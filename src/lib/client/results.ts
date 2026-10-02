@@ -106,6 +106,23 @@ export function variantKey(name: string): string {
   return s || name;
 }
 
+/**
+ * 사업 '계열' 키: 지역 변형 키에서 괄호 내용과 일반어(원스톱·종합·지원·서비스·사업·제공·프로그램·운영)를 뺀 핵심 이름.
+ * 예) 양육비 이행 원스톱 종합서비스 / 양육비 이행 지원 서비스 → 양육비이행
+ */
+export function familyKey(name: string): string {
+  const k = variantKey(name)
+    .replace(/\([^)]*\)/g, "")
+    .replace(/(원스톱|종합|지원|서비스|사업|제공|프로그램|운영|및|등)/g, "");
+  return k || variantKey(name);
+}
+/** 같은 계열인지: 핵심 이름이 같거나, 4자 이상인 한쪽이 다른 쪽의 앞부분 (구직자취업 ⊂ 구직자취업역량강화) */
+export function sameFamily(a: string, b: string): boolean {
+  if (a === b) return true;
+  const [s, l] = a.length <= b.length ? [a, b] : [b, a];
+  return s.length >= 4 && l.startsWith(s);
+}
+
 export function scoreAll(programs: Program[], profile: Profile): Scored[] {
   const out: Scored[] = programs.map((program) => {
     const ev = evaluateRule(program.rule, profile);
@@ -131,14 +148,18 @@ export interface Filters {
   includeEdu?: boolean;
   /** 농림축산어업·사업자 대상 서비스 포함 여부 (기본 숨김) */
   includeIndustry?: boolean;
+  /** 기관·시설 운영 지원 사업 포함 여부 (기본 숨김, 운영자 방향 2026-10-02) */
+  includeOperator?: boolean;
 }
 
 /** 자동 제공·기관 선정 사업: 추천·탭 목록에서는 빼고 '자동으로 받는 혜택' 접힌 영역에만 (운영자 방향 2026-10-02) */
 export const autoLike = (p: Program) => isAutoLike(p);
 const eduHidden = (p: Program, f: Filters) => p.orgType === "edu_office" && !f.includeEdu && f.org !== "edu_office";
-const industryHidden = (p: Program, f: Filters) => !!p.sector && !f.includeIndustry;
-/** 기본 숨김 대상인지 (교육청·복지 외 분야) */
-export const hiddenByDefault = (p: Program, f: Filters) => eduHidden(p, f) || industryHidden(p, f);
+const isIndustry = (p: Program) => p.sector === "agri" || p.sector === "business";
+const industryHidden = (p: Program, f: Filters) => isIndustry(p) && !f.includeIndustry;
+const operatorHidden = (p: Program, f: Filters) => p.sector === "operator" && !f.includeOperator;
+/** 기본 숨김 대상인지 (교육청·복지 외 분야·기관·시설 운영 지원) */
+export const hiddenByDefault = (p: Program, f: Filters) => eduHidden(p, f) || industryHidden(p, f) || operatorHidden(p, f);
 /** 본문(추천·탭 목록)에 보이지 않는 사업: 기본 숨김 + 자동 제공·기관 선정 */
 const offMain = (p: Program, f: Filters) => autoLike(p) || hiddenByDefault(p, f);
 
@@ -222,12 +243,24 @@ export function groupVariants(list: Scored[]): Group[] {
 
 /** 숨겨진 교육청 서비스 묶음 수 (현재 탭·검색어 기준) */
 export function eduCount(items: Scored[], f: Filters): number {
-  return new Set(items.filter((s) => s.program.orgType === "edu_office" && !autoLike(s.program) && s.ev.tier === f.tier && matchesQuery(s.program, f.q) && !industryHidden(s.program, f)).map((s) => s.group)).size;
+  return new Set(items.filter((s) => s.program.orgType === "edu_office" && !autoLike(s.program) && s.ev.tier === f.tier && matchesQuery(s.program, f.q) && !industryHidden(s.program, f) && !operatorHidden(s.program, f)).map((s) => s.group)).size;
 }
 
 /** 숨겨진 복지 외 분야(농림·사업자) 묶음 수 (현재 탭·검색어 기준) */
 export function industryCount(items: Scored[], f: Filters): number {
-  return new Set(items.filter((s) => !!s.program.sector && !autoLike(s.program) && s.ev.tier === f.tier && matchesQuery(s.program, f.q) && !eduHidden(s.program, f)).map((s) => s.group)).size;
+  return new Set(items.filter((s) => isIndustry(s.program) && !autoLike(s.program) && s.ev.tier === f.tier && matchesQuery(s.program, f.q) && !eduHidden(s.program, f) && !operatorHidden(s.program, f)).map((s) => s.group)).size;
+}
+
+/**
+ * 숨겨진 기관·시설 운영 지원 묶음 수 — 체크하면 화면에 새로 나타나는 카드 수
+ * (현재 탭 목록에 들어갈 것 + 아래 '자동으로 받는 혜택'에 들어갈 것)
+ */
+export function operatorCount(items: Scored[], f: Filters): number {
+  const on: Filters = { ...f, includeOperator: true };
+  const ops = items.filter((s) => s.program.sector === "operator");
+  const main = groupVariants(applyFilters(ops, on));
+  const autos = autoGroups(ops, on);
+  return new Set([...main, ...autos].map((g) => g.key)).size;
 }
 
 const TIER_RANK: Record<Tier, number> = { eligible: 0, likely: 1, check: 2, ineligible: 3 };
@@ -255,11 +288,21 @@ export function autoGroups(items: Scored[], f: Filters): Group[] {
 }
 
 /** 맞춤 추천: 조건 충족 → 가능성 있음 순으로 관련도 상위 n개 묶음 (숨김 대상 제외) */
-export function topPicks(items: Scored[], f: Pick<Filters, "includeEdu" | "includeIndustry">, n = 5): Group[] {
+export function topPicks(items: Scored[], f: Pick<Filters, "includeEdu" | "includeIndustry" | "includeOperator">, n = 5): Group[] {
   const base: Filters = { tier: "eligible", category: null, org: null, q: "", ...f };
   const pool = items.filter((s) => (s.ev.tier === "eligible" || s.ev.tier === "likely") && !offMain(s.program, base));
   // '조건 충족'에 가산점(+2)을 주되, 관련도가 확실히 높은 '가능성 있음'은 앞설 수 있다
   const key = (s: Scored) => s.score + (s.ev.tier === "eligible" ? 2 : 0);
   const sorted = [...pool].sort((a, b) => key(b) - key(a) || a.program.name.localeCompare(b.program.name, "ko"));
-  return groupVariants(sorted).slice(0, n);
+  // 같은 계열(양육비 이행 원스톱 / 양육비 이행 지원 서비스 등)은 추천 5개에 하나만 — 높은 쪽을 남기고 다음 다른 사업이 자리를 채운다 (탭 목록은 그대로)
+  const out: Group[] = [];
+  const fams: string[] = [];
+  for (const g of groupVariants(sorted)) {
+    const fk = familyKey(g.lead.program.name);
+    if (fams.some((x) => sameFamily(x, fk))) continue;
+    fams.push(fk);
+    out.push(g);
+    if (out.length >= n) break;
+  }
+  return out;
 }

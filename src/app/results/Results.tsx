@@ -6,7 +6,7 @@ import { ProgramCard, ReasonSummary } from "@/components/ProgramCard";
 import { TierBadge } from "@/components/Badges";
 import { clearProfile, saveProfile, useExample, useProfile } from "@/lib/client/storage";
 import { loadForRegion, type Loaded } from "@/lib/client/bundles";
-import { applyFilters, autoGroups, eduCount, facetCounts, groupVariants, industryCount, scoreAll, topPicks, type Filters } from "@/lib/client/results";
+import { applyFilters, autoGroups, eduCount, facetCounts, groupVariants, industryCount, operatorCount, scoreAll, topPicks, type Filters } from "@/lib/client/results";
 import { PRESETS } from "@/lib/client/presets";
 import { profileChips } from "@/lib/client/summary";
 import { CATEGORIES, ORG_TYPE_LABEL, type Category, type OrgType } from "@/lib/data/types";
@@ -90,14 +90,18 @@ function ResultsInner({ profile }: { profile: Profile }) {
   const groups = useMemo(() => groupVariants(applyFilters(scored, f)), [scored, f]);
   const edu = useMemo(() => eduCount(scored, f), [scored, f]);
   const industry = useMemo(() => industryCount(scored, f), [scored, f]);
+  const operator = useMemo(() => operatorCount(scored, f), [scored, f]);
   // 자동 제공·기관 선정 사업 (본문에서 빼고 아래 접힌 영역에) — 분야·기관·검색·기본 숨김 필터는 본문과 같게
   const autos = useMemo(() => autoGroups(scored, f), [scored, f]);
   // 머리글 합계: 분야·기관·검색 필터는 빼고, 기본 숨김(교육청·복지 외 분야) 설정만 반영한 카드 수
   const total = useMemo(
-    () => facetCounts(scored, { tier: "eligible", category: null, org: null, q: "", includeEdu: f.includeEdu, includeIndustry: f.includeIndustry }).tiers,
-    [scored, f.includeEdu, f.includeIndustry],
+    () => facetCounts(scored, { tier: "eligible", category: null, org: null, q: "", includeEdu: f.includeEdu, includeIndustry: f.includeIndustry, includeOperator: f.includeOperator }).tiers,
+    [scored, f.includeEdu, f.includeIndustry, f.includeOperator],
   );
-  const picks = useMemo(() => topPicks(scored, { includeEdu: f.includeEdu, includeIndustry: f.includeIndustry }, 5), [scored, f.includeEdu, f.includeIndustry]);
+  const picks = useMemo(
+    () => topPicks(scored, { includeEdu: f.includeEdu, includeIndustry: f.includeIndustry, includeOperator: f.includeOperator }, 5),
+    [scored, f.includeEdu, f.includeIndustry, f.includeOperator],
+  );
 
   const update = (patch: Partial<Filters>) => {
     setF((prev) => ({ ...prev, ...patch }));
@@ -302,6 +306,12 @@ function ResultsInner({ profile }: { profile: Profile }) {
               <input type="checkbox" checked={!!f.includeIndustry} onChange={(e) => update({ includeIndustry: e.target.checked })} data-testid="include-industry" />
               <span>
                 농림축산어업·사업자(창업·소상공인) 대상도 보기 <span className="muted">({industry.toLocaleString("ko-KR")}개)</span>
+              </span>
+            </label>
+            <label>
+              <input type="checkbox" checked={!!f.includeOperator} onChange={(e) => update({ includeOperator: e.target.checked })} data-testid="include-operator" />
+              <span>
+                기관·시설 운영 지원 사업도 보기 <span className="muted">({operator.toLocaleString("ko-KR")}개)</span>
               </span>
             </label>
             <label>

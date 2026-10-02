@@ -2,9 +2,9 @@
   "suwon-senior": {
     "groups": {
       "eligible": 12,
-      "likely": 306,
+      "likely": 305,
       "check": 260,
-      "ineligible": 843
+      "ineligible": 841
     },
     "rawPrograms": {
       "eligible": 12,
@@ -14,18 +14,15 @@
     },
     "applyTypes": {
       "self": 431,
-      "unknown": 149,
+      "unknown": 148,
       "auto": 4,
-      "institution": 9
+      "institution": 6
     },
-    "autoSection": 6,
+    "autoSection": 3,
     "autoSamples": [
-      "중앙노인돌봄지원기관 운영지원 [institution·likely]",
-      "경로당 운영 지원 [institution·likely]",
       "노인보호전문기관 [institution·likely]",
       "노인월동난방비 등 지원 [auto·likely]",
-      "장기요양급여비용 본인부담금 감경 [auto·check]",
-      "여성기업종합지원센터운영 [institution·likely]"
+      "장기요양급여비용 본인부담금 감경 [auto·check]"
     ],
     "top": [
       "노인맞춤돌봄서비스 [eligible·전국·self·20.0]",
@@ -45,9 +42,9 @@
   "seongnam-single-parent": {
     "groups": {
       "eligible": 84,
-      "likely": 378,
-      "check": 253,
-      "ineligible": 678
+      "likely": 377,
+      "check": 252,
+      "ineligible": 677
     },
     "rawPrograms": {
       "eligible": 96,
@@ -57,14 +54,13 @@
     },
     "applyTypes": {
       "self": 597,
-      "unknown": 123,
+      "unknown": 121,
       "auto": 11,
-      "institution": 6
+      "institution": 4
     },
-    "autoSection": 8,
+    "autoSection": 7,
     "autoSamples": [
       "성남시 저소득 한부모가족 냉난방비 지원 [auto·eligible]",
-      "직장어린이집 설치 지원 [institution·likely]",
       "아동 입원진료비 지원 [auto·likely]",
       "학대피해아동 쉼터 설치 및 운영 [institution·likely]",
       "학대피해아동 의료비 등 지원 [auto·likely]",
@@ -92,7 +88,7 @@
       "eligible": 51,
       "likely": 266,
       "check": 264,
-      "ineligible": 830
+      "ineligible": 827
     },
     "rawPrograms": {
       "eligible": 62,
@@ -104,7 +100,7 @@
       "self": 489,
       "unknown": 93,
       "auto": 6,
-      "institution": 4
+      "institution": 3
     },
     "autoSection": 3,
     "autoSamples": [
@@ -116,8 +112,8 @@
       "경기도 청년 면접수당 [eligible·경기도·self·12.0]",
       "청년월세 지원 [likely·전국·self·13.5]",
       "구직자 취업역량강화 프로그램 [eligible·전국·self·10.0]",
-      "구직자 취업지원 서비스 제공 [eligible·전국·self·10.0]",
-      "대‧중소기업 상생일자리 프로그램 [eligible·전국·self·10.0]"
+      "대‧중소기업 상생일자리 프로그램 [eligible·전국·self·10.0]",
+      "산림보호지원단 일자리 제공 [eligible·전국·self·10.0]"
     ],
     "eligibleTab": [
       "경기도 청년 면접수당",
@@ -132,7 +128,7 @@
       "eligible": 55,
       "likely": 352,
       "check": 240,
-      "ineligible": 725
+      "ineligible": 722
     },
     "rawPrograms": {
       "eligible": 65,
@@ -144,7 +140,7 @@
       "self": 521,
       "unknown": 129,
       "auto": 3,
-      "institution": 7
+      "institution": 6
     },
     "autoSection": 3,
     "autoSamples": [

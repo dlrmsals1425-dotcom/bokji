@@ -43,8 +43,9 @@ export function ReviewBadge({ p }: { p: Program }) {
 export function SectorBadge({ p }: { p: Program }) {
   if (!p.sector) return null;
   return (
-    <span className="badge warn" title="기본 결과에서는 숨기는 복지 외 분야 서비스예요">
-      {SECTOR_LABEL[p.sector]} 대상
+    <span className="badge warn" title={p.sector === "operator" ? "개인이 아니라 기관·시설 운영을 돕는 사업이라 기본 결과에서는 숨겨요" : "기본 결과에서는 숨기는 복지 외 분야 서비스예요"}>
+      {SECTOR_LABEL[p.sector]}
+      {p.sector === "operator" ? "" : " 대상"}
     </span>
   );
 }

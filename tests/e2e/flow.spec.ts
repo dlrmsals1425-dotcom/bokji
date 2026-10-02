@@ -102,6 +102,16 @@ test.describe("로그인 없는 전체 흐름", () => {
     if (indN > 0) expect(afterInd).toBeGreaterThan(beforeEdu);
     await page.getByTestId("include-industry").uncheck();
 
+    // 기관·시설 운영 지원도 기본 숨김 (체크하면 목록 또는 '자동으로 받는 혜택'에 나타남)
+    const opLabel = await page.locator("label", { has: page.getByTestId("include-operator") }).innerText();
+    const opN = Number(opLabel.match(/\((\d[\d,]*)개\)/)![1].replace(/,/g, ""));
+    await page.getByTestId("include-operator").check();
+    const afterOp = await count("likely");
+    expect(afterOp).toBeGreaterThanOrEqual(beforeEdu);
+    expect(afterOp).toBeLessThanOrEqual(beforeEdu + opN);
+    await page.getByTestId("include-operator").uncheck();
+    expect(await count("likely")).toBe(beforeEdu);
+
     // 목록 길이 = 탭 개수 (처음 10개 + 더 보기)
     const shown = await page.getByTestId("result-list").getByTestId("program-card").count();
     expect(shown).toBe(Math.min(10, beforeEdu));

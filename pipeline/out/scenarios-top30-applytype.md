@@ -24,16 +24,16 @@
 | 18 | 노인일자리 및 사회활동 지원 | 전국 | likely | self |
 | 19 | 노인장기요양 재가급여 지원 | 경기도 | likely | self |
 | 20 | 노인장기요양보험 복지용구 급여 | 전국 | likely | unknown |
-| 21 | 중앙노인돌봄지원기관 운영지원 | 전국 | likely | institution |
-| 22 | 노인장기요양 시설급여 지원 | 경기도 | likely | self |
-| 23 | 경로당 운영 지원 | 전국 | likely | institution |
-| 24 | 노인장기요양보험(장기요양인정) | 전국 | likely | self |
-| 25 | 치매검진·치매치료관리비 지원 | 전국 | likely | unknown |
-| 26 | 국민기초생활보장 생계급여 | 전국 | likely | self |
-| 27 | 저소득 노인가구 건강보험료 | 경기도 | likely | unknown |
-| 28 | 주거취약계층 주거상향 지원 | 전국 | likely | self |
-| 29 | 차상위 본인부담 경감대상자 지원 | 전국 | likely | self |
-| 30 | 차상위계층 확인 | 전국 | likely | self |
+| 21 | 노인장기요양 시설급여 지원 | 경기도 | likely | self |
+| 22 | 노인장기요양보험(장기요양인정) | 전국 | likely | self |
+| 23 | 치매검진·치매치료관리비 지원 | 전국 | likely | unknown |
+| 24 | 국민기초생활보장 생계급여 | 전국 | likely | self |
+| 25 | 저소득 노인가구 건강보험료 | 경기도 | likely | unknown |
+| 26 | 주거취약계층 주거상향 지원 | 전국 | likely | self |
+| 27 | 차상위 본인부담 경감대상자 지원 | 전국 | likely | self |
+| 28 | 차상위계층 확인 | 전국 | likely | self |
+| 29 | K-water 사랑샘터 | 전국 | likely | self |
+| 30 | 고독사 예방·관리 | 전국 | likely | unknown |
 
 ## 성남시 한부모 가정 (seongnam-single-parent)
 
@@ -68,7 +68,7 @@
 | 27 | 그 밖의 연장형 보육료 등 지원 | 전국 | likely | unknown |
 | 28 | 아동용품구입비 지원 | 전국 | likely | self |
 | 29 | 영유아 발달 정밀검사비 지원 | 전국 | eligible | self |
-| 30 | 직장어린이집 설치 지원 | 전국 | likely | institution |
+| 30 | 청년미래적금 | 전국 | eligible | self |
 
 ## 고양시 구직 청년 (goyang-youth)
 

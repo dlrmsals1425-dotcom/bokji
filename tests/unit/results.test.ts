@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { applyFilters, autoGroups, facetCounts, groupVariants, industryCount, matchesQuery, scoreAll, topPicks, variantKey } from "@/lib/client/results";
+import { applyFilters, autoGroups, facetCounts, familyKey, operatorCount, sameFamily, groupVariants, industryCount, matchesQuery, scoreAll, topPicks, variantKey } from "@/lib/client/results";
 import { profileChips } from "@/lib/client/summary";
 import { EMPTY_PROFILE, type Profile } from "@/lib/engine/profile";
 import type { Program } from "@/lib/data/types";
@@ -120,6 +120,42 @@ describe("신청 유형: 자동 제공·기관 선정은 본문·추천에서 �
     expect(autos.every((g) => g.lead.score > 0)).toBe(true);
     const unrelated = scoreAll([prog("교원 직무연수", { applyType: "institution", category: "보육" })], P);
     expect(autoGroups(unrelated, base)).toHaveLength(unrelated[0].score > 0 ? 1 : 0);
+  });
+});
+
+describe("기관·시설 운영 지원 숨김 + 추천 5개 계열 중복 줄이기", () => {
+  const items: Program[] = [
+    prog("양육비 이행 원스톱 종합서비스", { rule: rule("y1", "curated", SENIOR) }),
+    prog("양육비 이행 지원 서비스", { rule: rule("y2", "curated", SENIOR) }),
+    prog("기초연금", { applyType: "self", rule: rule("s1", "curated", SENIOR) }),
+    prog("노인 돌봄", { category: "보호·돌봄", rule: rule("s2", "curated", SENIOR) }),
+    prog("경로당 운영 지원", { applyType: "institution", sector: "operator", rule: rule("o1", "curated", SENIOR) }),
+    prog("노인복지민간단체지원", { sector: "operator", rule: rule("o2", "curated", SENIOR) }),
+  ];
+  const sc = scoreAll(items, P);
+  const base = { tier: "eligible" as const, category: null, org: null, q: "" };
+  it("계열 키: 일반어·괄호를 빼고 비교, 4자 이상 앞부분 일치도 같은 계열", () => {
+    expect(familyKey("양육비 이행 원스톱 종합서비스")).toBe(familyKey("양육비 이행 지원 서비스"));
+    expect(sameFamily(familyKey("구직자 취업지원 서비스 제공"), familyKey("구직자 취업역량강화 프로그램"))).toBe(true);
+    expect(sameFamily(familyKey("기초연금"), familyKey("기초생활보장 생계급여"))).toBe(false);
+    expect(sameFamily(familyKey("청년월세 지원"), familyKey("청년내일저축계좌"))).toBe(false);
+  });
+  it("추천 5개에는 같은 계열 하나만, 탭 목록에는 둘 다", () => {
+    const top = topPicks(sc, {}, 5).map((g) => g.lead.program.id);
+    expect(top.filter((id) => id.startsWith("양육비"))).toHaveLength(1);
+    expect(top).toContain("기초연금");
+    expect(applyFilters(sc, base).filter((s) => s.program.id.startsWith("양육비"))).toHaveLength(2);
+  });
+  it("운영 지원은 추천·목록·자동 영역 모두에서 숨기고, 필터를 켜면 개수만큼 나타난다", () => {
+    const ids = (gs: { lead: { program: Program } }[]) => gs.map((g) => g.lead.program.id);
+    expect(ids(topPicks(sc, {}, 5))).not.toContain("경로당 운영 지원");
+    expect(ids(autoGroups(sc, base))).not.toContain("경로당 운영 지원");
+    expect(applyFilters(sc, base).map((s) => s.program.id)).not.toContain("노인복지민간단체지원");
+    const n = operatorCount(sc, base);
+    expect(n).toBe(2);
+    const on = { ...base, includeOperator: true };
+    const appeared = groupVariants(applyFilters(sc, on)).length + autoGroups(sc, on).length - (groupVariants(applyFilters(sc, base)).length + autoGroups(sc, base).length);
+    expect(appeared).toBe(n);
   });
 });
 
