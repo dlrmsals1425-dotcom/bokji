@@ -12,6 +12,10 @@ export interface SourceRecord {
   criteria?: string;
   benefit?: string;
   applyMethod?: string;
+  /** 신청 경로 구분 (정부24 목록 '신청방법' 코드, 복지로 aplyMtdNm) */
+  applyChannel?: string;
+  /** 지원·제공 유형 (정부24 지원유형, 복지로 제공유형) */
+  supportType?: string;
   documents?: string;
   contact?: string;
   deadline?: string;

@@ -68,6 +68,8 @@ export function applyBokjiroApi(index: SourceRecord[], regions: RegionIndex, log
         criteria: get("slctCritCn"),
         benefit: get("alwServCn"),
         applyMethod,
+        applyChannel: get("aplyMtdNm"),
+        supportType: cleanText(String(d.srvPvsnNm ?? row.srvPvsnNm ?? "")) || undefined,
         contact: contacts.length ? contacts.join("\n") : undefined,
         documents: forms.length ? `관련 서식·안내: ${forms.join(", ")}` : undefined,
         applyUrl: homepages[0]?.val,

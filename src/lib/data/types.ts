@@ -118,11 +118,26 @@ export interface Program {
   aliases?: string[];
   /** 복지 외 분야: agri 농림축산어업 종사자 대상 / business 소상공인·기업·창업 등 사업자 대상 (기본 결과에서 숨김) */
   sector?: Sector;
+  /** 신청 유형: self 직접 신청 / auto 자동 제공 / institution 기관 추천·선정·시설 대상 / unknown 확인 필요 (없으면 unknown) */
+  applyType?: ApplyType;
+  /** 신청 유형 판단 근거 (상세 샤드에만) */
+  applyReason?: string;
   /** 목록 번들 전용: 신청방법·연락처가 있는지 (상세 필드는 details 샤드에) */
   hasApply?: boolean;
 }
 
 export type Sector = "agri" | "business";
+
+/** 신청 유형 (운영자 방향 2026-10-02: 직접 신청해야 받는 혜택을 앞에, 자동·기관 선정 혜택은 아래 접힌 영역) */
+export type ApplyType = "self" | "auto" | "institution" | "unknown";
+export const APPLY_TYPE_LABEL: Record<ApplyType, string> = {
+  self: "직접 신청",
+  auto: "자동 제공",
+  institution: "기관 추천·선정",
+  unknown: "신청 방법 확인",
+};
+/** 결과 본문(추천·탭 목록)에서 빼고 '자동으로 받는 혜택'에 모으는 유형 */
+export const isAutoLike = (p: { applyType?: ApplyType }) => p.applyType === "auto" || p.applyType === "institution";
 export const SECTOR_LABEL: Record<Sector, string> = { agri: "농림축산어업", business: "사업자·창업" };
 
 export interface Bundle {

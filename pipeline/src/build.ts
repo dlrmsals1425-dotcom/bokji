@@ -20,6 +20,7 @@ import { dedupWithinIcare, mergeAcrossSources, regionDisplayName, type DedupStat
 import { readCached, readCachedStatus } from "./gov24/ingest";
 import { CURATED } from "../rules/curated";
 import { classifySector } from "./normalize/sector";
+import { classifyApplyType, type ApplyResult } from "./normalize/applyType";
 import { normalizeUrl } from "./normalize/names";
 import { detailBucket } from "../../src/lib/data/bucket";
 import type { Bundle, BuildMeta, LocalOperation, Program, RegionIndex as RegionIndexJson, SourceRef } from "../../src/lib/data/types";
@@ -124,6 +125,16 @@ function main() {
     const uniqSources = sources.filter((s, i) => sources.findIndex((x) => x.source === s.source && x.id === s.id) === i);
 
     const sector = members.find((m) => m.source === "gov24")?.sector ?? (members.some((m) => m.source === "gov24") ? undefined : classifySector({ name: rec.name, target: rec.target }));
+    const uniqJoin = (k: "applyMethod" | "applyChannel" | "supportType", sep: string) =>
+      [...new Set(members.map((m) => m[k]).filter(Boolean) as string[])].join(sep) || undefined;
+    const apply: ApplyResult = classifyApplyType({
+      name: rec.name, summary: rec.summary, scope: rec.scope, owner: rec.owner,
+      target: rec.target ?? members.find((m) => m.target)?.target,
+      criteria: rec.criteria ?? members.find((m) => m.criteria)?.criteria,
+      benefit: rec.benefit ?? members.find((m) => m.benefit)?.benefit,
+      applyMethod: uniqJoin("applyMethod", "\n"), applyChannel: uniqJoin("applyChannel", "||"),
+      supportType: [uniqJoin("supportType", ","), ...(rec.provision ?? [])].filter(Boolean).join(",") || undefined,
+    });
     const placements: (string | undefined)[] = rec.scope === "sigungu" ? rec.sigunguCodes! : [undefined];
     for (const sgg of placements) {
       const prefix = rec.scope === "national" ? "n" : rec.scope === "sido" ? `s${rec.sidoCode}` : `g${sgg}`;
@@ -189,6 +200,8 @@ function main() {
         rule,
         mergedCount: members.length > 1 ? members.length : undefined,
         sector,
+        applyType: apply.type,
+        applyReason: apply.reason,
         aliases: [...new Set([...(rec.aliases ?? []), ...(rec.scope !== "national" && regionDisplayName(rec.name, tokensFor(rec)) !== rec.name ? [rec.name] : [])])].slice(0, 8) || undefined,
       };
       programs.push({ p, rec, sigungu: sgg });
@@ -213,7 +226,7 @@ function main() {
     owner: p.owner, provider: p.provider, target: cut(p.target, 120), deadline: cut(p.deadline, 60),
     sources: p.sources.map((x) => ({ source: x.source, id: x.id }) as SourceRef), trust: p.trust, badges: p.badges,
     rule: { id: p.rule.id, origin: p.rule.origin, review: p.rule.review, logic: p.rule.logic, unstructured: p.rule.unstructured, unstructuredCore: p.rule.unstructuredCore },
-    mergedCount: p.mergedCount, aliases: p.aliases, sector: p.sector, hasApply: !!(p.applyMethod || p.contact) || undefined,
+    mergedCount: p.mergedCount, aliases: p.aliases, sector: p.sector, applyType: p.applyType === "unknown" ? undefined : p.applyType, hasApply: !!(p.applyMethod || p.contact) || undefined,
   });
   const detailShards = new Map<string, Record<string, Program>>();
   for (const { p } of programs) {
@@ -255,7 +268,9 @@ function main() {
   const bySource: Record<string, number> = {};
   const bySourceOrg: Record<string, Record<string, number>> = {};
   const bySector: Record<string, number> = {};
+  const byApplyType: Record<string, number> = {};
   for (const { p, rec } of uniquePrograms) {
+    byApplyType[p.applyType ?? "unknown"] = (byApplyType[p.applyType ?? "unknown"] ?? 0) + 1;
     byOrg[p.orgType] = (byOrg[p.orgType] ?? 0) + 1;
     byScope[p.scope] = (byScope[p.scope] ?? 0) + 1;
     if (p.sector) bySector[p.sector] = (bySector[p.sector] ?? 0) + 1;
@@ -288,7 +303,7 @@ function main() {
       icare: "2026-04 등 (메뉴판 문서별 원문 기준월), 수집 " + icareFetched,
       gov24: gov24.length ? `수집 ${g24list.fetchedAt?.slice(0, 10)}` : "미수집",
     },
-    counts: { raw, excluded, uniquePrograms: uniquePrograms.length, placements: programs.length, byOrg, byScope, bySector, bySource, bySourceOrg, dedup: { ...stats, regionalCopySamples: undefined }, localOps: localOpsCount, rulesByReview: reviewCounts, rulesByOrigin: originCounts, pilot, nationalCurated, nationalStructured, coverage, bokjiroApi },
+    counts: { raw, excluded, uniquePrograms: uniquePrograms.length, placements: programs.length, byOrg, byScope, bySector, byApplyType, bySource, bySourceOrg, dedup: { ...stats, regionalCopySamples: undefined }, localOps: localOpsCount, rulesByReview: reviewCounts, rulesByOrigin: originCounts, pilot, nationalCurated, nationalStructured, coverage, bokjiroApi },
     gov24: gov24Status
       ? { status: gov24Status.status, detail: gov24Status.detail, services: gov24.length || undefined }
       : { status: "unavailable", detail: "수집 기록 없음 (npm run ingest:gov24 미실행)" },
@@ -315,6 +330,10 @@ function main() {
   const rc = ["decision,reason,similarity,national,local,region"];
   for (const x of stats.regionalCopySamples ?? []) rc.push([x.decision, x.reason, x.sim, x.nat, x.local, x.region].map(csvCell).join(","));
   fs.writeFileSync(path.join(REPORT, "regional-copies.csv"), "\uFEFF" + rc.join("\n"));
+  // 신청 유형 분류표 (사업 단위, 시군구 배치 중복 제외)
+  const at = ["id,name,org,region,orgType,applyType,reason"];
+  for (const { p } of uniquePrograms) at.push([p.id, p.name, p.owner ?? p.provider ?? "", p.region?.label ?? "전국", p.orgType, p.applyType, p.applyReason].map(csvCell).join(","));
+  fs.writeFileSync(path.join(REPORT, "apply-type.csv"), "\uFEFF" + at.join("\n"));
   const statsForMeta = { ...stats, regionalCopySamples: undefined };
   void statsForMeta;
   const missingCurated = Object.keys(CURATED).filter((k) => !seen.has(k));
@@ -334,6 +353,7 @@ function main() {
     `- 최종 사업(중복 제거 후): **${uniquePrograms.length}** (시군구 배치 기준 ${programs.length})`,
     `- 기관 유형별: ${Object.entries(byOrg).map(([k, v]) => `${k} ${v}`).join(" / ")}`,
     `- 복지 외 분야(기본 숨김): ${Object.entries(bySector).map(([k, v]) => `${k} ${v}`).join(" / ")} · 교육청(기본 숨김) ${byOrg.edu_office ?? 0}`,
+    `- 신청 유형(사업 단위): ${Object.entries(byApplyType).map(([k, v]) => `${k} ${v}`).join(" / ")} (pipeline/out/apply-type.csv)`,
     `- 범위별: ${Object.entries(byScope).map(([k, v]) => `${k} ${v}`).join(" / ")}`,
     `- 원천 기여(사업 수): ${Object.entries(bySource).map(([k, v]) => `${k} ${v}`).join(" / ")}`,
     `- 규칙 검수 상태(배치 기준): ${Object.entries(reviewCounts).map(([k, v]) => `${k} ${v}`).join(" / ")}`,

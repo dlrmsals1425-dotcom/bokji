@@ -88,6 +88,8 @@ export function loadGov24(
       criteria: str("선정기준", d) ?? str("선정기준"),
       benefit: str("지원내용", d) ?? str("지원내용"),
       applyMethod: str("신청방법", d) ?? str("신청방법"),
+      applyChannel: str("신청방법"),
+      supportType: str("지원유형", d) ?? str("지원유형"),
       documents: [str("구비서류", d), str("본인확인필요구비서류", d) && `본인 확인 필요: ${str("본인확인필요구비서류", d)}`, str("공무원확인구비서류", d) && `담당 공무원이 확인: ${str("공무원확인구비서류", d)}`].filter(Boolean).join("\n") || undefined,
       contact: formatContacts(str("문의처", d) ?? str("전화문의")),
       deadline: str("신청기한", d) ?? str("신청기한"),
