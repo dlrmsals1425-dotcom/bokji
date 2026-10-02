@@ -11,7 +11,10 @@
     "test": "vitest run",
     "e2e": "playwright test",
     "pipeline": "tsx pipeline/src/build.ts",
-    "ingest:gov24": "tsx pipeline/src/gov24/ingest.ts"
+    "ingest:gov24": "tsx pipeline/src/gov24/ingest.ts",
+    "ingest:bokjiro": "tsx pipeline/src/bokjiro/ingest.ts",
+    "build:safe": "env -i PATH=\"$PATH\" HOME=\"$HOME\" next build",
+    "start:safe": "env -i PATH=\"$PATH\" HOME=\"$HOME\" next start -p 3217"
   },
   "dependencies": {
     "next": "16.3.8",
@@ -25,6 +28,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.3.8",
+    "fast-xml-parser": "^4.5.7",
     "tsx": "^4.23.15",
     "typescript": "^5",
     "vitest": "^3.2.7"

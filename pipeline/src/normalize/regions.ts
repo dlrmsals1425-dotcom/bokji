@@ -115,4 +115,38 @@ export class RegionIndex {
     const parent = this.sggByFull.get(`${sido.name} ${first}`);
     return parent ? [parent] : [];
   }
+
+  /**
+   * 기관명(띄어쓰기 없는 경우 포함)에서 지역 추정: '재단법인경기도시장상권진흥원' → 경기도, '고양도시관리공사' → 고양시,
+   * '인천광역시부평구시설관리공단' → 인천 부평구. 시도 접두어 우선, 없으면 시군구 이름·어간이 유일할 때만.
+   */
+  resolveOrgName(raw: string): { sido?: Sido; sigungus?: Sigungu[] } {
+    const n = raw.replace(/\s+/g, "").replace(/^(재단법인|사단법인|\(재\)|\(사\)|\(주\)|\(재단\)|\(재단법인\))+/, "");
+    const prefixes: [string, Sido][] = [];
+    for (const sd of this.sidos) {
+      prefixes.push([sd.name, sd]);
+      if (sd.short.length >= 2) prefixes.push([sd.short, sd]);
+    }
+    for (const [alias, cur] of Object.entries(SIDO_ALIASES)) prefixes.push([alias, this.sidoByName.get(cur)!]);
+    prefixes.push(["전남", this.sidoByName.get("전남광주통합특별시")!], ["전라남", this.sidoByName.get("전남광주통합특별시")!]);
+    prefixes.sort((a, b) => b[0].length - a[0].length);
+    const stem = (x: string) => (x.length >= 3 ? x.replace(/(시|군|구)$/, "") : x);
+    const matchSgg = (rest: string, pool: Sigungu[]) => {
+      const exact = pool.filter((g) => rest.startsWith(g.name));
+      if (exact.length) return exact;
+      return pool.filter((g) => stem(g.name).length >= 2 && rest.startsWith(stem(g.name)));
+    };
+    for (const [pre, sd] of prefixes) {
+      if (!sd || !n.startsWith(pre)) continue;
+      // '광주'는 경기 광주시와 겹치므로 시도 접두어로 쓰지 않음 (광주광역시는 별칭으로 처리)
+      if (sd.code === "36000") return { sido: sd, sigungus: this.sigungus.filter((g) => g.code === "36110") };
+      const rest = n.slice(pre.length);
+      const sg = matchSgg(rest, this.sigungusOf(sd.code));
+      if (sg.length === 1) return { sido: sd, sigungus: sg };
+      return { sido: sd };
+    }
+    const sg = matchSgg(n, this.sigungus);
+    if (sg.length === 1) return { sido: this.sidoByCode(sg[0].sido), sigungus: sg };
+    return {};
+  }
 }

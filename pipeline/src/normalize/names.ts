@@ -35,7 +35,7 @@ export function cleanText(s: string | undefined | null): string | undefined {
   const t = s
     .replace(/\r\n?/g, "\n")
     .replace(/[ \t]+/g, " ")
-    .replace(/\n{3,}/g, "\n\n")
+    .replace(/\n[ \t]*(?:\n[ \t]*)+/g, "\n")
     .trim();
   return t || undefined;
 }

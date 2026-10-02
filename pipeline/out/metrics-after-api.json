@@ -1,0 +1,33 @@
+{
+  "all": {
+    "programs": 24131,
+    "applyMethod": "12422/24131 (51.5%)",
+    "contact": "10329/24131 (42.8%)",
+    "either": "12735/24131 (52.8%)"
+  },
+  "gyeonggi": {
+    "programs": 3013,
+    "applyMethod": "1552/3013 (51.5%)",
+    "contact": "1628/3013 (54.0%)",
+    "either": "1632/3013 (54.2%)"
+  },
+  "national": {
+    "programs": 1421,
+    "applyMethod": "1193/1421 (84.0%)",
+    "contact": "1375/1421 (96.8%)",
+    "either": "1375/1421 (96.8%)"
+  },
+  "suwonPrograms": 1730,
+  "suwonMinimal": {
+    "eligible": 12,
+    "likely": 733,
+    "check": 419,
+    "ineligible": 566
+  },
+  "suwonDemo": {
+    "eligible": 12,
+    "likely": 545,
+    "check": 337,
+    "ineligible": 836
+  }
+}

@@ -14,8 +14,9 @@ import { RegionIndex, PILOT_SIDO } from "./normalize/regions";
 import { loadWelfare100 } from "./sources/welfare100";
 import { loadIcare } from "./sources/icare";
 import { loadGov24 } from "./sources/gov24";
+import { applyBokjiroApi } from "./sources/bokjiroApi";
 import type { SourceRecord } from "./sources/record";
-import { dedupWithinIcare, mergeAcrossSources, type DedupStats } from "./dedup";
+import { dedupWithinIcare, mergeAcrossSources, regionDisplayName, type DedupStats } from "./dedup";
 import { readCached, readCachedStatus } from "./gov24/ingest";
 import { CURATED } from "../rules/curated";
 import type { Bundle, BuildMeta, LocalOperation, Program, RegionIndex as RegionIndexJson, SourceRef } from "../../src/lib/data/types";
@@ -58,7 +59,10 @@ function main() {
   const gov24Status = readCachedStatus();
 
   // 1. 수집 캐시 읽기
-  const w100 = loadWelfare100(path.join(ICDASH, "data"), regions, log);
+  const w100Index = loadWelfare100(path.join(ICDASH, "data"), regions, log);
+  // 복지로 OpenAPI(중앙·지자체) 캐시로 색인 보강 + 신규 서비스 추가
+  const { records: w100, stats: bokjiroApi } = applyBokjiroApi(w100Index, regions, log);
+  log(`[bokjiro-api] 목록 중앙 ${bokjiroApi.list.central} · 지자체 ${bokjiroApi.list.local} / 상세 중앙 ${bokjiroApi.detail.central} · 지자체 ${bokjiroApi.detail.local} / 보강 ${bokjiroApi.enriched} · 신규 ${bokjiroApi.added} · 색인에만 있음 ${bokjiroApi.indexOnly}`);
   const icareFetched = (() => {
     try {
       const j = JSON.parse(fs.readFileSync(path.join(ICDASH, "data/api_summary.json"), "utf8"));
@@ -88,7 +92,17 @@ function main() {
   // 3. 중복 제거 · 교차 병합
   const stats: DedupStats = { d1Exact: 0, d2Substantive: 0, crossMerged: [], absorbedAsLocalOps: 0, blockedByLevel: 0 };
   const deduped = dedupWithinIcare(kept, stats);
-  const { records, localOps } = mergeAcrossSources(deduped, stats);
+  const tokensFor = (r: SourceRecord): string[] => {
+    const t = new Set<string>();
+    const sd = r.sidoCode ? regions.sidoByCode(r.sidoCode) : undefined;
+    if (sd) { t.add(sd.name); t.add(sd.short); }
+    for (const c of r.sigunguCodes ?? []) {
+      const g = regions.sigunguByCode(c);
+      if (g) { t.add(g.name); if (g.name.length >= 3) t.add(g.name.replace(/(시|군|구)$/, "")); }
+    }
+    return [...t].filter(Boolean);
+  };
+  const { records, localOps } = mergeAcrossSources(deduped, stats, tokensFor);
 
   // 4. 규칙 + 프로그램 생성
   const ledger = readLedger();
@@ -121,10 +135,12 @@ function main() {
           reviewer: "1차: 원문 대조 작성(AI) · 최종 사람 검수 대기", reviewedAt: GENERATED_AT.slice(0, 10),
         };
       } else {
+        // 공공서비스 API 구조화 지원조건: 전국 사업·경기도(시범) 사업은 '조건 충족' 판정 허용, 그 밖의 지역은 상한 '가능성 있음'
+        const structured = draftMember.draft.origin === "gov24_conditions" && (rec.scope === "national" || rec.sidoCode === PILOT_SIDO);
         rule = {
-          id: ruleId, origin: draftMember.draft.origin, review: "auto", logic: draftMember.draft.logic,
+          id: ruleId, origin: draftMember.draft.origin, review: structured ? "structured" : "auto", logic: draftMember.draft.logic,
           unstructured: draftMember.draft.unstructured, unstructuredCore: draftMember.draft.core,
-          evidence: draftMember.target ?? undefined,
+          evidence: draftMember.target ? (draftMember.target.length > 400 ? draftMember.target.slice(0, 399) + "…" : draftMember.target) : undefined,
         };
       }
       const l = ledger.get(ruleId) ?? (curatedKey ? ledger.get(`curated:${curatedKey}`) : undefined);
@@ -135,11 +151,13 @@ function main() {
       reviewCounts[rule.review] = (reviewCounts[rule.review] ?? 0) + 1;
       originCounts[rule.origin] = (originCounts[rule.origin] ?? 0) + 1;
 
+      const pick = <K extends "target" | "criteria" | "benefit" | "applyMethod" | "documents" | "contact" | "deadline" | "url" | "applyUrl" | "provider" | "owner">(k: K) =>
+        rec[k] ?? members.find((m) => m[k])?.[k];
       const sggInfo = sgg ? regions.sigunguByCode(sgg) : undefined;
       const sidoInfo = rec.sidoCode ? regions.sidoByCode(rec.sidoCode) : undefined;
       const p: Program = {
         id,
-        name: rec.name,
+        name: rec.scope === "national" ? rec.name : regionDisplayName(rec.name, tokensFor(rec)),
         summary: rec.summary,
         category: rec.category,
         tags: rec.tags.length ? rec.tags.slice(0, 6) : undefined,
@@ -148,17 +166,17 @@ function main() {
         region: rec.scope === "national" ? undefined : {
           sido: rec.sidoCode!, sigungu: sgg, label: sggInfo ? `${sidoInfo?.short ?? ""} ${sggInfo.name}`.trim() : sidoInfo?.name ?? rec.regionLabel ?? "",
         },
-        owner: rec.owner,
-        provider: rec.provider,
-        target: rec.target,
-        criteria: rec.criteria,
-        benefit: rec.benefit,
-        applyMethod: rec.applyMethod,
-        documents: rec.documents,
-        contact: rec.contact,
-        deadline: rec.deadline,
-        url: rec.url,
-        applyUrl: rec.applyUrl,
+        owner: pick("owner"),
+        provider: pick("provider"),
+        target: pick("target"),
+        criteria: pick("criteria"),
+        benefit: pick("benefit"),
+        applyMethod: pick("applyMethod"),
+        documents: pick("documents"),
+        contact: pick("contact"),
+        deadline: pick("deadline"),
+        url: pick("url"),
+        applyUrl: pick("applyUrl"),
         provision: rec.provision?.length ? rec.provision : undefined,
         laws: rec.laws?.length ? rec.laws.slice(0, 4) : undefined,
         sources: uniqSources,
@@ -166,7 +184,7 @@ function main() {
         badges: rec.badges.length ? rec.badges : undefined,
         rule,
         mergedCount: members.length > 1 ? members.length : undefined,
-        aliases: rec.aliases?.length ? rec.aliases.slice(0, 8) : undefined,
+        aliases: [...new Set([...(rec.aliases ?? []), ...(rec.scope !== "national" && regionDisplayName(rec.name, tokensFor(rec)) !== rec.name ? [rec.name] : [])])].slice(0, 8) || undefined,
       };
       programs.push({ p, rec, sigungu: sgg });
     }
@@ -225,21 +243,27 @@ function main() {
   const gyeonggi = uniquePrograms.filter((x) => x.p.region?.sido === PILOT_SIDO);
   const pilot = {
     programs: gyeonggi.length,
-    curatedOrVerified: gyeonggi.filter((x) => x.p.rule.review !== "auto").length,
+    curatedOrVerified: gyeonggi.filter((x) => x.p.rule.review === "curated" || x.p.rule.review === "verified").length,
+    structured: gyeonggi.filter((x) => x.p.rule.review === "structured").length,
     autoRules: gyeonggi.filter((x) => x.p.rule.review === "auto" && x.p.rule.logic).length,
     noRule: gyeonggi.filter((x) => !x.p.rule.logic).length,
   };
-  const nationalCurated = national.programs.filter((p) => p.rule.review !== "auto").length;
+  const nationalCurated = national.programs.filter((p) => p.rule.review === "curated" || p.rule.review === "verified").length;
+  const nationalStructured = national.programs.filter((p) => p.rule.review === "structured").length;
+  const filled = (k: "applyMethod" | "contact") => uniquePrograms.filter((x) => x.p[k] && String(x.p[k]).trim()).length;
+  const coverage = { applyMethod: filled("applyMethod"), contact: filled("contact"), either: uniquePrograms.filter((x) => x.p.applyMethod || x.p.contact).length, total: uniquePrograms.length };
 
   const meta: BuildMeta = {
     schema: 1,
     generatedAt: GENERATED_AT,
     dataAsOf: {
-      bokjiro: "2026-09-24 (복지로 색인 기준일)",
+      bokjiro: bokjiroApi.list.central + bokjiroApi.list.local
+        ? `복지로 OpenAPI 수집 ${GENERATED_AT.slice(0, 10)} (서비스별 최종수정일 표시) · 색인 2026-09-24`
+        : "2026-09-24 (복지로 색인 기준일)",
       icare: "2026-04 등 (메뉴판 문서별 원문 기준월), 수집 " + icareFetched,
       gov24: gov24.length ? `수집 ${g24list.fetchedAt?.slice(0, 10)}` : "미수집",
     },
-    counts: { raw, excluded, uniquePrograms: uniquePrograms.length, placements: programs.length, byOrg, byScope, bySource, bySourceOrg, dedup: stats, localOps: localOpsCount, rulesByReview: reviewCounts, rulesByOrigin: originCounts, pilot, nationalCurated },
+    counts: { raw, excluded, uniquePrograms: uniquePrograms.length, placements: programs.length, byOrg, byScope, bySource, bySourceOrg, dedup: stats, localOps: localOpsCount, rulesByReview: reviewCounts, rulesByOrigin: originCounts, pilot, nationalCurated, nationalStructured, coverage, bokjiroApi },
     gov24: gov24Status
       ? { status: gov24Status.status, detail: gov24Status.detail, services: gov24.length || undefined }
       : { status: "unavailable", detail: "수집 기록 없음 (npm run ingest:gov24 미실행)" },
@@ -269,6 +293,8 @@ function main() {
     `# 파이프라인 리포트 (${GENERATED_AT})`,
     "",
     `- 공공서비스(혜택) API: **${meta.gov24.status}** — ${meta.gov24.detail}`,
+    `- 복지로 OpenAPI: 목록 중앙 ${bokjiroApi.list.central} · 지자체 ${bokjiroApi.list.local} / 상세 중앙 ${bokjiroApi.detail.central} · 지자체 ${bokjiroApi.detail.local} / 색인 보강 ${bokjiroApi.enriched} · 신규 ${bokjiroApi.added} · 색인에만 있음 ${bokjiroApi.indexOnly}`,
+    `- 신청방법 채움 ${coverage.applyMethod}/${coverage.total} · 연락처 ${coverage.contact}/${coverage.total} · 둘 중 하나 ${coverage.either}/${coverage.total}`,
     `- 원천 레코드: ${Object.entries(raw).map(([k, v]) => `${k} ${v}`).join(" / ")}`,
     `- 노출 제외: ${Object.entries(excluded).map(([k, v]) => `${k} ${v}`).join(" / ") || "없음"}`,
     `- 통합돌봄 D1 완전 중복 ${stats.d1Exact} · D2 실질 중복 ${stats.d2Substantive}`,
@@ -280,8 +306,8 @@ function main() {
     `- 원천 기여(사업 수): ${Object.entries(bySource).map(([k, v]) => `${k} ${v}`).join(" / ")}`,
     `- 규칙 검수 상태(배치 기준): ${Object.entries(reviewCounts).map(([k, v]) => `${k} ${v}`).join(" / ")}`,
     `- 규칙 출처(배치 기준): ${Object.entries(originCounts).map(([k, v]) => `${k} ${v}`).join(" / ")}`,
-    `- 경기도 파일럿: 사업 ${pilot.programs} · 큐레이션/검수 규칙 ${pilot.curatedOrVerified} · 자동 규칙(검수 대기열) ${pilot.autoRules} · 규칙 없음 ${pilot.noRule}`,
-    `- 전국 공통 사업 중 큐레이션 규칙: ${nationalCurated}`,
+    `- 경기도 파일럿: 사업 ${pilot.programs} · 큐레이션/검수 규칙 ${pilot.curatedOrVerified} · API 지원조건 ${pilot.structured} · 자동 규칙(검수 대기열) ${pilot.autoRules} · 규칙 없음 ${pilot.noRule}`,
+    `- 전국 공통 사업 중 큐레이션 규칙: ${nationalCurated} · API 지원조건 규칙: ${nationalStructured}`,
     missingCurated.length ? `- ⚠ 원천에서 찾지 못한 큐레이션 키: ${missingCurated.join(", ")}` : "",
     "",
     "## 읍면동 단독 사업으로 제외한 예",

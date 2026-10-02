@@ -21,7 +21,7 @@ export function lifecycleCond(tags: string[]): Cond | null {
   else {
     if (t.has("청년")) parts.push(age(19, 39, "청년(만 19~39세 기준)"));
     if (t.has("중장년")) parts.push(age(40, 64, "중장년(만 40~64세)"));
-    if (t.has("노년")) parts.push(age(60, undefined, "노년(만 60세 이상)"));
+    if (t.has("노년")) parts.push(age(65, undefined, "노년(만 65세 이상)"));
   }
   if (parts.length === 0) return null;
   return parts.length === 1 ? parts[0] : any(`복지로 생애주기(${[...t].join("·")})`, ...parts);
