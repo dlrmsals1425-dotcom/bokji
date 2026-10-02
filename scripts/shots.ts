@@ -25,6 +25,7 @@ async function main() {
   await page.goto(BASE + "/");
   await page.waitForLoadState("networkidle");
   await page.screenshot({ path: `${OUT}/01-home-desktop.png` });
+  await page.screenshot({ path: `${OUT}/home.png`, fullPage: true });
 
   // 입력: 2단계(나와 가구)에 선택값이 보이는 상태
   await page.goto(BASE + "/check");
@@ -47,6 +48,7 @@ async function main() {
   await page.getByTestId("reasons").waitFor();
   await page.screenshot({ path: `${OUT}/04-detail-desktop.png` });
   await page.screenshot({ path: `${OUT}/04b-detail-desktop-full.png`, fullPage: true });
+  await page.screenshot({ path: `${OUT}/detail.png`, fullPage: true });
 
   // 통합돌봄 출처(신청처 정보 없음 → 대체 안내) 상세
   await page.goto(BASE + "/p/g41110.icare-0085-1489588-1-1-30");
@@ -60,6 +62,7 @@ async function main() {
     await t.goto(`${BASE}/results?example=${ps.id}`);
     await t.getByTestId("top-picks").waitFor();
     await t.getByTestId("result-list").getByTestId("program-card").first().waitFor();
+    await t.waitForLoadState("networkidle");
     await t.evaluate(() => window.scrollTo(0, 0));
     await t.screenshot({ path: `${OUT}/scenario-${ps.id}.png` });
   }
@@ -91,8 +94,10 @@ async function main() {
   await m.goto(BASE + "/");
   await m.waitForLoadState("networkidle");
   await m.screenshot({ path: `${OUT}/07-home-mobile.png` });
+  await m.screenshot({ path: `${OUT}/home-mobile.png`, fullPage: true });
   await m.goto(`${BASE}/results?example=bucheon-disability`);
   await m.getByTestId("top-picks").waitFor();
+  await m.waitForLoadState("networkidle");
   await m.evaluate(() => window.scrollTo(0, 0));
   await m.screenshot({ path: `${OUT}/scenario-bucheon-disability-mobile.png` });
 
