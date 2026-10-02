@@ -136,7 +136,7 @@ describe("기관·시설 운영 지원 숨김 + 추천 5개 계열 중복 줄이
   const base = { tier: "eligible" as const, category: null, org: null, q: "" };
   it("계열 키: 일반어·괄호를 빼고 비교, 4자 이상 앞부분 일치도 같은 계열", () => {
     expect(familyKey("양육비 이행 원스톱 종합서비스")).toBe(familyKey("양육비 이행 지원 서비스"));
-    expect(sameFamily(familyKey("구직자 취업지원 서비스 제공"), familyKey("구직자 취업역량강화 프로그램"))).toBe(true);
+    expect(sameFamily(familyKey("구직자 취업지원 서비스 제공"), familyKey("구직자 취업역량강화 프로그램"))).toBe(false);
     expect(sameFamily(familyKey("기초연금"), familyKey("기초생활보장 생계급여"))).toBe(false);
     expect(sameFamily(familyKey("청년월세 지원"), familyKey("청년내일저축계좌"))).toBe(false);
   });
@@ -156,6 +156,32 @@ describe("기관·시설 운영 지원 숨김 + 추천 5개 계열 중복 줄이
     const on = { ...base, includeOperator: true };
     const appeared = groupVariants(applyFilters(sc, on)).length + autoGroups(sc, on).length - (groupVariants(applyFilters(sc, base)).length + autoGroups(sc, base).length);
     expect(appeared).toBe(n);
+  });
+});
+
+describe("추천 5개: 넓은 조건만 맞은 사업보다 내 상황을 콕 집은 사업", () => {
+  const YOUTH = { field: "age", min: 18, label: "만 18세 이상" } as const;
+  const SEEK = { field: "activity", anyOf: ["job_seeking"], label: "구직 중" } as const;
+  const both = (): Rule["logic"] => ({ all: [{ ...YOUTH }, { ...SEEK }] } as Rule["logic"]);
+  const items: Program[] = [
+    prog("가나 산림 일자리 제공", { target: "신청일 현재 만18세 이상인 자", rule: rule("j1", "structured", both()) }),
+    prog("가다 해설사 일자리", { target: "만 18세 이상 도민", rule: rule("j2", "structured", both()) }),
+    prog("구직자 취업지원 서비스 제공", { target: "취업을 원하는 구직자", rule: rule("j3", "structured", both()) }),
+    prog("청년 면접수당", { target: "만 19~39세 청년 구직자", rule: rule("j4", "structured", both()) }),
+  ];
+  const youth: Profile = { ...EMPTY_PROFILE, sido: "41000", sigungu: "41280", age: "25-29", activity: "job_seeking" };
+  const sc = scoreAll(items, youth);
+  it("청년 구직자: 대상이 '구직자·청년'인 사업은 specific, '만 18세 이상'만인 공공 일자리는 아님", () => {
+    const sp = Object.fromEntries(sc.map((s) => [s.program.id, s.specific]));
+    expect(sp).toEqual({ "가나 산림 일자리 제공": false, "가다 해설사 일자리": false, "구직자 취업지원 서비스 제공": true, "청년 면접수당": true });
+  });
+  it("추천은 specific 먼저, 모자라면 넓은 조건 사업으로 채움", () => {
+    const top2 = topPicks(sc, {}, 2).map((g) => g.lead.program.id).sort();
+    expect(top2).toEqual(["구직자 취업지원 서비스 제공", "청년 면접수당"].sort());
+    expect(topPicks(sc, {}, 4)).toHaveLength(4);
+  });
+  it("특별한 상황을 입력하지 않았으면 모두 자격 있음", () => {
+    expect(scoreAll(items, { ...EMPTY_PROFILE, sido: "41000" }).every((s) => s.specific)).toBe(true);
   });
 });
 

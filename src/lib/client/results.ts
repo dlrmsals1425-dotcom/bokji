@@ -12,6 +12,8 @@ export interface Scored {
   score: number;
   /** 지역 변형 묶음 키 (같은 이름의 시도·시군구·구 사업을 한 카드로) */
   group: string;
+  /** 내 특별한 상황(구직·청년·장애·한부모·수급 등)을 콕 집어 맞은 사업인지 — 추천 5개 자격 */
+  specific?: boolean;
 }
 
 /* ---------------- 관련도 ---------------- */
@@ -74,6 +76,39 @@ function hasSalient(pr: Profile): boolean {
     pr.children?.some((c) => c !== "19+") || pr.activity === "job_seeking" || (pr.age !== "unknown" && ageRange(pr.age)[0] >= 65));
 }
 
+/**
+ * 추천 5개 자격: 넓은 조건(나이·근로 상태·거주)만 맞은 사업이 아니라 내 특별한 상황을 콕 집은 사업인지.
+ *  - 상황 항목(수급·돌봄·장애·가구 특성·자녀·주거)으로 맞았거나, 65세 이상이 나이로 맞았거나, 장애 가구원 대리 신청
+ *  - 또는 이름·대상 문구 앞부분이 내 집단(청년·구직자·어르신·장애인·한부모·아동·저소득·1인 가구·월세·돌봄 등)을 직접 가리킴
+ * 예) 청년 구직자에게 '구직자 취업지원 서비스'(대상: 구직자)는 해당, '산림보호지원단 일자리'(대상: 만 18세 이상)는 해당 없음
+ */
+export function specificMatch(p: Program, ev: Evaluation, pr: Profile): boolean {
+  if (!hasSalient(pr)) return true;
+  const met = ev.reasons.filter((r) => r.kind === "met");
+  const age = pr.age === "unknown" ? null : ageRange(pr.age);
+  const senior = !!age && age[0] >= 65;
+  if (met.some((r) => SALIENT.has(r.field ?? "") || (senior && r.field === "age"))) return true;
+  if (ev.reasons.some((r) => r.kind === "unknown" && r.field === "disability")) return true;
+  const text = `${p.name} ${(p.target ?? "").slice(0, 80)}`;
+  const kids = pr.children ?? [];
+  const groups: [boolean, RegExp][] = [
+    [!!age && age[0] >= 19 && age[1] <= 39, /청년/],
+    [pr.activity === "job_seeking", /(구직|미취업|실업)/],
+    [senior, /(노인|어르신|65세|고령)/],
+    [pr.disability !== "unknown" && pr.disability !== "none", /장애/],
+    [!!pr.traits?.includes("single_parent"), /(한부모|조손|미혼모|미혼부)/],
+    [!!pr.traits?.includes("multicultural"), /(다문화|결혼이민)/],
+    [!!pr.traits?.includes("veteran"), /(보훈|국가유공|참전)/],
+    [!!pr.traits?.includes("multi_child"), /(다자녀|셋째)/],
+    [kids.some((k) => k !== "19+"), /(아동|영유아|유아|자녀|양육|출산|임신|임산부)/],
+    [!!pr.benefits?.length || (pr.income !== "unknown" && Number(pr.income) <= 50), /(저소득|수급|차상위|취약계층)/],
+    [pr.householdSize === 1 || !!pr.traits?.includes("single"), /(1인\s*가구|독거|홀몸)/],
+    [["monthly", "jeonse", "public_rental"].includes(pr.housing), /(월세|전세|임차|주거비)/],
+    [!!pr.care?.length, /(돌봄|간병|요양)/],
+  ];
+  return groups.some(([on, re]) => on && re.test(text));
+}
+
 export function relevance(p: Program, ev: Evaluation, pr: Profile): number {
   const met = ev.reasons.filter((r) => r.kind === "met");
   const metW = met.reduce((n, r) => n + (FIELD_WEIGHT[r.field ?? ""] ?? 1), 0);
@@ -116,11 +151,9 @@ export function familyKey(name: string): string {
     .replace(/(원스톱|종합|지원|서비스|사업|제공|프로그램|운영|및|등)/g, "");
   return k || variantKey(name);
 }
-/** 같은 계열인지: 핵심 이름이 같거나, 4자 이상인 한쪽이 다른 쪽의 앞부분 (구직자취업 ⊂ 구직자취업역량강화) */
+/** 같은 계열인지: 핵심 이름이 같을 때만 (앞부분만 같은 '구직자 취업지원'·'구직자 취업역량강화'는 다른 사업으로 본다) */
 export function sameFamily(a: string, b: string): boolean {
-  if (a === b) return true;
-  const [s, l] = a.length <= b.length ? [a, b] : [b, a];
-  return s.length >= 4 && l.startsWith(s);
+  return a === b;
 }
 
 export function scoreAll(programs: Program[], profile: Profile): Scored[] {
@@ -131,6 +164,7 @@ export function scoreAll(programs: Program[], profile: Profile): Scored[] {
       met: ev.reasons.filter((r) => r.kind === "met").length,
       score: relevance(program, ev, profile),
       group: variantKey(program.name),
+      specific: specificMatch(program, ev, profile),
     };
   });
   out.sort((a, b) => b.score - a.score || a.program.name.localeCompare(b.program.name, "ko"));
@@ -295,14 +329,21 @@ export function topPicks(items: Scored[], f: Pick<Filters, "includeEdu" | "inclu
   const key = (s: Scored) => s.score + (s.ev.tier === "eligible" ? 2 : 0);
   const sorted = [...pool].sort((a, b) => key(b) - key(a) || a.program.name.localeCompare(b.program.name, "ko"));
   // 같은 계열(양육비 이행 원스톱 / 양육비 이행 지원 서비스 등)은 추천 5개에 하나만 — 높은 쪽을 남기고 다음 다른 사업이 자리를 채운다 (탭 목록은 그대로)
+  // 내 특별한 상황을 콕 집은 사업(specific)을 먼저 채우고, 모자라면 넓은 조건만 맞은 사업으로 채운다
   const out: Group[] = [];
   const fams: string[] = [];
-  for (const g of groupVariants(sorted)) {
-    const fk = familyKey(g.lead.program.name);
-    if (fams.some((x) => sameFamily(x, fk))) continue;
-    fams.push(fk);
-    out.push(g);
-    if (out.length >= n) break;
+  const groups = groupVariants(sorted);
+  for (const pass of [true, false]) {
+    for (const g of groups) {
+      if (out.length >= n) break;
+      if (pass && g.lead.specific === false) continue;
+      if (out.includes(g)) continue;
+      const fk = familyKey(g.lead.program.name);
+      if (fams.some((x) => sameFamily(x, fk))) continue;
+      fams.push(fk);
+      out.push(g);
+    }
   }
-  return out;
+  // 화면 순서는 관련도 순 그대로
+  return out.sort((a, b) => groups.indexOf(a) - groups.indexOf(b));
 }
