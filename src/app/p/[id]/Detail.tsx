@@ -233,7 +233,9 @@ export function Detail({ id }: { id: string }) {
                   <br />
                   {p.scope === "national"
                     ? "주소지 읍면동 행정복지센터(주민센터) 또는 시군구청 담당 부서에 문의하세요."
-                    : `${placeLabel} 시군구청 담당 부서 또는 주소지 읍면동 행정복지센터에 문의하세요.`}
+                    : p.scope === "sigungu"
+                      ? `${placeLabel.split(" ").pop()}청 담당 부서 또는 주소지 읍면동 행정복지센터에 문의하세요.`
+                      : `${placeLabel} 시·도청 담당 부서, 주소지 시군구청 또는 읍면동 행정복지센터에 문의하세요.`}
                   <br />
                   보건복지상담센터 ☎ 129 · 정부민원안내 ☎ 110
                 </p>
