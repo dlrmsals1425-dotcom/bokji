@@ -41,7 +41,7 @@ export type SourceId = "gov24" | "bokjiro" | "welfare100" | "icare";
 
 export const SOURCE_LABEL: Record<SourceId, string> = {
   gov24: "정부24 공공서비스(혜택) 정보 (행정안전부)",
-  bokjiro: "복지로 복지서비스 색인 (한국사회보장정보원)",
+  bokjiro: "복지로 복지서비스 정보 (한국사회보장정보원 OpenAPI)",
   welfare100: "복지로 기반 핵심 복지 100선 요약",
   icare: "보건복지부 통합돌봄 지방정부 서비스 메뉴판",
 };
@@ -76,6 +76,9 @@ export interface LocalOperation {
   target?: string;
   url?: string;
   updatedAt?: string;
+  contact?: string;
+  applyMethod?: string;
+  source?: SourceId;
 }
 
 export interface Program {

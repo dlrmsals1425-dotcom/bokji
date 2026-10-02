@@ -76,6 +76,8 @@ p { margin: 0; }
 .badge.tier-ineligible { background: var(--no-bg); color: var(--no); }
 .badge.org { background: #f1f3f8; color: var(--ink-2); font-weight: 600; }
 .badge.reviewed { background: #efe7ff; color: #5b2bb5; }
+.badge.api { background: #e0f4f1; color: #0b5e55; }
+.badge.edu { background: #fdeaf3; color: #8a1d55; }
 .badge.trust { background: #e9f4ff; color: #0b4f8a; font-weight: 600; }
 .badge.warn { background: var(--accent-soft); color: #6b4a00; }
 .badges { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }

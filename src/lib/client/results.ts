@@ -10,7 +10,7 @@ export interface Scored {
   met: number;
 }
 
-const REVIEW_RANK = { verified: 0, curated: 1, auto: 2 } as const;
+const REVIEW_RANK = { verified: 0, curated: 1, structured: 2, auto: 3 } as const;
 const SCOPE_RANK = { sigungu: 0, sido: 1, national: 2 } as const;
 
 export function scoreAll(programs: Program[], profile: Profile): Scored[] {
@@ -33,7 +33,11 @@ export interface Filters {
   category: Category | null;
   org: OrgType | null;
   q: string;
+  /** 교육청 서비스 포함 여부 (기본 숨김 — 노출 범위는 운영자 결정 대기) */
+  includeEdu?: boolean;
 }
+
+const eduHidden = (p: Program, f: Filters) => p.orgType === "edu_office" && !f.includeEdu && f.org !== "edu_office";
 
 export function normalizeQuery(s: string): string {
   return s.replace(/\s+/g, "").toLowerCase();
@@ -55,7 +59,7 @@ export function facetCounts(items: Scored[], f: Filters) {
   const orgs = new Map<OrgType, number>();
   for (const s of items) {
     const p = s.program;
-    if (!matchesQuery(p, f.q)) continue;
+    if (!matchesQuery(p, f.q) || eduHidden(p, f)) continue;
     const okCat = !f.category || p.category === f.category;
     const okOrg = !f.org || p.orgType === f.org;
     const okTier = s.ev.tier === f.tier;
@@ -70,8 +74,14 @@ export function applyFilters(items: Scored[], f: Filters): Scored[] {
   return items.filter(
     (s) =>
       s.ev.tier === f.tier &&
+      !eduHidden(s.program, f) &&
       (!f.category || s.program.category === f.category) &&
       (!f.org || s.program.orgType === f.org) &&
       matchesQuery(s.program, f.q),
   );
+}
+
+/** 숨겨진 교육청 서비스 수 (현재 탭·검색어 기준) */
+export function eduCount(items: Scored[], f: Filters): number {
+  return items.filter((s) => s.program.orgType === "edu_office" && s.ev.tier === f.tier && matchesQuery(s.program, f.q)).length;
 }

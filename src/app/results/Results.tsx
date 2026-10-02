@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { ProgramCard } from "@/components/ProgramCard";
 import { clearProfile, useProfile } from "@/lib/client/storage";
 import { loadForRegion, type Loaded } from "@/lib/client/bundles";
-import { applyFilters, facetCounts, scoreAll, type Filters } from "@/lib/client/results";
+import { applyFilters, eduCount, facetCounts, scoreAll, type Filters } from "@/lib/client/results";
 import { profileChips } from "@/lib/client/summary";
 import { CATEGORIES, ORG_TYPE_LABEL, type Category, type OrgType } from "@/lib/data/types";
 import { TIER_LABEL, type Tier } from "@/lib/engine/types";
@@ -16,7 +16,7 @@ const TABS: { tier: Tier; desc: string }[] = [
   { tier: "likely", desc: "일부 조건 확인 필요" },
   { tier: "check", desc: "상담·원문으로 확인" },
 ];
-const ORGS: OrgType[] = ["central", "metro", "local", "public_inst", "edu_office"];
+const ORGS: OrgType[] = ["central", "metro", "local", "public_inst"];
 const PAGE = 30;
 
 export function Results() {
@@ -58,9 +58,12 @@ function ResultsInner({ profile }: { profile: Profile }) {
   const scored = useMemo(() => (data ? scoreAll(data.programs, profile) : []), [data, profile]);
   const counts = useMemo(() => facetCounts(scored, f), [scored, f]);
   const list = useMemo(() => applyFilters(scored, f), [scored, f]);
+  const edu = useMemo(() => eduCount(scored, f), [scored, f]);
   const total = useMemo(() => {
     const t: Record<Tier, number> = { eligible: 0, likely: 0, check: 0, ineligible: 0 };
-    scored.forEach((s) => t[s.ev.tier]++);
+    scored.forEach((s) => {
+      if (s.program.orgType !== "edu_office") t[s.ev.tier]++;
+    });
     return t;
   }, [scored]);
 
@@ -212,6 +215,10 @@ function ResultsInner({ profile }: { profile: Profile }) {
               </button>
             ))}
           </div>
+          <label className="small" style={{ display: "flex", gap: 8, alignItems: "center", marginTop: 10, cursor: "pointer" }}>
+            <input type="checkbox" checked={!!f.includeEdu} onChange={(e) => update({ includeEdu: e.target.checked })} data-testid="include-edu" />
+            교육청 서비스도 보기 ({edu.toLocaleString("ko-KR")}개)
+          </label>
           <h3>분야</h3>
           <div className="fchips">
             <button type="button" className="fchip" aria-pressed={!f.category} onClick={() => update({ category: null })}>

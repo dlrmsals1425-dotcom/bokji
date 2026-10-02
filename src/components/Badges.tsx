@@ -30,5 +30,11 @@ export function ReviewBadge({ p }: { p: Program }) {
         ✔ 검수 규칙(1차)
       </span>
     );
+  if (p.rule.review === "structured")
+    return (
+      <span className="badge api" title="공공서비스(혜택) API의 구조화된 지원조건 코드로 판정했어요. 재산 등 세부 요건은 원문에서 확인하세요.">
+        ⚙ API 지원조건
+      </span>
+    );
   return null;
 }

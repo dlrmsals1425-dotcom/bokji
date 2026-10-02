@@ -77,6 +77,15 @@ test.describe("로그인 없는 전체 흐름", () => {
     await page.locator(".filters").getByRole("button", { name: "전체" }).first().click();
     expect(await count("likely")).toBe(l0);
 
+    // 교육청 서비스는 기본 숨김 → 체크하면 개수가 늘어난다
+    await page.getByTestId("tab-likely").click();
+    const beforeEdu = await count("likely");
+    const eduLabel = await page.locator("label", { has: page.getByTestId("include-edu") }).innerText();
+    const eduN = Number(eduLabel.match(/\((\d[\d,]*)개\)/)![1].replace(/,/g, ""));
+    await page.getByTestId("include-edu").check();
+    expect(await count("likely")).toBe(beforeEdu + eduN);
+    await page.getByTestId("include-edu").uncheck();
+
     // 상세
     await page.getByTestId("tab-eligible").click();
     await page.getByTestId("program-card").first().locator("h3 a").click();
@@ -123,6 +132,17 @@ test.describe("로그인 없는 전체 흐름", () => {
     await expect(page.locator("html")).toHaveAttribute("data-large", "1");
     await page.reload();
     await expect(page.locator("html")).toHaveAttribute("data-large", "1");
+  });
+
+  test("상세 페이지: API 신청방법·연락처와 출처(정부24·복지로) 표시 @mobile", async ({ page }) => {
+    await page.goto("/p/n.gov24-SSE000000170");
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("기초연금");
+    await expect(page.getByText("신청 방법", { exact: true })).toBeVisible();
+    await expect(page.locator("#h-apply").locator("..")).toContainText("129");
+    await expect(page.getByTestId("apply-fallback")).toHaveCount(0);
+    await expect(page.getByTestId("sources")).toContainText("정부24 공공서비스");
+    await expect(page.getByTestId("sources")).toContainText("복지로 복지서비스 정보");
+    await expect(page.getByText("검수 규칙(1차)").first()).toBeVisible();
   });
 
   test("상세 페이지: 신청처 정보가 없으면 주민센터·시군구청 안내로 대체 @mobile", async ({ page }) => {

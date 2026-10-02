@@ -243,7 +243,7 @@ function dedupeReasons(rs: Reason[]): Reason[] {
 /* ---------------- 최종 판정 (설계서 6.1·6.2) ---------------- */
 
 export function isApproved(rule: Rule): boolean {
-  return rule.review === "verified" || rule.review === "curated";
+  return rule.review === "verified" || rule.review === "curated" || rule.review === "structured";
 }
 
 export function evaluateRule(rule: Rule, p: Profile): Evaluation {

@@ -82,6 +82,7 @@ export function Detail({ id }: { id: string }) {
         <OrgBadge p={p} />
         <span className="badge org">{p.category}</span>
         <ReviewBadge p={p} />
+        {p.orgType === "edu_office" && <span className="badge edu">교육청 서비스</span>}
         <span className="badge trust">신뢰도 {p.trust}</span>
       </div>
       <h1>{p.name}</h1>
@@ -129,19 +130,25 @@ export function Detail({ id }: { id: string }) {
               {p.target && (
                 <>
                   <dt>지원 대상</dt>
-                  <dd>{p.target}</dd>
+                  <dd>
+                    <LongText text={p.target} />
+                  </dd>
                 </>
               )}
               {p.criteria && (
                 <>
                   <dt>선정 기준</dt>
-                  <dd>{p.criteria}</dd>
+                  <dd>
+                    <LongText text={p.criteria} />
+                  </dd>
                 </>
               )}
               {p.benefit && (
                 <>
                   <dt>지원 내용</dt>
-                  <dd>{p.benefit}</dd>
+                  <dd>
+                    <LongText text={p.benefit} />
+                  </dd>
                 </>
               )}
               {p.provision?.length ? (
@@ -153,13 +160,17 @@ export function Detail({ id }: { id: string }) {
               {p.applyMethod && (
                 <>
                   <dt>신청 방법</dt>
-                  <dd>{p.applyMethod}</dd>
+                  <dd>
+                    <LongText text={p.applyMethod} />
+                  </dd>
                 </>
               )}
               {p.documents && (
                 <>
                   <dt>구비 서류</dt>
-                  <dd>{p.documents}</dd>
+                  <dd>
+                    <LongText text={p.documents} />
+                  </dd>
                 </>
               )}
               {p.deadline && (
@@ -193,7 +204,17 @@ export function Detail({ id }: { id: string }) {
                     <strong>{o.name}</strong>
                     {o.provider && <div className="small">운영: {o.provider}</div>}
                     {o.description && <div className="small muted">{o.description}</div>}
-                    {o.updatedAt && <div className="small muted">원문 기준일 {o.updatedAt} · 보건복지부 통합돌봄 메뉴판</div>}
+                    {o.contact && <div className="small">문의: {o.contact}</div>}
+                    {o.applyMethod && <div className="small textblock">신청: {o.applyMethod.length > 200 ? o.applyMethod.slice(0, 199) + "…" : o.applyMethod}</div>}
+                    {o.url && (
+                      <a className="small" href={o.url} target="_blank" rel="noopener noreferrer">
+                        원문 ↗
+                      </a>
+                    )}
+                    <div className="small muted">
+                      {o.updatedAt ? `원문 기준일 ${o.updatedAt} · ` : ""}
+                      {o.source ? SOURCE_LABEL[o.source] : SOURCE_LABEL.icare}
+                    </div>
                   </li>
                 ))}
               </ul>
@@ -244,7 +265,7 @@ export function Detail({ id }: { id: string }) {
             <div className="btn-row" style={{ marginTop: 14, flexDirection: "column" }}>
               {p.applyUrl && (
                 <a href={p.applyUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
-                  온라인 신청 페이지 열기 ↗
+                  온라인 신청·관련 누리집 ↗
                 </a>
               )}
               {p.url ? (
@@ -312,6 +333,10 @@ function RuleNote({ p }: { p: Program }) {
   if (r.review === "verified") text = `검수 규칙 · ${r.reviewer ?? "검수자"} ${r.reviewedAt ?? ""}`;
   else if (r.review === "curated")
     text = "검수 규칙(1차) · 원문 근거 구절과 대조해 작성했고(AI 보조), 최종 사람 검수는 진행 중이에요.";
+  else if (r.review === "structured")
+    text = "API 지원조건 · 공공서비스(혜택) API의 구조화된 지원조건 코드(나이·소득 구간·대상 특성·가구 유형)로 판정했어요. 재산 등 세부 요건과 원문 문구에서 보완한 조건은 신청처에서 확인하세요.";
+  else if (r.origin === "gov24_conditions")
+    text = "API 지원조건(시범 지역 외) · 공공서비스(혜택) API 지원조건 코드로 변환했지만, 시범 지역(경기도)·전국 사업이 아니어서 최대 '가능성 있음'까지만 판정해요.";
   else if (r.origin === "none") text = "아직 구조화된 자격 규칙이 없어요. 원문·신청처에서 확인하세요.";
   else text = "자동 변환 규칙(검수 전) · 원문 문구·분류 태그에서 자동으로 뽑은 조건이라 최대 '가능성 있음'까지만 판정해요.";
   return (
@@ -323,5 +348,19 @@ function RuleNote({ p }: { p: Program }) {
         </p>
       )}
     </div>
+  );
+}
+
+/** 긴 원문은 접어서 보여 준다 */
+function LongText({ text, limit = 280 }: { text: string; limit?: number }) {
+  const [open, setOpen] = useState(false);
+  if (text.length <= limit + 40) return <>{text}</>;
+  return (
+    <>
+      {open ? text : text.slice(0, limit).replace(/\s+\S*$/, "") + "…"}
+      <button type="button" className="btn btn-text btn-sm no-print" aria-expanded={open} onClick={() => setOpen((o) => !o)} style={{ display: "block", padding: "4px 0" }}>
+        {open ? "접기 ▲" : "원문 더 보기 ▼"}
+      </button>
+    </>
   );
 }
