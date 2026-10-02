@@ -38,6 +38,15 @@ async function main() {
   await pick("가구 특성", "1인 가구");
   await page.evaluate(() => window.scrollTo(0, 0));
   await page.screenshot({ path: `${OUT}/02-input-desktop.png` });
+  await page.screenshot({ path: `${OUT}/input-step.png` });
+
+  // 서비스 찾기: 생애주기(어르신) + 관심주제(돌봄) 필터
+  await page.goto(BASE + "/search?life=senior&topic=" + encodeURIComponent("보호·돌봄"));
+  await page.getByTestId("program-card").first().waitFor();
+  await page.waitForLoadState("networkidle");
+  await page.setViewportSize({ width: 1280, height: 1400 });
+  await page.screenshot({ path: `${OUT}/search.png` });
+  await page.setViewportSize({ width: 1280, height: 800 });
 
   await seed(page);
   await page.goto(BASE + "/results");
