@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { applyFilters, facetCounts, groupVariants, industryCount, matchesQuery, scoreAll, topPicks, variantKey } from "@/lib/client/results";
+import { applyFilters, autoGroups, facetCounts, groupVariants, industryCount, matchesQuery, scoreAll, topPicks, variantKey } from "@/lib/client/results";
 import { profileChips } from "@/lib/client/summary";
 import { EMPTY_PROFILE, type Profile } from "@/lib/engine/profile";
 import type { Program } from "@/lib/data/types";
@@ -80,6 +80,46 @@ describe("지역 변형 묶음·숨김 필터·추천", () => {
     expect(top[0].lead.program.id).toBe("노인 돌봄");
     expect(top.map((g) => g.lead.program.sector).filter(Boolean)).toHaveLength(0);
     expect(top).toHaveLength(2);
+  });
+});
+
+describe("신청 유형: 자동 제공·기관 선정은 본문·추천에서 빼고 아래 접힌 영역으로", () => {
+  const items: Program[] = [
+    prog("기초연금", { applyType: "self", rule: rule("s1", "curated", SENIOR) }),
+    prog("노인 돌봄", { category: "보호·돌봄", rule: rule("s2", "curated", SENIOR) }), // unknown → 본문에 그대로
+    prog("저소득 건강보험료 지원", { applyType: "auto", rule: rule("a1", "curated", SENIOR) }),
+    prog("수원시 명절 위문금", { applyType: "auto", orgType: "local", scope: "sigungu", rule: rule("a2", "auto", SENIOR) }),
+    prog("경기도 명절 위문금", { applyType: "auto", orgType: "metro", scope: "sido", rule: rule("a3", "auto", SENIOR) }),
+    prog("경로당 운영 지원", { applyType: "institution", category: "보호·돌봄", rule: rule("i1", "auto", SENIOR) }),
+    prog("청년 자동지급", { applyType: "auto", rule: rule("a4", "curated", { field: "age", min: 19, max: 34, label: "19~34세" }) }),
+    prog("농가 자동지원", { applyType: "auto", sector: "agri", rule: rule("a5", "auto", SENIOR) }),
+  ];
+  const sc = scoreAll(items, P);
+  const base = { tier: "eligible" as const, category: null, org: null, q: "" };
+  it("탭 개수와 목록에는 직접 신청·확인 필요만", () => {
+    for (const tier of ["eligible", "likely", "check"] as const) {
+      const f = { ...base, tier };
+      const groups = groupVariants(applyFilters(sc, f));
+      expect(facetCounts(sc, f).tiers[tier]).toBe(groups.length);
+      expect(groups.every((g) => g.variants.every((v) => !v.program.applyType || v.program.applyType === "self" || v.program.applyType === "unknown"))).toBe(true);
+    }
+    expect(applyFilters(sc, base).map((s) => s.program.id).sort()).toEqual(["기초연금", "노인 돌봄"].sort());
+  });
+  it("맞춤 추천에서도 제외", () => {
+    expect(topPicks(sc, {}, 5).map((g) => g.lead.program.id).sort()).toEqual(["기초연금", "노인 돌봄"].sort());
+  });
+  it("자동 영역: 해당 없음·기본 숨김(농림)·무관한 사업 제외, 지역 변형은 한 묶음, 분야 필터 반영", () => {
+    const autos = autoGroups(sc, base);
+    const ids = autos.map((g) => g.lead.program.id);
+    expect(ids).not.toContain("청년 자동지급");
+    expect(ids).not.toContain("농가 자동지원");
+    expect(autos).toHaveLength(3);
+    expect(autos.find((g) => g.variants.length === 1)).toBeTruthy();
+    expect(autoGroups(sc, { ...base, category: "보호·돌봄" }).map((g) => g.lead.program.id)).toEqual(["경로당 운영 지원"]);
+    // 관련도 0 이하(내 상황과 무관한 사업)는 자동 영역에도 넣지 않는다
+    expect(autos.every((g) => g.lead.score > 0)).toBe(true);
+    const unrelated = scoreAll([prog("교원 직무연수", { applyType: "institution", category: "보육" })], P);
+    expect(autoGroups(unrelated, base)).toHaveLength(unrelated[0].score > 0 ? 1 : 0);
   });
 });
 

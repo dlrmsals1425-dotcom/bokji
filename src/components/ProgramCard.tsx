@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Program } from "@/lib/data/types";
 import type { Evaluation, Reason } from "@/lib/engine/types";
-import { OrgBadge, ReviewBadge, SectorBadge, TierBadge } from "./Badges";
+import { ApplyBadge, OrgBadge, ReviewBadge, SectorBadge, TierBadge } from "./Badges";
 
 export interface Variant {
   p: Program;
@@ -49,6 +49,7 @@ export function ProgramCard({ p, ev, variants, rank }: { p: Program; ev?: Evalua
     <article className={`card pcard ${ev ? `t-${ev.tier}` : ""}`} data-testid="program-card">
       <div className="badges">
         {ev && <TierBadge tier={ev.tier} />}
+        <ApplyBadge p={p} />
         <OrgBadge p={p} />
         <span className="badge org">{p.category}</span>
         <ReviewBadge p={p} />

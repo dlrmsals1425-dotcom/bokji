@@ -2,7 +2,7 @@
 import { evaluateRule } from "../engine/evaluate";
 import { ageRange, type Profile } from "../engine/profile";
 import type { Evaluation, Tier } from "../engine/types";
-import type { Category, OrgType, Program } from "../data/types";
+import { isAutoLike, type Category, type OrgType, type Program } from "../data/types";
 
 export interface Scored {
   program: Program;
@@ -133,10 +133,14 @@ export interface Filters {
   includeIndustry?: boolean;
 }
 
+/** 자동 제공·기관 선정 사업: 추천·탭 목록에서는 빼고 '자동으로 받는 혜택' 접힌 영역에만 (운영자 방향 2026-10-02) */
+export const autoLike = (p: Program) => isAutoLike(p);
 const eduHidden = (p: Program, f: Filters) => p.orgType === "edu_office" && !f.includeEdu && f.org !== "edu_office";
 const industryHidden = (p: Program, f: Filters) => !!p.sector && !f.includeIndustry;
 /** 기본 숨김 대상인지 (교육청·복지 외 분야) */
 export const hiddenByDefault = (p: Program, f: Filters) => eduHidden(p, f) || industryHidden(p, f);
+/** 본문(추천·탭 목록)에 보이지 않는 사업: 기본 숨김 + 자동 제공·기관 선정 */
+const offMain = (p: Program, f: Filters) => autoLike(p) || hiddenByDefault(p, f);
 
 export function normalizeQuery(s: string): string {
   return s.replace(/\s+/g, "").toLowerCase();
@@ -166,7 +170,7 @@ export function facetCounts(items: Scored[], f: Filters) {
   };
   for (const s of items) {
     const p = s.program;
-    if (!matchesQuery(p, f.q) || hiddenByDefault(p, f)) continue;
+    if (!matchesQuery(p, f.q) || offMain(p, f)) continue;
     const okCat = !f.category || p.category === f.category;
     const okOrg = !f.org || p.orgType === f.org;
     const okTier = s.ev.tier === f.tier;
@@ -186,7 +190,7 @@ export function applyFilters(items: Scored[], f: Filters): Scored[] {
   return items.filter(
     (s) =>
       s.ev.tier === f.tier &&
-      !hiddenByDefault(s.program, f) &&
+      !offMain(s.program, f) &&
       (!f.category || s.program.category === f.category) &&
       (!f.org || s.program.orgType === f.org) &&
       matchesQuery(s.program, f.q),
@@ -218,18 +222,42 @@ export function groupVariants(list: Scored[]): Group[] {
 
 /** 숨겨진 교육청 서비스 묶음 수 (현재 탭·검색어 기준) */
 export function eduCount(items: Scored[], f: Filters): number {
-  return new Set(items.filter((s) => s.program.orgType === "edu_office" && s.ev.tier === f.tier && matchesQuery(s.program, f.q) && !industryHidden(s.program, f)).map((s) => s.group)).size;
+  return new Set(items.filter((s) => s.program.orgType === "edu_office" && !autoLike(s.program) && s.ev.tier === f.tier && matchesQuery(s.program, f.q) && !industryHidden(s.program, f)).map((s) => s.group)).size;
 }
 
 /** 숨겨진 복지 외 분야(농림·사업자) 묶음 수 (현재 탭·검색어 기준) */
 export function industryCount(items: Scored[], f: Filters): number {
-  return new Set(items.filter((s) => !!s.program.sector && s.ev.tier === f.tier && matchesQuery(s.program, f.q) && !eduHidden(s.program, f)).map((s) => s.group)).size;
+  return new Set(items.filter((s) => !!s.program.sector && !autoLike(s.program) && s.ev.tier === f.tier && matchesQuery(s.program, f.q) && !eduHidden(s.program, f)).map((s) => s.group)).size;
+}
+
+const TIER_RANK: Record<Tier, number> = { eligible: 0, likely: 1, check: 2, ineligible: 3 };
+
+/**
+ * '자동으로 받는 혜택' 영역: 자동 제공·기관 선정 사업 중 조건이 맞지 않는 것을 뺀 묶음 (판정 단계 → 관련도 순).
+ * 분야·기관·검색어·기본 숨김(교육청·복지 외 분야) 필터는 본문과 똑같이 적용한다. 개수 = 화면 카드(묶음) 수.
+ */
+export function autoGroups(items: Scored[], f: Filters): Group[] {
+  const list = items.filter(
+    (s) =>
+      autoLike(s.program) &&
+      s.ev.tier !== "ineligible" &&
+      // 직접 신청할 일이 없는 보조 안내라서 내 상황과 관련 있는 것(관련도 > 0)만 — 교원 연수·기관 운영비 같은 무관한 항목 제외
+      s.score > 0 &&
+      !hiddenByDefault(s.program, f) &&
+      (!f.category || s.program.category === f.category) &&
+      (!f.org || s.program.orgType === f.org) &&
+      matchesQuery(s.program, f.q),
+  );
+  // 추천과 같은 기준(관련도 + 조건 충족 가산점)으로 정렬하고, 같은 점수면 판정 단계 순
+  const key = (s: Scored) => s.score + (s.ev.tier === "eligible" ? 2 : 0);
+  const sorted = [...list].sort((a, b) => key(b) - key(a) || TIER_RANK[a.ev.tier] - TIER_RANK[b.ev.tier] || a.program.name.localeCompare(b.program.name, "ko"));
+  return groupVariants(sorted);
 }
 
 /** 맞춤 추천: 조건 충족 → 가능성 있음 순으로 관련도 상위 n개 묶음 (숨김 대상 제외) */
 export function topPicks(items: Scored[], f: Pick<Filters, "includeEdu" | "includeIndustry">, n = 5): Group[] {
   const base: Filters = { tier: "eligible", category: null, org: null, q: "", ...f };
-  const pool = items.filter((s) => (s.ev.tier === "eligible" || s.ev.tier === "likely") && !hiddenByDefault(s.program, base));
+  const pool = items.filter((s) => (s.ev.tier === "eligible" || s.ev.tier === "likely") && !offMain(s.program, base));
   // '조건 충족'에 가산점(+2)을 주되, 관련도가 확실히 높은 '가능성 있음'은 앞설 수 있다
   const key = (s: Scored) => s.score + (s.ev.tier === "eligible" ? 2 : 0);
   const sorted = [...pool].sort((a, b) => key(b) - key(a) || a.program.name.localeCompare(b.program.name, "ko"));

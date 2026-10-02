@@ -6,7 +6,7 @@ import { ProgramCard, ReasonSummary } from "@/components/ProgramCard";
 import { TierBadge } from "@/components/Badges";
 import { clearProfile, saveProfile, useExample, useProfile } from "@/lib/client/storage";
 import { loadForRegion, type Loaded } from "@/lib/client/bundles";
-import { applyFilters, eduCount, facetCounts, groupVariants, industryCount, scoreAll, topPicks, type Filters } from "@/lib/client/results";
+import { applyFilters, autoGroups, eduCount, facetCounts, groupVariants, industryCount, scoreAll, topPicks, type Filters } from "@/lib/client/results";
 import { PRESETS } from "@/lib/client/presets";
 import { profileChips } from "@/lib/client/summary";
 import { CATEGORIES, ORG_TYPE_LABEL, type Category, type OrgType } from "@/lib/data/types";
@@ -74,6 +74,8 @@ function ResultsInner({ profile }: { profile: Profile }) {
   const preset = PRESETS.find((x) => x.id === example);
   const [toast, setToast] = useState<string | null>(null);
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [autoOpen, setAutoOpen] = useState(false);
+  const [autoLimit, setAutoLimit] = useState(FIRST);
 
   useEffect(() => {
     let alive = true;
@@ -88,6 +90,8 @@ function ResultsInner({ profile }: { profile: Profile }) {
   const groups = useMemo(() => groupVariants(applyFilters(scored, f)), [scored, f]);
   const edu = useMemo(() => eduCount(scored, f), [scored, f]);
   const industry = useMemo(() => industryCount(scored, f), [scored, f]);
+  // 자동 제공·기관 선정 사업 (본문에서 빼고 아래 접힌 영역에) — 분야·기관·검색·기본 숨김 필터는 본문과 같게
+  const autos = useMemo(() => autoGroups(scored, f), [scored, f]);
   // 머리글 합계: 분야·기관·검색 필터는 빼고, 기본 숨김(교육청·복지 외 분야) 설정만 반영한 카드 수
   const total = useMemo(
     () => facetCounts(scored, { tier: "eligible", category: null, org: null, q: "", includeEdu: f.includeEdu, includeIndustry: f.includeIndustry }).tiers,
@@ -98,6 +102,7 @@ function ResultsInner({ profile }: { profile: Profile }) {
   const update = (patch: Partial<Filters>) => {
     setF((prev) => ({ ...prev, ...patch }));
     setLimit(FIRST);
+    setAutoLimit(FIRST);
   };
 
   // 처음 열었을 때 '조건 충족'이 0개면 '가능성 있음' 탭부터 보여준다
@@ -309,6 +314,7 @@ function ResultsInner({ profile }: { profile: Profile }) {
           </div>
         </aside>
 
+        <div className="results-main">
         <section id="result-list" data-testid="result-list" role="tabpanel" aria-label={TIER_LABEL[f.tier]}>
           <div className="list-head">
             <p className="small" aria-live="polite">
@@ -363,11 +369,51 @@ function ResultsInner({ profile }: { profile: Profile }) {
               </button>
             )}
           </div>
-          <p className="disclaimer">
-            이 결과는 공개된 자격 조건과 입력하신 정보만으로 계산한 안내이며, 실제 선정은 소득·재산 조사 등 기관 심사로 결정됩니다. 검수 전인
-            자동 변환 규칙은 최대 &lsquo;가능성 있음&rsquo;까지만 판정합니다.
-          </p>
         </section>
+        {autos.length > 0 && (
+          <details
+            className="auto-section"
+            data-testid="auto-section"
+            open={autoOpen}
+            onToggle={(e) => setAutoOpen((e.currentTarget as HTMLDetailsElement).open)}
+          >
+            <summary data-testid="auto-toggle">
+              <span className="t">
+                <span aria-hidden="true">🔄</span> 자동으로 받는 혜택
+              </span>
+              <span className="s">(따로 신청하지 않아도 되는 경우가 많아요)</span>
+              <span className="c">
+                <span data-testid="auto-count">{autos.length.toLocaleString("ko-KR")}</span>개 <span className="chev" aria-hidden="true">▼</span>
+              </span>
+            </summary>
+            {autoOpen && (
+              <div className="auto-body">
+                <p className="small muted">
+                  대상이 되면 기관이 자동으로 지급·연계하거나(공단 명단 통보, 수급자 선정 시 연계, 담당 공무원 직권 처리), 학교·시설·기관이 추천·선정하는
+                  서비스예요. 해당될 것 같은데 받고 있지 않다면 주민센터나 ☎129에 확인해 보세요.
+                </p>
+                <div className="list">
+                  {autos.slice(0, autoLimit).map((g) => (
+                    <ProgramCard key={g.key} p={g.lead.program} ev={g.lead.ev} variants={g.variants.map((v) => ({ p: v.program, ev: v.ev }))} />
+                  ))}
+                </div>
+                {autos.length > autoLimit && (
+                  <div style={{ textAlign: "center", marginTop: 16 }} className="no-print">
+                    <button type="button" className="btn btn-ghost" onClick={() => setAutoLimit((l) => l + PAGE)} data-testid="auto-more">
+                      더 보기 ({(autos.length - autoLimit).toLocaleString("ko-KR")}개 남음)
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+          </details>
+        )}
+        <p className="disclaimer">
+          이 결과는 공개된 자격 조건과 입력하신 정보만으로 계산한 안내이며, 실제 선정은 소득·재산 조사 등 기관 심사로 결정됩니다. 검수 전인
+          자동 변환 규칙은 최대 &lsquo;가능성 있음&rsquo;까지만 판정합니다. &lsquo;직접 신청&rsquo;·&lsquo;자동 제공&rsquo; 표시는 원문 신청방법 문구로
+          분류한 것이니 정확한 절차는 기관에 확인하세요.
+        </p>
+        </div>
       </div>
       {toast && (
         <div className="toast" role="status">

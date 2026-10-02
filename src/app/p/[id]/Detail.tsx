@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { OrgBadge, ReviewBadge, SectorBadge, TierBadge } from "@/components/Badges";
+import { ApplyBadge, OrgBadge, ReviewBadge, SectorBadge, TierBadge } from "@/components/Badges";
 import { loadLocalOps, loadProgram } from "@/lib/client/bundles";
 import { useProfile } from "@/lib/client/storage";
 import { evaluateRule } from "@/lib/engine/evaluate";
@@ -80,6 +80,7 @@ export function Detail({ id }: { id: string }) {
       </nav>
       <div className="badges" style={{ marginTop: 12 }}>
         {ev && <TierBadge tier={ev.tier} />}
+        <ApplyBadge p={p} />
         <OrgBadge p={p} />
         <span className="badge org">{p.category}</span>
         <ReviewBadge p={p} />
@@ -227,6 +228,27 @@ export function Detail({ id }: { id: string }) {
         <div>
           <section className="card pad dsec" aria-labelledby="h-apply">
             <h2 id="h-apply">📞 신청·문의</h2>
+            {p.applyType && p.applyType !== "unknown" && (
+              <p className={`info small ${p.applyType === "self" ? "" : "warn"}`} style={{ marginBottom: 12 }} data-testid="apply-type">
+                <span aria-hidden="true">{p.applyType === "self" ? "✍" : p.applyType === "auto" ? "🔄" : "🏢"}</span>
+                <span>
+                  <strong>
+                    {p.applyType === "self"
+                      ? "직접 신청해야 받을 수 있어요."
+                      : p.applyType === "auto"
+                        ? "대상이 되면 따로 신청하지 않아도 자동으로 지급·연계되는 경우가 많아요."
+                        : "기관·학교·시설이 대상자를 추천하거나 선정하는 사업이에요."}
+                  </strong>
+                  {p.applyType !== "self" && " 해당될 것 같은데 받고 있지 않다면 아래 문의처나 주민센터에 확인해 보세요."}
+                  {p.applyReason && (
+                    <>
+                      <br />
+                      <span className="muted">근거: {p.applyReason}</span>
+                    </>
+                  )}
+                </span>
+              </p>
+            )}
             <dl className="kv">
               {p.owner && (
                 <>

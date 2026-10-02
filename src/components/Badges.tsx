@@ -1,6 +1,6 @@
 import type { Tier } from "@/lib/engine/types";
 import { TIER_LABEL } from "@/lib/engine/types";
-import { ORG_TYPE_ICON, ORG_TYPE_LABEL, SECTOR_LABEL, type Program } from "@/lib/data/types";
+import { APPLY_TYPE_LABEL, ORG_TYPE_ICON, ORG_TYPE_LABEL, SECTOR_LABEL, type Program } from "@/lib/data/types";
 
 const TIER_ICON: Record<Tier, string> = { eligible: "●", likely: "◐", check: "○", ineligible: "✕" };
 
@@ -45,6 +45,25 @@ export function SectorBadge({ p }: { p: Program }) {
   return (
     <span className="badge warn" title="기본 결과에서는 숨기는 복지 외 분야 서비스예요">
       {SECTOR_LABEL[p.sector]} 대상
+    </span>
+  );
+}
+
+const APPLY_ICON = { self: "✍", auto: "🔄", institution: "🏢", unknown: "" } as const;
+const APPLY_TITLE = {
+  self: "본인이나 가족이 직접 신청해야 받을 수 있어요",
+  auto: "대상이 되면 따로 신청하지 않아도 자동으로 지급·연계되는 경우가 많아요",
+  institution: "기관·학교·시설이 대상자를 추천하거나 선정하는 사업이에요",
+  unknown: "",
+} as const;
+
+/** 신청 유형 표시: 직접 신청 / 자동 제공 / 기관 추천·선정 (확인 필요는 표시하지 않음) */
+export function ApplyBadge({ p }: { p: Program }) {
+  const t = p.applyType;
+  if (!t || t === "unknown") return null;
+  return (
+    <span className={`badge apply-${t}`} title={APPLY_TITLE[t]} data-testid="apply-badge">
+      <span aria-hidden="true">{APPLY_ICON[t]}</span> {APPLY_TYPE_LABEL[t]}
     </span>
   );
 }

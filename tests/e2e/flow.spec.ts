@@ -201,4 +201,29 @@ test.describe("로그인 없는 전체 흐름", () => {
     await expect(page.getByTestId("tab-eligible")).toBeVisible({ timeout: 20_000 });
     await expect(page.getByTestId("example-banner")).toHaveCount(0);
   });
+  test("자동으로 받는 혜택: 본문·추천과 분리된 접힌 영역, 개수 = 카드 수 @mobile", async ({ page }) => {
+    await page.goto("/");
+    await page.getByTestId("preset-seongnam-single-parent").click();
+    await expect(page.getByTestId("top-picks")).toBeVisible({ timeout: 20_000 });
+    const sec = page.getByTestId("auto-section");
+    await expect(sec).toBeVisible();
+    // 본문 목록 바깥(#result-list 밖)에 있고, 기본은 접혀 있다
+    await expect(page.getByTestId("result-list").getByTestId("auto-section")).toHaveCount(0);
+    await expect(sec).not.toHaveAttribute("open", "");
+    await expect(sec.getByTestId("program-card")).toHaveCount(0);
+    // 추천·본문 카드에는 '자동 제공'/'기관 추천·선정' 태그가 없다
+    await expect(page.getByTestId("top-picks").getByText("자동 제공")).toHaveCount(0);
+    await expect(page.getByTestId("result-list").getByTestId("apply-badge").filter({ hasText: /자동 제공|기관 추천/ })).toHaveCount(0);
+    const n = Number((await page.getByTestId("auto-count").innerText()).replace(/[^0-9]/g, ""));
+    expect(n).toBeGreaterThan(0);
+    await page.getByTestId("auto-toggle").click();
+    await expect(sec).toHaveAttribute("open", "");
+    const cards = sec.getByTestId("program-card");
+    await expect(cards).toHaveCount(Math.min(n, 10));
+    while (await page.getByTestId("auto-more").count()) await page.getByTestId("auto-more").click();
+    await expect(cards).toHaveCount(n);
+    await expect(sec.getByTestId("apply-badge").filter({ hasText: /자동 제공|기관 추천/ })).toHaveCount(n);
+    await page.getByTestId("auto-toggle").click();
+    await expect(sec.getByTestId("program-card")).toHaveCount(0);
+  });
 });

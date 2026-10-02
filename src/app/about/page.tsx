@@ -35,6 +35,28 @@ export default function About() {
             <tr><td>└ 복지 외 분야: 사업자·창업·소상공인 대상 (기본 숨김)</td><td>{n((c as { bySector?: Record<string, number> }).bySector?.business ?? 0)}</td></tr>
           </tbody>
         </table>
+        <h3 style={{ fontSize: "1rem", marginTop: 18 }}>신청 유형</h3>
+        <p className="small" style={{ marginTop: 4 }}>
+          이 서비스는 <strong>내가 직접 신청해야 받는데 놓치기 쉬운 혜택</strong>을 찾는 데 집중합니다. 신청방법·접수방법 원문에
+          &lsquo;별도 신청 없이&rsquo;·&lsquo;자동 지급&rsquo;·&lsquo;직권 신청&rsquo;·&lsquo;학교장 추천&rsquo;·&lsquo;시설 입소자&rsquo; 같은 표현이 있으면
+          자동 제공·기관 선정으로 분류해 추천과 목록에서 빼고, 결과 맨 아래 <strong>&lsquo;자동으로 받는 혜택&rsquo;</strong>에 접어 둡니다. 애매하면
+          &lsquo;직접 신청&rsquo;이나 &lsquo;신청 방법 확인&rsquo;으로 두어 목록에 그대로 보입니다.
+        </p>
+        <table className="median-table" style={{ marginTop: 10 }}>
+          <caption className="sr-only">신청 유형별 서비스 수</caption>
+          <thead>
+            <tr>
+              <th scope="col">신청 유형</th>
+              <th scope="col">서비스 수</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>직접 신청 (본인·가족이 주민센터·복지로·기관에 신청)</td><td>{n(c.byApplyType.self)}</td></tr>
+            <tr><td>신청 방법 확인 (원문에 신청방법이 없거나 애매 — 목록에 그대로 표시)</td><td>{n(c.byApplyType.unknown)}</td></tr>
+            <tr><td>자동 제공 (자동 지급·연계, 직권 신청, 학교·어린이집이 처리)</td><td>{n(c.byApplyType.auto)}</td></tr>
+            <tr><td>기관 추천·선정 (기관·학교장 추천, 시설·기관 대상)</td><td>{n(c.byApplyType.institution)}</td></tr>
+          </tbody>
+        </table>
         <h3 style={{ fontSize: "1rem", marginTop: 18 }}>출처</h3>
         <ul className="small" style={{ paddingLeft: 18 }}>
           <li>

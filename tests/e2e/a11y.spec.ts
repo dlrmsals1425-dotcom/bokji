@@ -36,6 +36,11 @@ test("axe 접근성: 주요 화면 serious/critical 0건 @mobile", async ({ page
   const rl = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"]).analyze();
   summary["결과(큰 글씨, 부천 장애인 가구)"] = { violations: rl.violations.map((v) => ({ id: v.id, impact: v.impact, nodes: v.nodes.length, help: v.help })) };
   await page.getByTestId("large-text").click();
+  // 자동으로 받는 혜택 영역을 펼친 상태
+  await page.getByTestId("auto-toggle").click();
+  await expect(page.getByTestId("auto-section").getByTestId("program-card").first()).toBeVisible();
+  const ra = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"]).analyze();
+  summary["결과(자동으로 받는 혜택 펼침)"] = { violations: ra.violations.map((v) => ({ id: v.id, impact: v.impact, nodes: v.nodes.length, help: v.help })) };
   fs.mkdirSync("test-results", { recursive: true });
   fs.writeFileSync(`test-results/axe-${info.project.name}.json`, JSON.stringify(summary, null, 2));
   const bad = Object.entries(summary).flatMap(([n, s]) => s.violations.filter((v) => v.impact === "serious" || v.impact === "critical").map((v) => `${n}: ${v.id} (${v.impact}, ${v.nodes}) ${v.help}`));

@@ -80,6 +80,9 @@ p { margin: 0; }
 .badge.edu { background: #fdeaf3; color: #8a1d55; }
 .badge.trust { background: #e9f4ff; color: #0b4f8a; font-weight: 600; }
 .badge.warn { background: var(--accent-soft); color: #6b4a00; }
+.badge.apply-self { background: #e3f3e8; color: #135c2c; }
+.badge.apply-auto { background: #eceff5; color: #3a4357; }
+.badge.apply-institution { background: #fff0e3; color: #7a3a00; }
 .badges { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
 
 /* Home */
@@ -146,6 +149,7 @@ legend { font-weight: 800; font-size: 1.05rem; padding: 0; margin-bottom: 10px; 
 .tab[aria-selected="true"].t-check { border-color: var(--check); background: var(--check-bg); color: var(--check); }
 .tab .d { font-size: .78rem; color: var(--muted); font-weight: 500; }
 @media (max-width: 560px) { .tab .d { display: none; } .tab { padding: 10px; } .tab .n { font-size: 1.35rem; } .tab .l { font-size: .85rem; } }
+.results-main { min-width: 0; }
 .results-layout { display: grid; grid-template-columns: 260px 1fr; gap: 22px; margin-top: 18px; align-items: start; }
 @media (max-width: 900px) { .results-layout { grid-template-columns: 1fr; } }
 .filters { position: sticky; top: calc(var(--header-h) + 12px); }
@@ -278,3 +282,15 @@ html[data-large="1"] .filters { position: static; }
 .picks .why-list li { display: inline-flex; gap: 4px; }
 .picks .badges { margin-bottom: 2px; }
 @media (min-width: 900px) { .picks ol { grid-template-columns: 1fr 1fr; } .picks ol > li:first-child { grid-column: 1 / -1; } }
+
+/* 자동으로 받는 혜택 (접힌 영역) */
+.auto-section { margin-top: 26px; border: 1.5px dashed var(--line); border-radius: var(--radius); background: #f8f9fc; }
+.auto-section > summary { cursor: pointer; list-style: none; padding: 16px 18px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; min-height: 48px; }
+.auto-section > summary::-webkit-details-marker { display: none; }
+.auto-section > summary .t { font-weight: 850; font-size: 1.05rem; color: var(--ink); }
+.auto-section > summary .s { color: var(--ink-2); font-size: .9rem; }
+.auto-section > summary .c { margin-left: auto; font-weight: 800; color: var(--brand); white-space: nowrap; }
+.auto-section > summary .chev { transition: transform .15s; }
+.auto-section[open] > summary .chev { transform: rotate(180deg); }
+.auto-section .auto-body { padding: 0 18px 18px; }
+.auto-section .auto-body > p { margin-bottom: 12px; }

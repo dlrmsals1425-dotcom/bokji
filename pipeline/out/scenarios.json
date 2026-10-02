@@ -2,9 +2,9 @@
   "suwon-senior": {
     "groups": {
       "eligible": 12,
-      "likely": 320,
-      "check": 270,
-      "ineligible": 881
+      "likely": 306,
+      "check": 260,
+      "ineligible": 843
     },
     "rawPrograms": {
       "eligible": 12,
@@ -12,12 +12,27 @@
       "check": 295,
       "ineligible": 954
     },
+    "applyTypes": {
+      "self": 431,
+      "unknown": 149,
+      "auto": 4,
+      "institution": 9
+    },
+    "autoSection": 6,
+    "autoSamples": [
+      "중앙노인돌봄지원기관 운영지원 [institution·likely]",
+      "경로당 운영 지원 [institution·likely]",
+      "노인보호전문기관 [institution·likely]",
+      "노인월동난방비 등 지원 [auto·likely]",
+      "장기요양급여비용 본인부담금 감경 [auto·check]",
+      "여성기업종합지원센터운영 [institution·likely]"
+    ],
     "top": [
-      "노인맞춤돌봄서비스 [eligible·전국·20.0]",
-      "의료·요양 통합돌봄 [eligible·전국·13.0]",
-      "노인장기요양보험 [likely·전국·14.5]",
-      "기초연금 [eligible·전국·12.0]",
-      "저소득 재가노인 식사배달 [likely·경기도·14.0]"
+      "노인맞춤돌봄서비스 [eligible·전국·self·20.0]",
+      "의료·요양 통합돌봄 [eligible·전국·unknown·13.0]",
+      "노인장기요양보험 [likely·전국·self·14.5]",
+      "기초연금 [eligible·전국·self·12.0]",
+      "저소득 재가노인 식사배달 [likely·경기도·self·14.0]"
     ],
     "eligibleTab": [
       "노인맞춤돌봄서비스",
@@ -29,10 +44,10 @@
   },
   "seongnam-single-parent": {
     "groups": {
-      "eligible": 86,
-      "likely": 394,
-      "check": 264,
-      "ineligible": 713
+      "eligible": 84,
+      "likely": 378,
+      "check": 253,
+      "ineligible": 678
     },
     "rawPrograms": {
       "eligible": 96,
@@ -40,27 +55,44 @@
       "check": 290,
       "ineligible": 756
     },
+    "applyTypes": {
+      "self": 597,
+      "unknown": 123,
+      "auto": 11,
+      "institution": 6
+    },
+    "autoSection": 8,
+    "autoSamples": [
+      "성남시 저소득 한부모가족 냉난방비 지원 [auto·eligible]",
+      "직장어린이집 설치 지원 [institution·likely]",
+      "아동 입원진료비 지원 [auto·likely]",
+      "학대피해아동 쉼터 설치 및 운영 [institution·likely]",
+      "학대피해아동 의료비 등 지원 [auto·likely]",
+      "2세미만 영유아 입원진료비 본인부담금 면제 [auto·likely]",
+      "맞춤형 e북 지원 [auto·eligible]",
+      "군 복무기간 이자면제 지원 [auto·likely]"
+    ],
     "top": [
-      "한부모가족 아동양육비 지원 [eligible·전국·19.5]",
-      "저소득층 아동보험(한부모가정 의료보험) 지원 [eligible·전국·17.5]",
-      "청년내일저축계좌 [eligible·전국·15.0]",
-      "성남시 저소득 한부모가족 냉난방비 지원 [eligible·경기 성남시·13.5]",
-      "가사·간병 방문 지원 [eligible·전국·13.0]"
+      "한부모가족 아동양육비 지원 [eligible·전국·self·19.5]",
+      "저소득층 아동보험(한부모가정 의료보험) 지원 [eligible·전국·self·17.5]",
+      "청년내일저축계좌 [eligible·전국·self·15.0]",
+      "가사·간병 방문 지원 [eligible·전국·self·13.0]",
+      "양육비 이행 원스톱 종합서비스 [likely·전국·self·15.0]"
     ],
     "eligibleTab": [
       "한부모가족 아동양육비 지원",
       "저소득층 아동보험(한부모가정 의료보험) 지원",
       "청년내일저축계좌",
-      "성남시 저소득 한부모가족 냉난방비 지원",
-      "가사·간병 방문 지원"
+      "가사·간병 방문 지원",
+      "양육비 이행 지원 서비스"
     ]
   },
   "goyang-youth": {
     "groups": {
-      "eligible": 53,
-      "likely": 276,
-      "check": 275,
-      "ineligible": 872
+      "eligible": 51,
+      "likely": 266,
+      "check": 264,
+      "ineligible": 830
     },
     "rawPrograms": {
       "eligible": 62,
@@ -68,12 +100,24 @@
       "check": 302,
       "ineligible": 927
     },
+    "applyTypes": {
+      "self": 489,
+      "unknown": 93,
+      "auto": 6,
+      "institution": 4
+    },
+    "autoSection": 3,
+    "autoSamples": [
+      "맞춤형 e북 지원 [auto·eligible]",
+      "발전소 주변지역 육영사업 지원(서인천발전본부) [auto·eligible]",
+      "군 복무기간 이자면제 지원 [auto·likely]"
+    ],
     "top": [
-      "경기도 청년 면접수당 [eligible·경기도·12.0]",
-      "청년월세 지원 [likely·전국·13.5]",
-      "구직자 취업역량강화 프로그램 [eligible·전국·10.0]",
-      "구직자 취업지원 서비스 제공 [eligible·전국·10.0]",
-      "대‧중소기업 상생일자리 프로그램 [eligible·전국·10.0]"
+      "경기도 청년 면접수당 [eligible·경기도·self·12.0]",
+      "청년월세 지원 [likely·전국·self·13.5]",
+      "구직자 취업역량강화 프로그램 [eligible·전국·self·10.0]",
+      "구직자 취업지원 서비스 제공 [eligible·전국·self·10.0]",
+      "대‧중소기업 상생일자리 프로그램 [eligible·전국·self·10.0]"
     ],
     "eligibleTab": [
       "경기도 청년 면접수당",
@@ -85,10 +129,10 @@
   },
   "bucheon-disability": {
     "groups": {
-      "eligible": 56,
-      "likely": 363,
-      "check": 250,
-      "ineligible": 767
+      "eligible": 55,
+      "likely": 352,
+      "check": 240,
+      "ineligible": 725
     },
     "rawPrograms": {
       "eligible": 65,
@@ -96,12 +140,24 @@
       "check": 276,
       "ineligible": 816
     },
+    "applyTypes": {
+      "self": 521,
+      "unknown": 129,
+      "auto": 3,
+      "institution": 7
+    },
+    "autoSection": 3,
+    "autoSamples": [
+      "경기도 장애인 건강검진비 감면 [institution·eligible]",
+      "경기도 장애인 입원비 감면 [institution·likely]",
+      "장기요양급여비용 본인부담금 감경 [auto·check]"
+    ],
     "top": [
-      "일상돌봄 서비스 [eligible·전국·14.0]",
-      "장애인 대소변흡수용품 구입 지원 [eligible·경기도·11.5]",
-      "장애인 온라인 직업심리검사 [eligible·전국·11.5]",
-      "장애인 활동지원 [likely·전국·13.5]",
-      "중증장애인직업재활지원 [likely·전국·13.5]"
+      "일상돌봄 서비스 [eligible·전국·self·14.0]",
+      "장애인 대소변흡수용품 구입 지원 [eligible·경기도·self·11.5]",
+      "장애인 온라인 직업심리검사 [eligible·전국·self·11.5]",
+      "장애인 활동지원 [likely·전국·self·13.5]",
+      "중증장애인직업재활지원 [likely·전국·unknown·13.5]"
     ],
     "eligibleTab": [
       "일상돌봄 서비스",
