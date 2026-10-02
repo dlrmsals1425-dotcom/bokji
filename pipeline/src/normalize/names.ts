@@ -46,3 +46,15 @@ export function cleanOrg(s: string | undefined | null): string | undefined {
   const t = s.trim().replace(/(장관|청장|처장|위원장)$/u, "");
   return t || undefined;
 }
+
+/** 'www.nhis.or.kr' 처럼 스킴이 빠진 링크를 https 로 보정하고, URL 이 아니면 버린다 */
+export function normalizeUrl(u: string | undefined): string | undefined {
+  if (!u) return undefined;
+  let t = u.trim().split(/\s+/)[0];
+  if (!/^https?:\/\//i.test(t)) {
+    if (/^[\w-]+(\.[\w-]+)+(\/|$)/.test(t)) t = `https://${t}`;
+    else return undefined;
+  }
+  try { return new URL(t).toString(); } catch { return undefined; }
+}
+

@@ -5,6 +5,7 @@ import { gov24Category } from "../normalize/categories";
 import type { RegionIndex } from "../normalize/regions";
 import { rulesFromSupportConditions, supplementFromText, type Gov24Conditions } from "../rules/fromGov24";
 import type { OrgType } from "../../../src/lib/data/types";
+import { classifySector } from "../normalize/sector";
 
 /**
  * 공공서비스(혜택) API 캐시(serviceList + supportConditions + serviceDetail) → SourceRecord.
@@ -76,7 +77,7 @@ export function loadGov24(
     const cond = condById.get(id);
     const draft = cond ? rulesFromSupportConditions(cond) : null;
     // 지원조건 코드가 하나라도 있을 때만 원문 보완 (코드가 전혀 없으면 '구조화 조건 없음'으로 둔다)
-    const sup = draft?.logic ? supplementFromText(draft.logic, [str("지원대상", d) ?? str("지원대상"), str("선정기준", d)].filter(Boolean).join(" ")) : null;
+    const sup = draft?.logic ? supplementFromText(draft.logic, [str("지원대상", d) ?? str("지원대상"), str("선정기준", d), str("서비스목적요약")].filter(Boolean).join(" ")) : null;
     const rec: SourceRecord = {
       source: "gov24",
       sourceId: id,
@@ -113,6 +114,7 @@ export function loadGov24(
         core: sup?.core ?? false,
       },
     };
+    rec.sector = classifySector({ name, target: rec.target, gov24Field: str("서비스분야"), users });
     if (!/개인|가구/.test(users)) rec.excluded = "not_individual";
     else if (draft?.businessOnly) rec.excluded = "business_only";
     else if (isRegional && !org.sidoCode) rec.excluded = "region_unresolved";

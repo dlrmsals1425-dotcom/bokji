@@ -1,0 +1,114 @@
+{
+  "suwon-senior": {
+    "groups": {
+      "eligible": 12,
+      "likely": 320,
+      "check": 270,
+      "ineligible": 881
+    },
+    "rawPrograms": {
+      "eligible": 12,
+      "likely": 470,
+      "check": 295,
+      "ineligible": 954
+    },
+    "top": [
+      "노인맞춤돌봄서비스 [eligible·전국·20.0]",
+      "의료·요양 통합돌봄 [eligible·전국·13.0]",
+      "노인장기요양보험 [likely·전국·14.5]",
+      "기초연금 [eligible·전국·12.0]",
+      "저소득 재가노인 식사배달 [likely·경기도·14.0]"
+    ],
+    "eligibleTab": [
+      "노인맞춤돌봄서비스",
+      "의료·요양 통합돌봄",
+      "기초연금",
+      "응급안전안심서비스",
+      "보건소 방문건강관리 서비스"
+    ]
+  },
+  "seongnam-single-parent": {
+    "groups": {
+      "eligible": 86,
+      "likely": 394,
+      "check": 264,
+      "ineligible": 713
+    },
+    "rawPrograms": {
+      "eligible": 96,
+      "likely": 556,
+      "check": 290,
+      "ineligible": 756
+    },
+    "top": [
+      "한부모가족 아동양육비 지원 [eligible·전국·19.5]",
+      "저소득층 아동보험(한부모가정 의료보험) 지원 [eligible·전국·17.5]",
+      "청년내일저축계좌 [eligible·전국·15.0]",
+      "성남시 저소득 한부모가족 냉난방비 지원 [eligible·경기 성남시·13.5]",
+      "가사·간병 방문 지원 [eligible·전국·13.0]"
+    ],
+    "eligibleTab": [
+      "한부모가족 아동양육비 지원",
+      "저소득층 아동보험(한부모가정 의료보험) 지원",
+      "청년내일저축계좌",
+      "성남시 저소득 한부모가족 냉난방비 지원",
+      "가사·간병 방문 지원"
+    ]
+  },
+  "goyang-youth": {
+    "groups": {
+      "eligible": 53,
+      "likely": 276,
+      "check": 275,
+      "ineligible": 872
+    },
+    "rawPrograms": {
+      "eligible": 62,
+      "likely": 439,
+      "check": 302,
+      "ineligible": 927
+    },
+    "top": [
+      "경기도 청년 면접수당 [eligible·경기도·12.0]",
+      "청년월세 지원 [likely·전국·13.5]",
+      "구직자 취업역량강화 프로그램 [eligible·전국·10.0]",
+      "구직자 취업지원 서비스 제공 [eligible·전국·10.0]",
+      "대‧중소기업 상생일자리 프로그램 [eligible·전국·10.0]"
+    ],
+    "eligibleTab": [
+      "경기도 청년 면접수당",
+      "구직자 취업역량강화 프로그램",
+      "구직자 취업지원 서비스 제공",
+      "대‧중소기업 상생일자리 프로그램",
+      "산림보호지원단 일자리 제공"
+    ]
+  },
+  "bucheon-disability": {
+    "groups": {
+      "eligible": 56,
+      "likely": 363,
+      "check": 250,
+      "ineligible": 767
+    },
+    "rawPrograms": {
+      "eligible": 65,
+      "likely": 522,
+      "check": 276,
+      "ineligible": 816
+    },
+    "top": [
+      "일상돌봄 서비스 [eligible·전국·14.0]",
+      "장애인 대소변흡수용품 구입 지원 [eligible·경기도·11.5]",
+      "장애인 온라인 직업심리검사 [eligible·전국·11.5]",
+      "장애인 활동지원 [likely·전국·13.5]",
+      "중증장애인직업재활지원 [likely·전국·13.5]"
+    ],
+    "eligibleTab": [
+      "일상돌봄 서비스",
+      "장애인 대소변흡수용품 구입 지원",
+      "장애인 온라인 직업심리검사",
+      "발달장애인 공공후견 지원",
+      "장애인 집합 정보화교육"
+    ]
+  }
+}

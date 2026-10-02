@@ -18,6 +18,75 @@ export interface DedupStats {
   blockedByLevel: number;
   /** 정부24·복지로 시군구 등록분 중 전국 사업의 지역 집행분으로 흡수한 수 */
   absorbedRegionalCopies?: number;
+  /** 이름·법령은 같지만 지역 추가사업 표지·설명 차이로 흡수하지 않고 별도 사업으로 둔 수 */
+  keptRegionalAddons?: number;
+  /** 점검용 표본: 흡수/유지 판단 (사유·유사도) */
+  regionalCopySamples?: { decision: "absorb" | "keep"; reason: string; sim: number; nat: string; local: string; region?: string }[];
+}
+
+/* ---------- 지역 집행분(복사본) vs 지역 추가사업 판별 ---------- */
+
+/** 이름에 붙으면 '지자체가 따로 얹은 사업'임을 뜻하는 표지 */
+const ADDON_NAME_RE = /(추가|지자체|자체|특화|확대|가산|소득무관|도비|시비|군비|구비|본인부담|차액|플러스|\+|[가-힣]{2,}형(?=\s|\(|$))/;
+/** 설명문에서 지역 추가사업을 뜻하는 표현 */
+const ADDON_TEXT_RE = /(자체\s*(사업|예산|재원|지원)|(시|군|구|도)\s*자체|추가\s*(지원|지급|급여|제공)|추가로\s*(지원|지급)|별도\s*(지원|지급)|도비|시비|군비|구비|특화\s*사업|차액\s*지원|본인부담(금)?\s*(지원|경감))/;
+
+/** 설명문에 흔한 서술어·기능어 — 유사도를 부풀리지 않게 뺀다 */
+const FILLER_RE = /(합니다|됩니다|입니다|습니다|있는|하는|위한|위하여|대상|지원|사업|서비스|제공|및|등|또는|경우|으로|에게)/g;
+function bigrams(s: string): Map<string, number> {
+  const t = s.replace(FILLER_RE, " ").replace(/[^0-9A-Za-z가-힣]/g, "");
+  const m = new Map<string, number>();
+  for (let i = 0; i < t.length - 1; i++) { const g = t.slice(i, i + 2); m.set(g, (m.get(g) ?? 0) + 1); }
+  return m;
+}
+/** 글자 2-gram Dice 유사도 (0~1) */
+export function textSimilarity(a: string, b: string): number {
+  const A = bigrams(a), B = bigrams(b);
+  let inter = 0, na = 0, nb = 0;
+  for (const v of A.values()) na += v;
+  for (const v of B.values()) nb += v;
+  if (!na || !nb) return 0;
+  for (const [g, v] of A) inter += Math.min(v, B.get(g) ?? 0);
+  return (2 * inter) / (na + nb);
+}
+
+export function lawsOverlap(a?: string[], b?: string[]): boolean {
+  const norm = (x: string) => x.replace(/\s+/g, "").replace(/[(（].*$/, "").replace(/\|\|.*$/, "");
+  const A = new Set((a ?? []).flatMap((x) => x.split("||")).map(norm).filter((x) => x.length > 3));
+  return (b ?? []).flatMap((x) => x.split("||")).map(norm).some((x) => A.has(x));
+}
+
+const descOf = (r: SourceRecord, tokens: string[] = []) => {
+  let t = [r.summary, r.target, r.benefit].filter(Boolean).join(" ").slice(0, 700);
+  for (const k of tokens) t = t.split(k).join(" ");
+  return t;
+};
+
+/** 설명 유사도 하한: 이보다 낮으면 같은 사업의 지역 집행분으로 보지 않는다 (전국 236쌍 표본으로 보정: 같은 사업도 지역 설명은 표현이 크게 달라 낮게 둔다 — 추가사업은 주로 이름·설명 표지로 거른다) */
+export const COPY_SIM_MIN = 0.06;
+
+/**
+ * 시군구 등록분 r 이 전국 사업 nat 의 '지역 집행분(같은 사업)'인지 판별.
+ * 조건: 이름 정규화 일치 + 근거 법령 겹침 + 이름·설명에 지역 추가사업 표지 없음 + 설명 유사도 ≥ COPY_SIM_MIN.
+ * 하나라도 어긋나면 별도의 지역 사업으로 남긴다 (예: '장애인 활동지원(추가)').
+ */
+export function regionalCopyCheck(nat: SourceRecord, r: SourceRecord, tokens: string[] = []): { ok: boolean; reason: string; sim: number } {
+  const rk = regionlessKey(r.name, tokens);
+  if (r.key !== nat.key && rk !== nat.key) return { ok: false, reason: "이름 불일치", sim: 0 };
+  if (!lawsOverlap(nat.laws, r.laws)) return { ok: false, reason: "근거 법령 불일치", sim: 0 };
+  const strip = (s: string) => s.replace(/\s+/g, "");
+  const nm = r.name.match(ADDON_NAME_RE);
+  if (nm && !strip(nat.name).includes(strip(nm[0]))) return { ok: false, reason: `이름 표지 '${nm[0]}'`, sim: 0 };
+  const natText = [nat.summary, nat.target, nat.benefit].filter(Boolean).join(" ");
+  const rText = [r.summary, r.target, r.benefit].filter(Boolean).join(" ");
+  const tm = rText.match(ADDON_TEXT_RE);
+  if (tm && !ADDON_TEXT_RE.test(natText)) return { ok: false, reason: `설명 표지 '${tm[0]}'`, sim: 0 };
+  const da = descOf(nat), db = descOf(r, tokens);
+  // 설명이 비어 있으면 이름·법령만으로 판단 (집행분 등록은 흔히 설명이 짧다)
+  if (!db.trim() || !da.trim()) return { ok: true, reason: "설명 없음(이름·법령 일치)", sim: 0 };
+  const sim = textSimilarity(da, db);
+  if (sim < COPY_SIM_MIN) return { ok: false, reason: "설명 유사도 낮음", sim };
+  return { ok: true, reason: "이름·법령·설명 일치", sim };
 }
 
 export const mergeKey = (r: SourceRecord) => `${r.key}|${nameQualifier(r.name) ?? ""}`;
@@ -129,17 +198,13 @@ export function mergeAcrossSources(records: SourceRecord[], stats: DedupStats, t
       m.set(code, list);
     }
   };
-  const lawsOverlap = (a?: string[], b?: string[]) => {
-    const norm = (x: string) => x.replace(/\s+/g, "").replace(/[(（].*$/, "").replace(/\|\|.*$/, "");
-    const A = new Set((a ?? []).flatMap((x) => x.split("||")).map(norm).filter((x) => x.length > 3));
-    return (b ?? []).flatMap((x) => x.split("||")).map(norm).some((x) => A.has(x));
-  };
-
   for (const pass of passes) for (const r of pass) {
     // 통합돌봄 '전국' 행 → 같은 이름의 전국 사업에 지역 운영 정보로 흡수
-    if (r.source === "icare" && r.icareType === "전국") {
-      const nat = nationalByKey.get(r.key) ?? nationalByKey.get(mergeKey(r));
+    // '미분류' 행도 이름이 전국 사업과 같고 지역 추가사업 표지가 없으면 같은 사업의 지역 운영분으로 본다 (예: 장애인활동지원)
+    if (r.source === "icare" && (r.icareType === "전국" || (r.icareType === "미분류" && !ADDON_NAME_RE.test(r.name)))) {
+      const nat = nationalByKey.get(r.key) ?? nationalByKey.get(mergeKey(r)) ?? nationalByKey.get(regionlessKey(r.name, tokensFor(r)));
       if (nat && r.sigunguCodes?.length) {
+        if (r.icareType === "미분류") (stats.regionalCopySamples ??= []).push({ decision: "absorb", reason: "통합돌봄 미분류 행: 전국 사업과 이름 일치", sim: 0, nat: nat.name, local: r.name, region: r.regionLabel });
         addOp(nat, r);
         stats.absorbedAsLocalOps += 1 + (r.merged?.length ?? 0);
         continue;
@@ -147,12 +212,20 @@ export function mergeAcrossSources(records: SourceRecord[], stats: DedupStats, t
     }
     // 정부24·복지로의 시군구 등록분이 전국 사업의 지역 집행분이면(같은 이름 + 같은 근거 법령) 지역 운영 정보로 흡수
     if ((r.source === "gov24" || r.source === "bokjiro") && r.scope === "sigungu" && level(r) === "R") {
-      const nat = nationalByKey.get(r.key);
-      if (nat && lawsOverlap(nat.laws, r.laws)) {
-        addOp(nat, r);
-        stats.absorbedAsLocalOps += 1 + (r.merged?.length ?? 0);
-        stats.absorbedRegionalCopies = (stats.absorbedRegionalCopies ?? 0) + 1;
-        continue;
+      const toks = tokensFor(r);
+      const nat = nationalByKey.get(r.key) ?? nationalByKey.get(regionlessKey(r.name, toks));
+      if (nat) {
+        const chk = regionalCopyCheck(nat, r, toks);
+        if (chk.reason !== "근거 법령 불일치" && chk.reason !== "이름 불일치") {
+          (stats.regionalCopySamples ??= []).push({ decision: chk.ok ? "absorb" : "keep", reason: chk.reason, sim: Math.round(chk.sim * 100) / 100, nat: nat.name, local: r.name, region: r.regionLabel });
+        }
+        if (chk.ok) {
+          addOp(nat, r);
+          stats.absorbedAsLocalOps += 1 + (r.merged?.length ?? 0);
+          stats.absorbedRegionalCopies = (stats.absorbedRegionalCopies ?? 0) + 1;
+          continue;
+        }
+        if (chk.reason !== "근거 법령 불일치" && chk.reason !== "이름 불일치") stats.keptRegionalAddons = (stats.keptRegionalAddons ?? 0) + 1;
       }
     }
     const regional = r.scope !== "national";

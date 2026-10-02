@@ -17,5 +17,5 @@ export default defineConfig({
   // 빌드된 앱을 직접 띄운다 (npm run build 선행). E2E_BASE_URL 을 주면 기존 서버 사용.
   webServer: process.env.E2E_BASE_URL
     ? undefined
-    : { command: `npx next start -p ${PORT}`, url: baseURL, reuseExistingServer: true, timeout: 60_000 },
+    : { command: `env -i PATH="$PATH" HOME="$HOME" npx next start -p ${PORT}`, url: baseURL, reuseExistingServer: true, timeout: 60_000 },
 });

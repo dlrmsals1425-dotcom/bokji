@@ -14,7 +14,9 @@ add(read("national.json"));
 for (const f of fs.readdirSync(path.join(B, "sido"))) add(read(`sido/${f}`));
 for (const f of fs.readdirSync(path.join(B, "sigungu"))) add(read(`sigungu/${f}`));
 const pct = (n: number, d: number) => `${n}/${d} (${((100 * n) / d).toFixed(1)}%)`;
-const has = (p: Program, k: "applyMethod" | "contact") => !!(p[k] && String(p[k]).trim());
+// 목록 번들은 가벼운 필드만 있으므로 채움률은 상세 샤드에서 센다
+const details: Record<string, Program> = Object.assign({}, ...fs.readdirSync(path.join(B, "details")).map((f) => JSON.parse(fs.readFileSync(path.join(B, "details", f), "utf8"))));
+const has = (p: Program, k: "applyMethod" | "contact") => { const d = details[p.id] ?? p; return !!(d[k] && String(d[k]).trim()); };
 const fill = (list: Program[]) => ({
   programs: list.length,
   applyMethod: pct(list.filter((p) => has(p, "applyMethod")).length, list.length),

@@ -1,6 +1,7 @@
 /** 헤드리스 Chromium 으로 데모 스크린샷 저장: npx tsx scripts/shots.ts [baseURL] */
 import { chromium, type Page } from "@playwright/test";
 import path from "node:path";
+import { PRESETS } from "../src/lib/client/presets";
 
 const BASE = process.argv[2] ?? "http://localhost:3217";
 const OUT = path.resolve(__dirname, "../shots");
@@ -42,7 +43,7 @@ async function main() {
   await page.getByTestId("program-card").first().waitFor();
   await page.screenshot({ path: `${OUT}/03-results-desktop.png` });
 
-  await page.getByRole("link", { name: "기초연금", exact: true }).first().click();
+  await page.getByTestId("result-list").getByRole("link", { name: "기초연금", exact: true }).first().click();
   await page.getByTestId("reasons").waitFor();
   await page.screenshot({ path: `${OUT}/04-detail-desktop.png` });
   await page.screenshot({ path: `${OUT}/04b-detail-desktop-full.png`, fullPage: true });
@@ -51,6 +52,17 @@ async function main() {
   await page.goto(BASE + "/p/g41110.icare-0085-1489588-1-1-30");
   await page.getByTestId("apply-fallback").waitFor();
   await page.screenshot({ path: `${OUT}/05-detail-fallback-desktop.png` });
+
+  // 예시 상황별 결과 (데스크톱, 추천 5개 + 탭 + 상위 카드가 보이도록 세로 1300px)
+  const tall = await browser.newContext({ viewport: { width: 1280, height: 1300 }, locale: "ko-KR", deviceScaleFactor: 1 });
+  const t = await tall.newPage();
+  for (const ps of PRESETS) {
+    await t.goto(`${BASE}/results?example=${ps.id}`);
+    await t.getByTestId("top-picks").waitFor();
+    await t.getByTestId("result-list").getByTestId("program-card").first().waitFor();
+    await t.evaluate(() => window.scrollTo(0, 0));
+    await t.screenshot({ path: `${OUT}/scenario-${ps.id}.png` });
+  }
 
   const mob = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, locale: "ko-KR" });
   const m = await mob.newPage();
@@ -61,6 +73,10 @@ async function main() {
   await m.goto(BASE + "/");
   await m.waitForLoadState("networkidle");
   await m.screenshot({ path: `${OUT}/07-home-mobile.png` });
+  await m.goto(`${BASE}/results?example=bucheon-disability`);
+  await m.getByTestId("top-picks").waitFor();
+  await m.evaluate(() => window.scrollTo(0, 0));
+  await m.screenshot({ path: `${OUT}/scenario-bucheon-disability-mobile.png` });
 
   await browser.close();
   console.log("saved to", OUT);

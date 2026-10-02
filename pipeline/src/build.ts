@@ -19,6 +19,9 @@ import type { SourceRecord } from "./sources/record";
 import { dedupWithinIcare, mergeAcrossSources, regionDisplayName, type DedupStats } from "./dedup";
 import { readCached, readCachedStatus } from "./gov24/ingest";
 import { CURATED } from "../rules/curated";
+import { classifySector } from "./normalize/sector";
+import { normalizeUrl } from "./normalize/names";
+import { detailBucket } from "../../src/lib/data/bucket";
 import type { Bundle, BuildMeta, LocalOperation, Program, RegionIndex as RegionIndexJson, SourceRef } from "../../src/lib/data/types";
 import type { Cond, Rule } from "../../src/lib/engine/types";
 
@@ -120,6 +123,7 @@ function main() {
     const sources: SourceRef[] = members.map((m) => ({ source: m.source, id: m.sourceId, url: m.url, updatedAt: m.updatedAt, fetchedAt: m.fetchedAt }));
     const uniqSources = sources.filter((s, i) => sources.findIndex((x) => x.source === s.source && x.id === s.id) === i);
 
+    const sector = members.find((m) => m.source === "gov24")?.sector ?? (members.some((m) => m.source === "gov24") ? undefined : classifySector({ name: rec.name, target: rec.target }));
     const placements: (string | undefined)[] = rec.scope === "sigungu" ? rec.sigunguCodes! : [undefined];
     for (const sgg of placements) {
       const prefix = rec.scope === "national" ? "n" : rec.scope === "sido" ? `s${rec.sidoCode}` : `g${sgg}`;
@@ -175,8 +179,8 @@ function main() {
         documents: pick("documents"),
         contact: pick("contact"),
         deadline: pick("deadline"),
-        url: pick("url"),
-        applyUrl: pick("applyUrl"),
+        url: normalizeUrl(pick("url")),
+        applyUrl: normalizeUrl(pick("applyUrl")),
         provision: rec.provision?.length ? rec.provision : undefined,
         laws: rec.laws?.length ? rec.laws.slice(0, 4) : undefined,
         sources: uniqSources,
@@ -184,6 +188,7 @@ function main() {
         badges: rec.badges.length ? rec.badges : undefined,
         rule,
         mergedCount: members.length > 1 ? members.length : undefined,
+        sector,
         aliases: [...new Set([...(rec.aliases ?? []), ...(rec.scope !== "national" && regionDisplayName(rec.name, tokensFor(rec)) !== rec.name ? [rec.name] : [])])].slice(0, 8) || undefined,
       };
       programs.push({ p, rec, sigungu: sgg });
@@ -201,14 +206,32 @@ function main() {
   for (const { p, rec } of programs) if (p.scope === "national") nationalIdByRec.set(rec, p.id);
 
   const write = (rel: string, data: unknown) => fs.writeFileSync(path.join(OUT, rel), JSON.stringify(data));
-  const national: Bundle = { schema: 1, kind: "national", code: "00000", label: "전국", generatedAt: GENERATED_AT, programs: programs.filter((x) => x.p.scope === "national").map((x) => x.p).sort(order) };
+  /** 결과 목록·판정에 필요한 필드만 남긴 가벼운 사업 (상세 필드는 details 샤드) */
+  const cut = (t: string | undefined, n: number) => (t && t.length > n ? t.slice(0, n - 1) + "…" : t);
+  const slim = (p: Program): Program => ({
+    id: p.id, name: p.name, summary: cut(p.summary, 160) ?? "", category: p.category, tags: p.tags, orgType: p.orgType, scope: p.scope, region: p.region,
+    owner: p.owner, provider: p.provider, target: cut(p.target, 120), deadline: cut(p.deadline, 60),
+    sources: p.sources.map((x) => ({ source: x.source, id: x.id }) as SourceRef), trust: p.trust, badges: p.badges,
+    rule: { id: p.rule.id, origin: p.rule.origin, review: p.rule.review, logic: p.rule.logic, unstructured: p.rule.unstructured, unstructuredCore: p.rule.unstructuredCore },
+    mergedCount: p.mergedCount, aliases: p.aliases, sector: p.sector, hasApply: !!(p.applyMethod || p.contact) || undefined,
+  });
+  const detailShards = new Map<string, Record<string, Program>>();
+  for (const { p } of programs) {
+    const b = detailBucket(p.id);
+    const m = detailShards.get(b) ?? {};
+    m[p.id] = p;
+    detailShards.set(b, m);
+  }
+  fs.mkdirSync(path.join(OUT, "details"), { recursive: true });
+  for (const [b, m] of detailShards) write(`details/${b}.json`, m);
+  const national: Bundle = { schema: 1, kind: "national", code: "00000", label: "전국", generatedAt: GENERATED_AT, programs: programs.filter((x) => x.p.scope === "national").map((x) => x.p).sort(order).map(slim) };
   write("national.json", national);
 
   const sizes: Record<string, number> = { national: national.programs.length };
   const regionJson: RegionIndexJson = { schema: 1, generatedAt: GENERATED_AT, sidos: [] };
   for (const sido of regions.sidos) {
     const sidoPrograms = programs.filter((x) => x.p.scope === "sido" && x.p.region?.sido === sido.code).map((x) => x.p).sort(order);
-    write(`sido/${sido.code}.json`, { schema: 1, kind: "sido", code: sido.code, label: sido.name, generatedAt: GENERATED_AT, programs: sidoPrograms } satisfies Bundle);
+    write(`sido/${sido.code}.json`, { schema: 1, kind: "sido", code: sido.code, label: sido.name, generatedAt: GENERATED_AT, programs: sidoPrograms.map(slim) } satisfies Bundle);
     const sggs = regions.sigungusOf(sido.code).map((s) => {
       const list = programs.filter((x) => x.sigungu === s.code).map((x) => x.p).sort(order);
       const ops: Record<string, LocalOperation[]> = {};
@@ -217,7 +240,7 @@ function main() {
         const v = m.get(s.code);
         if (nid && v) ops[nid] = v;
       }
-      write(`sigungu/${s.code}.json`, { schema: 1, kind: "sigungu", code: s.code, label: `${sido.name} ${s.name}`, generatedAt: GENERATED_AT, programs: list, localOps: ops } satisfies Bundle);
+      write(`sigungu/${s.code}.json`, { schema: 1, kind: "sigungu", code: s.code, label: `${sido.name} ${s.name}`, generatedAt: GENERATED_AT, programs: list.map(slim), localOps: ops } satisfies Bundle);
       return { code: s.code, name: s.name, count: list.length };
     });
     regionJson.sidos.push({ code: sido.code, name: sido.name, short: sido.short, pilot: sido.code === PILOT_SIDO, sigungus: sggs, count: sidoPrograms.length });
@@ -231,9 +254,11 @@ function main() {
   const byScope: Record<string, number> = {};
   const bySource: Record<string, number> = {};
   const bySourceOrg: Record<string, Record<string, number>> = {};
+  const bySector: Record<string, number> = {};
   for (const { p, rec } of uniquePrograms) {
     byOrg[p.orgType] = (byOrg[p.orgType] ?? 0) + 1;
     byScope[p.scope] = (byScope[p.scope] ?? 0) + 1;
+    if (p.sector) bySector[p.sector] = (bySector[p.sector] ?? 0) + 1;
     for (const s of new Set(p.sources.map((x) => x.source))) bySource[s] = (bySource[s] ?? 0) + 1;
     const ps = rec.source;
     bySourceOrg[ps] = bySourceOrg[ps] ?? {};
@@ -263,7 +288,7 @@ function main() {
       icare: "2026-04 등 (메뉴판 문서별 원문 기준월), 수집 " + icareFetched,
       gov24: gov24.length ? `수집 ${g24list.fetchedAt?.slice(0, 10)}` : "미수집",
     },
-    counts: { raw, excluded, uniquePrograms: uniquePrograms.length, placements: programs.length, byOrg, byScope, bySource, bySourceOrg, dedup: stats, localOps: localOpsCount, rulesByReview: reviewCounts, rulesByOrigin: originCounts, pilot, nationalCurated, nationalStructured, coverage, bokjiroApi },
+    counts: { raw, excluded, uniquePrograms: uniquePrograms.length, placements: programs.length, byOrg, byScope, bySector, bySource, bySourceOrg, dedup: { ...stats, regionalCopySamples: undefined }, localOps: localOpsCount, rulesByReview: reviewCounts, rulesByOrigin: originCounts, pilot, nationalCurated, nationalStructured, coverage, bokjiroApi },
     gov24: gov24Status
       ? { status: gov24Status.status, detail: gov24Status.detail, services: gov24.length || undefined }
       : { status: "unavailable", detail: "수집 기록 없음 (npm run ingest:gov24 미실행)" },
@@ -287,6 +312,11 @@ function main() {
     cur.push([key, p.rule.id, p.name, condToText(p.rule.logic), p.rule.unstructured.join(" / "), p.rule.evidence, "", "", ""].map(csvCell).join(","));
   }
   fs.writeFileSync(path.join(REPORT, "review-curated.csv"), "\uFEFF" + cur.join("\n"));
+  const rc = ["decision,reason,similarity,national,local,region"];
+  for (const x of stats.regionalCopySamples ?? []) rc.push([x.decision, x.reason, x.sim, x.nat, x.local, x.region].map(csvCell).join(","));
+  fs.writeFileSync(path.join(REPORT, "regional-copies.csv"), "\uFEFF" + rc.join("\n"));
+  const statsForMeta = { ...stats, regionalCopySamples: undefined };
+  void statsForMeta;
   const missingCurated = Object.keys(CURATED).filter((k) => !seen.has(k));
 
   const md = [
@@ -300,8 +330,10 @@ function main() {
     `- 통합돌봄 D1 완전 중복 ${stats.d1Exact} · D2 실질 중복 ${stats.d2Substantive}`,
     `- 교차 원천 병합: ${stats.crossMerged.map((x) => `${x.pair} ${x.count}`).join(" / ") || "없음"} · 기관 수준이 달라 병합 차단 ${stats.blockedByLevel}`,
     `- 통합돌봄 '전국' 행 → 전국 사업의 지역 운영 정보로 흡수: ${stats.absorbedAsLocalOps}행 (운영 정보 ${localOpsCount}건)`,
+    `- 정부24·복지로 시군구 등록분: 전국 사업의 지역 집행분으로 흡수 ${stats.absorbedRegionalCopies ?? 0} · 지역 추가사업으로 별도 유지 ${stats.keptRegionalAddons ?? 0} (pipeline/out/regional-copies.csv)`,
     `- 최종 사업(중복 제거 후): **${uniquePrograms.length}** (시군구 배치 기준 ${programs.length})`,
     `- 기관 유형별: ${Object.entries(byOrg).map(([k, v]) => `${k} ${v}`).join(" / ")}`,
+    `- 복지 외 분야(기본 숨김): ${Object.entries(bySector).map(([k, v]) => `${k} ${v}`).join(" / ")} · 교육청(기본 숨김) ${byOrg.edu_office ?? 0}`,
     `- 범위별: ${Object.entries(byScope).map(([k, v]) => `${k} ${v}`).join(" / ")}`,
     `- 원천 기여(사업 수): ${Object.entries(bySource).map(([k, v]) => `${k} ${v}`).join(" / ")}`,
     `- 규칙 검수 상태(배치 기준): ${Object.entries(reviewCounts).map(([k, v]) => `${k} ${v}`).join(" / ")}`,

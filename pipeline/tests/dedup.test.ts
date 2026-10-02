@@ -60,3 +60,53 @@ describe("통합돌봄 내부 중복 (D1·D2)", () => {
     expect(s.d2Substantive).toBe(1);
   });
 });
+
+import { regionalCopyCheck, textSimilarity } from "../src/dedup";
+
+describe("지역 집행분 vs 지역 추가사업 (전국 사업 흡수 규칙)", () => {
+  const LAW = ["장애인활동 지원에 관한 법률"];
+  const nat = rec({ source: "gov24", name: "장애인 활동지원", laws: LAW, summary: "혼자서 일상생활과 사회생활을 하기 어려운 장애인에게 활동지원급여를 제공합니다.", target: "만 6세 이상 65세 미만 등록 장애인" });
+  const local = (o: Partial<SourceRecord>) => rec({ source: "gov24", orgType: "local", scope: "sigungu", sidoCode: "41000", sigunguCodes: ["41110"], laws: LAW, ...o });
+
+  it("'(추가)' 표지가 붙은 지자체 추가사업은 흡수하지 않는다 (수원 장애인 활동지원(추가))", () => {
+    const r = local({ name: "장애인 활동지원(추가)", summary: "활동지원 수급자에게 시비로 추가 시간을 지원합니다." });
+    expect(regionalCopyCheck(nat, r, ["수원시", "수원"]).ok).toBe(false);
+    const s = fresh();
+    const { records, localOps } = mergeAcrossSources([nat, r], s, () => ["수원시", "수원"]);
+    expect(records).toHaveLength(2);
+    expect(localOps.size).toBe(0);
+    expect(s.keptRegionalAddons).toBe(1);
+  });
+  it("설명에 '자체 사업'·'추가 지원'이 있으면 흡수하지 않는다", () => {
+    const r = local({ name: "수원시 장애인 활동지원", summary: "국비 활동지원과 별도로 시 자체 예산으로 추가 지원합니다." });
+    expect(regionalCopyCheck(nat, r, ["수원시", "수원"]).reason).toMatch(/설명 표지/);
+  });
+  it("이름·법령·설명이 같은 지역 등록분은 지역 운영 정보로 흡수한다", () => {
+    const r = local({ name: "수원시 장애인 활동지원", summary: "일상생활과 사회생활을 하기 어려운 장애인에게 활동지원급여(활동보조·방문목욕·방문간호)를 제공합니다.", contact: "수원시 장애인복지과 ☎ 031-000-0000" });
+    const s = fresh();
+    const { records, localOps } = mergeAcrossSources([nat, r], s, () => ["수원시", "수원"]);
+    expect(records).toHaveLength(1);
+    expect(localOps.get(nat)?.get("41110")?.[0].contact).toContain("031");
+    expect(s.absorbedRegionalCopies).toBe(1);
+  });
+  it("근거 법령이 겹치지 않으면 흡수하지 않는다", () => {
+    const r = local({ name: "장애인 활동지원", laws: ["수원시 장애인 복지 조례"], summary: nat.summary });
+    expect(regionalCopyCheck(nat, r).ok).toBe(false);
+  });
+  it("설명이 전혀 다르면(유사도 낮음) 흡수하지 않는다", () => {
+    const r = local({ name: "장애인 활동지원", summary: "관내 복지단체 연말 행사비와 차량 임차료를 보조합니다." });
+    const c = regionalCopyCheck(nat, r);
+    expect(c.ok).toBe(false);
+    expect(c.reason).toBe("설명 유사도 낮음");
+  });
+  it("'OO형'·'확대'·'소득무관' 같은 지역 확장 표지도 별도 사업으로 둔다", () => {
+    const n2 = rec({ source: "gov24", name: "산모·신생아 건강관리 지원", laws: ["모자보건법"], summary: "산모와 신생아 가정에 건강관리사를 파견합니다." });
+    for (const name of ["산모·신생아 건강관리 지원(확대)", "산모·신생아 건강관리 지원(소득무관)", "화성형 산모·신생아 건강관리 지원"]) {
+      expect(regionalCopyCheck(n2, local({ name, laws: ["모자보건법"], summary: n2.summary })).ok).toBe(false);
+    }
+  });
+  it("텍스트 유사도: 같은 문장 1, 무관한 문장은 낮음", () => {
+    expect(textSimilarity("산모 신생아 건강관리", "산모·신생아 건강관리")).toBe(1);
+    expect(textSimilarity("산모 신생아 건강관리", "농기계 수리비 보조")).toBeLessThan(0.1);
+  });
+});
