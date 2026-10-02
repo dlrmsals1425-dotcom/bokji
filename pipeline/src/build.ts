@@ -19,7 +19,7 @@ import type { SourceRecord } from "./sources/record";
 import { dedupWithinIcare, mergeAcrossSources, regionDisplayName, type DedupStats } from "./dedup";
 import { readCached, readCachedStatus } from "./gov24/ingest";
 import { CURATED } from "../rules/curated";
-import { classifySector } from "./normalize/sector";
+import { classifyOperator, classifySector } from "./normalize/sector";
 import { classifyApplyType, type ApplyResult } from "./normalize/applyType";
 import { normalizeUrl } from "./normalize/names";
 import { detailBucket } from "../../src/lib/data/bucket";
@@ -135,6 +135,9 @@ function main() {
       applyMethod: uniqJoin("applyMethod", "\n"), applyChannel: uniqJoin("applyChannel", "||"),
       supportType: [uniqJoin("supportType", ","), ...(rec.provision ?? [])].filter(Boolean).join(",") || undefined,
     });
+    // 기관·시설 운영 지원(사람이 아니라 경로당·법인·운영기관에 가는 지원)은 농림·사업자처럼 기본 숨김
+    const operatorWhy = sector ? undefined : classifyOperator({ name: rec.name, summary: rec.summary, target: rec.target, applyType: apply.type });
+    const sectorFinal = sector ?? (operatorWhy ? "operator" : undefined);
     const placements: (string | undefined)[] = rec.scope === "sigungu" ? rec.sigunguCodes! : [undefined];
     for (const sgg of placements) {
       const prefix = rec.scope === "national" ? "n" : rec.scope === "sido" ? `s${rec.sidoCode}` : `g${sgg}`;
@@ -199,9 +202,10 @@ function main() {
         badges: rec.badges.length ? rec.badges : undefined,
         rule,
         mergedCount: members.length > 1 ? members.length : undefined,
-        sector,
+        sector: sectorFinal,
         applyType: apply.type,
         applyReason: apply.reason,
+        ...(operatorWhy ? { operatorReason: operatorWhy } : {}),
         aliases: [...new Set([...(rec.aliases ?? []), ...(rec.scope !== "national" && regionDisplayName(rec.name, tokensFor(rec)) !== rec.name ? [rec.name] : [])])].slice(0, 8) || undefined,
       };
       programs.push({ p, rec, sigungu: sgg });
@@ -334,6 +338,10 @@ function main() {
   const at = ["id,name,org,region,orgType,applyType,reason"];
   for (const { p } of uniquePrograms) at.push([p.id, p.name, p.owner ?? p.provider ?? "", p.region?.label ?? "전국", p.orgType, p.applyType, p.applyReason].map(csvCell).join(","));
   fs.writeFileSync(path.join(REPORT, "apply-type.csv"), "\uFEFF" + at.join("\n"));
+  // 기관·시설 운영 지원(기본 숨김) 목록
+  const op = ["id,name,org,region,applyType,reason"];
+  for (const { p } of uniquePrograms) if (p.sector === "operator") op.push([p.id, p.name, p.owner ?? p.provider ?? "", p.region?.label ?? "전국", p.applyType, (p as { operatorReason?: string }).operatorReason ?? ""].map(csvCell).join(","));
+  fs.writeFileSync(path.join(REPORT, "operator-hidden.csv"), "\uFEFF" + op.join("\n"));
   const statsForMeta = { ...stats, regionalCopySamples: undefined };
   void statsForMeta;
   const missingCurated = Object.keys(CURATED).filter((k) => !seen.has(k));

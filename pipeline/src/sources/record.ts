@@ -49,7 +49,7 @@ export interface SourceRecord {
   excluded?: string;
   aliases?: string[];
   /** 복지 외 분야 (산업·농림) — 기본 숨김 */
-  sector?: "agri" | "business";
+  sector?: "agri" | "business" | "operator";
   /** 병합된 원천 레코드 */
   merged?: SourceRecord[];
 }

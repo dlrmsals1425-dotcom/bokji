@@ -122,11 +122,13 @@ export interface Program {
   applyType?: ApplyType;
   /** 신청 유형 판단 근거 (상세 샤드에만) */
   applyReason?: string;
+  /** 기관·시설 운영 지원(sector operator)으로 본 근거 (상세 샤드에만) */
+  operatorReason?: string;
   /** 목록 번들 전용: 신청방법·연락처가 있는지 (상세 필드는 details 샤드에) */
   hasApply?: boolean;
 }
 
-export type Sector = "agri" | "business";
+export type Sector = "agri" | "business" | "operator";
 
 /** 신청 유형 (운영자 방향 2026-10-02: 직접 신청해야 받는 혜택을 앞에, 자동·기관 선정 혜택은 아래 접힌 영역) */
 export type ApplyType = "self" | "auto" | "institution" | "unknown";
@@ -138,7 +140,7 @@ export const APPLY_TYPE_LABEL: Record<ApplyType, string> = {
 };
 /** 결과 본문(추천·탭 목록)에서 빼고 '자동으로 받는 혜택'에 모으는 유형 */
 export const isAutoLike = (p: { applyType?: ApplyType }) => p.applyType === "auto" || p.applyType === "institution";
-export const SECTOR_LABEL: Record<Sector, string> = { agri: "농림축산어업", business: "사업자·창업" };
+export const SECTOR_LABEL: Record<Sector, string> = { agri: "농림축산어업", business: "사업자·창업", operator: "기관·시설 운영 지원" };
 
 export interface Bundle {
   schema: 1;

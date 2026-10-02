@@ -6,7 +6,7 @@
  *   농어업인 안전(재해)보험·건강검진·복지(행복)바우처·공익수당·출산·노후·주거 지원,
  *   1인 자영업자 유급병가·고용/산재보험료·노란우산공제·출산급여·자녀 돌봄 등 (운영자 방향 2026-10-02).
  */
-export type Sector = "agri" | "business";
+export type Sector = "agri" | "business" | "operator";
 
 const AGRI_NAME = /(농업인|농업경영|농가|어업인|어가|어선|축산|가축|양봉|양식|영농|임업|산림경영|임산물|귀농|귀어|귀산촌|농기계|농업기계|비료|퇴비|종자(?!통장)|종묘|육묘|묘판|상토|농약|병해충|(?<!해충\s?)방제|농산물|수산물|친환경농|농지|과수|과원|원예|시설하우스|비닐하우스|하우스\s*(?:수정벌|시설|신축)|스마트팜|축사|사료|낚시어선|수산|해녀|어촌계|직불금|직접지불|한우|젖소|낙농|착유|양돈|양계|산란계|육계|흑염소|꿀벌|수정벌|벼\s|벼$|^벼|딸기|농작물|농자재|농업자재|폐비닐|공동방제|농어촌민박|관광농원|농촌융복합|조림|임도|산주)/;
 const AGRI_TARGET = /(농업인|농업경영체|농가|어업인|어가|축산|임업인|영농|어선|양식업|농어업인|농업법인|사육|재배|착유|생산자단체|산림\s*소유|산주)/;
@@ -44,5 +44,41 @@ export function classifySector(x: SectorInput): Sector | undefined {
   if (BIZ_NAME.test(name)) return "business";
   if (BIZ_TARGET_START.test(target)) return "business";
   if (x.users && /소상공인|법인/.test(x.users) && !/개인|가구/.test(x.users)) return "business";
+  return undefined;
+}
+
+/**
+ * 기관·시설 운영 지원(operator): 사람이 아니라 경로당·어린이집·법인·단체·운영기관에 돌아가는 지원 — 결과에서 숨기고 필터로만 (운영자 방향 2026-10-02).
+ * 보수적으로: 사람이 직접 이용하는 'OO센터 운영'·주간이용시설·쉼터·보호시설, 종사자 개인 수당, 경로당에서 받는 건강·여가 프로그램은 숨기지 않는다.
+ */
+/** 이름만으로 분명한 운영 지원 (신청 유형과 무관) */
+const OP_NAME_STRONG = /((?:미등록\s*)?경로당\s*(?:운영\s*지원|운영비|비품|비상벨|기능보강|환경개선|개보수|냉난방비|난방비|양곡비?)|미등록\s*경로당\s*(?:지원|운영)|(?:명절|추석절?|설|추석명절)?\s*경로당\s*위문|민간단체\s*지원|단체\s*리프트\s*차량|장애인단체\s*명절\s*위문금|보육교직원\s*인건비|어린이집지원\s*\(\s*교사|어린이집\s*식판|직장어린이집\s*설치)/;
+/** 운영비·인건비·기능보강 지원 (본인 신청형이 아닐 때만, 차량·통학 등 개인 이동 지원은 제외) */
+const OP_NAME_FUND = /(운영비|인건비|기능보강)(?:\s*지원)?(?:\s*사업)?$/;
+const OP_NAME_FUND_EXEMPT = /(차량|통학|특장|교통약자|특별교통수단|신규채용|채용|일자리)/;
+/** 시설·법인·기관의 운영·설치 지원 (사람이 이용하는 이용·주간·단기·보호·쉼터·재가 시설은 제외) */
+const OP_NAME_FACILITY = /((?:사회)?복지시설|생활시설|요양시설|법인|기관)\s*(?:운영|설치|기능보강|환경개선|개보수|신축|증축|리모델링)\s*(?:및\s*운영)?\s*(?:비)?\s*(?:지원|보조)/;
+const OP_FACILITY_EXEMPT = /(이용|주간|단기|보호|쉼터|재가|그룹홈|퇴소|자립)/;
+/** 설명이 운영 법인·기관·기업을 지원한다고 밝히는 경우 */
+const OP_SUMMARY = /(수탁\s*운영\s*법인|운영\s*법인(?:을|를)?\s*지원|(?:수행|운영)\s*기관(?:을|를|에)\s*(?:지원|운영비)|(?:경로당|노인정|어린이집|시설|기관|법인|단체)(?:에|에게)\s*[^.。\n]{0,24}(?:운영비|인건비|냉난방비|양곡비|보조금|기능보강비)(?:와|과|를|을|\s)|설치\s*(?:및\s*)?운영비(?:를|을)?\s*지원|기업\s*지원을\s*통해|기업의?\s*경쟁력)/;
+
+export interface OperatorInput {
+  name: string;
+  summary?: string;
+  target?: string;
+  applyType?: string;
+}
+
+/** 기관·시설 운영 지원이면 근거 문자열, 아니면 undefined */
+export function classifyOperator(x: OperatorInput): string | undefined {
+  const name = x.name;
+  const m = OP_NAME_STRONG.exec(name);
+  if (m) return `이름: ${m[0].trim()}`;
+  if (x.applyType === "self") return undefined;
+  if (OP_NAME_FUND.test(name) && !OP_NAME_FUND_EXEMPT.test(name)) return `이름: ${OP_NAME_FUND.exec(name)![0]}`;
+  if (OP_NAME_FACILITY.test(name) && !OP_FACILITY_EXEMPT.test(name)) return `이름: ${OP_NAME_FACILITY.exec(name)![0]}`;
+  const desc = [x.summary, x.target].filter(Boolean).join(" ");
+  const d = OP_SUMMARY.exec(desc);
+  if (d && !OP_FACILITY_EXEMPT.test(name) && !/센터\s*운영$/.test(name.replace(/여성기업종합지원센터운영/, ""))) return `설명: ${desc.slice(Math.max(0, d.index - 10), d.index + 40)}`;
   return undefined;
 }

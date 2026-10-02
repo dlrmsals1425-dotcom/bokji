@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { classifySector } from "../src/normalize/sector";
+import { classifyOperator, classifySector } from "../src/normalize/sector";
 import { normalizeUrl } from "../src/normalize/names";
 
 describe("복지 외 분야 분류 (기본 숨김)", () => {
@@ -55,5 +55,30 @@ describe("링크 정규화", () => {
     expect(normalizeUrl("fbo.or.kr/index.do")).toBe("https://fbo.or.kr/index.do");
     expect(normalizeUrl("https://www.gov.kr/x?a=1")).toBe("https://www.gov.kr/x?a=1");
     expect(normalizeUrl("주민센터 방문")).toBeUndefined();
+  });
+});
+
+describe("기관·시설 운영 지원(operator)", () => {
+  const op = (name: string, summary?: string, applyType?: string) => classifyOperator({ name, summary, applyType });
+  it("운영 법인·경로당·어린이집 운영·직장어린이집 설치 지원은 숨김 대상", () => {
+    expect(op("중앙노인돌봄지원기관 운영지원", "중앙노인돌봄지원기관 수탁운영 법인을 지원하여 노인맞춤돌봄서비스 등의 원활한 추진을 도모합니다.", "institution")).toBeTruthy();
+    expect(op("여성기업종합지원센터운영", "여성기업 지원을 통해 여성의 창업을 활성화하고 여성기업의 경쟁력을 강화합니다.", "institution")).toBeTruthy();
+    expect(op("직장어린이집 설치 지원", "근로자의 육아부담 완화", "institution")).toBeTruthy();
+    expect(op("경로당 운영 지원", "경로당에 냉난방비와 양곡비를 지원", "institution")).toBeTruthy();
+    expect(op("명절 경로당 위문")).toBeTruthy();
+    expect(op("미등록경로당 지원 사업", undefined, "self")).toBeTruthy();
+    expect(op("보육교직원 인건비 지원")).toBeTruthy();
+  });
+  it("사람이 직접 이용하는 센터·시설, 경로당 건강 프로그램, 종사자 개인 수당, 본인 신청 운영비는 그대로", () => {
+    expect(op("치매안심센터 운영", "치매 조기검진과 상담")).toBeUndefined();
+    expect(op("장애인주간이용시설 운영지원", "장애인 주간 재활 및 교육 프로그램 제공")).toBeUndefined();
+    expect(op("노인생활시설 운영지원(재가)", "수급자 재가서비스 이용 급여 지원")).toBeUndefined();
+    expect(op("장애인 단기보호센터 운영지원")).toBeUndefined();
+    expect(op("경로당 주치의제")).toBeUndefined();
+    expect(op("찾아가는 경로당 순회의료서비스")).toBeUndefined();
+    expect(op("보육교직원 여름휴가비 지원", undefined, "self")).toBeUndefined();
+    expect(op("장애학생 통학용 차량 운영비", undefined, "self")).toBeUndefined();
+    expect(op("교통약자 특별교통수단 운영비 지원")).toBeUndefined();
+    expect(op("노숙인 일시보호시설 운영", undefined, "institution")).toBeUndefined();
   });
 });
