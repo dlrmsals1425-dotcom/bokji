@@ -80,9 +80,9 @@ tests/unit, pipeline/tests  Vitest   ·   tests/e2e  Playwright
 
 | 원천 | 상태 | 건수 | 비고 |
 |---|---|---|---|
-| 복지로 복지서비스 색인 (`/workspace/icdash/data/welfare100.html` 내장 색인, 기준 2026-09-24) | ✅ 사용 | 5,204 | WLF ID·복지로 링크·분류 태그. 신청방법·연락처 없음 |
+| 복지로 복지서비스 색인 (`/workspace/icdash/data/w100_index-lite/extra.json`, 선행 대시보드 수집본, 기준 2026-09-24) | ✅ 사용 | 5,204 | WLF ID·복지로 링크·분류 태그. 신청방법·연락처 없음 |
 | 통합돌봄 지방정부 서비스 메뉴판 (`/workspace/icdash/policies.csv`) | ✅ 사용 | 12,526행 | 원문 기준월별, 신청방법·연락처 대부분 비어 있음 |
-| 복지 100선 요약 (`w100_index-*.json`) | ✅ 사용 | 100 | 이전 대시보드의 요약문(2차), 원문 URL 없음 |
+| 복지 100선 요약 (같은 색인의 큐레이션 100건) | ✅ 사용 | 100 | 이전 대시보드의 요약문(2차), 원문 URL 없음 |
 | 공공서비스(혜택) API (data.go.kr 15113968) | ⏳ 대기 | 0 | 수집기 완성. 현재 키가 **HTTP 401 `code -4` “등록되지 않은 인증키”** 로 거부됨 |
 | 복지로 OpenAPI (B554287) | ⏳ 대기 | 0 | HTTP 403 `SERVICE_KEY_IS_NOT_REGISTERED_ERROR` |
 
