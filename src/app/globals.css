@@ -229,3 +229,52 @@ legend { font-weight: 800; font-size: 1.05rem; padding: 0; margin-bottom: 10px; 
   .result-actions { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
   .result-actions .btn { flex: none; }
 }
+
+/* 카드 판단 이유 · 지역 변형 · 추천 (2026-10 polish) */
+.why-list { list-style: none; margin: 8px 0 0; padding: 8px 10px; background: #f7f8fb; border-radius: 10px; display: grid; gap: 3px; font-size: .92rem; }
+.why-list li { display: flex; gap: 8px; align-items: baseline; }
+.why-list li > span[aria-hidden] { flex: none; width: 1.1em; font-weight: 800; text-align: center; }
+.why-list .met > span[aria-hidden] { color: var(--ok); }
+.why-list .unknown > span[aria-hidden] { color: var(--maybe); }
+.why-list .unmet > span[aria-hidden] { color: var(--no); }
+.pcard .rank { display: inline-grid; place-items: center; width: 1.6em; height: 1.6em; border-radius: 50%; background: var(--navy); color: #fff; font-size: .8em; margin-right: 8px; vertical-align: .1em; }
+.variants { margin-top: 10px; font-size: .9rem; }
+.variants summary { cursor: pointer; color: var(--brand); font-weight: 700; min-height: 32px; display: flex; align-items: center; }
+.variants ul { margin: 6px 0 0; padding-left: 18px; display: grid; gap: 4px; }
+.picks { margin-top: 18px; padding: 18px; border-radius: var(--radius); background: linear-gradient(135deg, #fffbea 0%, #fff 60%); border: 1.5px solid #f3df8f; }
+.picks h2 { font-size: 1.1rem; font-weight: 850; display: flex; gap: 8px; align-items: center; }
+.picks ol { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 8px; }
+.picks ol > li { display: grid; grid-template-columns: auto 1fr; gap: 10px; align-items: start; background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 10px 12px; }
+.picks .num { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: var(--navy); font-weight: 850; }
+.picks a { font-weight: 800; color: var(--ink); text-decoration: none; }
+.picks a:hover { text-decoration: underline; }
+.picks .r { font-size: .86rem; color: var(--ink-2); margin-top: 2px; }
+.list-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+.hidden-toggles { display: grid; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--line-2); }
+.hidden-toggles label { display: flex; gap: 8px; align-items: flex-start; cursor: pointer; font-size: .9rem; }
+.hidden-toggles input { width: 18px; height: 18px; margin-top: 3px; flex: none; accent-color: var(--brand); }
+.skeleton { display: grid; gap: 12px; margin-top: 18px; }
+.skeleton .sk { height: 112px; border-radius: var(--radius); background: linear-gradient(90deg, #eceff5 25%, #f6f7fb 50%, #eceff5 75%); background-size: 200% 100%; animation: sk 1.2s infinite linear; }
+@keyframes sk { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+/* 예시 상황 */
+.presets { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 14px; }
+@media (max-width: 960px) { .presets { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 520px) { .presets { grid-template-columns: 1fr; } }
+.preset { text-align: left; cursor: pointer; display: grid; gap: 6px; padding: 16px; border-radius: var(--radius); border: 1.5px solid var(--line); background: #fff; box-shadow: var(--shadow-sm); transition: border-color .15s, transform .1s; }
+.preset:hover { border-color: var(--brand-2); }
+.preset:active { transform: translateY(1px); }
+.preset .ex { justify-self: start; font-size: .75rem; font-weight: 800; color: #6b4a00; background: var(--accent-soft); border-radius: 999px; padding: 2px 8px; }
+.preset .t { font-weight: 800; font-size: 1.05rem; display: flex; gap: 8px; align-items: center; }
+.preset .d { color: var(--ink-2); font-size: .88rem; }
+.preset .go { color: var(--brand); font-weight: 700; font-size: .88rem; }
+.example-banner { margin-top: 12px; }
+html[data-large="1"] .tabs { grid-template-columns: 1fr; }
+html[data-large="1"] .results-layout { grid-template-columns: 1fr; }
+html[data-large="1"] .filters { position: static; }
+/* 결과 화면: 불러오는 동안·불러온 뒤 높이를 비슷하게 유지해 레이아웃 이동(CLS)을 줄인다 */
+.results-root { min-height: calc(100vh - var(--header-h)); }
+.skeleton .sk:first-child { height: 220px; }
+.picks .why-list { background: none; padding: 0; margin-top: 4px; display: flex; flex-wrap: wrap; gap: 2px 14px; font-size: .86rem; }
+.picks .why-list li { display: inline-flex; gap: 4px; }
+.picks .badges { margin-bottom: 2px; }
+@media (min-width: 900px) { .picks ol { grid-template-columns: 1fr 1fr; } .picks ol > li:first-child { grid-column: 1 / -1; } }

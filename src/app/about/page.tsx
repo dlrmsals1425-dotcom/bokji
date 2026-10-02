@@ -31,6 +31,8 @@ export default function About() {
             <tr><td>시군구</td><td>{n(c.byOrg.local)}</td></tr>
             <tr><td>공공기관 (공단·재단·지방 공기업 등)</td><td>{n(c.byOrg.public_inst)}</td></tr>
             <tr><td>교육청 (기본 결과에서는 숨김, 필터로 보기)</td><td>{n((c.byOrg as Record<string, number>).edu_office ?? 0)}</td></tr>
+            <tr><td>└ 복지 외 분야: 농림축산어업 종사자 대상 (기본 숨김)</td><td>{n((c as { bySector?: Record<string, number> }).bySector?.agri ?? 0)}</td></tr>
+            <tr><td>└ 복지 외 분야: 사업자·창업·소상공인 대상 (기본 숨김)</td><td>{n((c as { bySector?: Record<string, number> }).bySector?.business ?? 0)}</td></tr>
           </tbody>
         </table>
         <h3 style={{ fontSize: "1rem", marginTop: 18 }}>출처</h3>

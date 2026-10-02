@@ -62,10 +62,12 @@ test.describe("로그인 없는 전체 흐름", () => {
     expect(e0).toBeGreaterThan(0);
     expect(l0).toBeGreaterThan(0);
     expect(c0).toBeGreaterThan(0);
-    await expect(page.getByTestId("program-card").first()).toBeVisible();
-    await expect(page.getByTestId("program-card").first().locator(".badge.tier-eligible")).toBeVisible();
+    await expect(page.getByTestId("result-list").getByTestId("program-card").first()).toBeVisible();
+    await expect(page.getByTestId("result-list").getByTestId("program-card").first().locator(".badge.tier-eligible")).toBeVisible();
     // '조건 충족'에 기초연금이 있어야 한다 (75세·기초연금 수급)
-    await expect(page.getByRole("link", { name: "기초연금", exact: true })).toBeVisible();
+    await expect(page.getByTestId("result-list").getByRole("link", { name: "기초연금", exact: true })).toBeVisible();
+    // 맞춤 추천 5개
+    await expect(page.getByTestId("top-picks").locator("ol > li")).toHaveCount(5);
 
     // 필터: 기관 유형을 바꾸면 탭 개수도 함께 바뀐다
     await page.getByTestId("tab-likely").click();
@@ -83,12 +85,34 @@ test.describe("로그인 없는 전체 흐름", () => {
     const eduLabel = await page.locator("label", { has: page.getByTestId("include-edu") }).innerText();
     const eduN = Number(eduLabel.match(/\((\d[\d,]*)개\)/)![1].replace(/,/g, ""));
     await page.getByTestId("include-edu").check();
-    expect(await count("likely")).toBe(beforeEdu + eduN);
+    const afterEdu = await count("likely");
+    // 같은 이름의 사업은 한 카드로 묶으므로 늘어난 카드 수는 교육청 묶음 수 이하
+    expect(afterEdu).toBeGreaterThanOrEqual(beforeEdu);
+    expect(afterEdu).toBeLessThanOrEqual(beforeEdu + eduN);
+    if (eduN > 0) expect(afterEdu).toBeGreaterThan(beforeEdu);
     await page.getByTestId("include-edu").uncheck();
+    expect(await count("likely")).toBe(beforeEdu);
+
+    // 농림축산어업·사업자 대상도 기본 숨김
+    const indLabel = await page.locator("label", { has: page.getByTestId("include-industry") }).innerText();
+    const indN = Number(indLabel.match(/\((\d[\d,]*)개\)/)![1].replace(/,/g, ""));
+    await page.getByTestId("include-industry").check();
+    const afterInd = await count("likely");
+    expect(afterInd).toBeLessThanOrEqual(beforeEdu + indN);
+    if (indN > 0) expect(afterInd).toBeGreaterThan(beforeEdu);
+    await page.getByTestId("include-industry").uncheck();
+
+    // 목록 길이 = 탭 개수 (처음 10개 + 더 보기)
+    const shown = await page.getByTestId("result-list").getByTestId("program-card").count();
+    expect(shown).toBe(Math.min(10, beforeEdu));
+    if (beforeEdu > 10) {
+      await page.getByTestId("more").click();
+      expect(await page.getByTestId("result-list").getByTestId("program-card").count()).toBe(Math.min(30, beforeEdu));
+    }
 
     // 상세
     await page.getByTestId("tab-eligible").click();
-    await page.getByTestId("program-card").first().locator("h3 a").click();
+    await page.getByTestId("result-list").getByTestId("program-card").first().locator("h3 a").click();
     await expect(page).toHaveURL(/\/p\//);
     await expect(page.getByTestId("reasons")).toBeVisible();
     await expect(page.getByTestId("sources")).toContainText("수집일");
@@ -153,5 +177,28 @@ test.describe("로그인 없는 전체 흐름", () => {
     await expect(page.getByTestId("apply-fallback")).toContainText("129");
     await expect(page.getByTestId("official-link")).toHaveAttribute("href", /mohw\.go\.kr/);
     await expect(page.getByRole("link", { name: /12개 질문에 답하면/ })).toBeVisible();
+  });
+
+  test("홈의 예시 상황 4개: 한 번에 결과 + 예시 안내 + 추천 5개 @mobile", async ({ page }) => {
+    const cases: [string, RegExp][] = [
+      ["suwon-senior", /수원시/],
+      ["seongnam-single-parent", /성남시/],
+      ["goyang-youth", /고양시/],
+      ["bucheon-disability", /부천시/],
+    ];
+    for (const [id, region] of cases) {
+      await page.goto("/");
+      await page.getByTestId(`preset-${id}`).click();
+      await expect(page).toHaveURL(/\/results$/);
+      await expect(page.getByRole("heading", { level: 1 })).toContainText(region, { timeout: 20_000 });
+      await expect(page.getByTestId("example-banner")).toContainText("예시 상황");
+      await expect(page.getByTestId("top-picks").locator("ol > li")).toHaveCount(5);
+    }
+    // 직접 입력(저장)하면 예시 표시가 사라진다
+    await page.goto("/check");
+    await page.getByTestId("next").click();
+    await page.getByRole("button", { name: "지금까지 입력으로 결과 보기" }).click();
+    await expect(page.getByTestId("tab-eligible")).toBeVisible({ timeout: 20_000 });
+    await expect(page.getByTestId("example-banner")).toHaveCount(0);
   });
 });

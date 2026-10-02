@@ -24,7 +24,7 @@ function emit() {
 function subscribe(cb: () => void) {
   listeners.add(cb);
   const onStorage = (e: StorageEvent) => {
-    if (e.key === PROFILE_KEY || e.key === SETTINGS_KEY) emit();
+    if (e.key === PROFILE_KEY || e.key === SETTINGS_KEY || e.key === EXAMPLE_KEY) emit();
   };
   window.addEventListener("storage", onStorage);
   return () => {
@@ -97,11 +97,28 @@ function readProfile(): Profile | null {
   return profileCache.value;
 }
 
-export function saveProfile(p: Profile) {
+const EXAMPLE_KEY = "bn.example.v1";
+
+/** exampleId: 홈의 '예시 상황'으로 채운 경우 그 id (결과 화면에 '예시' 안내를 띄운다). 직접 입력하면 지운다 */
+export function saveProfile(p: Profile, exampleId?: string) {
   try {
     profileStore().setItem(PROFILE_KEY, JSON.stringify(p));
+    if (exampleId) profileStore().setItem(EXAMPLE_KEY, exampleId);
+    else {
+      localStorage.removeItem(EXAMPLE_KEY);
+      sessionStorage.removeItem(EXAMPLE_KEY);
+    }
   } catch {}
   emit();
+}
+
+function readExample(): string | null {
+  return safeGet(profileStore(), EXAMPLE_KEY);
+}
+
+/** 지금 결과가 예시 상황인지 (예시 id) */
+export function useExample(): string | null | undefined {
+  return useSyncExternalStore(subscribe, readExample, () => undefined);
 }
 
 /** '이 기기에서 지우기' — 두 저장소 모두에서 삭제 */
@@ -109,6 +126,8 @@ export function clearProfile() {
   try {
     localStorage.removeItem(PROFILE_KEY);
     sessionStorage.removeItem(PROFILE_KEY);
+    localStorage.removeItem(EXAMPLE_KEY);
+    sessionStorage.removeItem(EXAMPLE_KEY);
   } catch {}
   emit();
 }

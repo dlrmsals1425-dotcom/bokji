@@ -1,6 +1,7 @@
 "use client";
 /** 번들 로더: 전국 + 시도 + 시군구 번들을 받아 브라우저에서만 판정한다 (프로필은 전송하지 않음). */
 import type { Bundle, LocalOperation, Program, RegionIndex } from "../data/types";
+import { detailBucket } from "../data/bucket";
 
 export const BUNDLE_BASE = "/bundles/v1";
 const cache = new Map<string, Promise<unknown>>();
@@ -46,11 +47,11 @@ export function bundlePathForId(id: string): string | null {
   return `${m[1] === "s" ? "sido" : "sigungu"}/${m[2]}.json`;
 }
 
+/** 상세: id 해시 샤드(details/{bucket}.json)에서 전체 필드를 읽는다 */
 export async function loadProgram(id: string): Promise<Program | null> {
-  const path = bundlePathForId(id);
-  if (!path) return null;
-  const b = await getJSON<Bundle>(path);
-  return b?.programs.find((p) => p.id === id) ?? null;
+  if (!bundlePathForId(id)) return null;
+  const shard = await getJSON<Record<string, Program>>(`details/${detailBucket(id)}.json`);
+  return shard?.[id] ?? null;
 }
 
 export async function loadLocalOps(id: string, sido: string | null, sigungu: string | null): Promise<LocalOperation[]> {

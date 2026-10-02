@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { OrgBadge, ReviewBadge, TierBadge } from "@/components/Badges";
+import { OrgBadge, ReviewBadge, SectorBadge, TierBadge } from "@/components/Badges";
 import { loadLocalOps, loadProgram } from "@/lib/client/bundles";
 import { useProfile } from "@/lib/client/storage";
 import { evaluateRule } from "@/lib/engine/evaluate";
@@ -9,6 +9,7 @@ import { SOURCE_LABEL, ORG_TYPE_LABEL, type LocalOperation, type Program } from 
 import type { ReasonKind } from "@/lib/engine/types";
 
 const REASON_ICON: Record<ReasonKind, string> = { met: "✓", unmet: "✕", unknown: "?", note: "i" };
+const KIND_ORDER: Record<ReasonKind, number> = { met: 0, unmet: 1, unknown: 2, note: 3 };
 const TRUST_LABEL = {
   A: "A · 공식 통합 데이터(복지로·정부24)",
   B: "B · 기관 공식 문서·누리집 기반",
@@ -83,6 +84,7 @@ export function Detail({ id }: { id: string }) {
         <span className="badge org">{p.category}</span>
         <ReviewBadge p={p} />
         {p.orgType === "edu_office" && <span className="badge edu">교육청 서비스</span>}
+        <SectorBadge p={p} />
         <span className="badge trust">신뢰도 {p.trust}</span>
       </div>
       <h1>{p.name}</h1>
@@ -98,7 +100,7 @@ export function Detail({ id }: { id: string }) {
                   <TierBadge tier={ev.tier} /> <span className="small muted">입력하신 정보 기준</span>
                 </p>
                 <ul className="reasons" data-testid="reasons">
-                  {ev.reasons.map((r, i) => (
+                  {[...ev.reasons].sort((a, b) => KIND_ORDER[a.kind] - KIND_ORDER[b.kind]).map((r, i) => (
                     <li key={i} className={r.kind}>
                       <span className="ic" aria-hidden="true">
                         {REASON_ICON[r.kind]}

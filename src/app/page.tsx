@@ -2,6 +2,7 @@ import Link from "next/link";
 import meta from "../../public/bundles/v1/meta.json";
 import { TierBadge } from "@/components/Badges";
 import { ResumeBanner } from "@/components/ResumeBanner";
+import { PresetButtons } from "@/components/PresetButtons";
 
 const n = (v: number) => v.toLocaleString("ko-KR");
 
@@ -59,6 +60,16 @@ export default function Home() {
               모든 결과에 &lsquo;왜 그렇게 판단했는지&rsquo;와 원문 출처·기준일을 함께 표시합니다. 최종 자격은 담당 기관이 결정합니다.
             </p>
           </div>
+        </div>
+      </section>
+
+      <section className="section" aria-labelledby="ex-h" style={{ paddingBottom: 8 }}>
+        <div className="wrap">
+          <h2 id="ex-h">예시 상황으로 먼저 둘러보기</h2>
+          <p className="muted" style={{ marginTop: 6 }}>
+            입력 없이 한 번에 결과를 볼 수 있는 데모용 <strong>예시</strong>예요. 실제 개인 정보가 아니며, 결과 화면에서 내 상황으로 다시 입력할 수 있어요.
+          </p>
+          <PresetButtons />
         </div>
       </section>
 

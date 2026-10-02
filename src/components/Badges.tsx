@@ -1,6 +1,6 @@
 import type { Tier } from "@/lib/engine/types";
 import { TIER_LABEL } from "@/lib/engine/types";
-import { ORG_TYPE_ICON, ORG_TYPE_LABEL, type Program } from "@/lib/data/types";
+import { ORG_TYPE_ICON, ORG_TYPE_LABEL, SECTOR_LABEL, type Program } from "@/lib/data/types";
 
 const TIER_ICON: Record<Tier, string> = { eligible: "●", likely: "◐", check: "○", ineligible: "✕" };
 
@@ -37,4 +37,14 @@ export function ReviewBadge({ p }: { p: Program }) {
       </span>
     );
   return null;
+}
+
+/** 복지 외 분야 표시 (기본 숨김 대상) */
+export function SectorBadge({ p }: { p: Program }) {
+  if (!p.sector) return null;
+  return (
+    <span className="badge warn" title="기본 결과에서는 숨기는 복지 외 분야 서비스예요">
+      {SECTOR_LABEL[p.sector]} 대상
+    </span>
+  );
 }

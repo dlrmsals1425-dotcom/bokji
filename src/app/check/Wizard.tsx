@@ -67,7 +67,7 @@ function WizardInner({ initial, editing }: { initial: Profile; editing: boolean 
         <strong className="small">
           {step + 1} / {STEPS.length}
         </strong>
-        <div className="progress-bar" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={pct}>
+        <div className="progress-bar" role="progressbar" aria-label="입력 진행률" aria-valuemin={0} aria-valuemax={100} aria-valuenow={pct}>
           <span style={{ width: `${pct}%` }} />
         </div>
         <span className="small muted">입력 {answeredCount(p)}/12</span>

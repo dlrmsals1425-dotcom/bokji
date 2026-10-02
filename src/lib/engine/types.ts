@@ -72,6 +72,8 @@ export type ReasonKind = "met" | "unmet" | "unknown" | "note";
 export interface Reason {
   kind: ReasonKind;
   text: string;
+  /** 판정에 쓴 입력 항목 (관련도 정렬용) */
+  field?: Leaf["field"];
 }
 
 export interface Evaluation {

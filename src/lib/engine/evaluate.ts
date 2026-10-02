@@ -87,7 +87,7 @@ function joinLabels<T extends string>(vals: readonly T[], labels: Record<T, stri
 }
 
 /** 잎 조건을 평가하고, 사용자 입력값 설명(display)을 함께 돌려준다 */
-function rawLeaf(leaf: Leaf, p: Profile): { tri: Tri; missing: boolean; display?: string } {
+function rawLeaf(leaf: Leaf, p: Profile): { tri: Tri; missing: boolean; display?: string; proxy?: boolean } {
   switch (leaf.field) {
     case "age": {
       if (p.age === "unknown") return { tri: "U", missing: true };
@@ -152,6 +152,11 @@ function rawLeaf(leaf: Leaf, p: Profile): { tri: Tri; missing: boolean; display?
       if (p.disability === "unknown") return { tri: "U", missing: true };
       const display = DISABILITY_LABEL[p.disability];
       if (p.disability === "none") return { tri: "F", missing: false, display };
+      // '장애인 본인' 대상 사업이라도 장애가 있는 가구원(예: 성인 자녀) 이름으로 신청할 수 있다 → 확인 필요로 둔다
+      if (p.disability === "member" && leaf.anyOf.includes("self") && !leaf.anyOf.includes("member")) {
+        if (leaf.severity && p.disabilitySeverity !== "unknown" && p.disabilitySeverity !== leaf.severity) return { tri: "F", missing: false, display: `${display} · ${SEVERITY_LABEL[p.disabilitySeverity]}` };
+        return { tri: "U", missing: false, display, proxy: true };
+      }
       if (!leaf.anyOf.includes(p.disability)) return { tri: "F", missing: false, display };
       if (!leaf.severity) return { tri: "T", missing: false, display };
       if (p.disabilitySeverity === "unknown") return { tri: "U", missing: true, display };
@@ -183,13 +188,16 @@ export function evaluateLeaf(leaf: Leaf, p: Profile): LeafResult {
   }
   if (tri === "T") {
     text = leaf.label;
-    return { tri, reason: { kind: "met", text } };
+    return { tri, reason: { kind: "met", text, field: leaf.field } };
   }
   if (tri === "F") {
     text = raw.display ? `${leaf.label} (입력: ${raw.display})` : leaf.label;
     return { tri, reason: { kind: "unmet", text } };
   }
   tri = "U";
+  if (raw.proxy) {
+    return { tri, reason: { kind: "unknown", field: "disability", text: `${leaf.label} — 장애가 있는 가구원 본인 이름으로 신청할 수 있어요. 그 가구원의 나이·소득 기준을 확인하세요` } };
+  }
   text = raw.missing
     ? `${leaf.label} — ${FIELD_ASK[leaf.field]} 입력하면 확인할 수 있어요`
     : `${leaf.label} — 선택한 구간(${raw.display})이 기준에 걸쳐 있어요`;

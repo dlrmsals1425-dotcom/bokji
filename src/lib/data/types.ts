@@ -116,7 +116,14 @@ export interface Program {
   mergedCount?: number;
   /** 같은 사업의 다른 표기 */
   aliases?: string[];
+  /** 복지 외 분야: agri 농림축산어업 종사자 대상 / business 소상공인·기업·창업 등 사업자 대상 (기본 결과에서 숨김) */
+  sector?: Sector;
+  /** 목록 번들 전용: 신청방법·연락처가 있는지 (상세 필드는 details 샤드에) */
+  hasApply?: boolean;
 }
+
+export type Sector = "agri" | "business";
+export const SECTOR_LABEL: Record<Sector, string> = { agri: "농림축산어업", business: "사업자·창업" };
 
 export interface Bundle {
   schema: 1;

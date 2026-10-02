@@ -75,7 +75,12 @@ describe("잎 조건", () => {
     expect(evaluateCond(c, P({ disability: "self", disabilitySeverity: "severe" })).tri).toBe("T");
     expect(evaluateCond(c, P({ disability: "self", disabilitySeverity: "unknown" })).tri).toBe("U");
     expect(evaluateCond(c, P({ disability: "self", disabilitySeverity: "mild" })).tri).toBe("F");
-    expect(evaluateCond(c, P({ disability: "member" })).tri).toBe("F");
+    // 장애가 있는 가구원(예: 성인 자녀) 이름으로 신청할 수 있으므로 '확인 필요'(U), 장애 정도가 다르면 F
+    const m = evaluateCond(c, P({ disability: "member" }));
+    expect(m.tri).toBe("U");
+    expect(m.reasons[0].text).toMatch(/가구원 본인 이름으로 신청/);
+    expect(evaluateCond(c, P({ disability: "member", disabilitySeverity: "mild" })).tri).toBe("F");
+    expect(evaluateCond({ field: "disability", anyOf: ["self", "member"], label: "장애인 가구" }, P({ disability: "member" })).tri).toBe("T");
     expect(evaluateCond(c, P({ disability: "none" })).tri).toBe("F");
   });
   it("soft 조건은 F를 U로 낮춘다", () => {

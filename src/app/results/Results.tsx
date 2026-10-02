@@ -2,10 +2,12 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ProgramCard } from "@/components/ProgramCard";
-import { clearProfile, useProfile } from "@/lib/client/storage";
+import { ProgramCard, ReasonSummary } from "@/components/ProgramCard";
+import { TierBadge } from "@/components/Badges";
+import { clearProfile, saveProfile, useExample, useProfile } from "@/lib/client/storage";
 import { loadForRegion, type Loaded } from "@/lib/client/bundles";
-import { applyFilters, eduCount, facetCounts, scoreAll, type Filters } from "@/lib/client/results";
+import { applyFilters, eduCount, facetCounts, groupVariants, industryCount, scoreAll, topPicks, type Filters } from "@/lib/client/results";
+import { PRESETS } from "@/lib/client/presets";
 import { profileChips } from "@/lib/client/summary";
 import { CATEGORIES, ORG_TYPE_LABEL, type Category, type OrgType } from "@/lib/data/types";
 import { TIER_LABEL, type Tier } from "@/lib/engine/types";
@@ -17,11 +19,35 @@ const TABS: { tier: Tier; desc: string }[] = [
   { tier: "check", desc: "상담·원문으로 확인" },
 ];
 const ORGS: OrgType[] = ["central", "metro", "local", "public_inst"];
-const PAGE = 30;
+/** 처음에는 관련도 상위 10개만 크게 보여 주고, '더 보기'로 20개씩 */
+const FIRST = 10;
+const PAGE = 20;
+
+function Skeleton({ label }: { label: string }) {
+  return (
+    <div className="wrap results-head results-root" aria-busy="true" aria-live="polite">
+      <p className="muted">{label}</p>
+      <div className="skeleton" aria-hidden="true">
+        <div className="sk" />
+        <div className="sk" />
+        <div className="sk" />
+      </div>
+    </div>
+  );
+}
 
 export function Results() {
   const profile = useProfile();
-  if (profile === undefined) return <div className="wrap results-head muted">불러오는 중…</div>;
+  // /results?example=<예시 id> 링크로 예시 상황을 바로 연다 (데모·성능 점검용)
+  useEffect(() => {
+    const id = new URLSearchParams(window.location.search).get("example");
+    const preset = PRESETS.find((x) => x.id === id);
+    if (preset) {
+      saveProfile(preset.profile, preset.id);
+      window.history.replaceState(null, "", "/results");
+    }
+  }, []);
+  if (profile === undefined) return <Skeleton label="불러오는 중…" />;
   if (profile === null)
     return (
       <div className="narrow" style={{ padding: "48px 0" }}>
@@ -43,7 +69,9 @@ function ResultsInner({ profile }: { profile: Profile }) {
   const router = useRouter();
   const [data, setData] = useState<Loaded | null>(null);
   const [f, setF] = useState<Filters>({ tier: "eligible", category: null, org: null, q: "" });
-  const [limit, setLimit] = useState(PAGE);
+  const [limit, setLimit] = useState(FIRST);
+  const example = useExample();
+  const preset = PRESETS.find((x) => x.id === example);
   const [toast, setToast] = useState<string | null>(null);
   const [filtersOpen, setFiltersOpen] = useState(false);
 
@@ -57,19 +85,19 @@ function ResultsInner({ profile }: { profile: Profile }) {
 
   const scored = useMemo(() => (data ? scoreAll(data.programs, profile) : []), [data, profile]);
   const counts = useMemo(() => facetCounts(scored, f), [scored, f]);
-  const list = useMemo(() => applyFilters(scored, f), [scored, f]);
+  const groups = useMemo(() => groupVariants(applyFilters(scored, f)), [scored, f]);
   const edu = useMemo(() => eduCount(scored, f), [scored, f]);
-  const total = useMemo(() => {
-    const t: Record<Tier, number> = { eligible: 0, likely: 0, check: 0, ineligible: 0 };
-    scored.forEach((s) => {
-      if (s.program.orgType !== "edu_office") t[s.ev.tier]++;
-    });
-    return t;
-  }, [scored]);
+  const industry = useMemo(() => industryCount(scored, f), [scored, f]);
+  // 머리글 합계: 분야·기관·검색 필터는 빼고, 기본 숨김(교육청·복지 외 분야) 설정만 반영한 카드 수
+  const total = useMemo(
+    () => facetCounts(scored, { tier: "eligible", category: null, org: null, q: "", includeEdu: f.includeEdu, includeIndustry: f.includeIndustry }).tiers,
+    [scored, f.includeEdu, f.includeIndustry],
+  );
+  const picks = useMemo(() => topPicks(scored, { includeEdu: f.includeEdu, includeIndustry: f.includeIndustry }, 5), [scored, f.includeEdu, f.includeIndustry]);
 
   const update = (patch: Partial<Filters>) => {
     setF((prev) => ({ ...prev, ...patch }));
-    setLimit(PAGE);
+    setLimit(FIRST);
   };
 
   // 처음 열었을 때 '조건 충족'이 0개면 '가능성 있음' 탭부터 보여준다
@@ -79,16 +107,11 @@ function ResultsInner({ profile }: { profile: Profile }) {
     if (total.eligible === 0) setF((prev) => ({ ...prev, tier: total.likely ? "likely" : "check" }));
   }
 
-  if (!data)
-    return (
-      <div className="wrap results-head" aria-busy="true">
-        <p className="muted">내 지역 서비스를 불러와 이 기기에서 판정하고 있어요…</p>
-      </div>
-    );
+  if (!data) return <Skeleton label="내 지역 서비스를 불러와 이 기기에서 판정하고 있어요…" />;
 
   const chips = profileChips(profile, data.label);
   const share = async () => {
-    const top = scored.filter((s) => s.ev.tier === "eligible").slice(0, 5).map((s) => `· ${s.program.name}`);
+    const top = picks.map((g) => `· ${g.lead.program.name}`);
     const text = [
       `복지나침반에서 ${data.label} 기준으로 찾아본 결과: 조건 충족 ${total.eligible}개, 가능성 있음 ${total.likely}개, 확인 필요 ${total.check}개`,
       ...top,
@@ -106,7 +129,7 @@ function ResultsInner({ profile }: { profile: Profile }) {
   };
 
   return (
-    <div className="wrap" style={{ paddingBottom: 48 }}>
+    <div className="wrap results-root" style={{ paddingBottom: 48 }}>
       <section className="results-head">
         <div className="print-only">
           <strong>복지나침반 결과 요약</strong> — 출력일 {new Date().toLocaleDateString("ko-KR")}
@@ -115,6 +138,15 @@ function ResultsInner({ profile }: { profile: Profile }) {
           {data.label}에서 찾은 서비스{" "}
           <span style={{ color: "var(--brand)" }}>{(total.eligible + total.likely + total.check).toLocaleString("ko-KR")}개</span>
         </h1>
+        {preset && (
+          <p className="info warn small example-banner" data-testid="example-banner">
+            <span aria-hidden="true">🧪</span>
+            <span>
+              <strong>예시 상황</strong>으로 보는 중이에요: {preset.title} ({preset.desc}). 실제 개인 정보가 아닌 데모용 입력이에요.{" "}
+              <Link href="/check">내 상황으로 다시 입력</Link>
+            </span>
+          </p>
+        )}
         <div className="profile-chips" aria-label="입력한 내 상황">
           {chips.map((c) => (
             <span className="chip" key={c}>
@@ -128,6 +160,33 @@ function ResultsInner({ profile }: { profile: Profile }) {
             입력 수정
           </Link>
         </div>
+
+        {picks.length > 0 && (
+          <section className="picks" aria-labelledby="picks-h" data-testid="top-picks">
+            <h2 id="picks-h">
+              <span aria-hidden="true">⭐</span> 먼저 확인해 보세요 — 내 상황과 가장 관련 있는 {picks.length}개
+            </h2>
+            <ol>
+              {picks.map((g, i) => (
+                <li key={g.key}>
+                  <span className="num" aria-hidden="true">
+                    {i + 1}
+                  </span>
+                  <div>
+                    <div className="badges">
+                      <TierBadge tier={g.lead.ev.tier} />
+                      <span className="badge org">{g.lead.program.scope === "national" ? "전국" : g.lead.program.region?.label}</span>
+                    </div>
+                    <Link href={`/p/${encodeURIComponent(g.lead.program.id)}`}>{g.lead.program.name}</Link>
+                    <div className="r">
+                      <ReasonSummary ev={g.lead.ev} />
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </section>
+        )}
 
         <div className="tabs" role="tablist" aria-label="판정 결과">
           {TABS.map((t) => (
@@ -215,10 +274,6 @@ function ResultsInner({ profile }: { profile: Profile }) {
               </button>
             ))}
           </div>
-          <label className="small" style={{ display: "flex", gap: 8, alignItems: "center", marginTop: 10, cursor: "pointer" }}>
-            <input type="checkbox" checked={!!f.includeEdu} onChange={(e) => update({ includeEdu: e.target.checked })} data-testid="include-edu" />
-            교육청 서비스도 보기 ({edu.toLocaleString("ko-KR")}개)
-          </label>
           <h3>분야</h3>
           <div className="fchips">
             <button type="button" className="fchip" aria-pressed={!f.category} onClick={() => update({ category: null })}>
@@ -236,34 +291,64 @@ function ResultsInner({ profile }: { profile: Profile }) {
               </button>
             ))}
           </div>
+          <div className="hidden-toggles">
+            <p className="small muted">기본으로 숨긴 서비스</p>
+            <label>
+              <input type="checkbox" checked={!!f.includeIndustry} onChange={(e) => update({ includeIndustry: e.target.checked })} data-testid="include-industry" />
+              <span>
+                농림축산어업·사업자(창업·소상공인) 대상도 보기 <span className="muted">({industry.toLocaleString("ko-KR")}개)</span>
+              </span>
+            </label>
+            <label>
+              <input type="checkbox" checked={!!f.includeEdu} onChange={(e) => update({ includeEdu: e.target.checked })} data-testid="include-edu" />
+              <span>
+                교육청 서비스도 보기 <span className="muted">({edu.toLocaleString("ko-KR")}개)</span>
+              </span>
+            </label>
+          </div>
           </div>
         </aside>
 
-        <section id="result-list" role="tabpanel" aria-label={TIER_LABEL[f.tier]}>
-          <p className="small muted" aria-live="polite" style={{ marginBottom: 10 }}>
-            {TIER_LABEL[f.tier]} {list.length.toLocaleString("ko-KR")}개
-            {f.category || f.org || f.q ? " (필터 적용)" : ""} · 검수 규칙 → 맞는 조건 많은 순 → 우리 동네 사업 순
-          </p>
-          {list.length === 0 ? (
+        <section id="result-list" data-testid="result-list" role="tabpanel" aria-label={TIER_LABEL[f.tier]}>
+          <div className="list-head">
+            <p className="small" aria-live="polite">
+              <strong>{TIER_LABEL[f.tier]} {groups.length.toLocaleString("ko-KR")}개</strong>
+              {f.category || f.org || f.q ? " (필터 적용)" : ""}
+              {groups.length > limit ? ` 중 관련도 상위 ${Math.min(limit, groups.length)}개` : ""}
+            </p>
+            <p className="small muted">정렬: 내 상황과 맞는 조건 → 검수 규칙 → 우리 동네 사업 · 같은 이름의 지역 사업은 한 카드로 묶음</p>
+          </div>
+          {groups.length === 0 ? (
             <div className="card empty">
               <p>이 조건에 해당하는 서비스가 없어요.</p>
               {f.tier === "eligible" && (
                 <p className="small" style={{ marginTop: 6 }}>
-                  &lsquo;조건 충족&rsquo;은 검수된 규칙이 있는 서비스만 해당돼요. &lsquo;가능성 있음&rsquo; 탭도 확인해 보세요.
+                  &lsquo;조건 충족&rsquo;은 검수 규칙·API 지원조건이 있는 서비스만 해당돼요. &lsquo;가능성 있음&rsquo; 탭도 확인해 보세요.
                 </p>
+              )}
+              {(f.category || f.org || f.q) && (
+                <button type="button" className="btn btn-ghost btn-sm" style={{ marginTop: 12 }} onClick={() => update({ category: null, org: null, q: "" })}>
+                  필터 모두 해제
+                </button>
               )}
             </div>
           ) : (
             <div className="list">
-              {list.slice(0, limit).map((s) => (
-                <ProgramCard key={s.program.id} p={s.program} ev={s.ev} />
+              {groups.slice(0, limit).map((g, i) => (
+                <ProgramCard
+                  key={g.key}
+                  p={g.lead.program}
+                  ev={g.lead.ev}
+                  rank={i < FIRST ? i + 1 : undefined}
+                  variants={g.variants.map((v) => ({ p: v.program, ev: v.ev }))}
+                />
               ))}
             </div>
           )}
-          {list.length > limit && (
+          {groups.length > limit && (
             <div style={{ textAlign: "center", marginTop: 16 }} className="no-print">
-              <button type="button" className="btn btn-ghost" onClick={() => setLimit((l) => l + PAGE)}>
-                더 보기 ({(list.length - limit).toLocaleString("ko-KR")}개 남음)
+              <button type="button" className="btn btn-ghost" onClick={() => setLimit((l) => l + PAGE)} data-testid="more">
+                더 보기 ({(groups.length - limit).toLocaleString("ko-KR")}개 남음)
               </button>
             </div>
           )}

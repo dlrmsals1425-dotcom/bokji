@@ -1,6 +1,6 @@
-/** 판정 결과 계산·정렬·필터 (순수 함수 — 단위 테스트 대상) */
+/** 판정 결과 계산·관련도 정렬·묶음·필터 (순수 함수 — 단위 테스트 대상) */
 import { evaluateRule } from "../engine/evaluate";
-import type { Profile } from "../engine/profile";
+import { ageRange, type Profile } from "../engine/profile";
 import type { Evaluation, Tier } from "../engine/types";
 import type { Category, OrgType, Program } from "../data/types";
 
@@ -8,25 +8,119 @@ export interface Scored {
   program: Program;
   ev: Evaluation;
   met: number;
+  /** 관련도 점수 (높을수록 먼저) */
+  score: number;
+  /** 지역 변형 묶음 키 (같은 이름의 시도·시군구·구 사업을 한 카드로) */
+  group: string;
 }
 
-const REVIEW_RANK = { verified: 0, curated: 1, structured: 2, auto: 3 } as const;
-const SCOPE_RANK = { sigungu: 0, sido: 1, national: 2 } as const;
+/* ---------------- 관련도 ---------------- */
+
+/** 맞은 조건의 무게: 내 상황을 구체적으로 가리키는 조건일수록 크게 */
+const FIELD_WEIGHT: Record<string, number> = {
+  benefit: 4, care: 4, disability: 4, trait: 3, children: 3, childAge: 3, activity: 3,
+  housing: 2, income: 2, incomeBands: 2, age: 1.5, householdSize: 1, car: 0.5, resident: 0,
+};
+const REVIEW_BONUS = { verified: 3, curated: 3, structured: 2, auto: 0 } as const;
+const SCOPE_BONUS = { sigungu: 1, sido: 0.5, national: 0.5 } as const;
+
+/** 이름·대상 문구가 가리키는 집단과 내 상황의 일치도 (규칙이 잡지 못한 대상 집단 보정) */
+export function affinity(p: Program, pr: Profile): number {
+  const text = `${p.name} ${(p.target ?? "").slice(0, 80)}`;
+  const name = p.name;
+  const age = pr.age === "unknown" ? null : ageRange(pr.age);
+  const kids = pr.children;
+  const hasKid = (b: string[]) => !!kids?.some((k) => b.includes(k));
+  let s = 0;
+  const rule = (re: RegExp, on: boolean | null, plus: number, minus: number, src = name) => {
+    if (!re.test(src)) return;
+    if (on === true) s += plus;
+    else if (on === false) s -= minus;
+  };
+  rule(/청년/, age ? age[0] >= 19 && age[1] <= 39 : null, 2, 4);
+  rule(/(노인|어르신|경로|노년|치매|장수|효도|실버|65세)/, age ? (age[0] >= 65 ? true : age[1] < 60 ? false : null) : null, 2, 4);
+  rule(/(임신|임산부|산모|산후|출산|난임|신생아|태아)/, kids === null ? null : hasKid(["pregnant", "0-1"]), 2, 3);
+  rule(/(영유아|유아|어린이집|보육|아이돌봄|육아|양육|아동)/, kids === null ? null : hasKid(["0-1", "2-5", "6-12"]) || (age ? age[1] <= 18 : false), 2, 3);
+  rule(/(청소년|중학|고등학|학생|장학|수학여행|입학|교복)/, kids === null && pr.activity === "unknown" ? null : hasKid(["6-12", "13-18"]) || pr.activity === "student" || (age ? age[1] <= 24 : false), 1.5, 2.5);
+  rule(/장애/, pr.disability === "unknown" ? null : pr.disability !== "none", 3, 4, text);
+  rule(/(한부모|조손|미혼모|미혼부)/, pr.traits === null ? null : pr.traits.includes("single_parent"), 3, 4, text);
+  rule(/(다문화|북한이탈|새터민|결혼이민)/, pr.traits === null ? null : pr.traits.includes("multicultural"), 3, 4, text);
+  rule(/(보훈|참전|국가유공|독립유공|고엽제|제대군인|무공수훈)/, pr.traits === null ? null : pr.traits.includes("veteran"), 3, 4, text);
+  rule(/(다자녀|셋째|넷째)/, pr.traits === null ? null : pr.traits.includes("multi_child"), 2, 3);
+  rule(/(구직|취업|일자리|면접|직업훈련|취창업|구인)/, pr.activity === "unknown" ? null : pr.activity === "job_seeking" ? true : null, 2.5, 0);
+  rule(/(월세|전세|임차|주거비|임대)/, pr.housing === "unknown" ? null : ["monthly", "jeonse", "public_rental"].includes(pr.housing) ? true : pr.housing === "own" ? false : null, 2, 1.5);
+  rule(/(돌봄|간병|요양|방문|가사|식사|도시락|안부|병원동행|이동지원)/, pr.care === null ? null : pr.care.length > 0 ? true : null, 2, 0);
+  rule(/(1인\s*가구|독거|고독사|홀몸)/, pr.householdSize === 1 || pr.traits?.includes("single") ? true : pr.householdSize === "unknown" ? null : false, 2, 2);
+  const low = pr.benefits?.length || (pr.income !== "unknown" && Number(pr.income) <= 50);
+  rule(/(저소득|기초생활|수급자|차상위|취약계층)/, low ? true : pr.benefits?.length === 0 && pr.income !== "unknown" && Number(pr.income) >= 100 ? false : null, 1.5, 1);
+  rule(/(장병|군인|예비군|전역|입영)/, age ? (age[1] <= 29 ? null : false) : null, 0, 3);
+  // 간편 입력으로 묻지 않는 특정 신분 대상 (산재·피해자·자립준비청년 등) → 뒤로
+  if (/(산재|피해자|피해\s*지원|유족|귀환|귀국|난민|노숙|출소|보호관찰|가정폭력|성폭력|학대|자립준비|보호종료|위기청소년|이주배경|외국인|탈북)/.test(name)) s -= 3;
+  // 법률·행정 절차 등 생활 지원과 거리가 먼 틈새 서비스 → 약간 뒤로
+  // 간편 입력에 없는 직업 신분 (농어업인 등) → 뒤로 (농림 생산 지원은 이미 기본 숨김)
+  if (/(농업인|어업인|농어업인|임업인|농가|어가|해녀)/.test(name)) s -= 3;
+  // 장애 유형을 묻지 않으므로 특정 유형 대상은 약간 뒤로
+  if (/(발달장애|시각장애|청각장애|지체장애|뇌병변|정신장애|자폐)/.test(name) && pr.disability !== "none") s -= 1.5;
+  if (/(소송|구술심리|법률|변호|심판|공증|우편물|통역센터|민원)/.test(name)) s -= 2;
+  return s;
+}
+
+/** 내 상황을 특정하는 항목 (이 항목으로 맞은 사업이 '나를 위한' 사업) */
+const SALIENT = new Set(["benefit", "care", "disability", "trait", "children", "childAge", "housing"]);
+
+/** 사용자가 특별한 상황(수급·돌봄·장애·가구 특성·자녀·구직·고령)을 입력했는지 */
+function hasSalient(pr: Profile): boolean {
+  return !!(pr.benefits?.length || pr.care?.length || (pr.disability !== "unknown" && pr.disability !== "none") || pr.traits?.length ||
+    pr.children?.some((c) => c !== "19+") || pr.activity === "job_seeking" || (pr.age !== "unknown" && ageRange(pr.age)[0] >= 65));
+}
+
+export function relevance(p: Program, ev: Evaluation, pr: Profile): number {
+  const met = ev.reasons.filter((r) => r.kind === "met");
+  const metW = met.reduce((n, r) => n + (FIELD_WEIGHT[r.field ?? ""] ?? 1), 0);
+  const aff = affinity(p, pr);
+  // '장애인 본인' 대상인데 장애가 있는 가구원이 있는 경우: 가구원 이름으로 신청 가능 → 부분 일치로 가산
+  const proxy = ev.reasons.some((r) => r.kind === "unknown" && r.field === "disability") ? 3 : 0;
+  // 나이·근로 상태처럼 넓은 조건만 맞고 내 특별한 상황과는 무관한 사업은 뒤로 (예: 장애인 가구에 '건설노동자 휴양소')
+  const senior = pr.age !== "unknown" && ageRange(pr.age)[0] >= 65;
+  const generic = hasSalient(pr) && !proxy && !met.some((r) => SALIENT.has(r.field ?? "") || (senior && r.field === "age")) && aff <= 0 && !(pr.activity === "job_seeking" && met.some((r) => r.field === "activity")) ? -3 : 0;
+  const unknown = Math.min(4, ev.reasons.filter((r) => r.kind === "unknown").length);
+  const actionable = p.hasApply || p.applyMethod || p.contact ? 0.5 : 0;
+  // 대출·융자·보증은 받는 혜택이 아니라 빌리는 돈 → 같은 조건이면 뒤로
+  const loan = p.badges?.includes("financial") ? -1.5 : 0;
+  // 핵심 복지 100선에 든 사업, 여러 원천에 함께 실린 사업은 대표성이 높다
+  const core = (p.sources.some((s) => s.source === "welfare100") ? 2 : 0) + ((p.mergedCount ?? 1) > 1 ? 0.5 : 0);
+  return metW - unknown * 0.5 + REVIEW_BONUS[p.rule.review] + SCOPE_BONUS[p.scope] + aff + proxy + generic + actionable + core + loan;
+}
+
+/* ---------------- 지역 변형 묶음 ---------------- */
+
+const REGION_HEAD = /^(?:(?:서울|부산|대구|인천|광주|대전|울산|세종|경기|강원|충북|충남|전북|전남|경북|경남|제주)(?:특별시|광역시|특별자치시|특별자치도|도)?|[가-힣]{1,4}(?:특례시|시|군|구))\s+/;
+
+/** 같은 사업의 지역 변형(경기도 ○○ / 수원시 ○○ / (장안구) ○○)을 한데 묶는 키 */
+export function variantKey(name: string): string {
+  let s = name.normalize("NFC");
+  s = s.replace(/[(（[]\s*[가-힣\s]*(?:특례시|시|군|구|도|본청)\s*[)）\]]/g, " ");
+  for (let i = 0; i < 3; i++) s = s.trimStart().replace(REGION_HEAD, "");
+  s = s.replace(/[^0-9A-Za-z가-힣()]/g, "").toLowerCase();
+  for (let i = 0; i < 3; i++) s = s.replace(/(지원사업|사업|서비스|지원|지급|운영)$/u, "");
+  return s || name;
+}
 
 export function scoreAll(programs: Program[], profile: Profile): Scored[] {
   const out: Scored[] = programs.map((program) => {
     const ev = evaluateRule(program.rule, profile);
-    return { program, ev, met: ev.reasons.filter((r) => r.kind === "met").length };
+    return {
+      program, ev,
+      met: ev.reasons.filter((r) => r.kind === "met").length,
+      score: relevance(program, ev, profile),
+      group: variantKey(program.name),
+    };
   });
-  out.sort(
-    (a, b) =>
-      REVIEW_RANK[a.program.rule.review] - REVIEW_RANK[b.program.rule.review] ||
-      b.met - a.met ||
-      SCOPE_RANK[a.program.scope] - SCOPE_RANK[b.program.scope] ||
-      a.program.name.localeCompare(b.program.name, "ko"),
-  );
+  out.sort((a, b) => b.score - a.score || a.program.name.localeCompare(b.program.name, "ko"));
   return out;
 }
+
+/* ---------------- 필터 ---------------- */
 
 export interface Filters {
   tier: Tier;
@@ -35,9 +129,14 @@ export interface Filters {
   q: string;
   /** 교육청 서비스 포함 여부 (기본 숨김 — 노출 범위는 운영자 결정 대기) */
   includeEdu?: boolean;
+  /** 농림축산어업·사업자 대상 서비스 포함 여부 (기본 숨김) */
+  includeIndustry?: boolean;
 }
 
 const eduHidden = (p: Program, f: Filters) => p.orgType === "edu_office" && !f.includeEdu && f.org !== "edu_office";
+const industryHidden = (p: Program, f: Filters) => !!p.sector && !f.includeIndustry;
+/** 기본 숨김 대상인지 (교육청·복지 외 분야) */
+export const hiddenByDefault = (p: Program, f: Filters) => eduHidden(p, f) || industryHidden(p, f);
 
 export function normalizeQuery(s: string): string {
   return s.replace(/\s+/g, "").toLowerCase();
@@ -52,36 +151,87 @@ export function matchesQuery(p: Program, q: string): boolean {
     .every((t) => hay.includes(t));
 }
 
-/** 각 축의 개수는 '다른 축의 필터'를 적용한 상태에서 센다 → 필터를 바꾸면 모든 개수가 함께 갱신된다 */
+/**
+ * 각 축의 개수는 '다른 축의 필터'를 적용한 상태에서, 화면에 보이는 카드(지역 변형 묶음) 수로 센다
+ * → 탭·분야·기관 개수와 목록 길이가 항상 일치한다.
+ */
 export function facetCounts(items: Scored[], f: Filters) {
-  const tiers: Record<Tier, number> = { eligible: 0, likely: 0, check: 0, ineligible: 0 };
-  const cats = new Map<Category, number>();
-  const orgs = new Map<OrgType, number>();
+  const tiers: Record<Tier, Set<string>> = { eligible: new Set(), likely: new Set(), check: new Set(), ineligible: new Set() };
+  const cats = new Map<Category, Set<string>>();
+  const orgs = new Map<OrgType, Set<string>>();
+  const add = <K,>(m: Map<K, Set<string>>, k: K, g: string) => {
+    let s = m.get(k);
+    if (!s) m.set(k, (s = new Set()));
+    s.add(g);
+  };
   for (const s of items) {
     const p = s.program;
-    if (!matchesQuery(p, f.q) || eduHidden(p, f)) continue;
+    if (!matchesQuery(p, f.q) || hiddenByDefault(p, f)) continue;
     const okCat = !f.category || p.category === f.category;
     const okOrg = !f.org || p.orgType === f.org;
     const okTier = s.ev.tier === f.tier;
-    if (okCat && okOrg) tiers[s.ev.tier]++;
-    if (okTier && okOrg) cats.set(p.category, (cats.get(p.category) ?? 0) + 1);
-    if (okTier && okCat) orgs.set(p.orgType, (orgs.get(p.orgType) ?? 0) + 1);
+    if (okCat && okOrg) tiers[s.ev.tier].add(s.group);
+    if (okTier && okOrg) add(cats, p.category, s.group);
+    if (okTier && okCat) add(orgs, p.orgType, s.group);
   }
-  return { tiers, cats, orgs };
+  const size = <K,>(m: Map<K, Set<string>>) => new Map([...m].map(([k, v]) => [k, v.size] as [K, number]));
+  return {
+    tiers: { eligible: tiers.eligible.size, likely: tiers.likely.size, check: tiers.check.size, ineligible: tiers.ineligible.size } as Record<Tier, number>,
+    cats: size(cats),
+    orgs: size(orgs),
+  };
 }
 
 export function applyFilters(items: Scored[], f: Filters): Scored[] {
   return items.filter(
     (s) =>
       s.ev.tier === f.tier &&
-      !eduHidden(s.program, f) &&
+      !hiddenByDefault(s.program, f) &&
       (!f.category || s.program.category === f.category) &&
       (!f.org || s.program.orgType === f.org) &&
       matchesQuery(s.program, f.q),
   );
 }
 
-/** 숨겨진 교육청 서비스 수 (현재 탭·검색어 기준) */
+export interface Group {
+  key: string;
+  lead: Scored;
+  /** 같은 사업의 다른 지역 변형 (관련도 순) */
+  variants: Scored[];
+}
+
+/** 이미 정렬된 목록을 지역 변형 묶음으로 접는다. 대표는 묶음에서 관련도가 가장 높은 항목 */
+export function groupVariants(list: Scored[]): Group[] {
+  const map = new Map<string, Group>();
+  const out: Group[] = [];
+  for (const s of list) {
+    const g = map.get(s.group);
+    if (g) g.variants.push(s);
+    else {
+      const ng = { key: s.group, lead: s, variants: [] };
+      map.set(s.group, ng);
+      out.push(ng);
+    }
+  }
+  return out;
+}
+
+/** 숨겨진 교육청 서비스 묶음 수 (현재 탭·검색어 기준) */
 export function eduCount(items: Scored[], f: Filters): number {
-  return items.filter((s) => s.program.orgType === "edu_office" && s.ev.tier === f.tier && matchesQuery(s.program, f.q)).length;
+  return new Set(items.filter((s) => s.program.orgType === "edu_office" && s.ev.tier === f.tier && matchesQuery(s.program, f.q) && !industryHidden(s.program, f)).map((s) => s.group)).size;
+}
+
+/** 숨겨진 복지 외 분야(농림·사업자) 묶음 수 (현재 탭·검색어 기준) */
+export function industryCount(items: Scored[], f: Filters): number {
+  return new Set(items.filter((s) => !!s.program.sector && s.ev.tier === f.tier && matchesQuery(s.program, f.q) && !eduHidden(s.program, f)).map((s) => s.group)).size;
+}
+
+/** 맞춤 추천: 조건 충족 → 가능성 있음 순으로 관련도 상위 n개 묶음 (숨김 대상 제외) */
+export function topPicks(items: Scored[], f: Pick<Filters, "includeEdu" | "includeIndustry">, n = 5): Group[] {
+  const base: Filters = { tier: "eligible", category: null, org: null, q: "", ...f };
+  const pool = items.filter((s) => (s.ev.tier === "eligible" || s.ev.tier === "likely") && !hiddenByDefault(s.program, base));
+  // '조건 충족'에 가산점(+2)을 주되, 관련도가 확실히 높은 '가능성 있음'은 앞설 수 있다
+  const key = (s: Scored) => s.score + (s.ev.tier === "eligible" ? 2 : 0);
+  const sorted = [...pool].sort((a, b) => key(b) - key(a) || a.program.name.localeCompare(b.program.name, "ko"));
+  return groupVariants(sorted).slice(0, n);
 }
