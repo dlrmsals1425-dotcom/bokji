@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-10-02T08:16:53.242Z",
+  "generatedAt": "2026-10-02T08:45:08.113Z",
   "dataAsOf": {
     "bokjiro": "복지로 OpenAPI 수집 2026-10-02 (서비스별 최종수정일 표시) · 색인 2026-09-24",
     "icare": "2026-04 등 (메뉴판 문서별 원문 기준월), 수집 2026-10-01",
@@ -34,8 +34,14 @@
       "sido": 2261
     },
     "bySector": {
-      "agri": 1705,
-      "business": 78
+      "agri": 1694,
+      "business": 89
+    },
+    "byApplyType": {
+      "self": 11471,
+      "auto": 657,
+      "institution": 178,
+      "unknown": 11260
     },
     "bySource": {
       "gov24": 9346,
