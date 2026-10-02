@@ -32,7 +32,9 @@ export type Leaf =
   | (LeafBase & { field: "care"; anyOf: CareNeed[] })
   | (LeafBase & { field: "disability"; anyOf: Exclude<Disability, "none">[]; severity?: DisabilitySeverity })
   /** 익명 단계에서 묻지 않는 조건 (성별, 소득하위 70%, 등급 판정 등) → 항상 UNKNOWN */
-  | (LeafBase & { field: "unasked"; hint?: string });
+  | (LeafBase & { field: "unasked"; hint?: string })
+  /** 지역 주민 누구나 (번들 선택 단계에서 거주지가 이미 맞음) → 항상 TRUE */
+  | (LeafBase & { field: "resident" });
 
 export type Cond = Leaf | { all: Cond[]; label?: string } | { any: Cond[]; label?: string };
 

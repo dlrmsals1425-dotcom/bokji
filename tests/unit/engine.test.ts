@@ -58,7 +58,7 @@ describe("잎 조건", () => {
   it("모름이면 U와 '입력하면 확인' 안내", () => {
     const r = evaluateCond({ field: "age", min: 65, label: "만 65세 이상" }, P({}));
     expect(r.tri).toBe("U");
-    expect(r.reasons[0].text).toContain("나이대을(를) 입력하면");
+    expect(r.reasons[0].text).toContain("나이대를 입력하면");
   });
   it("자녀 나이: 6~12세 자녀는 '9세 미만'에 걸침 → U, 2~5세 → T, 자녀 없음 → F", () => {
     const c: Cond = { field: "childAge", min: 0, max: 8, label: "9세 미만 자녀" };

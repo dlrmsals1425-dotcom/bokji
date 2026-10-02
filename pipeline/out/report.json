@@ -1,0 +1,111 @@
+{
+  "schema": 1,
+  "generatedAt": "2026-10-02T07:09:03.091Z",
+  "dataAsOf": {
+    "bokjiro": "2026-09-24 (복지로 색인 기준일)",
+    "icare": "2026-04 등 (메뉴판 문서별 원문 기준월), 수집 2026-10-01",
+    "gov24": "미수집"
+  },
+  "counts": {
+    "raw": {
+      "gov24": 0,
+      "bokjiro": 5204,
+      "welfare100": 100,
+      "icare": 12526
+    },
+    "excluded": {
+      "eupmyeondong_level": 19
+    },
+    "uniquePrograms": 16300,
+    "placements": 16303,
+    "byOrg": {
+      "central": 482,
+      "metro": 948,
+      "local": 13808,
+      "public_inst": 1062
+    },
+    "byScope": {
+      "national": 482,
+      "sido": 780,
+      "sigungu": 15038
+    },
+    "bySource": {
+      "bokjiro": 5204,
+      "icare": 11050,
+      "welfare100": 100
+    },
+    "bySourceOrg": {
+      "bokjiro": {
+        "central": 387,
+        "metro": 771,
+        "local": 4046
+      },
+      "welfare100": {
+        "central": 95,
+        "metro": 2,
+        "local": 3
+      },
+      "icare": {
+        "local": 9759,
+        "public_inst": 1062,
+        "metro": 175
+      }
+    },
+    "dedup": {
+      "d1Exact": 19,
+      "d2Substantive": 75,
+      "crossMerged": [
+        {
+          "pair": "bokjiro+icare",
+          "count": 53
+        },
+        {
+          "pair": "welfare100+icare",
+          "count": 1
+        }
+      ],
+      "absorbedAsLocalOps": 1374,
+      "blockedByLevel": 545
+    },
+    "localOps": 1363,
+    "rulesByReview": {
+      "auto": 16230,
+      "curated": 73
+    },
+    "rulesByOrigin": {
+      "bokjiro_tags": 4651,
+      "none": 1341,
+      "text_extract": 10238,
+      "curated": 73
+    },
+    "pilot": {
+      "programs": 2106,
+      "curatedOrVerified": 10,
+      "autoRules": 1887,
+      "noRule": 209
+    },
+    "nationalCurated": 62
+  },
+  "gov24": {
+    "status": "unavailable",
+    "detail": "HTTP 401 code -4: 등록되지 않은 인증키 입니다."
+  },
+  "logs": [],
+  "excludedSamples": [
+    "부산 사하구 · 신평1동 식식(⾷⾷)가게",
+    "인천 남동구 · 간석3동 영양드림",
+    "인천 제물포구 · 송림6동 행복마을 집수리 지원사업",
+    "전북 진안군 · 읍면 지역사회보장협의체 특화사업",
+    "충남 아산시 · 도고면 행복키움추진단 특화사업",
+    "충남 아산시 · 둔포면 행복키움추진단 특화사업",
+    "충남 아산시 · 배방읍 행복키움추진단 특화사업",
+    "충남 아산시 · 송악면 행복키움추진단 특화사업",
+    "충남 아산시 · 신창면 행복키움추진단 특화사업",
+    "충남 아산시 · 염치읍 행복키움추진단 특화사업",
+    "충남 아산시 · 영인면 행복키움추진단 특화사업",
+    "충남 아산시 · 온양1동 행복키움추진단 특화사업",
+    "충남 아산시 · 온양2동 행복키움추진단 특화사업",
+    "충남 아산시 · 온양3동 행복키움추진단 특화사업",
+    "충남 아산시 · 온양4동 행복키움추진단 특화사업"
+  ]
+}

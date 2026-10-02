@@ -63,21 +63,23 @@ interface LeafResult {
   reason: Reason;
 }
 
-const FIELD_NAME: Record<Leaf["field"], string> = {
-  age: "나이대",
-  childAge: "자녀 나이대",
-  children: "자녀 정보",
-  income: "소득 구간",
-  incomeBands: "소득 구간",
-  householdSize: "가구원 수",
-  trait: "가구 특성",
-  benefit: "수급·자격 상태",
-  housing: "주거 형태",
-  car: "차량 보유",
-  activity: "취업·활동 상태",
-  care: "돌봄 필요",
-  disability: "장애 정보",
+/** 입력 안내용 목적어 (조사 포함) */
+const FIELD_ASK: Record<Leaf["field"], string> = {
+  age: "나이대를",
+  childAge: "자녀 나이대를",
+  children: "자녀 정보를",
+  income: "소득 구간을",
+  incomeBands: "소득 구간을",
+  householdSize: "가구원 수를",
+  trait: "가구 특성을",
+  benefit: "수급·자격 상태를",
+  housing: "주거 형태를",
+  car: "차량 보유 여부를",
+  activity: "취업·활동 상태를",
+  care: "돌봄 필요 여부를",
+  disability: "장애 정보를",
   unasked: "",
+  resident: "거주지를",
 };
 
 function joinLabels<T extends string>(vals: readonly T[], labels: Record<T, string>): string {
@@ -161,6 +163,8 @@ function rawLeaf(leaf: Leaf, p: Profile): { tri: Tri; missing: boolean; display?
     }
     case "unasked":
       return { tri: "U", missing: false };
+    case "resident":
+      return { tri: "T", missing: false };
   }
 }
 
@@ -187,7 +191,7 @@ export function evaluateLeaf(leaf: Leaf, p: Profile): LeafResult {
   }
   tri = "U";
   text = raw.missing
-    ? `${leaf.label} — ${FIELD_NAME[leaf.field]}을(를) 입력하면 확인할 수 있어요`
+    ? `${leaf.label} — ${FIELD_ASK[leaf.field]} 입력하면 확인할 수 있어요`
     : `${leaf.label} — 선택한 구간(${raw.display})이 기준에 걸쳐 있어요`;
   return { tri, reason: { kind: "unknown", text } };
 }
