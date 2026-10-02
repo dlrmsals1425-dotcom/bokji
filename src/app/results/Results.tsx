@@ -2,8 +2,8 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ProgramCard } from "@/components/ProgramCard";
-import { TierBadge } from "@/components/Badges";
+import { ProgramCard, SupportTags } from "@/components/ProgramCard";
+import { TierBadge, orgText } from "@/components/Badges";
 import { Icon } from "@/components/Icon";
 import { CHANNEL_LABEL, TIER_PLAIN, firstLine, howTo, metReasons, toCheck } from "@/lib/client/howto";
 import type { Program } from "@/lib/data/types";
@@ -152,273 +152,337 @@ function ResultsInner({ profile }: { profile: Profile }) {
   };
   const place = data.label.split(" ").pop();
 
+  const TILE_DESC: Record<Tier, string> = { eligible: "지금 신청해 볼 수 있어요", likely: "한두 가지만 더 확인해요", check: "기관에 물어봐야 알아요", ineligible: "" };
+  const pickTier = (tier: Tier) => {
+    update({ tier });
+    document.getElementById("list-h")?.scrollIntoView({ block: "start" });
+  };
+
   return (
-    <div className="wrap page results-root">
-      <div className="print-only">
+    <div className="results-root">
+      <div className="print-only wrap">
         <strong>복지나침반 결과 요약</strong> — 출력일 {new Date().toLocaleDateString("ko-KR")}
       </div>
-      {preset && (
-        <p className="notice" data-testid="example-banner" role="note">
-          <strong>예시 상황으로 보는 중입니다.</strong> {preset.title}({preset.desc})인 경우로 계산했습니다. 실제 개인 정보가 아닙니다.{" "}
-          <Link href="/check">내 상황으로 다시 입력</Link>
-        </p>
-      )}
-      <div className="layout">
-        <div>
-          <p className="caption">{data.label} · 찾기 결과</p>
-          <h1 className="h1">{place}에서 신청할 수 있는 복지 서비스</h1>
-          <p className="lead">
-            입력하신 상황으로 {data.label}에서 받을 수 있는 서비스를 모두 확인했습니다.
-            {picks.length > 0 && ` 아래 ${picks.length}가지를 먼저 확인하세요. 모두 직접 신청해야 받을 수 있는 서비스입니다.`}
-          </p>
-          {answered < 6 && (
-            <p className="warning">
-              <Icon name="alert" size={22} />
+      <section className="res-head" aria-labelledby="res-h">
+        <div className="wrap">
+          <ol className="crumbs no-print" aria-label="현재 위치">
+            <li>
+              <Link href="/">
+                <Icon name="home" size={14} /> 홈
+              </Link>
+            </li>
+            <li>
+              <Link href="/check">맞춤 찾기</Link>
+            </li>
+            <li>
+              <span aria-current="page">결과</span>
+            </li>
+          </ol>
+          {preset && (
+            <p className="notice warm" data-testid="example-banner" role="note">
+              <Icon name="info" size={18} />
               <span>
-                입력한 항목이 적어 &lsquo;확인 필요&rsquo;가 많습니다. <Link href="/check">항목을 더 입력</Link>하면 더 정확해집니다.
+                <strong>예시 상황으로 보는 중입니다.</strong> {preset.title}({preset.desc})인 경우로 계산했습니다. 실제 개인 정보가 아닙니다.{" "}
+                <Link href="/check">내 상황으로 다시 입력</Link>
               </span>
             </p>
           )}
-
-          {picks.length > 0 && (
-            <section aria-labelledby="picks-h" data-testid="top-picks">
-              <h2 className="h2" id="picks-h">
-                먼저 확인할 서비스 {picks.length}가지
-              </h2>
-              <ol className="steps">
-                {picks.map((g) => (
-                  <Pick key={g.key} g={g} detail={details[g.lead.program.id]} />
-                ))}
-              </ol>
-            </section>
-          )}
-
-          <h2 className="h2" id="list-h">
-            {picks.length > 0 ? "그 밖에 신청할 수 있는 서비스" : "신청할 수 있는 서비스"}
-          </h2>
-          <p className="body">
-            판단 결과에 따라 나누었습니다. 모두 합쳐 {(total.eligible + total.likely + total.check).toLocaleString("ko-KR")}개입니다.
-          </p>
-
-          <div className="refine no-print">
-            <div className="grow">
-              <label htmlFor="rq" className="label">
-                결과 안에서 찾기
-              </label>
-              <input id="rq" type="search" className="input" placeholder="예: 돌봄, 의료비" value={f.q} onChange={(e) => update({ q: e.target.value })} />
-            </div>
-            <button
-              type="button"
-              className="btn btn-ghost"
-              aria-expanded={filtersOpen}
-              aria-controls="filter-body"
-              onClick={() => setFiltersOpen((o) => !o)}
-              data-testid="filter-toggle"
-            >
-              <Icon name="sliders" size={18} /> 기관·분야로 좁히기{f.category || f.org ? " (적용 중)" : ""}
-            </button>
-          </div>
-          <div id="filter-body" className={`filters ${filtersOpen ? "open" : ""}`} role="group" aria-label="결과 좁히기">
-            <div className="select-row">
-              <div>
-                <label htmlFor="f-org" className="label">
-                  기관 유형
-                </label>
-                <select id="f-org" className="select" value={f.org ?? ""} onChange={(e) => update({ org: (e.target.value || null) as OrgType | null })}>
-                  <option value="">전체</option>
-                  {ORGS.filter((o) => (counts.orgs.get(o) ?? 0) > 0 || f.org === o).map((o) => (
-                    <option key={o} value={o}>
-                      {ORG_TYPE_LABEL[o]} ({counts.orgs.get(o) ?? 0})
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label htmlFor="f-cat" className="label">
-                  분야
-                </label>
-                <select id="f-cat" className="select" value={f.category ?? ""} onChange={(e) => update({ category: (e.target.value || null) as Category | null })}>
-                  <option value="">전체</option>
-                  {CATEGORIES.filter((c) => (counts.cats.get(c) ?? 0) > 0 || f.category === c).map((c) => (
-                    <option key={c} value={c}>
-                      {c} ({counts.cats.get(c) ?? 0})
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-            <fieldset className="hidden-toggles">
-              <legend>기본으로 숨긴 서비스</legend>
-              <label>
-                <input type="checkbox" checked={!!f.includeIndustry} onChange={(e) => update({ includeIndustry: e.target.checked })} data-testid="include-industry" />
-                <span>
-                  농림축산어업·사업자(창업·소상공인) 대상도 보기 <span className="muted">({industry.toLocaleString("ko-KR")}개)</span>
-                </span>
-              </label>
-              <label>
-                <input type="checkbox" checked={!!f.includeOperator} onChange={(e) => update({ includeOperator: e.target.checked })} data-testid="include-operator" />
-                <span>
-                  기관·시설 운영 지원 사업도 보기 <span className="muted">({operator.toLocaleString("ko-KR")}개)</span>
-                </span>
-              </label>
-              <label>
-                <input type="checkbox" checked={!!f.includeEdu} onChange={(e) => update({ includeEdu: e.target.checked })} data-testid="include-edu" />
-                <span>
-                  교육청 서비스도 보기 <span className="muted">({edu.toLocaleString("ko-KR")}개)</span>
-                </span>
-              </label>
-            </fieldset>
-            {filtered && (
-              <button type="button" className="btn btn-text" onClick={() => update({ category: null, org: null, q: "" })}>
-                조건 모두 지우기
-              </button>
-            )}
-          </div>
-
-          <div className="tabs" role="tablist" aria-label="판정 결과">
-            {TABS.map((t) => (
-              <button
-                key={t}
-                role="tab"
-                type="button"
-                className="tab"
-                aria-selected={f.tier === t}
-                aria-controls="result-list"
-                onClick={() => update({ tier: t })}
-                data-testid={`tab-${t}`}
-              >
-                <span className="l">{TIER_LABEL[t]}</span>
-                <span className="n">{counts.tiers[t].toLocaleString("ko-KR")}</span>
-              </button>
-            ))}
-          </div>
-
-          <section id="result-list" data-testid="result-list" role="tabpanel" aria-label={TIER_LABEL[f.tier]}>
-            <p className="tier-note">{TIER_PLAIN[f.tier]}</p>
-            <p className="list-head" aria-live="polite">
-              {TIER_LABEL[f.tier]} {groups.length.toLocaleString("ko-KR")}개{filtered ? " (필터 적용)" : ""}
-              {groups.length > limit ? ` · 내 상황과 관련 깊은 순으로 ${Math.min(limit, groups.length)}개를 보여 드립니다` : ""}
-            </p>
-            {groups.length === 0 ? (
-              <div className="empty">
-                <p>이 조건에 해당하는 서비스가 없습니다.</p>
-                {f.tier === "eligible" && (
-                  <p className="small" style={{ marginTop: "0.375rem" }}>
-                    &lsquo;조건 충족&rsquo;은 검수 규칙·API 지원조건이 있는 서비스만 해당합니다. &lsquo;가능성 있음&rsquo;도 확인해 보세요.
-                  </p>
-                )}
-              </div>
-            ) : (
-              <div className="list">
-                {groups.slice(0, limit).map((g) => (
-                  <ProgramCard key={g.key} p={g.lead.program} ev={g.lead.ev} variants={g.variants.map((v) => ({ p: v.program, ev: v.ev }))} />
-                ))}
-              </div>
-            )}
-            {groups.length > limit && (
-              <div className="more-row no-print">
-                <button type="button" className="btn btn-ghost" onClick={() => setLimit((l) => l + PAGE)} data-testid="more">
-                  더 보기 ({(groups.length - limit).toLocaleString("ko-KR")}개 남음)
-                </button>
-              </div>
-            )}
-            <div className="more-row no-print">
-              {f.tier === "ineligible" ? (
-                <button type="button" className="btn btn-text" onClick={() => update({ tier: "eligible" })}>
-                  판정 결과로 돌아가기
-                </button>
-              ) : (
-                <button type="button" className="btn btn-text" onClick={() => update({ tier: "ineligible" })} data-testid="show-ineligible">
-                  조건이 맞지 않는 서비스 {total.ineligible.toLocaleString("ko-KR")}개도 보기
-                </button>
-              )}
-            </div>
-          </section>
-
-          {autos.length > 0 && (
-            <details className="details" data-testid="auto-section" open={autoOpen} onToggle={(e) => setAutoOpen((e.currentTarget as HTMLDetailsElement).open)}>
-              <summary data-testid="auto-toggle">
-                신청하지 않아도 받는 서비스 (<span data-testid="auto-count">{autos.length.toLocaleString("ko-KR")}</span>개) <Icon name="chevronDown" size={18} />
-              </summary>
-              {autoOpen && (
-                <div className="details-body">
-                  <p className="body">
-                    대상이 되면 기관이 알아서 지급·연계하거나(공단 명단 통보, 수급자 선정 시 연계, 담당 공무원 직권 처리), 학교·시설·기관이 추천·선정하는
-                    서비스입니다. 해당될 것 같은데 받고 있지 않다면 주민센터나 129에 물어보세요.
-                  </p>
-                  <div className="list">
-                    {autos.slice(0, autoLimit).map((g) => (
-                      <ProgramCard key={g.key} p={g.lead.program} ev={g.lead.ev} variants={g.variants.map((v) => ({ p: v.program, ev: v.ev }))} />
-                    ))}
-                  </div>
-                  {autos.length > autoLimit && (
-                    <div className="more-row no-print">
-                      <button type="button" className="btn btn-ghost" onClick={() => setAutoLimit((l) => l + PAGE)} data-testid="auto-more">
-                        더 보기 ({(autos.length - autoLimit).toLocaleString("ko-KR")}개 남음)
-                      </button>
-                    </div>
-                  )}
-                </div>
-              )}
-            </details>
-          )}
-          <p className="disclaimer">
-            이 결과는 공개된 자격 조건과 입력하신 정보만으로 계산한 안내이며, 실제 선정은 소득·재산 조사 등 기관 심사로 결정됩니다. 검수 전인 자동 변환
-            규칙은 최대 &lsquo;가능성 있음&rsquo;까지만 판정합니다. 신청 방법은 원문 문구로 분류한 것이니 정확한 절차는 기관에 확인하세요.
-          </p>
-        </div>
-
-        <aside className="side" aria-label="이 결과에 대해">
-          <section>
-            <h2>입력한 상황</h2>
-            <p aria-label="입력한 내 상황">{chips.join(", ")}</p>
-            <p className="small muted" style={{ marginTop: "0.25rem" }}>
-              12개 중 {answered}개 입력
-            </p>
+          <h1 className="h1" id="res-h">
+            {place}에서 신청할 수 있는 복지 서비스
+          </h1>
+          <p className="situation">
+            <span>
+              <Icon name="mapPin" size={16} className="icon-inline" /> {chips.join(" · ")}
+            </span>
+            <span className="muted">(12개 중 {answered}개 입력)</span>
             <Link href="/check" className="no-print">
               입력 수정
             </Link>
-          </section>
-          <section>
-            <h2>판단 방법</h2>
-            <ul>
-              <li>공개된 지원 대상 조건과 입력하신 내용을 비교했습니다.</li>
-              <li>소득·재산처럼 입력하지 않은 조건은 &lsquo;확인&rsquo;으로 남겼습니다.</li>
-              <li>최종 결정은 담당 기관이 합니다.</li>
-            </ul>
-            <Link href="/about">판정 기준 자세히 보기</Link>
-          </section>
-          <section className="no-print">
-            <h2>이 결과로 할 수 있는 일</h2>
-            <ul className="link-list">
-              <li>
-                <button type="button" className="link-btn" onClick={() => window.print()}>
-                  <Icon name="printer" size={18} /> 인쇄하거나 PDF로 저장
+          </p>
+          <div className="tiles no-print" aria-label="판정 결과별 개수">
+            {TABS.map((tr) => (
+              <button
+                key={tr}
+                type="button"
+                className={`tile t-${tr}`}
+                aria-pressed={f.tier === tr}
+                aria-controls="result-list"
+                onClick={() => pickTier(tr)}
+                data-testid={`tab-${tr}`}
+              >
+                <span className="l">{TIER_LABEL[tr]}</span>
+                <span className="n">{counts.tiers[tr].toLocaleString("ko-KR")}</span>
+                <span className="d">{TILE_DESC[tr]}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <div className="wrap page">
+        <div className="layout">
+          <div>
+            {answered < 6 && (
+              <p className="notice warm" style={{ marginBottom: "1.5rem" }}>
+                <Icon name="alert" size={18} />
+                <span>
+                  입력한 항목이 적어 &lsquo;확인 필요&rsquo;가 많습니다. <Link href="/check">항목을 더 입력</Link>하면 더 정확해집니다.
+                </span>
+              </p>
+            )}
+
+            {picks.length > 0 && (
+              <section aria-labelledby="picks-h" data-testid="top-picks" style={{ marginBottom: "3rem" }}>
+                <div className="sec-head" style={{ marginBottom: "1rem" }}>
+                  <div>
+                    <h2 className="h2" id="picks-h">
+                      먼저 확인할 서비스 {picks.length}가지
+                    </h2>
+                    <p>내 상황과 가장 관련 깊은 순서입니다. 모두 직접 신청해야 받을 수 있어요.</p>
+                  </div>
+                </div>
+                <ol className="picks">
+                  {picks.map((g, i) => (
+                    <Pick key={g.key} g={g} i={i} detail={details[g.lead.program.id]} />
+                  ))}
+                </ol>
+              </section>
+            )}
+
+            <h2 className="h2" id="list-h">
+              {picks.length > 0 ? "그 밖에 신청할 수 있는 서비스" : "신청할 수 있는 서비스"}
+            </h2>
+            <p className="body">모두 {(total.eligible + total.likely + total.check).toLocaleString("ko-KR")}개를 판단 결과에 따라 나누었습니다.</p>
+
+            <div className="refine no-print">
+              <div className="grow">
+                <label htmlFor="rq" className="label">
+                  결과 안에서 찾기
+                </label>
+                <input id="rq" type="search" className="input" placeholder="예: 돌봄, 의료비" value={f.q} onChange={(e) => update({ q: e.target.value })} />
+              </div>
+              <button
+                type="button"
+                className="btn btn-ghost"
+                aria-expanded={filtersOpen}
+                aria-controls="filter-body"
+                onClick={() => setFiltersOpen((o) => !o)}
+                data-testid="filter-toggle"
+                style={{ minHeight: "3rem" }}
+              >
+                <Icon name="sliders" size={18} /> 기관·분야로 좁히기{f.category || f.org ? " (적용 중)" : ""}
+              </button>
+            </div>
+            <div id="filter-body" className={`filters ${filtersOpen ? "open" : ""}`} role="group" aria-label="결과 좁히기">
+              <div className="select-row">
+                <div>
+                  <label htmlFor="f-org" className="label">
+                    기관 유형
+                  </label>
+                  <select id="f-org" className="select" value={f.org ?? ""} onChange={(e) => update({ org: (e.target.value || null) as OrgType | null })}>
+                    <option value="">전체</option>
+                    {ORGS.filter((o) => (counts.orgs.get(o) ?? 0) > 0 || f.org === o).map((o) => (
+                      <option key={o} value={o}>
+                        {ORG_TYPE_LABEL[o]} ({counts.orgs.get(o) ?? 0})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="f-cat" className="label">
+                    분야
+                  </label>
+                  <select id="f-cat" className="select" value={f.category ?? ""} onChange={(e) => update({ category: (e.target.value || null) as Category | null })}>
+                    <option value="">전체</option>
+                    {CATEGORIES.filter((c) => (counts.cats.get(c) ?? 0) > 0 || f.category === c).map((c) => (
+                      <option key={c} value={c}>
+                        {c} ({counts.cats.get(c) ?? 0})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              <fieldset className="hidden-toggles">
+                <legend>기본으로 숨긴 서비스</legend>
+                <label>
+                  <input type="checkbox" checked={!!f.includeIndustry} onChange={(e) => update({ includeIndustry: e.target.checked })} data-testid="include-industry" />
+                  <span>
+                    농림축산어업·사업자(창업·소상공인) 대상도 보기 <span className="muted">({industry.toLocaleString("ko-KR")}개)</span>
+                  </span>
+                </label>
+                <label>
+                  <input type="checkbox" checked={!!f.includeOperator} onChange={(e) => update({ includeOperator: e.target.checked })} data-testid="include-operator" />
+                  <span>
+                    기관·시설 운영 지원 사업도 보기 <span className="muted">({operator.toLocaleString("ko-KR")}개)</span>
+                  </span>
+                </label>
+                <label>
+                  <input type="checkbox" checked={!!f.includeEdu} onChange={(e) => update({ includeEdu: e.target.checked })} data-testid="include-edu" />
+                  <span>
+                    교육청 서비스도 보기 <span className="muted">({edu.toLocaleString("ko-KR")}개)</span>
+                  </span>
+                </label>
+              </fieldset>
+              {filtered && (
+                <button type="button" className="btn btn-text" onClick={() => update({ category: null, org: null, q: "" })}>
+                  조건 모두 지우기
                 </button>
-              </li>
-              <li>
-                <button type="button" className="link-btn" onClick={share}>
-                  <Icon name="share" size={18} /> 결과 공유
-                </button>
-              </li>
-              <li>
+              )}
+            </div>
+
+            <div className="tabs" role="tablist" aria-label="판정 결과">
+              {TABS.map((tr) => (
                 <button
+                  key={tr}
+                  role="tab"
                   type="button"
-                  className="link-btn"
-                  onClick={() => {
-                    clearProfile();
-                    router.push("/");
-                  }}
+                  className="tab"
+                  aria-selected={f.tier === tr}
+                  aria-controls="result-list"
+                  onClick={() => update({ tier: tr })}
+                  data-testid={`list-tab-${tr}`}
                 >
-                  <Icon name="trash" size={18} /> 이 기기에서 지우기
+                  {TIER_LABEL[tr]} <span className="c">{counts.tiers[tr].toLocaleString("ko-KR")}</span>
                 </button>
-              </li>
-            </ul>
-            <p className="small muted" style={{ marginTop: "0.5rem" }}>
-              정밀 매칭·저장·알림은 로그인 기능과 함께 준비 중입니다.
+              ))}
+            </div>
+
+            <section id="result-list" data-testid="result-list" role="tabpanel" aria-label={TIER_LABEL[f.tier]}>
+              <p className="tier-note">{TIER_PLAIN[f.tier]}</p>
+              <p className="list-head" aria-live="polite">
+                {TIER_LABEL[f.tier]} {groups.length.toLocaleString("ko-KR")}개{filtered ? " (필터 적용)" : ""}
+                {groups.length > limit ? ` · 관련 깊은 순으로 ${Math.min(limit, groups.length)}개` : ""}
+              </p>
+              {groups.length === 0 ? (
+                <div className="empty">
+                  <p>이 조건에 해당하는 서비스가 없습니다.</p>
+                  {f.tier === "eligible" && (
+                    <p className="small" style={{ marginTop: "0.375rem" }}>
+                      &lsquo;조건 충족&rsquo;은 검수 규칙·API 지원조건이 있는 서비스만 해당합니다. &lsquo;가능성 있음&rsquo;도 확인해 보세요.
+                    </p>
+                  )}
+                </div>
+              ) : (
+                <div className="list">
+                  {groups.slice(0, limit).map((g) => (
+                    <ProgramCard key={g.key} p={g.lead.program} ev={g.lead.ev} variants={g.variants.map((v) => ({ p: v.program, ev: v.ev }))} />
+                  ))}
+                </div>
+              )}
+              {groups.length > limit && (
+                <div className="more-row no-print">
+                  <button type="button" className="btn btn-ghost" onClick={() => setLimit((l) => l + PAGE)} data-testid="more">
+                    더 보기 ({(groups.length - limit).toLocaleString("ko-KR")}개 남음) <Icon name="chevronDown" size={18} />
+                  </button>
+                </div>
+              )}
+              <div className="no-print" style={{ marginTop: "0.75rem", textAlign: "center" }}>
+                {f.tier === "ineligible" ? (
+                  <button type="button" className="btn btn-text" onClick={() => update({ tier: "eligible" })}>
+                    판정 결과로 돌아가기
+                  </button>
+                ) : (
+                  <button type="button" className="btn btn-text" onClick={() => update({ tier: "ineligible" })} data-testid="show-ineligible">
+                    조건이 맞지 않는 서비스 {total.ineligible.toLocaleString("ko-KR")}개도 보기
+                  </button>
+                )}
+              </div>
+            </section>
+
+            {autos.length > 0 && (
+              <details className="details auto-panel" data-testid="auto-section" open={autoOpen} onToggle={(e) => setAutoOpen((e.currentTarget as HTMLDetailsElement).open)}>
+                <summary data-testid="auto-toggle">
+                  <span>
+                    신청하지 않아도 받는 서비스 <span className="s">— 조건이 맞으면 기관이 알아서 제공해요</span>
+                  </span>
+                  <span className="c">
+                    <span data-testid="auto-count">{autos.length.toLocaleString("ko-KR")}</span>개 <Icon name="chevronDown" size={18} />
+                  </span>
+                </summary>
+                {autoOpen && (
+                  <div className="details-body">
+                    <p className="body">
+                      대상이 되면 기관이 알아서 지급·연계하거나(공단 명단 통보, 수급자 선정 시 연계, 담당 공무원 직권 처리), 학교·시설·기관이 추천·선정하는
+                      서비스입니다. 해당될 것 같은데 받고 있지 않다면 주민센터나 129에 물어보세요.
+                    </p>
+                    <div className="list">
+                      {autos.slice(0, autoLimit).map((g) => (
+                        <ProgramCard key={g.key} p={g.lead.program} ev={g.lead.ev} variants={g.variants.map((v) => ({ p: v.program, ev: v.ev }))} />
+                      ))}
+                    </div>
+                    {autos.length > autoLimit && (
+                      <div className="more-row no-print">
+                        <button type="button" className="btn btn-ghost" onClick={() => setAutoLimit((l) => l + PAGE)} data-testid="auto-more">
+                          더 보기 ({(autos.length - autoLimit).toLocaleString("ko-KR")}개 남음)
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </details>
+            )}
+            <p className="disclaimer">
+              이 결과는 공개된 자격 조건과 입력하신 정보만으로 계산한 안내이며, 실제 선정은 소득·재산 조사 등 기관 심사로 결정됩니다. 검수 전인 자동 변환
+              규칙은 최대 &lsquo;가능성 있음&rsquo;까지만 판정합니다. 신청 방법은 원문 문구로 분류한 것이니 정확한 절차는 기관에 확인하세요.
             </p>
-          </section>
-        </aside>
+          </div>
+
+          <aside className="side" aria-label="이 결과에 대해">
+            <section className="side-box">
+              <h2>
+                <Icon name="listChecks" size={18} /> 판단 방법
+              </h2>
+              <ul>
+                <li>공개된 지원 대상 조건과 입력하신 내용을 비교했습니다.</li>
+                <li>소득·재산처럼 입력하지 않은 조건은 &lsquo;확인&rsquo;으로 남겼습니다.</li>
+                <li>최종 결정은 담당 기관이 합니다.</li>
+              </ul>
+              <Link href="/about">판정 기준 자세히 보기</Link>
+            </section>
+            <section className="side-box no-print">
+              <h2>
+                <Icon name="fileText" size={18} /> 이 결과로 할 수 있는 일
+              </h2>
+              <ul className="link-list">
+                <li>
+                  <button type="button" className="link-btn" onClick={() => window.print()}>
+                    <Icon name="printer" size={18} /> 인쇄하거나 PDF로 저장
+                  </button>
+                </li>
+                <li>
+                  <button type="button" className="link-btn" onClick={share}>
+                    <Icon name="share" size={18} /> 결과 공유
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    className="link-btn"
+                    onClick={() => {
+                      clearProfile();
+                      router.push("/");
+                    }}
+                  >
+                    <Icon name="trash" size={18} /> 이 기기에서 지우기
+                  </button>
+                </li>
+              </ul>
+              <p className="small muted" style={{ marginTop: "0.5rem" }}>
+                정밀 매칭·저장·알림은 로그인 기능과 함께 준비 중입니다.
+              </p>
+            </section>
+            <section className="side-box">
+              <h2>
+                <Icon name="phone" size={18} /> 상담이 필요하면
+              </h2>
+              <p>
+                보건복지상담센터 <strong>129</strong>
+                <br />
+                <span className="muted">평일 9시~18시, 긴급 24시간</span>
+              </p>
+            </section>
+          </aside>
+        </div>
       </div>
       {toast && (
         <div className="toast" role="status">
@@ -429,44 +493,62 @@ function ResultsInner({ profile }: { profile: Profile }) {
   );
 }
 
-/** 먼저 확인할 서비스 한 항목: 무엇을 · 판단 · 어디서 · 문의 · 가져갈 것 */
-function Pick({ g, detail }: { g: Group; detail?: Program }) {
+/** 먼저 확인할 서비스 카드: 번호 · 지원형태 · 이름 · 판단 · 신청방법/기관/문의/가져갈 것 */
+function Pick({ g, i, detail }: { g: Group; i: number; detail?: Program }) {
   const p = g.lead.program;
   const ev = g.lead.ev;
   const how = howTo(detail, p);
   const met = metReasons(ev, 2);
   const check = ev.tier !== "eligible" ? toCheck(ev) : undefined;
+  const href = `/p/${encodeURIComponent(p.id)}`;
   return (
-    <li>
-      <div>
-        <h3 className="h3">
-          <Link href={`/p/${encodeURIComponent(p.id)}`}>{p.name}</Link>
-        </h3>
-        <p className="sum">{firstLine(p.summary, 90)}</p>
-        <dl className="summary">
-          <dt>판단</dt>
-          <dd>
-            <TierBadge tier={ev.tier} />
-            {met.length > 0 && <> — {met.join(", ")}에 해당합니다.</>}
-            {check && <> 신청할 때 확인할 것: {check}</>}
-          </dd>
-          <dt>신청하는 곳</dt>
-          <dd>
+    <li className="card pick">
+      <div className="pick-top">
+        <span className="pick-no" aria-hidden="true">
+          {i + 1}
+        </span>
+        <SupportTags p={detail ?? p} />
+      </div>
+      <h3>
+        <Link href={href}>{p.name}</Link>
+      </h3>
+      <p className="sum">{firstLine(p.summary, 90)}</p>
+      <p className="judge">
+        <TierBadge tier={ev.tier} />
+        {met.length > 0 && <> — {met.join(", ")}에 해당합니다.</>}
+        {check && <> 신청할 때 확인할 것: {check}</>}
+      </p>
+      <ul className="rows">
+        <li>
+          <span className="k">신청방법</span>
+          <span className="v">
             {how.place} ({how.channels.map((c) => CHANNEL_LABEL[c]).join(", ")})
-          </dd>
-          {how.phone && (
-            <>
-              <dt>문의</dt>
-              <dd>{how.phone}</dd>
-            </>
-          )}
-          {how.bring.length > 0 && (
-            <>
-              <dt>가져갈 것</dt>
-              <dd>{how.bring.join(", ")}</dd>
-            </>
-          )}
-        </dl>
+          </span>
+        </li>
+        <li>
+          <span className="k">담당기관</span>
+          <span className="v">{p.provider || p.owner || orgText(p)}</span>
+        </li>
+        {how.phone && (
+          <li>
+            <span className="k">문의</span>
+            <span className="v">{how.phone}</span>
+          </li>
+        )}
+        {how.bring.length > 0 && (
+          <li>
+            <span className="k">가져갈 것</span>
+            <span className="v">{how.bring.join(", ")}</span>
+          </li>
+        )}
+      </ul>
+      <div className="pick-foot no-print">
+        <Link href={href} className="btn btn-tonal btn-sm">
+          자세히 보기
+        </Link>
+        <Link href={`${href}#sec-apply`} className="btn btn-ghost btn-sm">
+          신청 방법 보기
+        </Link>
       </div>
     </li>
   );

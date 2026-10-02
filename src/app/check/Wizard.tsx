@@ -18,7 +18,7 @@ const QUESTION = ["어디에 사시나요?", "나와 함께 사는 가구에 대
 
 export function Wizard() {
   const stored = useProfile();
-  if (stored === undefined) return <div className="narrow wizard muted">불러오는 중…</div>;
+  if (stored === undefined) return <div className="narrow page muted">불러오는 중…</div>;
   return <WizardInner initial={stored ?? EMPTY_PROFILE} editing={!!stored} />;
 }
 
@@ -61,41 +61,53 @@ function WizardInner({ initial, editing }: { initial: Profile; editing: boolean 
   };
 
   const sido = regions?.sidos.find((s) => s.code === p.sido);
-  const pct = Math.round(((step + 1) / STEPS.length) * 100);
 
   return (
-    <div className="narrow wizard">
-      {step > 0 ? (
-        <button type="button" className="link-btn no-print" onClick={() => go(step - 1)}>
-          <Icon name="arrowLeft" size={18} /> 이전 질문
-        </button>
-      ) : (
-        <Link href="/" className="link-btn no-print">
-          <Icon name="arrowLeft" size={18} /> 처음으로
-        </Link>
-      )}
-      <div className="progress" style={{ marginTop: "1rem" }}>
-        <div className="progress-meta">
-          <span>
-            {STEPS.length}단계 중 {step + 1}단계 · {STEPS[step]}
-          </span>
-          <span>12개 중 {answeredCount(p)}개 입력</span>
-        </div>
-        <div className="progress-bar" role="progressbar" aria-label="입력 진행률" aria-valuemin={0} aria-valuemax={100} aria-valuenow={pct}>
-          <span style={{ width: `${pct}%` }} />
+    <>
+      <div className="form-head">
+        <div className="narrow">
+          <ol className="crumbs" aria-label="현재 위치">
+            <li>
+              <Link href="/">
+                <Icon name="home" size={14} /> 홈
+              </Link>
+            </li>
+            <li>
+              <span aria-current="page">맞춤 찾기</span>
+            </li>
+          </ol>
+          <h1 className="h1" style={{ marginBottom: "0.25rem" }}>
+            맞춤 찾기
+          </h1>
+          <p className="small muted">12개 중 {answeredCount(p)}개 입력 · 모르는 항목은 &lsquo;모름&rsquo;으로 넘어가도 됩니다</p>
+          <ol className="stepper" aria-label={`입력 단계 (${STEPS.length}단계 중 ${step + 1}단계)`}>
+            {STEPS.map((s, i) => (
+              <li key={s} className={i < step ? "done" : i === step ? "now" : ""} aria-current={i === step ? "step" : undefined}>
+                <span className="dot" aria-hidden="true">
+                  {i < step ? <Icon name="check" size={16} strokeWidth={3} /> : i + 1}
+                </span>
+                <span className="lbl">{s}</span>
+              </li>
+            ))}
+          </ol>
         </div>
       </div>
-
-      <h1 className="h1" tabIndex={-1} ref={titleRef}>
-        {QUESTION[step]}
-      </h1>
+      <div className="form-body">
+        <div className="narrow">
+          <div className="form-panel">
+            <p className="eyebrow">
+              {step + 1}단계 · {STEPS[step]}
+            </p>
+            <h2 className="h2" tabIndex={-1} ref={titleRef}>
+              {QUESTION[step]}
+            </h2>
 
       {step === 0 && (
         <>
-          <p className="lead">주민등록상 주소지를 골라 주세요. 그 지역에서만 하는 서비스와 신청하는 곳을 알려 드리는 데 씁니다.</p>
+          <p className="body">주민등록상 주소지를 골라 주세요. 그 지역에서만 하는 서비스와 신청하는 곳을 알려 드리는 데 씁니다.</p>
           {error && (
             <p role="alert" className="error">
-              {error}
+              <Icon name="alert" size={18} /> {error}
             </p>
           )}
           <div className="select-row field">
@@ -133,7 +145,8 @@ function WizardInner({ initial, editing }: { initial: Profile; editing: boolean 
             </div>
           </div>
           {sido && (
-            <p className="inset">
+            <p className="notice" style={{ marginTop: "1.25rem" }}>
+              <Icon name="info" size={18} />
               {sido.pilot
                 ? "경기도는 시범 지역이에요. 자격 규칙을 우선 검수하고 있어 더 정확한 결과를 보여드려요."
                 : "이 지역은 아직 규칙 검수 전이라 대부분 '가능성 있음'·'확인 필요'로 안내돼요. 서비스 목록과 신청처는 모두 볼 수 있어요."}
@@ -216,7 +229,9 @@ function WizardInner({ initial, editing }: { initial: Profile; editing: boolean 
             onChange={(v) => set("activity", v)}
           />
           <div className="sensitive">
-            <p>선택 입력 · 돌봄·장애 같은 민감 정보는 이 기기에만 저장돼요</p>
+            <p>
+              <Icon name="shieldCheck" size={18} /> 선택 입력 · 돌봄·장애 같은 민감 정보는 이 기기에만 저장돼요
+            </p>
             <MultiGroup
               name="care"
               legend="돌봄이 필요한 상황"
@@ -246,45 +261,58 @@ function WizardInner({ initial, editing }: { initial: Profile; editing: boolean 
       )}
 
       <div className="wizard-nav">
-        {step < STEPS.length - 1 ? (
-          <button type="button" className="btn btn-primary btn-lg" onClick={() => go(step + 1)} data-testid="next">
-            계속
+        {step > 0 ? (
+          <button type="button" className="btn btn-ghost" onClick={() => go(step - 1)}>
+            <Icon name="arrowLeft" size={18} /> 이전
           </button>
         ) : (
-          <button type="button" className="btn btn-primary btn-lg" onClick={finish} data-testid="finish">
-            결과 보기
-          </button>
+          <Link href="/" className="btn btn-ghost">
+            취소
+          </Link>
         )}
-        {step > 0 && step < STEPS.length - 1 && (
-          <button type="button" className="btn btn-text" onClick={finish}>
-            지금까지 입력으로 결과 보기
-          </button>
-        )}
-      </div>
-
-      <section className="wizard-aside" aria-labelledby="w-privacy">
-        <h2 id="w-privacy">내 정보는 어디에 저장되나요?</h2>
-        <p>입력한 내용은 서버로 보내지 않고 이 브라우저에만 저장됩니다.</p>
-        <div className="btn-row" style={{ marginTop: "0.5rem" }}>
-          <label className="check-inline">
-            <input type="checkbox" checked={settings?.shared ?? false} onChange={(e) => setSettings({ shared: e.target.checked })} />
-            공용 기기 모드 (브라우저를 닫으면 입력값 삭제)
-          </label>
-          {editing && (
-            <button
-              type="button"
-              className="btn btn-text"
-              onClick={() => {
-                clearProfile();
-                setP(EMPTY_PROFILE);
-                setStep(0);
-              }}
-            >
-              이 기기에서 지우기
+        <div className="grow">
+          {step > 0 && step < STEPS.length - 1 && (
+            <button type="button" className="btn btn-text" onClick={finish}>
+              지금까지 입력으로 결과 보기
+            </button>
+          )}
+          {step < STEPS.length - 1 ? (
+            <button type="button" className="btn btn-primary" onClick={() => go(step + 1)} data-testid="next">
+              다음 <Icon name="arrowRight" size={18} />
+            </button>
+          ) : (
+            <button type="button" className="btn btn-primary" onClick={finish} data-testid="finish">
+              결과 보기 <Icon name="arrowRight" size={18} />
             </button>
           )}
         </div>
-      </section>
-    </div>
+      </div>
+          </div>
+
+          <div className="wizard-aside">
+            <span style={{ display: "inline-flex", gap: "0.375rem", alignItems: "center" }}>
+              <Icon name="shieldCheck" size={18} /> 입력한 내용은 서버로 보내지 않고 이 브라우저에만 저장됩니다.
+            </span>
+            <label className="check-inline">
+              <input type="checkbox" checked={settings?.shared ?? false} onChange={(e) => setSettings({ shared: e.target.checked })} />
+              공용 기기 모드 (브라우저를 닫으면 삭제)
+            </label>
+            {editing && (
+              <button
+                type="button"
+                className="btn btn-text"
+                onClick={() => {
+                  clearProfile();
+                  setP(EMPTY_PROFILE);
+                  setStep(0);
+                }}
+              >
+                이 기기에서 지우기
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+    </>
   );
 }

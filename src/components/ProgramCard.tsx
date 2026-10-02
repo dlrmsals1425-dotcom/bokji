@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Program } from "@/lib/data/types";
 import type { Evaluation } from "@/lib/engine/types";
 import { reasonSentence } from "@/lib/client/howto";
+import { supportTypes } from "@/lib/client/facets";
 import { ApplyBadge, TierBadge, orgText, sectorText } from "./Badges";
 
 export interface Variant {
@@ -11,19 +12,37 @@ export interface Variant {
 
 const short = (s: string, n = 40) => (s.length > n ? s.slice(0, n - 1) + "…" : s);
 
-/** 목록 한 줄: 이름 · 요약 · 판단 한 문장 · 기관 (카드·배지 없이 문서형 행) */
+/** 지원형태 라벨 (현금·현물·서비스·이용권 등, 최대 2개) */
+export function SupportTags({ p }: { p: Program }) {
+  const types = supportTypes(p);
+  if (!types.length) return null;
+  return (
+    <span className="tags" aria-label="지원형태">
+      {types.map((t) => (
+        <span key={t} className="tag">
+          {t}
+        </span>
+      ))}
+    </span>
+  );
+}
+
+/** 목록 카드: 이름 · 지원형태 · 요약 · 판단 한 문장 · 기관 */
 export function ProgramCard({ p, ev, variants }: { p: Program; ev?: Evaluation; variants?: Variant[] }) {
   const where = p.provider || p.owner;
   const sector = sectorText(p);
   return (
     <article className="prow" data-testid="program-card" data-tier={ev?.tier}>
-      <h3>
-        <Link href={`/p/${encodeURIComponent(p.id)}`}>{p.name}</Link>
-      </h3>
+      <div className="top">
+        <h3>
+          <Link href={`/p/${encodeURIComponent(p.id)}`}>{p.name}</Link>
+        </h3>
+        <SupportTags p={p} />
+      </div>
       {p.summary && <p className="sum">{p.summary}</p>}
       {ev && (
         <p className="why">
-          <TierBadge tier={ev.tier} /> — {reasonSentence(ev)}
+          <TierBadge tier={ev.tier} /> · {reasonSentence(ev)}
         </p>
       )}
       <p className="meta">

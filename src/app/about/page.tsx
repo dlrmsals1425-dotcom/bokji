@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 import meta from "../../../public/bundles/v1/meta.json";
 import { TIER_PLAIN } from "@/lib/client/howto";
@@ -10,6 +11,14 @@ export default function About() {
   const c = meta.counts;
   return (
     <div className="narrow page">
+      <ol className="crumbs" aria-label="현재 위치">
+        <li>
+          <Link href="/">홈</Link>
+        </li>
+        <li>
+          <span aria-current="page">데이터·판정 기준</span>
+        </li>
+      </ol>
       <h1 className="h1">데이터 출처와 판정 기준</h1>
       <p className="lead">
         데이터 생성: {new Date(meta.generatedAt).toLocaleString("ko-KR", { timeZone: "Asia/Seoul" })} (KST)
@@ -99,7 +108,7 @@ export default function About() {
       </section>
 
       <section>
-        <h2 className="h2">개인정보 원칙</h2>
+        <h2 className="h2" id="privacy">개인정보 원칙</h2>
         <ul className="bullets">
           <li>로그인·회원가입 없이 이용합니다. 주민등록번호는 어느 단계에서도 받지 않습니다.</li>
           <li>입력값은 서버로 보내지 않습니다. 지역별 서비스 묶음을 내려받아 이 기기 안에서 판정합니다.</li>
