@@ -80,5 +80,9 @@ describe("기관·시설 운영 지원(operator)", () => {
     expect(op("장애학생 통학용 차량 운영비", undefined, "self")).toBeUndefined();
     expect(op("교통약자 특별교통수단 운영비 지원")).toBeUndefined();
     expect(op("노숙인 일시보호시설 운영", undefined, "institution")).toBeUndefined();
+    // 운영비라도 주민이 직접 이용하는 급식소·쉼터·버스는 그대로
+    expect(op("무료급식소 및 장애우 쉼터 운영비")).toBeUndefined();
+    expect(op("고흥군 수요응답형 버스 운영비 지원")).toBeUndefined();
+    expect(op("외국어체험센터 운영비 지원", undefined, "auto")).toBeTruthy();
   });
 });
