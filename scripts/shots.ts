@@ -64,6 +64,24 @@ async function main() {
     await t.screenshot({ path: `${OUT}/scenario-${ps.id}.png` });
   }
 
+  // 자동으로 받는 혜택 (목록 아래 접힌 영역): 접힌 상태 → 펼친 상태
+  await t.goto(`${BASE}/results?example=seongnam-single-parent`);
+  await t.getByTestId("top-picks").waitFor();
+  const sec = t.getByTestId("auto-section");
+  await sec.scrollIntoViewIfNeeded();
+  await t.evaluate(() => {
+    const el = document.querySelector('[data-testid="auto-section"]') as HTMLElement;
+    window.scrollTo(0, el.getBoundingClientRect().top + window.scrollY - 700);
+  });
+  await t.screenshot({ path: `${OUT}/auto-section-collapsed.png` });
+  await t.getByTestId("auto-toggle").click();
+  await sec.getByTestId("program-card").first().waitFor();
+  await t.evaluate(() => {
+    const el = document.querySelector('[data-testid="auto-section"]') as HTMLElement;
+    window.scrollTo(0, el.getBoundingClientRect().top + window.scrollY - 90);
+  });
+  await t.screenshot({ path: `${OUT}/auto-section-expanded.png` });
+
   const mob = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, locale: "ko-KR" });
   const m = await mob.newPage();
   await seed(m);
