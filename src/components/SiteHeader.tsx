@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LogoMark } from "./Logo";
 import { setSettings, useSettings } from "@/lib/client/storage";
 
 const NAV = [
@@ -19,8 +18,8 @@ export function SiteHeader() {
     <header className="site-header">
       <div className="wrap">
         <Link href="/" className="logo" aria-label="복지나침반 홈">
-          <LogoMark />
           복지나침반
+          <small aria-hidden="true">로그인 없이 찾는 복지 서비스</small>
         </Link>
         <nav className="header-nav" aria-label="주 메뉴">
           {NAV.map((n) => (
@@ -32,20 +31,20 @@ export function SiteHeader() {
         <div className="header-actions">
           <button
             type="button"
-            className="btn btn-ghost btn-sm toggle"
+            className="btn btn-sm toggle"
             aria-pressed={large}
             onClick={() => setSettings({ large: !large })}
             data-testid="large-text"
           >
-            <span aria-hidden="true">가+</span> 큰 글씨
+            {large ? "글자 보통" : "글자 크게"}
           </button>
           <button
             type="button"
-            className="btn btn-locked btn-sm hide-sm"
+            className="btn btn-quiet hide-sm"
             disabled
             title="로그인은 정밀 매칭·저장·알림·신청 지원과 함께 준비 중입니다. 지금은 로그인 없이 모든 검색·추천을 쓸 수 있어요."
           >
-            🔒 로그인 준비 중
+            로그인 준비 중
           </button>
         </div>
       </div>

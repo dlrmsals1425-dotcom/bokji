@@ -12,15 +12,6 @@ export const ORG_TYPE_LABEL: Record<OrgType, string> = {
   other: "기타 기관",
 };
 
-export const ORG_TYPE_ICON: Record<OrgType, string> = {
-  central: "🏛",
-  metro: "🏛",
-  local: "🏛",
-  public_inst: "🏢",
-  edu_office: "🏫",
-  other: "🏷",
-};
-
 /** 지리 범위 (설계서 5.4) — org_type 과 별개 축 */
 export type Scope = "national" | "sido" | "sigungu";
 

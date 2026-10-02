@@ -63,7 +63,7 @@ test.describe("로그인 없는 전체 흐름", () => {
     expect(l0).toBeGreaterThan(0);
     expect(c0).toBeGreaterThan(0);
     await expect(page.getByTestId("result-list").getByTestId("program-card").first()).toBeVisible();
-    await expect(page.getByTestId("result-list").getByTestId("program-card").first().locator(".badge.tier-eligible")).toBeVisible();
+    await expect(page.getByTestId("result-list").getByTestId("program-card").first().locator(".status.tier-eligible")).toBeVisible();
     // '조건 충족'에 기초연금이 있어야 한다 (75세·기초연금 수급)
     await expect(page.getByTestId("result-list").getByRole("link", { name: "기초연금", exact: true })).toBeVisible();
     // 맞춤 추천 5개
@@ -71,12 +71,15 @@ test.describe("로그인 없는 전체 흐름", () => {
 
     // 필터: 기관 유형을 바꾸면 탭 개수도 함께 바뀐다
     await page.getByTestId("tab-likely").click();
-    await page.locator(".filters").getByRole("button", { name: /^시군구/ }).click();
+    // 기관·분야 좁히기는 접혀 있다 → 펼쳐서 기관 유형 선택
+    await expect(page.getByLabel("기관 유형")).toBeHidden();
+    await page.getByTestId("filter-toggle").click();
+    await page.getByLabel("기관 유형").selectOption("local");
     const l1 = await count("likely");
     expect(l1).toBeLessThan(l0);
     expect(await count("eligible")).toBeLessThanOrEqual(e0);
     await expect(page.getByText(/필터 적용/)).toBeVisible();
-    await page.locator(".filters").getByRole("button", { name: "전체" }).first().click();
+    await page.getByLabel("기관 유형").selectOption("");
     expect(await count("likely")).toBe(l0);
 
     // 교육청 서비스는 기본 숨김 → 체크하면 개수가 늘어난다

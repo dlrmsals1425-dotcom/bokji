@@ -8,14 +8,8 @@ export function ResumeBanner() {
   const p = useProfile();
   if (!p) return null;
   return (
-    <div className="info" style={{ marginTop: 20 }}>
-      <span aria-hidden="true">💾</span>
-      <span>
-        이 기기에 저장된 입력이 있어요 (12개 중 {answeredCount(p)}개).{" "}
-        <Link href="/results">
-          <strong>지난 결과 이어서 보기</strong>
-        </Link>
-      </span>
-    </div>
+    <p className="inset">
+      이 기기에 저장된 입력이 있습니다(12개 중 {answeredCount(p)}개). <Link href="/results">지난 결과 이어서 보기</Link>
+    </p>
   );
 }

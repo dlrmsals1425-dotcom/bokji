@@ -33,6 +33,9 @@ export function RadioGroup<V extends string | number>(props: {
             <span>{o.label}</span>
           </label>
         ))}
+        <p className="or" aria-hidden="true">
+          또는
+        </p>
         <label className="opt unknown">
           <input type="radio" name={name} checked={value === "unknown"} onChange={() => onChange("unknown")} />
           <span>{unknownLabel}</span>
@@ -80,6 +83,9 @@ export function MultiGroup<V extends string>(props: {
           <input type="checkbox" name={name} checked={Array.isArray(value) && value.length === 0} onChange={() => onChange(value && value.length === 0 ? null : [])} />
           <span>{noneLabel}</span>
         </label>
+        <p className="or" aria-hidden="true">
+          또는
+        </p>
         <label className="opt unknown">
           <input type="checkbox" name={name} checked={value === null} onChange={() => onChange(null)} />
           <span>모름 / 건너뛰기</span>
