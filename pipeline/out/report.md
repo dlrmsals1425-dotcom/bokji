@@ -1,22 +1,22 @@
-# 파이프라인 리포트 (2026-10-02T08:54:00.982Z)
+# 파이프라인 리포트 (2026-10-03T00:18:41.785Z)
 
 - 공공서비스(혜택) API: **ok** — 수집 완료
-- 복지로 OpenAPI: 목록 중앙 461 · 지자체 4819 / 상세 중앙 93 · 지자체 939 / 색인 보강 5201 · 신규 79 · 색인에만 있음 3
-- 신청방법 채움 12452/23566 · 연락처 10356/23566 · 둘 중 하나 12765/23566
+- 복지로 OpenAPI: 목록 중앙 461 · 지자체 4819 / 상세 중앙 188 · 지자체 1889 / 색인 보강 5201 · 신규 79 · 색인에만 있음 3
+- 신청방법 채움 12615/23567 · 연락처 11269/23567 · 둘 중 하나 12960/23567
 - 원천 레코드: gov24 10949 / bokjiro 5283 / welfare100 100 / icare 12526
 - 노출 제외: not_individual 1014 / business_only 69 / eupmyeondong_level 26 / region_unresolved 5
 - 통합돌봄 D1 완전 중복 19 · D2 실질 중복 75
-- 교차 원천 병합: gov24+bokjiro 1151 / gov24+welfare100 41 / bokjiro+welfare100 9 / gov24+gov24 367 / bokjiro+bokjiro 32 / bokjiro+icare 59 / gov24+icare 59 · 기관 수준이 달라 병합 차단 396
-- 통합돌봄 '전국' 행 → 전국 사업의 지역 운영 정보로 흡수: 2386행 (운영 정보 2366건)
-- 정부24·복지로 시군구 등록분: 전국 사업의 지역 집행분으로 흡수 173 · 지역 추가사업으로 별도 유지 63 (pipeline/out/regional-copies.csv)
-- 최종 사업(중복 제거 후): **23566** (시군구 배치 기준 23569)
-- 기관 유형별: central 1062 / public_inst 2201 / local 18083 / metro 1967 / edu_office 253
-- 복지 외 분야(기본 숨김): agri 1694 / business 89 / operator 31 · 교육청(기본 숨김) 253
-- 신청 유형(사업 단위): self 11471 / auto 657 / institution 178 / unknown 11260 (pipeline/out/apply-type.csv)
-- 범위별: national 1421 / sigungu 19884 / sido 2261
-- 원천 기여(사업 수): gov24 9346 / bokjiro 5212 / welfare100 100 / icare 10218
-- 규칙 검수 상태(배치 기준): structured 1870 / auto 21626 / curated 73
-- 규칙 출처(배치 기준): gov24_conditions 8093 / none 2426 / curated 73 / bokjiro_tags 3609 / text_extract 9368
+- 교차 원천 병합: gov24+bokjiro 1151 / gov24+welfare100 41 / bokjiro+welfare100 9 / gov24+gov24 367 / bokjiro+bokjiro 32 / bokjiro+icare 59 / gov24+icare 59 · 기관 수준이 달라 병합 차단 397
+- 통합돌봄 '전국' 행 → 전국 사업의 지역 운영 정보로 흡수: 2385행 (운영 정보 2365건)
+- 정부24·복지로 시군구 등록분: 전국 사업의 지역 집행분으로 흡수 172 · 지역 추가사업으로 별도 유지 63 (pipeline/out/regional-copies.csv)
+- 최종 사업(중복 제거 후): **23567** (시군구 배치 기준 23570)
+- 기관 유형별: central 1062 / public_inst 2201 / local 18084 / metro 1967 / edu_office 253
+- 복지 외 분야(기본 숨김): agri 1694 / business 89 / operator 29 · 교육청(기본 숨김) 253
+- 신청 유형(사업 단위): self 11549 / auto 678 / institution 187 / unknown 11153 (pipeline/out/apply-type.csv)
+- 범위별: national 1421 / sigungu 19885 / sido 2261
+- 원천 기여(사업 수): gov24 9346 / bokjiro 5213 / welfare100 100 / icare 10218
+- 규칙 검수 상태(배치 기준): structured 1870 / auto 21627 / curated 73
+- 규칙 출처(배치 기준): gov24_conditions 8093 / none 2426 / curated 73 / bokjiro_tags 3614 / text_extract 9364
 - 경기도 파일럿: 사업 3000 · 큐레이션/검수 규칙 10 · API 지원조건 979 · 자동 규칙(검수 대기열) 1662 · 규칙 없음 349
 - 전국 공통 사업 중 큐레이션 규칙: 62 · API 지원조건 규칙: 891
 
@@ -39,5 +39,5 @@
 - 충남 아산시 · 송악면 행복키움추진단 특화사업
 
 ## 로그
-- [bokjiro-api] 목록 중앙 461 · 지자체 4819 / 상세 중앙 93 · 지자체 939 / 보강 5201 · 신규 79 · 색인에만 있음 3
+- [bokjiro-api] 목록 중앙 461 · 지자체 4819 / 상세 중앙 188 · 지자체 1889 / 보강 5201 · 신규 79 · 색인에만 있음 3
 - [gov24] 지역 해석 실패: 6건
