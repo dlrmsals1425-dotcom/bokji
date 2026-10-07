@@ -3,6 +3,7 @@
  * 원문에 신청 정보가 없으면 주민센터·☎129 일반 안내로 대신한다 (상세 화면의 대체 안내와 같은 원칙).
  */
 import type { Program } from "../data/types";
+import { normalizeText } from "../data/text";
 import type { Evaluation, Tier } from "../engine/types";
 
 const clean = (s: string) =>
@@ -111,6 +112,6 @@ export function parseDocs(s?: string): string[] {
 /** 긴 원문에서 첫 문장만 짧게 */
 export function firstLine(s: string | undefined, max = 60): string {
   if (!s) return "";
-  const t = s.replace(/^[\s○ㅇ\-·•*]+/, "").split(/\n|(?<=다\.)\s|(?<=요\.)\s/)[0].replace(/\s+/g, " ").trim();
+  const t = normalizeText(s).replace(/^[\s○●□■◆ㅇ\-·•*]+/, "").split(/\n|(?<=다\.)\s|(?<=요\.)\s/)[0].replace(/\s+/g, " ").trim();
   return shorten(t, max);
 }

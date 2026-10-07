@@ -1,3 +1,5 @@
+import { normalizeText } from "../../../src/lib/data/text";
+
 /**
  * 명칭 정규화 키 (설계서 5.1).
  * 공백·특수문자 제거, 한자 제거('강릉愛밥상' → '강릉밥상'), 괄호 안 부가설명 분리,
@@ -29,10 +31,10 @@ export function cleanName(name: string): string {
   return name.replace(/\s+/g, " ").replace(/^[\s·•\-]+|[\s·•\-]+$/g, "").trim();
 }
 
-/** 문장 정리: 줄바꿈·글머리표 정리 */
+/** 문장 정리: HTML 엔티티·깨진 기호 글자 정리(normalizeText) 후 줄바꿈·글머리표 정리 */
 export function cleanText(s: string | undefined | null): string | undefined {
   if (!s) return undefined;
-  const t = s
+  const t = normalizeText(s)
     .replace(/\r\n?/g, "\n")
     .replace(/[ \t]+/g, " ")
     .replace(/\n[ \t]*(?:\n[ \t]*)+/g, "\n")

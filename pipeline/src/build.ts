@@ -26,6 +26,7 @@ import { normalizeUrl } from "./normalize/names";
 import { detailBucket } from "../../src/lib/data/bucket";
 import type { Bundle, BuildMeta, LocalOperation, Program, RegionIndex as RegionIndexJson, SourceRef } from "../../src/lib/data/types";
 import type { Cond, Rule } from "../../src/lib/engine/types";
+import { normalizeDeep } from "../../src/lib/data/text";
 
 const ROOT = path.resolve(__dirname, "../..");
 const ICDASH = process.env.ICDASH_DIR ?? "/workspace/icdash";
@@ -233,7 +234,8 @@ function main() {
   const nationalIdByRec = new Map<SourceRecord, string>();
   for (const { p, rec } of programs) if (p.scope === "national") nationalIdByRec.set(rec, p.id);
 
-  const write = (rel: string, data: unknown) => fs.writeFileSync(path.join(OUT, rel), JSON.stringify(data));
+  // 번들에 쓰기 전 모든 문자열 정리 (HTML 엔티티·깨진 기호 글자 — src/lib/data/text.ts)
+  const write = (rel: string, data: unknown) => fs.writeFileSync(path.join(OUT, rel), JSON.stringify(normalizeDeep(data)));
   /** 결과 목록·판정에 필요한 필드만 남긴 가벼운 사업 (상세 필드는 details 샤드) */
   const cut = (t: string | undefined, n: number) => (t && t.length > n ? t.slice(0, n - 1) + "…" : t);
   const slim = (p: Program): Program => ({

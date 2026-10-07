@@ -3,6 +3,7 @@ import type { Program } from "@/lib/data/types";
 import type { Evaluation } from "@/lib/engine/types";
 import { reasonSentence } from "@/lib/client/howto";
 import { supportTypes } from "@/lib/client/facets";
+import { normalizeText } from "@/lib/data/text";
 import { ApplyBadge, MANUAL_TITLE, TierBadge, isManual, orgText, sectorText } from "./Badges";
 
 export interface Variant {
@@ -39,7 +40,7 @@ export function ProgramCard({ p, ev, variants }: { p: Program; ev?: Evaluation; 
         </h3>
         <SupportTags p={p} />
       </div>
-      {p.summary && <p className="sum">{p.summary}</p>}
+      {p.summary && <p className="sum">{normalizeText(p.summary)}</p>}
       {ev && (
         <p className="why">
           <TierBadge tier={ev.tier} /> · {reasonSentence(ev)}

@@ -11,6 +11,7 @@ import { saveSituation, situationOf } from "@/lib/client/start";
 import { checkPath, type FindMode } from "@/lib/client/mode";
 import { BUCKET_LABEL, DIM_BY_ID, answersFor, classifyOne, dimAvailable, dimsFor, explainItem, incomeExplain, plainLine, type ExplainLine, type Situation, type V2Item } from "@/lib/client/v2";
 import { SOURCE_LABEL, ORG_TYPE_LABEL, type LocalOperation, type Program } from "@/lib/data/types";
+import { blocksLength, normalizeText, textBlocks, type TextBlock } from "@/lib/data/text";
 const SECTIONS = [
   { id: "sec-target", label: "지원대상" },
   { id: "sec-benefit", label: "지원내용" },
@@ -135,7 +136,7 @@ export function Detail({ id }: { id: string }) {
           {sector && <span className="tag gray">{sector}</span>}
         </div>
         <h1 className="h1">{p.name}</h1>
-        {p.summary && <p className="lead">{p.summary}</p>}
+        {p.summary && <p className="lead">{normalizeText(p.summary)}</p>}
         <dl className="keyfacts">
           <div>
             <dt>담당기관</dt>
@@ -264,7 +265,7 @@ export function Detail({ id }: { id: string }) {
                       {o.provider && <div>운영: {o.provider}</div>}
                       {o.description && <div className="muted">{o.description}</div>}
                       {o.contact && <div>문의: {o.contact}</div>}
-                      {o.applyMethod && <div style={{ whiteSpace: "pre-line" }}>신청: {o.applyMethod.length > 200 ? o.applyMethod.slice(0, 199) + "…" : o.applyMethod}</div>}
+                      {o.applyMethod && <div style={{ whiteSpace: "pre-line" }}>신청: {shortText(o.applyMethod, 200)}</div>}
                       {o.url && (
                         <a href={o.url} target="_blank" rel="noopener noreferrer">
                           원문 (새 창)
@@ -481,17 +482,69 @@ function RuleNote({ p }: { p: Program }) {
 }
 
 /** 긴 원문은 접어서 보여 준다 */
+const shortText = (t: string, n: number) => {
+  const s = normalizeText(t);
+  return s.length > n ? s.slice(0, n - 1) + "…" : s;
+};
+
+/** 원문 긴 글: 줄바꿈은 문단으로, '○ · - * •' 글머리표 줄은 목록으로 (낱말은 그대로). 길면 앞부분만 + '원문 더 보기' */
 function LongText({ text, limit = 280 }: { text: string; limit?: number }) {
   const [open, setOpen] = useState(false);
-  if (text.length <= limit + 40) return <>{text}</>;
+  const blocks = useMemo(() => textBlocks(text), [text]);
+  const long = blocksLength(blocks) > limit + 40;
+  return (
+    <div className="rich">
+      <Blocks blocks={open || !long ? blocks : clipBlocks(blocks, limit)} />
+      {long && (
+        <button type="button" className="btn btn-text no-print" aria-expanded={open} onClick={() => setOpen((o) => !o)} style={{ display: "flex" }}>
+          {open ? "접기" : "원문 더 보기"}
+        </button>
+      )}
+    </div>
+  );
+}
+
+function Blocks({ blocks }: { blocks: TextBlock[] }) {
   return (
     <>
-      {open ? text : text.slice(0, limit).replace(/\s+\S*$/, "") + "…"}
-      <button type="button" className="btn btn-text no-print" aria-expanded={open} onClick={() => setOpen((o) => !o)} style={{ display: "flex" }}>
-        {open ? "접기" : "원문 더 보기"}
-      </button>
+      {blocks.map((b, i) =>
+        b.kind === "p" ? (
+          <p key={i}>{b.text}</p>
+        ) : (
+          <ul key={i}>
+            {b.items.map((it, j) => (
+              <li key={j} data-m={it.marker} className={it.level === 2 ? "lv2" : undefined}>
+                {it.text}
+              </li>
+            ))}
+          </ul>
+        ),
+      )}
     </>
   );
+}
+
+/** 앞에서부터 글자 수 limit까지 (넘는 곳은 낱말 단위로 자르고 '…') */
+function clipBlocks(blocks: TextBlock[], limit: number): TextBlock[] {
+  const cut = (t: string, n: number) => t.slice(0, n).replace(/\s+\S*$/, "") + "…";
+  const out: TextBlock[] = [];
+  let left = limit;
+  for (const b of blocks) {
+    if (left <= 0) break;
+    if (b.kind === "p") {
+      out.push(b.text.length > left ? { kind: "p", text: cut(b.text, left) } : b);
+      left -= b.text.length;
+    } else {
+      const items: typeof b.items = [];
+      for (const it of b.items) {
+        if (left <= 0) break;
+        items.push(it.text.length > left ? { ...it, text: cut(it.text, left) } : it);
+        left -= it.text.length;
+      }
+      out.push({ kind: "ul", items });
+    }
+  }
+  return out;
 }
 
 /** 내 답과 조건 비교: 맞은 것 · 어긋난 것 · 아직 모르는 것 (+ 정할 수 있는 질문은 바로 여기서) */
