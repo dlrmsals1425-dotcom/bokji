@@ -260,14 +260,19 @@ export interface Answer {
 
 export interface Dim {
   id: DimId;
-  /** 질문 (부모님/본인 말투) */
-  q: (mode: FindMode) => string;
+  /** 질문 (부모님/본인 말투 · 이미 아는 답에 맞춰) */
+  q: (mode: FindMode, s?: Situation) => string;
   help?: string;
   answers: Answer[];
   isUnknown: (s: Situation) => boolean;
   /** 이 상황(본인/부모님·나이)에서 물을 수 있는 질문인지 (없으면 언제나) */
   avail?: (s: Situation) => boolean;
+  /** 이미 아는 답과 어긋나는 보기를 뺀다 (예: 자녀 수를 알면 '자녀 없음') */
+  hide?: (a: Answer, s: Situation) => boolean;
 }
+
+/** 이 상황에서 보여줄 보기 */
+export const answersFor = (d: Dim, s: Situation) => (d.hide ? d.answers.filter((a) => !d.hide!(a, s)) : d.answers);
 
 /** 60세 이상인지: 'yes' | 'no' | 'unknown' */
 const seniorOf = (s: Situation) => (s.profile.age === "unknown" ? "unknown" : ageRange(s.profile.age)[1] >= 60 ? "yes" : "no");
@@ -424,10 +429,12 @@ export const DIMS: Dim[] = [
   },
   {
     id: "children",
-    q: () => "함께 사는 자녀가 있나요? (임신 중이면 '임신 중')",
+    q: (_m, s) =>
+      s?.x.childCount ? `자녀${s.x.childCount === 3 ? "(3명 이상)" : ` ${s.x.childCount}명`}의 나이는요? (여럿이면 가장 어린 자녀)` : "함께 사는 자녀가 있나요? (임신 중이면 '임신 중')",
     help: "자녀가 여럿이면 가장 어린 자녀를 고르고, '상황 고치기'에서 모두 고를 수 있어요.",
     isUnknown: (s) => s.profile.children === null,
     avail: childQuestion,
+    hide: (a, s) => a.key === "none" && !!s.x.childCount,
     answers: [
       { key: "none", label: "자녀 없음", apply: (s) => withX(withP(s, { children: [] }), { childCount: 0 }) },
       ...(["pregnant", "0-1", "2-5", "6-12", "13-18", "19+"] as const).map((c) => ({
@@ -557,7 +564,7 @@ export function decidingDims(p: Program, s: Situation, cur: Base): DimId[] {
   for (const id of dimsFor(p)) {
     const d = DIM_BY_ID[id];
     if (!dimAvailable(d, s) || !d.isUnknown(s)) continue;
-    if (d.answers.some((a) => classifyBase(p, a.apply(s)).base !== cur)) out.push(id);
+    if (answersFor(d, s).some((a) => classifyBase(p, a.apply(s)).base !== cur)) out.push(id);
   }
   return out;
 }

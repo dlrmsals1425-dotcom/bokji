@@ -488,6 +488,9 @@ html[data-large="1"] .fgrid fieldset + fieldset { border-left: 0; border-top: 1p
 .prefill-box .pf-title { display: flex; align-items: center; gap: 0.5rem; font-size: 1.1875rem; font-weight: 800; margin: 0 0 0.5rem; color: var(--primary-70); }
 .prefill-box .pf-quote { color: var(--ink-2); margin: 0 0 0.5rem; word-break: keep-all; }
 .prefill-box .pf-line { font-size: 1.0625rem; margin: 0 0 0.5rem; word-break: keep-all; }
+.pf-line .pf-l { margin: 0 0 0.375rem; word-break: keep-all; }
+.pf-line .pf-l:last-child { margin-bottom: 0; }
+.pf-line .pf-alt { margin-left: 0.5rem; vertical-align: baseline; }
 .prefill-box .pf-notes { margin: 0 0 0.5rem; padding-left: 1.25rem; color: var(--warm-60); font-size: 0.9375rem; }
 .prefill-box .pf-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem; }
 .search-hint { margin-top: 1rem; }

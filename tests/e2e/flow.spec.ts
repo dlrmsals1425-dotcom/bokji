@@ -317,6 +317,38 @@ test.describe("로그인 없는 전체 흐름 (상황 먼저 · 기본)", () => 
     expectPrivate(requests, (url) => url.includes("59년생") || url.includes("소재") || url.includes("65-69") || url.includes("만원") || /[?&=]300\b/.test(url));
   });
 
+  test("사용자 문장: 용인 86년생 자녀 2명 세후 400 → 소득·가구 채움, 배우자 없이 바꾸기, 다시 묻지 않음", async ({ page }) => {
+    const requests: Request[] = [];
+    page.on("request", (r) => requests.push(r));
+    await page.goto("/");
+    await page.locator("#home-q").fill("용인시에 사는 86년생이야, 자녀는 2명이 있어. 월급은 세후 400정도되");
+    await page.locator("#home-q").press("Enter");
+    await expect(page).toHaveURL(/\/situation\?for=self&prefill=1/);
+    await expect(page.getByTestId("prefill-banner")).toBeVisible({ timeout: 20_000 });
+    const line = page.getByTestId("prefill-line");
+    await expect(line).toContainText("경기 용인시");
+    await expect(line).toContainText("1986년생");
+    await expect(page.getByTestId("prefill-household")).toContainText("같이 사는 사람: 본인 포함 4명 (배우자 포함으로 봤어요");
+    await expect(page.getByTestId("prefill-income")).toContainText("월 소득 약 400만원 (세후)");
+    // 한 번에 '배우자 없이 3명' ↔ 되돌리기
+    await page.getByTestId("prefill-hh-alt").click();
+    await expect(page.getByTestId("prefill-household")).toContainText("본인 포함 3명 (배우자 없이");
+    await expect(page.getByLabel("함께 사는 가족 (본인 포함)")).toHaveValue("3");
+    await page.getByTestId("prefill-hh-alt").click();
+    await expect(page.getByTestId("prefill-household")).toContainText("본인 포함 4명");
+    await expect(page.getByLabel("함께 사는 가족 (본인 포함)")).toHaveValue("4");
+    await expect(page.getByTestId("v2-income")).toHaveValue("400");
+    await page.getByTestId("prefill-confirm").click();
+    await expect(page).toHaveURL(/\/results(\?for=self)?$/);
+    await expect(page.getByTestId("v2-chips")).toContainText("소득 월 400만원", { timeout: 20_000 });
+    await expect(page.getByTestId("v2-chips")).toContainText("4명 가구");
+    await expect(page.getByTestId("v2-q-income")).toHaveCount(0);
+    await expect(page.getByTestId("v2-q-alone")).toHaveCount(0);
+    await expect(page.getByTestId("v2-q-activity")).toHaveCount(0);
+    await expect(page.getByTestId("v2-a-children-none")).toHaveCount(0);
+    expectPrivate(requests, (url) => url.includes("86") && url.includes("년생") || url.includes("만원") || /[?&=]400\b/.test(url));
+  });
+
   test("문장 해석 → 아래에서 더 답하기: 해석값이 채워진 채로 한 화면 입력", async ({ page }) => {
     await page.goto("/");
     await page.locator("#home-q").fill("분당 사시는 어머니 혼자 사세요 1950년생");

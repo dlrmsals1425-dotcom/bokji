@@ -11,7 +11,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Icon } from "@/components/Icon";
 import { RadioGroup } from "@/components/Choice";
 import { loadRegions } from "@/lib/client/bundles";
-import { clearPrefill, parseSituation, readPrefill, understoodLine, type ParsedSituation, type Prefill } from "@/lib/client/parse";
+import { clearPrefill, parseSituation, parsedExtras, readPrefill, understoodLine, type ParsedSituation, type Prefill } from "@/lib/client/parse";
 import { householdLabel, parseFindMode, resultsPath, type FindMode } from "@/lib/client/mode";
 import { saveFiller, saveMode, useExtras, useMode, useProfile } from "@/lib/client/storage";
 import { saveSituation } from "@/lib/client/start";
@@ -61,12 +61,49 @@ function mergeParsed(prev: Profile, q: Profile): Profile {
   }
   return next;
 }
-function mergeParsedX(prev: Extras, q: Profile): Extras {
+function mergeParsedX(prev: Extras, ps: ParsedSituation): Extras {
+  const q = ps.profile;
   const benefits = { ...prev.benefits };
   q.benefits?.forEach((b) => (benefits[b] = true));
   const traits = { ...prev.traits };
   q.traits?.forEach((t) => (traits[t] = true));
-  return { ...prev, benefits, traits };
+  // 문장에서 읽은 월 소득·자녀 수 (예: '월급은 세후 400정도' → 400, '자녀 2명' → 2)
+  const ex = parsedExtras(ps);
+  if (ex.childCount !== undefined && ex.childCount !== 2) traits.multi_child = ex.childCount === 3;
+  return { ...prev, benefits, traits, ...ex };
+}
+
+/** 확인 화면의 '알아들은 내용' — 지역·나이·상황 한 줄, 같이 사는 사람(가정이면 바로 바꾸는 단추), 소득 */
+function UnderstoodLines({ ps, alt, onAlt, suffix }: { ps: ParsedSituation; alt: boolean; onAlt: (alt: boolean) => void; suffix?: string }) {
+  const main = understoodLine(ps, ["household", "income"]);
+  const hh = ps.understood.find((u) => u.key === "household")?.label;
+  const inc = ps.understood.find((u) => u.key === "income")?.label;
+  const a = ps.householdAlt;
+  return (
+    <>
+      {(main || suffix) && (
+        <p className="pf-l">
+          <strong>{main || "지역·나이는 알아듣지 못했어요"}</strong>
+          {suffix}
+        </p>
+      )}
+      {hh && (
+        <p className="pf-l" data-testid="prefill-household">
+          <strong>{a && alt ? a.label : hh}</strong>
+          {a && (
+            <button type="button" className="btn btn-ghost btn-sm pf-alt" aria-pressed={alt} onClick={() => onAlt(!alt)} data-testid="prefill-hh-alt">
+              {alt ? `배우자 포함 ${a.mainSize}명` : a.button}
+            </button>
+          )}
+        </p>
+      )}
+      {inc && (
+        <p className="pf-l" data-testid="prefill-income">
+          <strong>{inc}</strong>
+        </p>
+      )}
+    </>
+  );
 }
 
 const CHILD_AGES = CHILD_BUCKETS.filter((c) => c !== "pregnant");
@@ -77,12 +114,17 @@ function Form({ initial, initialX, initialMode, wantPrefill }: { initial: Profil
   const [prefill, setPrefill] = useState<Prefill | null>(() => (wantPrefill ? readPrefill() : null));
   const [mode, setMode] = useState<FindMode>(() => prefill?.parsed.mode ?? initialMode);
   const [p, setP] = useState<Profile>(() => (prefill ? mergeParsed(EMPTY_PROFILE, prefill.parsed.profile) : initial));
-  const [x, setX] = useState<Extras>(() => (prefill ? mergeParsedX(EMPTY_EXTRAS, prefill.parsed.profile) : initialX));
+  const [x, setX] = useState<Extras>(() => (prefill ? mergeParsedX(EMPTY_EXTRAS, prefill.parsed) : initialX));
   const [text, setText] = useState("");
-  const [understood, setUnderstood] = useState<string | null>(null);
+  const [understood, setUnderstood] = useState<ParsedSituation | null>(null);
   const [regions, setRegions] = useState<RegionIndex | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [incomeText, setIncomeText] = useState(initialX.incomeManwon !== null ? String(initialX.incomeManwon) : "");
+  const [incomeText, setIncomeText] = useState(() => {
+    const v = prefill?.parsed.income?.manwon ?? initialX.incomeManwon;
+    return v !== null && v !== undefined ? String(v) : "";
+  });
+  // 가구원 수를 '배우자 포함'으로 가정했을 때, 한 번에 '배우자 없이'로 바꿨는지
+  const [hhAlt, setHhAlt] = useState(false);
 
   useEffect(() => {
     loadRegions().then(setRegions);
@@ -110,13 +152,23 @@ function Form({ initial, initialX, initialMode, wantPrefill }: { initial: Profil
 
   const applyParsed = (r: ParsedSituation) => {
     setP((prev) => mergeParsed(prev, r.profile));
-    setX((prev) => mergeParsedX(prev, r.profile));
+    setX((prev) => mergeParsedX(prev, r));
+    if (r.income) setIncomeText(String(r.income.manwon));
     if (r.mode) setMode(r.mode);
+    setHhAlt(false);
   };
   const fillFromText = () => {
     const r = parseSituation(text, regions);
     applyParsed(r);
-    setUnderstood(understoodLine(r) || "알아들은 내용이 없어요. 아래 질문에 직접 답해 주세요.");
+    setUnderstood(r);
+  };
+  /** 같이 사는 사람: 배우자 포함(가정) ↔ 배우자 없이(한부모) */
+  const chooseHh = (ps: ParsedSituation, alt: boolean) => {
+    const a = ps.householdAlt;
+    if (!a) return;
+    setHhAlt(alt);
+    set("householdSize", alt ? a.size : (a.mainSize as Profile["householdSize"]));
+    setTrait("single_parent", alt && a.singleParent ? true : undefined);
   };
 
   const sido = regions?.sidos.find((s) => s.code === p.sido);
@@ -213,10 +265,16 @@ function Form({ initial, initialX, initialMode, wantPrefill }: { initial: Profil
                   <Icon name="check" size={20} strokeWidth={2.6} /> 이렇게 이해했어요
                 </h2>
                 <p className="pf-quote">&ldquo;{prefill.text}&rdquo;</p>
-                <p className="pf-line" data-testid="prefill-line">
-                  <strong>{understoodLine(prefill.parsed) || "알아들은 내용이 거의 없어요"}</strong>
-                  {parent ? " · 부모님 대신 찾기" : ""}
-                </p>
+                <div className="pf-line" data-testid="prefill-line">
+                  {understoodLine(prefill.parsed) ? (
+                    <UnderstoodLines ps={prefill.parsed} alt={hhAlt} onAlt={(v) => chooseHh(prefill.parsed, v)} suffix={parent ? " · 부모님 대신 찾기" : undefined} />
+                  ) : (
+                    <p className="pf-l">
+                      <strong>알아들은 내용이 거의 없어요</strong>
+                      {parent ? " · 부모님 대신 찾기" : ""}
+                    </p>
+                  )}
+                </div>
                 {prefill.parsed.notes.length > 0 && (
                   <ul className="pf-notes">
                     {prefill.parsed.notes.map((n) => (
@@ -256,12 +314,19 @@ function Form({ initial, initialX, initialMode, wantPrefill }: { initial: Profil
                   <span className="small muted">문장은 이 기기에서만 읽어요.</span>
                 </div>
                 {understood && (
-                  <p className="notice" role="status" style={{ marginTop: "0.75rem" }} data-testid="v2-understood">
+                  <div className="notice" role="status" style={{ marginTop: "0.75rem" }} data-testid="v2-understood">
                     <Icon name="check" size={18} />
-                    <span>
-                      <strong>이렇게 이해했어요:</strong> {understood}
-                    </span>
-                  </p>
+                    <div className="pf-line">
+                      <p className="pf-l">
+                        <strong>이렇게 이해했어요</strong>
+                      </p>
+                      {understoodLine(understood) ? (
+                        <UnderstoodLines ps={understood} alt={hhAlt} onAlt={(v) => chooseHh(understood, v)} />
+                      ) : (
+                        <p className="pf-l">알아들은 내용이 없어요. 아래 질문에 직접 답해 주세요.</p>
+                      )}
+                    </div>
+                  </div>
                 )}
               </section>
             )}

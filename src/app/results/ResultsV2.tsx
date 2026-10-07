@@ -16,7 +16,7 @@ import { saveSituation, situationOf } from "@/lib/client/start";
 import { PRESETS } from "@/lib/client/presets";
 import { checkPath, coupleNote, resultsCopy, type FindMode } from "@/lib/client/mode";
 import {
-  BUCKET_LABEL, LOW_INCOME_PCT, autoV2, buildView, classify, incomeExplain, inferredNoRecipient, plainLine, scoreV2, situationChips, topPicksV2,
+  BUCKET_LABEL, LOW_INCOME_PCT, answersFor, autoV2, buildView, classify, incomeExplain, inferredNoRecipient, plainLine, scoreV2, situationChips, topPicksV2,
   type Bucket, type DimId, type Situation, type V2Item,
 } from "@/lib/client/v2";
 import type { Program } from "@/lib/data/types";
@@ -184,14 +184,14 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
                   {questions.map((q) => (
                     <li key={q.dim.id} className="v2-q" data-testid={`v2-q-${q.dim.id}`}>
                       <p className="v2-q-t">
-                        <strong>{q.dim.q(mode)}</strong> <span className="small muted">(이 답으로 {q.groups}개가 정해져요)</span>
+                        <strong>{q.dim.q(mode, sit)}</strong> <span className="small muted">(이 답으로 {q.groups}개가 정해져요)</span>
                       </p>
                       {q.dim.help && <p className="small muted">{q.dim.help}</p>}
                       {q.dim.id === "income" ? (
                         <IncomeAsk sit={sit} onApply={apply} onSkip={() => setSkipped((s) => [...s, "income"])} />
                       ) : (
                         <div className="btn-row v2-answers">
-                          {q.dim.answers.map((a) => (
+                          {answersFor(q.dim, sit).map((a) => (
                             <button key={a.key} type="button" className="btn btn-ghost btn-sm" onClick={() => apply(a.apply(sit))} data-testid={`v2-a-${q.dim.id}-${a.key}`}>
                               {a.label}
                             </button>

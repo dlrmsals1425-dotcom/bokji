@@ -9,7 +9,7 @@ import { loadLocalOps, loadProgram } from "@/lib/client/bundles";
 import { useExtras, useMode, useProfile } from "@/lib/client/storage";
 import { saveSituation, situationOf } from "@/lib/client/start";
 import { checkPath, type FindMode } from "@/lib/client/mode";
-import { BUCKET_LABEL, DIM_BY_ID, classifyOne, dimAvailable, dimsFor, explainItem, incomeExplain, plainLine, type ExplainLine, type Situation, type V2Item } from "@/lib/client/v2";
+import { BUCKET_LABEL, DIM_BY_ID, answersFor, classifyOne, dimAvailable, dimsFor, explainItem, incomeExplain, plainLine, type ExplainLine, type Situation, type V2Item } from "@/lib/client/v2";
 import { SOURCE_LABEL, ORG_TYPE_LABEL, type LocalOperation, type Program } from "@/lib/data/types";
 const SECTIONS = [
   { id: "sec-target", label: "지원대상" },
@@ -551,12 +551,12 @@ function ExplainBlock({ item, sit, mode }: { item: V2Item; sit: Situation; mode:
             const d = DIM_BY_ID[id];
             return (
               <div key={id} data-testid={`detail-q-${id}`} style={{ marginTop: "0.75rem" }}>
-                <p className="v2-q-t">{d.q(mode)}</p>
+                <p className="v2-q-t">{d.q(mode, sit)}</p>
                 {id === "income" ? (
                   <DetailIncome sit={sit} onApply={apply} onSkip={() => setSkipped((s) => [...s, id])} />
                 ) : (
                   <div className="btn-row">
-                    {d.answers.map((a) => (
+                    {answersFor(d, sit).map((a) => (
                       <button key={a.key} type="button" className="btn btn-ghost btn-sm" onClick={() => apply(a.apply(sit))} data-testid={`detail-a-${id}-${a.key}`}>
                         {a.label}
                       </button>
