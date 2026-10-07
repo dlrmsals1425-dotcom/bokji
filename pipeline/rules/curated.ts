@@ -128,8 +128,8 @@ export const CURATED: Record<string, CuratedRule> = {
 
   /* ---------- 장애 ---------- */
   "disability-pension": { logic: all(age(18, undefined, "만 18세 이상"), disability(["self"], "중증(심한) 장애인 본인", "severe"), lowIncomeSoft("저소득 (소득인정액 선정기준 이하)")) },
-  "disability-allowance": { logic: all(age(18, undefined, "만 18세 이상"), disability(["self"], "심하지 않은 장애 (등록장애인 본인)", "mild"), lowIncomeSoft("저소득 가구")) },
-  "disabled-child-allowance": { logic: all(kid(0, 17, "18세 미만 자녀"), disability(["member"], "장애가 있는 자녀 (가구원)"), lowIncomeSoft("저소득 가구")) },
+  "disability-allowance": { logic: all(age(18, undefined, "만 18세 이상"), disability(["self"], "심하지 않은 장애 (등록장애인 본인)", "mild"), lowIncomeSoft("기초생활수급·차상위 가구")) },
+  "disabled-child-allowance": { logic: all(kid(0, 17, "18세 미만 자녀"), disability(["member"], "장애가 있는 자녀 (가구원)"), lowIncomeSoft("기초생활수급·차상위 가구")) },
   "disability-activity-support": {
     logic: all(age(6, 64, "만 6세~65세 미만"), disability(["self"], "장애인 본인")),
     unstructured: ["지원량은 종합조사 결과로 정해져요"],
@@ -153,9 +153,9 @@ export const CURATED: Record<string, CuratedRule> = {
   "hourly-childcare": { logic: kid(0, 5, "가정에서 키우는 영유아 자녀", { capU: true }) },
   "together-care": { logic: kid(6, 12, "초등학생 자녀") },
   "local-children-center": { logic: kid(6, 15, "초·중학생 자녀"), unstructured: ["방과후 돌봄이 필요한 아동 (우선순위는 센터 기준)"] },
-  "dream-start": { logic: all(kid(0, 12, "12세 이하 자녀"), lowIncomeSoft("취약계층 가구")) },
+  "dream-start": { logic: all(kid(0, 12, "12세 이하 자녀"), lowIncomeSoft("수급·차상위 등 취약계층 가구")) },
   "child-meal-support": { logic: all(kid(0, 17, "18세 미만 자녀"), lowIncomeSoft("저소득 가정")), unstructured: ["결식 우려 여부"], core: true },
-  "didim-seed-account": { logic: all(kid(0, 17, "아동 (18세 미만 자녀)"), lowIncomeSoft("보호대상·저소득 아동")), badges: ["financial"] },
+  "didim-seed-account": { logic: all(kid(0, 17, "아동 (18세 미만 자녀)"), lowIncomeSoft("보호대상·수급·차상위 가구 아동")), badges: ["financial"] },
   "maternal-newborn-care": { logic: children(["pregnant", "0-1"], "출산 가정", { capU: true }), unstructured: ["출산 후 신청 기한과 소득 기준은 원문 확인"] },
   "preconception-health": { logic: all(age(20, 49, "만 20~49세"), unasked("임신을 준비 중")) },
   "diaper-formula": { logic: all(kid(0, 1, "2세 미만 영아 자녀"), lowIncomeSoft("저소득 가정")) },

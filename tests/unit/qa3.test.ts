@@ -96,3 +96,22 @@ describe("C3 잔여·R2 말하지 않은 신분·활동 조건", () => {
     for (const p of nat.filter((p) => /^(청년월세|기초연금)$/.test(p.name))) expect(needsStatus(p), p.name).toBeNull();
   });
 });
+
+describe("R3 수급 자격 사업을 소득만으로 판정하지 않음", () => {
+  const T = "시흥 사는 37살 직장인이고 초등학생 아이 둘 혼자 키우는 엄마예요 월 180 벌어요 월세";
+  it("수급 여부 모름 + 소득 34% → 디딤씨앗·드림스타트는 '받으실 수 있어요' 아님", () => {
+    const { view } = picksOf(sitOf(T));
+    const fit = view.fit.map((g) => g[0].s.program.name);
+    expect(fit).not.toContain("디딤씨앗통장");
+    expect(fit).not.toContain("드림스타트");
+    const d = [...view.office, ...view.ask].find((g) => g[0].s.program.name === "디딤씨앗통장");
+    if (d && d[0].bucket === "office") expect(d[0].base.why).toMatch(/수급·차상위/);
+  });
+  it("수급 중이라고 하면 디딤씨앗은 받으실 수 있어요 쪽", () => {
+    const sit = sitOf(T);
+    sit.x = { ...sit.x, benefits: { ...sit.x.benefits, livelihood: true } };
+    const r = classifyOne(byId("n.welfare100-didim-seed-account"), sit);
+    expect(r.bucket).not.toBe("no");
+    expect(r.base.why ?? "").not.toMatch(/소득만으로 정하지 않고/);
+  });
+});

@@ -177,6 +177,23 @@ function leavesOf(c: Cond | null, out: Leaf[] = []): Leaf[] {
   return out;
 }
 
+/**
+ * '수급·차상위 또는 저소득(추정 비율)' 묶음 (QA 3차 R3: 디딤씨앗통장·드림스타트 수기 규칙) — 소득 잎이 soft(원문에 비율 없음)이면
+ * 수급 여부를 모르는 채 소득만으로 '받으실 수 있어요'로 두지 않는다.
+ */
+const RECIPIENT_GROUP = /수급|차상위|보호대상|취약계층/;
+export function recipientOrGuessedIncome(c: Cond | null): boolean {
+  if (!c || !("all" in c || "any" in c)) return false;
+  if ("any" in c) {
+    const ls = c.any.filter((x): x is Leaf => !("all" in x || "any" in x));
+    const rec = ls.some((l) => l.field === "benefit" && "anyOf" in l && (l.anyOf as string[]).some((k) => (RECIPIENT_KINDS as string[]).includes(k)));
+    // 묶음 이름이 수급·차상위·보호대상·취약계층인 경우만 (그냥 '저소득 가구'는 소득 기준 사업도 많아 그대로)
+    if (rec && ls.some((l) => l.field === "income" && l.soft && RECIPIENT_GROUP.test(l.label))) return true;
+    return c.any.some(recipientOrGuessedIncome);
+  }
+  return c.all.some(recipientOrGuessedIncome);
+}
+
 type GateInfo = { gate: Gate | null; priority: boolean; partial: boolean; partialRec?: boolean };
 const gateCache = new WeakMap<Program, GateInfo>();
 
@@ -716,6 +733,7 @@ export function classifyBase(p: Program, s: Situation): BaseResult {
   if (BUNDLE_RE.test(`${p.name}\n${(p.target ?? "").slice(0, 400)}`)) return { base: "open", ...r, why: BUNDLE_WHY };
   if (EQUIP_RE.test((p.target ?? "").slice(0, 600))) return { base: "open", ...r, why: EQUIP_WHY };
   if (isBasicPension(p) && pensionLikely(s)) return { base: "open", ...r, why: PENSION_WHY };
+  if (!recMet && recipientOrGuessedIncome(p.rule.logic)) return { base: "open", ...r, why: RECBAND_WHY };
   if (partialRec && !recMet) return { base: "open", ...r, why: p.rule.recBand ? RECBAND_WHY : "대상 유형이 여럿이에요 — 수급·차상위가 아니면 다른 유형(원문)에 해당하는지 신청할 때 확인" };
   if (ev.reasons.some((x) => x.kind === "note" && /법인·시설·단체/.test(x.text))) return { base: "open", ...r, why: "법인·시설·단체 대상 조건이 있어요 — 개인이 받을 수 있는지 문의" };
   const tri = evaluateCond(p.rule.logic, profile, opts).tri;
