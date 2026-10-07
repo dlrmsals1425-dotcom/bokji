@@ -206,6 +206,14 @@ export function Search() {
       </p>
 
       {q.trim() && <CrisisHelp text={q} />}
+      {q.trim() && !sido && regions && (
+        <p className="notice search-hint" data-testid="search-no-region" role="note">
+          <Icon name="mapPin" size={18} />
+          <span>
+            지금은 <strong>전국 공통</strong> 사업만 찾았어요. 출산지원금처럼 시·군·구마다 다른 지원은 위에서 사는 곳을 고르면 함께 찾아요. 내 상황을 한 번 입력해 두면 그 지역을 기본으로 함께 찾아요.
+          </span>
+        </p>
+      )}
       {autoRegion && (
         <p className="notice search-hint" data-testid="search-auto-region" role="note">
           <Icon name="mapPin" size={18} />

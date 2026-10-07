@@ -57,3 +57,15 @@ test.describe("QA 3차", () => {
     await expect(picks).not.toContainText("서울주택도시공사");
   });
 });
+
+test.describe("QA 3차 검색", () => {
+  test("M4: 저장된 지역이 있으면 '출산지원금' 검색에 그 지역 사업도, 없으면 지역 고르기 안내 @mobile", async ({ page }) => {
+    await page.goto("/search?q=" + encodeURIComponent("출산지원금"));
+    await expect(page.getByTestId("search-no-region")).toBeVisible({ timeout: 20_000 });
+    // 내 상황(용인)을 입력해 저장한 뒤 같은 검색
+    await toResults(page, "용인 수지 사는 30대 맞벌이 부부고 돌 안 된 아기 하나 있어요");
+    await page.goto("/search?q=" + encodeURIComponent("출산지원금"));
+    await expect(page.getByTestId("search-no-region")).toHaveCount(0);
+    await expect(page.getByText(/검색 범위: 전국 공통 \+ 경기/)).toBeVisible({ timeout: 20_000 });
+  });
+});
