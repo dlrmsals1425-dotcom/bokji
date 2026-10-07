@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Icon } from "@/components/Icon";
+import { CrisisHelp } from "@/components/CrisisHelp";
 import { RadioGroup } from "@/components/Choice";
 import { loadRegions } from "@/lib/client/bundles";
 import { clearPrefill, parseSituation, parsedExtras, readPrefill, understoodLine, type ParsedSituation, type Prefill } from "@/lib/client/parse";
@@ -344,6 +345,7 @@ function Form({ initial, initialX, initialMode, wantPrefill }: { initial: Profil
                   <Icon name="check" size={20} strokeWidth={2.6} /> 이렇게 이해했어요
                 </h2>
                 <p className="pf-quote">&ldquo;{prefill.text}&rdquo;</p>
+                <CrisisHelp text={prefill.text} />
                 <div className="pf-line" data-testid="prefill-line">
                   {understoodLine(prefill.parsed) ? (
                     <UnderstoodLines ps={prefill.parsed} alt={hhAlt} onAlt={(v) => chooseHh(prefill.parsed, v)} suffix={parent ? " · 부모님 대신 찾기" : undefined} />

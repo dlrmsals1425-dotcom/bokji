@@ -29,7 +29,27 @@ const SYNONYMS: string[][] = [
   ["아기", "영아", "영유아"],
   ["임산부", "임신부", "임신"],
   ["월세", "임차", "주거비"],
+  // QA 1차 M4: '출산지원금' 0건 → 지역마다 다른 이름
+  ["출산지원금", "출산장려금", "출산축하금", "출생축하금", "출산양육지원금", "출산지원", "첫만남이용권", "출산축하"],
+  ["육아수당", "양육수당", "아동수당", "부모급여"],
+  ["생활비", "생계비", "생계급여"],
 ];
+
+/** 알아볼 수 있는 글자(한글 음절·영문·숫자)가 하나도 없는 검색어 (예: 'ㅁㄴㅇㄹ', '???') — 전체 목록 대신 0건 */
+export function isGibberish(q: string): boolean {
+  const t = q.normalize("NFC").trim();
+  return !!t && !/[0-9A-Za-z가-힣]/.test(t);
+}
+
+/** 위기 신호 (QA 1차 M4): 자살·자해 생각 → 109 먼저, 생계 위기 → 129·긴급복지 */
+const SUICIDE_RE = /(죽고\s*싶|죽을\s*(?:것\s*같|까)|자살|목숨을?\s*끊|살기\s*싫|살고\s*싶지\s*않|사라지고\s*싶|극단적\s*(?:선택|생각)|생을\s*마감|자해)/;
+const DISTRESS_RE = /(도와\s*주세요|살려\s*주세요|돈이\s*(?:너무\s*|하나도\s*|전혀\s*)?없|먹을\s*(?:게|것이?)\s*없|굶고|굶어|쫓겨나|길에서\s*자|노숙|월세를?\s*못\s*내|전기가?\s*끊|가스가?\s*끊|너무\s*힘들|막막)/;
+export function crisisOf(q: string): "suicide" | "distress" | null {
+  const t = q.normalize("NFC");
+  if (SUICIDE_RE.test(t)) return "suicide";
+  if (DISTRESS_RE.test(t)) return "distress";
+  return null;
+}
 
 export const compact = (s: string) => s.replace(/\s+/g, "").toLowerCase();
 

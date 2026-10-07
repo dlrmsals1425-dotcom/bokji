@@ -8,7 +8,8 @@ import { EMPTY_SELECTION, HOUSEHOLD, LIFE, TOPICS, matchesSelection, parseSelect
 import { loadForRegion, loadRegions, type Loaded } from "@/lib/client/bundles";
 import { useProfile } from "@/lib/client/storage";
 import { evaluateProgram, matchesQuery, queryHitCount } from "@/lib/client/results";
-import { queryTokens } from "@/lib/client/query";
+import { isGibberish, queryTokens } from "@/lib/client/query";
+import { CrisisHelp } from "@/components/CrisisHelp";
 import { parseSituation, prefillPath, savePrefill, understoodLine } from "@/lib/client/parse";
 import type { RegionIndex } from "@/lib/data/types";
 
@@ -60,6 +61,8 @@ export function Search() {
 
   const { hits, partial } = useMemo(() => {
     if (!data || !active) return { hits: [], partial: false };
+    // 'ㅁㄴㅇㄹ' 처럼 알아볼 글자가 없으면 전체 목록 대신 0건 (QA 1차 M4)
+    if (isGibberish(q) && selectionSize(sel) === 0) return { hits: [], partial: false };
     const inSel = data.programs.filter((p) => matchesSelection(p, sel));
     const all = inSel.filter((p) => !q.trim() || matchesQuery(p, q, exclude));
     // 모든 낱말이 들어간 결과가 없으면 일부 낱말이 맞는 결과를 많이 맞는 순으로
@@ -201,6 +204,7 @@ export function Search() {
         {profile ? " · 입력하신 정보로 판정 결과도 함께 표시" : ""}
       </p>
 
+      {q.trim() && <CrisisHelp text={q} />}
       {autoRegion && (
         <p className="notice search-hint" data-testid="search-auto-region" role="note">
           <Icon name="mapPin" size={18} />
@@ -252,7 +256,17 @@ export function Search() {
             </p>
           )}
           {hits.length === 0 ? (
-            <p className="empty">조건에 맞는 서비스가 없습니다. 조건을 줄이거나 다른 낱말로 찾아 보세요.</p>
+            isGibberish(q) ? (
+              <p className="empty" data-testid="search-gibberish">
+                알아볼 수 있는 낱말이 없어요. 예: <Link href="/search?q=기초연금">기초연금</Link>, <Link href="/search?q=출산">출산</Link>, <Link href="/search?q=월세">월세</Link>처럼 찾거나,{" "}
+                <Link href="/situation">상황을 적어서 찾아 보세요</Link>.
+              </p>
+            ) : (
+              <p className="empty" data-testid="search-empty">
+                조건에 맞는 서비스가 없습니다. 다른 낱말로 찾거나, 위에서 시·도를 골라 지역 사업까지 찾아 보세요. 받을 수 있는 것을 한 번에 보려면{" "}
+                <Link href="/situation">상황으로 찾기</Link>를 이용하세요.
+              </p>
+            )
           ) : (
             <div className="list">
               {hits.slice(0, limit).map((p) => (
