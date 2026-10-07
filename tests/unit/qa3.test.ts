@@ -115,3 +115,15 @@ describe("R3 수급 자격 사업을 소득만으로 판정하지 않음", () =>
     expect(r.base.why ?? "").not.toMatch(/소득만으로 정하지 않고/);
   });
 });
+
+describe("M2 이미 말한 수급 여부는 다시 묻지 않음", () => {
+  it("'동탄사는 할머니 80넘으심 기초수급자에요' → 수급 질문 없음", () => {
+    const { view } = picksOf(sitOf("동탄사는 할머니 80넘으심 기초수급자에요"));
+    expect(view.questions.map((q) => q.dim.id)).not.toContain("support");
+  });
+  it("'차상위예요' · '수급자 아니에요'도 다시 묻지 않음, 말하지 않았으면 물음", () => {
+    expect(picksOf(sitOf("차상위예요 수원 사는 45살")).view.questions.map((q) => q.dim.id)).not.toContain("support");
+    expect(picksOf(sitOf("수급자 아니에요 수원 사는 45살")).view.questions.map((q) => q.dim.id)).not.toContain("support");
+    expect(picksOf(sitOf("수원 사는 45살 혼자 살아요")).view.questions.map((q) => q.dim.id)).toContain("support");
+  });
+});

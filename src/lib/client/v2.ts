@@ -380,7 +380,11 @@ export const DIMS: Dim[] = [
     id: "support",
     q: (m) => subj(m, "주민센터에서 기초생활보장(생계·의료·주거급여)이나 차상위 지원을 받고 계신가요?", "부모님이 주민센터에서 기초생활보장(생계·의료·주거급여)이나 차상위 지원을 받고 계신가요?"),
     help: "‘수급자’, ‘차상위’라고 적힌 혜택은 이 답 하나로 정해져요.",
-    isUnknown: (s) => RECIPIENT_KINDS.some((k) => inferExtras(s).benefits[k] === undefined),
+    // 이미 '기초수급자'·'차상위'라고 말했으면 다시 묻지 않는다 (QA 3차 M2) — 아니라고 했으면 모두 false라 묻지 않음
+    isUnknown: (s) => {
+      const b = inferExtras(s).benefits;
+      return !RECIPIENT_KINDS.some((k) => b[k] === true) && RECIPIENT_KINDS.some((k) => b[k] === undefined);
+    },
     answers: [
       { key: "none", label: "아니요, 받지 않아요", apply: (s) => setBenefits(s, [], RECIPIENT_KINDS) },
       ...SUPPORT_LEVELS.map((l) => ({
