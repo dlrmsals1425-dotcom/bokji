@@ -26,8 +26,10 @@ function sitOf(text: string, hint?: "self" | "parent"): Situation {
   const b: Extras["benefits"] = {};
   r.profile.benefits?.forEach((k) => (b[k] = true));
   r.benefitsNo?.forEach((k) => (b[k] = false));
+  const tr: Extras["traits"] = {};
+  r.profile.traits?.forEach((k) => (tr[k] = true));
   const ex = parsedExtras(r);
-  return { profile: p, x: { ...EMPTY_EXTRAS, benefits: b, ...ex, ageSpan: ex.ageSpan ?? null }, mode: r.mode ?? hint ?? "self" };
+  return { profile: p, x: { ...EMPTY_EXTRAS, benefits: b, traits: tr, ...ex, ageSpan: ex.ageSpan ?? null }, mode: r.mode ?? hint ?? "self" };
 }
 function picksOf(sit: Situation) {
   const p = sit.profile;
@@ -266,5 +268,13 @@ describe("N7 원문 비율이 확인해 준 '저소득' 기준", () => {
   });
   it("'(원문 확인)' 묶음(HPV — 청소년은 소득 무관)은 그대로 soft", () => {
     expect(JSON.stringify(byId("n.gov24-179038700004").rule.logic)).toContain('"label":"저소득","soft":true');
+  });
+});
+
+describe("한부모 문장 (나이 모름)", () => {
+  it("'시흥에서 아이 둘 혼자 키우는 엄마예요 월 180' → 한부모 아동양육비가 먼저 확인할 것 1위, 위기아동·청소년한부모 없음", () => {
+    const { picks } = picksOf(sitOf("시흥에서 아이 둘 혼자 키우는 엄마예요 월 180 벌어요"));
+    expect(picks[0].s.program.name).toContain("아동양육비");
+    expect(picks.map((i) => i.s.program.name).join(" ")).not.toMatch(/위기아동|청소년한부모/);
   });
 });

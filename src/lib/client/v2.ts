@@ -747,7 +747,7 @@ export function pensionPossible(s: Situation): boolean {
 /** 기초연금을 말함 ('기초연금 받고 싶어요') + 아직 안 받음 + 65세 미만이 아님 */
 const pensionWanted = (s: Situation) => !!s.x.interests?.includes("basic_pension") && inferExtras(s).benefits.basic_pension !== true && (ageBoundsOf(s)?.[1] ?? 120) >= 65;
 /** 간편 입력이 묻지 않는 특별한 신분·처지 대상 (시설 보호아동·가정위탁·자립준비청년 등) — 목록에는 두되 먼저 확인할 것에는 넣지 않음 */
-export const SPECIAL_STATUS = /(보호\s*대상\s*아동|가정\s*위탁|위탁\s*(?:아동|가정|부모)|아동\s*복지\s*시설|시설\s*(?:보호|입소|퇴소|아동)|자립\s*준비|보호\s*종료|입양|요보호|소년\s*소녀\s*가정|그룹\s*홈|공동\s*생활\s*가정)/;
+export const SPECIAL_STATUS = /(보호\s*대상\s*아동|유기\s*(?:및|·)?\s*위기\s*아동|가정\s*위탁|위탁\s*(?:아동|가정|부모)|아동\s*복지\s*시설|시설\s*(?:보호|입소|퇴소|아동)|자립\s*준비|보호\s*종료|입양|요보호|소년\s*소녀\s*가정|그룹\s*홈|공동\s*생활\s*가정)/;
 /** 추천에서 뺄 이유가 적힌 '신청할 때 확인' (법인·시설·단체·직업 조건) */
 const PICK_BLOCK_WHY = /(법인·시설·단체|기관·시설|직업·신분|직업·자격|개인이 신청해 받는 혜택이 아니에요)/;
 export const PENSION_WHY = "소득만 보면 받으실 가능성이 높아요 — 재산(소득인정액)에 따라 달라요";
@@ -1102,7 +1102,7 @@ export function topPicksV2(view: Pick<V2View, "fit" | "office"> & Partial<Pick<V
       if (VICTIM_RE.test(p.name) || SPECIAL_STATUS.test(p.name)) continue;
       // '법인·시설·단체 대상', '직업·자격 조건'이 적힌 항목은 추천하지 않는다 (QA 2차 M1·N3)
       if (g[0].base.why && PICK_BLOCK_WHY.test(g[0].base.why)) continue;
-      if (ageUnknown && !onTopic && g[0].base.ev.reasons.some((r) => r.kind === "unknown" && r.field === "age")) continue;
+      if (ageUnknown && !forced && (g[0].dims.includes("age") || g[0].base.ev.reasons.some((r) => r.kind === "unknown" && r.field === "age"))) continue;
       const fk = familyKey(p.name);
       if (fams.has(fk)) continue;
       fams.add(fk);

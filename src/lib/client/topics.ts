@@ -26,6 +26,11 @@ export const TOPICS = {
     tgt: /(노부모|직계\s*존속을?\s*(?:부양|모시)|부모를?\s*(?:부양|모시)|3\s*세대\s*이상)/,
   },
   rent: { label: "월세", say: /월세/, prog: /(월세|주거비)/ },
+  single_parent: {
+    label: "한부모",
+    say: /(한부모|싱글\s*(?:맘|대디)|미혼\s*(?:모|부)|(?:아이|애|애기|자녀|아들|딸)\S*\s*(?:\S+\s*)?혼자\s*(?:키우|키워|기르)|혼자\s*(?:\S+\s*)?(?:키우|키워|기르))/,
+    prog: /(한부모|아동\s*양육비|양육비\s*이행|미혼\s*(?:모|부))/,
+  },
 } as const;
 export type TopicId = keyof typeof TOPICS;
 export const TOPIC_IDS = Object.keys(TOPICS) as TopicId[];
