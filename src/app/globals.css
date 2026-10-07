@@ -482,3 +482,14 @@ html[data-large="1"] .fgrid fieldset + fieldset { border-left: 0; border-top: 1p
 .side-actions .btn { width: 100%; justify-content: center; }
 @media (max-width: 30rem) { .dtabs a { padding: 0.75rem 0.375rem; font-size: 0.9375rem; } }
 .dtabs a:focus-visible { outline-offset: -3px; }
+
+/* 상황 문장 해석 확인 (입력 화면 위) */
+.prefill-box { border: 2px solid var(--primary); border-radius: var(--radius); background: #f5f8ff; padding: 1.125rem 1.25rem; margin-bottom: 1.5rem; }
+.prefill-box .pf-title { display: flex; align-items: center; gap: 0.5rem; font-size: 1.1875rem; font-weight: 800; margin: 0 0 0.5rem; color: var(--primary-70); }
+.prefill-box .pf-quote { color: var(--ink-2); margin: 0 0 0.5rem; word-break: keep-all; }
+.prefill-box .pf-line { font-size: 1.0625rem; margin: 0 0 0.5rem; word-break: keep-all; }
+.prefill-box .pf-notes { margin: 0 0 0.5rem; padding-left: 1.25rem; color: var(--warm-60); font-size: 0.9375rem; }
+.prefill-box .pf-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem; }
+.search-hint { margin-top: 1rem; }
+.linklike { background: none; border: 0; padding: 0; font: inherit; color: var(--primary-60); text-decoration: underline; font-weight: 700; cursor: pointer; }
+.linklike:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }

@@ -4,6 +4,7 @@ import { HeroArt } from "@/components/HeroArt";
 import { Icon, type IconName } from "@/components/Icon";
 import { ResumeBanner } from "@/components/ResumeBanner";
 import { PresetButtons } from "@/components/PresetButtons";
+import { HomeSearch } from "@/components/HomeSearch";
 import { MODE_ENTRY } from "@/lib/client/mode";
 import { TIER_PLAIN } from "@/lib/client/howto";
 
@@ -38,15 +39,7 @@ export default function Home() {
               중앙정부·시도·시군구·공공기관 서비스 {n(c.uniquePrograms)}개 가운데, 직접 신청해야 받을 수 있는 것을 이유와 함께 알려 드립니다.
               30·40대에게는 본인보다 부모님 돌봄·장애 관련 지원을 대신 알아보는 길이 더 유용할 때가 많아요.
             </p>
-            <form action="/search" role="search" className="hero-search">
-              <label htmlFor="home-q" className="sr-only">
-                서비스 이름으로 찾기
-              </label>
-              <input id="home-q" name="q" type="search" placeholder="서비스 이름이나 낱말로 찾기 (예: 기초연금)" autoComplete="off" />
-              <button type="submit" aria-label="검색">
-                <Icon name="search" size={22} strokeWidth={2.2} />
-              </button>
-            </form>
+            <HomeSearch />
             <p className="hero-keys">
               <span>많이 찾는 말</span>
               <Link href="/search?q=기초연금">기초연금</Link>

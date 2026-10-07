@@ -1,8 +1,9 @@
 /** 판정 결과 계산·관련도 정렬·묶음·필터 (순수 함수 — 단위 테스트 대상) */
 import { evaluateRule } from "../engine/evaluate";
 import { ageRange, type Profile } from "../engine/profile";
-import type { Evaluation, Tier } from "../engine/types";
+import type { Evaluation, Reason, Tier } from "../engine/types";
 import { isAutoLike, type Category, type OrgType, type Program } from "../data/types";
+import { queryTokens, tokenHit } from "./query";
 
 export interface Scored {
   program: Program;
@@ -45,6 +46,8 @@ export function affinity(p: Program, pr: Profile): number {
   rule(/(영유아|유아|어린이집|보육|아이돌봄|육아|양육|아동)/, kids === null ? null : hasKid(["0-1", "2-5", "6-12"]) || (age ? age[1] <= 18 : false), 2, 3);
   rule(/(청소년|중학|고등학|학생|장학|수학여행|입학|교복)/, kids === null && pr.activity === "unknown" ? null : hasKid(["6-12", "13-18"]) || pr.activity === "student" || (age ? age[1] <= 24 : false), 1.5, 2.5);
   rule(/장애/, pr.disability === "unknown" ? null : pr.disability !== "none", 3, 4, text);
+  // 장애 여부를 '모름'으로 두면 장애인 전용 사업은 목록에 남기되 뒤로 (위에 올라오지 않게)
+  if (pr.disability === "unknown" && /장애/.test(name)) s -= 3;
   rule(/(한부모|조손|미혼모|미혼부)/, pr.traits === null ? null : pr.traits.includes("single_parent"), 3, 4, text);
   rule(/(다문화|북한이탈|새터민|결혼이민)/, pr.traits === null ? null : pr.traits.includes("multicultural"), 3, 4, text);
   rule(/(보훈|참전|국가유공|독립유공|고엽제|제대군인|무공수훈)/, pr.traits === null ? null : pr.traits.includes("veteran"), 3, 4, text);
@@ -88,7 +91,8 @@ export function specificMatch(p: Program, ev: Evaluation, pr: Profile): boolean 
   const age = pr.age === "unknown" ? null : ageRange(pr.age);
   const senior = !!age && age[0] >= 65;
   if (met.some((r) => SALIENT.has(r.field ?? "") || (senior && r.field === "age"))) return true;
-  if (ev.reasons.some((r) => r.kind === "unknown" && r.field === "disability")) return true;
+  // 장애가 있는 가구원(member)이 있을 때만: '장애인 본인' 대상 사업을 가구원 이름으로 신청 가능 (모름이면 해당 없음)
+  if (pr.disability === "member" && ev.reasons.some((r) => r.kind === "unknown" && r.field === "disability")) return true;
   const text = `${p.name} ${(p.target ?? "").slice(0, 80)}`;
   const kids = pr.children ?? [];
   const groups: [boolean, RegExp][] = [
@@ -114,7 +118,7 @@ export function relevance(p: Program, ev: Evaluation, pr: Profile): number {
   const metW = met.reduce((n, r) => n + (FIELD_WEIGHT[r.field ?? ""] ?? 1), 0);
   const aff = affinity(p, pr);
   // '장애인 본인' 대상인데 장애가 있는 가구원이 있는 경우: 가구원 이름으로 신청 가능 → 부분 일치로 가산
-  const proxy = ev.reasons.some((r) => r.kind === "unknown" && r.field === "disability") ? 3 : 0;
+  const proxy = pr.disability === "member" && ev.reasons.some((r) => r.kind === "unknown" && r.field === "disability") ? 3 : 0;
   // 나이·근로 상태처럼 넓은 조건만 맞고 내 특별한 상황과는 무관한 사업은 뒤로 (예: 장애인 가구에 '건설노동자 휴양소')
   const senior = pr.age !== "unknown" && ageRange(pr.age)[0] >= 65;
   const generic = hasSalient(pr) && !proxy && !met.some((r) => SALIENT.has(r.field ?? "") || (senior && r.field === "age")) && aff <= 0 && !(pr.activity === "job_seeking" && met.some((r) => r.field === "activity")) ? -3 : 0;
@@ -156,9 +160,66 @@ export function sameFamily(a: string, b: string): boolean {
   return a === b;
 }
 
+/* ---------------- 판정 보정 ---------------- */
+
+/** 원문이 저소득·수급·차상위를 대상으로 한다고 적은 사업 (예: '저소득층 백내장 수술비') */
+const LOW_INCOME_TARGET = /(저소득|기초생활\s*수급|수급자|수급권자|차상위|의료급여|취약계층)/;
+const LOW_INCOME_EXCLUDED = /(수급자|차상위|의료급여)[^.。\n]{0,8}(은|는)?\s*제외/;
+const isLowIncomeProfile = (pr: Profile) => !!pr.benefits?.length || (pr.income !== "unknown" && Number(pr.income) <= 50);
+
+/**
+ * 규칙 판정 뒤 보정 (화면 어디서나 같은 판정을 쓰도록 결과·검색·상세가 모두 이 함수를 쓴다).
+ *  - 나이만 맞아 '조건 충족'이 됐지만 원문은 저소득·수급·차상위 대상인 사업 → '가능성 있음' + '소득 확인' 사유
+ */
+export function adjustEvaluation(p: Program, ev: Evaluation, pr: Profile): Evaluation {
+  if (ev.tier !== "eligible") return ev;
+  const text = `${p.name} ${p.summary ?? ""} ${(p.target ?? "").slice(0, 300)}`;
+  if (!LOW_INCOME_TARGET.test(text) || LOW_INCOME_EXCLUDED.test(text)) return ev;
+  const incomeMet = ev.reasons.some((r) => r.kind === "met" && (r.field === "benefit" || r.field === "income" || r.field === "incomeBands"));
+  if (incomeMet || isLowIncomeProfile(pr)) return ev;
+  const reason: Reason = { kind: "unknown", field: "income", text: "소득 확인 — 원문에 저소득·수급·차상위 대상(또는 일부 지원이 저소득층 한정)이라고 되어 있어요. 소득·수급 상태를 확인하세요." };
+  const met = ev.reasons.filter((r) => r.kind === "met").slice(0, 2).map((r) => `✓ ${r.text}`);
+  return { ...ev, tier: "likely", reasons: [...ev.reasons, reason], headline: [...met, "? 소득 확인"].join("  ") };
+}
+
+/** 결과·검색·상세 공통 판정 */
+export function evaluateProgram(p: Program, pr: Profile): Evaluation {
+  return adjustEvaluation(p, evaluateRule(p.rule, pr), pr);
+}
+
+/**
+ * 만 65세가 되면 생기는 핵심 혜택 (나이가 맞으면 위로).
+ * ID를 박아 두지 않고 이름 규칙으로 찾는다 — 규칙마다 '전국 사업 중 관련도가 가장 높은 하나'에만 가산점.
+ */
+export const SENIOR_CORE: { key: string; re: RegExp }[] = [
+  { key: "기초연금", re: /^기초연금$|^기초연금\s*(지급|신청)?$/ },
+  { key: "독감", re: /(인플루엔자|독감).*(예방접종|접종)/ },
+  { key: "폐렴구균", re: /폐렴구균/ },
+  { key: "대상포진", re: /대상포진/ },
+  { key: "치매검진", re: /치매.*검진|치매\s*조기\s*검진/ },
+  { key: "노인일자리", re: /노인\s*일자리/ },
+  { key: "노인맞춤돌봄", re: /노인\s*맞춤\s*돌봄/ },
+  { key: "장기요양", re: /^노인\s*장기요양\s*보험$|장기요양\s*(등급|인정)/ },
+  { key: "틀니·임플란트", re: /(틀니|임플란트)/ },
+];
+const SENIOR_CORE_BONUS = 4;
+
+function seniorCoreBoost(out: Scored[], pr: Profile) {
+  if (pr.age === "unknown" || ageRange(pr.age)[0] < 65) return;
+  for (const { re } of SENIOR_CORE) {
+    const cands = out.filter((s) => s.ev.tier !== "ineligible" && re.test(s.program.name) && !s.program.badges?.includes("financial"));
+    if (!cands.length) continue;
+    // 전국 사업을 먼저 (없으면 지역 사업), 그 안에서 관련도가 가장 높은 것 하나
+    const pool = cands.some((s) => s.program.scope === "national") ? cands.filter((s) => s.program.scope === "national") : cands;
+    const best = pool.reduce((a, b) => (b.score > a.score ? b : a));
+    best.score += SENIOR_CORE_BONUS;
+    best.specific = true;
+  }
+}
+
 export function scoreAll(programs: Program[], profile: Profile): Scored[] {
   const out: Scored[] = programs.map((program) => {
-    const ev = evaluateRule(program.rule, profile);
+    const ev = evaluateProgram(program, profile);
     return {
       program, ev,
       met: ev.reasons.filter((r) => r.kind === "met").length,
@@ -167,6 +228,7 @@ export function scoreAll(programs: Program[], profile: Profile): Scored[] {
       specific: specificMatch(program, ev, profile),
     };
   });
+  seniorCoreBoost(out, profile);
   out.sort((a, b) => b.score - a.score || a.program.name.localeCompare(b.program.name, "ko"));
   return out;
 }
@@ -201,13 +263,32 @@ export function normalizeQuery(s: string): string {
   return s.replace(/\s+/g, "").toLowerCase();
 }
 
-export function matchesQuery(p: Program, q: string): boolean {
+export function programHay(p: Program): string {
+  return normalizeQuery([p.name, p.summary, p.target ?? "", p.owner ?? "", p.provider ?? "", (p.tags ?? []).join(" "), (p.aliases ?? []).join(" ")].join(" "));
+}
+
+/**
+ * 검색어 일치: 쉼표 묶음마다 (1) 띄어쓰기를 뺀 전체가 들어 있거나 (2) 낱말(조사·불용어 제외, 비슷한 말 포함)이 모두 들어 있으면 일치.
+ * exclude: 검색어에서 뺄 낱말 (지역으로 읽은 낱말 등)
+ */
+export function matchesQuery(p: Program, q: string, exclude: string[] = []): boolean {
   if (!q) return true;
-  const hay = normalizeQuery([p.name, p.summary, p.target ?? "", p.owner ?? "", p.provider ?? "", (p.tags ?? []).join(" "), (p.aliases ?? []).join(" ")].join(" "));
-  return normalizeQuery(q)
-    .split(/[,]/)
-    .filter(Boolean)
-    .every((t) => hay.includes(t));
+  const hay = programHay(p);
+  const groups = q.split(",");
+  const tokens = queryTokens(q, exclude);
+  return groups.every((g, i) => {
+    if (!g.trim()) return true;
+    const whole = normalizeQuery(g);
+    if (whole && hay.includes(whole)) return true;
+    const t = tokens[i];
+    return !!t && t.every((tok) => tokenHit(hay, tok));
+  });
+}
+
+/** 낱말 중 몇 개가 맞는지 (모두 맞는 결과가 없을 때 일부 일치로 보여 줄 때 정렬용) */
+export function queryHitCount(p: Program, q: string, exclude: string[] = []): number {
+  const hay = programHay(p);
+  return queryTokens(q, exclude).flat().filter((tok) => tokenHit(hay, tok)).length;
 }
 
 /**

@@ -14,6 +14,7 @@ import { RegionIndex, PILOT_SIDO } from "./normalize/regions";
 import { loadWelfare100 } from "./sources/welfare100";
 import { loadIcare } from "./sources/icare";
 import { loadGov24 } from "./sources/gov24";
+import { loadManual } from "./sources/manual";
 import { applyBokjiroApi } from "./sources/bokjiroApi";
 import type { SourceRecord } from "./sources/record";
 import { dedupWithinIcare, mergeAcrossSources, regionDisplayName, type DedupStats } from "./dedup";
@@ -80,10 +81,12 @@ function main() {
       (g24list.fetchedAt ?? GENERATED_AT).slice(0, 10), regions, log)
     : [];
 
-  const raw = { gov24: gov24.length, bokjiro: w100.filter((r) => r.source === "bokjiro").length, welfare100: w100.filter((r) => r.source === "welfare100").length, icare: icare.length };
+  const manual = loadManual(path.join(ROOT, "pipeline/curated"), regions, log);
+
+  const raw = { gov24: gov24.length, bokjiro: w100.filter((r) => r.source === "bokjiro").length, welfare100: w100.filter((r) => r.source === "welfare100").length, icare: icare.length, manual: manual.length };
 
   // 2. 노출 제외 (읍면동 단독·개인 대상 아님 등)
-  const all = [...gov24, ...w100, ...icare];
+  const all = [...gov24, ...w100, ...icare, ...manual];
   const excluded: Record<string, number> = {};
   const excludedSamples: string[] = [];
   const kept = all.filter((r) => {
@@ -151,6 +154,14 @@ function main() {
           unstructured: c.unstructured ?? [], unstructuredCore: !!c.core,
           evidence: [curatedMember!.target, curatedMember!.summary].filter(Boolean).join(" / ") + (c.source ? ` · 근거: ${c.source}` : ""),
           reviewer: "1차: 원문 대조 작성(AI) · 최종 사람 검수 대기", reviewedAt: GENERATED_AT.slice(0, 10),
+        };
+      } else if (draftMember.source === "manual") {
+        // 수동 보강: 기관 공식 누리집 원문과 대조해 작성한 규칙
+        rule = {
+          id: ruleId, origin: "curated", review: "curated", logic: draftMember.draft.logic,
+          unstructured: draftMember.draft.unstructured, unstructuredCore: false,
+          evidence: `${draftMember.target ?? ""} · 근거: ${draftMember.url} (${draftMember.fetchedAt} 확인)`,
+          reviewer: "수동 보강: 공식 누리집 원문 대조(AI) · 최종 사람 검수 대기", reviewedAt: draftMember.fetchedAt,
         };
       } else {
         // 공공서비스 API 구조화 지원조건: 전국 사업·경기도(시범) 사업은 '조건 충족' 판정 허용, 그 밖의 지역은 상한 '가능성 있음'

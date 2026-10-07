@@ -7,8 +7,9 @@ import { Icon } from "@/components/Icon";
 import { EMPTY_SELECTION, HOUSEHOLD, LIFE, TOPICS, matchesSelection, parseSelection, selectionQuery, selectionSize, type FacetSelection } from "@/lib/client/facets";
 import { loadForRegion, loadRegions, type Loaded } from "@/lib/client/bundles";
 import { useProfile } from "@/lib/client/storage";
-import { matchesQuery } from "@/lib/client/results";
-import { evaluateRule } from "@/lib/engine/evaluate";
+import { evaluateProgram, matchesQuery, queryHitCount } from "@/lib/client/results";
+import { queryTokens } from "@/lib/client/query";
+import { parseSituation, prefillPath, savePrefill, understoodLine } from "@/lib/client/parse";
 import type { RegionIndex } from "@/lib/data/types";
 
 const PAGE = 30;
@@ -24,8 +25,16 @@ export function Search() {
   const [data, setData] = useState<Loaded | null>(null);
   const [limit, setLimit] = useState(PAGE);
 
-  const sido = pick ? pick.sido : (profile?.sido ?? null);
-  const sigungu = pick ? pick.sigungu : (profile?.sigungu ?? null);
+  const chosenSido = pick ? pick.sido : (profile?.sido ?? null);
+  const chosenSigungu = pick ? pick.sigungu : (profile?.sigungu ?? null);
+  // 검색어를 상황 문장으로도 읽어 본다 (기기 안에서만)
+  const parsed = useMemo(() => (q.trim() && regions ? parseSituation(q, regions) : null), [q, regions]);
+  // 시·도를 고르지 않았는데 검색어에 지역 낱말이 있으면 그 지역 사업까지 포함
+  const autoRegion = !chosenSido && !!parsed?.profile.sido;
+  const sido = autoRegion ? parsed!.profile.sido : chosenSido;
+  const sigungu = autoRegion ? parsed!.profile.sigungu : chosenSigungu;
+  const exclude = useMemo(() => (parsed && parsed.profile.sido && parsed.profile.sido === sido ? parsed.regionTerms : []), [parsed, sido]);
+  const situation = !!parsed?.looksLikeSituation && parsed.understood.some((u) => u.key !== "region");
 
   useEffect(() => {
     loadRegions().then(setRegions);
@@ -49,10 +58,16 @@ export function Search() {
     apply(q, { ...sel, [group]: cur.includes(id) ? cur.filter((x) => x !== id) : [...cur, id] });
   };
 
-  const hits = useMemo(() => {
-    if (!data || !active) return [];
-    return data.programs.filter((p) => (!q.trim() || matchesQuery(p, q)) && matchesSelection(p, sel));
-  }, [data, q, sel, active]);
+  const { hits, partial } = useMemo(() => {
+    if (!data || !active) return { hits: [], partial: false };
+    const inSel = data.programs.filter((p) => matchesSelection(p, sel));
+    const all = inSel.filter((p) => !q.trim() || matchesQuery(p, q, exclude));
+    // 모든 낱말이 들어간 결과가 없으면 일부 낱말이 맞는 결과를 많이 맞는 순으로
+    if (all.length || !q.trim() || queryTokens(q, exclude).flat().length < 2) return { hits: all, partial: false };
+    const scored = inSel.map((p) => ({ p, n: queryHitCount(p, q, exclude) })).filter((x) => x.n > 0);
+    scored.sort((a, b) => b.n - a.n);
+    return { hits: scored.map((x) => x.p), partial: scored.length > 0 };
+  }, [data, q, sel, active, exclude]);
 
   const sidoObj = regions?.sidos.find((s) => s.code === sido);
   const chosen = [
@@ -134,7 +149,7 @@ export function Search() {
             <label htmlFor="s-sido" className="label">
               시·도
             </label>
-            <select id="s-sido" className="select" value={sido ?? ""} onChange={(e) => setPick({ sido: e.target.value || null, sigungu: null })}>
+            <select id="s-sido" className="select" value={chosenSido ?? ""} onChange={(e) => setPick({ sido: e.target.value || null, sigungu: null })}>
               <option value="">전국 공통만</option>
               {regions?.sidos.map((s) => (
                 <option key={s.code} value={s.code}>
@@ -147,7 +162,7 @@ export function Search() {
             <label htmlFor="s-sigungu" className="label">
               시·군·구
             </label>
-            <select id="s-sigungu" className="select" value={sigungu ?? ""} disabled={!sidoObj} onChange={(e) => setPick({ sido, sigungu: e.target.value || null })}>
+            <select id="s-sigungu" className="select" value={autoRegion ? "" : (sigungu ?? "")} disabled={!sidoObj || autoRegion} onChange={(e) => setPick({ sido, sigungu: e.target.value || null })}>
               <option value="">{sidoObj ? "시도 사업까지" : "시·도 먼저"}</option>
               {sidoObj?.sigungus.map((g) => (
                 <option key={g.code} value={g.code}>
@@ -186,6 +201,35 @@ export function Search() {
         {profile ? " · 입력하신 정보로 판정 결과도 함께 표시" : ""}
       </p>
 
+      {autoRegion && (
+        <p className="notice search-hint" data-testid="search-auto-region" role="note">
+          <Icon name="mapPin" size={18} />
+          <span>
+            검색어의 지역 낱말로 <strong>{scope.replace(/^전국 공통 \+ /, "")}</strong> 사업까지 함께 찾았어요. 다른 지역은 시·도를 골라 주세요.
+          </span>
+        </p>
+      )}
+      {situation && parsed && (
+        <div className="notice warm search-hint" data-testid="search-situation" role="note">
+          <Icon name="info" size={18} />
+          <span>
+            상황을 말씀하신 것 같아요: <strong>{understoodLine(parsed)}</strong>
+            {parsed.mode === "parent" ? " · 부모님 대신 찾기" : ""}. 받을 수 있는지까지 보려면{" "}
+            <button
+              type="button"
+              className="linklike"
+              data-testid="search-to-check"
+              onClick={() => {
+                savePrefill(q, parsed);
+                router.push(prefillPath(parsed));
+              }}
+            >
+              이 내용으로 맞춤 찾기
+            </button>
+            를 눌러 주세요.
+          </span>
+        </div>
+      )}
       {!active ? (
         <p className="empty" style={{ marginTop: "2rem" }}>
           대상·주제를 고르거나 검색어를 입력하세요.
@@ -202,12 +246,17 @@ export function Search() {
             </h2>
             <span className="small muted">{scope}</span>
           </div>
+          {partial && (
+            <p className="small muted" data-testid="search-partial">
+              모든 낱말이 들어간 서비스가 없어, 낱말 일부가 맞는 서비스를 많이 맞는 순으로 보여 드려요.
+            </p>
+          )}
           {hits.length === 0 ? (
             <p className="empty">조건에 맞는 서비스가 없습니다. 조건을 줄이거나 다른 낱말로 찾아 보세요.</p>
           ) : (
             <div className="list">
               {hits.slice(0, limit).map((p) => (
-                <ProgramCard key={p.id} p={p} ev={profile ? evaluateRule(p.rule, profile) : undefined} />
+                <ProgramCard key={p.id} p={p} ev={profile ? evaluateProgram(p, profile) : undefined} />
               ))}
             </div>
           )}

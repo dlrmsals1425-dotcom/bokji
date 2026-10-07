@@ -11,7 +11,7 @@ import { clearProfile, saveFiller, saveMode, saveProfile, useExample, useMode, u
 import { loadForRegion, loadProgram, type Loaded } from "@/lib/client/bundles";
 import { applyFilters, autoGroups, eduCount, facetCounts, groupVariants, industryCount, operatorCount, scoreAll, topPicks, type Filters, type Group } from "@/lib/client/results";
 import { PRESETS } from "@/lib/client/presets";
-import { MODE_ENTRY, parseFindMode, resultsCopy, resultsPath, type FindMode } from "@/lib/client/mode";
+import { MODE_ENTRY, coupleNote, parseFindMode, resultsCopy, resultsPath, type FindMode } from "@/lib/client/mode";
 import { profileChips } from "@/lib/client/summary";
 import { CATEGORIES, ORG_TYPE_LABEL, type Category, type OrgType } from "@/lib/data/types";
 import { TIER_LABEL, type Tier } from "@/lib/engine/types";
@@ -202,6 +202,14 @@ function ResultsInner({ profile, mode }: { profile: Profile; mode: FindMode }) {
               <Icon name="heart" size={18} />
               <span>
                 <strong>부모님 복지 찾기</strong> — 자녀·가족이 대신 알아본 결과입니다. 판정은 부모님 상황을 기준으로 했습니다.
+              </span>
+            </p>
+          )}
+          {coupleNote(mode, profile) && (
+            <p className="notice" data-testid="couple-note" role="note">
+              <Icon name="info" size={18} />
+              <span>
+                <strong>부모님 두 분이 함께 사시면</strong> — {coupleNote(mode, profile)}
               </span>
             </p>
           )}

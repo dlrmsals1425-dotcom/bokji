@@ -3,7 +3,7 @@ import type { Program } from "@/lib/data/types";
 import type { Evaluation } from "@/lib/engine/types";
 import { reasonSentence } from "@/lib/client/howto";
 import { supportTypes } from "@/lib/client/facets";
-import { ApplyBadge, TierBadge, orgText, sectorText } from "./Badges";
+import { ApplyBadge, MANUAL_TITLE, TierBadge, isManual, orgText, sectorText } from "./Badges";
 
 export interface Variant {
   p: Program;
@@ -51,6 +51,7 @@ export function ProgramCard({ p, ev, variants }: { p: Program; ev?: Evaluation; 
         <span>{p.category}</span>
         <ApplyBadge p={p} />
         {sector && <span>{sector}</span>}
+        {isManual(p) && <span title={MANUAL_TITLE} data-testid="manual-badge">수동 보강</span>}
         {p.orgType === "edu_office" && <span>교육청</span>}
         {p.deadline && <span>기간: {short(p.deadline)}</span>}
       </p>

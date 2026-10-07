@@ -23,6 +23,10 @@ export function reviewText(p: Program): string | null {
   return null;
 }
 
+/** 수동 보강 사업인지 (원천 데이터에 없어 기관 공식 누리집에서 직접 옮긴 정보) */
+export const isManual = (p: Program) => p.sources.some((s) => s.source === "manual");
+export const MANUAL_TITLE = "원천 데이터(정부24·복지로·통합돌봄)에 없어 기관 공식 누리집에서 직접 확인해 옮긴 정보예요. 원문 링크에서 최신 내용을 확인하세요.";
+
 /** 복지 외 분야·운영 지원 표시 (기본 숨김 대상) */
 export function sectorText(p: Program): string | null {
   if (!p.sector) return null;

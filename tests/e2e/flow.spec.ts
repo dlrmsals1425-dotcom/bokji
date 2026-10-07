@@ -259,7 +259,7 @@ test.describe("로그인 없는 전체 흐름", () => {
     await page.getByLabel("시·군·구").selectOption({ label: "수원시" });
     await page.getByTestId("next").click();
     await pick(page, "부모님 나이", "70~74세");
-    await pick(page, "함께 사는 가구원 수 (부모님 포함)", "2명");
+    await pick(page, "함께 사는 가구원 수 (부모님 포함)", "2명 (부부 두 분 등)");
     await page.getByTestId("next").click();
     await pick(page, "자녀·손자녀(또는 임신) 나이대", "해당 없음");
     await page.getByTestId("next").click();
@@ -278,5 +278,63 @@ test.describe("로그인 없는 전체 흐름", () => {
     await expect(page.getByTestId("example-banner")).toBeVisible({ timeout: 20_000 });
     await expect(page.getByTestId("parent-results-banner")).toBeVisible();
     await expect(page.getByTestId("top-picks").locator("ol > li")).toHaveCount(5);
+  });
+  test("운영자 문장: 홈 검색창 '수원시 소재에 계시고 59년생 부모님 두분이 계신다' → 이해 확인 → 결과 @mobile", async ({ page }) => {
+    const requests: Request[] = [];
+    page.on("request", (r) => requests.push(r));
+    const sentence = "수원시 소재에 계시고 59년생 부모님 두분이 계신다";
+    await page.goto("/");
+    await page.locator("#home-q").fill(sentence);
+    await page.locator("#home-q").press("Enter");
+    await expect(page).toHaveURL(/\/check\?for=parent/);
+    const box = page.getByTestId("prefill-banner");
+    await expect(box).toBeVisible({ timeout: 20_000 });
+    await expect(box).toContainText("이렇게 이해했어요");
+    await expect(page.getByTestId("prefill-line")).toContainText("경기 수원시");
+    await expect(page.getByTestId("prefill-line")).toContainText("만 66~67세");
+    await expect(page.getByTestId("prefill-line")).toContainText("부부 2인");
+    await expect(page.getByTestId("prefill-line")).toContainText("부모님 대신 찾기");
+    await page.getByTestId("prefill-confirm").click();
+    await expect(page).toHaveURL(/\/results\?for=parent/);
+    await expect(page.getByTestId("parent-results-banner")).toBeVisible({ timeout: 20_000 });
+    await expect(page.getByRole("heading", { level: 1 })).toContainText("수원시");
+    const picks = page.getByTestId("top-picks");
+    await expect(picks.locator("ol > li")).toHaveCount(5);
+    await expect(picks).toContainText("폐렴구균");
+    await expect(page.getByTestId("couple-note")).toContainText("기초연금");
+    // 문장·해석 내용은 어떤 요청 주소에도 실리지 않는다
+    for (const r of requests) {
+      const url = decodeURIComponent(r.url());
+      expect(url.includes("59년생") || url.includes("소재") || url.includes("65-69"), url).toBeFalsy();
+      expect(r.method(), url).toBe("GET");
+    }
+  });
+
+  test("문장 해석 → 고쳐서 입력: 해석값이 채워진 채로 단계 입력", async ({ page }) => {
+    await page.goto("/");
+    await page.locator("#home-q").fill("분당 사시는 어머니 혼자 사세요 1950년생");
+    await page.locator("#home-q").press("Enter");
+    await expect(page.getByTestId("prefill-banner")).toBeVisible({ timeout: 20_000 });
+    await page.getByTestId("prefill-edit").click();
+    await expect(page.getByTestId("prefill-banner")).toHaveCount(0);
+    await expect(page.getByLabel("시·군·구")).toHaveValue("41130");
+    await page.getByTestId("next").click();
+    await expect(page.getByRole("radio", { name: "75~79세" })).toBeChecked();
+    await expect(page.getByRole("radio", { name: "1명 (혼자 사심)" })).toBeChecked();
+  });
+
+  test("검색: 서비스 이름은 그대로 검색, 지역 낱말은 그 지역까지, 상황 문장은 맞춤 찾기 제안", async ({ page }) => {
+    await page.goto("/");
+    await page.locator("#home-q").fill("기초연금");
+    await page.locator("#home-q").press("Enter");
+    await expect(page).toHaveURL(/\/search\?q=/);
+    await expect(page.getByText(/검색 결과 \d+개/)).toBeVisible({ timeout: 20_000 });
+    await page.goto("/search?q=" + encodeURIComponent("수원 어르신 교통비"));
+    await expect(page.getByTestId("search-auto-region")).toContainText("수원시", { timeout: 20_000 });
+    await expect(page.getByTestId("program-card").filter({ hasText: "수원시 어르신 교통비 지원" })).toHaveCount(1);
+    await expect(page.getByTestId("manual-badge").first()).toBeVisible();
+    await page.goto("/search?q=" + encodeURIComponent("부모님 59년생 틀니"));
+    await expect(page.getByTestId("search-situation")).toBeVisible({ timeout: 20_000 });
+    await expect(page.getByTestId("program-card").filter({ hasText: "건강보험 틀니" })).toHaveCount(1);
   });
 });

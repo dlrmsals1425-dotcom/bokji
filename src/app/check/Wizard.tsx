@@ -1,13 +1,14 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Icon } from "@/components/Icon";
 import { MultiGroup, RadioGroup, opts } from "@/components/Choice";
 import { clearProfile, saveFiller, saveMode, saveProfile, setSettings, useFiller, useMode, useProfile, useSettings } from "@/lib/client/storage";
 import { loadRegions } from "@/lib/client/bundles";
 import type { RegionIndex } from "@/lib/data/types";
-import { FILLER_LABEL, parseFindMode, resultsPath, wizardCopy, type FindMode, type FillerRole } from "@/lib/client/mode";
+import { clearPrefill, readPrefill, understoodLine, type Prefill } from "@/lib/client/parse";
+import { FILLER_LABEL, householdLabel, parseFindMode, resultsPath, wizardCopy, type FindMode, type FillerRole } from "@/lib/client/mode";
 import {
   ACTIVITIES, ACTIVITY_LABEL, AGE_BANDS, AGE_LABEL, BENEFITS, BENEFIT_LABEL, CARE_LABEL, CARE_NEEDS, CARS, CAR_LABEL,
   CHILD_BUCKETS, CHILD_LABEL, DISABILITY, DISABILITY_SEVERITY, EMPTY_PROFILE, HOUSEHOLD_TRAITS, HOUSING,
@@ -18,10 +19,23 @@ export function Wizard() {
   const stored = useProfile();
   const storedMode = useMode();
   const storedFiller = useFiller();
+  // 주소의 ?for= · ?prefill=1 (클라이언트 이동 직후 window.location은 아직 이전 주소일 수 있어 useSearchParams로 읽는다)
+  const params = useSearchParams();
+  const urlMode = parseFindMode(params.get("for"));
+  const wantPrefill = params.get("prefill") === "1";
   if (stored === undefined || storedMode === undefined || storedFiller === undefined) {
     return <div className="narrow page muted">불러오는 중…</div>;
   }
-  return <WizardInner initial={stored ?? EMPTY_PROFILE} editing={!!stored} initialMode={storedMode} initialFiller={storedFiller} />;
+  return (
+    <WizardInner
+      initial={stored ?? EMPTY_PROFILE}
+      editing={!!stored}
+      initialMode={storedMode}
+      initialFiller={storedFiller}
+      urlMode={urlMode}
+      wantPrefill={wantPrefill}
+    />
+  );
 }
 
 function WizardInner({
@@ -29,20 +43,27 @@ function WizardInner({
   editing,
   initialMode,
   initialFiller,
+  urlMode,
+  wantPrefill,
 }: {
   initial: Profile;
   editing: boolean;
   initialMode: FindMode;
   initialFiller: FillerRole;
+  urlMode: FindMode | null;
+  wantPrefill: boolean;
 }) {
   const router = useRouter();
   const settings = useSettings();
-  const [p, setP] = useState<Profile>(initial);
+  // 홈 검색창의 상황 문장 해석 (sessionStorage로만 전달, URL에는 prefill=1 표시만).
+  // WizardInner는 저장소를 읽은 뒤(클라이언트)에만 그려지므로 초기값에서 바로 읽어도 된다.
+  const [prefill, setPrefill] = useState<Prefill | null>(() => (wantPrefill ? readPrefill() : null));
+  const [p, setP] = useState<Profile>(() => prefill?.parsed.profile ?? initial);
   const [step, setStep] = useState(0);
   const [regions, setRegions] = useState<RegionIndex | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [mode, setModeState] = useState<FindMode>(initialMode);
-  const [filler, setFillerState] = useState<FillerRole>(initialFiller);
+  const [mode, setModeState] = useState<FindMode>(() => urlMode ?? initialMode);
+  const [filler, setFillerState] = useState<FillerRole>(() => (urlMode === "parent" ? "child" : initialFiller));
   const titleRef = useRef<HTMLHeadingElement>(null);
   const copy = wizardCopy(mode);
 
@@ -50,18 +71,14 @@ function WizardInner({
     loadRegions().then(setRegions);
   }, []);
 
-  // URL ?for=parent|self → 모드 반영 (마운트 시 1회). editing 의존 금지:
+  // URL ?for=parent|self → 저장·주소 정리 (마운트 시 1회). editing 의존 금지:
   // finish()에서 saveProfile → editing true 로 effect가 다시 돌면 replaceState가
   // router.push('/results?for=parent')를 덮어 /check에 머물게 된다.
   useEffect(() => {
-    const m = parseFindMode(new URLSearchParams(window.location.search).get("for"));
+    const m = urlMode;
     if (m) {
-      setModeState(m);
       saveMode(m);
-      if (m === "parent") {
-        setFillerState("child");
-        saveFiller("child");
-      }
+      if (m === "parent") saveFiller("child");
       const url = m === "parent" ? "/check?for=parent" : "/check";
       window.history.replaceState(null, "", url);
     }
@@ -110,6 +127,22 @@ function WizardInner({
     router.push(resultsPath(mode));
   };
 
+  /** 해석한 그대로 결과 보기 */
+  const confirmPrefill = () => {
+    if (!p.sigungu) return;
+    clearPrefill();
+    saveMode(mode);
+    if (mode === "parent") saveFiller(filler);
+    saveProfile(p, undefined, mode);
+    router.push(resultsPath(mode));
+  };
+  /** 해석 결과를 채운 채로 단계별 입력 */
+  const editPrefill = () => {
+    clearPrefill();
+    setPrefill(null);
+    requestAnimationFrame(() => titleRef.current?.focus());
+  };
+
   const sido = regions?.sidos.find((s) => s.code === p.sido);
   const disabilityOpts = DISABILITY.map((v) => ({ value: v, label: copy.disabilityLabels[v] }));
 
@@ -156,6 +189,39 @@ function WizardInner({
       <div className="form-body">
         <div className="narrow">
           <div className="form-panel">
+            {prefill && (
+              <section className="prefill-box" data-testid="prefill-banner" aria-labelledby="pf-h">
+                <h2 id="pf-h" className="pf-title">
+                  <Icon name="check" size={20} strokeWidth={2.6} /> 이렇게 이해했어요
+                </h2>
+                <p className="pf-quote">&ldquo;{prefill.text}&rdquo;</p>
+                <p className="pf-line" data-testid="prefill-line">
+                  <strong>{understoodLine(prefill.parsed) || "알아들은 내용이 거의 없어요"}</strong>
+                  {mode === "parent" ? " · 부모님 대신 찾기" : ""}
+                </p>
+                {prefill.parsed.notes.length > 0 && (
+                  <ul className="pf-notes">
+                    {prefill.parsed.notes.map((n) => (
+                      <li key={n}>{n}</li>
+                    ))}
+                  </ul>
+                )}
+                <p className="small muted">
+                  {p.sigungu
+                    ? "맞으면 결과 보기를 누르세요. 나머지 항목은 '모름'으로 두고 찾고, 결과 화면에서 언제든 고칠 수 있어요."
+                    : "시·군·구를 알 수 없어 바로 결과를 볼 수 없어요. 고쳐서 입력해 주세요."}
+                  {" "}문장은 이 기기에서만 해석하며 어디에도 보내지 않아요.
+                </p>
+                <div className="pf-actions">
+                  <button type="button" className="btn btn-primary" onClick={confirmPrefill} disabled={!p.sigungu} data-testid="prefill-confirm">
+                    맞아요, 결과 보기 <Icon name="arrowRight" size={18} />
+                  </button>
+                  <button type="button" className="btn btn-ghost" onClick={editPrefill} data-testid="prefill-edit">
+                    고쳐서 입력
+                  </button>
+                </div>
+              </section>
+            )}
             {copy.banner && (
               <p className="notice warm" data-testid="parent-banner" role="note">
                 <Icon name="heart" size={18} />
@@ -243,7 +309,7 @@ function WizardInner({
           <RadioGroup
             name="hh"
             legend={copy.hhLegend}
-            options={[1, 2, 3, 4, 5, 6].map((v) => ({ value: v as 1 | 2 | 3 | 4 | 5 | 6, label: v === 6 ? "6명 이상" : `${v}명` }))}
+            options={[1, 2, 3, 4, 5, 6].map((v) => ({ value: v as 1 | 2 | 3 | 4 | 5 | 6, label: householdLabel(mode, v) }))}
             value={p.householdSize}
             onChange={(v) => set("householdSize", v)}
           />

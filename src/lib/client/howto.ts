@@ -102,7 +102,7 @@ export function parseDocs(s?: string): string[] {
   if (!s) return [];
   const t = s.replace(/본인 확인 필요:[\s\S]*$/, "").replace(/관련 서식·안내:[\s\S]*$/, "");
   const parts = t
-    .split(/\s*(?:○|ㅇ|-|·|•|\n|,)\s*/)
+    .split(/\s*(?:○|ㅇ|(?<![A-Za-z])-(?![A-Za-z])|·|•|\n|,)\s*/)
     .map((x) => x.replace(/[*※].*$/, "").replace(/^\d+[.)]\s*/, "").trim())
     .filter((x) => x && !/^(해당\s*없음|본인\s*신청|대리\s*신청|없음)$/.test(x) && x.length <= 28);
   return [...new Set(parts)].slice(0, 4);

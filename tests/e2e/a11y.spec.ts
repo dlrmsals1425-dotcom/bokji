@@ -3,11 +3,12 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
 /** 접근성 점검 (axe-core, WCAG 2.1 A/AA): serious·critical 위반 0건이어야 한다 */
-const PAGES: { name: string; path: string; preset?: string }[] = [
+const PAGES: { name: string; path: string; preset?: string; sentence?: string }[] = [
   { name: "홈", path: "/" },
   { name: "입력", path: "/check" },
   { name: "결과(예시: 수원 어르신)", path: "/results", preset: "suwon-senior" },
   { name: "입력(부모님)", path: "/check?for=parent" },
+  { name: "입력(문장 해석 확인)", path: "/", sentence: "수원시 소재에 계시고 59년생 부모님 두분이 계신다" },
   { name: "결과(부모님 돌보기)", path: "/results", preset: "parent-care" },
   { name: "상세(기초연금)", path: "/p/n.gov24-SSE000000170" },
   { name: "상세(대체 안내)", path: "/p/g41110.icare-0085-1489588-1-1-30" },
@@ -19,7 +20,12 @@ test("axe 접근성: 주요 화면 serious/critical 0건 @mobile", async ({ page
   test.setTimeout(120_000);
   const summary: Record<string, { violations: { id: string; impact: string | null | undefined; nodes: number; help: string }[] }> = {};
   for (const pg of PAGES) {
-    if (pg.preset) {
+    if (pg.sentence) {
+      await page.goto("/");
+      await page.locator("#home-q").fill(pg.sentence);
+      await page.locator("#home-q").press("Enter");
+      await expect(page.getByTestId("prefill-banner")).toBeVisible({ timeout: 20_000 });
+    } else if (pg.preset) {
       await page.goto("/");
       await page.getByTestId(`preset-${pg.preset}`).click();
       await expect(page.getByTestId("top-picks")).toBeVisible({ timeout: 20_000 });

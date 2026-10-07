@@ -1,13 +1,13 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { TierBadge, orgText, reviewText, sectorText } from "@/components/Badges";
+import { MANUAL_TITLE, TierBadge, isManual, orgText, reviewText, sectorText } from "@/components/Badges";
 import { Icon } from "@/components/Icon";
 import { CHANNEL_LABEL, TIER_PLAIN, firstLine, howTo } from "@/lib/client/howto";
 import { supportTypes } from "@/lib/client/facets";
 import { loadLocalOps, loadProgram } from "@/lib/client/bundles";
 import { useProfile } from "@/lib/client/storage";
-import { evaluateRule } from "@/lib/engine/evaluate";
+import { evaluateProgram } from "@/lib/client/results";
 import { SOURCE_LABEL, ORG_TYPE_LABEL, type LocalOperation, type Program } from "@/lib/data/types";
 import type { ReasonKind } from "@/lib/engine/types";
 
@@ -71,7 +71,7 @@ export function Detail({ id }: { id: string }) {
   }, [id, sido, sigungu]);
 
   const active = useActiveSection(!!program);
-  const ev = useMemo(() => (program && profile ? evaluateRule(program.rule, profile) : null), [program, profile]);
+  const ev = useMemo(() => (program && profile ? evaluateProgram(program, profile) : null), [program, profile]);
 
   if (program === undefined) return <div className="wrap page muted">불러오는 중…</div>;
   if (program === null)
@@ -128,6 +128,7 @@ export function Detail({ id }: { id: string }) {
           <span className="tag">{orgText(p)}</span>
           <span className="tag gray">{p.category}</span>
           {p.orgType === "edu_office" && <span className="tag gray">교육청 서비스</span>}
+          {isManual(p) && <span className="tag gray" title={MANUAL_TITLE} data-testid="manual-badge">수동 보강</span>}
           {sector && <span className="tag gray">{sector}</span>}
         </div>
         <h1 className="h1">{p.name}</h1>
@@ -355,6 +356,7 @@ export function Detail({ id }: { id: string }) {
             <p className="rule-note">
               신뢰도 {TRUST_LABEL[p.trust]}
               {review ? ` · ${review}` : ""}
+              {isManual(p) ? " · 수동 보강 (공식 누리집 확인, 최종 사람 검수 대기)" : ""}
               {p.mergedCount && p.mergedCount > 1 ? ` · ${p.mergedCount}개 원천에서 같은 사업으로 합침` : ""}
             </p>
           </section>

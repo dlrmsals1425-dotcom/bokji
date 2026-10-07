@@ -2,6 +2,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { PRESETS } from "../src/lib/client/presets";
+import { parseSituation } from "../src/lib/client/parse";
 import { autoGroups, facetCounts, groupVariants, hiddenByDefault, scoreAll, topPicks, applyFilters, type Filters } from "../src/lib/client/results";
 import type { Bundle, Program } from "../src/lib/data/types";
 
@@ -10,7 +11,11 @@ const read = (f: string): Bundle | null => (fs.existsSync(path.join(B, f)) ? JSO
 const out: Record<string, unknown> = {};
 const n = Number(process.argv[2] ?? 5);
 const md: string[] = ["# 예시 상황별 상위 30개 신청 유형 점검 (자동 제외 전 추천 순서)", ""];
-for (const ps of PRESETS) {
+// 예시 상황 + 운영자 문장(해석 결과 그대로)
+const OWNER_SENTENCE = "수원시 소재에 계시고 59년생 부모님 두분이 계신다";
+const owner = parseSituation(OWNER_SENTENCE, JSON.parse(fs.readFileSync(path.join(B, "regions.json"), "utf8")), { year: 2026, month: 10, day: 7 });
+const SCENARIOS = [...PRESETS, { id: "sentence-suwon-59", title: `문장: ${OWNER_SENTENCE}`, profile: owner.profile }];
+for (const ps of SCENARIOS) {
   const p = ps.profile;
   const programs: Program[] = [...(read(`sigungu/${p.sigungu}.json`)?.programs ?? []), ...(read(`sido/${p.sido}.json`)?.programs ?? []), ...(read("national.json")?.programs ?? [])];
   const scored = scoreAll(programs, p);

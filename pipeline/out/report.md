@@ -1,24 +1,24 @@
-# 파이프라인 리포트 (2026-10-07T00:52:08.063Z)
+# 파이프라인 리포트 (2026-10-07T05:57:25.142Z)
 
 - 공공서비스(혜택) API: **ok** — 수집 완료
 - 복지로 OpenAPI: 목록 중앙 461 · 지자체 4819 / 상세 중앙 461 · 지자체 4819 / 색인 보강 5201 · 신규 79 · 색인에만 있음 3
-- 신청방법 채움 12861/23572 · 연락처 13383/23572 · 둘 중 하나 13415/23572
-- 원천 레코드: gov24 10949 / bokjiro 5283 / welfare100 100 / icare 12526
+- 신청방법 채움 12864/23575 · 연락처 13384/23575 · 둘 중 하나 13418/23575
+- 원천 레코드: gov24 10949 / bokjiro 5283 / welfare100 100 / icare 12526 / manual 3
 - 노출 제외: not_individual 1014 / business_only 69 / eupmyeondong_level 26 / region_unresolved 5
 - 통합돌봄 D1 완전 중복 19 · D2 실질 중복 75
 - 교차 원천 병합: gov24+bokjiro 1152 / gov24+welfare100 41 / bokjiro+welfare100 9 / gov24+gov24 367 / bokjiro+bokjiro 32 / bokjiro+icare 59 / gov24+icare 59 · 기관 수준이 달라 병합 차단 402
 - 통합돌봄 '전국' 행 → 전국 사업의 지역 운영 정보로 흡수: 2379행 (운영 정보 2359건)
 - 정부24·복지로 시군구 등록분: 전국 사업의 지역 집행분으로 흡수 166 · 지역 추가사업으로 별도 유지 48 (pipeline/out/regional-copies.csv)
-- 최종 사업(중복 제거 후): **23572** (시군구 배치 기준 23575)
-- 기관 유형별: central 1061 / public_inst 2201 / local 18090 / metro 1967 / edu_office 253
+- 최종 사업(중복 제거 후): **23575** (시군구 배치 기준 23578)
+- 기관 유형별: central 1061 / public_inst 2203 / local 18091 / metro 1967 / edu_office 253
 - 복지 외 분야(기본 숨김): agri 1694 / business 89 / operator 29 · 교육청(기본 숨김) 253
-- 신청 유형(사업 단위): self 11607 / auto 735 / institution 211 / unknown 11019 (pipeline/out/apply-type.csv)
-- 범위별: national 1420 / sigungu 19891 / sido 2261
-- 원천 기여(사업 수): gov24 9336 / bokjiro 5229 / welfare100 100 / icare 10218
-- 규칙 검수 상태(배치 기준): structured 1870 / auto 21632 / curated 73
-- 규칙 출처(배치 기준): gov24_conditions 8085 / none 2423 / curated 73 / bokjiro_tags 3632 / text_extract 9362
-- 경기도 파일럿: 사업 3000 · 큐레이션/검수 규칙 10 · API 지원조건 979 · 자동 규칙(검수 대기열) 1662 · 규칙 없음 349
-- 전국 공통 사업 중 큐레이션 규칙: 62 · API 지원조건 규칙: 891
+- 신청 유형(사업 단위): self 11610 / auto 735 / institution 211 / unknown 11019 (pipeline/out/apply-type.csv)
+- 범위별: national 1422 / sigungu 19892 / sido 2261
+- 원천 기여(사업 수): gov24 9336 / bokjiro 5229 / welfare100 100 / manual 3 / icare 10218
+- 규칙 검수 상태(배치 기준): structured 1869 / auto 21631 / curated 78
+- 규칙 출처(배치 기준): gov24_conditions 8084 / none 2423 / curated 78 / bokjiro_tags 3631 / text_extract 9362
+- 경기도 파일럿: 사업 3001 · 큐레이션/검수 규칙 12 · API 지원조건 979 · 자동 규칙(검수 대기열) 1661 · 규칙 없음 349
+- 전국 공통 사업 중 큐레이션 규칙: 65 · API 지원조건 규칙: 890
 
 
 ## 읍면동 단독 사업으로 제외한 예
@@ -41,3 +41,4 @@
 ## 로그
 - [bokjiro-api] 목록 중앙 461 · 지자체 4819 / 상세 중앙 461 · 지자체 4819 / 보강 5201 · 신규 79 · 색인에만 있음 3
 - [gov24] 지역 해석 실패: 6건
+- [manual] 수동 보강 3건

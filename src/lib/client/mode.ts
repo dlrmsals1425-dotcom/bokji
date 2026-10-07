@@ -3,6 +3,7 @@
  * 프로필 필드는 동일 — parent 모드에서는 입력·결과 문구만 부모님 기준으로 바꾸고,
  * 매칭 엔진에는 부모님 상황을 그대로 넣는다.
  */
+import { ageRange, type Profile } from "../engine/profile";
 import {
   ACTIVITY_LABEL, AGE_LABEL, BENEFIT_LABEL, CARE_LABEL, DISABILITY_LABEL, HOUSING_LABEL,
   type Activity, type AgeBand, type Benefit, type CareNeed, type Disability, type Housing,
@@ -190,3 +191,21 @@ export const PARENT_BENEFIT = BENEFIT_LABEL;
 export const PARENT_CARE = CARE_LABEL;
 export const PARENT_HOUSING = HOUSING_LABEL;
 export type { Activity, AgeBand, Benefit, CareNeed, Housing };
+
+/** 가구원 수 선택지 이름 (부모님 모드: 1명 '혼자 사심', 2명 '부부 두 분 등') */
+export function householdLabel(mode: FindMode, n: number): string {
+  if (n === 6) return "6명 이상";
+  if (mode === "parent" && n === 1) return "1명 (혼자 사심)";
+  if (mode === "parent" && n === 2) return "2명 (부부 두 분 등)";
+  return `${n}명`;
+}
+
+/**
+ * 부모님 두 분(2인 가구, 60세 이상) 안내: 결과는 입력한 한 분 기준이고, 기초연금은 한 분씩 판정·부부 감액.
+ * 근거: 기초연금법 제8조 제1항 (본인과 배우자가 모두 수급권자이면 각각 100분의 20 감액) — 국가법령정보센터 2026-10-07 확인
+ */
+export function coupleNote(mode: FindMode, p: Pick<Profile, "householdSize" | "age">): string | null {
+  if (mode !== "parent" || p.householdSize !== 2 || p.age === "unknown") return null;
+  if (ageRange(p.age)[0] < 60) return null;
+  return "결과는 입력한 한 분의 나이 기준이에요. 두 분 나이가 다르면 다른 한 분도 따로 확인해 보세요. 기초연금은 한 분씩 각각 신청·판정하며, 두 분 모두 받으시면 각각 20%가 감액돼요(기초연금법 제8조, 부부 감액).";
+}
