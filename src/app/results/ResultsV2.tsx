@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { Icon } from "@/components/Icon";
 import { SupportTags } from "@/components/ProgramCard";
 import { ApplyBadge, orgText } from "@/components/Badges";
-import { loadForRegion, loadProgram, type Loaded } from "@/lib/client/bundles";
+import { loadForRegion, loadProgram, loadRegions, type Loaded } from "@/lib/client/bundles";
 import { CHANNEL_LABEL, firstLine, howTo } from "@/lib/client/howto";
 import { clearProfile, useExample, useExtras } from "@/lib/client/storage";
 import { saveSituation, situationOf } from "@/lib/client/start";
@@ -35,6 +35,10 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
   const [toast, setToast] = useState<string | null>(null);
   const [autoOpen, setAutoOpen] = useState(false);
   const [autoLimit, setAutoLimit] = useState(FIRST);
+  const [pilotSidos, setPilotSidos] = useState<string[] | null>(null);
+  useEffect(() => {
+    loadRegions().then((r) => setPilotSidos(r ? r.sidos.filter((x) => x.pilot).map((x) => x.code) : null));
+  }, []);
   useEffect(() => {
     let alive = true;
     loadForRegion(profile.sido, profile.sigungu).then((d) => alive && setData(d));
@@ -89,91 +93,10 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
   const picked = new Set(picks);
   const couple = coupleNote(mode, profile);
 
-  const share = async () => {
-    const text = [
-      `복지나침반에서 ${data.label} 기준${parent ? "(부모님)" : ""}으로 찾아본 결과: 받으실 수 있어요 ${view.fit.length}개, 신청할 때 확인 ${view.office.length}개`,
-      ...picks.map((g) => `· ${g[0].s.program.name}`),
-      "(입력한 개인 정보는 공유되지 않아요. 직접 확인해 보세요)",
-    ].join("\n");
-    const url = window.location.origin;
-    try {
-      if (navigator.share) await navigator.share({ title: "복지나침반", text, url });
-      else {
-        await navigator.clipboard.writeText(`${text}\n${url}`);
-        setToast("결과 요약을 복사했어요 (입력값은 포함되지 않아요)");
-        setTimeout(() => setToast(null), 2500);
-      }
-    } catch {}
-  };
-
-  return (
-    <div className="results-root v2" data-testid="v2-results">
-      <div className="print-only wrap">
-        <strong>복지나침반 결과 요약</strong> — 출력일 {new Date().toLocaleDateString("ko-KR")}
-      </div>
-      <section className="res-head" aria-labelledby="res-h">
-        <div className="wrap">
-          <ol className="crumbs no-print" aria-label="현재 위치">
-            <li>
-              <Link href="/">
-                <Icon name="home" size={14} /> 홈
-              </Link>
-            </li>
-            <li>
-              <Link href={editHref}>{parent ? "부모님 상황" : "내 상황"}</Link>
-            </li>
-            <li>
-              <span aria-current="page">결과</span>
-            </li>
-          </ol>
-          {parent && (
-            <p className="notice warm" data-testid="parent-results-banner" role="note">
-              <Icon name="heart" size={18} />
-              <span>
-                <strong>부모님 복지 찾기</strong> — 자녀·가족이 대신 알아본 결과입니다. 부모님 상황을 기준으로 골랐어요.
-              </span>
-            </p>
-          )}
-          {couple && (
-            <p className="notice" data-testid="couple-note" role="note">
-              <Icon name="info" size={18} />
-              <span>
-                <strong>부모님 두 분이 함께 사시면</strong> — {couple}
-              </span>
-            </p>
-          )}
-          {preset && (
-            <p className="notice warm" data-testid="example-banner" role="note">
-              <Icon name="info" size={18} />
-              <span>
-                <strong>예시 상황으로 보는 중입니다.</strong> {preset.title}({preset.desc})인 경우로 계산했어요. 실제 개인 정보가 아니에요.{" "}
-                <Link href={`${editHref}&new=1`}>{copy.reenterLabel}</Link>
-              </span>
-            </p>
-          )}
-          <h1 className="h1" id="res-h">
-            {place} {parent ? "부모님께 맞는 혜택" : "나에게 맞는 혜택"}
-          </h1>
-          <p className="situation" data-testid="v2-chips">
-            <span>
-              <Icon name="mapPin" size={16} className="icon-inline" /> {[data.label, ...situationChips(sit)].join(" · ")}
-            </span>
-            <Link href={editHref} className="no-print" data-testid="edit-situation">
-              상황 고치기
-            </Link>
-          </p>
-          <div className="tiles v2-tiles" aria-label="분류별 개수">
-            <Tile href="#v2-fit" cls="t-eligible" label="받으실 수 있어요" n={view.fit.length} d="답하신 상황으로 조건이 맞아요" testId="v2-n-fit" />
-            <Tile href="#v2-office" cls="t-likely" label="신청할 때 확인" n={view.office.length} d="원문의 세부 조건을 확인해요" testId="v2-n-office" />
-            <Tile href="#v2-ask" cls="t-check" label="답하면 정해져요" n={view.ask.length} d="위 질문에 답하면 바로 갈려요" testId="v2-n-ask" />
-            <Tile href="#v2-no" cls="t-none" label="맞지 않아 뺐어요" n={view.no.length} d="답하신 상황과 달라요" testId="v2-n-no" />
-          </div>
-        </div>
-      </section>
-
-      <div className="wrap page">
-        <div className="v2-main">
-          <section className="v2-follow no-print" aria-labelledby="fq-h" data-testid="v2-followup">
+  // 나이를 모르면 먼저 확인할 것이 크게 달라지므로 질문을 위에, 아니면 '먼저 확인할 것'을 맨 위에 (QA 1차 H5)
+  const askFirst = questions.some((q) => q.dim.id === "age");
+  const followUp = (
+    <section className="v2-follow no-print" aria-labelledby="fq-h" data-testid="v2-followup">
             {questions.length > 0 ? (
               <>
                 <h2 className="h2" id="fq-h">
@@ -217,6 +140,105 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
               </p>
             )}
           </section>
+  );
+
+  // 공유 (QA 1차 M3): 상황(나이·소득 등)은 주소에 싣지 않는다 — 받는 사람이 바로 열어 볼 수 있게
+  // 먼저 확인할 혜택마다 공개 상세 주소(/p/…)를 붙이고, 자기 상황으로 다시 찾는 시작 주소를 덧붙인다
+  const share = async () => {
+    const origin = window.location.origin;
+    const text = [
+      `복지나침반에서 ${data.label} 기준${parent ? "으로 부모님께" : "으로"} 먼저 확인해 볼 혜택이에요.`,
+      ...picks.map((g) => `· ${g[0].s.program.name} — ${origin}/p/${encodeURIComponent(g[0].s.program.id)}`),
+      `내 상황으로 다시 찾기: ${origin}/situation${parent ? "?for=parent" : ""}`,
+      "(나이·소득 등 입력한 정보는 들어 있지 않아요)",
+    ].join("\n");
+    try {
+      if (navigator.share) await navigator.share({ title: "복지나침반 — 먼저 확인할 혜택", text });
+      else {
+        await navigator.clipboard.writeText(text);
+        setToast("먼저 확인할 혜택과 상세 주소를 복사했어요 (입력값은 들어 있지 않아요)");
+        setTimeout(() => setToast(null), 2500);
+      }
+    } catch {}
+  };
+
+  return (
+    <div className="results-root v2" data-testid="v2-results">
+      <div className="print-only wrap">
+        <strong>복지나침반 결과 요약</strong> — 출력일 {new Date().toLocaleDateString("ko-KR")}
+      </div>
+      <section className="res-head" aria-labelledby="res-h">
+        <div className="wrap">
+          <ol className="crumbs no-print" aria-label="현재 위치">
+            <li>
+              <Link href="/">
+                <Icon name="home" size={14} /> 홈
+              </Link>
+            </li>
+            <li>
+              <Link href={editHref}>{parent ? "부모님 상황" : "내 상황"}</Link>
+            </li>
+            <li>
+              <span aria-current="page">결과</span>
+            </li>
+          </ol>
+          {parent && (
+            <p className="notice warm" data-testid="parent-results-banner" role="note">
+              <Icon name="heart" size={18} />
+              <span>
+                <strong>부모님 복지 찾기</strong> — 부모님 상황을 기준으로 골랐어요.
+              </span>
+            </p>
+          )}
+          {couple && (
+            <details className="notice couple-fold" data-testid="couple-note">
+              <summary>
+                <Icon name="info" size={18} /> <strong>부모님 두 분이 함께 사시면</strong> <span className="small muted">(눌러서 보기)</span>
+              </summary>
+              <p>{couple}</p>
+            </details>
+          )}
+          {pilotSidos && profile.sido && !pilotSidos.includes(profile.sido) && (
+            <p className="notice" data-testid="non-pilot-note" role="note">
+              <Icon name="info" size={18} />
+              <span>
+                <strong>시범 지역(경기도) 밖이에요.</strong> 이 지역 사업은 조건을 사람이 아직 검수하지 않아 &lsquo;신청할 때 확인&rsquo;이 많을 수 있어요.
+              </span>
+            </p>
+          )}
+          {preset && (
+            <p className="notice warm" data-testid="example-banner" role="note">
+              <Icon name="info" size={18} />
+              <span>
+                <strong>예시 상황으로 보는 중입니다.</strong> {preset.title}({preset.desc})인 경우로 계산했어요. 실제 개인 정보가 아니에요.{" "}
+                <Link href={`${editHref}&new=1`}>{copy.reenterLabel}</Link>
+              </span>
+            </p>
+          )}
+          <h1 className="h1" id="res-h">
+            {place} {parent ? "부모님께 맞는 혜택" : "나에게 맞는 혜택"}
+          </h1>
+          <p className="situation" data-testid="v2-chips">
+            <span>
+              <Icon name="mapPin" size={16} className="icon-inline" /> {[data.label, ...situationChips(sit)].join(" · ")}
+            </span>
+            <Link href={editHref} className="no-print" data-testid="edit-situation">
+              상황 고치기
+            </Link>
+          </p>
+          {/* 큰 숫자 타일 대신 한 줄 개수 (QA 1차 H5: 모바일 첫 화면에 할 일이 보이게) */}
+          <ul className="v2-counts" aria-label="분류별 개수">
+            <Count href="#v2-fit" cls="t-eligible" label="받으실 수 있어요" n={view.fit.length} testId="v2-n-fit" />
+            <Count href="#v2-office" cls="t-likely" label="신청할 때 확인" n={view.office.length} testId="v2-n-office" />
+            <Count href="#v2-ask" cls="t-check" label="답하면 정해져요" n={view.ask.length} testId="v2-n-ask" />
+            <Count href="#v2-no" cls="t-none" label="맞지 않아 뺀 것" n={view.no.length} testId="v2-n-no" />
+          </ul>
+        </div>
+      </section>
+
+      <div className="wrap page">
+        <div className="v2-main">
+          {askFirst && followUp}
 
           {picks.length > 0 && (
             <section aria-labelledby="picks-h" data-testid="top-picks" className="v2-sec">
@@ -231,6 +253,8 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
               </ol>
             </section>
           )}
+
+          {!askFirst && followUp}
 
           <BucketList id="v2-fit" bucket="fit" title={picks.some((g) => g[0].bucket === "fit") ? `그 밖에 받으실 수 있는 혜택` : "받으실 수 있는 혜택"} lead="답하신 상황으로 공개된 지원 조건이 모두 맞아요." groups={view.fit.filter((g) => !picked.has(g))} sit={sit} mode={mode} />
           <BucketList
@@ -247,7 +271,7 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
             bucket="ask"
             title="질문에 답하면 정해지는 혜택"
             lead="맨 위 질문에 답하시면 '받으실 수 있어요' 또는 '맞지 않아요'로 옮겨요."
-            groups={view.ask}
+            groups={view.ask.filter((g) => !picked.has(g))}
             sit={sit}
             mode={mode}
             collapsed
@@ -310,7 +334,7 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
               <Icon name="printer" size={18} /> 인쇄하거나 PDF로 저장
             </button>
             <button type="button" className="link-btn" onClick={share} data-testid="share">
-              <Icon name="share" size={18} /> 결과 공유 (입력값 제외)
+              <Icon name="share" size={18} /> 가족에게 보내기 (입력값 제외)
             </button>
             <button
               type="button"
@@ -343,13 +367,13 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
   );
 }
 
-function Tile({ href, cls, label, n, d, testId }: { href: string; cls: string; label: string; n: number; d: string; testId: string }) {
+function Count({ href, cls, label, n, testId }: { href: string; cls: string; label: string; n: number; testId: string }) {
   return (
-    <a href={href} className={`tile ${cls}`} data-testid={testId}>
-      <span className="l">{label}</span>
-      <span className="n">{n.toLocaleString("ko-KR")}</span>
-      <span className="d">{d}</span>
-    </a>
+    <li>
+      <a href={href} className={`v2-count ${cls}`} data-testid={testId}>
+        <span className="l">{label}</span> <span className="n">{n.toLocaleString("ko-KR")}</span>
+      </a>
+    </li>
   );
 }
 
