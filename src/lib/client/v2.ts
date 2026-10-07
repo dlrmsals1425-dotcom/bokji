@@ -12,6 +12,7 @@ import type { Cond, EvalOptions, Evaluation, Leaf, Reason } from "../engine/type
 import type { Program } from "../data/types";
 import { autoLike, familyKey, groupVariants, hiddenByDefault, scoreAll, type Filters, type Group, type Scored } from "./results";
 import type { FindMode } from "./mode";
+import { programTopics, type TopicId } from "./topics";
 
 /* ---------------- 입력 (12개 항목 + 항목별 '모름') ---------------- */
 
@@ -33,6 +34,12 @@ export interface Extras {
   /** 월 가구 소득(만원). null = 모름 → 프로필의 소득 구간을 그대로 쓴다 */
   incomeManwon: number | null;
   facts: Partial<Record<FactId, boolean>>;
+  /** 정확한 나이를 모를 때 말한 나이 범위 (예: '30대' → [30, 39]) — 범위 전체에서 맞는 혜택만 '받으실 수 있어요' (QA 2차 H2) */
+  ageSpan?: [number, number] | null;
+  /** 문장에서 말한 관심 주제 (예: '기초연금 받고 싶어요' → basic_pension) — 순위만 올린다 (QA 2차 H1·N3) */
+  interests?: TopicId[];
+  /** 부모님 두 분의 나이대가 다를 때 다른 분 (결과 화면 '다른 분 기준으로 보기' — QA 2차 M7) */
+  otherAge?: { band: Exclude<Profile["age"], "unknown">; label: string } | null;
 }
 
 export interface Situation {
@@ -87,9 +94,27 @@ export function inferExtras(s: Situation): Extras {
 /** 미루어 본 답이 있는지 (화면 안내용) */
 export const inferredNoRecipient = (s: Situation) => RECIPIENT_KINDS.some((k) => s.x.benefits[k] === undefined) && inferExtras(s) !== s.x;
 
+/**
+ * 나이를 정확히 모를 때 판정에 쓰는 나이 범위 (QA 2차 H2·N3)
+ *  - 말한 범위 ('30대' → 30~39), 없으면 본인 찾기는 성인(19세 이상), 부모님 찾기는 40세 이상
+ *  - 범위 전체에서 맞는 조건은 맞음, 범위에 걸치는 조건은 '답하면 정해져요', 범위 밖은 맞지 않음
+ */
+export function ageSpanOf(s: Situation): [number, number] | null {
+  if (s.profile.age !== "unknown") return null;
+  if (s.x.ageSpan) return s.x.ageSpan;
+  return s.mode === "self" ? [19, 120] : s.mode === "parent" ? [40, 120] : null;
+}
+
+/** 나이(정확한 구간 또는 범위) → [하한, 상한] (모르면 null) */
+export function ageBoundsOf(s: Situation): [number, number] | null {
+  return s.profile.age !== "unknown" ? ageRange(s.profile.age) : ageSpanOf(s);
+}
+
 /** v2 입력 → 판정용 프로필 + 판정 선택 사항 */
 export function toEval(s: Situation, strict = false): { profile: Profile; opts: EvalOptions } {
-  const p = s.profile;
+  const span = ageSpanOf(s);
+  // 나이 범위는 'a-b' 구간으로 판정 (엔진의 ageRange 가 그대로 읽음)
+  const p: Profile = span ? { ...s.profile, age: `${span[0]}-${span[1]}` as Profile["age"] } : s.profile;
   const x = inferExtras(s);
   const bKnown = BENEFITS.filter((b) => x.benefits[b] !== undefined);
   const size = sizeOf(p);
@@ -181,7 +206,7 @@ export function textGate(p: Program): GateInfo {
   const benefitHandled = leaves.some((l) => !l.soft && l.field === "benefit");
   const incomeMax = leaves
     .filter((l) => !l.soft && (l.field === "income" || l.field === "incomeBands"))
-    .reduce((m, l) => Math.max(m, l.field === "income" ? l.lte : l.field === "incomeBands" ? Math.max(...l.bands.map((x) => x[1])) : 0), -1);
+    .reduce((m, l) => Math.max(m, l.field === "income" ? l.lte : l.field === "incomeBands" ? Math.max(...l.bands.map((x) => x[1] ?? Infinity)) : 0), -1);
   const hasIncome = incomeMax >= 0;
   // 규칙의 '묻지 않는 조건'에 저소득이 적힌 경우 (예: '부모와 따로 사는 저소득 청년')
   const unaskedLow = leaves.find((l) => l.field === "unasked" && !l.soft && LOW_RE.test(l.label));
@@ -189,7 +214,10 @@ export function textGate(p: Program): GateInfo {
     // 대상 문구의 유형 줄(○·• 등)만 센다 — 이름 줄과 '*', '※' 로 시작하는 덧붙임 줄은 빼고
     const nameGate = ANY_GATE.test(p.name);
     const lead2 = text.slice(text.indexOf("\n") + 1).replace(/[※*]/g, "\n$&");
-    const lines = lead2.split(/\n|○|•|·\s(?=\S)/).map((l) => l.trim()).filter((l) => l.length > 4 && !/^[※*]/.test(l));
+    const lines0 = lead2.split(/\n|○|•|·\s(?=\S)/).map((l) => l.trim()).filter((l) => l.length > 4 && !/^[※*]/.test(l));
+    // 시설·기관 유형 줄(예: '사회복지시설')은 개인 판정에서 뺀다 — 개인은 나머지 유형으로 (QA 2차 C3: 고효율조명기기)
+    const personLines = lines0.filter((l) => !FACILITY_LINE.test(l));
+    const lines = personLines.length ? personLines : lines0;
     const gated = lines.filter((l) => ANY_GATE.test(l));
     // 관문 낱말은 이름과 유형 줄에서만 찾는다 (덧붙임 줄의 '활동지원 수급자였다가' 같은 말은 대상 조건이 아님)
     // '장기요양 수급자'·'활동지원 수급자'·'기초연금 수급자' 같은 말의 '수급자'는 기초생활수급이 아님
@@ -230,6 +258,9 @@ export function textGate(p: Program): GateInfo {
     }
     if (!gate && !partial && !hasIncome && unaskedLow) gate = { kind: "low", text: LOW_RE.exec(unaskedLow.label)![0] };
   }
+  // (QA 2차 C3) 원문(선정기준 전문 포함)이 수급·차상위인데 규칙은 소득 코드 0~50%뿐 (refine.ts recBand)
+  //  → 소득 구간만 맞는 비수급자는 '신청할 때 확인' (수급·차상위면 그대로)
+  if (p.rule.recBand && gate?.kind !== "recipient") partialRec = true;
   const out: GateInfo = { gate, priority, partial, ...(partialRec ? { partialRec } : {}) };
   gateCache.set(p, out);
   return out;
@@ -295,8 +326,13 @@ export interface Dim {
 /** 이 상황에서 보여줄 보기 */
 export const answersFor = (d: Dim, s: Situation) => (d.hide ? d.answers.filter((a) => !d.hide!(a, s)) : d.answers);
 
-/** 60세 이상인지: 'yes' | 'no' | 'unknown' */
-const seniorOf = (s: Situation) => (s.profile.age === "unknown" ? "unknown" : ageRange(s.profile.age)[1] >= 60 ? "yes" : "no");
+/** 60세 이상인지: 'yes' | 'no' | 'unknown' (나이 범위를 말했으면 범위로 — '30대'는 'no') */
+const seniorOf = (s: Situation) => {
+  if (s.profile.age !== "unknown") return ageRange(s.profile.age)[1] >= 60 ? "yes" : "no";
+  const sp = s.x.ageSpan;
+  if (!sp) return "unknown";
+  return sp[0] >= 60 ? "yes" : sp[1] < 60 ? "no" : "unknown";
+};
 /** 기초연금·장기요양 질문: 부모님 찾기는 나이를 모를 때도, 본인 찾기는 60세 이상이라고 답했을 때만 */
 const seniorQuestion = (s: Situation) => (s.mode === "self" ? seniorOf(s) === "yes" : seniorOf(s) !== "no");
 /** 자녀·임신 질문: 본인 찾기에서 60세 미만(또는 나이 모름)일 때만 */
@@ -340,7 +376,7 @@ export const DIMS: Dim[] = [
     id: "basicPension",
     q: (m) => subj(m, "기초연금을 받고 계신가요?", "부모님이 기초연금을 받고 계신가요?"),
     help: "만 65세 이상 중 소득·재산이 적은 70%가 받는 연금이에요 (국민연금과 달라요).",
-    isUnknown: (s) => s.x.benefits.basic_pension === undefined && (s.profile.age === "unknown" || ageRange(s.profile.age)[1] >= 65),
+    isUnknown: (s) => s.x.benefits.basic_pension === undefined && (ageBoundsOf(s)?.[1] ?? 120) >= 65,
     avail: seniorQuestion,
     answers: [
       { key: "yes", label: "예", apply: (s) => setBenefits(s, ["basic_pension"], []) },
@@ -400,7 +436,14 @@ export const DIMS: Dim[] = [
     id: "age",
     q: (m) => subj(m, "나이(만)가 어떻게 되세요?", "부모님 나이(만)가 어떻게 되세요?"),
     isUnknown: (s) => s.profile.age === "unknown",
-    hide: (a, s) => s.mode === "parent" && ["0-18", "19-24", "25-29", "30-34", "35-39"].includes(a.key),
+    hide: (a, s) => {
+      if (s.mode === "parent" && ["0-18", "19-24", "25-29", "30-34", "35-39"].includes(a.key)) return true;
+      // '30대'처럼 범위를 말했으면 그 범위 안의 보기만
+      const sp = s.x.ageSpan;
+      if (!sp) return false;
+      const [lo, hi] = ageRange(a.key as Exclude<Profile["age"], "unknown">);
+      return hi < sp[0] || lo > sp[1];
+    },
     answers: AGE_BANDS.filter((b) => b !== "0-18").map((b) => ({ key: b, label: AGE_LABEL[b], apply: (s: Situation) => withP(s, { age: b }) })),
   },
   {
@@ -550,6 +593,56 @@ const OFFICE_GROUPS: [RegExp, string][] = [
   [/(운영\s*지원|기관\s*지원|대관|설치\s*운영)/, "기관·시설을 지원하는 사업이에요 — 이용할 수 있는지 문의"],
 ];
 
+/**
+ * 직업·자격·추천이 있어야 하는 사업 (QA 2차 C3): 간편 입력은 직업·자격을 묻지 않으므로 '받으실 수 있어요'로 두지 않는다.
+ * 이름이나 대상 문구 앞부분에서 찾는다 — 예) KPF 디플로마(언론인·추천), 대한민국명장(15년 이상 숙련기술자), 국제심판 양성
+ */
+// '기관·학교장 추천'은 선정 절차라 직업 조건이 아님 (일상돌봄·학비 지원 등 오탐) — 넣지 않는다.
+// 공무원·교사·법인·종사자·재직은 '○○ 제외'·'시설 종사자'·'재직 중인 직장인'처럼 직업 조건이 아닌 쓰임이 많아 넣지 않는다 (직장 여부는 '하고 있는 일' 질문이 맡음).
+export const OCCUPATION_RE = /(언론인|숙련\s*기술|명장|(?:국제|생활|전문)\s*심판|변리사|교원(?!\s*자녀)|체육인|운동\s*선수|선수\s*(?:출신|경력|등록)|(?:전문|생활)\s*체육\s*지도자|예술인|농업인|어업인|임업인|농어업인|어선원|소상공인|자영업자|개인\s*사업자|사업자\s*등록|창업(?:자|기업|\s*\d)|(?:중소|벤처|사회적)\s*기업\s*대표|기업\s*대표|자격증\s*(?:소지|보유|취득)|면허\s*(?:소지|보유)|\d+\s*년\s*이상\s*(?:종사|경력|숙련))/g;
+const OCCUPATION_WHY = "직업·자격 조건이 있어요 (간편 입력으로는 묻지 않아요) — 해당하는지 신청할 때 확인";
+/** 같은 줄에 이런 말이 있으면 직업 낱말은 조건이 아님: 제외 문구, 또는 일반 개인 유형과 나란히 적힌 경우 ('청년 근로자, 소상공인') */
+const OCC_EXCLUDE = /(제외|아닌|불가|해당\s*없|해당하지|미해당)/;
+const OCC_ORDINARY = /(근로자|노동자|피보험|고용보험|국민|주민|가구|주택|학생|아동|청소년|노인|어르신|장애인|누구나|구직자|취업\s*준비생|사회\s*초년생|임산부|부모|다자녀|한부모|수급자|차상위|유공자|보훈)/;
+/** 소득·관문 판정 전에 보는 대상 문구 앞부분 (유형 줄 몇 개) */
+const leadText = (p: Program) => `${p.name}\n${(p.target ?? "").replace(/&#13;/g, "\n").slice(0, 250)}`;
+export function needsOccupation(p: Program): boolean {
+  if (leavesOf(p.rule.logic).some((l) => !l.soft && l.field === "activity")) return false;
+  const text = leadText(p);
+  // 대상 문구에 일반 개인 유형(근로자·주민·학생 등)이 함께 있으면 직업은 여러 대상 중 하나이거나 제외 대상 → 이름에 있을 때만
+  const ordinary = OCC_ORDINARY.test(text.slice(p.name.length));
+  for (const m of text.matchAll(OCCUPATION_RE)) {
+    const idx = m.index ?? 0;
+    if (idx < p.name.length) return true; // 이름에 있으면 (예: 대한민국명장, 언론인 금고)
+    if (ordinary) continue;
+    const start = Math.max(text.lastIndexOf("\n", idx), text.slice(0, idx).search(/[○ㅇ•□][^○ㅇ•□]*$/)) + 1;
+    const endN = text.indexOf("\n", idx);
+    const line = text.slice(start, endN < 0 ? undefined : endN);
+    if (OCC_EXCLUDE.test(line) || OCC_ORDINARY.test(line)) continue;
+    return true;
+  }
+  return false;
+}
+/** 원문 대상에 시설·기관 유형 줄이 함께 있음 (예: '수급·차상위 가구 / 사회복지시설') — 개인은 다른 줄로 판정 */
+const FACILITY_LINE = /^(?:[-○ㅇ·•*□]\s*)?(?:\S+\s*)?(?:사회\s*)?복지\s*시설|^(?:[-○ㅇ·•*□]\s*)?(?:\S+\s*)?(?:시설|기관|단체|법인)(?:\s|$|[,·(])/;
+export const NOT_FOR_PERSON_WHY = "개인이 신청해 받는 혜택이 아니에요 (기관·단체 대상, 행사·모금 사업) — 자세한 내용은 원문 확인";
+
+/** 출처 태그에서 온 soft 조건이 이 사업 이름·대상 문구와 무관하면 화면 문구에서 뺀다 (QA 2차 N6: 장기요양인정에 '등록 장애인') */
+const SOFT_TOPIC: Partial<Record<Leaf["field"], RegExp>> = {
+  disability: /장애/,
+  care: /(돌봄|요양|거동|간병|수발|보호가\s*필요|도움이\s*필요|일상\s*생활)/,
+  householdSize: /(1인|독거|홀몸|혼자|단독)/,
+  trait: /(보훈|유공|한부모|조손|다문화|결혼\s*이민|북한|다자녀|1인|독거|홀몸)/,
+  benefit: /(수급|차상위|기초\s*연금|생계|의료\s*급여|주거\s*급여)/,
+};
+export function softIrrelevant(r: Reason, p: Program): boolean {
+  const l = r.leaf;
+  if (!l?.soft) return false;
+  const re = SOFT_TOPIC[l.field];
+  if (!re) return false;
+  return !re.test(`${p.name}\n${(p.target ?? "").replace(/&#13;/g, "\n")}`);
+}
+
 export function classifyBase(p: Program, s: Situation): BaseResult {
   // soft 조건(원천 태그 등)은 답과 달라도 빼지 않는다 — 배타적이지 않은 신호라서 (감사 2026-10-07: 장애인연금·장기요양 등이 잘못 빠짐)
   const t = toEval(s, false);
@@ -557,13 +650,16 @@ export function classifyBase(p: Program, s: Situation): BaseResult {
   const proc = LTC_APPLY.test(p.name) && !LTC_AFTER.test(p.name);
   const opts = proc ? { ...t.opts, facts: { ...t.opts.facts, ltcGrade: true } } : t.opts;
   const process = proc ? LTC_PROCESS : undefined;
-  const ev = evaluateRule(p.rule, profile, opts);
+  const ev0 = evaluateRule(p.rule, profile, opts);
+  // 사업과 무관한 soft 조건(출처 태그)은 화면 문구에서 뺀다 — 판정 등급은 그대로 (N6)
+  const ev = ev0.reasons.some((x) => softIrrelevant(x, p)) ? { ...ev0, reasons: ev0.reasons.filter((x) => !softIrrelevant(x, p)) } : ev0;
   const { gate, priority, partialRec } = textGate(p);
   const gs = gate ? gateState(gate, s, profile) : undefined;
   const r = { ev, gate, gateState: gs, priority, process };
   const recMet = RECIPIENT_KINDS.some((k) => inferExtras(s).benefits[k] === true);
   if (ev.tier === "ineligible") return { base: "no", ...r };
   if (gs === "no") return { base: "no", ...r };
+  if (notForPersons(p)) return { base: "open", ...r, why: NOT_FOR_PERSON_WHY };
   if (!p.rule.logic || p.rule.unstructuredCore) return { base: "open", ...r };
   // 생계·의료·주거·교육급여, 차상위 확인: 소득이 기준 안이어도 재산·부양 조사를 거쳐 정해짐 → 최대 '신청할 때 확인'
   if (p.rule.meansTest) return { base: "open", ...r, why: evaluateCond(p.rule.logic, profile, opts).tri === "T" && gs !== "unknown" ? MEANS_WHY : "재산·부양 조사를 거쳐 정해져요 — 신청할 때 확인" };
@@ -571,14 +667,16 @@ export function classifyBase(p: Program, s: Situation): BaseResult {
   if (CRISIS.test(p.name) || NAMED_GROUP.test(p.name)) return { base: "open", ...r };
   const og = OFFICE_GROUPS.find(([re]) => re.test(p.name));
   if (og) return { base: "open", ...r, why: og[1] };
+  if (needsOccupation(p)) return { base: "open", ...r, why: OCCUPATION_WHY };
   if (isBasicPension(p) && pensionLikely(s)) return { base: "open", ...r, why: PENSION_WHY };
-  if (partialRec && !recMet) return { base: "open", ...r, why: "대상 유형이 여럿이에요 — 수급·차상위가 아니면 다른 유형(원문)에 해당하는지 신청할 때 확인" };
+  if (partialRec && !recMet) return { base: "open", ...r, why: p.rule.recBand ? RECBAND_WHY : "대상 유형이 여럿이에요 — 수급·차상위가 아니면 다른 유형(원문)에 해당하는지 신청할 때 확인" };
   if (ev.reasons.some((x) => x.kind === "note" && /법인·시설·단체/.test(x.text))) return { base: "open", ...r, why: "법인·시설·단체 대상 조건이 있어요 — 개인이 받을 수 있는지 문의" };
   const tri = evaluateCond(p.rule.logic, profile, opts).tri;
   if (tri === "T" && gs !== "unknown") return { base: p.rule.review === "auto" ? "autoFit" : "fit", ...r };
   return { base: "open", ...r };
 }
 
+const RECBAND_WHY = "원문 대상이 수급·차상위(또는 그에 준하는 저소득층)예요 — 소득만으로 정하지 않고 신청할 때 확인";
 const MEANS_WHY = "재산·부양 조사를 거쳐 정해져요 — 소득만 보면 신청해 볼 만해요";
 const CRISIS = /긴급\s*(복지|지원|생계)|위기\s*가구/;
 /** 이름 괄호 안에 따로 정한 대상 집단 — 예) 무료 소송대리 서비스(가족관계미등록자), (미혼모·부), (장애인1~3급) */
@@ -634,6 +732,24 @@ export function pensionLikely(s: Situation): boolean {
   const t = s.profile.householdSize === "unknown" || s.profile.householdSize === 1 ? BASIC_PENSION_THRESHOLD_2026.single : BASIC_PENSION_THRESHOLD_2026.couple;
   return s.x.incomeManwon * 10000 <= t * 0.7;
 }
+/**
+ * 기초연금을 받으실 수도 있음 (QA 2차 H1): 만 65세 이상, 아직 안 받음(또는 모름), 소득을 모르거나 선정기준액 이하.
+ * 이때 기초연금은 '답하면 정해져요'에 접어 두지 않고 먼저 확인할 것의 맨 앞에 둔다 (어르신에게 가장 큰 현금 급여).
+ */
+export function pensionPossible(s: Situation): boolean {
+  const b = ageBoundsOf(s);
+  if (!b || b[0] < 65) return false;
+  if (inferExtras(s).benefits.basic_pension === true) return false;
+  if (s.x.incomeManwon === null) return s.profile.income === "unknown" || incomeRange(s.profile.income)[0] < 100;
+  const t = s.profile.householdSize === "unknown" || s.profile.householdSize === 1 ? BASIC_PENSION_THRESHOLD_2026.single : BASIC_PENSION_THRESHOLD_2026.couple;
+  return s.x.incomeManwon * 10000 <= t;
+}
+/** 기초연금을 말함 ('기초연금 받고 싶어요') + 아직 안 받음 + 65세 미만이 아님 */
+const pensionWanted = (s: Situation) => !!s.x.interests?.includes("basic_pension") && inferExtras(s).benefits.basic_pension !== true && (ageBoundsOf(s)?.[1] ?? 120) >= 65;
+/** 간편 입력이 묻지 않는 특별한 신분·처지 대상 (시설 보호아동·가정위탁·자립준비청년 등) — 목록에는 두되 먼저 확인할 것에는 넣지 않음 */
+export const SPECIAL_STATUS = /(보호\s*대상\s*아동|가정\s*위탁|위탁\s*(?:아동|가정|부모)|아동\s*복지\s*시설|시설\s*(?:보호|입소|퇴소|아동)|자립\s*준비|보호\s*종료|입양|요보호|소년\s*소녀\s*가정|그룹\s*홈|공동\s*생활\s*가정)/;
+/** 추천에서 뺄 이유가 적힌 '신청할 때 확인' (법인·시설·단체·직업 조건) */
+const PICK_BLOCK_WHY = /(법인·시설·단체|기관·시설|직업·신분|직업·자격|개인이 신청해 받는 혜택이 아니에요)/;
 export const PENSION_WHY = "소득만 보면 받으실 가능성이 높아요 — 재산(소득인정액)에 따라 달라요";
 /** 누구나 받거나 안내 위주인 보편 서비스 (예방접종·검진·할인·상담 창구) — 앞자리를 핵심 급여에 양보 */
 const UNIVERSAL_LOW = /(예방\s*접종|건강\s*검진|검진비|철도|공공\s*할인|생활\s*체육|스포츠\s*강좌|말벗|정신\s*건강\s*복지\s*센터|방문\s*건강\s*관리|안부)/;
@@ -641,7 +757,11 @@ const ILLNESS_NAME = /(수술|질환|치료비|환자|투병|난치|희귀|암\s
 export function rankAdj(i: V2Item, sit: Situation): number {
   const p = i.s.program;
   if (VICTIM_RE.test(p.name)) return -6;
-  if (isBasicPension(p) && pensionLikely(sit)) return 4;
+  if (isBasicPension(p) && (pensionLikely(sit) || pensionWanted(sit))) return 6;
+  if (isBasicPension(p) && pensionPossible(sit)) return 4;
+  // 문장에서 말한 주제(신혼·실직·아기·치매·월세 등)의 사업은 앞으로
+  if (programTopics(p.name, sit.x.interests, p.target).length) return 3;
+  if (SPECIAL_STATUS.test(p.name)) return -4;
   if (i.base.why === MEANS_WHY) return 2;
   if (UNIVERSAL_LOW.test(p.name)) return -2;
   // 병·수술이 있어야 하는 사업은 병을 말하지 않았으면 뒤로 (예: '노인 무릎인공관절 수술'이 1순위가 되던 문제)
@@ -656,7 +776,9 @@ export const inMain = (p: Program) => !autoLike(p) && !hiddenByDefault(p, MAIN) 
 /** 개인이 받는 혜택이 아닌 사업 (QA 1차 C3·M1): 언론사·사회적기업·단체 대상, 공공기관 시설 체험 행사 */
 const ORG_TARGET = /^[\s○ㅇ\-·•*]*(?:지원\s*대상\s*[:：]?\s*)?(?:신문|인터넷\s*신문|인터넷\s*뉴스|잡지|방송사|언론사|정기\s*간행물|사회적\s*기업|예비\s*사회적\s*기업|지원\s*대상\s*단체)(?=[\s,·、(]|사|$)/;
 const ORG_NAME = /(기획\s*취재|언론사|신문사|방송사|렛츠런\s*파크|경마)/;
-export const notForPersons = (p: Program) => ORG_NAME.test(p.name) || ORG_TARGET.test((p.target ?? "").replace(/&#13;/g, "\n"));
+/** 기부·후원·모금 캠페인 (받는 혜택이 아니라 내는 사업 — QA 2차 C3: 사랑나눔 1인1나눔 계좌갖기) */
+export const DONATION_RE = /(나눔\s*계좌|1\s*인\s*1\s*나눔|계좌\s*갖기|정기\s*후원|후원\s*(?:신청|회원|계좌|자\s*모집)|기부\s*(?:캠페인|신청|참여|약정)|모금\s*(?:캠페인|운동)|성금\s*모금|나눔\s*캠페인)/;
+export const notForPersons = (p: Program) => ORG_NAME.test(p.name) || DONATION_RE.test(p.name) || ORG_TARGET.test((p.target ?? "").replace(/&#13;/g, "\n"));
 /** 피해자·특정 사건 대상 사업 — 숨기지는 않되(필요한 분이 있음) 먼저 확인할 것·목록 앞에는 두지 않는다 (QA 1차 M1) */
 export const VICTIM_RE = /(피해\s*아동|피해자|피해\s*청소년|학대|성착취|성매매|가정\s*폭력|성폭력|보호\s*전문\s*기관|범죄|유가족|참사|사건)/;
 
@@ -679,6 +801,31 @@ export interface V2View {
 const ORDER: Bucket[] = ["fit", "ask", "office", "no"];
 
 /** 판정·분류·묶음. 같은 사업의 지역 변형은 가장 좋은 분류 하나로 */
+/**
+ * 질문 답으로 혜택이 '열릴' 가능성 (대략의 사전 확률). 보훈·다문화처럼 드문 신분은 대부분 '아니요'라
+ * 답해도 찾는 혜택이 늘지 않으므로 뒤로 (QA 2차 M2). 부모님 찾기에서는 돌봄·장기요양을 높게.
+ */
+export const RARE_DIMS: ReadonlySet<DimId> = new Set<DimId>(["veteran", "multicultural"]);
+
+export function questionPrior(id: DimId, sit: Situation): number {
+  const parent = sit.mode === "parent";
+  switch (id) {
+    case "veteran":
+    case "multicultural":
+      return 0.1;
+    case "singleParent":
+      return 0.25;
+    case "illness":
+    case "disability":
+      return parent ? 0.5 : 0.3;
+    case "care":
+    case "ltcGrade":
+      return parent ? 1 : 0.3;
+    default:
+      return 1;
+  }
+}
+
 export function buildView(scored: Scored[], sit: Situation, maxQuestions = 3): V2View {
   const items = scored.map((x) => classify(x, sit));
   const seen = new Set<string>();
@@ -702,12 +849,20 @@ export function buildView(scored: Scored[], sit: Situation, maxQuestions = 3): V
   for (const g of out.ask) for (const id of g[0].dims) {
     if (!count.has(id)) count.set(id, new Set());
     count.get(id)!.add(g[0].s.group);
-    const sc = Math.max(0, g[0].s.score);
+    const sc = Math.max(0, key(g));
     weight.set(id, (weight.get(id) ?? 0) + sc * sc + 0.01);
   }
-  // 나이·가구원 수를 모르면 그것부터 (정해지는 혜택이 있을 때) — QA 1차 H2·M2
-  const first = (id: DimId) => (id === "age" ? 2 : id === "alone" ? 1 : 0);
-  const ranked = [...count].sort((a, b) => first(b[0]) - first(a[0]) || (weight.get(b[0]) ?? 0) - (weight.get(a[0]) ?? 0)).slice(0, maxQuestions);
+  // QA 2차 M2: 질문의 '값' = 정해지는 혜택의 관련도 × 그 답으로 혜택이 열릴 가능성(드문 신분은 낮게).
+  // 나이를 모르면 나이부터 (QA 1차 H2). 가구원 수는 소득을 말했을 때만 앞에 둔다.
+  // 월 소득을 말했는데 가구원 수를 모르면 소득 판단에 가구원 수가 꼭 필요하므로 나이 다음으로 (QA 1차 M2)
+  const incomeKnown = sit.x.incomeManwon != null;
+  const first = (id: DimId) => (id === "age" ? 2 : id === "alone" && incomeKnown ? 1 : 0);
+  const value = (id: DimId) => (weight.get(id) ?? 0) * questionPrior(id, sit);
+  // 보훈·다문화처럼 드문 신분은 먼저 묻지 않는다 (입력 화면에서는 언제든 답할 수 있음)
+  const ranked = [...count]
+    .filter(([id]) => !RARE_DIMS.has(id))
+    .sort((a, b) => first(b[0]) - first(a[0]) || value(b[0]) - value(a[0]))
+    .slice(0, maxQuestions);
   const union = new Set(ranked.flatMap(([, v]) => [...v]));
   return {
     ...out,
@@ -766,7 +921,7 @@ export function plainLeaf(leaf: Leaf, prof: Profile): string {
     case "income":
       return incomeLine(leaf.lte, prof);
     case "incomeBands": {
-      const hi = Math.max(...leaf.bands.map((b) => b[1]));
+      const hi = Math.max(...leaf.bands.map((b) => b[1] ?? Infinity));
       return Number.isFinite(hi) && hi < 1000 ? incomeLine(hi, prof) : leaf.label;
     }
     case "benefit":
@@ -805,6 +960,14 @@ const reasonPlain = (r: Reason, prof: Profile) => {
 };
 /** 신청 과정에서 정해지는 잎 조건 (장기요양등급) — 카드의 '맞은 조건'에서 뺀다 */
 const isProcessLeaf = (r: Reason) => r.leaf?.field === "unasked" && FACT_PATTERNS.ltcGrade.test(r.leaf.label);
+/** 받침에 맞춘 '은/는' (예: '만 6~64세는', '혼자 사는 분은') */
+export function withTopic(t: string): string {
+  const m = /([가-힣])[^가-힣]*$/.exec(t);
+  if (!m) return /[0-9]$/.test(t) ? `${t}은` : `${t}은`;
+  const code = m[1].charCodeAt(0) - 0xac00;
+  // 끝 글자 뒤에 괄호·숫자 등이 붙어 있으면 끝 한글 기준
+  return `${t}${code % 28 === 0 ? "는" : "은"}`;
+}
 const short = (t: string, n = 70) => (t.length > n ? t.slice(0, n - 1) + "…" : t);
 
 /** 카드 한 줄: 사용자 말로 */
@@ -815,7 +978,9 @@ export function plainLine(i: V2Item, sit: Situation, mode: FindMode): string {
   const who = mode === "parent" ? "부모님이" : "";
   switch (i.bucket) {
     case "fit": {
-      const parts = [...met];
+      // 원문 소득 관문(저소득·중위 N%)이 맞았으면 소득 코드 줄은 빼고 관문 한 줄만 (소득 문구 중복 — QA 2차 L1)
+      const gateIncome = i.base.gate && i.base.gateState === "met" && (i.base.gate.kind === "low" || i.base.gate.kind === "median");
+      const parts = gateIncome ? ev.reasons.filter((r) => r.kind === "met" && r.leaf?.field !== "resident" && r.leaf?.field !== "income" && r.leaf?.field !== "incomeBands" && !(i.base.process && isProcessLeaf(r))).map((r) => reasonPlain(r, profile)) : [...met];
       if (i.base.gate && i.base.gateState === "met") parts.push(gateLine(i.base.gate, profile));
       const head = parts.length ? `${[...new Set(parts)].slice(0, 3).join(" · ")} — ${who ? who + " " : ""}해당돼요.` : "입력하신 상황으로 조건이 맞아요.";
       if (i.base.process) return `${head} ${i.base.process}`;
@@ -831,14 +996,15 @@ export function plainLine(i: V2Item, sit: Situation, mode: FindMode): string {
       return cond ? `${short(cond)}이면 받을 수 있어요.` : "위 질문에 답하시면 바로 알려드려요.";
     }
     case "office": {
+      // 개인 대상이 아닌 사업은 '맞은 조건'을 앞에 쓰지 않는다
+      const metLead = met.length && i.base.why !== NOT_FOR_PERSON_WHY ? `${withTopic([...new Set(met)].slice(0, 2).join(" · "))} 맞아요. ` : "";
       const named = NAMED_GROUP.exec(i.s.program.name);
-      if (named) return `${met.length ? `${[...new Set(met)].slice(0, 2).join(" · ")}은 맞아요. ` : ""}신청할 때 확인: '${named[1]}'에 해당하는 분만 받을 수 있어요.`;
-      if (CRISIS.test(i.s.program.name)) return `${met.length ? `${[...new Set(met)].slice(0, 2).join(" · ")}은 맞아요. ` : ""}갑작스러운 위기(실직·질병·사고 등)가 생겼을 때 받는 지원이에요.`;
-      if (i.base.why) return `${met.length ? `${[...new Set(met)].slice(0, 2).join(" · ")}은 맞아요. ` : ""}신청할 때 확인: ${i.base.why.replace(/ — /, ". ")}`;
-      if (i.base.base === "autoFit") return `${met.length ? `${[...new Set(met)].slice(0, 2).join(" · ")}은 맞아요. ` : ""}신청할 때 확인: 세부 자격 (조건을 원문에서 자동으로 정리했어요)`;
+      if (named) return `${metLead}신청할 때 확인: '${named[1]}'에 해당하는 분만 받을 수 있어요.`;
+      if (CRISIS.test(i.s.program.name)) return `${metLead}갑작스러운 위기(실직·질병·사고 등)가 생겼을 때 받는 지원이에요.`;
+      if (i.base.why) return `${metLead}신청할 때 확인: ${i.base.why.replace(/ — /, ". ")}`;
+      if (i.base.base === "autoFit") return `${metLead}신청할 때 확인: 세부 자격 (조건을 원문에서 자동으로 정리했어요)`;
       const unk = ev.reasons.find((r) => r.kind === "unknown") ?? ev.reasons.find((r) => r.kind === "note");
-      const lead = met.length ? `${[...new Set(met)].slice(0, 2).join(" · ")}은 맞아요. ` : "";
-      return `${lead}신청할 때 확인: ${unk ? short(reasonPlain(unk, profile), 60) : "세부 자격(원문)"}`;
+      return `${metLead}신청할 때 확인: ${unk ? short(reasonPlain(unk, profile), 60) : "세부 자격(원문)"}`;
     }
     case "no": {
       if (i.base.gate && i.base.gateState === "no") return `${gateLine(i.base.gate, profile)} 대상이라 맞지 않아요.`;
@@ -877,6 +1043,10 @@ export function situationChips(s: Situation): string[] {
   if (p.age !== "unknown") {
     const [a, b] = ageRange(p.age);
     out.push(b >= 120 ? `만 ${a}세 이상` : `만 ${a}~${b}세`);
+  } else if (s.x.ageSpan) {
+    // 말한 나이 범위 (예: '30대') — 정확한 나이는 아래 질문으로
+    const [a, b] = s.x.ageSpan;
+    out.push(a % 10 === 0 && b === a + 9 ? `${a}대 (정확한 나이 모름)` : `만 ${a}~${b}세 (정확한 나이 모름)`);
   }
   if (p.householdSize !== "unknown") out.push(p.householdSize === 1 ? "혼자 사심" : `${p.householdSize}명 가구`);
   const size = sizeOf(p);
@@ -909,24 +1079,52 @@ export function topPicksV2(view: Pick<V2View, "fit" | "office"> & Partial<Pick<V
   // '받으실 수 있어요'에 +2 (v1 추천의 '조건 충족' 가산과 같게) — 관련도가 확실히 높은 '신청할 때 확인'(장애인 활동지원 등)은 앞설 수 있다
   // 순위 보정: 기초연금 가능성 높음 +4, 소득 기준 안의 공공부조 +2, 보편 서비스(예방접종 등) −2
   const key = (g: V2Item[]) => g[0].s.score + (g[0].bucket === "fit" ? 2 : 0) + (g[0].reviewed ? 0.5 : 0) + (sit ? rankAdj(g[0], sit) : 0);
-  // 기초연금은 '이미 받고 계신지'만 남아 '답하면 정해져요'여도 받으실 가능성이 높으면 먼저 확인할 것에 넣는다 (QA 1차 H1)
-  const pension = sit && pensionLikely(sit) ? (view.ask ?? []).filter((g) => isBasicPension(g[0].s.program)) : [];
-  const pool = [...view.fit, ...view.office, ...pension].sort((a, b) => key(b) - key(a) || a[0].s.program.name.localeCompare(b[0].s.program.name, "ko"));
+  // 기초연금은 '이미 받고 계신지'·소득만 남아 '답하면 정해져요'여도 65세 이상이면 먼저 확인할 것에 넣는다 (QA 1차 H1, 2차 H1)
+  const pensionFirst = !!sit && (pensionLikely(sit) || pensionPossible(sit) || pensionWanted(sit));
+  const pension = pensionFirst ? (view.ask ?? []).filter((g) => isBasicPension(g[0].s.program)) : [];
+  // 문장에서 말한 주제의 사업은 '답하면 정해져요'여도 후보로 (예: '실직했어요' → 실업급여, '돌 안 된 아기' → 부모급여)
+  const topical = sit?.x.interests?.length ? (view.ask ?? []).filter((g) => programTopics(g[0].s.program.name, sit.x.interests, g[0].s.program.target).length && !isBasicPension(g[0].s.program)) : [];
+  const pool = [...view.fit, ...view.office, ...pension, ...topical].sort((a, b) => key(b) - key(a) || a[0].s.program.name.localeCompare(b[0].s.program.name, "ko"));
+  // 나이를 정확히 모르면 나이로 정해지는 혜택은 앞에 두지 않는다 (범위에 걸치는 것은 '답하면 정해져요')
+  const ageUnknown = !!sit && sit.profile.age === "unknown";
   const out: V2Item[][] = [];
   const fams = new Set<string>();
   for (const pass of [true, false]) {
     for (const g of pool) {
       if (out.length >= n) break;
       if (out.includes(g)) continue;
-      if (pass && g[0].s.specific === false) continue;
-      if (VICTIM_RE.test(g[0].s.program.name)) continue;
-      const fk = familyKey(g[0].s.program.name);
+      const p = g[0].s.program;
+      const forced = pension.includes(g);
+      const onTopic = forced || (!!sit && programTopics(p.name, sit.x.interests, p.target).length > 0);
+      if (pass && g[0].s.specific === false && !onTopic) continue;
+      // 내 상황과 이어지는 근거가 있는 것만 (QA 2차 N3: 조건 없이 누구나 맞는 상담 창구·나이만 걸친 자동 정리 사업이 1~5위를 채우던 문제)
+      if (!onTopic && sit && !hasSubstance(g[0], sit)) continue;
+      if (VICTIM_RE.test(p.name) || SPECIAL_STATUS.test(p.name)) continue;
+      // '법인·시설·단체 대상', '직업·자격 조건'이 적힌 항목은 추천하지 않는다 (QA 2차 M1·N3)
+      if (g[0].base.why && PICK_BLOCK_WHY.test(g[0].base.why)) continue;
+      if (ageUnknown && !onTopic && g[0].base.ev.reasons.some((r) => r.kind === "unknown" && r.field === "age")) continue;
+      const fk = familyKey(p.name);
       if (fams.has(fk)) continue;
       fams.add(fk);
       out.push(g);
     }
   }
-  return out.sort((a, b) => pool.indexOf(a) - pool.indexOf(b));
+  const sorted = out.sort((a, b) => pool.indexOf(a) - pool.indexOf(b));
+  // 기초연금은 맨 앞 (65세 이상이고 아직 안 받는 분에게 가장 큰 현금 급여 — 말했으면 더욱)
+  const pi = sorted.findIndex((g) => isBasicPension(g[0].s.program));
+  if (pensionFirst && pi > 0) sorted.unshift(...sorted.splice(pi, 1));
+  return sorted;
+}
+
+/**
+ * 추천 근거: 맞은 조건 중 사는 곳 말고 내 상황(수급·소득·가구·자녀·장애·돌봄·주거·일 등)이 하나라도 있음.
+ * 나이만 맞은 경우는 나이를 정확히 알 때만 (예: 73세 → 노인일자리), 나이 범위로 맞은 것은 근거로 보지 않음.
+ */
+function hasSubstance(i: V2Item, sit: Situation): boolean {
+  const met = i.base.ev.reasons.filter((r) => r.kind === "met" && r.field !== "resident");
+  if (met.some((r) => r.field !== "age")) return true;
+  if (i.base.gate && i.base.gateState === "met") return true;
+  return met.length > 0 && sit.profile.age !== "unknown";
 }
 
 /**

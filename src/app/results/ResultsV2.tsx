@@ -20,10 +20,12 @@ import {
   type Bucket, type DimId, type Situation, type V2Item,
 } from "@/lib/client/v2";
 import type { Program } from "@/lib/data/types";
-import type { Profile } from "@/lib/engine/profile";
+import { ageRange, type Profile } from "@/lib/engine/profile";
 
 const FIRST = 10;
 const MORE = 20;
+/** QA 2차 M1: '신청할 때 확인'은 상위 20개를 먼저 */
+const OFFICE_TOP = 20;
 
 export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode }) {
   const extras = useExtras();
@@ -92,6 +94,15 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
   const editHref = checkPath(mode);
   const picked = new Set(picks);
   const couple = coupleNote(mode, profile);
+  // 부모님 두 분의 나이대가 다르면 다른 분 기준 결과로 바꿔 보는 단추 (QA 2차 M7) — 바꾸면 지금 분이 '다른 분'이 된다
+  const other = sit.x.otherAge && profile.age !== "unknown" && sit.x.otherAge.band !== profile.age ? sit.x.otherAge : null;
+  const showOther = () => {
+    if (!other || profile.age === "unknown") return;
+    const [a, b] = ageRange(profile.age);
+    const cur = { band: profile.age, label: b >= 120 ? `만 ${a}세 이상` : `만 ${a}~${b}세` };
+    apply({ ...sit, profile: { ...sit.profile, age: other.band }, x: { ...sit.x, otherAge: cur } });
+    window.scrollTo({ top: 0 });
+  };
 
   // 나이를 모르면 먼저 확인할 것이 크게 달라지므로 질문을 위에, 아니면 '먼저 확인할 것'을 맨 위에 (QA 1차 H5)
   const askFirst = questions.some((q) => q.dim.id === "age");
@@ -198,6 +209,17 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
               <p>{couple}</p>
             </details>
           )}
+          {parent && other && (
+            <p className="notice" data-testid="other-parent-note" role="note">
+              <Icon name="info" size={18} />
+              <span>
+                다른 한 분은 나이대가 달라요 ({other.label}). 나이로 정해지는 혜택이 다를 수 있어요.{" "}
+                <button type="button" className="btn btn-ghost btn-sm" onClick={showOther} data-testid="other-parent-btn">
+                  다른 분 기준으로 보기
+                </button>
+              </span>
+            </p>
+          )}
           {pilotSidos && profile.sido && !pilotSidos.includes(profile.sido) && (
             <p className="notice" data-testid="non-pilot-note" role="note">
               <Icon name="info" size={18} />
@@ -245,13 +267,23 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
               <h2 className="h2" id="picks-h">
                 {copy.picksTitle(picks.length)}
               </h2>
-              <p className="body">{parent ? "부모님 상황에 가장 관련 깊은 순서예요. '받으실 수 있어요'를 먼저 넣었어요." : "내 상황에 가장 관련 깊은 순서예요. '받으실 수 있어요'를 먼저 넣었어요."}</p>
+              <p className="body">
+                {parent ? "부모님 상황에 가장 관련 깊은 순서예요." : "내 상황에 가장 관련 깊은 순서예요."}{" "}
+                {picks.some((g) => g[0].bucket === "ask") ? "‘답하면 정해져요’인 것은 위 질문에 답하면 바로 정해져요." : "‘받으실 수 있어요’를 먼저 넣었어요."}
+              </p>
               <ol className="picks">
                 {picks.map((g, i) => (
                   <Pick key={g[0].s.program.id} item={g[0]} i={i} detail={details[g[0].s.program.id]} sit={sit} mode={mode} />
                 ))}
               </ol>
             </section>
+          )}
+
+          {picks.length < 3 && askFirst && (
+            <p className="notice" data-testid="picks-need-age" role="note">
+              <Icon name="info" size={18} />
+              <span>{parent ? "부모님 나이" : "나이"}를 알려 주시면 먼저 확인할 혜택을 골라 드려요. 나이로 정해지는 혜택이 많아서, 모르는 채로는 고르지 않았어요.</span>
+            </p>
           )}
 
           {!askFirst && followUp}
@@ -263,6 +295,7 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
             title="신청할 때 확인이 필요한 혜택"
             lead="답하신 상황과 어긋나는 조건은 없어요. 원문에 있는 세부 조건 한두 가지는 신청할 때 확인해요."
             groups={view.office.filter((g) => !picked.has(g))}
+            top={OFFICE_TOP}
             sit={sit}
             mode={mode}
           />
@@ -475,16 +508,23 @@ function Pick({ item, i, detail, sit, mode }: { item: V2Item; i: number; detail?
 }
 
 function BucketList({
-  id, title, lead, groups, sit, mode, collapsed,
+  id, title, lead, groups, sit, mode, collapsed, top,
 }: {
-  id: string; bucket: Bucket; title: string; lead: string; groups: V2Item[][]; sit: Situation; mode: FindMode; collapsed?: boolean;
+  id: string; bucket: Bucket; title: string; lead: string; groups: V2Item[][]; sit: Situation; mode: FindMode; collapsed?: boolean; top?: number;
 }) {
-  const [limit, setLimit] = useState(FIRST);
+  const [limit, setLimit] = useState(top ?? FIRST);
   if (!groups.length) return null;
   const head = `${title} ${groups.length.toLocaleString("ko-KR")}개`;
+  // QA 2차 M1: 수백 개를 한꺼번에 늘어놓지 않고 관련 높은 순 상위 top개를 먼저 보여 준다
+  const topNote = top && groups.length > top ? `관련이 높은 순으로 ${top}개를 먼저 보여 드려요. 나머지 ${(groups.length - top).toLocaleString("ko-KR")}개는 아래 '더 보기'로 볼 수 있어요.` : null;
   const body = (
     <>
       <p className="body">{lead}</p>
+      {topNote && (
+        <p className="body muted" data-testid={`${id}-top-note`}>
+          {topNote}
+        </p>
+      )}
       <div className="v2-list">
         {groups.slice(0, limit).map((g) => (
           <V2Card key={g[0].s.program.id} item={g[0]} more={g.length - 1} sit={sit} mode={mode} />

@@ -40,7 +40,8 @@ export function affinity(p: Program, pr: Profile): number {
     if (on === true) s += plus;
     else if (on === false) s -= minus;
   };
-  rule(/청년/, age ? age[0] >= 19 && age[1] <= 39 : null, 2, 4);
+  // 나이 범위(예: 나이 모름 → 19세 이상)가 청년 구간에 걸치기만 하면 판단하지 않음
+  rule(/청년/, age ? (age[0] >= 19 && age[1] <= 39 ? true : age[1] < 19 || age[0] > 39 ? false : null) : null, 2, 4);
   rule(/(노인|어르신|경로|노년|치매|장수|효도|실버|65세)/, age ? (age[0] >= 65 ? true : age[1] < 60 ? false : null) : null, 2, 4);
   rule(/(임신|임산부|산모|산후|출산|난임|신생아|태아)/, kids === null ? null : hasKid(["pregnant", "0-1"]), 2, 3);
   rule(/(영유아|유아|어린이집|보육|아이돌봄|육아|양육|아동)/, kids === null ? null : hasKid(["0-1", "2-5", "6-12"]) || (age ? age[1] <= 18 : false), 2, 3);
@@ -58,7 +59,7 @@ export function affinity(p: Program, pr: Profile): number {
   rule(/(1인\s*가구|독거|고독사|홀몸)/, pr.householdSize === 1 || pr.traits?.includes("single") ? true : pr.householdSize === "unknown" ? null : false, 2, 2);
   const low = pr.benefits?.length || (pr.income !== "unknown" && Number(pr.income) <= 50);
   rule(/(저소득|기초생활|수급자|차상위|취약계층)/, low ? true : pr.benefits?.length === 0 && pr.income !== "unknown" && Number(pr.income) >= 100 ? false : null, 1.5, 1);
-  rule(/(장병|군인|예비군|전역|입영)/, age ? (age[1] <= 29 ? null : false) : null, 0, 3);
+  rule(/(장병|군인|예비군|전역|입영)/, age ? (age[0] <= 29 ? null : false) : null, 0, 3);
   // 간편 입력으로 묻지 않는 특정 신분 대상 (산재·피해자·자립준비청년 등) → 뒤로
   if (/(산재|피해자|피해\s*지원|유족|귀환|귀국|난민|노숙|출소|보호관찰|가정폭력|성폭력|학대|자립준비|보호종료|위기청소년|이주배경|외국인|탈북)/.test(name)) s -= 3;
   // 법률·행정 절차 등 생활 지원과 거리가 먼 틈새 서비스 → 약간 뒤로
@@ -290,6 +291,22 @@ export function matchesQuery(p: Program, q: string, exclude: string[] = []): boo
 export function queryHitCount(p: Program, q: string, exclude: string[] = []): number {
   const hay = programHay(p);
   return queryTokens(q, exclude).flat().filter((tok) => tokenHit(hay, tok)).length;
+}
+
+/**
+ * 이름 쪽 일치 점수 (QA 2차 N5: '기초연금 못 받고 계세요' 검색에서 사업명이 '기초연금'인 결과가 1위).
+ * 이름이 검색 낱말과 같으면 가장 높고, 이름에 든 낱말 수가 많을수록·이름이 짧을수록 앞.
+ */
+export function nameHitScore(p: Program, q: string, exclude: string[] = []): number {
+  const name = normalizeQuery([p.name, ...(p.aliases ?? [])].join(" "));
+  const bare = normalizeQuery(p.name);
+  const toks = queryTokens(q, exclude).flat();
+  let n = 0;
+  for (const t of toks) {
+    if (bare === normalizeQuery(t)) n += 10;
+    else if (tokenHit(name, t)) n += 3;
+  }
+  return n ? n - Math.min(bare.length, 40) / 100 : 0;
 }
 
 /**

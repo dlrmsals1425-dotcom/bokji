@@ -7,7 +7,7 @@ import { Icon } from "@/components/Icon";
 import { EMPTY_SELECTION, HOUSEHOLD, LIFE, TOPICS, matchesSelection, parseSelection, selectionQuery, selectionSize, type FacetSelection } from "@/lib/client/facets";
 import { loadForRegion, loadRegions, type Loaded } from "@/lib/client/bundles";
 import { useProfile } from "@/lib/client/storage";
-import { evaluateProgram, matchesQuery, queryHitCount } from "@/lib/client/results";
+import { evaluateProgram, matchesQuery, nameHitScore, queryHitCount } from "@/lib/client/results";
 import { isGibberish, queryTokens } from "@/lib/client/query";
 import { CrisisHelp } from "@/components/CrisisHelp";
 import { parseSituation, prefillPath, savePrefill, understoodLine } from "@/lib/client/parse";
@@ -64,11 +64,12 @@ export function Search() {
     // 'ㅁㄴㅇㄹ' 처럼 알아볼 글자가 없으면 전체 목록 대신 0건 (QA 1차 M4)
     if (isGibberish(q) && selectionSize(sel) === 0) return { hits: [], partial: false };
     const inSel = data.programs.filter((p) => matchesSelection(p, sel));
-    const all = inSel.filter((p) => !q.trim() || matchesQuery(p, q, exclude));
+    const byName = <T extends { n: number; p: (typeof inSel)[number] }>(xs: T[]) =>
+      xs.map((x) => ({ ...x, s: nameHitScore(x.p, q, exclude) })).sort((a, b) => b.n - a.n || b.s - a.s);
+    const all = byName(inSel.filter((p) => !q.trim() || matchesQuery(p, q, exclude)).map((p) => ({ p, n: 0 }))).map((x) => x.p);
     // 모든 낱말이 들어간 결과가 없으면 일부 낱말이 맞는 결과를 많이 맞는 순으로
     if (all.length || !q.trim() || queryTokens(q, exclude).flat().length < 2) return { hits: all, partial: false };
-    const scored = inSel.map((p) => ({ p, n: queryHitCount(p, q, exclude) })).filter((x) => x.n > 0);
-    scored.sort((a, b) => b.n - a.n);
+    const scored = byName(inSel.map((p) => ({ p, n: queryHitCount(p, q, exclude) })).filter((x) => x.n > 0));
     return { hits: scored.map((x) => x.p), partial: scored.length > 0 };
   }, [data, q, sel, active, exclude]);
 
