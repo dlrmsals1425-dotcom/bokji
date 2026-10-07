@@ -164,3 +164,14 @@ describe("N6 잔여 · R6", () => {
     expect(howTo(d, d, "11000").phone).toMatch(/서울주택도시공사/);
   });
 });
+
+describe("N3 나이 모를 때 일관성", () => {
+  it("'장인어른 모시고 삽니다 부천'도 '고양 일산 사는 신혼부부'처럼 말한 주제의 사업을 먼저 보여 줌", () => {
+    const n2 = picksOf(sitOf("장인어른 모시고 삽니다 부천")).picks.map((g) => g.s.program.name);
+    const n5 = picksOf(sitOf("고양 일산 사는 신혼부부")).picks.map((g) => g.s.program.name);
+    expect(n5.length).toBeGreaterThan(0);
+    expect(n2.length).toBeGreaterThan(0);
+    expect(n2.join(" ")).toMatch(/가족돌봄/);
+    expect(n2.join(" ")).not.toMatch(/가족돌봄수당/); // 경기 가족돌봄수당은 손자녀 돌봄 — 부모 모시기와 무관
+  });
+});
