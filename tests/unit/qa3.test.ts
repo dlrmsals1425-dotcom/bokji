@@ -127,3 +127,18 @@ describe("M2 이미 말한 수급 여부는 다시 묻지 않음", () => {
     expect(picksOf(sitOf("수원 사는 45살 혼자 살아요")).view.questions.map((q) => q.dim.id)).toContain("support");
   });
 });
+
+describe("R4 원문보다 좁은 소득 규칙을 원문 비율로", () => {
+  it("한부모무료법률구조 · 무료 소송대리(미혼모·부) → 중위 125%, (농업인·어업인) → 150%", () => {
+    const cap = (id: string) => JSON.stringify(byId(id).rule.logic).match(/"income","lte":(\d+)/)?.[1];
+    expect(cap("n.gov24-138300000040")).toBe("125");
+    expect(cap("n.gov24-B27000100043")).toBe("125");
+    expect(cap("n.gov24-B27000100042")).toBe("150");
+  });
+  it("'우선' 문구의 비율로는 넓히지 않고, '120% 이하, 우선순위: …'는 120%", async () => {
+    const { sourceMedianCapForWiden } = await import("@/lib/data/refine");
+    expect(sourceMedianCapForWiden({ target: "중위소득 120% 미만 사회적 배려계층 우선지원" })).toBeNull();
+    expect(sourceMedianCapForWiden({ target: "건강보험 가입자 중 중위소득 120% 이하, 우선순위: 기초생활수급자" })).toBe(120);
+    expect(sourceMedianCapForWiden({ target: "중위소득 120% 이하(국비) / 120% 초과(군비)" })).toBeNull();
+  });
+});

@@ -6,7 +6,7 @@
  *  3) 원천 자료의 담당 부처가 틀린 사업 고침
  *  4) (QA 2차 C3) 원문(대상 + 선정기준 전문)의 '중위소득 N%'로 소득 코드를 좁히고,
  *     원문이 수급·차상위인데 정부24 소득 코드(0~50%)만 있는 규칙에 recBand 표시 → 소득 구간만으로 '받으실 수 있어요'가 되지 않게 (v2 textGate)
- * 원칙: 조건을 좁히기만 하고 넓히지 않는다. 여러 번 적용해도 결과가 같다.
+ * 원칙: 원문에 맞춘다 — 코드가 원문보다 넓으면 좁히고, (QA 3차 R4) 원문 비율이 코드보다 넓으면 원문 비율로 넓힌다. 여러 번 적용해도 결과가 같다.
  * REFINE_VERSION 이 바뀌면 이전 번들의 규칙도 읽을 때 다시 다듬는다 (좁히기만 하므로 다시 적용해도 안전).
  * (원문의 '수급자'·'중위소득 N%' 문구는 v2 textGate 가 소득 코드보다 좁으면 관문으로 건다)
  */
@@ -89,9 +89,36 @@ export function sourceMedianCap(p: { target?: string; criteria?: string }): numb
   const caps = [textMedianCap(p.target, 1200), textMedianCap(p.criteria, 1200)].filter((x): x is number => x !== null);
   return caps.length ? Math.max(...caps) : null;
 }
+/**
+ * 넓히는 쪽에 쓰는 원문 비율 (QA 3차 R4): '우선·가점·순위' 문구의 비율은 빼고 가장 큰 값.
+ * 정부24 소득 코드(0~50/51~75/76~100…)가 원문 125%·150%를 담지 못해 규칙이 원문보다 좁아지는 것을 원문 기준으로 맞춘다.
+ */
+export function sourceMedianCapForWiden(p: { target?: string; criteria?: string }): number | null {
+  const caps: number[] = [];
+  const overs: number[] = [];
+  for (const raw of [p.target, p.criteria]) {
+    const t = (raw ?? "").replace(/&#13;/g, "\n").slice(0, 1200);
+    for (const m of t.matchAll(MEDIAN_ALL)) {
+      const n = Number(m[1]);
+      if (n < 20 || n > 300) continue;
+      // 같은 줄·같은 구절 안에서만 본다 ('120% 이하, 우선순위: 수급자'의 우선순위는 다른 이야기). '(3순위) 80% 이하'는 대상 단계라 빼지 않음
+      const i = m.index ?? 0;
+      const before = t.slice(Math.max(0, i - 30), i).split(/\n|[,;]/).pop() ?? "";
+      const after = (t.slice(i + m[0].length, i + m[0].length + 20).split(/\n|[,;]/)[0]) ?? "";
+      if (/우선|가점|추가\s*지원/.test(before + after)) continue;
+      caps.push(n);
+    }
+    // 기준 위쪽도 지원하는 사업('120% 초과(군비)')은 상한을 넓히지 않음
+    if ([...t.matchAll(MEDIAN_OVER)].length) return null;
+    overs.push(...[...t.matchAll(/(\d{2,3})\s*%\s*(?:초과|넘는)/g)].map((m) => Number(m[1])));
+  }
+  if (!caps.length) return null;
+  const cap = Math.max(...caps);
+  return overs.some((n) => n >= cap) ? null : cap;
+}
 export const REC_TEXT = /(수급자|수급권자|차상위|기초\s*생활\s*보장|생계\s*급여|의료\s*급여|주거\s*급여)/;
 const MED_TEXT = /중위\s*(?:소득\s*)?(?:의\s*)?\d{2,3}\s*%/;
-export const REFINE_VERSION = 3;
+export const REFINE_VERSION = 4;
 
 export function refineRule(p: { name: string; target?: string; criteria?: string }, rule: Rule): Rule {
   if (rule.refined === REFINE_VERSION) return rule;
@@ -112,6 +139,14 @@ export function refineRule(p: { name: string; target?: string; criteria?: string
   else if (rule.origin === "gov24_conditions" && logic) {
     // 정부24 소득 코드는 0~50/51~75/76~100/101~200 네 구간뿐이라 원문 '중위소득 N%'가 위로 반올림됨 → 원문 비율로 좁힘
     const cap = sourceMedianCap(p);
+    // (QA 3차 R4) 원문 비율이 코드 상한보다 넓으면 원문 비율로 넓힌다 (0부터 이어진 구간만 — 예: 0~100% → 원문 125%)
+    const wcap = sourceMedianCapForWiden(p);
+    if (wcap !== null) {
+      logic = mapLeaves(logic, (l) => {
+        if (l.field !== "incomeBands" || l.soft || wcap <= incomeMax(l) + 5 || !contiguousFromZero(l.bands)) return l;
+        return { field: "income", lte: wcap, label: `기준 중위소득 ${wcap}% 이하 (원문)` };
+      });
+    }
     if (cap !== null) {
       logic = mapLeaves(logic, (l) => {
         if (l.field !== "incomeBands" || l.soft || cap >= incomeMax(l)) return l;

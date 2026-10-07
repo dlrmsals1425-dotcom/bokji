@@ -2,13 +2,14 @@
  * QA 2차 C3: 규칙 전수 감사 — 번들 전체(전국·시도·시군구)와 상세 샤드를 읽어
  *  (A) 원문(대상 + 선정기준 전문)이 수급·차상위 자격인데 소득 코드(0~50%)만으로 판정하는 규칙이 없어야 하고
  *  (B) 규칙의 소득 상한이 원문 '중위소득 N%'보다 5%p 넘게 넓은 규칙이 없어야 한다.
+ *  (C) (QA 3차 R4) 0부터 이어진 정부24 소득 코드가 원문 '중위소득 N%'보다 5%p 넘게 좁은 규칙도 없어야 한다 (받을 수 있는 사람을 빼는 쪽).
  * 실패하면 pipeline/refine 이 새 원문 유형을 놓친 것 — src/lib/data/refine.ts 를 고친 뒤 `npm run pipeline`.
  */
 import fs from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { textGate } from "@/lib/client/v2";
-import { REC_TEXT, refineProgram, sourceMedianCap } from "@/lib/data/refine";
+import { REC_TEXT, refineProgram, sourceMedianCap, sourceMedianCapForWiden } from "@/lib/data/refine";
 import type { Program } from "@/lib/data/types";
 import type { Cond, Leaf } from "@/lib/engine/types";
 
@@ -23,6 +24,8 @@ const MED = /중위\s*(?:소득\s*)?(?:의\s*)?\d{2,3}\s*%/;
 type Row = { id: string; name: string; why: string };
 const recBandOnly: Row[] = [];
 const wider: Row[] = [];
+const narrower: Row[] = [];
+let checkedC = 0;
 let checkedA = 0;
 let checkedB = 0;
 for (const f of files) {
@@ -45,11 +48,17 @@ for (const f of files) {
         const eff = Math.min(max, g.gate?.kind === "median" ? g.gate.pct : Infinity);
         if (eff > cap + 5) wider.push({ id: p.id, name: p.name, why: `원문 ${cap}% / 규칙 ${eff}%` });
       }
+      // (C) 좁은 쪽: 원문 비율(우선·가점 문구 제외)보다 규칙 상한이 5%p 넘게 낮음
+      const wcap = sourceMedianCapForWiden(d);
+      if (wcap !== null && inc.length) {
+        checkedC++;
+        if (max < wcap - 5) narrower.push({ id: p.id, name: p.name, why: `원문 ${wcap}% / 규칙 ${max}%` });
+      }
     }
   }
 }
 
-if (process.env.AUDIT_LOG) console.log({ checkedA, checkedB, recBandOnly: recBandOnly.length, wider: wider.length });
+if (process.env.AUDIT_LOG) console.log({ checkedA, checkedB, recBandOnly: recBandOnly.length, wider: wider.length, checkedC, narrower: narrower.length, ex: narrower.slice(0, 30) });
 describe("규칙 전수 감사 (QA 2차 C3)", () => {
   it("검사 대상이 실제로 있음 (번들을 읽었는지)", () => {
     expect(checkedA).toBeGreaterThan(300);
@@ -60,5 +69,9 @@ describe("규칙 전수 감사 (QA 2차 C3)", () => {
   });
   it("원문 '중위소득 N%'보다 넓은 규칙 0건", () => {
     expect(wider.slice(0, 20)).toEqual([]);
+  });
+  it("원문 '중위소득 N%'보다 좁은 규칙 0건 (QA 3차 R4)", () => {
+    expect(checkedC).toBeGreaterThan(100);
+    expect(narrower.slice(0, 20)).toEqual([]);
   });
 });

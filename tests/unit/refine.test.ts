@@ -23,15 +23,18 @@ describe("규칙 다듬기 (QA 1차 C3)", () => {
     expect(JSON.stringify(r.logic)).not.toContain("incomeBands");
   });
 
-  it("원문 '중위소득 N%'가 정부24 구간보다 좁으면 원문 비율로 (넓히지 않음)", () => {
+  it("원문 '중위소득 N%'에 맞춤: 정부24 구간보다 좁으면 좁히고, 넓으면 넓힘 (QA 3차 R4)", () => {
     expect(textMedianCap("기준중위소득 120% 이하 청년")).toBe(120);
     expect(textMedianCap("저소득층(중위소득 80%이하)")).toBe(80);
     const bands = { field: "incomeBands" as const, bands: [[0, 50], [50, 75], [75, 100], [100, 200]] as [number, number][], label: "x" };
     const r = refineRule({ name: "경기도 청년 노동자 통장", target: "기준중위소득 120% 이하" }, rule(bands));
     expect(r.logic).toMatchObject({ field: "income", lte: 120 });
-    // 원문이 더 넓으면 그대로 (넓히지 않음)
+    // 원문이 더 넓으면 원문 비율로 넓힘 (QA 3차 R4: 정부24 코드가 125%·150%를 담지 못함)
     const r2 = refineRule({ name: "x", target: "중위소득 150% 이하" }, rule(BAND50));
-    expect(r2.logic).toMatchObject({ field: "incomeBands" });
+    expect(r2.logic).toMatchObject({ field: "income", lte: 150 });
+    // '우선' 문구의 비율로는 넓히지 않음
+    const r3 = refineRule({ name: "x", target: "중위소득 150% 이하 가구 우선 지원" }, rule(BAND50));
+    expect(r3.logic).toMatchObject({ field: "incomeBands" });
     // 여러 번 적용해도 같음
     expect(refineRule({ name: "x", target: "기준중위소득 120% 이하" }, r)).toBe(r);
   });
