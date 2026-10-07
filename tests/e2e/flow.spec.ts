@@ -337,4 +337,38 @@ test.describe("로그인 없는 전체 흐름", () => {
     await expect(page.getByTestId("search-situation")).toBeVisible({ timeout: 20_000 });
     await expect(page.getByTestId("program-card").filter({ hasText: "건강보험 틀니" })).toHaveCount(1);
   });
+  test("v2 시험판: 상황 먼저 → 추가 질문 → 소득 월 300만원 답하면 바로 다시 거름 @mobile", async ({ page }) => {
+    const requests: Request[] = [];
+    page.on("request", (r) => requests.push(r));
+    await page.goto("/situation?for=parent&new=1");
+    await page.getByTestId("v2-text").fill("수원시 소재에 계시고 59년생 부모님 두분이 계신다");
+    await expect(page.locator("#sido option")).not.toHaveCount(1, { timeout: 20_000 });
+    await page.getByTestId("v2-fill").click();
+    await expect(page.getByTestId("v2-understood")).toContainText("경기 수원시");
+    await expect(page.getByLabel("시·군·구")).toHaveValue("41110");
+    await page.getByTestId("v2-submit").click();
+    await expect(page).toHaveURL(/\/results\?for=parent&v=2/);
+    const follow = page.getByTestId("v2-followup");
+    await expect(follow).toBeVisible({ timeout: 20_000 });
+    await expect(follow).toContainText("이것만 알려주시면");
+    await expect(page.getByTestId("v2-q-income")).toBeVisible();
+    const fitBefore = Number(await page.getByTestId("v2-n-fit").locator(".n").innerText());
+    const noBefore = Number((await page.getByTestId("v2-n-no").locator(".n").innerText()).replace(/,/g, ""));
+    await page.getByTestId("v2-a-income-input").fill("300");
+    await page.getByTestId("v2-a-income-ok").click();
+    await expect(page.getByTestId("v2-inferred")).toBeVisible();
+    await expect(page.getByTestId("v2-chips")).toContainText("소득 월 300만원");
+    await expect(page.getByTestId("v2-q-income")).toHaveCount(0);
+    const fitAfter = Number(await page.getByTestId("v2-n-fit").locator(".n").innerText());
+    const noAfter = Number((await page.getByTestId("v2-n-no").locator(".n").innerText()).replace(/,/g, ""));
+    expect(fitAfter).toBeGreaterThan(fitBefore);
+    expect(noAfter).toBeGreaterThan(noBefore);
+    await expect(page.getByTestId("v2-fit")).toContainText("폐렴구균");
+    // 상황·소득은 어떤 요청 주소에도 실리지 않는다
+    for (const r of requests) {
+      const url = decodeURIComponent(r.url());
+      expect(url.includes("59년생") || url.includes("만원") || /[?&=]300\b/.test(url) || url.includes("65-69"), url).toBeFalsy();
+      expect(r.method(), url).toBe("GET");
+    }
+  });
 });

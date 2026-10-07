@@ -49,6 +49,16 @@ test("axe 접근성: 주요 화면 serious/critical 0건 @mobile", async ({ page
   await expect(page.getByTestId("auto-section").getByTestId("program-card").first()).toBeVisible();
   const ra = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"]).analyze();
   summary["결과(자동으로 받는 혜택 펼침)"] = { violations: ra.violations.map((v) => ({ id: v.id, impact: v.impact, nodes: v.nodes.length, help: v.help })) };
+  // v2 시험판: 상황 입력 · 결과(맞지 않아 뺀 혜택 펼침)
+  await page.goto("/results?v=2");
+  await expect(page.getByTestId("v2-followup")).toBeVisible({ timeout: 20_000 });
+  await page.getByTestId("v2-no").locator("summary").click();
+  const rv = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"]).analyze();
+  summary["결과 v2 시험판 (부천, 뺀 혜택 펼침)"] = { violations: rv.violations.map((v) => ({ id: v.id, impact: v.impact, nodes: v.nodes.length, help: v.help })) };
+  await page.goto("/situation?for=parent&new=1");
+  await expect(page.getByTestId("v2-situation")).toBeVisible({ timeout: 20_000 });
+  const rs = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"]).analyze();
+  summary["상황 입력 v2 시험판"] = { violations: rs.violations.map((v) => ({ id: v.id, impact: v.impact, nodes: v.nodes.length, help: v.help })) };
   fs.mkdirSync("test-results", { recursive: true });
   fs.writeFileSync(`test-results/axe-${info.project.name}.json`, JSON.stringify(summary, null, 2));
   const bad = Object.entries(summary).flatMap(([n, s]) => s.violations.filter((v) => v.impact === "serious" || v.impact === "critical").map((v) => `${n}: ${v.id} (${v.impact}, ${v.nodes}) ${v.help}`));

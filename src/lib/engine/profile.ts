@@ -177,8 +177,37 @@ export function answeredCount(p: Profile): number {
   return n;
 }
 
-/** 2026년 기준 중위소득(월, 원) — 보건복지부 고시 보도자료(기획안 9장 [검증]: 1인 2,564,238 / 4인 6,494,738). */
-export const MEDIAN_INCOME_2026: Partial<Record<number, number>> = {
+/**
+ * 2026년 기준 중위소득(월, 원) — 보건복지부 보도자료 (중앙생활보장위원회 의결, 2025-08)
+ * https://www.mohw.go.kr/board.es?act=view&bid=0027&list_no=1487098&mid=a10503010100 (확인 2026-10-07)
+ */
+export const MEDIAN_INCOME_2026: Record<1 | 2 | 3 | 4 | 5 | 6, number> = {
   1: 2564238,
+  2: 4199292,
+  3: 5359036,
   4: 6494738,
+  5: 7556719,
+  6: 8555952,
 };
+
+/**
+ * 2026년 기초연금 선정기준액(월 소득인정액) — 보건복지부 보도자료 2026-01-01
+ * https://www.mohw.go.kr/board.es?act=view&bid=0027&list_no=1488478&mid=a10503010100 (확인 2026-10-07)
+ */
+export const BASIC_PENSION_THRESHOLD_2026 = { single: 2470000, couple: 3952000 } as const;
+
+/** 월 가구 소득(원) → 기준 중위소득 대비 % */
+export function medianPercent(monthlyWon: number, size: 1 | 2 | 3 | 4 | 5 | 6): number {
+  return (monthlyWon / MEDIAN_INCOME_2026[size]) * 100;
+}
+
+/** 월 가구 소득(원) → 소득 구간 (상한 이하 첫 구간) */
+export function incomeBandFor(monthlyWon: number, size: 1 | 2 | 3 | 4 | 5 | 6): IncomeBand {
+  const pct = medianPercent(monthlyWon, size);
+  return INCOME_BANDS.find((b) => b !== "200+" && pct <= Number(b)) ?? "200+";
+}
+
+/** 기준 중위소득 X% 의 월 금액(원) */
+export function medianWon(pct: number, size: 1 | 2 | 3 | 4 | 5 | 6): number {
+  return Math.floor((MEDIAN_INCOME_2026[size] * pct) / 100);
+}

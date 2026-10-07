@@ -8,12 +8,15 @@
 import { useSyncExternalStore } from "react";
 import { EMPTY_PROFILE, type Profile } from "../engine/profile";
 import type { FindMode, FillerRole } from "./mode";
+import type { Extras } from "./v2";
 
 const PROFILE_KEY = "bn.profile.v1";
 const SETTINGS_KEY = "bn.settings.v1";
 const EXAMPLE_KEY = "bn.example.v1";
 const MODE_KEY = "bn.mode.v1";
 const FILLER_KEY = "bn.filler.v1";
+/** v2 시험판: 항목별 '모름'까지 담은 상황 답 (기기에만 저장) */
+const EXTRAS_KEY = "bn.facts.v1";
 
 export interface Settings {
   large: boolean;
@@ -28,7 +31,7 @@ function emit() {
 function subscribe(cb: () => void) {
   listeners.add(cb);
   const onStorage = (e: StorageEvent) => {
-    if (e.key === PROFILE_KEY || e.key === SETTINGS_KEY || e.key === EXAMPLE_KEY || e.key === MODE_KEY || e.key === FILLER_KEY) emit();
+    if (e.key === PROFILE_KEY || e.key === SETTINGS_KEY || e.key === EXAMPLE_KEY || e.key === MODE_KEY || e.key === FILLER_KEY || e.key === EXTRAS_KEY) emit();
   };
   window.addEventListener("storage", onStorage);
   return () => {
@@ -70,7 +73,7 @@ export function setSettings(patch: Partial<Settings>) {
   if (prev.shared !== next.shared) {
     const from = prev.shared ? sessionStorage : localStorage;
     const to = next.shared ? sessionStorage : localStorage;
-    for (const key of [PROFILE_KEY, EXAMPLE_KEY, MODE_KEY, FILLER_KEY]) {
+    for (const key of [PROFILE_KEY, EXAMPLE_KEY, MODE_KEY, FILLER_KEY, EXTRAS_KEY]) {
       const raw = safeGet(from, key);
       try {
         from.removeItem(key);
@@ -182,8 +185,10 @@ export function clearProfile() {
       store.removeItem(EXAMPLE_KEY);
       store.removeItem(MODE_KEY);
       store.removeItem(FILLER_KEY);
+      store.removeItem(EXTRAS_KEY);
     }
   } catch {}
+  extrasCache = { raw: null, value: EMPTY_EXTRAS };
   profileCache = { raw: null, value: null };
   modeCache = { raw: null, value: "self" };
   fillerCache = { raw: null, value: "child" };
@@ -193,4 +198,32 @@ export function clearProfile() {
 /** undefined = 아직 확인 전(SSR/하이드레이션), null = 저장된 입력 없음 */
 export function useProfile(): Profile | null | undefined {
   return useSyncExternalStore(subscribe, readProfile, () => undefined);
+}
+
+/* ---------- v2 상황 답 ---------- */
+const EMPTY_EXTRAS: Extras = { benefits: {}, traits: {}, incomeManwon: null, facts: {} };
+let extrasCache: { raw: string | null; value: Extras } = { raw: null, value: EMPTY_EXTRAS };
+function readExtras(): Extras {
+  const raw = safeGet(profileStore(), EXTRAS_KEY);
+  if (raw !== extrasCache.raw) {
+    let value = EMPTY_EXTRAS;
+    try {
+      const v = raw ? JSON.parse(raw) : null;
+      if (v && typeof v === "object") value = { ...EMPTY_EXTRAS, ...v };
+    } catch {}
+    extrasCache = { raw, value };
+  }
+  return extrasCache.value;
+}
+
+export function saveExtras(x: Extras) {
+  try {
+    profileStore().setItem(EXTRAS_KEY, JSON.stringify(x));
+  } catch {}
+  emit();
+}
+
+/** v2 상황 답 (저장된 것이 없으면 빈 답 = 모두 '모름') */
+export function useExtras(): Extras | undefined {
+  return useSyncExternalStore(subscribe, readExtras, () => undefined);
 }

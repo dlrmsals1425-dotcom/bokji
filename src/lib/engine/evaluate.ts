@@ -4,7 +4,7 @@ import {
   ageRange, childRange, incomeRange,
   type Profile,
 } from "./profile";
-import type { Cond, Evaluation, Leaf, Reason, Rule, Tier, Tri } from "./types";
+import type { Cond, EvalOptions, Evaluation, Leaf, Reason, Rule, Tier, Tri } from "./types";
 
 /* ---------------- 3값 논리 ---------------- */
 
@@ -173,15 +173,39 @@ function rawLeaf(leaf: Leaf, p: Profile): { tri: Tri; missing: boolean; display?
   }
 }
 
-export function evaluateLeaf(leaf: Leaf, p: Profile): LeafResult {
+export function evaluateLeaf(leaf: Leaf, p: Profile, opts?: EvalOptions): LeafResult {
+  const r = evaluateLeafBase(leaf, p, opts);
+  if (opts?.withLeaf) r.reason = { ...r.reason, leaf };
+  return r;
+}
+
+function evaluateLeafBase(leaf: Leaf, p: Profile, opts?: EvalOptions): LeafResult {
+  // 간편 입력 밖 사실에 대한 사용자 답 (예: 장기요양등급 '있음')
+  if (leaf.field === "unasked" && opts?.facts && opts.factPatterns) {
+    for (const [k, re] of Object.entries(opts.factPatterns)) {
+      if (!(k in opts.facts) || !re.test(leaf.label)) continue;
+      return opts.facts[k]
+        ? { tri: "T", reason: { kind: "met", text: leaf.label, field: "unasked" } }
+        : { tri: "F", reason: { kind: "unmet", text: `${leaf.label} (답: 해당 없음)` } };
+    }
+  }
   const raw = rawLeaf(leaf, p);
+  // 수급·가구 특성 중 일부만 답한 경우: 맞는 항목이 없고 '모름'인 항목이 걸려 있으면 UNKNOWN
+  if (raw.tri === "F" && leaf.field === "benefit" && opts?.unknownBenefits?.some((b) => leaf.anyOf.includes(b))) {
+    raw.tri = "U";
+    raw.missing = true;
+  }
+  if (raw.tri === "F" && leaf.field === "trait" && opts?.unknownTraits?.some((t) => leaf.anyOf.includes(t))) {
+    raw.tri = "U";
+    raw.missing = true;
+  }
   let tri = raw.tri;
   let text: string;
   if (leaf.field === "unasked") {
     return { tri: "U", reason: { kind: "unknown", text: `${leaf.label} — ${leaf.hint ?? "간편 입력에서는 묻지 않는 조건이에요. 신청처에서 확인하세요."}` } };
   }
-  if (tri === "F" && leaf.soft) {
-    return { tri: "U", reason: { kind: "unknown", text: `${leaf.label} — 해당 여부는 신청처에서 확인하세요` } };
+  if (tri === "F" && leaf.soft && !opts?.strictSoft) {
+    return { tri: "U", reason: { kind: "unknown", text: `${leaf.label} — 해당 여부는 신청처에서 확인하세요`, ...(opts ? { softNo: true } : {}) } };
   }
   if (tri === "T" && leaf.capU) {
     return { tri: "U", reason: { kind: "unknown", text: `${leaf.label} — 해당될 수 있어요 (세부 기준 확인)` } };
@@ -211,14 +235,14 @@ export interface CondResult {
   reasons: Reason[];
 }
 
-export function evaluateCond(c: Cond, p: Profile): CondResult {
+export function evaluateCond(c: Cond, p: Profile, opts?: EvalOptions): CondResult {
   if ("all" in c) {
-    const rs = c.all.map((x) => evaluateCond(x, p));
+    const rs = c.all.map((x) => evaluateCond(x, p, opts));
     const tri = triAll(rs.map((r) => r.tri));
     return { tri, reasons: rs.flatMap((r) => r.reasons) };
   }
   if ("any" in c) {
-    const rs = c.any.map((x) => evaluateCond(x, p));
+    const rs = c.any.map((x) => evaluateCond(x, p, opts));
     const tri = triAny(rs.map((r) => r.tri));
     let reasons: Reason[];
     if (tri === "T") {
@@ -234,7 +258,7 @@ export function evaluateCond(c: Cond, p: Profile): CondResult {
     }
     return { tri, reasons: dedupeReasons(reasons) };
   }
-  const r = evaluateLeaf(c, p);
+  const r = evaluateLeaf(c, p, opts);
   return { tri: r.tri, reasons: [r.reason] };
 }
 
@@ -254,7 +278,7 @@ export function isApproved(rule: Rule): boolean {
   return rule.review === "verified" || rule.review === "curated" || rule.review === "structured";
 }
 
-export function evaluateRule(rule: Rule, p: Profile): Evaluation {
+export function evaluateRule(rule: Rule, p: Profile, opts?: EvalOptions): Evaluation {
   const notes: Reason[] = rule.unstructured.map((t) => ({
     kind: "note" as const,
     text: rule.unstructuredCore ? `상담으로 판단하는 조건: ${t}` : `추가로 확인할 조건: ${t}`,
@@ -268,7 +292,7 @@ export function evaluateRule(rule: Rule, p: Profile): Evaluation {
     return { tier: "check", reasons, headline: headlineFor("check", reasons, rule) };
   }
 
-  const res = evaluateCond(rule.logic, p);
+  const res = evaluateCond(rule.logic, p, opts);
   const reasons = dedupeReasons([...res.reasons, ...notes]);
   let tier: Tier;
   if (res.tri === "F") tier = "ineligible";

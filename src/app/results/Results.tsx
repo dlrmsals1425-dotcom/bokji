@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { ProgramCard, SupportTags } from "@/components/ProgramCard";
 import { TierBadge, orgText } from "@/components/Badges";
 import { Icon } from "@/components/Icon";
@@ -16,6 +16,7 @@ import { profileChips } from "@/lib/client/summary";
 import { CATEGORIES, ORG_TYPE_LABEL, type Category, type OrgType } from "@/lib/data/types";
 import { TIER_LABEL, type Tier } from "@/lib/engine/types";
 import { answeredCount, type Profile } from "@/lib/engine/profile";
+import { ResultsV2 } from "./ResultsV2";
 
 const TABS: Tier[] = ["eligible", "likely", "check"];
 const ORGS: OrgType[] = ["central", "metro", "local", "public_inst"];
@@ -39,6 +40,9 @@ function Skeleton({ label }: { label: string }) {
 export function Results() {
   const profile = useProfile();
   const mode = useMode();
+  // ?v=2: '상황 먼저' 시험판 (주소 정리 때도 유지)
+  const v2 = useSearchParams().get("v") === "2";
+  const keepV2 = (path: string) => (v2 ? `${path}${path.includes("?") ? "&" : "?"}v=2` : path);
   // /results?example=<id>&for=parent 링크로 예시·모드를 바로 연다
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -49,11 +53,12 @@ export function Results() {
       const m = forParam ?? preset.mode ?? "self";
       saveProfile(preset.profile, preset.id, m);
       if (m === "parent") saveFiller("child");
-      window.history.replaceState(null, "", resultsPath(m));
+      window.history.replaceState(null, "", keepV2(resultsPath(m)));
     } else if (forParam) {
       saveMode(forParam);
-      window.history.replaceState(null, "", resultsPath(forParam));
+      window.history.replaceState(null, "", keepV2(resultsPath(forParam)));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- mount-only URL bootstrap
   }, []);
   if (profile === undefined || mode === undefined) return <Skeleton label="불러오는 중…" />;
   if (profile === null) {
@@ -75,6 +80,7 @@ export function Results() {
       </div>
     );
   }
+  if (v2) return <ResultsV2 profile={profile} mode={mode} />;
   return <ResultsInner profile={profile} mode={mode} key={JSON.stringify(profile) + mode} />;
 }
 

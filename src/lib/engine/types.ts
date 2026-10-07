@@ -74,6 +74,28 @@ export interface Reason {
   text: string;
   /** 판정에 쓴 입력 항목 (관련도 정렬용) */
   field?: Leaf["field"];
+  /** (선택) 이 사유를 만든 잎 조건 — 쉬운 말 다시 쓰기·추가 질문 고르기용 (EvalOptions.withLeaf) */
+  leaf?: Leaf;
+  /** (선택) 입력값으로는 맞지 않지만 '참고(soft)' 조건이라 확인으로 낮춘 경우 */
+  softNo?: boolean;
+}
+
+/**
+ * 판정 선택 사항 (기본값이면 기존 판정과 같다).
+ *  - facts: 간편 입력 12개 밖의 사실(예: 장기요양등급 있음)에 대한 사용자 답. 키 = FACT 패턴 id → 'unasked' 조건을 참·거짓으로
+ *  - withLeaf: 사유에 잎 조건을 붙인다
+ */
+export interface EvalOptions {
+  facts?: Record<string, boolean>;
+  /** facts 키 → '묻지 않는 조건' 이름 패턴 */
+  factPatterns?: Record<string, RegExp>;
+  withLeaf?: boolean;
+  /** 프로필 benefits 가 답해졌어도 이 항목들은 '모름' (예: 수급 아님 + 기초연금 모름) */
+  unknownBenefits?: Benefit[];
+  /** 프로필 traits 가 답해졌어도 이 항목들은 '모름' */
+  unknownTraits?: HouseholdTrait[];
+  /** soft 조건도 FALSE 그대로 (v2: 답한 사실과 맞지 않는 사업을 본문에서 뺄 때) */
+  strictSoft?: boolean;
 }
 
 export interface Evaluation {
