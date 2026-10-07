@@ -217,9 +217,10 @@ function seniorCoreBoost(out: Scored[], pr: Profile) {
   }
 }
 
-export function scoreAll(programs: Program[], profile: Profile): Scored[] {
+/** evalFn: 판정 함수를 바꿔 끼울 때 (v2 시험판 — 답한 사실·수급 항목별 '모름' 반영) */
+export function scoreAll(programs: Program[], profile: Profile, evalFn: (p: Program) => Evaluation = (p) => evaluateProgram(p, profile)): Scored[] {
   const out: Scored[] = programs.map((program) => {
-    const ev = evaluateProgram(program, profile);
+    const ev = evalFn(program);
     return {
       program, ev,
       met: ev.reasons.filter((r) => r.kind === "met").length,
