@@ -11,7 +11,7 @@
 import { OWNER_FIX, refineRule } from "../../src/lib/data/refine";
 import applyPlacesJson from "../curated/apply-places.json";
 /** 수동 보강 신청처 (id → 창구·방법·문의·출처) */
-const APPLY_PLACES = new Map(applyPlacesJson.items.map((x: { id: string; place: string; applyMethod: string; contact: string; applyUrl?: string; source: string }) => [x.id, x]));
+const APPLY_PLACES = new Map(applyPlacesJson.items.map((x: { id: string; place: string; applyMethod: string; contact: string; applyUrl?: string; source: string; override?: boolean }) => [x.id, x]));
 import fs from "node:fs";
 import path from "node:path";
 import { RegionIndex, PILOT_SIDO } from "./normalize/regions";
@@ -227,10 +227,11 @@ function main() {
       };
       // 수동 보강 신청처 (원문 신청방법이 비어 있어 주민센터로 잘못 안내되던 핵심 사업 — QA 2차 N4)
       const ap = APPLY_PLACES.get(id);
-      if (ap && !p.applyMethod) {
+      // override: 원문 신청방법이 '방문, 온라인'처럼 비어 있다시피 하고 문의처가 부처 담당과뿐인 경우 (QA 3차 N4: 첫만남이용권)
+      if (ap && (!p.applyMethod || ap.override)) {
         p.applyMethod = ap.applyMethod;
-        p.contact = p.contact ?? ap.contact;
-        p.applyUrl = p.applyUrl ?? ap.applyUrl;
+        p.contact = ap.override ? ap.contact : (p.contact ?? ap.contact);
+        p.applyUrl = ap.override ? (ap.applyUrl ?? p.applyUrl) : (p.applyUrl ?? ap.applyUrl);
         p.applyPlace = ap.place;
         p.applyNote = { source: ap.source, checkedAt: applyPlacesJson.checkedAt };
       }

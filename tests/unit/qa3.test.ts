@@ -211,3 +211,21 @@ describe("L1·R7 문구", () => {
     expect(r.understood.map((u) => u.label).join(" ")).toMatch(/기초연금 안 받/);
   });
 });
+
+describe("N4 잔여 신청처", () => {
+  const how = (id: string) => {
+    const p = byId(id);
+    const d = JSON.parse(readFileSync(`public/bundles/v1/details/${detailBucket(id)}.json`, "utf8"))[id] as Program;
+    return howTo(d, p, "41000");
+  };
+  it("입양 → 국가아동권리보장원, 북향민 정착금 → 하나원·통일부, 경로당 → 등록 경로당이 신청", () => {
+    expect(how("n.welfare100-adoption").place).toMatch(/아동권리보장원/);
+    expect(how("n.welfare100-defector-settlement").place).toMatch(/하나원|통일부/);
+    expect(how("n.welfare100-senior-center").place).toMatch(/경로당/);
+  });
+  it("첫만남이용권 → 주민센터 또는 복지로·정부24, 문의 129 ('출산정책과' 아님)", () => {
+    const h = how("n.gov24-135200005015");
+    expect(h.place).toMatch(/복지로|정부24/);
+    expect(`${h.place} ${h.phone}`).not.toMatch(/출산정책과/);
+  });
+});

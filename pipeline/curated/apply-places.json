@@ -133,6 +133,39 @@
       "applyMethod": "주민등록 주소지 관할 보건소 치매안심센터에 방문·우편·팩스·전자우편으로 신청 (다른 지역에서 신청하면 주소지 센터로 이송).",
       "contact": "치매상담콜센터 ☎1899-9988",
       "source": "https://www.hanam.go.kr/health/contents.do?key=13736"
+    },
+    {
+      "id": "n.welfare100-adoption",
+      "place": "국가아동권리보장원 (온라인 입양신청 또는 등기우편)",
+      "applyMethod": "2025년 7월 19일부터 국내입양 신청·접수는 국가아동권리보장원이 받음. 아동권리보장원 누리집(www.kadoption.or.kr)에 회원가입 후 '예비양부모 신청'에서 온라인 신청(2026년 4월 30일부터) 또는 등기우편 제출. 이후 가정조사·예비양부모 교육·결연·가정법원 입양허가 순서로 진행.",
+      "contact": "국가아동권리보장원 입양실무지원부 ☎02-6454-8610",
+      "applyUrl": "https://www.kadoption.or.kr",
+      "source": "https://www.ncrc.or.kr/ncrc/cm/cntnts/cntntsView.do?cntntsId=1346&mi=1281"
+    },
+    {
+      "id": "n.welfare100-defector-settlement",
+      "place": "하나원 수료 때 통일부가 지급 (따로 주민센터에 신청하지 않음)",
+      "applyMethod": "정착 기본금은 통일부 보호결정을 받은 북향민에게 세대별로 지급. 하나원(북한이탈주민정착지원사무소) 수료 때 초기 지급금, 거주지 전입 뒤 1년 안에 분기별로 나머지 지급. 장려금·가산금은 남북하나재단·통일부에 문의.",
+      "contact": "남북하나재단 종합상담콜센터 ☎1577-6635 · 통일부 북한이탈주민 문의 ☎1855-0714",
+      "applyUrl": "https://www.unikorea.go.kr/web/unikorea/contents/settlement_fund",
+      "source": "https://www.unikorea.go.kr/web/unikorea/contents/settlement_fund"
+    },
+    {
+      "id": "n.welfare100-senior-center",
+      "place": "등록 경로당이 관할 읍·면·동 행정복지센터에 신청 (개인 신청 아님 · 시·군·구 노인복지 담당)",
+      "applyMethod": "노인여가복지시설로 등록된 경로당에 운영비·냉난방비·양곡비 등을 지원. 경로당(회장)이 관할 읍·면·동 행정복지센터 또는 시·군·구 노인복지 담당 부서에 신청. 경로당 이용은 가까운 경로당에 문의.",
+      "contact": "시·군·구청 노인복지 담당 부서 (모르면 ☎129)",
+      "source": "https://www.yongin.go.kr/home/www/www18/www18_02/www18_02_09/www18_02_09_01.jsp"
+    },
+    {
+      "id": "n.gov24-135200005015",
+      "place": "아동 주소지 행정복지센터(주민센터) 또는 복지로·정부24 (출생신고 때 행복출산 원스톱으로 함께 신청 가능)",
+      "applyMethod": "보호자(부모)는 복지로(www.bokjiro.go.kr)·정부24(www.gov.kr)에서 온라인 신청 가능, 그 밖의 보호자는 아동 주소지 읍·면·동 행정복지센터 방문 신청. 출생신고 때 행복출산 원스톱 서비스로 부모급여·아동수당과 함께 신청할 수 있음.",
+      "contact": "보건복지상담센터 ☎129",
+      "applyUrl": "https://www.bokjiro.go.kr",
+      "source": "https://www.socialservice.or.kr:444/user/htmlEditor/view2.do?p_sn=69",
+      "override": true,
+      "why": "원문 신청방법이 '방문, 온라인'뿐이고 문의처가 부처 담당과(출산정책과)라 시민 안내로 부족 — 사회서비스 전자바우처 안내로 덮어씀"
     }
   ]
 }
