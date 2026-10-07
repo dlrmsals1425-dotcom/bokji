@@ -69,3 +69,17 @@ test.describe("QA 3차 검색", () => {
     await expect(page.getByText(/검색 범위: 전국 공통 \+ 경기/)).toBeVisible({ timeout: 20_000 });
   });
 });
+
+test.describe("QA 3차 뒤로 가기", () => {
+  test("M3: 펼친 '더 보기'가 뒤로 가기 뒤에도 유지됨", async ({ page }) => {
+    await toResults(page, "남양주 사는데 월세가 너무 부담돼요");
+    const office = page.getByTestId("v2-office");
+    await page.getByTestId("v2-office-more").click();
+    const n = await office.locator(".v2-list > *").count();
+    expect(n).toBeGreaterThan(20);
+    await office.locator(".v2-list a").first().click();
+    await expect(page).toHaveURL(/\/p\//);
+    await page.goBack();
+    await expect(page.getByTestId("v2-office").locator(".v2-list > *")).toHaveCount(n, { timeout: 20_000 });
+  });
+});

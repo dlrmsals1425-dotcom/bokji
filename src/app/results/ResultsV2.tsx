@@ -523,7 +523,21 @@ function BucketList({
 }: {
   id: string; bucket: Bucket; title: string; lead: string; groups: V2Item[][]; sit: Situation; mode: FindMode; collapsed?: boolean; top?: number;
 }) {
-  const [limit, setLimit] = useState(top ?? FIRST);
+  // 뒤로 가기로 돌아와도 펼친 '더 보기'를 유지 (QA 3차 M3) — 이 탭 안에서만, 목록 길이만 기억
+  const memKey = `bokji-v2-limit-${id}-${groups.length}`;
+  const [limit, setLimitRaw] = useState(() => {
+    if (typeof window === "undefined") return top ?? FIRST;
+    const n = Number(window.sessionStorage.getItem(memKey));
+    return Number.isFinite(n) && n > (top ?? FIRST) ? n : (top ?? FIRST);
+  });
+  const setLimit = (f: (l: number) => number) =>
+    setLimitRaw((l) => {
+      const v = f(l);
+      try {
+        window.sessionStorage.setItem(memKey, String(v));
+      } catch {}
+      return v;
+    });
   if (!groups.length) return null;
   const head = `${title} ${groups.length.toLocaleString("ko-KR")}개`;
   // QA 2차 M1: 수백 개를 한꺼번에 늘어놓지 않고 관련 높은 순 상위 top개를 먼저 보여 준다
