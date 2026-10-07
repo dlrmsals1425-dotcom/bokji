@@ -1,0 +1,14 @@
+# Vercel 업로드에서 제외 (빌드는 src + public/bundles 만 필요)
+.env*
+!.env.example
+logs/
+test-results/
+playwright-report/
+blob-report/
+pipeline/
+scripts/
+.venv-pipeline/
+shots/
+tests/
+docs/
+*.tsbuildinfo

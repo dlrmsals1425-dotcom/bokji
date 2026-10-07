@@ -50,3 +50,9 @@ next-env.d.ts
 
 # 참고 사이트 캡처(내부 참고용, 저작권상 커밋하지 않음)
 shots/ref-*.png
+
+# 작업 로그·임시 산출물 (커밋하지 않음)
+/logs/
+/pipeline/out/scenarios*
+/.next/
+/node_modules/

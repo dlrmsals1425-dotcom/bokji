@@ -1,10 +1,10 @@
 # 복지나침반 (MVP)
 
-로그인 없이 12개 간단한 질문으로 **중앙정부·청 / 시도 / 시군구 / 공공기관** 복지 서비스를 찾아
-**조건 충족 · 가능성 있음 · 확인 필요** 3단계로, 이유와 함께 보여주는 서비스입니다.
-입력값은 서버로 보내지 않고 브라우저 안에서 판정합니다. (기획: `/workspace/welfare-plan/기획안.md`, `설계서.md` v0.3)
+로그인 없이 **내 상황을 먼저 알려주면**(사는 곳만 필수, 나머지는 모름 가능) **중앙정부·청 / 시도 / 시군구 / 공공기관** 복지 서비스를
+**받으실 수 있어요 · 신청할 때 확인 · 답하면 정해져요 · 맞지 않아 뺐어요**로 나눠, 이유와 함께 보여주는 서비스입니다.
+입력값은 서버로 보내지 않고 브라우저 안에서 판정합니다. 예전 3단계 화면은 비교용으로 `/results?v=1`, `/check?v=1`.
 
-![결과 화면](shots/03-results-desktop.png)
+![결과 화면](shots/scenario-suwon-senior.png)
 
 ## 빠르게 실행
 
@@ -174,3 +174,13 @@ npm run pipeline && npm run build
 - 데이터 갱신 = `npm run pipeline` 후 커밋 → 재배포.
 
 > **보안 주의:** Turbopack 로컬 캐시(`.next/cache`)는 빌드 프로세스의 환경변수를 스냅샷합니다. 셸에 `DATA_GO_KR_SERVICE_KEY` 등 비밀값이 있으면 `npm run build:safe` / `npm run start:safe`(최소 환경으로 실행)를 사용하세요. 앱 런타임은 API 키가 필요 없습니다(번들은 정적 JSON).
+
+## 배포 (Vercel)
+
+- **데이터 키 불필요**: 앱은 커밋된 `public/bundles/v1/*`(정적 JSON)만 읽고, 판정은 브라우저에서 한다. `DATA_GO_KR_SERVICE_KEY`는
+  데이터를 다시 수집할 때(`npm run ingest:*`, 로컬 전용)만 쓰며 **Vercel 환경 변수에 넣지 않는다**. 빌드(`next build`)는 수집·파이프라인을 실행하지 않는다.
+- **설정**: Framework Preset `Next.js` · Build Command `npm run build`(= `next build`) · Output 기본값(`.next`) · Install `npm ci` · Node 20 이상. 환경 변수 없음.
+- **업로드 제외**: `.vercelignore`(로그·테스트 결과·파이프라인·스크린샷·`.env*` 제외). 참고 사이트 캡처 `shots/ref-*.png`는 저작권상 저장소에도 커밋하지 않는다.
+- **데이터 갱신**: 로컬에서 `npm run ingest:gov24 && npm run ingest:bokjiro && npm run pipeline` → `public/bundles/v1` 커밋 → 푸시(또는 `vercel --prod`).
+- CLI 배포: `vercel link --yes --project bokji-compass` → `vercel --prod --yes`.
+
