@@ -70,3 +70,9 @@ test.describe("QA 1차", () => {
     expect(r.status()).toBe(404);
   });
 });
+
+test("신청 창구 정보가 없는 사업은 빈 괄호 '()' 없이 표시", async ({ page }) => {
+  await page.goto("/p/n.manual-nhis-senior-implant");
+  await expect(page.locator("main")).toContainText("국민건강보험공단", { timeout: 20_000 });
+  expect(await page.locator("main").innerText()).not.toContain("()");
+});

@@ -441,7 +441,8 @@ function Pick({ item, i, detail, sit, mode }: { item: V2Item; i: number; detail?
         <li>
           <span className="k">신청방법</span>
           <span className="v">
-            {how.place} ({how.channels.map((c) => CHANNEL_LABEL[c]).join(", ")})
+            {how.place}
+            {how.channels.length > 0 && ` (${how.channels.map((c) => CHANNEL_LABEL[c]).join(", ")})`}
           </span>
         </li>
         <li>

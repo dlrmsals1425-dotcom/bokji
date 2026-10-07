@@ -152,7 +152,7 @@ export function Detail({ id }: { id: string }) {
           </div>
           <div>
             <dt>신청 창구</dt>
-            <dd>{how.channels.map((c) => CHANNEL_LABEL[c]).join(", ")}</dd>
+            <dd>{how.channels.length ? how.channels.map((c) => CHANNEL_LABEL[c]).join(", ") : how.place}</dd>
           </div>
         </dl>
         {((item && sit) || (p.applyType && p.applyType !== "unknown")) && (
@@ -303,7 +303,7 @@ export function Detail({ id }: { id: string }) {
                 <span className="n" aria-hidden="true">3</span>
                 <div>
                   <h3>신청</h3>
-                  <p>{how.channels.map((c) => CHANNEL_LABEL[c]).join(", ")}</p>
+                  <p>{how.channels.length ? how.channels.map((c) => CHANNEL_LABEL[c]).join(", ") : how.place}</p>
                 </div>
               </li>
             </ol>
