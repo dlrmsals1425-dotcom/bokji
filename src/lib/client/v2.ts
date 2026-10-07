@@ -623,6 +623,47 @@ export function needsOccupation(p: Program): boolean {
   }
   return false;
 }
+/**
+ * 말하지 않은 신분·활동이 있어야 하는 사업 (QA 3차 C3 잔여·R2): 육아휴직·근로시간 단축 사용, 재직 기간, 자격 취득·응시,
+ * 종사자·전문인력, 특정 분야 구직자, 대학 재학. 나이 코드만 맞는다고 '받으실 수 있어요'로 두지 않는다.
+ * strong: 대상 문구 어디에 있어도 조건 (일반 개인 낱말이 함께 있어도). weak: 이름에 있거나, 대상에 일반 개인 유형이 없을 때만.
+ */
+const STATUS_KINDS: { re: RegExp; label: string; strong: boolean; lead?: number; skip?: (s: Situation) => boolean; coveredBy?: string }[] = [
+  { re: /(육아기\s*근로\s*시간\s*단축|육아\s*휴직)[^\n]{0,30}(실시|사용|중인|한\s*(?:근로자|사람|자))|근로\s*시간\s*단축\s*급여|육아\s*휴직\s*등?\s*급여/, label: "육아휴직·근로시간 단축 사용", strong: true, lead: 160 },
+  { re: /(산업체|기업)\s*재직\s*(?:기간|경력|요건)|재직\s*(?:기간|경력)\s*(?:이\s*)?\d|\d+\s*년\s*이상\s*재직|재직\s*요건/, label: "재직 기간·소속", strong: true },
+  { re: /자격(?:증)?(?:을|의)?\s*취득(?:자|한\s*(?:사람|자|분))|자격증?\s*소지자|검정을\s*받으려는|시험\s*응시(?:자|료)|응시\s*(?:료|수수료)/, label: "자격 취득·시험 응시", strong: true },
+  { re: /(?<![가-힣])(?:종사자|전문\s*인력|현장\s*교사|실습생을\s*지도|교원|강사|담당자|실무자)(?!\s*(?:제외|자녀))/, label: "종사자·전문인력", strong: false },
+  { re: /\S+\s*분야\s*(?:구직자|취업\s*준비생)/, label: "특정 분야 구직·종사", strong: true },
+  { re: /대학(?:원)?\s*재학|대학(?:원)?생(?!\s*자녀)|사업\s*참여\s*대학/, label: "대학 재학", strong: false, skip: (s) => s.profile.activity === "student", coveredBy: "student" },
+];
+const STATUS_ORDINARY = new RegExp(`${OCC_ORDINARY.source}|시민|도민|청년|신혼|고령자|노인가족|취업\\s*준비|재직자|자녀`);
+export function needsStatus(p: Program, s?: Situation): string | null {
+  // 하는 일 질문(학생 등)이 이미 정하는 조건은 빼고 — 육아휴직 사용·재직 기간·특정 분야는 '직장인·구직자' 답만으로 알 수 없음
+  const act = leavesOf(p.rule.logic).filter((l) => !l.soft && l.field === "activity").flatMap((l) => ("anyOf" in l && Array.isArray(l.anyOf) ? (l.anyOf as string[]) : []));
+  const text = `${p.name}\n${(p.target ?? "").replace(/&#13;/g, "\n").slice(0, 400)}`;
+  const ordinary = STATUS_ORDINARY.test(text.slice(p.name.length));
+  for (const k of STATUS_KINDS) {
+    if (s && k.skip?.(s)) continue;
+    if (k.coveredBy && act.includes(k.coveredBy)) continue;
+    const scope = k.lead ? text.slice(0, p.name.length + 1 + k.lead) : text;
+    for (const m of scope.matchAll(new RegExp(k.re.source, "g"))) {
+      const idx = m.index ?? 0;
+      if (idx < p.name.length) return k.label;
+      const start = text.lastIndexOf("\n", idx) + 1;
+      const endN = text.indexOf("\n", idx);
+      const line = text.slice(start, endN < 0 ? undefined : endN);
+      if (OCC_EXCLUDE.test(line)) continue;
+      if (!k.strong && (ordinary || STATUS_ORDINARY.test(line))) continue;
+      return k.label;
+    }
+  }
+  return null;
+}
+export const statusWhy = (label: string) => `따로 조건(${label})이 있어요 — 말씀하신 내용으로는 알 수 없어 신청할 때 확인`;
+/** 세부 서비스·대상을 지자체가 정하는 묶음 사업 (지역사회서비스투자사업, 청년성장프로젝트 등) */
+const BUNDLE_RE = /자율적으로\s*(?:설정|정|선정)|지역사회서비스\s*투자|지역사회서비스\s*청년\s*사업단/;
+const BUNDLE_WHY = "서비스마다 대상(소득·필요 등)을 지자체가 따로 정해요 — 신청할 때 확인";
+
 /** 원문 대상에 시설·기관 유형 줄이 함께 있음 (예: '수급·차상위 가구 / 사회복지시설') — 개인은 다른 줄로 판정 */
 const FACILITY_LINE = /^(?:[-○ㅇ·•*□]\s*)?(?:\S+\s*)?(?:사회\s*)?복지\s*시설|^(?:[-○ㅇ·•*□]\s*)?(?:\S+\s*)?(?:시설|기관|단체|법인)(?:\s|$|[,·(])/;
 export const NOT_FOR_PERSON_WHY = "개인이 신청해 받는 혜택이 아니에요 (기관·단체 대상, 행사·모금 사업) — 자세한 내용은 원문 확인";
@@ -670,6 +711,9 @@ export function classifyBase(p: Program, s: Situation): BaseResult {
   const og = OFFICE_GROUPS.find(([re]) => re.test(p.name));
   if (og) return { base: "open", ...r, why: og[1] };
   if (needsOccupation(p)) return { base: "open", ...r, why: OCCUPATION_WHY };
+  const st = needsStatus(p, s);
+  if (st) return { base: "open", ...r, why: statusWhy(st) };
+  if (BUNDLE_RE.test(`${p.name}\n${(p.target ?? "").slice(0, 400)}`)) return { base: "open", ...r, why: BUNDLE_WHY };
   if (EQUIP_RE.test((p.target ?? "").slice(0, 600))) return { base: "open", ...r, why: EQUIP_WHY };
   if (isBasicPension(p) && pensionLikely(s)) return { base: "open", ...r, why: PENSION_WHY };
   if (partialRec && !recMet) return { base: "open", ...r, why: p.rule.recBand ? RECBAND_WHY : "대상 유형이 여럿이에요 — 수급·차상위가 아니면 다른 유형(원문)에 해당하는지 신청할 때 확인" };
@@ -755,7 +799,7 @@ const pensionWanted = (s: Situation) => !!s.x.interests?.includes("basic_pension
 /** 간편 입력이 묻지 않는 특별한 신분·처지 대상 (시설 보호아동·가정위탁·자립준비청년 등) — 목록에는 두되 먼저 확인할 것에는 넣지 않음 */
 export const SPECIAL_STATUS = /(보호\s*대상\s*아동|유기\s*(?:및|·)?\s*위기\s*아동|가정\s*위탁|위탁\s*(?:아동|가정|부모)|아동\s*복지\s*시설|시설\s*(?:보호|입소|퇴소|아동)|자립\s*준비|보호\s*종료|입양|요보호|소년\s*소녀\s*가정|그룹\s*홈|공동\s*생활\s*가정)/;
 /** 추천에서 뺄 이유가 적힌 '신청할 때 확인' (법인·시설·단체·직업 조건) */
-const PICK_BLOCK_WHY = /(법인·시설·단체|기관·시설|직업·신분|직업·자격|개인이 신청해 받는 혜택이 아니에요)/;
+const PICK_BLOCK_WHY = /(법인·시설·단체|기관·시설|직업·신분|직업·자격|개인이 신청해 받는 혜택이 아니에요|따로 조건\(|지자체가 따로 정해요)/;
 export const PENSION_WHY = "소득만 보면 받으실 가능성이 높아요 — 재산(소득인정액)에 따라 달라요";
 /** 누구나 받거나 안내 위주인 보편 서비스 (예방접종·검진·할인·상담 창구) — 앞자리를 핵심 급여에 양보 */
 const UNIVERSAL_LOW = /(예방\s*접종|건강\s*검진|검진비|철도|공공\s*할인|생활\s*체육|스포츠\s*강좌|말벗|정신\s*건강\s*복지\s*센터|방문\s*건강\s*관리|안부)/;

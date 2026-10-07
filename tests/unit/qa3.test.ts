@@ -3,7 +3,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { parseSituation, parsedExtras } from "@/lib/client/parse";
 import {
-  DIM_BY_ID, EMPTY_EXTRAS, SPECIAL_STATUS, answersFor, buildView, classifyOne, needsOccupation, notForPersons, plainLine, scoreV2, topPicksV2, withTopic,
+  DIM_BY_ID, EMPTY_EXTRAS, needsStatus, SPECIAL_STATUS, answersFor, buildView, classifyOne, needsOccupation, notForPersons, plainLine, scoreV2, topPicksV2, withTopic,
   type Extras, type Situation,
 } from "@/lib/client/v2";
 import { howTo } from "@/lib/client/howto";
@@ -70,5 +70,29 @@ describe("R1 나이 표현", () => {
     for (const s of ["이십대 후반이고 안양에서 혼자 자취해요", "저는 딸이고 아빠는 예순다섯 평택 사세요", "삼십대 초반 신혼부부 고양", "하남에 할아버지 혼자 사세요 거동이 불편하세요", "마흔 넘은 싱글맘 시흥"]) {
       expect(picksOf(sitOf(s)).picks.length, s).toBeGreaterThanOrEqual(3);
     }
+  });
+});
+
+describe("C3 잔여·R2 말하지 않은 신분·활동 조건", () => {
+  const P7A = "서울 관악구 사는 31살 직장인 혼자 월세 살아요";
+  const STATUS_IDS = ["n.gov24-999000000007", "n.gov24-134200005001", "n.gov24-149200000070", "n.gov24-B55117700003", "n.gov24-B55353000218", "n.gov24-B55252900215"];
+  it("육아기 단축·고졸 후학습자·기술자격 면제·항공 취업·전문인력·현장실습 → 신분 조건", () => {
+    for (const id of STATUS_IDS) expect(needsStatus(byId(id)), id).not.toBeNull();
+  });
+  it("P7a '받으실 수 있어요'에 신분 조건 사업이 없음", () => {
+    const { view } = picksOf(sitOf(P7A));
+    const fitIds = view.fit.map((g) => g[0].s.program.id);
+    for (const id of STATUS_IDS) expect(fitIds, id).not.toContain(id);
+    for (const g of view.office.filter((g) => STATUS_IDS.includes(g[0].s.program.id))) expect(g[0].base.why).toMatch(/따로 조건/);
+  });
+  it("'다른 분 기준(60~64세)' 상위 5개에 기술자격·전문인력·현장실습 없음", () => {
+    const sit = sitOf("아버지 59년생 어머니 63년생 두 분이 수원 영통에 사세요. 기초연금 받으시는지 모르겠어요", "parent");
+    sit.profile = { ...sit.profile, age: "60-64" };
+    sit.x = { ...sit.x, ageSpan: [62, 63] };
+    const names = picksOf(sit).picks.map((g) => g.s.program.name).join(" / ");
+    expect(names).not.toMatch(/기술자격|전문인력|현장실습|청년사업단/);
+  });
+  it("일반 사업은 그대로 (청년월세·기초연금은 신분 조건 아님)", () => {
+    for (const p of nat.filter((p) => /^(청년월세|기초연금)$/.test(p.name))) expect(needsStatus(p), p.name).toBeNull();
   });
 });
