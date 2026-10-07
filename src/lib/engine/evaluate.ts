@@ -87,7 +87,15 @@ function joinLabels<T extends string>(vals: readonly T[], labels: Record<T, stri
 }
 
 /** 잎 조건을 평가하고, 사용자 입력값 설명(display)을 함께 돌려준다 */
-function rawLeaf(leaf: Leaf, p: Profile): { tri: Tri; missing: boolean; display?: string; proxy?: boolean } {
+function rawLeaf(leaf: Leaf, p: Profile, opts?: EvalOptions): { tri: Tri; missing: boolean; display?: string; proxy?: boolean } {
+  // 월 소득을 원으로 알면 구간 대신 정확한 % 로 비교
+  if ((leaf.field === "income" || leaf.field === "incomeBands") && opts?.incomePct !== undefined) {
+    const pct = opts.incomePct;
+    const display = `기준 중위소득의 약 ${Math.round(pct)}%`;
+    // 구간 표기 (a, b] — '0~50, 51~75' 처럼 1%p 틈이 있는 표기는 이어 붙여 본다
+    const hit = leaf.field === "income" ? pct <= leaf.lte : leaf.bands.some(([a, b]) => pct > (a > 0 ? a - 1 : -1) && pct <= b);
+    return { tri: hit ? "T" : "F", missing: false, display };
+  }
   switch (leaf.field) {
     case "age": {
       if (p.age === "unknown") return { tri: "U", missing: true };
@@ -189,7 +197,7 @@ function evaluateLeafBase(leaf: Leaf, p: Profile, opts?: EvalOptions): LeafResul
         : { tri: "F", reason: { kind: "unmet", text: `${leaf.label} (답: 해당 없음)` } };
     }
   }
-  const raw = rawLeaf(leaf, p);
+  const raw = rawLeaf(leaf, p, opts);
   // 수급·가구 특성 중 일부만 답한 경우: 맞는 항목이 없고 '모름'인 항목이 걸려 있으면 UNKNOWN
   if (raw.tri === "F" && leaf.field === "benefit" && opts?.unknownBenefits?.some((b) => leaf.anyOf.includes(b))) {
     raw.tri = "U";

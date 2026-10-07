@@ -106,10 +106,18 @@ function readProfile(): Profile | null {
   return profileCache.value;
 }
 
-/** exampleId: 홈의 '예시 상황'으로 채운 경우 그 id. mode: 본인/부모님 찾기 */
-export function saveProfile(p: Profile, exampleId?: string, mode?: FindMode) {
+/**
+ * exampleId: 홈의 '예시 상황'으로 채운 경우 그 id. mode: 본인/부모님 찾기.
+ * x: '상황 먼저' 답(항목별 모름·월 소득). 주지 않으면 지난 답을 지운다 — 프로필과 어긋난 답이 남지 않게.
+ */
+export function saveProfile(p: Profile, exampleId?: string, mode?: FindMode, x?: Extras) {
   try {
     profileStore().setItem(PROFILE_KEY, JSON.stringify(p));
+    if (x) profileStore().setItem(EXTRAS_KEY, JSON.stringify(x));
+    else {
+      localStorage.removeItem(EXTRAS_KEY);
+      sessionStorage.removeItem(EXTRAS_KEY);
+    }
     if (exampleId) profileStore().setItem(EXAMPLE_KEY, exampleId);
     else {
       localStorage.removeItem(EXAMPLE_KEY);
@@ -188,7 +196,7 @@ export function clearProfile() {
       store.removeItem(EXTRAS_KEY);
     }
   } catch {}
-  extrasCache = { raw: null, value: EMPTY_EXTRAS };
+  extrasCache = { raw: null, value: null };
   profileCache = { raw: null, value: null };
   modeCache = { raw: null, value: "self" };
   fillerCache = { raw: null, value: "child" };
@@ -200,13 +208,13 @@ export function useProfile(): Profile | null | undefined {
   return useSyncExternalStore(subscribe, readProfile, () => undefined);
 }
 
-/* ---------- v2 상황 답 ---------- */
+/* ---------- 상황 답 (항목별 '모름'·월 소득) ---------- */
 const EMPTY_EXTRAS: Extras = { benefits: {}, traits: {}, incomeManwon: null, facts: {} };
-let extrasCache: { raw: string | null; value: Extras } = { raw: null, value: EMPTY_EXTRAS };
-function readExtras(): Extras {
+let extrasCache: { raw: string | null; value: Extras | null } = { raw: null, value: null };
+function readExtras(): Extras | null {
   const raw = safeGet(profileStore(), EXTRAS_KEY);
   if (raw !== extrasCache.raw) {
-    let value = EMPTY_EXTRAS;
+    let value: Extras | null = null;
     try {
       const v = raw ? JSON.parse(raw) : null;
       if (v && typeof v === "object") value = { ...EMPTY_EXTRAS, ...v };
@@ -216,14 +224,7 @@ function readExtras(): Extras {
   return extrasCache.value;
 }
 
-export function saveExtras(x: Extras) {
-  try {
-    profileStore().setItem(EXTRAS_KEY, JSON.stringify(x));
-  } catch {}
-  emit();
-}
-
-/** v2 상황 답 (저장된 것이 없으면 빈 답 = 모두 '모름') */
-export function useExtras(): Extras | undefined {
+/** 상황 답 (null = 저장된 답 없음 → 프로필에서 만든다) */
+export function useExtras(): Extras | null | undefined {
   return useSyncExternalStore(subscribe, readExtras, () => undefined);
 }

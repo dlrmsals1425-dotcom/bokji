@@ -1,20 +1,25 @@
 "use client";
 /**
- * v2 시험판 결과 (/results?v=2): 답한 상황과 맞지 않는 혜택은 본문에서 빼고,
- * '모름'으로 남은 조건은 맨 위 짧은 질문(예/아니오/모름)으로 다시 거른다. 답하면 바로 다시 계산 (기기 안에서만).
+ * 결과 (기본 화면): 답한 상황과 맞지 않는 혜택은 본문에서 빼고, '모름'으로 남은 조건은 맨 위 짧은 질문(최대 3개)으로 다시 거른다.
+ * 답하면 바로 다시 계산 (기기 안에서만). 예전 결과 화면은 /results?v=1 (비교용).
  */
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Icon } from "@/components/Icon";
 import { SupportTags } from "@/components/ProgramCard";
 import { ApplyBadge, orgText } from "@/components/Badges";
-import { loadForRegion, type Loaded } from "@/lib/client/bundles";
-import { saveExtras, saveProfile, useExtras } from "@/lib/client/storage";
+import { loadForRegion, loadProgram, type Loaded } from "@/lib/client/bundles";
+import { CHANNEL_LABEL, firstLine, howTo } from "@/lib/client/howto";
+import { clearProfile, useExample, useExtras } from "@/lib/client/storage";
+import { saveSituation, situationOf } from "@/lib/client/start";
+import { PRESETS } from "@/lib/client/presets";
+import { checkPath, coupleNote, resultsCopy, type FindMode } from "@/lib/client/mode";
 import {
-  EMPTY_EXTRAS, LOW_INCOME_PCT, buildView, incomeExplain, inferredNoRecipient, plainLine, profileForStorage, scoreV2, situationChips,
+  BUCKET_LABEL, LOW_INCOME_PCT, autoV2, buildView, classify, incomeExplain, inferredNoRecipient, plainLine, scoreV2, situationChips, topPicksV2,
   type Bucket, type DimId, type Situation, type V2Item,
 } from "@/lib/client/v2";
-import type { FindMode } from "@/lib/client/mode";
+import type { Program } from "@/lib/data/types";
 import type { Profile } from "@/lib/engine/profile";
 
 const FIRST = 10;
@@ -22,8 +27,14 @@ const MORE = 20;
 
 export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode }) {
   const extras = useExtras();
+  const example = useExample();
+  const router = useRouter();
   const [data, setData] = useState<Loaded | null>(null);
   const [skipped, setSkipped] = useState<DimId[]>([]);
+  const [details, setDetails] = useState<Record<string, Program>>({});
+  const [toast, setToast] = useState<string | null>(null);
+  const [autoOpen, setAutoOpen] = useState(false);
+  const [autoLimit, setAutoLimit] = useState(FIRST);
   useEffect(() => {
     let alive = true;
     loadForRegion(profile.sido, profile.sigungu).then((d) => alive && setData(d));
@@ -32,30 +43,74 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
     };
   }, [profile.sido, profile.sigungu]);
 
-  const sit: Situation = useMemo(() => ({ profile, x: extras ?? EMPTY_EXTRAS }), [profile, extras]);
+  const sit: Situation = useMemo(() => situationOf(profile, extras ?? null, mode), [profile, extras, mode]);
   const scored = useMemo(() => (data ? scoreV2(data.programs, sit) : []), [data, sit]);
   const view = useMemo(() => buildView(scored, sit, 12), [scored, sit]);
+  const picks = useMemo(() => topPicksV2(view, 5), [view]);
+  const autos = useMemo(() => (data ? autoV2(data.programs, sit) : []), [data, sit]);
+
+  // 먼저 확인할 5가지는 신청 방법(어디서·무엇을 가져가서)을 보여 주려고 상세 묶음을 따로 불러온다
+  const pickIds = picks.map((g) => g[0].s.program.id).join("|");
+  useEffect(() => {
+    if (!pickIds) return;
+    let alive = true;
+    Promise.all(pickIds.split("|").map((id) => loadProgram(id))).then((ps) => {
+      if (!alive) return;
+      const out: Record<string, Program> = {};
+      ps.forEach((p) => p && (out[p.id] = p));
+      setDetails(out);
+    });
+    return () => {
+      alive = false;
+    };
+  }, [pickIds]);
 
   if (!data || extras === undefined) {
     return (
-      <div className="wrap page results-root" aria-busy="true">
+      <div className="wrap page results-root" aria-busy="true" aria-live="polite">
         <p className="muted">내 지역 서비스를 불러와 이 기기에서 고르고 있어요…</p>
+        <div className="skeleton" aria-hidden="true">
+          <div className="sk" />
+          <div className="sk" />
+          <div className="sk" />
+        </div>
       </div>
     );
   }
 
   const parent = mode === "parent";
+  const copy = resultsCopy(mode);
+  const preset = PRESETS.find((x) => x.id === example);
   const place = data.label.split(" ").pop();
   const questions = view.questions.filter((q) => !skipped.includes(q.dim.id)).slice(0, 3);
   const unlock = new Set(questions.flatMap((q) => q.keys)).size;
-  const apply = (next: Situation) => {
-    saveProfile(profileForStorage(next), undefined, mode);
-    saveExtras(next.x);
+  const apply = (next: Situation) => saveSituation(next, mode);
+  const editHref = checkPath(mode);
+  const picked = new Set(picks);
+  const couple = coupleNote(mode, profile);
+
+  const share = async () => {
+    const text = [
+      `복지나침반에서 ${data.label} 기준${parent ? "(부모님)" : ""}으로 찾아본 결과: 받으실 수 있어요 ${view.fit.length}개, 신청할 때 확인 ${view.office.length}개`,
+      ...picks.map((g) => `· ${g[0].s.program.name}`),
+      "(입력한 개인 정보는 공유되지 않아요. 직접 확인해 보세요)",
+    ].join("\n");
+    const url = window.location.origin;
+    try {
+      if (navigator.share) await navigator.share({ title: "복지나침반", text, url });
+      else {
+        await navigator.clipboard.writeText(`${text}\n${url}`);
+        setToast("결과 요약을 복사했어요 (입력값은 포함되지 않아요)");
+        setTimeout(() => setToast(null), 2500);
+      }
+    } catch {}
   };
-  const editHref = parent ? "/situation?for=parent" : "/situation";
 
   return (
     <div className="results-root v2" data-testid="v2-results">
+      <div className="print-only wrap">
+        <strong>복지나침반 결과 요약</strong> — 출력일 {new Date().toLocaleDateString("ko-KR")}
+      </div>
       <section className="res-head" aria-labelledby="res-h">
         <div className="wrap">
           <ol className="crumbs no-print" aria-label="현재 위치">
@@ -65,13 +120,37 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
               </Link>
             </li>
             <li>
-              <Link href={editHref}>내 상황</Link>
+              <Link href={editHref}>{parent ? "부모님 상황" : "내 상황"}</Link>
             </li>
             <li>
-              <span aria-current="page">결과 (시험판)</span>
+              <span aria-current="page">결과</span>
             </li>
           </ol>
-          <p className="v2-flag">시험판 · 상황 먼저 묻는 방식</p>
+          {parent && (
+            <p className="notice warm" data-testid="parent-results-banner" role="note">
+              <Icon name="heart" size={18} />
+              <span>
+                <strong>부모님 복지 찾기</strong> — 자녀·가족이 대신 알아본 결과입니다. 부모님 상황을 기준으로 골랐어요.
+              </span>
+            </p>
+          )}
+          {couple && (
+            <p className="notice" data-testid="couple-note" role="note">
+              <Icon name="info" size={18} />
+              <span>
+                <strong>부모님 두 분이 함께 사시면</strong> — {couple}
+              </span>
+            </p>
+          )}
+          {preset && (
+            <p className="notice warm" data-testid="example-banner" role="note">
+              <Icon name="info" size={18} />
+              <span>
+                <strong>예시 상황으로 보는 중입니다.</strong> {preset.title}({preset.desc})인 경우로 계산했어요. 실제 개인 정보가 아니에요.{" "}
+                <Link href={`${editHref}&new=1`}>{copy.reenterLabel}</Link>
+              </span>
+            </p>
+          )}
           <h1 className="h1" id="res-h">
             {place} {parent ? "부모님께 맞는 혜택" : "나에게 맞는 혜택"}
           </h1>
@@ -79,7 +158,7 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
             <span>
               <Icon name="mapPin" size={16} className="icon-inline" /> {[data.label, ...situationChips(sit)].join(" · ")}
             </span>
-            <Link href={editHref} className="no-print">
+            <Link href={editHref} className="no-print" data-testid="edit-situation">
               상황 고치기
             </Link>
           </p>
@@ -94,7 +173,7 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
 
       <div className="wrap page">
         <div className="v2-main">
-          <section className="v2-follow" aria-labelledby="fq-h" data-testid="v2-followup">
+          <section className="v2-follow no-print" aria-labelledby="fq-h" data-testid="v2-followup">
             {questions.length > 0 ? (
               <>
                 <h2 className="h2" id="fq-h">
@@ -139,20 +218,34 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
             )}
           </section>
 
-          <BucketList id="v2-fit" bucket="fit" title={`받으실 수 있는 혜택 ${view.fit.length}개`} lead="답하신 상황으로 공개된 지원 조건이 모두 맞아요." groups={view.fit} sit={sit} mode={mode} />
+          {picks.length > 0 && (
+            <section aria-labelledby="picks-h" data-testid="top-picks" className="v2-sec">
+              <h2 className="h2" id="picks-h">
+                {copy.picksTitle(picks.length)}
+              </h2>
+              <p className="body">{parent ? "부모님 상황에 가장 관련 깊은 순서예요. '받으실 수 있어요'를 먼저 넣었어요." : "내 상황에 가장 관련 깊은 순서예요. '받으실 수 있어요'를 먼저 넣었어요."}</p>
+              <ol className="picks">
+                {picks.map((g, i) => (
+                  <Pick key={g[0].s.program.id} item={g[0]} i={i} detail={details[g[0].s.program.id]} sit={sit} mode={mode} />
+                ))}
+              </ol>
+            </section>
+          )}
+
+          <BucketList id="v2-fit" bucket="fit" title={picks.some((g) => g[0].bucket === "fit") ? `그 밖에 받으실 수 있는 혜택` : "받으실 수 있는 혜택"} lead="답하신 상황으로 공개된 지원 조건이 모두 맞아요." groups={view.fit.filter((g) => !picked.has(g))} sit={sit} mode={mode} />
           <BucketList
             id="v2-office"
             bucket="office"
-            title={`신청할 때 확인이 필요한 혜택 ${view.office.length}개`}
+            title="신청할 때 확인이 필요한 혜택"
             lead="답하신 상황과 어긋나는 조건은 없어요. 원문에 있는 세부 조건 한두 가지는 신청할 때 확인해요."
-            groups={view.office}
+            groups={view.office.filter((g) => !picked.has(g))}
             sit={sit}
             mode={mode}
           />
           <BucketList
             id="v2-ask"
             bucket="ask"
-            title={`질문에 답하면 정해지는 혜택 ${view.ask.length}개`}
+            title="질문에 답하면 정해지는 혜택"
             lead="맨 위 질문에 답하시면 '받으실 수 있어요' 또는 '맞지 않아요'로 옮겨요."
             groups={view.ask}
             sit={sit}
@@ -162,19 +255,90 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
           <BucketList
             id="v2-no"
             bucket="no"
-            title={`답하신 상황과 맞지 않아 뺀 혜택 ${view.no.length}개`}
+            title="답하신 상황과 맞지 않아 뺀 혜택"
             lead="나이·가구·소득·수급 등 답하신 내용과 지원 조건이 달라요. 상황이 바뀌면 '상황 고치기'로 다시 보세요."
             groups={view.no}
             sit={sit}
             mode={mode}
             collapsed
           />
+
+          {autos.length > 0 && (
+            <details className="details auto-panel" data-testid="auto-section" open={autoOpen} onToggle={(e) => setAutoOpen((e.currentTarget as HTMLDetailsElement).open)}>
+              <summary data-testid="auto-toggle">
+                <span>
+                  신청하지 않아도 받는 혜택 <span className="s">— 조건이 맞으면 기관이 알아서 제공해요</span>
+                </span>
+                <span className="c">
+                  <span data-testid="auto-count">{autos.length.toLocaleString("ko-KR")}</span>개 <Icon name="chevronDown" size={18} />
+                </span>
+              </summary>
+              {autoOpen && (
+                <div className="details-body">
+                  <p className="body">
+                    대상이 되면 기관이 알아서 지급·연계하거나(공단 명단 통보, 수급자 선정 시 연계, 담당 공무원 직권 처리), 학교·시설·기관이 추천·선정하는 혜택이에요.
+                    해당될 것 같은데 받고 있지 않다면 주민센터나 129에 물어보세요.
+                  </p>
+                  <div className="v2-list">
+                    {autos.slice(0, autoLimit).map((g) => (
+                      <V2Card key={g.key} item={classify(g.lead, sit)} more={g.variants.length} sit={sit} mode={mode} />
+                    ))}
+                  </div>
+                  {autos.length > autoLimit && (
+                    <div className="more-row no-print">
+                      <button type="button" className="btn btn-ghost" onClick={() => setAutoLimit((l) => l + MORE)} data-testid="auto-more">
+                        더 보기 ({(autos.length - autoLimit).toLocaleString("ko-KR")}개 남음)
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
+            </details>
+          )}
+
+          {copy.proxyNote && (
+            <p className="notice" data-testid="proxy-apply-note" role="note" style={{ marginTop: "1.5rem" }}>
+              <Icon name="info" size={18} />
+              <span>
+                <strong>가족이 대신 신청할 때</strong> — {copy.proxyNote}
+              </span>
+            </p>
+          )}
+
+          <div className="v2-actions no-print" role="group" aria-label="이 결과로 할 수 있는 일">
+            <button type="button" className="link-btn" onClick={() => window.print()}>
+              <Icon name="printer" size={18} /> 인쇄하거나 PDF로 저장
+            </button>
+            <button type="button" className="link-btn" onClick={share} data-testid="share">
+              <Icon name="share" size={18} /> 결과 공유 (입력값 제외)
+            </button>
+            <button
+              type="button"
+              className="link-btn"
+              onClick={() => {
+                clearProfile();
+                router.push("/");
+              }}
+              data-testid="clear"
+            >
+              <Icon name="trash" size={18} /> 이 기기에서 지우기
+            </button>
+            <span className="small muted">
+              <Icon name="phone" size={16} /> 상담: 보건복지상담센터 <strong>129</strong> (평일 9~18시)
+            </span>
+          </div>
+
           <p className="small muted v2-foot">
-            기준: 2026년 기준 중위소득·기초연금 선정기준액(보건복지부). 숫자 기준이 없는 &lsquo;저소득&rsquo;은 기준 중위소득 {LOW_INCOME_PCT}% 이하로 봤어요. 실제 선정은
-            재산을 포함한 소득인정액으로 신청처에서 정해요. <Link href={parent ? "/results?for=parent" : "/results"}>기존 결과 화면 보기</Link>
+            기준: 2026년 기준 중위소득·기초연금 선정기준액(보건복지부). 숫자 기준이 없는 &lsquo;저소득&rsquo;은 기준 중위소득 {LOW_INCOME_PCT}% 이하로 봤어요. 실제 선정은 재산을
+            포함한 소득인정액으로 신청처에서 정해요. <Link href="/about#v2">판단 기준 자세히 보기</Link>
           </p>
         </div>
       </div>
+      {toast && (
+        <div className="toast" role="status">
+          {toast}
+        </div>
+      )}
     </div>
   );
 }
@@ -228,6 +392,63 @@ function IncomeAsk({ sit, onApply, onSkip }: { sit: Situation; onApply: (s: Situ
 
 const BUCKET_ICON: Record<Bucket, "check" | "info" | "alert" | "x"> = { fit: "check", office: "info", ask: "alert", no: "x" };
 
+/** 먼저 확인할 카드: 번호 · 지원형태 · 이름 · 판단(쉬운 말) · 신청방법/기관/문의/가져갈 것 */
+function Pick({ item, i, detail, sit, mode }: { item: V2Item; i: number; detail?: Program; sit: Situation; mode: FindMode }) {
+  const p = item.s.program;
+  const how = howTo(detail, p);
+  const href = `/p/${encodeURIComponent(p.id)}`;
+  return (
+    <li className="card pick" data-testid="pick" data-bucket={item.bucket}>
+      <div className="pick-top">
+        <span className="pick-no" aria-hidden="true">
+          {i + 1}
+        </span>
+        <span className={`v2-badge b-${item.bucket}`}>{BUCKET_LABEL[item.bucket]}</span>
+        <SupportTags p={detail ?? p} />
+      </div>
+      <h3>
+        <Link href={href}>{p.name}</Link>
+      </h3>
+      <p className="sum">{firstLine(p.summary, 90)}</p>
+      <p className={`v2-why w-${item.bucket}`}>
+        <Icon name={BUCKET_ICON[item.bucket]} size={16} /> <span>{plainLine(item, sit, mode)}</span>
+      </p>
+      <ul className="rows">
+        <li>
+          <span className="k">신청방법</span>
+          <span className="v">
+            {how.place} ({how.channels.map((c) => CHANNEL_LABEL[c]).join(", ")})
+          </span>
+        </li>
+        <li>
+          <span className="k">담당기관</span>
+          <span className="v">{p.provider || p.owner || orgText(p)}</span>
+        </li>
+        {how.phone && (
+          <li>
+            <span className="k">문의</span>
+            <span className="v">{how.phone}</span>
+          </li>
+        )}
+        {how.bring.length > 0 && (
+          <li>
+            <span className="k">가져갈 것</span>
+            <span className="v">{how.bring.join(", ")}</span>
+          </li>
+        )}
+      </ul>
+      <div className="pick-foot no-print">
+        <Link href={href} className="btn btn-tonal btn-sm">
+          자세히 보기
+        </Link>
+        <Link href={`${href}#sec-apply`} className="btn btn-ghost btn-sm">
+          신청 방법 보기
+        </Link>
+      </div>
+    </li>
+  );
+}
+
 function BucketList({
   id, title, lead, groups, sit, mode, collapsed,
 }: {
@@ -235,6 +456,7 @@ function BucketList({
 }) {
   const [limit, setLimit] = useState(FIRST);
   if (!groups.length) return null;
+  const head = `${title} ${groups.length.toLocaleString("ko-KR")}개`;
   const body = (
     <>
       <p className="body">{lead}</p>
@@ -244,7 +466,7 @@ function BucketList({
         ))}
       </div>
       {groups.length > limit && (
-        <button type="button" className="btn btn-ghost" onClick={() => setLimit((l) => l + MORE)} style={{ marginTop: "1rem" }}>
+        <button type="button" className="btn btn-ghost no-print" onClick={() => setLimit((l) => l + MORE)} style={{ marginTop: "1rem" }} data-testid={`${id}-more`}>
           {Math.min(MORE, groups.length - limit)}개 더 보기 ({limit}/{groups.length})
         </button>
       )}
@@ -254,7 +476,7 @@ function BucketList({
     return (
       <details className="details v2-sec" id={id} data-testid={id}>
         <summary>
-          <span className="h3">{title}</span> <Icon name="chevronDown" size={18} />
+          <span className="h3">{head}</span> <Icon name="chevronDown" size={18} />
         </summary>
         <div className="details-body">{body}</div>
       </details>
@@ -263,7 +485,7 @@ function BucketList({
   return (
     <section className="v2-sec" id={id} aria-labelledby={`${id}-h`} data-testid={id}>
       <h2 className="h2" id={`${id}-h`}>
-        {title}
+        {head}
       </h2>
       {body}
     </section>

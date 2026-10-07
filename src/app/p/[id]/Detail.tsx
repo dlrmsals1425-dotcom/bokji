@@ -1,18 +1,16 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { MANUAL_TITLE, TierBadge, isManual, orgText, reviewText, sectorText } from "@/components/Badges";
+import { MANUAL_TITLE, isManual, orgText, reviewText, sectorText } from "@/components/Badges";
 import { Icon } from "@/components/Icon";
-import { CHANNEL_LABEL, TIER_PLAIN, firstLine, howTo } from "@/lib/client/howto";
+import { CHANNEL_LABEL, firstLine, howTo } from "@/lib/client/howto";
 import { supportTypes } from "@/lib/client/facets";
 import { loadLocalOps, loadProgram } from "@/lib/client/bundles";
-import { useProfile } from "@/lib/client/storage";
-import { evaluateProgram } from "@/lib/client/results";
+import { useExtras, useMode, useProfile } from "@/lib/client/storage";
+import { saveSituation, situationOf } from "@/lib/client/start";
+import { checkPath, type FindMode } from "@/lib/client/mode";
+import { BUCKET_LABEL, DIM_BY_ID, classifyOne, dimAvailable, dimsFor, explainItem, incomeExplain, plainLine, type ExplainLine, type Situation, type V2Item } from "@/lib/client/v2";
 import { SOURCE_LABEL, ORG_TYPE_LABEL, type LocalOperation, type Program } from "@/lib/data/types";
-import type { ReasonKind } from "@/lib/engine/types";
-
-const REASON_LABEL: Record<ReasonKind, string> = { met: "맞음", unmet: "맞지 않음", unknown: "확인 필요", note: "참고" };
-const KIND_ORDER: Record<ReasonKind, number> = { met: 0, unmet: 1, unknown: 2, note: 3 };
 const SECTIONS = [
   { id: "sec-target", label: "지원대상" },
   { id: "sec-benefit", label: "지원내용" },
@@ -48,6 +46,8 @@ const TRUST_LABEL = {
 
 export function Detail({ id }: { id: string }) {
   const profile = useProfile();
+  const extras = useExtras();
+  const storedMode = useMode();
   const [program, setProgram] = useState<Program | null | undefined>(undefined);
   const [ops, setOps] = useState<LocalOperation[]>([]);
   const [copied, setCopied] = useState(false);
@@ -71,7 +71,10 @@ export function Detail({ id }: { id: string }) {
   }, [id, sido, sigungu]);
 
   const active = useActiveSection(!!program);
-  const ev = useMemo(() => (program && profile ? evaluateProgram(program, profile) : null), [program, profile]);
+  // 결과 화면과 같은 판단 (상황 먼저 · 쉬운 말) — 저장된 상황 기준, 기기 안에서만
+  const mode: FindMode = storedMode ?? "self";
+  const sit = useMemo(() => (profile && extras !== undefined ? situationOf(profile, extras, mode) : null), [profile, extras, mode]);
+  const item = useMemo(() => (program && sit ? classifyOne(program, sit) : null), [program, sit]);
 
   if (program === undefined) return <div className="wrap page muted">불러오는 중…</div>;
   if (program === null)
@@ -151,11 +154,12 @@ export function Detail({ id }: { id: string }) {
             <dd>{how.channels.map((c) => CHANNEL_LABEL[c]).join(", ")}</dd>
           </div>
         </dl>
-        {(ev || (p.applyType && p.applyType !== "unknown")) && (
+        {((item && sit) || (p.applyType && p.applyType !== "unknown")) && (
           <div className="d-judge">
-            {ev && (
-              <p>
-                <TierBadge tier={ev.tier} /> — {TIER_PLAIN[ev.tier]} <span className="muted">(입력하신 정보 기준)</span>
+            {item && sit && (
+              <p data-testid="detail-judge" data-bucket={item.bucket}>
+                <span className={`v2-badge b-${item.bucket}`}>{BUCKET_LABEL[item.bucket]}</span> {plainLine(item, sit, mode)}{" "}
+                <span className="muted small">({mode === "parent" ? "부모님 상황" : "답하신 상황"} 기준)</span>
               </p>
             )}
             {p.applyType && p.applyType !== "unknown" && (
@@ -185,21 +189,14 @@ export function Detail({ id }: { id: string }) {
           <section className="dsec" id="sec-target" aria-labelledby="h-target">
             <h2 id="h-target">지원대상</h2>
             <h3 className="h3">내 상황과 비교한 결과</h3>
-            {ev ? (
+            {item && sit ? (
               <>
-                <ul className="reasons" data-testid="reasons">
-                  {[...ev.reasons].sort((a, b) => KIND_ORDER[a.kind] - KIND_ORDER[b.kind]).map((r, i) => (
-                    <li key={i} className={r.kind}>
-                      <span className="k">{REASON_LABEL[r.kind]}</span>
-                      <span>{r.text}</span>
-                    </li>
-                  ))}
-                </ul>
+                <ExplainBlock item={item} sit={sit} mode={mode} />
                 <RuleNote p={p} />
               </>
             ) : (
               <p className="inset">
-                <Link href="/check">12개 질문에 답하면</Link> 이 서비스의 대상 여부를 이유와 함께 알려 드립니다. 로그인은 필요 없습니다.
+                <Link href="/situation">사는 곳과 상황을 알려주시면</Link> 이 서비스를 받을 수 있는지 이유와 함께 알려 드립니다. 로그인은 필요 없습니다.
               </p>
             )}
             {(p.target || p.criteria) && (
@@ -494,5 +491,132 @@ function LongText({ text, limit = 280 }: { text: string; limit?: number }) {
         {open ? "접기" : "원문 더 보기"}
       </button>
     </>
+  );
+}
+
+/** 내 답과 조건 비교: 맞은 것 · 어긋난 것 · 아직 모르는 것 (+ 정할 수 있는 질문은 바로 여기서) */
+function ExplainBlock({ item, sit, mode }: { item: V2Item; sit: Situation; mode: FindMode }) {
+  const ex = explainItem(item, sit);
+  const [skipped, setSkipped] = useState<string[]>([]);
+  // 바로 정할 수 있는 질문 먼저, 그다음 이 혜택 조건에 걸린 나머지 '모름' 질문 (최대 3개)
+  const open = item.bucket === "ask" || item.bucket === "office";
+  const rest = open ? dimsFor(item.s.program).filter((id) => dimAvailable(DIM_BY_ID[id], sit) && DIM_BY_ID[id].isUnknown(sit)) : [];
+  const dims = [...new Set([...item.dims, ...rest])].filter((d) => !skipped.includes(d)).slice(0, 3);
+  const apply = (next: Situation) => saveSituation(next, mode);
+  const who = mode === "parent" ? "부모님 답" : "내 답";
+  const list = (lines: ExplainLine[]) => (
+    <ul>
+      {lines.map((l) => (
+        <li key={l.cond}>
+          <span>{l.cond}</span>
+          <span className="ans">
+            {who}: <strong>{l.answer ?? "답하지 않음"}</strong>
+          </span>
+        </li>
+      ))}
+    </ul>
+  );
+  return (
+    <div className="explain" data-testid="explain">
+      {ex.failed.length > 0 && (
+        <div className="bad" data-testid="explain-failed">
+          <h3>
+            <Icon name="x" size={18} /> 맞지 않는 조건
+          </h3>
+          {list(ex.failed)}
+        </div>
+      )}
+      {ex.matched.length > 0 && (
+        <div className="ok" data-testid="explain-matched">
+          <h3>
+            <Icon name="check" size={18} /> 맞는 조건
+          </h3>
+          {list(ex.matched)}
+        </div>
+      )}
+      {ex.unknown.length > 0 && (
+        <div className="unk" data-testid="explain-unknown">
+          <h3>
+            <Icon name="alert" size={18} /> 아직 모르는 조건
+          </h3>
+          {list(ex.unknown)}
+        </div>
+      )}
+      {dims.length > 0 && (
+        <div className="inline-q no-print" data-testid="detail-questions">
+          <p>
+            <strong>이것만 답하시면 바로 알려드려요</strong> <span className="small muted">(답은 이 기기에만 저장돼요)</span>
+          </p>
+          {dims.map((id) => {
+            const d = DIM_BY_ID[id];
+            return (
+              <div key={id} data-testid={`detail-q-${id}`} style={{ marginTop: "0.75rem" }}>
+                <p className="v2-q-t">{d.q(mode)}</p>
+                {id === "income" ? (
+                  <DetailIncome sit={sit} onApply={apply} onSkip={() => setSkipped((s) => [...s, id])} />
+                ) : (
+                  <div className="btn-row">
+                    {d.answers.map((a) => (
+                      <button key={a.key} type="button" className="btn btn-ghost btn-sm" onClick={() => apply(a.apply(sit))} data-testid={`detail-a-${id}-${a.key}`}>
+                        {a.label}
+                      </button>
+                    ))}
+                    <button type="button" className="btn btn-quiet" onClick={() => setSkipped((s) => [...s, id])}>
+                      모름
+                    </button>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      )}
+      {ex.notes.length > 0 && (
+        <div className="unk" data-testid="explain-notes">
+          <h3>
+            <Icon name="info" size={18} /> 신청할 때 확인할 것
+          </h3>
+          <ul>
+            {ex.notes.map((n) => (
+              <li key={n} style={{ gridTemplateColumns: "minmax(0, 1fr)" }}>
+                {n}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      <p className="small muted">
+        <Link href={checkPath(mode)}>상황 고치기</Link> · 판단은 공개된 조건과 답하신 내용만으로 한 안내이고, 실제 선정은 기관 심사로 정해져요.
+      </p>
+    </div>
+  );
+}
+
+function DetailIncome({ sit, onApply, onSkip }: { sit: Situation; onApply: (s: Situation) => void; onSkip: () => void }) {
+  const [t, setT] = useState("");
+  const size = sit.profile.householdSize === "unknown" ? null : sit.profile.householdSize;
+  const n = t ? Number(t) : null;
+  const ex = n !== null && size ? incomeExplain(n, size) : null;
+  return (
+    <div>
+      <div className="btn-row">
+        <label htmlFor="dq-income" className="sr-only">
+          한 달 소득 (만원)
+        </label>
+        <input id="dq-income" className="input v2-income-in" inputMode="numeric" placeholder="예: 300" value={t} onChange={(e) => setT(e.target.value.replace(/[^0-9]/g, "").slice(0, 5))} />
+        <span>만원 / 월</span>
+        <button type="button" className="btn btn-ghost btn-sm" disabled={n === null} onClick={() => n !== null && onApply({ ...sit, x: { ...sit.x, incomeManwon: n } })}>
+          확인
+        </button>
+        <button type="button" className="btn btn-quiet" onClick={onSkip}>
+          모름
+        </button>
+      </div>
+      {ex && (
+        <p className="small" aria-live="polite">
+          {ex.line}
+        </p>
+      )}
+    </div>
   );
 }

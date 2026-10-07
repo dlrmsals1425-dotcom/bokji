@@ -6,7 +6,6 @@ import { ResumeBanner } from "@/components/ResumeBanner";
 import { PresetButtons } from "@/components/PresetButtons";
 import { HomeSearch } from "@/components/HomeSearch";
 import { MODE_ENTRY } from "@/lib/client/mode";
-import { TIER_PLAIN } from "@/lib/client/howto";
 
 const n = (v: number) => v.toLocaleString("ko-KR");
 
@@ -70,7 +69,7 @@ export default function Home() {
               </Link>
             </div>
             <p className="small muted" style={{ marginTop: "0.75rem" }}>
-              질문 12개 · 약 3분 · 모르는 항목은 &lsquo;모름&rsquo; · 부모님 찾기도 같은 질문 구조
+              한 화면 질문 12개 안팎 · 약 2분 · 사는 곳만 필수, 나머지는 &lsquo;모름&rsquo;이어도 돼요
             </p>
             <ResumeBanner />
           </div>
@@ -133,13 +132,13 @@ export default function Home() {
           <ol className="howto">
             <li>
               <span className="n">1</span>
-              <h3>대상과 상황 입력</h3>
-              <p>내 복지 또는 부모님 복지를 고른 뒤, 지역·나이·가구·돌봄 등 12가지. 모르면 건너뛰어도 됩니다.</p>
+              <h3>상황 먼저 알려주기</h3>
+              <p>사는 곳과 나이·가구·소득·지원 등 아는 만큼만. 모르는 것은 결과 화면에서 꼭 필요한 것만 다시 물어요.</p>
             </li>
             <li>
               <span className="n">2</span>
-              <h3>공개된 조건과 비교</h3>
-              <p>정부24·복지로의 지원 대상 조건과 입력 내용을 이 기기에서 비교합니다.</p>
+              <h3>맞지 않는 혜택은 빼기</h3>
+              <p>정부24·복지로의 지원 대상 조건과 답을 이 기기에서 비교해, 상황과 다른 혜택은 이유와 함께 접어 둡니다.</p>
             </li>
             <li>
               <span className="n">3</span>
@@ -149,16 +148,16 @@ export default function Home() {
           </ol>
           <dl className="tiers3">
             <div>
-              <dt className="status tier-eligible">조건 충족</dt>
-              <dd>{TIER_PLAIN.eligible}</dd>
+              <dt className="status tier-eligible">받으실 수 있어요</dt>
+              <dd>답하신 상황으로 공개된 조건이 모두 맞아요.</dd>
             </div>
             <div>
-              <dt className="status tier-likely">가능성 있음</dt>
-              <dd>{TIER_PLAIN.likely}</dd>
+              <dt className="status tier-likely">신청할 때 확인</dt>
+              <dd>어긋나는 조건은 없고, 원문의 세부 조건 한두 가지를 신청처에서 확인해요.</dd>
             </div>
             <div>
-              <dt className="status">확인 필요</dt>
-              <dd>{TIER_PLAIN.check}</dd>
+              <dt className="status">답하면 정해져요</dt>
+              <dd>&lsquo;모름&rsquo;으로 둔 질문 하나에 답하면 바로 갈려요.</dd>
             </div>
           </dl>
           <p className="facts-line">

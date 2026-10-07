@@ -91,7 +91,7 @@ export function Search() {
       </ol>
       <h1 className="h1">서비스 찾기</h1>
       <p className="lead" style={{ marginBottom: "1.5rem" }}>
-        대상과 주제를 고르거나 이름으로 찾습니다. 받을 수 있는지까지 알고 싶다면 <Link href="/check">맞춤 찾기</Link>가 더 빠릅니다.
+        대상과 주제를 고르거나 이름으로 찾습니다. 받을 수 있는지까지 알고 싶다면 <Link href="/situation">맞춤 찾기</Link>가 더 빠릅니다.
       </p>
 
       <form

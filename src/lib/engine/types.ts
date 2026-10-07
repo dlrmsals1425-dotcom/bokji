@@ -96,6 +96,8 @@ export interface EvalOptions {
   unknownTraits?: HouseholdTrait[];
   /** soft 조건도 FALSE 그대로 (v2: 답한 사실과 맞지 않는 사업을 본문에서 뺄 때) */
   strictSoft?: boolean;
+  /** 월 소득(원)·가구원 수로 계산한 기준 중위소득 대비 % (구간 대신 정확한 값으로 소득 조건 비교) */
+  incomePct?: number;
 }
 
 export interface Evaluation {

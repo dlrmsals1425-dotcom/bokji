@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import { PRESETS } from "@/lib/client/presets";
 import { resultsPath } from "@/lib/client/mode";
-import { saveFiller, saveProfile } from "@/lib/client/storage";
+import { startPreset } from "@/lib/client/start";
 import { Icon, type IconName } from "./Icon";
 
 const ICON: Record<string, IconName> = {
@@ -25,10 +25,8 @@ export function PresetButtons() {
             className={`preset${p.mode === "parent" ? " preset-parent" : ""}`}
             data-testid={`preset-${p.id}`}
             onClick={() => {
-              const mode = p.mode ?? "self";
-              saveProfile(p.profile, p.id, mode);
-              if (mode === "parent") saveFiller("child");
-              router.push(resultsPath(mode));
+              startPreset(p);
+              router.push(resultsPath(p.mode ?? "self"));
             }}
           >
             <span className="p-ic" aria-hidden="true">

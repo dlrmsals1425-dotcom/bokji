@@ -5,7 +5,7 @@ import { setSettings, useSettings } from "@/lib/client/storage";
 import { Icon } from "./Icon";
 
 const NAV = [
-  { href: "/check", label: "맞춤 찾기" },
+  { href: "/situation", label: "맞춤 찾기" },
   { href: "/results", label: "내 결과" },
   { href: "/search", label: "서비스 검색" },
   { href: "/about", label: "데이터·판정 기준" },

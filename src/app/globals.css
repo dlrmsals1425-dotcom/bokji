@@ -528,3 +528,26 @@ html[data-large="1"] .fgrid fieldset + fieldset { border-left: 0; border-top: 1p
 .v2-income { display: flex; align-items: center; gap: 0.625rem; flex-wrap: wrap; }
 .v2-income .input { width: 8rem; }
 .v2-inline { min-height: 2.75rem; }
+
+/* v2 기본 결과 · 입력 */
+.req { color: #b3261e; font-size: 0.875rem; font-weight: 700; }
+.v2-badge { display: inline-flex; align-items: center; font-size: 0.8125rem; font-weight: 800; padding: 0.125rem 0.625rem; border-radius: 999px; border: 1px solid var(--line); background: #fff; color: var(--ink-2); }
+.v2-badge.b-fit { background: var(--primary-5); color: var(--primary-70); border-color: var(--primary-20); }
+.v2-badge.b-office { background: var(--surface-2); color: var(--ink); }
+.v2-badge.b-ask { background: var(--warm-5); color: #8a4b00; border-color: #f3d9b1; }
+.v2-badge.b-no { background: var(--surface-2); color: var(--ink-2); }
+.v2-actions { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; align-items: center; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--line-2); }
+.v2-actions .small { display: inline-flex; gap: 0.375rem; align-items: center; }
+.v2-sec .picks { margin-top: 1rem; }
+.explain { display: grid; gap: 1rem; margin-top: 1rem; }
+.explain h3 { font-size: 1.0625rem; font-weight: 800; margin: 0 0 0.375rem; display: flex; gap: 0.5rem; align-items: center; }
+.explain ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.375rem; }
+.explain li { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 14rem); gap: 0.75rem; padding: 0.5rem 0.75rem; border-radius: var(--radius-sm); background: var(--surface-2); }
+.explain .ans { color: var(--ink-2); font-size: 0.9375rem; }
+.explain .ans strong { color: var(--ink); }
+.explain .ok h3 svg { color: var(--primary-60); }
+.explain .bad h3 svg { color: #b3261e; }
+.explain .unk h3 svg { color: var(--warm-60); }
+@media (max-width: 30rem) { .explain li { grid-template-columns: minmax(0, 1fr); gap: 0.125rem; } }
+.inline-q { margin-top: 1rem; padding: 1rem 1.125rem; border: 2px solid var(--primary-20); border-radius: var(--radius); background: #fff; }
+.inline-q .btn-row { margin-top: 0.5rem; gap: 0.5rem; }

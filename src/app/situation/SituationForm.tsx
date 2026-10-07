@@ -1,7 +1,9 @@
 "use client";
 /**
- * v2 시험판 '내 상황' 입력 (한 화면, 질문 12개 + 문장 칸). 모든 질문에 '모름'이 있다.
- * 답은 이 기기에만 저장하고, 결과는 /results?v=2 에서 본다.
+ * '내 상황' 입력 (기본 입력 화면, 한 화면 · 질문 12개 안팎 + 문장 칸). 모든 질문에 '모름'이 있고 사는 곳만 필수.
+ * 내 복지: 자녀·임신·한부모·일(구직·학생)·다문화를 묻고, 기초연금·장기요양은 60세 이상이라고 답했을 때만.
+ * 부모님 복지: 기초연금·장기요양을 묻고 자녀 질문은 묻지 않는다.
+ * 답은 이 기기에만 저장한다 (주소에는 싣지 않음).
  */
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -9,12 +11,13 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Icon } from "@/components/Icon";
 import { RadioGroup } from "@/components/Choice";
 import { loadRegions } from "@/lib/client/bundles";
-import { parseSituation, understoodLine } from "@/lib/client/parse";
-import { householdLabel, parseFindMode, type FindMode } from "@/lib/client/mode";
-import { saveExtras, saveFiller, saveMode, saveProfile, useExtras, useMode, useProfile } from "@/lib/client/storage";
-import { SUPPORT_LEVELS, extrasFromProfile, incomeExplain, profileForStorage, type Extras } from "@/lib/client/v2";
+import { clearPrefill, parseSituation, readPrefill, understoodLine, type ParsedSituation, type Prefill } from "@/lib/client/parse";
+import { householdLabel, parseFindMode, resultsPath, type FindMode } from "@/lib/client/mode";
+import { saveFiller, saveMode, useExtras, useMode, useProfile } from "@/lib/client/storage";
+import { saveSituation } from "@/lib/client/start";
+import { EMPTY_EXTRAS, SUPPORT_LEVELS, extrasFromProfile, incomeExplain, type Extras } from "@/lib/client/v2";
 import type { RegionIndex } from "@/lib/data/types";
-import { AGE_BANDS, AGE_LABEL, EMPTY_PROFILE, ageRange, type Benefit, type Profile } from "@/lib/engine/profile";
+import { AGE_BANDS, AGE_LABEL, CHILD_BUCKETS, CHILD_LABEL, EMPTY_PROFILE, ageRange, type Benefit, type ChildBucket, type Profile } from "@/lib/engine/profile";
 
 export function SituationForm() {
   const stored = useProfile();
@@ -23,10 +26,11 @@ export function SituationForm() {
   const params = useSearchParams();
   const urlMode = parseFindMode(params.get("for"));
   const fresh = params.get("new") === "1";
+  const wantPrefill = params.get("prefill") === "1";
   if (stored === undefined || storedMode === undefined || storedX === undefined) return <div className="narrow page muted">불러오는 중…</div>;
   const p0 = fresh || !stored ? EMPTY_PROFILE : stored;
-  const x0 = fresh || !stored ? { benefits: {}, traits: {}, incomeManwon: null, facts: {} } : Object.keys(storedX.benefits).length || storedX.incomeManwon !== null ? storedX : extrasFromProfile(stored);
-  return <Form initial={p0} initialX={x0} initialMode={urlMode ?? storedMode} />;
+  const x0: Extras = fresh || !stored ? EMPTY_EXTRAS : (storedX ?? extrasFromProfile(stored));
+  return <Form initial={p0} initialX={x0} initialMode={urlMode ?? storedMode} wantPrefill={wantPrefill} />;
 }
 
 type Tri3 = "yes" | "no" | "unknown";
@@ -46,11 +50,34 @@ function supportValue(x: Extras): string {
   return "unknown";
 }
 
-function Form({ initial, initialX, initialMode }: { initial: Profile; initialX: Extras; initialMode: FindMode }) {
+/** 문장 해석 결과를 입력값에 얹는다 (알아들은 것만, '예'인 것만) */
+function mergeParsed(prev: Profile, q: Profile): Profile {
+  const next = { ...prev };
+  for (const k of Object.keys(q) as (keyof Profile)[]) {
+    const v = q[k];
+    if (v === null || v === "unknown") continue;
+    if (Array.isArray(v) && v.length === 0) continue;
+    (next as Record<string, unknown>)[k] = v;
+  }
+  return next;
+}
+function mergeParsedX(prev: Extras, q: Profile): Extras {
+  const benefits = { ...prev.benefits };
+  q.benefits?.forEach((b) => (benefits[b] = true));
+  const traits = { ...prev.traits };
+  q.traits?.forEach((t) => (traits[t] = true));
+  return { ...prev, benefits, traits };
+}
+
+const CHILD_AGES = CHILD_BUCKETS.filter((c) => c !== "pregnant");
+
+function Form({ initial, initialX, initialMode, wantPrefill }: { initial: Profile; initialX: Extras; initialMode: FindMode; wantPrefill: boolean }) {
   const router = useRouter();
-  const [mode, setMode] = useState<FindMode>(initialMode);
-  const [p, setP] = useState<Profile>(initial);
-  const [x, setX] = useState<Extras>(initialX);
+  // 홈 검색창 문장 해석 (sessionStorage로만 전달). Form은 저장소를 읽은 뒤(클라이언트)에만 그려진다.
+  const [prefill, setPrefill] = useState<Prefill | null>(() => (wantPrefill ? readPrefill() : null));
+  const [mode, setMode] = useState<FindMode>(() => prefill?.parsed.mode ?? initialMode);
+  const [p, setP] = useState<Profile>(() => (prefill ? mergeParsed(EMPTY_PROFILE, prefill.parsed.profile) : initial));
+  const [x, setX] = useState<Extras>(() => (prefill ? mergeParsedX(EMPTY_EXTRAS, prefill.parsed.profile) : initialX));
   const [text, setText] = useState("");
   const [understood, setUnderstood] = useState<string | null>(null);
   const [regions, setRegions] = useState<RegionIndex | null>(null);
@@ -73,22 +100,22 @@ function Form({ initial, initialX, initialMode }: { initial: Profile; initialX: 
       }
       return { ...prev, benefits: b };
     });
+  const setTrait = (k: keyof Extras["traits"], v: boolean | undefined) =>
+    setX((prev) => {
+      const t = { ...prev.traits };
+      if (v === undefined) delete t[k];
+      else t[k] = v;
+      return { ...prev, traits: t };
+    });
 
+  const applyParsed = (r: ParsedSituation) => {
+    setP((prev) => mergeParsed(prev, r.profile));
+    setX((prev) => mergeParsedX(prev, r.profile));
+    if (r.mode) setMode(r.mode);
+  };
   const fillFromText = () => {
     const r = parseSituation(text, regions);
-    const q = r.profile;
-    setP((prev) => {
-      const next = { ...prev };
-      for (const k of Object.keys(q) as (keyof Profile)[]) {
-        const v = q[k];
-        if (v === null || v === "unknown") continue;
-        if (Array.isArray(v) && v.length === 0 && k !== "traits") continue;
-        (next as Record<string, unknown>)[k] = v;
-      }
-      return next;
-    });
-    if (q.benefits?.length) setB(Object.fromEntries(q.benefits.map((b) => [b, true])));
-    if (r.mode) setMode(r.mode);
+    applyParsed(r);
     setUnderstood(understoodLine(r) || "알아들은 내용이 없어요. 아래 질문에 직접 답해 주세요.");
   };
 
@@ -96,21 +123,56 @@ function Form({ initial, initialX, initialMode }: { initial: Profile; initialX: 
   const size = p.householdSize === "unknown" ? null : p.householdSize;
   const income = x.incomeManwon;
   const explain = income !== null && size ? incomeExplain(income, size) : null;
-  const senior = p.age === "unknown" || ageRange(p.age)[1] >= 60;
+  const ageKnown = p.age !== "unknown";
+  const senior60 = ageKnown && ageRange(p.age as Exclude<Profile["age"], "unknown">)[1] >= 60;
+  // 기초연금·장기요양: 부모님은 60세 미만이라고 답하지 않았으면, 본인은 60세 이상이라고 답했을 때만
+  const askSenior = parent ? !ageKnown || senior60 : senior60;
+  // 자녀·임신·한부모·다문화: 본인 찾기에서 60세 이상이 아닐 때
+  const askFamily = !parent && !senior60;
+  // 돌봄: 부모님·어르신·장애가 있을 때 (그 밖에는 결과 화면에서 필요할 때만 물어봐요)
+  const askCare = parent || senior60 || p.disability === "self" || p.disability === "member" || p.care !== null;
 
+  const childCount = x.childCount ?? null;
+  const ages = p.children ?? [];
+  const setChildren = (count: 0 | 1 | 2 | 3 | null, list: ChildBucket[]) => {
+    const keep = count === 0 ? list.filter((c) => c === "pregnant") : list;
+    setP((prev) => ({ ...prev, children: keep.length ? keep : count === 0 ? [] : null }));
+    setX((prev) => {
+      const t = { ...prev.traits };
+      if (count === null || count === 2) delete t.multi_child;
+      else t.multi_child = count === 3;
+      const next: Extras = { ...prev, traits: t };
+      if (count === null) delete next.childCount;
+      else next.childCount = count;
+      return next;
+    });
+  };
+  const toggleAge = (c: ChildBucket) => setChildren(childCount, ages.includes(c) ? ages.filter((a) => a !== c) : [...ages, c]);
+
+  const go = () => {
+    saveMode(mode);
+    if (parent) saveFiller("child");
+    clearPrefill();
+    saveSituation({ profile: p, x, mode }, mode);
+    router.push(resultsPath(mode));
+  };
   const submit = () => {
     if (!p.sigungu) {
       setError(parent ? "부모님이 사시는 시·군·구를 골라 주세요." : "사는 시·군·구를 골라 주세요.");
       document.getElementById("sit-region")?.scrollIntoView({ block: "center" });
+      document.getElementById(p.sido ? "sigungu" : "sido")?.focus();
       return;
     }
-    const sit = { profile: p, x };
-    saveMode(mode);
-    if (parent) saveFiller("child");
-    saveProfile(profileForStorage(sit), undefined, mode);
-    saveExtras(x);
-    router.push(parent ? "/results?for=parent&v=2" : "/results?v=2");
+    go();
   };
+  const editPrefill = () => {
+    clearPrefill();
+    setPrefill(null);
+    requestAnimationFrame(() => document.getElementById("sit-basic-h")?.scrollIntoView({ block: "start" }));
+  };
+
+  const disabilityValue =
+    p.disability === "none" ? "none" : p.disability === "unknown" ? "unknown" : `${p.disability}-${p.disabilitySeverity === "mild" ? "mild" : "severe"}`;
 
   return (
     <>
@@ -123,20 +185,20 @@ function Form({ initial, initialX, initialMode }: { initial: Profile; initialX: 
               </Link>
             </li>
             <li>
-              <span aria-current="page">내 상황 알려주기 (시험판)</span>
+              <span aria-current="page">{parent ? "부모님 상황 알려주기" : "내 상황 알려주기"}</span>
             </li>
           </ol>
           <h1 className="h1" style={{ marginBottom: "0.25rem" }}>
             {parent ? "부모님 상황을 먼저 알려주세요" : "내 상황을 먼저 알려주세요"}
           </h1>
           <p className="small muted">
-            답에 맞는 혜택만 골라 드려요. 모르는 질문은 &lsquo;모름&rsquo;으로 두면 결과 화면에서 꼭 필요한 것만 다시 물어봐요. 답은 이 기기에만 저장돼요.
+            사는 곳만 꼭 골라 주세요. 나머지는 아는 만큼만 답하고 모르면 &lsquo;모름&rsquo;으로 두세요 — 결과 화면에서 꼭 필요한 것만 다시 물어봐요. 답은 이 기기에만 저장돼요.
           </p>
           <div className="mode-switch" role="group" aria-label="찾기 대상">
-            <button type="button" className={!parent ? "on" : ""} aria-pressed={!parent} onClick={() => setMode("self")}>
+            <button type="button" className={!parent ? "on" : ""} aria-pressed={!parent} onClick={() => setMode("self")} data-testid="mode-self">
               내 복지
             </button>
-            <button type="button" className={parent ? "on" : ""} aria-pressed={parent} onClick={() => setMode("parent")}>
+            <button type="button" className={parent ? "on" : ""} aria-pressed={parent} onClick={() => setMode("parent")} data-testid="mode-parent">
               부모님 복지
             </button>
           </div>
@@ -144,30 +206,65 @@ function Form({ initial, initialX, initialMode }: { initial: Profile; initialX: 
       </div>
       <div className="form-body">
         <div className="narrow">
-          <div className="form-panel v2-form" data-testid="v2-situation">
-            <section aria-labelledby="sit-free-h" className="v2-block">
-              <h2 className="h3" id="sit-free-h">
-                {parent ? "부모님 상황을 적어 주세요" : "내 상황을 적어 주세요"} <span className="small muted">(선택)</span>
-              </h2>
-              <label htmlFor="sit-text" className="hint">
-                예: 수원시에 사시는 59년생 부모님 두 분, 아버지가 거동이 불편하세요
-              </label>
-              <textarea id="sit-text" className="input" rows={2} value={text} onChange={(e) => setText(e.target.value)} data-testid="v2-text" />
-              <div className="btn-row" style={{ marginTop: "0.5rem" }}>
-                <button type="button" className="btn btn-tonal btn-sm" onClick={fillFromText} disabled={!text.trim()} data-testid="v2-fill">
-                  이 문장으로 아래 칸 채우기
-                </button>
-                <span className="small muted">문장은 이 기기에서만 읽어요.</span>
-              </div>
-              {understood && (
-                <p className="notice" role="status" style={{ marginTop: "0.75rem" }} data-testid="v2-understood">
-                  <Icon name="check" size={18} />
-                  <span>
-                    <strong>이렇게 이해했어요:</strong> {understood}
-                  </span>
+          <div className="form-panel v2-form" data-testid="v2-situation" data-mode={mode}>
+            {prefill && (
+              <section className="prefill-box" data-testid="prefill-banner" aria-labelledby="pf-h">
+                <h2 id="pf-h" className="pf-title">
+                  <Icon name="check" size={20} strokeWidth={2.6} /> 이렇게 이해했어요
+                </h2>
+                <p className="pf-quote">&ldquo;{prefill.text}&rdquo;</p>
+                <p className="pf-line" data-testid="prefill-line">
+                  <strong>{understoodLine(prefill.parsed) || "알아들은 내용이 거의 없어요"}</strong>
+                  {parent ? " · 부모님 대신 찾기" : ""}
                 </p>
-              )}
-            </section>
+                {prefill.parsed.notes.length > 0 && (
+                  <ul className="pf-notes">
+                    {prefill.parsed.notes.map((n) => (
+                      <li key={n}>{n}</li>
+                    ))}
+                  </ul>
+                )}
+                <p className="small muted">
+                  {p.sigungu
+                    ? "맞으면 결과 보기를 누르세요. 나머지는 '모름'으로 두고 찾은 뒤, 결과 화면 맨 위에서 꼭 필요한 것만 물어봐요. 아래에서 더 답해도 돼요."
+                    : "시·군·구를 알 수 없어 바로 결과를 볼 수 없어요. 아래에서 사는 곳을 골라 주세요."}{" "}
+                  문장은 이 기기에서만 해석하며 어디에도 보내지 않아요.
+                </p>
+                <div className="pf-actions">
+                  <button type="button" className="btn btn-primary" onClick={go} disabled={!p.sigungu} data-testid="prefill-confirm">
+                    맞아요, 결과 보기 <Icon name="arrowRight" size={18} />
+                  </button>
+                  <button type="button" className="btn btn-ghost" onClick={editPrefill} data-testid="prefill-edit">
+                    아래에서 더 답하기
+                  </button>
+                </div>
+              </section>
+            )}
+            {!prefill && (
+              <section aria-labelledby="sit-free-h" className="v2-block">
+                <h2 className="h3" id="sit-free-h">
+                  {parent ? "부모님 상황을 적어 주세요" : "내 상황을 적어 주세요"} <span className="small muted">(선택)</span>
+                </h2>
+                <label htmlFor="sit-text" className="hint">
+                  {parent ? "예: 수원시에 사시는 59년생 부모님 두 분, 아버지가 거동이 불편하세요" : "예: 고양시 사는 29살, 혼자 살고 일자리를 찾고 있어요"}
+                </label>
+                <textarea id="sit-text" className="input" rows={2} value={text} onChange={(e) => setText(e.target.value)} data-testid="v2-text" />
+                <div className="btn-row" style={{ marginTop: "0.5rem" }}>
+                  <button type="button" className="btn btn-tonal btn-sm" onClick={fillFromText} disabled={!text.trim()} data-testid="v2-fill">
+                    이 문장으로 아래 칸 채우기
+                  </button>
+                  <span className="small muted">문장은 이 기기에서만 읽어요.</span>
+                </div>
+                {understood && (
+                  <p className="notice" role="status" style={{ marginTop: "0.75rem" }} data-testid="v2-understood">
+                    <Icon name="check" size={18} />
+                    <span>
+                      <strong>이렇게 이해했어요:</strong> {understood}
+                    </span>
+                  </p>
+                )}
+              </section>
+            )}
 
             <section aria-labelledby="sit-basic-h" className="v2-block" id="sit-region">
               <h2 className="h3" id="sit-basic-h">
@@ -181,20 +278,21 @@ function Form({ initial, initialX, initialMode }: { initial: Profile; initialX: 
               <div className="select-row field">
                 <div>
                   <label htmlFor="sido" className="label">
-                    {who ? `${who}이 사는 ` : "사는 "}시·도
+                    {who ? `${who}이 사는 ` : "사는 "}시·도 <span className="req">(필수)</span>
                   </label>
                   <select id="sido" className="select" value={p.sido ?? ""} onChange={(e) => setP((prev) => ({ ...prev, sido: e.target.value || null, sigungu: null }))}>
                     <option value="">선택하세요</option>
                     {regions?.sidos.map((s) => (
                       <option key={s.code} value={s.code}>
                         {s.name}
+                        {s.pilot ? " (시범 지역)" : ""}
                       </option>
                     ))}
                   </select>
                 </div>
                 <div>
                   <label htmlFor="sigungu" className="label">
-                    시·군·구
+                    시·군·구 <span className="req">(필수)</span>
                   </label>
                   <select id="sigungu" className="select" value={p.sigungu ?? ""} disabled={!sido} onChange={(e) => set("sigungu", e.target.value || null)}>
                     <option value="">{sido ? "선택하세요" : "시·도를 먼저 고르세요"}</option>
@@ -261,7 +359,7 @@ function Form({ initial, initialX, initialMode }: { initial: Profile; initialX: 
                   setB(Object.fromEntries(RECIPIENTS.map((k) => [k, lv ? lv.on.includes(k) : false])));
                 }}
               />
-              {senior && (
+              {askSenior && (
                 <RadioGroup
                   name="basic-pension"
                   legend={parent ? "부모님이 기초연금을 받고 계신가요?" : "기초연금을 받고 계신가요?"}
@@ -315,40 +413,103 @@ function Form({ initial, initialX, initialMode }: { initial: Profile; initialX: 
               </fieldset>
             </section>
 
+            {askFamily && (
+              <section aria-labelledby="sit-family-h" className="v2-block" data-testid="sit-family">
+                <h2 className="h3" id="sit-family-h">
+                  3. 자녀·임신
+                </h2>
+                <RadioGroup
+                  name="child-count"
+                  legend="함께 사는(키우는) 자녀는 몇 명인가요?"
+                  hint="다자녀 혜택은 보통 2명 또는 3명 이상부터예요."
+                  options={[
+                    { value: "0", label: "없어요" },
+                    { value: "1", label: "1명" },
+                    { value: "2", label: "2명" },
+                    { value: "3", label: "3명 이상" },
+                  ]}
+                  value={childCount === null ? "unknown" : String(childCount)}
+                  onChange={(v) => setChildren(v === "unknown" ? null : (Number(v) as 0 | 1 | 2 | 3), ages)}
+                />
+                <fieldset className="field" data-testid="child-ages">
+                  <legend>
+                    {childCount === 0 ? "임신 중이신가요?" : "자녀 나이 · 임신"} <span className="small muted">(해당하는 것 모두)</span>
+                  </legend>
+                  <div className="opts">
+                    {(childCount === 0 ? (["pregnant"] as ChildBucket[]) : (["pregnant", ...CHILD_AGES] as ChildBucket[])).map((c) => (
+                      <label className="opt" key={c}>
+                        <input type="checkbox" name="child-age" checked={ages.includes(c)} onChange={() => toggleAge(c)} />
+                        <span>{c === "pregnant" ? "임신 중 (출산 예정)" : CHILD_LABEL[c]}</span>
+                      </label>
+                    ))}
+                    <p className="or" aria-hidden="true">
+                      또는
+                    </p>
+                    <label className="opt unknown">
+                      <input type="checkbox" name="child-age" checked={ages.length === 0} onChange={() => setChildren(childCount, [])} />
+                      <span>{childCount === 0 ? "아니요 / 모름" : "모름 / 건너뛰기"}</span>
+                    </label>
+                  </div>
+                </fieldset>
+                {childCount !== 0 && (
+                  <RadioGroup
+                    name="single-parent"
+                    legend="혼자 자녀를 키우는 한부모 가구인가요?"
+                    hint="이혼·사별·미혼 등으로 혼자 자녀를 키우는 경우예요 (조부모가 손주를 키우는 조손 가구 포함)."
+                    options={YN}
+                    value={triOf(x.traits.single_parent)}
+                    unknownLabel="잘 모르겠어요"
+                    onChange={(v) => setTrait("single_parent", boolOf(v))}
+                  />
+                )}
+              </section>
+            )}
+
             <section aria-labelledby="sit-health-h" className="v2-block">
               <h2 className="h3" id="sit-health-h">
-                3. 건강·돌봄
+                {askFamily ? "4" : "3"}. 건강·돌봄
               </h2>
               <RadioGroup
                 name="disability"
-                legend={parent ? "부모님 중 장애인으로 등록된 분이 있나요?" : "장애인으로 등록되어 있나요?"}
-                options={[
-                  { value: "none", label: "아니요" },
-                  { value: "severe", label: "예 — 심한 장애" },
-                  { value: "mild", label: "예 — 심하지 않은 장애" },
-                ]}
-                value={p.disability === "none" ? "none" : p.disability === "unknown" ? "unknown" : p.disabilitySeverity === "unknown" ? "severe" : p.disabilitySeverity}
-                unknownLabel="잘 모르겠어요"
-                onChange={(v) =>
-                  setP((prev) => ({
-                    ...prev,
-                    disability: v === "unknown" ? "unknown" : v === "none" ? "none" : "self",
-                    disabilitySeverity: v === "severe" || v === "mild" ? v : "unknown",
-                  }))
+                legend={parent ? "부모님 중 장애인으로 등록된 분이 있나요?" : "나 또는 함께 사는 가족이 장애인으로 등록되어 있나요?"}
+                options={
+                  parent
+                    ? [
+                        { value: "none", label: "아니요" },
+                        { value: "self-severe", label: "예 — 심한 장애" },
+                        { value: "self-mild", label: "예 — 심하지 않은 장애" },
+                      ]
+                    : [
+                        { value: "none", label: "아니요" },
+                        { value: "self-severe", label: "본인 — 심한 장애" },
+                        { value: "self-mild", label: "본인 — 심하지 않은 장애" },
+                        { value: "member-severe", label: "가족 중 — 심한 장애" },
+                        { value: "member-mild", label: "가족 중 — 심하지 않은 장애" },
+                      ]
                 }
-              />
-              <RadioGroup
-                name="care"
-                legend={parent ? "식사·거동·외출에 다른 사람의 도움이 필요하신가요?" : "식사·거동·외출에 다른 사람의 도움이 필요한가요?"}
-                options={YN}
-                value={p.care === null ? "unknown" : p.care.includes("daily") ? "yes" : "no"}
+                value={parent && disabilityValue.startsWith("member") ? disabilityValue.replace("member", "self") : disabilityValue}
                 unknownLabel="잘 모르겠어요"
-                onChange={(v) => set("care", v === "unknown" ? null : v === "yes" ? ["daily"] : [])}
+                onChange={(v) => {
+                  if (v === "unknown" || v === "none") return setP((prev) => ({ ...prev, disability: v, disabilitySeverity: "unknown" }));
+                  const [d, s] = v.split("-") as ["self" | "member", "severe" | "mild"];
+                  setP((prev) => ({ ...prev, disability: d, disabilitySeverity: s }));
+                }}
               />
-              {senior && (
+              {askCare && (
+                <RadioGroup
+                  name="care"
+                  legend={parent ? "식사·거동·외출에 다른 사람의 도움이 필요하신가요?" : "식사·거동·외출에 다른 사람의 도움이 필요한가요? (본인 또는 돌보는 가족)"}
+                  options={YN}
+                  value={p.care === null ? "unknown" : p.care.includes("daily") ? "yes" : "no"}
+                  unknownLabel="잘 모르겠어요"
+                  onChange={(v) => set("care", v === "unknown" ? null : v === "yes" ? ["daily"] : [])}
+                />
+              )}
+              {askSenior && (
                 <RadioGroup
                   name="ltc"
-                  legend="건강보험공단에서 장기요양등급(1~5등급·인지지원등급)을 받으셨나요?"
+                  legend={parent ? "부모님이 건강보험공단에서 장기요양등급(1~5등급·인지지원등급)을 받으셨나요?" : "건강보험공단에서 장기요양등급(1~5등급·인지지원등급)을 받으셨나요?"}
+                  hint="아직 없으면 '아니요' — 등급 신청 방법은 결과에서 알려드려요."
                   options={YN}
                   value={triOf(x.facts.ltcGrade)}
                   unknownLabel="잘 모르겠어요"
@@ -359,8 +520,30 @@ function Form({ initial, initialX, initialMode }: { initial: Profile; initialX: 
 
             <section aria-labelledby="sit-life-h" className="v2-block">
               <h2 className="h3" id="sit-life-h">
-                4. 생활
+                {askFamily ? "5" : "4"}. 일·생활
               </h2>
+              <RadioGroup
+                name="activity"
+                legend={parent ? "부모님이 지금 일을 하고 계신가요?" : "지금 하고 있는 일은요?"}
+                options={
+                  parent
+                    ? [
+                        { value: "employed", label: "예, 일해요" },
+                        { value: "job_seeking", label: "일자리를 찾고 있어요" },
+                        { value: "none", label: "아니요" },
+                      ]
+                    : [
+                        { value: "employed", label: "직장에 다녀요" },
+                        { value: "self_employed", label: "자영업·프리랜서" },
+                        { value: "job_seeking", label: "일자리를 찾고 있어요" },
+                        { value: "student", label: "학생" },
+                        { value: "none", label: "일하지 않아요" },
+                      ]
+                }
+                value={parent && p.activity === "self_employed" ? "employed" : parent && p.activity === "student" ? "none" : p.activity}
+                unknownLabel="잘 모르겠어요"
+                onChange={(v) => set("activity", v as Profile["activity"])}
+              />
               <RadioGroup
                 name="housing"
                 legend={parent ? "부모님 댁은 어떤 형태인가요?" : "사는 집은 어떤 형태인가요?"}
@@ -375,34 +558,30 @@ function Form({ initial, initialX, initialMode }: { initial: Profile; initialX: 
                 onChange={(v) => set("housing", v)}
               />
               <RadioGroup
-                name="activity"
-                legend={parent ? "부모님이 지금 일을 하고 계신가요?" : "지금 일을 하고 계신가요?"}
-                options={[
-                  { value: "employed", label: "예, 일해요" },
-                  { value: "job_seeking", label: "일자리를 찾고 있어요" },
-                  { value: "none", label: "아니요" },
-                ]}
-                value={p.activity === "self_employed" ? "employed" : p.activity === "student" ? "none" : p.activity}
-                unknownLabel="잘 모르겠어요"
-                onChange={(v) => set("activity", v)}
-              />
-              <RadioGroup
                 name="veteran"
-                legend={parent ? "부모님이 국가유공자·참전유공자 등 보훈 대상이신가요?" : "국가유공자 등 보훈 대상인가요?"}
+                legend={parent ? "부모님이 국가유공자·참전유공자 등 보훈 대상이신가요?" : "국가유공자 등 보훈 대상(또는 그 가족)인가요?"}
                 options={YN}
                 value={triOf(x.traits.veteran)}
                 unknownLabel="잘 모르겠어요"
-                onChange={(v) => setX((prev) => ({ ...prev, traits: { ...prev.traits, veteran: boolOf(v) } }))}
+                onChange={(v) => setTrait("veteran", boolOf(v))}
               />
+              {askFamily && (
+                <RadioGroup
+                  name="multicultural"
+                  legend="다문화 가족(결혼이민)이거나 북한이탈주민인가요?"
+                  options={YN}
+                  value={triOf(x.traits.multicultural)}
+                  unknownLabel="잘 모르겠어요"
+                  onChange={(v) => setTrait("multicultural", boolOf(v))}
+                />
+              )}
             </section>
 
             <div className="btn-row" style={{ marginTop: "1.5rem" }}>
               <button type="button" className="btn btn-primary btn-lg" onClick={submit} data-testid="v2-submit">
                 {parent ? "부모님께 맞는 혜택 보기" : "나에게 맞는 혜택 보기"} <Icon name="arrowRight" size={18} />
               </button>
-              <span className="small muted">
-                모름으로 둔 질문은 결과 화면 맨 위에서 꼭 필요한 것만 다시 물어봐요.
-              </span>
+              <span className="small muted">모름으로 둔 질문은 결과 화면 맨 위에서 꼭 필요한 것만 다시 물어봐요.</span>
             </div>
           </div>
         </div>

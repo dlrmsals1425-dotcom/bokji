@@ -18,7 +18,7 @@ describe("상황 문장 해석: 운영자 문장", () => {
     expect(r.looksLikeSituation).toBe(true);
     expect(understoodLine(r)).toBe("경기 수원시 · 1959년생 → 만 66~67세 (65~69세) · 부모님 두 분 (부부 2인 가구)");
     expect(r.regionTerms).toEqual(["수원시"]);
-    expect(prefillPath(r)).toBe("/check?for=parent&prefill=1");
+    expect(prefillPath(r)).toBe("/situation?for=parent&prefill=1");
     // 해석에 없는 항목은 '모름'
     expect(r.profile.income).toBe("unknown");
     expect(r.profile.disability).toBe("unknown");

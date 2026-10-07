@@ -23,6 +23,7 @@ const DIM_LABEL: Record<DimId, string> = {
   support: "기초생활수급(생계·의료·주거·교육급여)·차상위 여부",
   basicPension: "기초연금 수급(소득 하위 70%)",
   income: "가구 소득 (기준 중위소득 %)",
+  children: "자녀 유무·나이대 (임신 포함)",
   disability: "장애 등록·정도",
   care: "일상생활 도움 필요",
   ltcGrade: "장기요양등급",

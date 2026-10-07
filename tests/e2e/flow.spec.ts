@@ -1,165 +1,140 @@
 import { expect, test, type Page, type Request } from "@playwright/test";
 
-/** 입력 프로필 값이 네트워크로 나가지 않는지 확인하기 위한 표식 */
-const PROFILE_MARKERS = ["75-79", "basic_pension", "daily", "single", "householdSize", "bn.profile"];
+/** 입력 상황 값이 네트워크로 나가지 않는지 확인하기 위한 표식 */
+const PROFILE_MARKERS = ["75-79", "basic_pension", "daily", "single", "householdSize", "bn.profile", "bn.facts", "incomeManwon"];
 
-function pick(page: Page, legend: string, option: string) {
+function pick(page: Page, legend: string | RegExp, option: string) {
   return page.getByRole("group", { name: legend }).getByText(option, { exact: true }).click();
 }
+const num = async (page: Page, id: string) => Number((await page.getByTestId(id).locator(".n").innerText()).replace(/,/g, ""));
+function expectPrivate(requests: Request[], extra: (url: string) => boolean = () => false) {
+  for (const r of requests) {
+    const url = decodeURIComponent(r.url());
+    expect(r.method(), url).toBe("GET");
+    for (const m of PROFILE_MARKERS) expect(url.includes(m), `${m} in ${url}`).toBeFalsy();
+    expect(extra(url), url).toBeFalsy();
+    expect(r.postData() ?? "").toBe("");
+  }
+}
+async function regionsReady(page: Page) {
+  await expect(page.locator("#sido option")).not.toHaveCount(1, { timeout: 20_000 });
+}
 
-test.describe("로그인 없는 전체 흐름", () => {
-  test("홈 → 5단계 입력 → 3단계 결과(필터) → 상세 → 기기에서 지우기", async ({ page }) => {
+test.describe("로그인 없는 전체 흐름 (상황 먼저 · 기본)", () => {
+  test("홈 → 내 상황 입력(어르신) → 결과 → 상세(내 답 비교) → 기기에서 지우기", async ({ page }) => {
     const requests: Request[] = [];
     page.on("request", (r) => requests.push(r));
 
     await page.goto("/");
     await expect(page.getByRole("heading", { level: 1 })).toContainText("내 조건");
-    // 로그인 화면·비밀번호 입력이 없어야 한다. 로그인은 '준비 중' 비활성 버튼만.
     await expect(page.locator("input[type=password]")).toHaveCount(0);
-    const loginBtn = page.getByRole("button", { name: /로그인 준비 중/ });
-    await expect(loginBtn).toBeDisabled();
+    await expect(page.getByRole("button", { name: /로그인 준비 중/ })).toBeDisabled();
 
     await page.getByTestId("start-self").click();
-    await expect(page).toHaveURL(/\/check/);
+    await expect(page).toHaveURL(/\/situation\?for=self/);
+    await expect(page.getByTestId("v2-situation")).toHaveAttribute("data-mode", "self");
+    await expect(page.getByText("시험판")).toHaveCount(0);
+    await regionsReady(page);
 
-    // 1단계: 지역은 필수
-    await page.getByTestId("next").click();
-    await expect(page.getByRole("alert").filter({ hasText: "시군구를 선택" })).toBeVisible();
-    await page.getByLabel("시·도").selectOption({ label: "경기도 (시범 지역)" });
-    await page.getByLabel("시·군·구").selectOption({ label: "수원시" });
-    await expect(page.getByText("경기도는 시범 지역이에요")).toBeVisible();
-    await page.getByTestId("next").click();
+    // 사는 곳만 필수
+    await page.getByTestId("v2-submit").click();
+    await expect(page.getByRole("alert").filter({ hasText: "시·군·구를 골라" })).toBeVisible();
+    await page.getByLabel(/^사는 시·도/).selectOption({ label: "경기도 (시범 지역)" });
+    await page.getByLabel(/^시·군·구/).selectOption({ label: "수원시" });
+    // 60세 이상이 아니면 기초연금·장기요양 대신 자녀·한부모를 묻는다
+    await expect(page.getByTestId("sit-family")).toBeVisible();
+    await expect(page.getByRole("group", { name: "기초연금을 받고 계신가요?" })).toHaveCount(0);
+    await page.getByLabel("나이 (만)").selectOption("75-79");
+    await expect(page.getByTestId("sit-family")).toHaveCount(0);
+    await page.getByLabel("함께 사는 가족 (본인 포함)").selectOption("1");
+    await pick(page, "주민센터에서 받고 있는 지원이 있나요?", "없어요 (받지 않아요)");
+    await pick(page, "기초연금을 받고 계신가요?", "예");
+    await pick(page, /식사·거동·외출/, "예");
+    await expect(page.getByRole("group", { name: /장기요양등급/ })).toBeVisible();
+    await page.getByTestId("v2-submit").click();
 
-    // 2단계: 나와 가구
-    await pick(page, "본인 나이", "75~79세");
-    await pick(page, "함께 사는 가구원 수 (본인 포함)", "1명");
-    await pick(page, "가구 특성", "1인 가구");
-    await page.getByTestId("next").click();
-
-    // 3단계: 자녀
-    await pick(page, "자녀(또는 임신) 나이대", "자녀 없음");
-    await page.getByTestId("next").click();
-
-    // 4단계: 소득은 '모름' 그대로, 수급 상태만
-    await expect(page.getByRole("group", { name: "가구 소득 (기준 중위소득 대비)" }).getByRole("radio", { name: "모름 / 건너뛰기" })).toBeChecked();
-    await pick(page, "받고 있는 수급·자격", "기초연금");
-    await pick(page, "주거 형태", "자가");
-    await page.getByTestId("next").click();
-
-    // 5단계: 민감 정보(선택)
-    await pick(page, "돌봄이 필요한 상황", "일상생활 도움 필요");
-    await page.getByTestId("finish").click();
-
-    // 결과
+    // 결과 (기본 = 상황 먼저)
     await expect(page).toHaveURL(/\/results$/);
-    const tabEligible = page.getByTestId("tab-eligible");
-    await expect(tabEligible).toBeVisible({ timeout: 20_000 });
+    await expect(page.getByTestId("v2-results")).toBeVisible({ timeout: 20_000 });
     await expect(page.getByRole("heading", { level: 1 })).toContainText("수원시");
-    const count = async (tier: string) => Number((await page.getByTestId(`tab-${tier}`).locator(".n").innerText()).replace(/,/g, ""));
-    const e0 = await count("eligible");
-    const l0 = await count("likely");
-    const c0 = await count("check");
-    expect(e0).toBeGreaterThan(0);
-    expect(l0).toBeGreaterThan(0);
-    expect(c0).toBeGreaterThan(0);
-    await expect(page.getByTestId("result-list").getByTestId("program-card").first()).toBeVisible();
-    await expect(page.getByTestId("result-list").getByTestId("program-card").first().locator(".status.tier-eligible")).toBeVisible();
-    // '조건 충족'에 기초연금이 있어야 한다 (75세·기초연금 수급)
-    await expect(page.getByTestId("result-list").getByRole("link", { name: "기초연금", exact: true })).toBeVisible();
-    // 맞춤 추천 5개
-    await expect(page.getByTestId("top-picks").locator("ol > li")).toHaveCount(5);
+    await expect(page.getByTestId("v2-chips")).toContainText("기초연금 받음");
+    expect(await num(page, "v2-n-fit")).toBeGreaterThan(0);
+    expect(await num(page, "v2-n-no")).toBeGreaterThan(0);
+    const picks = page.getByTestId("top-picks");
+    await expect(picks.locator("ol > li")).toHaveCount(5);
+    await expect(picks.getByRole("link", { name: "기초연금", exact: true })).toBeVisible();
+    await expect(picks.locator("[data-bucket=fit]").first()).toBeVisible();
+    await expect(page.getByText("시험판")).toHaveCount(0);
 
-    // 필터: 기관 유형을 바꾸면 탭 개수도 함께 바뀐다
-    await page.getByTestId("tab-likely").click();
-    // 기관·분야 좁히기는 접혀 있다 → 펼쳐서 기관 유형 선택
-    await expect(page.getByLabel("기관 유형")).toBeHidden();
-    await page.getByTestId("filter-toggle").click();
-    await page.getByLabel("기관 유형").selectOption("local");
-    const l1 = await count("likely");
-    expect(l1).toBeLessThan(l0);
-    expect(await count("eligible")).toBeLessThanOrEqual(e0);
-    await expect(page.getByText(/필터 적용/)).toBeVisible();
-    await page.getByLabel("기관 유형").selectOption("");
-    expect(await count("likely")).toBe(l0);
-
-    // 교육청 서비스는 기본 숨김 → 체크하면 개수가 늘어난다
-    await page.getByTestId("tab-likely").click();
-    const beforeEdu = await count("likely");
-    const eduLabel = await page.locator("label", { has: page.getByTestId("include-edu") }).innerText();
-    const eduN = Number(eduLabel.match(/\((\d[\d,]*)개\)/)![1].replace(/,/g, ""));
-    await page.getByTestId("include-edu").check();
-    const afterEdu = await count("likely");
-    // 같은 이름의 사업은 한 카드로 묶으므로 늘어난 카드 수는 교육청 묶음 수 이하
-    expect(afterEdu).toBeGreaterThanOrEqual(beforeEdu);
-    expect(afterEdu).toBeLessThanOrEqual(beforeEdu + eduN);
-    if (eduN > 0) expect(afterEdu).toBeGreaterThan(beforeEdu);
-    await page.getByTestId("include-edu").uncheck();
-    expect(await count("likely")).toBe(beforeEdu);
-
-    // 농림축산어업·사업자 대상도 기본 숨김
-    const indLabel = await page.locator("label", { has: page.getByTestId("include-industry") }).innerText();
-    const indN = Number(indLabel.match(/\((\d[\d,]*)개\)/)![1].replace(/,/g, ""));
-    await page.getByTestId("include-industry").check();
-    const afterInd = await count("likely");
-    expect(afterInd).toBeLessThanOrEqual(beforeEdu + indN);
-    if (indN > 0) expect(afterInd).toBeGreaterThan(beforeEdu);
-    await page.getByTestId("include-industry").uncheck();
-
-    // 기관·시설 운영 지원도 기본 숨김 (체크하면 목록 또는 '자동으로 받는 혜택'에 나타남)
-    const opLabel = await page.locator("label", { has: page.getByTestId("include-operator") }).innerText();
-    const opN = Number(opLabel.match(/\((\d[\d,]*)개\)/)![1].replace(/,/g, ""));
-    await page.getByTestId("include-operator").check();
-    const afterOp = await count("likely");
-    expect(afterOp).toBeGreaterThanOrEqual(beforeEdu);
-    expect(afterOp).toBeLessThanOrEqual(beforeEdu + opN);
-    await page.getByTestId("include-operator").uncheck();
-    expect(await count("likely")).toBe(beforeEdu);
-
-    // 목록 길이 = 탭 개수 (처음 10개 + 더 보기)
-    const shown = await page.getByTestId("result-list").getByTestId("program-card").count();
-    expect(shown).toBe(Math.min(10, beforeEdu));
-    if (beforeEdu > 10) {
-      await page.getByTestId("more").click();
-      expect(await page.getByTestId("result-list").getByTestId("program-card").count()).toBe(Math.min(30, beforeEdu));
-    }
-
-    // 상세
-    await page.getByTestId("tab-eligible").click();
-    await page.getByTestId("result-list").getByTestId("program-card").first().locator("h3 a").click();
+    // 상세: 결과와 같은 판단 + 내 답과 비교
+    await picks.getByRole("link", { name: "기초연금", exact: true }).click();
     await expect(page).toHaveURL(/\/p\//);
-    await expect(page.getByTestId("reasons")).toBeVisible();
+    await expect(page.getByTestId("detail-judge")).toHaveAttribute("data-bucket", "fit");
+    await expect(page.getByTestId("detail-judge")).toContainText("받으실 수 있어요");
+    await expect(page.getByTestId("explain-matched")).toContainText("내 답");
+    await expect(page.getByTestId("explain-matched")).toContainText("기초연금 받음");
     await expect(page.getByTestId("sources")).toContainText("수집일");
-    await expect(page.getByTestId("sources")).toContainText("원문 기준일");
-    await expect(page.getByText("소관기관")).toBeVisible();
-    await expect(page.getByRole("button", { name: /신청 준비 체크리스트/ })).toBeDisabled();
 
-    // 네트워크: 정적 자원·번들 GET 만, 프로필 값 없음
-    for (const r of requests) {
-      const url = r.url();
-      expect(r.method(), url).toBe("GET");
-      for (const m of PROFILE_MARKERS) expect(url.includes(m), `${m} in ${url}`).toBeFalsy();
-      expect(r.postData() ?? "").toBe("");
-    }
-    const bundleReqs = requests.filter((r) => r.url().includes("/bundles/v1/"));
-    expect(bundleReqs.length).toBeGreaterThan(0);
+    expectPrivate(requests);
+    expect(requests.filter((r) => r.url().includes("/bundles/v1/")).length).toBeGreaterThan(0);
 
     // 기기에서 지우기
     await page.goto("/results");
+    await expect(page.getByTestId("v2-results")).toBeVisible({ timeout: 20_000 });
     await page.getByRole("button", { name: /이 기기에서 지우기/ }).click();
     await expect(page).toHaveURL(/\/$/);
     expect(await page.evaluate(() => localStorage.getItem("bn.profile.v1"))).toBeNull();
+    expect(await page.evaluate(() => localStorage.getItem("bn.facts.v1"))).toBeNull();
     await page.goto("/results");
     await expect(page.getByText("아직 입력한 정보가 없어요")).toBeVisible();
   });
 
-  test("입력 없이 건너뛰어도 결과가 나온다 (모름만) + 검색 + 큰 글씨", async ({ page }) => {
+  test("내 복지(청년·자녀): 자녀 수·나이·임신·한부모·구직을 묻고, 추가 질문은 3개까지 @mobile", async ({ page }) => {
+    await page.goto("/situation?for=self&new=1");
+    await regionsReady(page);
+    await page.getByLabel(/^사는 시·도/).selectOption({ label: "경기도 (시범 지역)" });
+    await page.getByLabel(/^시·군·구/).selectOption({ label: "성남시" });
+    await page.getByLabel("나이 (만)").selectOption("30-34");
+    await page.getByLabel("함께 사는 가족 (본인 포함)").selectOption("2");
+    await pick(page, "함께 사는(키우는) 자녀는 몇 명인가요?", "1명");
+    await page.getByTestId("child-ages").getByText("6~12세", { exact: true }).click();
+    await pick(page, "혼자 자녀를 키우는 한부모 가구인가요?", "예");
+    await pick(page, "지금 하고 있는 일은요?", "일자리를 찾고 있어요");
+    await page.getByTestId("v2-income").fill("200");
+    await expect(page.getByTestId("v2-income-band")).toContainText("2인 가구 기준중위소득");
+    // 60세 미만 본인 → 기초연금·장기요양은 묻지 않는다
+    await expect(page.getByRole("group", { name: "기초연금을 받고 계신가요?" })).toHaveCount(0);
+    await expect(page.getByRole("group", { name: /장기요양등급/ })).toHaveCount(0);
+    await page.getByTestId("v2-submit").click();
+    await expect(page).toHaveURL(/\/results$/);
+    await expect(page.getByTestId("v2-results")).toBeVisible({ timeout: 20_000 });
+    await expect(page.getByRole("heading", { level: 1 })).toContainText("성남시");
+    await expect(page.getByTestId("top-picks").locator("ol > li")).toHaveCount(5);
+    await expect(page.getByTestId("top-picks")).toContainText(/한부모|아동|양육/);
+    expect(await page.getByTestId("v2-followup").locator(".v2-q").count()).toBeLessThanOrEqual(3);
+    // 본인 찾기 추가 질문에는 기초연금·장기요양이 나오지 않는다
+    await expect(page.getByTestId("v2-q-basicPension")).toHaveCount(0);
+    await expect(page.getByTestId("v2-q-ltcGrade")).toHaveCount(0);
+    // 다시 고치기: 저장된 답이 그대로 (주소에는 싣지 않음)
+    await page.getByTestId("edit-situation").click();
+    await expect(page).toHaveURL(/\/situation/);
+    await expect(page.getByTestId("v2-income")).toHaveValue("200");
+    await expect(page.getByRole("group", { name: "혼자 자녀를 키우는 한부모 가구인가요?" }).getByRole("radio", { name: "예" })).toBeChecked();
+    expect(page.url()).not.toContain("200");
+  });
+
+  test("모름만으로도 결과 + 예전 주소(/check, v=2) 호환 + 검색 + 큰 글씨", async ({ page }) => {
     await page.goto("/check");
-    await page.getByLabel("시·도").selectOption({ label: "서울특별시" });
-    await page.getByLabel("시·군·구").selectOption({ label: "종로구" });
-    await page.getByTestId("next").click();
-    await page.getByRole("button", { name: "지금까지 입력으로 결과 보기" }).click();
-    await expect(page.getByTestId("tab-check")).toBeVisible({ timeout: 20_000 });
-    await expect(page.getByText(/입력한 항목이 적어/)).toBeVisible();
+    await expect(page).toHaveURL(/\/situation$/);
+    await regionsReady(page);
+    await page.getByLabel(/^사는 시·도/).selectOption({ label: "서울특별시" });
+    await page.getByLabel(/^시·군·구/).selectOption({ label: "종로구" });
+    await page.getByTestId("v2-submit").click();
+    await expect(page.getByTestId("v2-followup")).toBeVisible({ timeout: 20_000 });
+    expect(await page.getByTestId("v2-followup").locator(".v2-q").count()).toBeLessThanOrEqual(3);
+    await page.goto("/results?v=2");
+    await expect(page.getByTestId("v2-results")).toBeVisible({ timeout: 20_000 });
+    await expect(page).toHaveURL(/\/results$/);
 
     await page.goto("/search?q=에너지바우처");
     await expect(page.getByText(/검색 결과 \d+개/)).toBeVisible({ timeout: 20_000 });
@@ -169,6 +144,21 @@ test.describe("로그인 없는 전체 흐름", () => {
     await expect(page.locator("html")).toHaveAttribute("data-large", "1");
     await page.reload();
     await expect(page.locator("html")).toHaveAttribute("data-large", "1");
+  });
+
+  test("예전 화면은 v=1 로만 (비교용): 단계 입력 · 3단계 결과·필터", async ({ page }) => {
+    await page.goto("/results?v=1&example=suwon-senior");
+    await expect(page.getByTestId("tab-eligible")).toBeVisible({ timeout: 20_000 });
+    await expect(page).toHaveURL(/\/results\?v=1$/);
+    await expect(page.getByTestId("top-picks").locator("ol > li")).toHaveCount(5);
+    const l0 = await num(page, "tab-likely");
+    await page.getByTestId("tab-likely").click();
+    await page.getByTestId("filter-toggle").click();
+    await page.getByLabel("기관 유형").selectOption("local");
+    expect(await num(page, "tab-likely")).toBeLessThan(l0);
+    await page.goto("/check?v=1");
+    await expect(page.getByTestId("next")).toBeVisible({ timeout: 20_000 });
+    await expect(page).toHaveURL(/\/check\?v=1/);
   });
 
   test("상세 페이지: API 신청방법·연락처와 출처(정부24·복지로) 표시 @mobile", async ({ page }) => {
@@ -183,110 +173,105 @@ test.describe("로그인 없는 전체 흐름", () => {
   });
 
   test("상세 페이지: 신청처 정보가 없으면 주민센터·시군구청 안내로 대체 @mobile", async ({ page }) => {
-    // 통합돌봄 메뉴판 출처(신청 방법·연락처 비어 있음) 사업
     await page.goto("/p/g41110.icare-0085-1489588-1-1-30");
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("가정간호제도");
     await expect(page.getByTestId("apply-fallback")).toContainText("행정복지센터");
     await expect(page.getByTestId("apply-fallback")).toContainText("129");
     await expect(page.getByTestId("official-link")).toHaveAttribute("href", /mohw\.go\.kr/);
-    await expect(page.getByRole("link", { name: /12개 질문에 답하면/ })).toBeVisible();
+    await expect(page.getByRole("link", { name: /사는 곳과 상황을 알려주시면/ })).toHaveAttribute("href", "/situation");
   });
 
-  test("홈의 예시 상황: 한 번에 결과 + 예시 안내 + 추천 5개 @mobile", async ({ page }) => {
-    const cases: [string, RegExp][] = [
-      ["suwon-senior", /수원시/],
-      ["parent-care", /수원시/],
-      ["seongnam-single-parent", /성남시/],
-      ["goyang-youth", /고양시/],
-      ["bucheon-disability", /부천시/],
+  test("홈의 예시 상황: 한 번에 결과 + 예시 안내 + 먼저 확인할 5가지 @mobile", async ({ page }) => {
+    const cases: [string, RegExp, string][] = [
+      ["suwon-senior", /수원시/, "기초연금"],
+      ["parent-care", /수원시/, "노인장기요양보험"],
+      ["seongnam-single-parent", /성남시/, "아동양육비"],
+      ["goyang-youth", /고양시/, "면접"],
+      ["bucheon-disability", /부천시/, "일상돌봄"],
     ];
-    for (const [id, region] of cases) {
+    for (const [id, region, top] of cases) {
       await page.goto("/");
       await page.getByTestId(`preset-${id}`).click();
-      await expect(page).toHaveURL(id === "parent-care" ? /\/results\?for=parent/ : /\/results/);
+      await expect(page).toHaveURL(id === "parent-care" ? /\/results\?for=parent$/ : /\/results$/);
       await expect(page.getByRole("heading", { level: 1 })).toContainText(region, { timeout: 20_000 });
       await expect(page.getByTestId("example-banner")).toContainText("예시 상황");
       await expect(page.getByTestId("top-picks").locator("ol > li")).toHaveCount(5);
+      await expect(page.getByTestId("top-picks")).toContainText(top);
       if (id === "parent-care") {
         await expect(page.getByTestId("parent-results-banner")).toBeVisible();
         await expect(page.getByTestId("proxy-apply-note")).toBeVisible();
       }
     }
     // 직접 입력(저장)하면 예시 표시가 사라진다
-    await page.goto("/check");
-    await page.getByTestId("next").click();
-    await page.getByRole("button", { name: "지금까지 입력으로 결과 보기" }).click();
-    await expect(page.getByTestId("tab-eligible")).toBeVisible({ timeout: 20_000 });
+    await page.goto("/situation");
+    await regionsReady(page);
+    await page.getByTestId("v2-submit").click();
+    await expect(page.getByTestId("v2-results")).toBeVisible({ timeout: 20_000 });
     await expect(page.getByTestId("example-banner")).toHaveCount(0);
   });
+
   test("자동으로 받는 혜택: 본문·추천과 분리된 접힌 영역, 개수 = 카드 수 @mobile", async ({ page }) => {
     await page.goto("/");
     await page.getByTestId("preset-seongnam-single-parent").click();
     await expect(page.getByTestId("top-picks")).toBeVisible({ timeout: 20_000 });
     const sec = page.getByTestId("auto-section");
     await expect(sec).toBeVisible();
-    // 본문 목록 바깥(#result-list 밖)에 있고, 기본은 접혀 있다
-    await expect(page.getByTestId("result-list").getByTestId("auto-section")).toHaveCount(0);
     await expect(sec).not.toHaveAttribute("open", "");
-    await expect(sec.getByTestId("program-card")).toHaveCount(0);
-    // 추천·본문 카드에는 '자동 제공'/'기관 추천·선정' 태그가 없다
+    await expect(sec.getByTestId("v2-card")).toHaveCount(0);
     await expect(page.getByTestId("top-picks").getByText("자동 제공")).toHaveCount(0);
-    await expect(page.getByTestId("result-list").getByTestId("apply-badge").filter({ hasText: /자동 제공|기관 추천/ })).toHaveCount(0);
+    for (const b of ["v2-fit", "v2-office"]) await expect(page.getByTestId(b).getByTestId("apply-badge").filter({ hasText: /자동 제공|기관 추천/ })).toHaveCount(0);
     const n = Number((await page.getByTestId("auto-count").innerText()).replace(/[^0-9]/g, ""));
     expect(n).toBeGreaterThan(0);
     await page.getByTestId("auto-toggle").click();
     await expect(sec).toHaveAttribute("open", "");
-    const cards = sec.getByTestId("program-card");
+    const cards = sec.getByTestId("v2-card");
     await expect(cards).toHaveCount(Math.min(n, 10));
     while (await page.getByTestId("auto-more").count()) await page.getByTestId("auto-more").click();
     await expect(cards).toHaveCount(n);
     await expect(sec.getByTestId("apply-badge").filter({ hasText: /자동 제공|기관 추천/ })).toHaveCount(n);
     await page.getByTestId("auto-toggle").click();
-    await expect(sec.getByTestId("program-card")).toHaveCount(0);
+    await expect(sec.getByTestId("v2-card")).toHaveCount(0);
   });
 
-  test("부모님 복지 찾기: 홈 CTA → 입력(부모님 문구) → 결과(대리 신청 안내) @mobile", async ({ page }) => {
+  test("부모님 복지 찾기: 홈 CTA → 부모님 상황 입력 → 결과(대리 신청 안내) @mobile", async ({ page }) => {
     await page.goto("/");
     await expect(page.getByTestId("start-self")).toBeVisible();
-    await expect(page.getByTestId("start-parent")).toBeVisible();
     await page.getByTestId("start-parent").click();
-    await expect(page).toHaveURL(/for=parent/);
-    await expect(page.getByRole("heading", { level: 1 })).toContainText("부모님 복지");
-    await expect(page.getByTestId("parent-banner")).toBeVisible();
+    await expect(page).toHaveURL(/\/situation\?for=parent/);
+    await expect(page.getByRole("heading", { level: 1 })).toContainText("부모님 상황");
     await expect(page.getByTestId("mode-parent")).toHaveAttribute("aria-pressed", "true");
-    await expect(page.getByRole("heading", { name: /부모님은 어디에/ })).toBeVisible();
-    await page.getByLabel("시·도").selectOption({ label: "경기도 (시범 지역)" });
-    await page.getByLabel("시·군·구").selectOption({ label: "수원시" });
-    await page.getByTestId("next").click();
-    await pick(page, "부모님 나이", "70~74세");
-    await pick(page, "함께 사는 가구원 수 (부모님 포함)", "2명 (부부 두 분 등)");
-    await page.getByTestId("next").click();
-    await pick(page, "자녀·손자녀(또는 임신) 나이대", "해당 없음");
-    await page.getByTestId("next").click();
-    await pick(page, "주거 형태", "자가");
-    await page.getByTestId("next").click();
-    await pick(page, "돌봄이 필요한 상황", "일상생활 도움 필요");
-    await page.getByTestId("finish").click();
-    await expect(page).toHaveURL(/\/results\?for=parent/);
+    await regionsReady(page);
+    await page.getByLabel(/^부모님이 사는 시·도/).selectOption({ label: "경기도 (시범 지역)" });
+    await page.getByLabel(/^시·군·구/).selectOption({ label: "수원시" });
+    // 부모님 찾기: 자녀 질문 대신 기초연금·장기요양 (나이를 몰라도)
+    await expect(page.getByTestId("sit-family")).toHaveCount(0);
+    await expect(page.getByRole("group", { name: "부모님이 기초연금을 받고 계신가요?" })).toBeVisible();
+    await page.getByLabel("부모님 나이 (만)").selectOption("70-74");
+    await page.getByLabel("함께 사는 가족 (본인 포함)").selectOption("2");
+    await pick(page, /식사·거동·외출/, "예");
+    await page.getByTestId("v2-submit").click();
+    await expect(page).toHaveURL(/\/results\?for=parent$/);
     await expect(page.getByTestId("parent-results-banner")).toBeVisible({ timeout: 20_000 });
-    await expect(page.getByRole("heading", { level: 1 })).toContainText("부모님께 신청해 드릴 수 있는");
+    await expect(page.getByRole("heading", { level: 1 })).toContainText("부모님께 맞는 혜택");
     await expect(page.getByTestId("top-picks")).toBeVisible();
     await expect(page.getByTestId("proxy-apply-note")).toContainText("주민센터");
     await expect(page.getByTestId("proxy-apply-note")).toContainText("법률 자문이 아닙니다");
-    // URL 예시로도 열림
+    await expect(page.getByTestId("couple-note")).toContainText("기초연금");
+    // URL 예시로도 열림 (예전 링크)
     await page.goto("/results?for=parent&example=parent-care");
     await expect(page.getByTestId("example-banner")).toBeVisible({ timeout: 20_000 });
     await expect(page.getByTestId("parent-results-banner")).toBeVisible();
     await expect(page.getByTestId("top-picks").locator("ol > li")).toHaveCount(5);
   });
-  test("운영자 문장: 홈 검색창 '수원시 소재에 계시고 59년생 부모님 두분이 계신다' → 이해 확인 → 결과 @mobile", async ({ page }) => {
+
+  test("운영자 문장: 홈 검색창 → 이해 확인 → 결과 → 추가 질문(소득 300만원) → 상세에서 남은 질문 @mobile", async ({ page }) => {
     const requests: Request[] = [];
     page.on("request", (r) => requests.push(r));
     const sentence = "수원시 소재에 계시고 59년생 부모님 두분이 계신다";
     await page.goto("/");
     await page.locator("#home-q").fill(sentence);
     await page.locator("#home-q").press("Enter");
-    await expect(page).toHaveURL(/\/check\?for=parent/);
+    await expect(page).toHaveURL(/\/situation\?for=parent&prefill=1/);
     const box = page.getByTestId("prefill-banner");
     await expect(box).toBeVisible({ timeout: 20_000 });
     await expect(box).toContainText("이렇게 이해했어요");
@@ -295,32 +280,54 @@ test.describe("로그인 없는 전체 흐름", () => {
     await expect(page.getByTestId("prefill-line")).toContainText("부부 2인");
     await expect(page.getByTestId("prefill-line")).toContainText("부모님 대신 찾기");
     await page.getByTestId("prefill-confirm").click();
-    await expect(page).toHaveURL(/\/results\?for=parent/);
+    await expect(page).toHaveURL(/\/results\?for=parent$/);
     await expect(page.getByTestId("parent-results-banner")).toBeVisible({ timeout: 20_000 });
     await expect(page.getByRole("heading", { level: 1 })).toContainText("수원시");
     const picks = page.getByTestId("top-picks");
     await expect(picks.locator("ol > li")).toHaveCount(5);
     await expect(picks).toContainText("폐렴구균");
     await expect(page.getByTestId("couple-note")).toContainText("기초연금");
-    // 문장·해석 내용은 어떤 요청 주소에도 실리지 않는다
-    for (const r of requests) {
-      const url = decodeURIComponent(r.url());
-      expect(url.includes("59년생") || url.includes("소재") || url.includes("65-69"), url).toBeFalsy();
-      expect(r.method(), url).toBe("GET");
-    }
+
+    const follow = page.getByTestId("v2-followup");
+    await expect(follow).toContainText("이것만 알려주시면");
+    expect(await follow.locator(".v2-q").count()).toBeLessThanOrEqual(3);
+    await expect(page.getByTestId("v2-q-income")).toBeVisible();
+    const fitBefore = await num(page, "v2-n-fit");
+    const noBefore = await num(page, "v2-n-no");
+    await page.getByTestId("v2-a-income-input").fill("300");
+    await page.getByTestId("v2-a-income-ok").click();
+    await expect(page.getByTestId("v2-inferred")).toBeVisible();
+    await expect(page.getByTestId("v2-chips")).toContainText("소득 월 300만원");
+    await expect(page.getByTestId("v2-q-income")).toHaveCount(0);
+    expect(await num(page, "v2-n-fit")).toBeGreaterThan(fitBefore);
+    expect(await num(page, "v2-n-no")).toBeGreaterThan(noBefore);
+
+    // 상세: '답하면 정해져요' 혜택은 남은 질문을 상세에서 바로 답할 수 있다
+    await page.getByTestId("v2-ask").locator("summary").click();
+    await page.getByTestId("v2-ask").getByTestId("v2-card").first().locator("h3 a").click();
+    await expect(page).toHaveURL(/\/p\//);
+    await expect(page.getByTestId("detail-judge")).toHaveAttribute("data-bucket", "ask");
+    const q = page.getByTestId("detail-questions").locator("[data-testid^=detail-q-]").first();
+    await expect(q).toBeVisible();
+    const qid = await q.getAttribute("data-testid");
+    await q.locator("button").first().click();
+    await expect(page.getByTestId(qid!)).toHaveCount(0);
+    await expect(page.getByTestId("explain")).toContainText("부모님 답");
+
+    expectPrivate(requests, (url) => url.includes("59년생") || url.includes("소재") || url.includes("65-69") || url.includes("만원") || /[?&=]300\b/.test(url));
   });
 
-  test("문장 해석 → 고쳐서 입력: 해석값이 채워진 채로 단계 입력", async ({ page }) => {
+  test("문장 해석 → 아래에서 더 답하기: 해석값이 채워진 채로 한 화면 입력", async ({ page }) => {
     await page.goto("/");
     await page.locator("#home-q").fill("분당 사시는 어머니 혼자 사세요 1950년생");
     await page.locator("#home-q").press("Enter");
     await expect(page.getByTestId("prefill-banner")).toBeVisible({ timeout: 20_000 });
     await page.getByTestId("prefill-edit").click();
     await expect(page.getByTestId("prefill-banner")).toHaveCount(0);
-    await expect(page.getByLabel("시·군·구")).toHaveValue("41130");
-    await page.getByTestId("next").click();
-    await expect(page.getByRole("radio", { name: "75~79세" })).toBeChecked();
-    await expect(page.getByRole("radio", { name: "1명 (혼자 사심)" })).toBeChecked();
+    await regionsReady(page);
+    await expect(page.getByLabel(/^시·군·구/)).toHaveValue("41130");
+    await expect(page.getByLabel("부모님 나이 (만)")).toHaveValue("75-79");
+    await expect(page.getByLabel("함께 사는 가족 (본인 포함)")).toHaveValue("1");
   });
 
   test("검색: 서비스 이름은 그대로 검색, 지역 낱말은 그 지역까지, 상황 문장은 맞춤 찾기 제안", async ({ page }) => {
@@ -336,39 +343,5 @@ test.describe("로그인 없는 전체 흐름", () => {
     await page.goto("/search?q=" + encodeURIComponent("부모님 59년생 틀니"));
     await expect(page.getByTestId("search-situation")).toBeVisible({ timeout: 20_000 });
     await expect(page.getByTestId("program-card").filter({ hasText: "건강보험 틀니" })).toHaveCount(1);
-  });
-  test("v2 시험판: 상황 먼저 → 추가 질문 → 소득 월 300만원 답하면 바로 다시 거름 @mobile", async ({ page }) => {
-    const requests: Request[] = [];
-    page.on("request", (r) => requests.push(r));
-    await page.goto("/situation?for=parent&new=1");
-    await page.getByTestId("v2-text").fill("수원시 소재에 계시고 59년생 부모님 두분이 계신다");
-    await expect(page.locator("#sido option")).not.toHaveCount(1, { timeout: 20_000 });
-    await page.getByTestId("v2-fill").click();
-    await expect(page.getByTestId("v2-understood")).toContainText("경기 수원시");
-    await expect(page.getByLabel("시·군·구")).toHaveValue("41110");
-    await page.getByTestId("v2-submit").click();
-    await expect(page).toHaveURL(/\/results\?for=parent&v=2/);
-    const follow = page.getByTestId("v2-followup");
-    await expect(follow).toBeVisible({ timeout: 20_000 });
-    await expect(follow).toContainText("이것만 알려주시면");
-    await expect(page.getByTestId("v2-q-income")).toBeVisible();
-    const fitBefore = Number(await page.getByTestId("v2-n-fit").locator(".n").innerText());
-    const noBefore = Number((await page.getByTestId("v2-n-no").locator(".n").innerText()).replace(/,/g, ""));
-    await page.getByTestId("v2-a-income-input").fill("300");
-    await page.getByTestId("v2-a-income-ok").click();
-    await expect(page.getByTestId("v2-inferred")).toBeVisible();
-    await expect(page.getByTestId("v2-chips")).toContainText("소득 월 300만원");
-    await expect(page.getByTestId("v2-q-income")).toHaveCount(0);
-    const fitAfter = Number(await page.getByTestId("v2-n-fit").locator(".n").innerText());
-    const noAfter = Number((await page.getByTestId("v2-n-no").locator(".n").innerText()).replace(/,/g, ""));
-    expect(fitAfter).toBeGreaterThan(fitBefore);
-    expect(noAfter).toBeGreaterThan(noBefore);
-    await expect(page.getByTestId("v2-fit")).toContainText("폐렴구균");
-    // 상황·소득은 어떤 요청 주소에도 실리지 않는다
-    for (const r of requests) {
-      const url = decodeURIComponent(r.url());
-      expect(url.includes("59년생") || url.includes("만원") || /[?&=]300\b/.test(url) || url.includes("65-69"), url).toBeFalsy();
-      expect(r.method(), url).toBe("GET");
-    }
   });
 });

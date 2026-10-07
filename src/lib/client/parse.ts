@@ -448,5 +448,5 @@ export function clearPrefill() {
 
 /** 해석 결과로 갈 입력 화면 주소 (해석 내용은 싣지 않음) */
 export function prefillPath(ps: ParsedSituation): string {
-  return `/check?for=${ps.mode ?? "self"}&prefill=1`;
+  return `/situation?for=${ps.mode ?? "self"}&prefill=1`;
 }

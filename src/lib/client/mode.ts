@@ -34,19 +34,25 @@ export const MODE_ENTRY = {
   self: {
     title: "내 복지 찾기",
     desc: "내 나이·가구·소득으로 받을 수 있는 혜택",
-    href: "/check?for=self",
+    href: "/situation?for=self",
     testId: "start-self",
   },
   parent: {
     title: "부모님 복지 찾기",
     desc: "부모님이 받을 수 있는 정부·지자체 지원을 대신 알아보기",
-    href: "/check?for=parent",
+    href: "/situation?for=parent",
     testId: "start-parent",
   },
 } as const;
 
+/** 상황 입력 화면 (기본: '상황 먼저' 한 화면 입력) */
 export function checkPath(mode: FindMode): string {
-  return mode === "parent" ? "/check?for=parent" : "/check";
+  return mode === "parent" ? "/situation?for=parent" : "/situation?for=self";
+}
+
+/** 예전 단계별 입력·결과(v1)를 비교용으로 열 때 붙이는 숨은 표시 */
+export function withV1(path: string): string {
+  return `${path}${path.includes("?") ? "&" : "?"}v=1`;
 }
 
 export function resultsPath(mode: FindMode, exampleId?: string): string {
@@ -141,7 +147,7 @@ export function resultsCopy(mode: FindMode) {
   if (mode === "parent") {
     return {
       crumbCheck: "부모님 복지",
-      checkHref: "/check?for=parent",
+      checkHref: "/situation?for=parent",
       h1Suffix: "에서 부모님께 신청해 드릴 수 있는 복지",
       situationPrefix: "부모님 상황",
       editLabel: "부모님 정보 수정",
@@ -164,13 +170,13 @@ export function resultsCopy(mode: FindMode) {
   }
   return {
     crumbCheck: "맞춤 찾기",
-    checkHref: "/check",
+    checkHref: "/situation?for=self",
     h1Suffix: "에서 신청할 수 있는 복지 서비스",
     situationPrefix: null as string | null,
     editLabel: "입력 수정",
     reenterLabel: "내 상황으로 다시 입력",
     emptyTitle: "아직 입력한 정보가 없어요",
-    emptyLead: "12개 간단한 질문에 답하면 받을 수 있을 만한 서비스를 찾아드려요. 로그인은 필요 없어요.",
+    emptyLead: "사는 곳과 몇 가지 상황만 알려주시면 받을 수 있는 혜택을 골라 드려요. 로그인은 필요 없어요.",
     emptySelf: "내 복지 찾기",
     emptyParent: "부모님 복지 찾기",
     picksTitle: (n: number) => `먼저 확인할 서비스 ${n}가지`,

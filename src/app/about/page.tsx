@@ -2,10 +2,13 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import meta from "../../../public/bundles/v1/meta.json";
 import { TIER_PLAIN } from "@/lib/client/howto";
+import { LOW_INCOME_PCT } from "@/lib/client/v2";
+import { BASIC_PENSION_THRESHOLD_2026, MEDIAN_INCOME_2026 } from "@/lib/engine/profile";
 
 export const metadata: Metadata = { title: "데이터·판정 기준" };
 
 const n = (v: number) => v.toLocaleString("ko-KR");
+const man = (won: number) => `${Math.floor(won / 10000).toLocaleString("ko-KR")}만원`;
 
 export default function About() {
   const c = meta.counts;
@@ -90,7 +93,65 @@ export default function About() {
       </section>
 
       <section>
-        <h2 className="h2">판정 기준</h2>
+        <h2 className="h2" id="v2">판단 기준 (상황 먼저 묻는 방식)</h2>
+        <p className="body">
+          사는 곳과 상황을 먼저 묻고, 답하신 상황과 맞지 않는 혜택은 본문에서 뺍니다. &lsquo;모름&rsquo;으로 남은 조건은 결과 맨 위에서 꼭 필요한 질문(최대 3개)으로만 다시
+          묻습니다. 모든 계산은 이 기기 안에서 합니다.
+        </p>
+        <dl className="summary" style={{ marginTop: "0.75rem" }}>
+          <dt>받으실 수 있어요</dt>
+          <dd>검수했거나 공식 구조화된 조건이 답하신 상황과 모두 맞을 때. 장기요양등급처럼 신청하면서 정해지는 조건은 &lsquo;신청 절차&rsquo;로 안내합니다.</dd>
+          <dt>신청할 때 확인</dt>
+          <dd>답과 어긋나는 조건은 없지만 원문의 세부 조건(재산, 특정 장애 유형, 대상 기관 등)을 신청처에서 확인해야 할 때. 원문에서 자동으로 정리한 조건은 다 맞아도 여기까지만 둡니다.</dd>
+          <dt>답하면 정해져요</dt>
+          <dd>&lsquo;모름&rsquo;으로 둔 질문 하나에 답하면 &lsquo;받으실 수 있어요&rsquo; 또는 &lsquo;맞지 않아요&rsquo;로 바로 갈리는 혜택.</dd>
+          <dt>맞지 않아 뺐어요</dt>
+          <dd>나이·가구·소득·수급 등 답하신 내용과 조건이 다를 때. 이유와 함께 접어 둡니다.</dd>
+        </dl>
+        <h3 className="h3" style={{ marginTop: "1.5rem" }} id="income">
+          소득 기준
+        </h3>
+        <ul className="bullets">
+          <li>
+            한 달 소득을 적으면 함께 사는 가족 수 기준으로 <strong>2026년 기준 중위소득</strong>(보건복지부 고시) 대비 몇 %인지 계산해, 원문의 소득 기준(예: 중위소득 80%
+            이하)과 그대로 비교합니다.
+          </li>
+          <li>
+            원문에 숫자 없이 <strong>&lsquo;저소득&rsquo;</strong>이라고만 적힌 혜택은 <strong>기준 중위소득 {LOW_INCOME_PCT}% 이하</strong>로 보고 판단합니다(청년·노인
+            사업에서 흔히 쓰는 기준). 실제 기준은 사업마다 다를 수 있어 카드에 &lsquo;기준이 숫자로 없어 {LOW_INCOME_PCT}%로 봤어요&rsquo;라고 함께 적습니다.
+          </li>
+          <li>소득이 기준 중위소득 {LOW_INCOME_PCT}%를 넘으면 기초생활수급(생계·의료·주거·교육급여, 50% 이하)·차상위(50% 이하)는 아닌 것으로 봅니다(직접 답하면 답을 따릅니다).</li>
+          <li>
+            기초연금 선정기준액(2026): 혼자 사는 어르신 월 {man(BASIC_PENSION_THRESHOLD_2026.single)}, 부부 월 395만 2천원(소득인정액). 기초연금을 받고 있다고 답하면 &lsquo;소득 하위 70%&rsquo; 조건은
+            맞는 것으로 봅니다.
+          </li>
+          <li>건강보험료로 소득을 미루어 짐작하지 않습니다. 실제 선정은 재산을 포함한 소득인정액으로 신청처에서 정합니다.</li>
+        </ul>
+        <table className="median-table" style={{ marginTop: "0.75rem" }}>
+          <caption className="sr-only">2026년 가구원 수별 기준 중위소득 (월)</caption>
+          <thead>
+            <tr>
+              <th scope="col">가구원 수</th>
+              <th scope="col">기준 중위소득 100%</th>
+              <th scope="col">{LOW_INCOME_PCT}% (숫자 없는 &lsquo;저소득&rsquo;)</th>
+              <th scope="col">50% (차상위)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {([1, 2, 3, 4, 5, 6] as const).map((k) => (
+              <tr key={k}>
+                <td>{k}인</td>
+                <td>{man(MEDIAN_INCOME_2026[k])}</td>
+                <td>{man((MEDIAN_INCOME_2026[k] * LOW_INCOME_PCT) / 100)}</td>
+                <td>{man(MEDIAN_INCOME_2026[k] / 2)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2 className="h2">예전 결과 화면의 판정 단계 (비교용)</h2>
         <dl className="summary">
           <dt>조건 충족</dt>
           <dd>{TIER_PLAIN.eligible} 검수된 규칙의 조건을 입력값이 모두 충족할 때만 표시합니다.</dd>

@@ -5,12 +5,12 @@
  */
 import { evaluateCond, evaluateRule } from "../engine/evaluate";
 import {
-  BASIC_PENSION_THRESHOLD_2026, BENEFITS, HOUSEHOLD_TRAITS, INCOME_BANDS, ageRange, incomeBandFor, incomeRange, medianWon,
+  BASIC_PENSION_THRESHOLD_2026, BENEFITS, CHILD_LABEL, HOUSEHOLD_TRAITS, INCOME_BANDS, ageRange, incomeBandFor, incomeRange, medianWon,
   type Benefit, type HouseholdTrait, type IncomeBand, type Profile,
 } from "../engine/profile";
 import type { Cond, EvalOptions, Evaluation, Leaf, Reason } from "../engine/types";
 import type { Program } from "../data/types";
-import { autoLike, groupVariants, hiddenByDefault, scoreAll, type Filters, type Group, type Scored } from "./results";
+import { autoLike, familyKey, groupVariants, hiddenByDefault, scoreAll, type Filters, type Group, type Scored } from "./results";
 import type { FindMode } from "./mode";
 
 /* ---------------- 입력 (12개 항목 + 항목별 '모름') ---------------- */
@@ -24,6 +24,8 @@ export const FACT_PATTERNS = {
 export type FactId = keyof typeof FACT_PATTERNS;
 
 export interface Extras {
+  /** 자녀 수 (0·1·2·3=3명 이상). 없음 = 모름 — 다자녀 판단·입력 화면 복원용 */
+  childCount?: 0 | 1 | 2 | 3 | null;
   /** 수급·자격 항목별 답 (키 없음 = 모름) */
   benefits: Partial<Record<Benefit, boolean>>;
   /** 가구 특성 항목별 답 (키 없음 = 모름) */
@@ -36,6 +38,8 @@ export interface Extras {
 export interface Situation {
   profile: Profile;
   x: Extras;
+  /** 본인/부모님 — 추가 질문 고르기·말투 (없으면 부모님 기준 질문 모두) */
+  mode?: FindMode;
 }
 
 export const EMPTY_EXTRAS: Extras = { benefits: {}, traits: {}, incomeManwon: null, facts: {} };
@@ -50,6 +54,12 @@ export function extrasFromProfile(p: Profile): Extras {
 }
 
 const sizeOf = (p: Profile) => (p.householdSize === "unknown" ? null : p.householdSize);
+
+/** 월 소득(만원)·가구원 수를 알면 기준 중위소득 대비 % (모르면 null) */
+export function incomePctOf(s: Situation): number | null {
+  const size = sizeOf(s.profile);
+  return s.x.incomeManwon !== null && size !== null ? (s.x.incomeManwon * 1e6) / medianWon(100, size) : null;
+}
 
 /** 소득 구간 (월 소득 입력이 있으면 그것으로) */
 export function incomeOf(s: Situation): Profile["income"] {
@@ -85,12 +95,15 @@ export function toEval(s: Situation, strict = false): { profile: Profile; opts: 
   const size = sizeOf(p);
   const traitsMap = { ...x.traits };
   if (size !== null) traitsMap.single = size === 1;
+  // 자녀 수 → 다자녀 (3명 이상은 다자녀, 0·1명은 아님, 2명은 사업마다 달라 모름으로 둔다)
+  if (traitsMap.multi_child === undefined && x.childCount !== undefined && x.childCount !== null && x.childCount !== 2) traitsMap.multi_child = x.childCount === 3;
   const tKnown = HOUSEHOLD_TRAITS.filter((t) => traitsMap[t] !== undefined);
   const income = incomeOf(s);
   const facts: Record<string, boolean> = {};
   for (const [k, v] of Object.entries(x.facts)) if (v !== undefined) facts[k] = v;
   // 기초연금을 받고 있으면 '소득 하위 70%' 조건은 이미 맞음 (안 받는다고 아니라고 볼 수는 없음)
   if (x.benefits.basic_pension === true) facts.pension70 = true;
+  const pct = incomePctOf(s);
   return {
     profile: {
       ...p,
@@ -100,6 +113,7 @@ export function toEval(s: Situation, strict = false): { profile: Profile; opts: 
     },
     opts: {
       facts, factPatterns: FACT_PATTERNS, withLeaf: true, strictSoft: strict,
+      ...(pct !== null ? { incomePct: pct } : {}),
       unknownBenefits: bKnown.length ? BENEFITS.filter((b) => x.benefits[b] === undefined) : undefined,
       unknownTraits: tKnown.length ? HOUSEHOLD_TRAITS.filter((t) => traitsMap[t] === undefined) : undefined,
     },
@@ -121,6 +135,11 @@ const RECIPIENT_RE = /(기초\s*생활\s*(보장\s*)?수급|생계\s*급여|의�
 const LOW_RE = /(저소득|취약\s*계층|형편이?\s*어려운|생계가?\s*어려운|경제적(으로)?\s*어려운|소외\s*계층|빈곤)/;
 const MEDIAN_RE = /중위\s*소득\s*(\d{2,3})\s*%\s*(이하|이내|미만)/;
 const BASIC_PENSION_RE = /기초\s*연금\s*(수급|대상|받)/;
+
+/** 기초생활보장이 아닌 다른 제도의 '수급자' (기초연금은 따로 기초연금 관문으로) */
+const OTHER_RECIPIENT = /((?:\d\s*[~∼-]\s*)?\d\s*등급(?:을\s*받은)?|등급을\s*받은|장기\s*요양(?:\s*보험)?(?:\s*급여)?|활동\s*지원(?:\s*급여)?|기초\s*연금|장애인\s*연금|국민\s*연금|공무원\s*연금|실업\s*급여|구직\s*급여|산재\s*보험|보훈\s*급여|연금)\s*(?:수급권자|수급자|수급)/g;
+/** '소득 기준과 무관하게 신청 가능' — 소득·수급 관문 없음 */
+const INCOME_FREE = /소득\s*(기준|수준)[과와]?\s*(무관|관계\s*없)/;
 const ANY_GATE = new RegExp(`${RECIPIENT_RE.source}|${LOW_RE.source}|${MEDIAN_RE.source}|기초\\s*연금`);
 
 function leavesOf(c: Cond | null, out: Leaf[] = []): Leaf[] {
@@ -151,21 +170,44 @@ export function textGate(p: Program): { gate: Gate | null; priority: boolean; pa
   PRIORITY.lastIndex = 0;
   let gate: Gate | null = null;
   let partial = false;
-  // 규칙이 소득·수급을 '확정 조건'으로 다루면 관문을 따로 두지 않는다 (soft = 원천 태그처럼 배타적이지 않은 신호는 제외)
-  const handled = leavesOf(p.rule.logic).some((l) => !l.soft && (l.field === "benefit" || l.field === "income" || l.field === "incomeBands"));
-  if (!handled && !EXCLUDED.test(text)) {
-    const lines = text.split(/\n|○|•|·\s(?=\S)|※/).map((l) => l.trim()).filter((l) => l.length > 4);
+  // 규칙이 수급을 '확정 조건'으로 다루면 관문을 따로 두지 않는다 (soft = 원천 태그처럼 배타적이지 않은 신호는 제외).
+  // 소득 조건(API 코드)이 있어도 원문 대상이 '수급자·차상위'뿐이면 그 문구가 더 좁으므로 관문으로 본다
+  //   예) 문화누리카드: 코드는 '중위 75% 이하', 원문은 '기초생활수급자 및 차상위계층' → 수급·차상위 아님이면 뺀다
+  const leaves = leavesOf(p.rule.logic);
+  const benefitHandled = leaves.some((l) => !l.soft && l.field === "benefit");
+  const incomeMax = leaves
+    .filter((l) => !l.soft && (l.field === "income" || l.field === "incomeBands"))
+    .reduce((m, l) => Math.max(m, l.field === "income" ? l.lte : l.field === "incomeBands" ? Math.max(...l.bands.map((x) => x[1])) : 0), -1);
+  const hasIncome = incomeMax >= 0;
+  // 규칙의 '묻지 않는 조건'에 저소득이 적힌 경우 (예: '부모와 따로 사는 저소득 청년')
+  const unaskedLow = leaves.find((l) => l.field === "unasked" && !l.soft && LOW_RE.test(l.label));
+  if (!benefitHandled && !EXCLUDED.test(text)) {
+    // 대상 문구의 유형 줄(○·• 등)만 센다 — 이름 줄과 '*', '※' 로 시작하는 덧붙임 줄은 빼고
+    const nameGate = ANY_GATE.test(p.name);
+    const lead2 = text.slice(text.indexOf("\n") + 1).replace(/[※*]/g, "\n$&");
+    const lines = lead2.split(/\n|○|•|·\s(?=\S)/).map((l) => l.trim()).filter((l) => l.length > 4 && !/^[※*]/.test(l));
     const gated = lines.filter((l) => ANY_GATE.test(l));
-    if (lines.length >= 3 && gated.length && gated.length < lines.length - 1) partial = true;
+    // 관문 낱말은 이름과 유형 줄에서만 찾는다 (덧붙임 줄의 '활동지원 수급자였다가' 같은 말은 대상 조건이 아님)
+    // '장기요양 수급자'·'활동지원 수급자'·'기초연금 수급자' 같은 말의 '수급자'는 기초생활수급이 아님
+    const core = `${p.name}\n${lines.join("\n")}`.replace(OTHER_RECIPIENT, (_m, w: string) => (/기초\s*연금/.test(w) ? "기초연금 받는 분" : " ")).replace(/(건강\s*보험\s*적용자\s*\+?\s*)?의료\s*급여\s*적용자/g, " ");
+    // 장기요양·활동지원 사업 안에서 홀로 쓰인 '수급자'는 그 제도의 수급자 (예: '시설급여 가능한 수급자')
+    const coreX = /장기\s*요양|요양\s*등급|활동\s*지원/.test(core) ? core.replace(/(?<!기초\s*생활\s*)(?<!급여\s*)수급(?:권)?자/g, " ") : core;
+    if (INCOME_FREE.test(text)) partial = false;
+    else if (!nameGate && lines.length >= 2 && gated.length && gated.length < lines.length) partial = true;
     else {
-      const m = MEDIAN_RE.exec(text);
-      const rec = RECIPIENT_RE.exec(text);
-      const low = LOW_RE.exec(text);
-      if (m) gate = { kind: "median", pct: Number(m[1]), text: m[0] };
-      else if (rec && !low) gate = { kind: "recipient", text: rec[0] };
-      else if (low) gate = { kind: "low", text: low[0] };
-      else if (BASIC_PENSION_RE.test(text)) gate = { kind: "basicPension", text: "기초연금 수급" };
+      const m = MEDIAN_RE.exec(coreX);
+      const rec = RECIPIENT_RE.exec(coreX);
+      const low = LOW_RE.exec(coreX);
+      if (m) {
+        if (!hasIncome || incomeMax >= 100) gate = { kind: "median", pct: Number(m[1]), text: m[0] };
+      } else if (rec) {
+        // 소득 코드가 50% 이하면 수급·차상위 기준과 같으니 코드로 충분
+        if (!hasIncome || incomeMax > 50) gate = low ? { kind: "low", text: low[0] } : { kind: "recipient", text: rec[0] };
+      } else if (low) {
+        if (!hasIncome) gate = { kind: "low", text: low[0] };
+      } else if (BASIC_PENSION_RE.test(coreX) && !hasIncome) gate = { kind: "basicPension", text: "기초연금 수급" };
     }
+    if (!gate && !partial && !hasIncome && unaskedLow) gate = { kind: "low", text: LOW_RE.exec(unaskedLow.label)![0] };
   }
   const out = { gate, priority, partial };
   gateCache.set(p, out);
@@ -177,7 +219,8 @@ export const LOW_INCOME_PCT = 60;
 
 type GateState = "met" | "no" | "unknown";
 
-function incomeTri(prof: Profile, pct: number): GateState {
+function incomeTri(prof: Profile, pct: number, exact: number | null = null): GateState {
+  if (exact !== null) return exact <= pct ? "met" : "no";
   if (prof.income === "unknown") return "unknown";
   const [lo, hi] = incomeRange(prof.income);
   if (hi <= pct) return "met";
@@ -194,12 +237,11 @@ export function gateState(g: Gate, s: Situation, prof: Profile): GateState {
       return anyRec ? "met" : noRec ? "no" : "unknown";
     case "low": {
       if (anyRec) return "met";
-      const t = incomeTri(prof, LOW_INCOME_PCT);
-      return t;
+      return incomeTri(prof, LOW_INCOME_PCT, incomePctOf(s));
     }
     case "median": {
       if (anyRec && g.pct >= 50) return "met";
-      return incomeTri(prof, g.pct);
+      return incomeTri(prof, g.pct, incomePctOf(s));
     }
     case "basicPension":
       return b.basic_pension === true ? "met" : b.basic_pension === false ? "no" : "unknown";
@@ -208,7 +250,7 @@ export function gateState(g: Gate, s: Situation, prof: Profile): GateState {
 
 /* ---------------- 추가 질문 (차원) ---------------- */
 
-export type DimId = "support" | "basicPension" | "income" | "disability" | "care" | "ltcGrade" | "alone" | "veteran" | "singleParent" | "multicultural" | "housing" | "activity" | "illness";
+export type DimId = "support" | "basicPension" | "income" | "disability" | "care" | "ltcGrade" | "alone" | "veteran" | "singleParent" | "multicultural" | "housing" | "activity" | "illness" | "children";
 
 export interface Answer {
   key: string;
@@ -223,7 +265,18 @@ export interface Dim {
   help?: string;
   answers: Answer[];
   isUnknown: (s: Situation) => boolean;
+  /** 이 상황(본인/부모님·나이)에서 물을 수 있는 질문인지 (없으면 언제나) */
+  avail?: (s: Situation) => boolean;
 }
+
+/** 60세 이상인지: 'yes' | 'no' | 'unknown' */
+const seniorOf = (s: Situation) => (s.profile.age === "unknown" ? "unknown" : ageRange(s.profile.age)[1] >= 60 ? "yes" : "no");
+/** 기초연금·장기요양 질문: 부모님 찾기는 나이를 모를 때도, 본인 찾기는 60세 이상이라고 답했을 때만 */
+const seniorQuestion = (s: Situation) => (s.mode === "self" ? seniorOf(s) === "yes" : seniorOf(s) !== "no");
+/** 자녀·임신 질문: 본인 찾기에서 60세 미만(또는 나이 모름)일 때만 */
+const childQuestion = (s: Situation) => s.mode === "self" && seniorOf(s) !== "yes";
+
+export const dimAvailable = (d: Dim, s: Situation) => !d.avail || d.avail(s);
 
 const withX = (s: Situation, patch: Partial<Extras>): Situation => ({ ...s, x: { ...s.x, ...patch } });
 const withP = (s: Situation, patch: Partial<Profile>): Situation => ({ ...s, profile: { ...s.profile, ...patch } });
@@ -262,6 +315,7 @@ export const DIMS: Dim[] = [
     q: (m) => subj(m, "기초연금을 받고 계신가요?", "부모님이 기초연금을 받고 계신가요?"),
     help: "만 65세 이상 중 소득·재산이 적은 70%가 받는 연금이에요 (국민연금과 달라요).",
     isUnknown: (s) => s.x.benefits.basic_pension === undefined && (s.profile.age === "unknown" || ageRange(s.profile.age)[1] >= 65),
+    avail: seniorQuestion,
     answers: [
       { key: "yes", label: "예", apply: (s) => setBenefits(s, ["basic_pension"], []) },
       { key: "no", label: "아니요", apply: (s) => setBenefits(s, [], ["basic_pension"]) },
@@ -297,6 +351,7 @@ export const DIMS: Dim[] = [
     id: "ltcGrade",
     q: (m) => subj(m, "건강보험공단에서 장기요양등급(1~5등급·인지지원등급)을 받으셨나요?", "부모님이 건강보험공단에서 장기요양등급(1~5등급·인지지원등급)을 받으셨나요?"),
     isUnknown: (s) => s.x.facts.ltcGrade === undefined,
+    avail: seniorQuestion,
     answers: [
       { key: "yes", label: "예", apply: (s) => withX(s, { facts: { ...s.x.facts, ltcGrade: true } }) },
       { key: "no", label: "아니요", apply: (s) => withX(s, { facts: { ...s.x.facts, ltcGrade: false } }) },
@@ -322,7 +377,7 @@ export const DIMS: Dim[] = [
   },
   {
     id: "singleParent",
-    q: (m) => subj(m, "한부모 가구이거나, 조부모가 손주를 키우는 조손 가구인가요?", "부모님이 손주를 키우고 계신가요 (조손 가구)?"),
+    q: (m) => subj(m, "혼자 자녀를 키우는 한부모 가구인가요? (조부모가 손주를 키우는 조손 가구 포함)", "부모님이 손주를 키우고 계신가요 (조손 가구)?"),
     isUnknown: (s) => s.x.traits.single_parent === undefined,
     answers: [
       { key: "yes", label: "예", apply: (s) => withX(s, { traits: { ...s.x.traits, single_parent: true } }) },
@@ -351,8 +406,10 @@ export const DIMS: Dim[] = [
     q: (m) => subj(m, "지금 일을 하고 계신가요?", "부모님이 지금 일을 하고 계신가요?"),
     isUnknown: (s) => s.profile.activity === "unknown",
     answers: [
-      { key: "employed", label: "예, 일해요", apply: (s) => withP(s, { activity: "employed" }) },
+      { key: "employed", label: "예, 직장에 다녀요", apply: (s) => withP(s, { activity: "employed" }) },
+      { key: "self_employed", label: "자영업", apply: (s) => withP(s, { activity: "self_employed" }) },
       { key: "job_seeking", label: "일자리를 찾고 있어요", apply: (s) => withP(s, { activity: "job_seeking" }) },
+      { key: "student", label: "학생", apply: (s) => withP(s, { activity: "student" }) },
       { key: "none", label: "아니요", apply: (s) => withP(s, { activity: "none" }) },
     ],
   },
@@ -363,6 +420,21 @@ export const DIMS: Dim[] = [
     answers: [
       { key: "yes", label: "예", apply: (s) => withX(s, { facts: { ...s.x.facts, illness: true } }) },
       { key: "no", label: "아니요", apply: (s) => withX(s, { facts: { ...s.x.facts, illness: false } }) },
+    ],
+  },
+  {
+    id: "children",
+    q: () => "함께 사는 자녀가 있나요? (임신 중이면 '임신 중')",
+    help: "자녀가 여럿이면 가장 어린 자녀를 고르고, '상황 고치기'에서 모두 고를 수 있어요.",
+    isUnknown: (s) => s.profile.children === null,
+    avail: childQuestion,
+    answers: [
+      { key: "none", label: "자녀 없음", apply: (s) => withX(withP(s, { children: [] }), { childCount: 0 }) },
+      ...(["pregnant", "0-1", "2-5", "6-12", "13-18", "19+"] as const).map((c) => ({
+        key: c,
+        label: CHILD_LABEL[c],
+        apply: (s: Situation) => withP(s, { children: [c] }),
+      })),
     ],
   },
 ];
@@ -389,6 +461,7 @@ export function dimsFor(p: Program): DimId[] {
       case "householdSize": out.add("alone"); break;
       case "housing": out.add("housing"); break;
       case "activity": out.add("activity"); break;
+      case "children": case "childAge": out.add("children"); break;
       case "unasked":
         for (const [k, re] of Object.entries(FACT_PATTERNS)) {
           if (!re.test(l.label)) continue;
@@ -418,30 +491,55 @@ export interface BaseResult {
   gate: Gate | null;
   gateState?: GateState;
   priority: boolean;
+  /** 간편 입력으로 묻지 않는 대상 집단이라 '신청할 때 확인'으로 둔 이유 (예: 장애 유형) */
+  why?: string;
+  /** 신청하면 그 과정에서 정해지는 조건 (예: 장기요양등급 판정) — 미리 갖출 필요 없음 */
+  process?: string;
 }
+
+/** 장기요양 '인정 신청' 자체 (등급은 신청하면 공단이 판정) — 등급을 받은 뒤의 급여·용구 사업은 제외 */
+const LTC_APPLY = /^노인\s*장기\s*요양\s*보험$|장기\s*요양\s*(인정|등급\s*(신청|판정))/;
+const LTC_AFTER = /(급여|용구|재가|시설|가족|요양보호사|본인\s*부담|감경)/;
+const LTC_PROCESS = "신청하면 국민건강보험공단이 방문 조사로 장기요양등급을 정해요 (미리 등급이 없어도 돼요).";
+
+/** 간편 입력이 묻지 않는 대상 집단 (이름에 적힘) → 조건이 다 맞아도 '신청할 때 확인' */
+const OFFICE_GROUPS: [RegExp, string][] = [
+  [/(발달\s*장애|지적\s*장애|자폐|시각\s*장애|중도\s*시각|청각\s*장애|언어\s*장애|지체\s*장애|뇌병변|척수\s*장애|정신\s*장애|신장\s*장애|농아|점자|수어|보조견)/, "장애 유형은 묻지 않았어요 — 이 유형에 해당하는지 신청할 때 확인"],
+  [/(간호사|간호조무사|요양보호사|건설\s*기능|건설\s*근로|건설\s*노동|농업인|어업인|임업인|농어업인|예술인|선원|해녀|장병|제대\s*군인|소방관|택시|화물)/, "직업·신분 조건이 있어요 — 해당하는지 신청할 때 확인"],
+  [/(운영\s*지원|기관\s*지원|대관|설치\s*운영)/, "기관·시설을 지원하는 사업이에요 — 이용할 수 있는지 문의"],
+];
 
 export function classifyBase(p: Program, s: Situation): BaseResult {
   // soft 조건(원천 태그 등)은 답과 달라도 빼지 않는다 — 배타적이지 않은 신호라서 (감사 2026-10-07: 장애인연금·장기요양 등이 잘못 빠짐)
-  const { profile, opts } = toEval(s, false);
+  const t = toEval(s, false);
+  const profile = t.profile;
+  const proc = LTC_APPLY.test(p.name) && !LTC_AFTER.test(p.name);
+  const opts = proc ? { ...t.opts, facts: { ...t.opts.facts, ltcGrade: true } } : t.opts;
+  const process = proc ? LTC_PROCESS : undefined;
   const ev = evaluateRule(p.rule, profile, opts);
   const { gate, priority } = textGate(p);
   const gs = gate ? gateState(gate, s, profile) : undefined;
-  if (ev.tier === "ineligible") return { base: "no", ev, gate, gateState: gs, priority };
-  if (gs === "no") return { base: "no", ev, gate, gateState: gs, priority };
-  if (!p.rule.logic || p.rule.unstructuredCore) return { base: "open", ev, gate, gateState: gs, priority };
+  const r = { ev, gate, gateState: gs, priority, process };
+  if (ev.tier === "ineligible") return { base: "no", ...r };
+  if (gs === "no") return { base: "no", ...r };
+  if (!p.rule.logic || p.rule.unstructuredCore) return { base: "open", ...r };
   // 긴급지원은 소득 기준이 맞아도 '갑작스러운 위기'가 있어야 함 → 신청할 때 확인
-  if (CRISIS.test(p.name) || NAMED_GROUP.test(p.name)) return { base: "open", ev, gate, gateState: gs, priority };
+  if (CRISIS.test(p.name) || NAMED_GROUP.test(p.name)) return { base: "open", ...r };
+  const og = OFFICE_GROUPS.find(([re]) => re.test(p.name));
+  if (og) return { base: "open", ...r, why: og[1] };
+  if (ev.reasons.some((x) => x.kind === "note" && /법인·시설·단체/.test(x.text))) return { base: "open", ...r, why: "법인·시설·단체 대상 조건이 있어요 — 개인이 받을 수 있는지 문의" };
   const tri = evaluateCond(p.rule.logic, profile, opts).tri;
-  if (tri === "T" && gs !== "unknown") return { base: p.rule.review === "auto" ? "autoFit" : "fit", ev, gate, gateState: gs, priority };
-  return { base: "open", ev, gate, gateState: gs, priority };
+  if (tri === "T" && gs !== "unknown") return { base: p.rule.review === "auto" ? "autoFit" : "fit", ...r };
+  return { base: "open", ...r };
 }
 
 const CRISIS = /긴급\s*(복지|지원|생계)|위기\s*가구/;
-/** 이름 괄호 안에 따로 정한 대상 집단 — 예) 무료 소송대리 서비스(가족관계미등록자) */
-const NAMED_GROUP = /\(([^()]*(?:자|인|가족|민|대상|사건[^()]*))\)\s*$/;
+/** 이름 괄호 안에 따로 정한 대상 집단 — 예) 무료 소송대리 서비스(가족관계미등록자), (미혼모·부), (장애인1~3급) */
+const NAMED_GROUP = /\(([^()]*(?:자|인|가족|민|대상|모|부|급|사건[^()]*))\)\s*$/;
 
 /** 화면 분류: fit 받을 수 있어요 / ask 질문 하나로 정해져요 / office 신청할 때 확인 / no 맞지 않아 뺐어요 */
 export type Bucket = "fit" | "ask" | "office" | "no";
+export const BUCKET_LABEL: Record<Bucket, string> = { fit: "받으실 수 있어요", office: "신청할 때 확인", ask: "답하면 정해져요", no: "맞지 않아요" };
 
 export interface V2Item {
   s: Scored;
@@ -458,7 +556,7 @@ export function decidingDims(p: Program, s: Situation, cur: Base): DimId[] {
   const out: DimId[] = [];
   for (const id of dimsFor(p)) {
     const d = DIM_BY_ID[id];
-    if (!d.isUnknown(s)) continue;
+    if (!dimAvailable(d, s) || !d.isUnknown(s)) continue;
     if (d.answers.some((a) => classifyBase(p, a.apply(s)).base !== cur)) out.push(id);
   }
   return out;
@@ -590,7 +688,7 @@ export function plainLeaf(leaf: Leaf, prof: Profile): string {
     case "care":
       return leaf.anyOf.includes("daily") ? "일상생활에 도움이 필요한 분" : "최근 퇴원한 분";
     case "disability":
-      return leaf.severity === "severe" ? "심한 장애로 등록된 분" : "등록 장애인";
+      return leaf.severity === "severe" ? "심한 장애로 등록된 분" : leaf.severity === "mild" ? "심하지 않은 장애로 등록된 분" : "등록 장애인";
     case "householdSize":
       return leaf.max === 1 ? "혼자 사는 분" : leaf.label;
     case "resident":
@@ -612,20 +710,29 @@ function gateLine(g: Gate, prof: Profile): string {
   }
 }
 
-const reasonPlain = (r: Reason, prof: Profile) => (r.leaf ? (r.kind === "unknown" && r.leaf.capU ? `${r.leaf.label} (세부 기준)` : plainLeaf(r.leaf, prof)) : r.text.replace(/\s+—\s.*$/, "").replace(/^(추가로 확인할 조건|상담으로 판단하는 조건):\s*/, ""));
+const PROXY = /가구원 본인 이름으로 신청/;
+const reasonPlain = (r: Reason, prof: Profile) => {
+  // 장애가 있는 가족(가구원) 이름으로 신청하는 경우
+  if (r.kind === "unknown" && r.field === "disability" && PROXY.test(r.text)) return `${r.leaf ? plainLeaf(r.leaf, prof) : "장애인 본인"} — 장애가 있는 가족 이름으로 신청 (그 가족 기준으로 확인)`;
+  if (r.leaf) return r.kind === "unknown" && r.leaf.capU ? `${r.leaf.label} (세부 기준)` : plainLeaf(r.leaf, prof);
+  return r.text.replace(/\s+—\s.*$/, "").replace(/^(추가로 확인할 조건|상담으로 판단하는 조건):\s*/, "");
+};
+/** 신청 과정에서 정해지는 잎 조건 (장기요양등급) — 카드의 '맞은 조건'에서 뺀다 */
+const isProcessLeaf = (r: Reason) => r.leaf?.field === "unasked" && FACT_PATTERNS.ltcGrade.test(r.leaf.label);
 const short = (t: string, n = 70) => (t.length > n ? t.slice(0, n - 1) + "…" : t);
 
 /** 카드 한 줄: 사용자 말로 */
 export function plainLine(i: V2Item, sit: Situation, mode: FindMode): string {
   const { profile } = toEval(sit);
   const ev = i.base.ev;
-  const met = ev.reasons.filter((r) => r.kind === "met" && r.leaf?.field !== "resident").map((r) => reasonPlain(r, profile));
+  const met = ev.reasons.filter((r) => r.kind === "met" && r.leaf?.field !== "resident" && !(i.base.process && isProcessLeaf(r))).map((r) => reasonPlain(r, profile));
   const who = mode === "parent" ? "부모님이" : "";
   switch (i.bucket) {
     case "fit": {
       const parts = [...met];
       if (i.base.gate && i.base.gateState === "met") parts.push(gateLine(i.base.gate, profile));
       const head = parts.length ? `${[...new Set(parts)].slice(0, 3).join(" · ")} — ${who ? who + " " : ""}해당돼요.` : "입력하신 상황으로 조건이 맞아요.";
+      if (i.base.process) return `${head} ${i.base.process}`;
       const note = ev.reasons.find((r) => r.kind === "note" && !/재산·세부 요건은 원문/.test(r.text));
       const tail = [i.base.priority ? "저소득층 우선 선정" : "", note ? `참고: ${short(reasonPlain(note, profile), 50)}` : ""].filter(Boolean).join(" · ");
       return tail ? `${head} (${tail})` : head;
@@ -641,6 +748,7 @@ export function plainLine(i: V2Item, sit: Situation, mode: FindMode): string {
       const named = NAMED_GROUP.exec(i.s.program.name);
       if (named) return `${met.length ? `${[...new Set(met)].slice(0, 2).join(" · ")}은 맞아요. ` : ""}신청할 때 확인: '${named[1]}'에 해당하는 분만 받을 수 있어요.`;
       if (CRISIS.test(i.s.program.name)) return `${met.length ? `${[...new Set(met)].slice(0, 2).join(" · ")}은 맞아요. ` : ""}갑작스러운 위기(실직·질병·사고 등)가 생겼을 때 받는 지원이에요.`;
+      if (i.base.why) return `${met.length ? `${[...new Set(met)].slice(0, 2).join(" · ")}은 맞아요. ` : ""}신청할 때 확인: ${i.base.why.replace(/ — /, ". ")}`;
       if (i.base.base === "autoFit") return `${met.length ? `${[...new Set(met)].slice(0, 2).join(" · ")}은 맞아요. ` : ""}신청할 때 확인: 세부 자격 (조건을 원문에서 자동으로 정리했어요)`;
       const unk = ev.reasons.find((r) => r.kind === "unknown") ?? ev.reasons.find((r) => r.kind === "note");
       const lead = met.length ? `${[...new Set(met)].slice(0, 2).join(" · ")}은 맞아요. ` : "";
@@ -649,6 +757,7 @@ export function plainLine(i: V2Item, sit: Situation, mode: FindMode): string {
     case "no": {
       if (i.base.gate && i.base.gateState === "no") return `${gateLine(i.base.gate, profile)} 대상이라 맞지 않아요.`;
       const un = ev.reasons.find((r) => r.kind === "unmet");
+      if (un && !un.leaf && /중 해당하는 항목이 없어요$/.test(un.text)) return `${short(un.text.replace(/없어요$/, "없어"))} 맞지 않아요.`;
       return un ? `${short(reasonPlain(un, profile))} 대상이라 맞지 않아요.` : "입력하신 상황과 맞지 않아요.";
     }
   }
@@ -672,7 +781,7 @@ export function profileForStorage(s: Situation): Profile {
   const x = inferExtras(s);
   const pick = <K extends string>(keys: readonly K[], m: Partial<Record<K, boolean>>): K[] | null =>
     keys.some((k) => m[k] !== undefined) ? keys.filter((k) => m[k] === true) : null;
-  return { ...s.profile, income: incomeOf(s), benefits: pick(BENEFITS, x.benefits), traits: s.profile.traits ?? pick(HOUSEHOLD_TRAITS, x.traits) };
+  return { ...s.profile, income: incomeOf(s), benefits: pick(BENEFITS, x.benefits), traits: pick(HOUSEHOLD_TRAITS, x.traits) ?? s.profile.traits };
 }
 
 /** 머리글 요약 (지역 제외) */
@@ -692,11 +801,199 @@ export function situationChips(s: Situation): string[] {
   const rec = RECIPIENT_KINDS.filter((k) => x.benefits[k] === true);
   if (rec.length) out.push(rec.map((k) => BENEFIT_PLAIN[k].replace(/\(.*$/, "")).join("·") + " 수급");
   else if (RECIPIENT_KINDS.every((k) => x.benefits[k] === false)) out.push("수급·차상위 아님");
+  // 기초연금은 60세 이상(또는 나이 모름)일 때만 보여 준다 (청년·중년 화면에 '기초연금 안 받음'이 뜨지 않게)
+  const seniorish = p.age === "unknown" || ageRange(p.age)[1] >= 60;
   if (x.benefits.basic_pension === true) out.push("기초연금 받음");
-  else if (x.benefits.basic_pension === false) out.push("기초연금 안 받음");
+  else if (x.benefits.basic_pension === false && seniorish) out.push("기초연금 안 받음");
   if (p.care?.length) out.push("일상생활 도움 필요");
   if (p.disability === "none") out.push("장애 없음");
+  else if (p.disability === "member") out.push("가족 중 장애 있음");
   else if (p.disability !== "unknown") out.push("장애 있음");
+  return out;
+}
+
+/* ---------------- 먼저 확인할 5가지 · 자동으로 받는 혜택 ---------------- */
+
+/**
+ * 먼저 확인할 n개: '받으실 수 있어요'(가산 +3)와 '신청할 때 확인' 중 관련도 순.
+ * 내 상황을 콕 집은 사업(specific)을 먼저 채우고, 같은 계열(양육비 이행 원스톱/지원 등)은 하나만.
+ * '답하면 정해져요'·'뺐어요'는 넣지 않는다 (애매한 것을 맨 위에 올리지 않음).
+ */
+export function topPicksV2(view: Pick<V2View, "fit" | "office">, n = 5): V2Item[][] {
+  // '받으실 수 있어요'에 +2 (v1 추천의 '조건 충족' 가산과 같게) — 관련도가 확실히 높은 '신청할 때 확인'(장애인 활동지원 등)은 앞설 수 있다
+  const key = (g: V2Item[]) => g[0].s.score + (g[0].bucket === "fit" ? 2 : 0) + (g[0].reviewed ? 0.5 : 0);
+  const pool = [...view.fit, ...view.office].sort((a, b) => key(b) - key(a) || a[0].s.program.name.localeCompare(b[0].s.program.name, "ko"));
+  const out: V2Item[][] = [];
+  const fams = new Set<string>();
+  for (const pass of [true, false]) {
+    for (const g of pool) {
+      if (out.length >= n) break;
+      if (out.includes(g)) continue;
+      if (pass && g[0].s.specific === false) continue;
+      const fk = familyKey(g[0].s.program.name);
+      if (fams.has(fk)) continue;
+      fams.add(fk);
+      out.push(g);
+    }
+  }
+  return out.sort((a, b) => pool.indexOf(a) - pool.indexOf(b));
+}
+
+/**
+ * 신청하지 않아도 받는(자동 제공·기관 선정) 사업 중 답한 상황과 어긋나지 않고 관련 있는 것 (본문과 따로 접어 둔다).
+ * 기본 숨김(교육청·복지 외 분야·기관 운영)은 뺀다.
+ */
+export function autoV2(programs: Program[], sit: Situation): Group[] {
+  const { profile, opts } = toEval(sit, false);
+  const pool = programs.filter((p) => autoLike(p) && !hiddenByDefault(p, MAIN));
+  const scored = scoreAll(pool, profile, (p) => evaluateRule(p.rule, profile, opts)).filter((x) => x.score > 0 && classifyBase(x.program, sit).base !== "no");
+  const key = (x: Scored) => x.score + (x.ev.tier === "eligible" ? 2 : 0);
+  return groupVariants([...scored].sort((a, b) => key(b) - key(a) || a.program.name.localeCompare(b.program.name, "ko")));
+}
+
+/** 한 사업 판정 (상세 화면용) — 관련도 없이 */
+export function classifyOne(p: Program, sit: Situation): V2Item {
+  const { profile, opts } = toEval(sit, false);
+  const ev = evaluateRule(p.rule, profile, opts);
+  const s: Scored = { program: p, ev, met: 0, score: 0, group: p.name };
+  return classify(s, sit);
+}
+
+/* ---------------- 상세: 내 답과 맞은 것·어긋난 것·남은 질문 ---------------- */
+
+export interface ExplainLine {
+  /** 조건 (쉬운 말) */
+  cond: string;
+  /** 내 답 (쉬운 말). 없으면 답하지 않음 */
+  answer?: string;
+}
+
+export interface Explain {
+  matched: ExplainLine[];
+  failed: ExplainLine[];
+  unknown: ExplainLine[];
+  /** 신청할 때 확인할 원문 조건 (간편 입력으로 묻지 않는 것) */
+  notes: string[];
+}
+
+const ACTIVITY_PLAIN: Record<string, string> = { employed: "직장에 다님", self_employed: "자영업", job_seeking: "일자리를 찾는 중", student: "학생", none: "일하지 않음" };
+const HOUSING_PLAIN: Record<string, string> = { own: "자가", jeonse: "전세", monthly: "월세", public_rental: "공공임대", other: "기타" };
+
+/** 이 조건에 대해 사용자가 한 답 (쉬운 말). 답하지 않았으면 undefined */
+export function answerText(field: Leaf["field"] | "gate", sit: Situation, leaf?: Leaf): string | undefined {
+  const p = sit.profile;
+  const x = inferExtras(sit);
+  const size = sizeOf(p);
+  const income = () => {
+    if (sit.x.incomeManwon !== null) return `월 ${sit.x.incomeManwon.toLocaleString("ko-KR")}만원${size ? ` (${size}인 가구 기준중위소득의 약 ${Math.round((sit.x.incomeManwon * 1e6) / medianWon(100, size))}%)` : ""}`;
+    return p.income === "unknown" ? undefined : `기준중위소득 ${p.income}% 이하 구간`;
+  };
+  const support = () => {
+    const rec = RECIPIENT_KINDS.filter((k) => x.benefits[k] === true);
+    if (rec.length) return rec.map((k) => BENEFIT_PLAIN[k].replace(/\(.*$/, "")).join("·") + " 받음";
+    if (RECIPIENT_KINDS.every((k) => x.benefits[k] === false)) return sit.x.benefits.livelihood === undefined ? "수급·차상위 아님 (소득으로 추정)" : "수급·차상위 아님";
+    return undefined;
+  };
+  switch (field) {
+    case "age":
+      return p.age === "unknown" ? undefined : situationChips({ ...sit, profile: { ...EMPTY_AGE_ONLY, age: p.age } })[0];
+    case "income": case "incomeBands":
+      return income() ?? support();
+    case "gate":
+      return [support(), income()].filter(Boolean).join(" · ") || undefined;
+    case "benefit": {
+      if (leaf?.field === "benefit" && leaf.anyOf.length === 1 && leaf.anyOf[0] === "basic_pension") {
+        return x.benefits.basic_pension === undefined ? undefined : x.benefits.basic_pension ? "기초연금 받음" : "기초연금 안 받음";
+      }
+      const parts = [support(), x.benefits.basic_pension === true ? "기초연금 받음" : undefined].filter(Boolean);
+      return parts.length ? parts.join(" · ") : undefined;
+    }
+    case "care":
+      return p.care === null ? undefined : p.care.includes("daily") ? "일상생활 도움 필요" : p.care.includes("discharged") ? "최근 퇴원" : "도움 필요 없음";
+    case "disability":
+      if (p.disability === "unknown") return undefined;
+      if (p.disability === "none") return "장애 없음";
+      return `${p.disability === "member" ? "가족 중 " : ""}${p.disabilitySeverity === "severe" ? "심한 장애" : p.disabilitySeverity === "mild" ? "심하지 않은 장애" : "장애 있음"}`;
+    case "householdSize":
+      return size === null ? undefined : size === 1 ? "혼자 삶" : `${size}명 가구`;
+    case "trait": {
+      const t = { ...x.traits, ...(size !== null ? { single: size === 1 } : {}) };
+      const on = (Object.keys(t) as HouseholdTrait[]).filter((k) => t[k] === true);
+      const known = (Object.keys(t) as HouseholdTrait[]).filter((k) => t[k] !== undefined);
+      if (leaf?.field === "trait") {
+        const hit = leaf.anyOf.filter((k) => t[k] === true);
+        if (hit.length) return hit.map((k) => TRAIT_PLAIN[k]).join("·");
+        if (leaf.anyOf.every((k) => t[k] === false)) return leaf.anyOf.map((k) => `${TRAIT_PLAIN[k]} 아님`).join(" · ");
+        return undefined;
+      }
+      return known.length ? (on.length ? on.map((k) => TRAIT_PLAIN[k]).join("·") : "해당 없음") : undefined;
+    }
+    case "housing":
+      return p.housing === "unknown" ? undefined : HOUSING_PLAIN[p.housing];
+    case "activity":
+      return p.activity === "unknown" ? undefined : ACTIVITY_PLAIN[p.activity];
+    case "children": case "childAge":
+      if (p.children === null) return undefined;
+      return p.children.length ? p.children.map((c) => CHILD_LABEL[c]).join(", ") : "자녀 없음";
+    case "unasked": {
+      if (!leaf) return undefined;
+      for (const [k, re] of Object.entries(FACT_PATTERNS)) {
+        if (!re.test(leaf.label)) continue;
+        if (k === "pension70" && x.benefits.basic_pension === true) return "기초연금 받음";
+        const v = x.facts[k as FactId];
+        if (v === undefined) return undefined;
+        return { ltcGrade: v ? "장기요양등급 있음" : "장기요양등급 없음", pension70: v ? "해당" : "해당 없음", illness: v ? "치료 중인 병 있음" : "치료 중인 병 없음" }[k as FactId];
+      }
+      return undefined;
+    }
+    default:
+      return undefined;
+  }
+}
+
+const EMPTY_AGE_ONLY: Profile = { sido: null, sigungu: null, age: "unknown", householdSize: "unknown", traits: null, children: null, income: "unknown", benefits: null, housing: "unknown", car: "unknown", activity: "unknown", care: null, disability: "unknown", disabilitySeverity: "unknown" };
+const TRAIT_PLAIN: Record<HouseholdTrait, string> = { single: "1인 가구", single_parent: "한부모·조손 가구", multi_child: "다자녀 가구", multicultural: "다문화·북한이탈 가구", veteran: "보훈 대상" };
+
+/** 상세 화면: 조건마다 내 답과 맞았는지 */
+export function explainItem(i: V2Item, sit: Situation): Explain {
+  const { profile } = toEval(sit);
+  const out: Explain = { matched: [], failed: [], unknown: [], notes: [] };
+  const seen = new Set<string>();
+  const push = (list: ExplainLine[], line: ExplainLine) => {
+    const k = line.cond;
+    if (seen.has(k)) return;
+    seen.add(k);
+    list.push(line);
+  };
+  for (const r of i.base.ev.reasons) {
+    if (r.leaf?.field === "resident") {
+      push(out.matched, { cond: "이 지역에 사는 분", answer: "사는 곳" });
+      continue;
+    }
+    if (r.kind === "note") {
+      const t = reasonPlain(r, profile);
+      if (!/재산·세부 요건은 원문|구조화된 자격 조건이 아직 없어요/.test(t)) out.notes.push(short(t, 140));
+      continue;
+    }
+    const cond = r.leaf ? reasonPlain(r, profile) : short(reasonPlain(r, profile), 120);
+    const answer = r.leaf ? answerText(r.leaf.field, sit, r.leaf) : undefined;
+    if (r.kind === "met") push(out.matched, { cond, answer });
+    else if (r.kind === "unmet") push(out.failed, { cond, answer: answer ?? r.text.match(/\(입력: (.*)\)$/)?.[1] });
+    else if (r.softNo) push(out.unknown, { cond: `${cond} (원문 분류상 대상 — 신청처에서 확인)`, answer });
+    else if (r.leaf?.field === "unasked" && !answer) out.notes.push(short(cond, 140));
+    else push(out.unknown, { cond, answer });
+  }
+  const g = i.base.gate;
+  if (g) {
+    const line = { cond: gateLine(g, profile), answer: answerText("gate", sit) };
+    if (i.base.gateState === "met") push(out.matched, line);
+    else if (i.base.gateState === "no") push(out.failed, line);
+    else push(out.unknown, line);
+  }
+  const named = NAMED_GROUP.exec(i.s.program.name);
+  if (named) out.notes.unshift(`'${named[1]}'에 해당하는 분만 받을 수 있어요.`);
+  if (CRISIS.test(i.s.program.name)) out.notes.unshift("갑작스러운 위기(실직·질병·사고 등)가 생겼을 때 받는 지원이에요.");
+  if (i.base.priority) out.notes.push("저소득층을 먼저 뽑아요 (우선 선정).");
   return out;
 }
 

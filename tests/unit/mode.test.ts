@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
-  MODE_ENTRY, checkPath, isParentMode, parseFindMode, resultsCopy, resultsPath, wizardCopy,
+  MODE_ENTRY, checkPath, isParentMode, parseFindMode, resultsCopy, resultsPath, withV1, wizardCopy,
 } from "@/lib/client/mode";
 import { PRESETS } from "@/lib/client/presets";
 
@@ -13,8 +13,10 @@ describe("찾기 모드 (본인 / 부모님)", () => {
   });
 
   it("경로 헬퍼가 for=parent를 붙인다", () => {
-    expect(checkPath("parent")).toBe("/check?for=parent");
-    expect(checkPath("self")).toBe("/check");
+    expect(checkPath("parent")).toBe("/situation?for=parent");
+    expect(checkPath("self")).toBe("/situation?for=self");
+    expect(withV1("/results?for=parent")).toBe("/results?for=parent&v=1");
+    expect(withV1("/check")).toBe("/check?v=1");
     expect(resultsPath("parent")).toBe("/results?for=parent");
     expect(resultsPath("self", "suwon-senior")).toBe("/results?example=suwon-senior");
     expect(resultsPath("parent", "parent-care")).toBe("/results?for=parent&example=parent-care");
@@ -38,7 +40,8 @@ describe("찾기 모드 (본인 / 부모님)", () => {
   });
 
   it("홈 CTA와 parent-care 프리셋", () => {
-    expect(MODE_ENTRY.parent.href).toBe("/check?for=parent");
+    expect(MODE_ENTRY.parent.href).toBe("/situation?for=parent");
+    expect(MODE_ENTRY.self.href).toBe("/situation?for=self");
     expect(isParentMode("parent")).toBe(true);
     const pc = PRESETS.find((p) => p.id === "parent-care");
     expect(pc?.mode).toBe("parent");

@@ -1,4 +1,5 @@
 "use client";
+import { replaceUrl } from "@/lib/client/url";
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -7,11 +8,12 @@ import { TierBadge, orgText } from "@/components/Badges";
 import { Icon } from "@/components/Icon";
 import { CHANNEL_LABEL, TIER_PLAIN, firstLine, howTo, metReasons, toCheck } from "@/lib/client/howto";
 import type { Program } from "@/lib/data/types";
-import { clearProfile, saveFiller, saveMode, saveProfile, useExample, useMode, useProfile } from "@/lib/client/storage";
+import { clearProfile, saveMode, useExample, useMode, useProfile } from "@/lib/client/storage";
+import { startPreset } from "@/lib/client/start";
 import { loadForRegion, loadProgram, type Loaded } from "@/lib/client/bundles";
 import { applyFilters, autoGroups, eduCount, facetCounts, groupVariants, industryCount, operatorCount, scoreAll, topPicks, type Filters, type Group } from "@/lib/client/results";
 import { PRESETS } from "@/lib/client/presets";
-import { MODE_ENTRY, coupleNote, parseFindMode, resultsCopy, resultsPath, type FindMode } from "@/lib/client/mode";
+import { MODE_ENTRY, coupleNote, parseFindMode, resultsCopy, resultsPath, withV1, type FindMode } from "@/lib/client/mode";
 import { profileChips } from "@/lib/client/summary";
 import { CATEGORIES, ORG_TYPE_LABEL, type Category, type OrgType } from "@/lib/data/types";
 import { TIER_LABEL, type Tier } from "@/lib/engine/types";
@@ -40,9 +42,9 @@ function Skeleton({ label }: { label: string }) {
 export function Results() {
   const profile = useProfile();
   const mode = useMode();
-  // ?v=2: '상황 먼저' 시험판 (주소 정리 때도 유지)
-  const v2 = useSearchParams().get("v") === "2";
-  const keepV2 = (path: string) => (v2 ? `${path}${path.includes("?") ? "&" : "?"}v=2` : path);
+  // 기본은 '상황 먼저' 결과. ?v=1 은 예전 결과 화면 (비교용 숨은 표시, 주소 정리 때도 유지)
+  const v1 = useSearchParams().get("v") === "1";
+  const keepV1 = (path: string) => (v1 ? withV1(path) : path);
   // /results?example=<id>&for=parent 링크로 예시·모드를 바로 연다
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -51,12 +53,14 @@ export function Results() {
     const preset = PRESETS.find((x) => x.id === id);
     if (preset) {
       const m = forParam ?? preset.mode ?? "self";
-      saveProfile(preset.profile, preset.id, m);
-      if (m === "parent") saveFiller("child");
-      window.history.replaceState(null, "", keepV2(resultsPath(m)));
+      startPreset(preset, m);
+      replaceUrl(keepV1(resultsPath(m)));
     } else if (forParam) {
       saveMode(forParam);
-      window.history.replaceState(null, "", keepV2(resultsPath(forParam)));
+      replaceUrl(keepV1(resultsPath(forParam)));
+    } else if (params.get("v") === "2") {
+      // 예전 시험판 주소 (/results?v=2) → 기본 화면
+      replaceUrl("/results");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps -- mount-only URL bootstrap
   }, []);
@@ -80,8 +84,8 @@ export function Results() {
       </div>
     );
   }
-  if (v2) return <ResultsV2 profile={profile} mode={mode} />;
-  return <ResultsInner profile={profile} mode={mode} key={JSON.stringify(profile) + mode} />;
+  if (v1) return <ResultsInner profile={profile} mode={mode} key={JSON.stringify(profile) + mode} />;
+  return <ResultsV2 profile={profile} mode={mode} />;
 }
 
 function ResultsInner({ profile, mode }: { profile: Profile; mode: FindMode }) {

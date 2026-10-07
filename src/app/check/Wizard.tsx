@@ -1,4 +1,5 @@
 "use client";
+import { replaceUrl } from "@/lib/client/url";
 import { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
@@ -8,7 +9,7 @@ import { clearProfile, saveFiller, saveMode, saveProfile, setSettings, useFiller
 import { loadRegions } from "@/lib/client/bundles";
 import type { RegionIndex } from "@/lib/data/types";
 import { clearPrefill, readPrefill, understoodLine, type Prefill } from "@/lib/client/parse";
-import { FILLER_LABEL, householdLabel, parseFindMode, resultsPath, wizardCopy, type FindMode, type FillerRole } from "@/lib/client/mode";
+import { FILLER_LABEL, householdLabel, parseFindMode, resultsPath, withV1, wizardCopy, type FindMode, type FillerRole } from "@/lib/client/mode";
 import {
   ACTIVITIES, ACTIVITY_LABEL, AGE_BANDS, AGE_LABEL, BENEFITS, BENEFIT_LABEL, CARE_LABEL, CARE_NEEDS, CARS, CAR_LABEL,
   CHILD_BUCKETS, CHILD_LABEL, DISABILITY, DISABILITY_SEVERITY, EMPTY_PROFILE, HOUSEHOLD_TRAITS, HOUSING,
@@ -80,7 +81,7 @@ function WizardInner({
       saveMode(m);
       if (m === "parent") saveFiller("child");
       const url = m === "parent" ? "/check?for=parent" : "/check";
-      window.history.replaceState(null, "", url);
+      replaceUrl(withV1(url));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps -- mount-only URL bootstrap
   }, []);
@@ -95,7 +96,7 @@ function WizardInner({
       saveFiller("child");
     }
     const url = next === "parent" ? "/check?for=parent" : "/check";
-    window.history.replaceState(null, "", url);
+    replaceUrl(withV1(url));
   };
 
   const go = (next: number) => {
@@ -124,7 +125,7 @@ function WizardInner({
     saveMode(mode);
     if (mode === "parent") saveFiller(filler);
     saveProfile(p, undefined, mode);
-    router.push(resultsPath(mode));
+    router.push(withV1(resultsPath(mode)));
   };
 
   /** 해석한 그대로 결과 보기 */
@@ -134,7 +135,7 @@ function WizardInner({
     saveMode(mode);
     if (mode === "parent") saveFiller(filler);
     saveProfile(p, undefined, mode);
-    router.push(resultsPath(mode));
+    router.push(withV1(resultsPath(mode)));
   };
   /** 해석 결과를 채운 채로 단계별 입력 */
   const editPrefill = () => {
