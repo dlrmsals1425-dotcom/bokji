@@ -10,7 +10,8 @@ import {
   ageRange, type AgeBand, type Benefit, type HouseholdTrait, type Housing, type Profile,
 } from "../engine/profile";
 import type { FindMode } from "./mode";
-import { topicsIn, type TopicId } from "./topics";
+import { topicsIn, PREGNANT_RE, type TopicId } from "./topics";
+export { PREGNANT_RE };
 import type { ChildBucket } from "../engine/profile";
 
 export interface Understood {
@@ -71,7 +72,12 @@ export interface ParsedSituation {
   childAges?: ChildBucket[];
   /** 부모님 두 분 나이가 다를 때 다른 한 분 (M7: 그분 기준으로 바로 다시 보기) */
   otherAge?: { band: AgeBand; label: string; range: [number, number] };
+  /** 가구원 수를 모르지만 이보다 적지는 않음 (예: '가장이에요' → 2명 이상) — 확인 화면 선택지에서 1명을 뺀다 */
+  minHousehold?: number;
 }
+
+/** 자녀 수·나이를 셀 때 지우는 임신 표현 ('임신 7개월'의 '7개월'은 아이 나이가 아님 — QA 4차 S2) */
+const PREGNANT_STRIP = /(?:임신|임산부|임부)\s*(?:한\s*지\s*)?(?:중\s*)?(?:이고\s*|이에요\s*|예요\s*)?\d{1,2}\s*(?:주|개월)(?:\s*(?:차|째))?|(?:배|뱃)\s*속\s*(?:에\s*)?(?:있는\s*)?(?:아기|애기|아이|애)|태아|출산\s*(?:을\s*)?(?:예정|앞두|앞둔)(?:인|이에요|이고)?\s*(?:아기|애기|아이)?/g;
 
 export interface ParseOptions {
   /** 사용자가 고른 탭 (부모님 복지 탭에서 시작했으면, 분명히 본인 이야기가 아닌 한 부모님 찾기로) */
@@ -388,7 +394,7 @@ function parseAge(text: string, today: Today, self = false) {
     band = hi;
     notes.push(`${self ? "생일이 지나지 않았다면" : "생신이 지나지 않으셨다면"} 만 ${pick.r[0]}세예요 (${AGE_LABEL[lo ?? hi]} 기준이 될 수 있어요).`);
   } else {
-    notes.push(`${pick.label}는 나이대가 둘 이상에 걸쳐요. 아래에서 나이대를 골라 주세요.`);
+    notes.push(`${topicJosa(pick.label)} 나이대가 둘 이상에 걸쳐요. 아래에서 나이대를 골라 주세요.`);
   }
   // 나이대가 정해지지 않으면 걸친 나이대를 고를 수 있게 (예: '30대' → 30~34세 / 35~39세)
   const choices = band === "unknown" ? AGE_BANDS.filter((b) => {
@@ -583,8 +589,15 @@ const HONORIFIC = /(계세요|계시|계셔|받으셨|받으시|받으세요|사
 /** 서술로 끝나는 문장 ('…했어요', '…예요', '…입니다') — 서비스 이름만 쓴 검색어와 구별 */
 const VERB_END = /(?:어요|아요|해요|예요|이에요|에요|습니다|었어|았어|했어|해|돼|나요|까요)[.!?~\s]*$/;
 const SELF_RE = /(?:^|\s)(?:나는|내가|난|저는|제가|본인은|본인이|저희\s*집)(?=\s|$)|저\s*혼자|나\s*혼자/;
-const COUPLE_RE = /(두\s*분|부부|내외|양친|두\s*사람|둘이서?|노부부)/;
+const COUPLE_RE = /(두\s*분|부부|내외|양친|두\s*사람|(?<![가-힣])둘이서?(?!\s*(?:세요|에요|예요|이세요|십))|노부모?부부|노부부)/;
 const ALONE_RE = /((?:혼자|홀로)\s*(?:(?:서|월세|전세|자취|원룸|집에서|단칸방|임대|에)\s*)?(?:사|살|계|지내|되|자취)|독거|홀몸|1\s*인\s*가구|자취\s*(?:해|하고|중|생))/;
+
+/** 받침에 맞춘 '은/는' (QA 4차 S6: '30대 중반는' → '30대 중반은') */
+function topicJosa(t: string): string {
+  const m = /([가-힣])[^가-힣]*$/.exec(t);
+  if (!m) return `${t}은`;
+  return `${t}${(m[1].charCodeAt(0) - 0xac00) % 28 === 0 ? "는" : "은"}`;
+}
 
 export function parseSituation(raw: string, regions: RegionIndex | null, today: Today = todayInSeoul(), opt: ParseOptions = {}): ParsedSituation {
   const text = raw.normalize("NFC").replace(/\s+/g, " ").trim();
@@ -609,9 +622,12 @@ export function parseSituation(raw: string, regions: RegionIndex | null, today: 
   }
 
   // 자녀 수·소득·함께 사는 부모님 (대상 판단에도 씀)
-  let childN = countChildren(text);
+  // 아직 태어나지 않은 아이는 자녀 수·나이·가구원에 넣지 않는다 (QA 4차 S2)
+  const pregnant = affirmed(text, PREGNANT_RE);
+  const kidText = pregnant ? text.replace(PREGNANT_STRIP, " ") : text;
+  let childN = countChildren(kidText);
   let childAssumed = false;
-  const kidAges = childAges(text);
+  const kidAges = childAges(kidText);
   // 나이만 말한 자녀 ('돌 안 된 아기 있어요', '첫째 7살 둘째 3살') → 그 수만큼
   if (childN === null && kidAges.length) childN = kidAges.length;
   const inc = parseIncome(text);
@@ -623,11 +639,12 @@ export function parseSituation(raw: string, regions: RegionIndex | null, today: 
   const selfParent = SELF_PARENT_RE.test(text) || singleMom || /(?:^|\s)(?:엄마|아빠)\s*(?:혼자|홀로)\s*(?:서\s*)?(?:애|아이|자녀|아들|딸|애기|애들)/.test(text);
 
   const selfHint =
-    selfParent || SELF_RE.test(text) || (childN !== null && childN > 0) || (!!inc && SALARY_RE.test(text)) || /(아내|와이프|남편|신랑|배우자|집사람|자영업|프리랜서|회사원|직장인)/.test(text);
+    selfParent ||
+    pregnant || SELF_RE.test(text) || (childN !== null && childN > 0) || (!!inc && SALARY_RE.test(text)) || /(아내|와이프|남편|신랑|배우자|집사람|자영업|프리랜서|회사원|직장인)/.test(text);
   // '부모님 모시고 살아요' — 부모님은 함께 사는 가족이고 찾는 사람은 본인
   const livesWithParent = !!lpM && (/모시|모셔/.test(lpM[2]) || selfHint);
   // 말하는 사람이 엄마·아빠이고 자녀 낱말만 있으면(수 없음) 자녀 1명으로 본다 ('지적장애 있는 딸', '혼자 애 키워요')
-  if (selfParent && childN === null && (singleMom || /(?<![가-힣])(?:딸|아들|아이|애|애기|아기)(?:이|가|이랑|랑|하고|과|와|을|를|은|는|\s|$)/.test(text))) {
+  if (selfParent && childN === null && (singleMom || /(?<![가-힣])(?:딸|아들|아이|애|애기|아기)(?:이|가|이랑|랑|하고|과|와|을|를|은|는|\s|$)/.test(kidText))) {
     childN = 1;
     childAssumed = true;
   }
@@ -727,6 +744,12 @@ export function parseSituation(raw: string, regions: RegionIndex | null, today: 
   } else if (COUPLE_RE.test(text)) {
     p.householdSize = 2;
     understood.push({ key: "household", label: mode === "parent" ? "부모님 두 분 (부부 2인 가구)" : "부부 2인 가구" });
+  }
+  // '가장이에요' — 부양하는 가족이 있다는 뜻 (QA 4차 S5: 1명으로 보이던 문제). 수는 모르니 2명 이상에서 고르게
+  let minHousehold: number | undefined;
+  if (p.householdSize === "unknown" && mode !== "parent" && /(?<![가-힣])(?:집안\s*)?가장(?:이에요|이예요|입니다|이고|이라|인데|이에|임|으로|이죠)/.test(text)) {
+    minHousehold = 2;
+    understood.push({ key: "household", label: "가장 (부양하는 가족 있음 · 가족 수는 아래에서 골라 주세요)" });
   }
   if (mode !== "parent" && childN !== null && !hhFromKids) {
     understood.push({ key: "children", label: childN === 0 ? "자녀 없음" : `자녀 ${childN}명` });
@@ -836,10 +859,12 @@ export function parseSituation(raw: string, regions: RegionIndex | null, today: 
     p.activity = "employed";
     signals.push("직장에 다님");
   }
-  if (mode !== "parent" && affirmed(text, /임신(?!\s*(?:준비|계획))/)) {
+  if (mode !== "parent" && pregnant) {
     p.children = ["pregnant", ...kidAges];
     signals.push("임신 중");
   }
+  // '군 제대했어요·전역했어요' → 제대한 청년 (QA 4차 S4) — 일자리·구직 주제로 (장기복무 제대군인 사업과는 다름)
+  if (mode !== "parent" && /(?:군\s*(?:에서\s*)?)?(?:제대|전역)(?:\s*(?:했|한|하고|해서|후|하자마자|한\s*지)|\s*군인|\s*장병|했어요)/.test(text)) signals.push("군 제대 (청년 일자리·구직)");
   if (/(저소득|형편이?\s*어려|어렵게\s*사)/.test(text)) notes.push("소득이 낮다고 하셨어요. 소득 구간을 입력하면 더 정확해져요.");
 
   for (const s of signals) understood.push({ key: "signal", label: s });
@@ -871,6 +896,7 @@ export function parseSituation(raw: string, regions: RegionIndex | null, today: 
     ...(interests.length ? { interests } : {}),
     ...(kidAges.length && mode !== "parent" ? { childAges: kidAges } : {}),
     ...(age?.other && mode === "parent" ? { otherAge: age.other } : {}),
+    ...(minHousehold ? { minHousehold } : {}),
   };
 }
 

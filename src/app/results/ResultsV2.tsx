@@ -282,6 +282,19 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
             </section>
           )}
 
+          {/* '장인어른 모시고 삽니다' — 모시는 분께 맞는 혜택은 그분 기준으로 따로 찾아야 정확함 (QA 4차 N3) */}
+          {!parent && sit.x.interests?.includes("eldercare") && (
+            <p className="notice" data-testid="eldercare-note" role="note">
+              <Icon name="info" size={18} />
+              <span>
+                함께 사는 부모님(장인·장모·시부모님 포함)께 맞는 혜택(기초연금·장기요양 등)은 그분 나이·상황으로 찾아야 정확해요.{" "}
+                <Link href="/situation?for=parent&new=1" className="btn btn-ghost btn-sm" data-testid="eldercare-parent-link">
+                  부모님 기준으로 따로 찾기
+                </Link>
+              </span>
+            </p>
+          )}
+
           {picks.length < 3 && askFirst && (
             <p className="notice" data-testid="picks-need-age" role="note">
               <Icon name="info" size={18} />

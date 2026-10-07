@@ -175,7 +175,7 @@ function QuickFill({ ps, p, mode, regions, setP }: { ps: ParsedSituation; p: Pro
         <div className="pf-q" data-testid="prefill-hh">
           <p className="pf-qh">함께 사는 가족 <span className="small muted">({parent ? "부모님 포함" : "본인 포함"} · 소득 기준을 정할 때 써요)</span></p>
           <div className="pf-chips" role="group" aria-label="가구원 수 고르기">
-            {([1, 2, 3, 4, 5, 6] as const).map((n) => (
+            {([1, 2, 3, 4, 5, 6] as const).filter((n) => n >= (ps.minHousehold ?? 1)).map((n) => (
               <button key={n} type="button" className={`btn btn-sm ${p.householdSize === n ? "btn-primary" : "btn-ghost"}`} aria-pressed={p.householdSize === n} onClick={() => setP((prev) => ({ ...prev, householdSize: n }))}>
                 {householdLabel(mode, n)}
               </button>
