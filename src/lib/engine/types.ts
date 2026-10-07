@@ -65,8 +65,10 @@ export interface Rule {
   reviewedAt?: string;
   /** 공공부조 관문 제도 자체 (재산·부양 조사가 따로 있음) → 조건이 맞아도 '신청할 때 확인' */
   meansTest?: boolean;
-  /** src/lib/data/refine.ts 를 이미 적용함 */
-  refined?: boolean;
+  /** 원문 대상이 수급·차상위인데 규칙은 소득 코드(0~50%)뿐 → 소득 구간만으로 '받으실 수 있어요' 금지 (refine.ts) */
+  recBand?: boolean;
+  /** src/lib/data/refine.ts 를 이미 적용함 (판 번호 — 예전 번들은 true) */
+  refined?: boolean | number;
 }
 
 export type Tier = "eligible" | "likely" | "check" | "ineligible";

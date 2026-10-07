@@ -38,7 +38,8 @@ export function compareIncomeLte(user: [number, number], lte: number): Tri {
 
 /** 소득: 사용자 구간 (lo, hi] 가 구간들 (a, b] 의 합집합에 들어가는지 */
 export function compareIncomeBands(user: [number, number], bands: [number, number][]): Tri {
-  const merged = mergeIntervals(bands);
+  // JSON 에서 Infinity 는 null 로 저장됨 ('200% 초과' = [200, null])
+  const merged = mergeIntervals(bands.map(([a, b]) => [a, b ?? Infinity] as [number, number]));
   const [lo, hi] = user;
   if (merged.some(([a, b]) => lo >= a && hi <= b)) return "T";
   if (!merged.some(([a, b]) => lo < b && hi > a)) return "F";
@@ -93,13 +94,15 @@ function rawLeaf(leaf: Leaf, p: Profile, opts?: EvalOptions): { tri: Tri; missin
     const pct = opts.incomePct;
     const display = `기준 중위소득의 약 ${Math.round(pct)}%`;
     // 구간 표기 (a, b] — '0~50, 51~75' 처럼 1%p 틈이 있는 표기는 이어 붙여 본다
-    const hit = leaf.field === "income" ? pct <= leaf.lte : leaf.bands.some(([a, b]) => pct > (a > 0 ? a - 1 : -1) && pct <= b);
+    const hit = leaf.field === "income" ? pct <= leaf.lte : leaf.bands.some(([a, b]) => pct > (a > 0 ? a - 1 : -1) && pct <= (b ?? Infinity));
     return { tri: hit ? "T" : "F", missing: false, display };
   }
   switch (leaf.field) {
     case "age": {
       if (p.age === "unknown") return { tri: "U", missing: true };
-      return { tri: compareRange(ageRange(p.age), leaf.min, leaf.max), missing: false, display: AGE_LABEL[p.age] };
+      const [lo, hi] = ageRange(p.age);
+      // 나이 범위(예: '30대' → 30-39)는 AGE_LABEL 에 없으므로 직접 적는다
+      return { tri: compareRange([lo, hi], leaf.min, leaf.max), missing: false, display: AGE_LABEL[p.age] ?? (hi >= 120 ? `만 ${lo}세 이상` : `만 ${lo}~${hi}세`) };
     }
     case "childAge": {
       if (p.children === null) return { tri: "U", missing: true };

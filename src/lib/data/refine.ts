@@ -4,7 +4,10 @@
  *     재산·부양 조사가 따로 있으므로 meansTest 표시 → 조건이 맞아도 '신청할 때 확인' (v2 classifyBase)
  *  2) 장기요양 '등급을 받은 뒤' 이용하는 급여·서비스: 장기요양등급 조건을 덧붙인다 (없으면 '받으실 수 있어요'가 되지 않게)
  *  3) 원천 자료의 담당 부처가 틀린 사업 고침
+ *  4) (QA 2차 C3) 원문(대상 + 선정기준 전문)의 '중위소득 N%'로 소득 코드를 좁히고,
+ *     원문이 수급·차상위인데 정부24 소득 코드(0~50%)만 있는 규칙에 recBand 표시 → 소득 구간만으로 '받으실 수 있어요'가 되지 않게 (v2 textGate)
  * 원칙: 조건을 좁히기만 하고 넓히지 않는다. 여러 번 적용해도 결과가 같다.
+ * REFINE_VERSION 이 바뀌면 이전 번들의 규칙도 읽을 때 다시 다듬는다 (좁히기만 하므로 다시 적용해도 안전).
  * (원문의 '수급자'·'중위소득 N%' 문구는 v2 textGate 가 소득 코드보다 좁으면 관문으로 건다)
  */
 import type { Cond, Leaf, Rule } from "../engine/types";
@@ -63,10 +66,15 @@ function mapLeaves(c: Cond, f: (l: Leaf) => Cond): Cond {
 
 /** 원문 '중위소득 N% 이하' (여러 개면 가장 큰 값 — 유형별 기준 중 가장 넓은 것보다 넓히지 않음) */
 const MEDIAN_ALL = /중위\s*(?:소득\s*)?(?:의\s*)?(\d{2,3})\s*%\s*(?:이하|이내|미만)/g;
-export function textMedianCap(target: string | undefined): number | null {
-  const t = (target ?? "").replace(/&#13;/g, "\n").slice(0, 400);
+const MEDIAN_OVER = /중위\s*(?:소득\s*)?(?:의\s*)?(\d{2,3})\s*%\s*(?:초과|이상|넘는)/g;
+export function textMedianCap(target: string | undefined, limit = 400): number | null {
+  const t = (target ?? "").replace(/&#13;/g, "\n").slice(0, limit);
   const nums = [...t.matchAll(MEDIAN_ALL)].map((m) => Number(m[1])).filter((n) => n >= 20 && n <= 300);
-  return nums.length ? Math.max(...nums) : null;
+  if (!nums.length) return null;
+  const cap = Math.max(...nums);
+  // '120% 이하(국비) / 120% 초과(군비)' 처럼 기준 위쪽도 지원하면 상한이 아님
+  if ([...t.matchAll(MEDIAN_OVER)].some((m) => Number(m[1]) >= cap)) return null;
+  return cap;
 }
 /** 0부터 이어진 구간인지 (예: 0~50, 51~75, 76~100) */
 const contiguousFromZero = (bands: [number, number][]) => {
@@ -74,10 +82,19 @@ const contiguousFromZero = (bands: [number, number][]) => {
   return b[0]?.[0] === 0 && b.every((x, i) => i === 0 || x[0] <= b[i - 1][1] + 1);
 };
 
-const incomeMax = (l: Leaf) => (l.field === "income" ? l.lte : l.field === "incomeBands" ? Math.max(...l.bands.map((b) => b[1])) : Infinity);
+const incomeMax = (l: Leaf) => (l.field === "income" ? l.lte : l.field === "incomeBands" ? Math.max(...l.bands.map((b) => b[1] ?? Infinity)) : Infinity);
 
-export function refineRule(p: Pick<Program, "name" | "target">, rule: Rule): Rule {
-  if (rule.refined) return rule;
+/** 원문 비율 상한: 대상 문구와 선정기준 전문에 적힌 비율 중 가장 큰 값 (넓은 쪽 — 좁히기 과잉 방지) */
+export function sourceMedianCap(p: { target?: string; criteria?: string }): number | null {
+  const caps = [textMedianCap(p.target, 1200), textMedianCap(p.criteria, 1200)].filter((x): x is number => x !== null);
+  return caps.length ? Math.max(...caps) : null;
+}
+export const REC_TEXT = /(수급자|수급권자|차상위|기초\s*생활\s*보장|생계\s*급여|의료\s*급여|주거\s*급여)/;
+const MED_TEXT = /중위\s*(?:소득\s*)?(?:의\s*)?\d{2,3}\s*%/;
+export const REFINE_VERSION = 3;
+
+export function refineRule(p: { name: string; target?: string; criteria?: string }, rule: Rule): Rule {
+  if (rule.refined === REFINE_VERSION) return rule;
   let logic = rule.logic;
   let meansTest: true | undefined;
   const mt = meansTestOf(p.name);
@@ -94,23 +111,54 @@ export function refineRule(p: Pick<Program, "name" | "target">, rule: Rule): Rul
   }
   else if (rule.origin === "gov24_conditions" && logic) {
     // 정부24 소득 코드는 0~50/51~75/76~100/101~200 네 구간뿐이라 원문 '중위소득 N%'가 위로 반올림됨 → 원문 비율로 좁힘
-    const cap = textMedianCap(p.target);
+    const cap = sourceMedianCap(p);
     if (cap !== null) {
-      logic = mapLeaves(logic, (l) =>
-        l.field === "incomeBands" && !l.soft && contiguousFromZero(l.bands) && cap < incomeMax(l)
-          ? { field: "income", lte: cap, label: `기준 중위소득 ${cap}% 이하 (원문)` }
-          : l);
+      logic = mapLeaves(logic, (l) => {
+        if (l.field !== "incomeBands" || l.soft || cap >= incomeMax(l)) return l;
+        if (contiguousFromZero(l.bands)) return { field: "income", lte: cap, label: `기준 중위소득 ${cap}% 이하 (원문)` };
+        // 0부터 이어지지 않는 구간(예: 51~100%)은 원문 상한에서 자른다 (구간을 넓히지 않음)
+        const bands = l.bands.filter((b) => b[0] < cap).map((b) => [b[0], Math.min(b[1] ?? Infinity, cap)] as [number, number]);
+        return bands.length ? { ...l, bands, label: `${l.label} 중 원문 기준 중위소득 ${cap}% 이하` } : l;
+      });
     }
+  }
+  // QA 2차 N7: 수기 규칙의 '저소득' soft 소득 잎이 원문 비율(±5%p)과 같으면 원문이 확인해 준 기준 → soft를 푼다
+  // (같은 'any' 묶음의 수급 soft 잎도 함께: 수급 아님·소득 초과가 분명하면 대상 아님)
+  if (logic) {
+    const cap = sourceMedianCap(p);
+    if (cap !== null) logic = hardenConfirmed(logic, cap);
   }
   if (needsLtcGrade(p) && !leaves(logic).some((l) => l.field === "unasked" && LTC_LEAF_RE.test(l.label))) {
     const leaf: Leaf = { field: "unasked", label: LTC_LEAF_LABEL, hint: "국민건강보험공단의 장기요양등급 판정을 받은 분이 이용해요." };
     logic = logic ? ("all" in logic ? { ...logic, all: [...logic.all, leaf] } : { all: [logic, leaf] }) : leaf;
   }
-  return { ...rule, logic, ...(meansTest ? { meansTest } : {}), refined: true };
+  // 원문이 수급·차상위(비율 없음)인데 규칙은 정부24 소득 코드 0~50%뿐 → 소득 구간만으로 맞음 판정 금지 표시
+  let recBand: true | undefined = rule.recBand ? true : undefined;
+  if (!meansTest && rule.origin === "gov24_conditions" && logic) {
+    const ls = leaves(logic);
+    const band = ls.filter((l) => !l.soft && l.field === "incomeBands");
+    const src = `${p.target ?? ""}\n${p.criteria ?? ""}`.replace(/&#13;/g, "\n");
+    if (band.length && Math.max(...band.map(incomeMax)) <= 50 && !ls.some((l) => !l.soft && l.field === "benefit") && REC_TEXT.test(src) && !MED_TEXT.test(src)) recBand = true;
+  }
+  return { ...rule, logic, ...(meansTest ? { meansTest } : {}), ...(recBand ? { recBand } : {}), refined: REFINE_VERSION };
+}
+
+const confirmedIncome = (l: Cond, cap: number) => !("all" in l) && !("any" in l) && l.field === "income" && !!l.soft && Math.abs(l.lte - cap) <= 5;
+function hardenConfirmed(c: Cond, cap: number): Cond {
+  if ("all" in c) return { ...c, all: c.all.map((x) => hardenConfirmed(x, cap)) };
+  if ("any" in c) {
+    const kids = c.any;
+    const flat = kids.every((k) => !("all" in k) && !("any" in k) && (k.field === "income" || k.field === "benefit"));
+    // '(원문 확인)' 묶음은 자동 변환이 불확실하다고 표시한 것 (예: HPV — 청소년은 소득 무관) → 그대로 둔다
+    if (/원문 확인/.test(c.label ?? "")) return c;
+    if (flat && kids.some((k) => confirmedIncome(k, cap))) return { ...c, any: kids.map((k) => ({ ...(k as Leaf), soft: undefined })) };
+    return { ...c, any: kids.map((x) => hardenConfirmed(x, cap)) };
+  }
+  return confirmedIncome(c, cap) && !/원문 확인/.test(c.label) ? { ...c, soft: undefined } : c;
 }
 
 export function refineProgram<T extends Program>(p: T): T {
-  if (p.rule?.refined && !OWNER_FIX[p.id]) return p;
+  if (p.rule?.refined === REFINE_VERSION && !OWNER_FIX[p.id]) return p;
   const owner = OWNER_FIX[p.id] ?? p.owner;
   return { ...p, owner, rule: p.rule ? refineRule(p, p.rule) : p.rule };
 }
