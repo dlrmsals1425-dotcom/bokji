@@ -1,8 +1,8 @@
 {
   "schema": 1,
-  "generatedAt": "2026-10-06T14:06:02.464Z",
+  "generatedAt": "2026-10-07T00:52:08.063Z",
   "dataAsOf": {
-    "bokjiro": "복지로 OpenAPI 수집 2026-10-06 (서비스별 최종수정일 표시) · 색인 2026-09-24",
+    "bokjiro": "복지로 OpenAPI 수집 2026-10-07 (서비스별 최종수정일 표시) · 색인 2026-09-24",
     "icare": "2026-04 등 (메뉴판 문서별 원문 기준월), 수집 2026-10-01",
     "gov24": "수집 2026-10-02"
   },
@@ -19,18 +19,18 @@
       "eupmyeondong_level": 26,
       "region_unresolved": 5
     },
-    "uniquePrograms": 23569,
-    "placements": 23572,
+    "uniquePrograms": 23572,
+    "placements": 23575,
     "byOrg": {
       "central": 1061,
       "public_inst": 2201,
-      "local": 18087,
+      "local": 18090,
       "metro": 1967,
       "edu_office": 253
     },
     "byScope": {
       "national": 1420,
-      "sigungu": 19888,
+      "sigungu": 19891,
       "sido": 2261
     },
     "bySector": {
@@ -39,14 +39,14 @@
       "operator": 29
     },
     "byApplyType": {
-      "self": 11611,
-      "auto": 728,
-      "institution": 203,
-      "unknown": 11027
+      "self": 11607,
+      "auto": 735,
+      "institution": 211,
+      "unknown": 11019
     },
     "bySource": {
       "gov24": 9336,
-      "bokjiro": 5226,
+      "bokjiro": 5229,
       "welfare100": 100,
       "icare": 10218
     },
@@ -61,7 +61,7 @@
       "bokjiro": {
         "central": 274,
         "metro": 569,
-        "local": 3238
+        "local": 3241
       },
       "welfare100": {
         "central": 46,
@@ -107,22 +107,22 @@
           "count": 59
         }
       ],
-      "absorbedAsLocalOps": 2382,
-      "blockedByLevel": 399,
-      "keptRegionalAddons": 52,
-      "absorbedRegionalCopies": 169
+      "absorbedAsLocalOps": 2379,
+      "blockedByLevel": 402,
+      "keptRegionalAddons": 48,
+      "absorbedRegionalCopies": 166
     },
-    "localOps": 2362,
+    "localOps": 2359,
     "rulesByReview": {
       "structured": 1870,
-      "auto": 21629,
+      "auto": 21632,
       "curated": 73
     },
     "rulesByOrigin": {
       "gov24_conditions": 8085,
       "none": 2423,
       "curated": 73,
-      "bokjiro_tags": 3629,
+      "bokjiro_tags": 3632,
       "text_extract": 9362
     },
     "pilot": {
@@ -135,10 +135,10 @@
     "nationalCurated": 62,
     "nationalStructured": 891,
     "coverage": {
-      "applyMethod": 12837,
-      "contact": 12926,
-      "either": 13334,
-      "total": 23569
+      "applyMethod": 12861,
+      "contact": 13383,
+      "either": 13415,
+      "total": 23572
     },
     "bokjiroApi": {
       "list": {
@@ -147,7 +147,7 @@
       },
       "detail": {
         "central": 461,
-        "local": 3916
+        "local": 4819
       },
       "enriched": 5201,
       "added": 79,
@@ -160,7 +160,7 @@
     "services": 10949
   },
   "logs": [
-    "[bokjiro-api] 목록 중앙 461 · 지자체 4819 / 상세 중앙 461 · 지자체 3916 / 보강 5201 · 신규 79 · 색인에만 있음 3",
+    "[bokjiro-api] 목록 중앙 461 · 지자체 4819 / 상세 중앙 461 · 지자체 4819 / 보강 5201 · 신규 79 · 색인에만 있음 3",
     "[gov24] 지역 해석 실패: 6건"
   ],
   "excludedSamples": [
