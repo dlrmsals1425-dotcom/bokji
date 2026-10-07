@@ -238,8 +238,10 @@ function Form({ initial, initialX, initialMode, wantPrefill }: { initial: Profil
     if (r.mode) setMode(r.mode);
     setHhAlt(false);
   };
-  const fillFromText = () => {
-    const r = parseSituation(text, regions, undefined, { hint: mode });
+  const fillFromText = async () => {
+    // 지역 목록을 아직 못 받았으면 기다렸다가 읽는다 (빨리 누르면 지역을 놓치던 문제)
+    const rg = regions ?? (await loadRegions().catch(() => null));
+    const r = parseSituation(text, rg, undefined, { hint: mode });
     applyParsed(r);
     setUnderstood(r);
   };
