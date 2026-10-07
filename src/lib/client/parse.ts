@@ -10,6 +10,8 @@ import {
   ageRange, type AgeBand, type Benefit, type HouseholdTrait, type Housing, type Profile,
 } from "../engine/profile";
 import type { FindMode } from "./mode";
+import { topicsIn, type TopicId } from "./topics";
+import type { ChildBucket } from "../engine/profile";
 
 export interface Understood {
   /** 항목 이름 (지역·나이·가구·소득·자녀·대상·상황) */
@@ -63,6 +65,17 @@ export interface ParsedSituation {
   ageChoices?: AgeBand[];
   /** 문장에서 '받지 않는다'고 한 수급·연금 (예: '기초연금 안 받아요') */
   benefitsNo?: Benefit[];
+  /** 문장에서 말한 관심 주제 (예: '기초연금 받고 싶어요' → basic_pension) — 먼저 확인할 것의 순서에만 쓴다 */
+  interests?: TopicId[];
+  /** 문장에서 읽은 자녀 나이대 (예: '돌 안 된 아기' → 0~1세) */
+  childAges?: ChildBucket[];
+  /** 부모님 두 분 나이가 다를 때 다른 한 분 (M7: 그분 기준으로 바로 다시 보기) */
+  otherAge?: { band: AgeBand; label: string; range: [number, number] };
+}
+
+export interface ParseOptions {
+  /** 사용자가 고른 탭 (부모님 복지 탭에서 시작했으면, 분명히 본인 이야기가 아닌 한 부모님 찾기로) */
+  hint?: FindMode;
 }
 
 /* ---------------- 지역 ---------------- */
@@ -274,6 +287,7 @@ export function ageFromBirth(year: number, today: Today, month?: number): [numbe
   return [full - 1, full];
 }
 
+const CHILD_AGE_LABEL: Record<ChildBucket, string> = { pregnant: "임신 중", "0-1": "0~1세", "2-5": "2~5세", "6-12": "6~12세", "13-18": "13~18세", "19+": "19세 이상" };
 const bandOf = (age: number): AgeBand | null => {
   if (age < 0) return null;
   return AGE_BANDS.find((b) => {
@@ -285,12 +299,22 @@ const bandOf = (age: number): AgeBand | null => {
 const KOR_NUM: Record<string, number> = { 한: 1, 혼: 1, 두: 2, 세: 3, 네: 4, 다섯: 5, 여섯: 6 };
 const KOR_TENS: Record<string, number> = { 스물: 20, 서른: 30, 마흔: 40, 쉰: 50, 예순: 60, 일흔: 70, 여든: 80, 아흔: 90, 이십: 20, 삼십: 30, 사십: 40, 오십: 50, 육십: 60, 칠십: 70, 팔십: 80, 구십: 90 };
 const KOR_ONES: Record<string, number> = { 하나: 1, 한: 1, 둘: 2, 두: 2, 셋: 3, 세: 3, 넷: 4, 네: 4, 다섯: 5, 여섯: 6, 일곱: 7, 여덟: 8, 아홉: 9, 일: 1, 이: 2, 삼: 3, 사: 4, 오: 5, 육: 6, 칠: 7, 팔: 8, 구: 9 };
-const TENS_W = "스물|서른|마흔|쉰|예순|일흔|여든|아흔|이십|삼십|사십|오십|육십|칠십|팔십|구십";
-/** '육십오세', '일흔 두 살', '여든이신' — 한자어 십 단위는 '세·살'이 붙을 때만 (예: '오십견' 제외) */
-const KOR_AGE_RE = new RegExp(`(?<![가-힣])(${TENS_W})\\s*(하나|한|둘|두|셋|세(?!\\s*살|$)|넷|네|다섯|여섯|일곱|여덟|아홉|일|이|삼|사|오|육|칠|팔|구)?\\s*(?:세|살|이신|이세요|이심|이에요|이야|되셨|되신|되었|됐|드신|잡수)`, "g");
+const TENS_W = "스물|스무|서른|마흔|쉰|예순|일흔|여든|아흔|이십|삼십|사십|오십|육십|칠십|팔십|구십";
+const NATIVE_TENS = "스물|스무|서른|마흔|쉰|예순|일흔|여든|아흔";
+const SINO_TENS = "이십|삼십|사십|오십|육십|칠십|팔십|구십";
+/** 서술격 조사 '이세요·이신·이에요'의 '이'는 숫자 2가 아님 (QA 2차 N2: '일흔이세요' → 72세로 읽던 문제) */
+const COPULA_AFTER = "(?!세요|셔|신|심|시고|시며|에요|예요|야|고|라|니|던|었|여서|어서)";
+const NATIVE_ONES = `하나|한|둘|두|셋|세(?!\\s*살|$|요)|넷|네|다섯|여섯|일곱|여덟|아홉`;
+const SINO_ONES = `일|이${COPULA_AFTER}|삼|사|오|육|칠|팔|구`;
+const AGE_SUFFIX = "(?:세|살|이신|이세요|이셔|이심|이시고|이에요|이예요|이야|이고|이라|되셨|되신|되었|됐|드신|잡수)";
+/**
+ * '육십오세', '일흔 두 살', '여든이신', '예순다섯이세요' — 고유어 십 단위(일흔)에는 고유어 일 단위(둘)만, 한자어(칠십)에는 한자어(이)만.
+ * 한자어 십 단위는 '세·살'이 붙을 때만 (예: '오십견' 제외)
+ */
+const KOR_AGE_RE = new RegExp(`(?<![가-힣])(?:(${NATIVE_TENS})\\s*(${NATIVE_ONES})?|(${SINO_TENS})\\s*(${SINO_ONES})?)\\s*${AGE_SUFFIX}`, "g");
 const OVER_RE = new RegExp(`(?<![\\d가-힣])([2-9]0|${TENS_W})\\s*(?:세|살)?\\s*(?:이|가|이\\s*)?\\s*(?:넘|훌쩍\\s*넘|넘으|넘은|넘었|넘긴|이상\\s*되)`, "g");
 function korAge(tens: string, ones?: string): number | null {
-  const t = KOR_TENS[tens];
+  const t = KOR_TENS[tens] ?? (tens === "스무" ? 20 : undefined);
   if (!t) return null;
   return t + (ones ? KOR_ONES[ones] ?? 0 : 0);
 }
@@ -312,6 +336,7 @@ function parseAge(text: string, today: Today, self = false) {
   for (const m of text.matchAll(/(?:만\s*)?(\d{1,3})\s*(?:세|살)(?!\s*(?:이상|이하|미만|초과|부터|까지|넘|이후))/g)) {
     // '아이 3살', '첫째 7살' — 자녀 나이는 본인 나이가 아님
     if (/(?:아이|애|애기|아기|자녀|아들|딸|첫째|둘째|셋째|막내|큰애|작은애|쌍둥이)(?:들|는|은|가|이)?\s*(?:\d+\s*명\s*)?(?:(?:하나|둘|셋)\s*)?$/.test(text.slice(Math.max(0, m.index! - 10), m.index!))) continue;
+    if (/^\s*(?:짜리\s*)?(?:된\s*)?(?:첫째|둘째|셋째|막내|큰애|작은애|아이|애기|아기|애|아들|딸|손자|손녀|쌍둥이)/.test(text.slice(m.index! + m[0].length))) continue;
     const a = Number(m[1]);
     if (a > 0 && a < 120) ranges.push({ r: [a, a], label: `만 ${a}세` });
   }
@@ -326,7 +351,7 @@ function parseAge(text: string, today: Today, self = false) {
   }
   // 한글 숫자 나이: '육십오세', '일흔둘', '예순 다섯 살', '여든' (QA 1차 C1)
   for (const m of text.matchAll(KOR_AGE_RE)) {
-    const a = korAge(m[1], m[2]);
+    const a = m[1] ? korAge(m[1], m[2]) : korAge(m[3], m[4]);
     if (a && a >= 20 && a < 110 && !/(?:이상|이하|미만|넘)/.test(text.slice(m.index! + m[0].length, m.index! + m[0].length + 4))) ranges.push({ r: [a, a], label: `만 ${a}세` });
   }
   // '80 넘으심', '칠십 넘', '일흔 넘으셨' → 그 나이대 (QA 1차 H2)
@@ -355,9 +380,16 @@ function parseAge(text: string, today: Today, self = false) {
     const [a, z] = ageRange(b);
     return z >= pick.r[0] && a <= pick.r[1];
   }) : undefined;
-  if (multi) notes.push("나이가 여러 개 있어 연세가 가장 많은 분 기준으로 찾았어요. 다른 분도 따로 확인해 보세요.");
+  // 다른 한 분 (나이대가 다를 때만 — M7 '그분 기준으로 다시 보기')
+  let other: { band: AgeBand; label: string; range: [number, number] } | undefined;
+  if (multi) {
+    const rest = ranges.filter((x) => x.label !== pick.label).reduce<(typeof ranges)[number] | null>((a, b) => (!a || b.r[1] < a.r[1] ? b : a), null);
+    const ob = rest ? bandOf(rest.r[1]) : null;
+    if (rest && ob && ob !== band) other = { band: ob, label: rest.label, range: rest.r };
+    notes.push(other ? `나이가 여러 개 있어 연세가 가장 많은 분 기준으로 찾았어요. 결과 화면에서 다른 분(${rest!.label}) 기준으로도 바로 볼 수 있어요.` : "나이가 여러 개 있어 연세가 가장 많은 분 기준으로 찾았어요. 다른 분도 따로 확인해 보세요.");
+  }
   const ageLabel = band === "unknown" ? `${pick.label} (나이대 확인 필요)` : `${pick.label}${pick.decade ? "" : ` (${AGE_LABEL[band]})`}`;
-  return { band, range: pick.r, label: ageLabel, notes, choices: choices?.length ? choices : undefined };
+  return { band, range: pick.r, label: ageLabel, notes, choices: choices?.length ? choices : undefined, other };
 }
 
 /* ---------------- 소득 ---------------- */
@@ -445,6 +477,25 @@ const SINGLE_PARENT_RE = /(한부모|이혼|사별|돌싱|미혼모|미혼부|�
 const NOT_PARENT_TARGET = /(?:(?:\d+|한|두|세|네)\s*)?(?:아이|애|애기|아기|자녀|아들|딸|쌍둥이)(?:들)?\s*(?:둘|셋|넷|하나)?\s*(?:의\s*)?(?:엄마|아빠)|한부모|학부모/g;
 const LIVE_PARENT_RE = /(양가\s*부모님|시부모님|부모님|어머니|어머님|엄마|아버지|아버님|아빠|시어머니|시어머님|시아버지|시아버님|장모님|장인어른|장모|장인|친정\s*엄마)\s*(?:을|를|과|와|이랑|랑|하고|도)?\s*(모시고|모셔|같이\s*살|함께\s*살|한\s*집|같이\s*지내|함께\s*지내)/;
 
+/** 자녀 나이 (QA 2차 N3): '돌 안 된 아기', '갓난아기', '생후 5개월', '첫째 7살', '3살 딸', '초등학생 아들' */
+const KN_AGE: Record<string, number> = { 한: 1, 두: 2, 세: 3, 네: 4, 다섯: 5, 여섯: 6, 일곱: 7, 여덟: 8, 아홉: 9, 열: 10 };
+const childBucketOf = (age: number): ChildBucket | null => (age < 0 ? null : age <= 1 ? "0-1" : age <= 5 ? "2-5" : age <= 12 ? "6-12" : age <= 18 ? "13-18" : "19+");
+const KID = "(?:첫째|둘째|셋째|막내|큰애|작은애|큰아이|작은아이|아이|애기|아기|애|아들|딸|딸아이|손자|손녀|쌍둥이)";
+function childAges(text: string): ChildBucket[] {
+  const out: ChildBucket[] = [];
+  const add = (b: ChildBucket | null) => b && out.push(b);
+  if (/돌\s*(?:도\s*)?(?:안|못)\s*(?:된|지난|됐)|갓\s*난|신생아|생후\s*\d+\s*(?:개월|일|주)|(?<![\d])\d{1,2}\s*개월\s*(?:된|짜리|아기|애기|아이|딸|아들|이에요|예요|입니다)?|백일|첫\s*돌|(?<![두세네])\s*돌\s*(?:된|지난|쟁이)/.test(text)) add("0-1");
+  if (/두\s*돌/.test(text)) add("2-5");
+  const kidAge = new RegExp(`${KID}(?:들)?\\s*(?:는|은|이|가)?\\s*(?:만\\s*)?(\\d{1,2}|한|두|세|네|다섯|여섯|일곱|여덟|아홉|열)\\s*(?:살|세)(?!\\s*(?:이상|이하|미만))`, "g");
+  for (const m of text.matchAll(kidAge)) add(childBucketOf(/^\d+$/.test(m[1]) ? Number(m[1]) : KN_AGE[m[1]] ?? -1));
+  const ageKid = new RegExp(`(?<![\\d가-힣])(\\d{1,2}|한|두|세|네|다섯|여섯|일곱|여덟|아홉|열)\\s*(?:살|세)\\s*(?:짜리\\s*)?(?:된\\s*)?${KID}`, "g");
+  for (const m of text.matchAll(ageKid)) add(childBucketOf(/^\d+$/.test(m[1]) ? Number(m[1]) : KN_AGE[m[1]] ?? -1));
+  if (/초등\s*(?:학생|학교|생)?|초딩/.test(text)) add("6-12");
+  if (/중학생|중학교|고등학생|고등학교|고딩|중딩/.test(text)) add("13-18");
+  if (/유치원/.test(text)) add("2-5");
+  return [...new Set(out)];
+}
+
 function countChildren(text: string): number | null {
   if (NO_CHILD_RE.test(text)) return 0;
   const general: number[] = [];
@@ -501,19 +552,26 @@ function affirmed(text: string, re: RegExp): boolean {
   return false;
 }
 /** 부모 낱말 찾기 (낱말 경계 확인) */
-function findParentWord(text: string): string | undefined {
+function findParentWord(text: string, possessiveOnly = false): string | undefined {
   for (const m of text.matchAll(PARENT_RE)) {
     const prev = text.slice(Math.max(0, m.index! - 6), m.index!);
     if (/[가-힣]$/.test(prev) && !PARENT_PREFIX_OK.test(prev)) continue;
+    if (possessiveOnly && !POSSESSIVE.test(prev)) continue;
     return m[1];
   }
   return undefined;
 }
+/** 부모 낱말 앞의 '우리·울·저희·제·내·친정·시' (말하는 사람의 부모님) */
+const POSSESSIVE = /(?:울|우리|저희|내|제|친정|시)\s?$/;
+/** 주체 높임 (남의 상황): '계세요', '받으셨어요', '사세요', '이세요' — '하세요'(명령)는 제외 */
+const HONORIFIC = /(계세요|계시|계셔|받으셨|받으시|받으세요|사세요|사시|사셔|드셨|이세요|이셔|이신|으셨|셨어요|셔요)/;
+/** 서술로 끝나는 문장 ('…했어요', '…예요', '…입니다') — 서비스 이름만 쓴 검색어와 구별 */
+const VERB_END = /(?:어요|아요|해요|예요|이에요|에요|습니다|었어|았어|했어|해|돼|나요|까요)[.!?~\s]*$/;
 const SELF_RE = /(?:^|\s)(?:나는|내가|난|저는|제가|본인은|본인이|저희\s*집)(?=\s|$)|저\s*혼자|나\s*혼자/;
 const COUPLE_RE = /(두\s*분|부부|내외|양친|두\s*사람|둘이서?|노부부)/;
 const ALONE_RE = /((?:혼자|홀로)\s*(?:(?:서|월세|전세|자취|원룸|집에서|단칸방|임대|에)\s*)?(?:사|살|계|지내|되|자취)|독거|홀몸|1\s*인\s*가구|자취\s*(?:해|하고|중|생))/;
 
-export function parseSituation(raw: string, regions: RegionIndex | null, today: Today = todayInSeoul()): ParsedSituation {
+export function parseSituation(raw: string, regions: RegionIndex | null, today: Today = todayInSeoul(), opt: ParseOptions = {}): ParsedSituation {
   const text = raw.normalize("NFC").replace(/\s+/g, " ").trim();
   const p: Profile = { ...EMPTY_PROFILE };
   const understood: Understood[] = [];
@@ -538,6 +596,9 @@ export function parseSituation(raw: string, regions: RegionIndex | null, today: 
   // 자녀 수·소득·함께 사는 부모님 (대상 판단에도 씀)
   let childN = countChildren(text);
   let childAssumed = false;
+  const kidAges = childAges(text);
+  // 나이만 말한 자녀 ('돌 안 된 아기 있어요', '첫째 7살 둘째 3살') → 그 수만큼
+  if (childN === null && kidAges.length) childN = kidAges.length;
   const inc = parseIncome(text);
   const SALARY_RE = /(월급|급여|봉급|실수령|세후|세전|연봉|맞벌이|외벌이)/;
   const lpM = text.match(LIVE_PARENT_RE);
@@ -555,7 +616,8 @@ export function parseSituation(raw: string, regions: RegionIndex | null, today: 
   }
 
   // 대상 (부모님 / 본인)
-  const parentWord = selfParent ? undefined : findParentWord(text.replace(NOT_PARENT_TARGET, " "));
+  // '저는 엄마고 우리 엄마는 일흔이세요' — 말하는 사람이 엄마여도 '우리 엄마·저희 어머니'가 따로 있으면 그분을 찾는다 (QA 2차 N1)
+  const parentWord = selfParent ? findParentWord(text.replace(NOT_PARENT_TARGET, " "), true) : findParentWord(text.replace(NOT_PARENT_TARGET, " "));
   let mode: FindMode | null = null;
   if (parentWord && !livesWithParent) {
     mode = "parent";
@@ -563,8 +625,12 @@ export function parseSituation(raw: string, regions: RegionIndex | null, today: 
     understood.push({ key: "target", label: `${gp ?? "부모님"} 대신 찾기` });
   } else if (SELF_RE.test(text) || livesWithParent || selfHint) {
     mode = "self";
-    understood.push({ key: "target", label: "내 복지 찾기" });
   }
+  // 부모님 복지 탭에서 시작했으면, 분명히 본인 이야기('저는·제가'·'…엄마예요'·'부모님 모시고')가 아닌 한 부모님 찾기 (QA 2차 N1)
+  const clearlySelf = SELF_RE.test(text) || selfParent || livesWithParent;
+  if (opt.hint === "parent" && mode === "self" && !clearlySelf) mode = "parent";
+  if (mode === "parent" && !understood.some((u) => u.key === "target")) understood.push({ key: "target", label: "부모님 대신 찾기" });
+  if (mode === "self") understood.push({ key: "target", label: "내 복지 찾기" });
 
   // 나이
   const age = parseAge(text, today, mode === "self");
@@ -620,12 +686,26 @@ export function parseSituation(raw: string, regions: RegionIndex | null, today: 
         mainLabel,
       };
     }
+  } else if (livesWithParent && mode !== "parent") {
+    // '장인어른 모시고 삽니다' — 장인·장모·시부모는 배우자가 있다는 뜻 (QA 2차 N3)
+    const inLaw = /(장인|장모|시부모|시어머|시아버)/.test(lpM![1]);
+    const spouse = inLaw || SPOUSE_RE.test(text) ? 1 : 0;
+    const kidsN = hasKids ? childN! : 0;
+    const n = 1 + spouse + lpN + kidsN;
+    p.householdSize = cap(n);
+    const who = [spouse ? "배우자" : "", lpTxt.replace(/^ · /, ""), kidsN ? `자녀 ${kidsN}명` : ""].filter(Boolean).join(" · ");
+    understood.push({ key: "household", label: `같이 사는 사람: ${ppl(n)} (${who}${spouse && !SPOUSE_RE.test(text) ? " — 배우자도 함께 산다고 봤어요" : ""})` });
+    hhFromKids = true;
   } else if (COUPLE_RE.test(text)) {
     p.householdSize = 2;
     understood.push({ key: "household", label: mode === "parent" ? "부모님 두 분 (부부 2인 가구)" : "부부 2인 가구" });
   }
   if (mode !== "parent" && childN !== null && !hhFromKids) {
     understood.push({ key: "children", label: childN === 0 ? "자녀 없음" : `자녀 ${childN}명` });
+  }
+  if (mode !== "parent" && kidAges.length) {
+    p.children = kidAges;
+    understood.push({ key: "children", label: `자녀 나이 ${kidAges.map((c) => CHILD_AGE_LABEL[c]).join(", ")}` });
   }
 
   if (childAssumed) notes.push("자녀 수를 말하지 않아 1명으로 봤어요. 다르면 아래 자녀 칸에서 고쳐 주세요.");
@@ -721,25 +801,34 @@ export function parseSituation(raw: string, regions: RegionIndex | null, today: 
   else if (mode === "self" && /(자영업|장사\s*(?:해|하고|를)|가게\s*(?:를\s*)?(?:해|운영)|프리랜서)/.test(text)) {
     p.activity = "self_employed";
     signals.push("자영업·프리랜서");
-  } else if (mode === "self" && /(월급|급여|봉급|연봉|직장\s*(?:에|을|다니|다녀|인)|회사\s*(?:에\s*)?(?:다니|다녀)|회사원|직장인)/.test(text) && !/(퇴사|그만두|실직|휴직)/.test(text)) {
+  } else if (mode === "self" && /(월급|급여|봉급|연봉|맞벌이|직장\s*(?:에|을|다니|다녀|인)|회사\s*(?:에\s*)?(?:다니|다녀)|회사원|직장인)/.test(text) && !/(퇴사|그만두|실직|휴직)/.test(text)) {
     p.activity = "employed";
     signals.push("직장에 다님");
   }
   if (mode !== "parent" && affirmed(text, /임신(?!\s*(?:준비|계획))/)) {
-    p.children = ["pregnant"];
+    p.children = ["pregnant", ...kidAges];
     signals.push("임신 중");
   }
   if (/(저소득|형편이?\s*어려|어렵게\s*사)/.test(text)) notes.push("소득이 낮다고 하셨어요. 소득 구간을 입력하면 더 정확해져요.");
 
   for (const s of signals) understood.push({ key: "signal", label: s });
 
-  const familyWord = !!parentWord || ALONE_RE.test(text) || COUPLE_RE.test(text) || !!nIn || hasKids;
+  const familyWord = !!parentWord || ALONE_RE.test(text) || COUPLE_RE.test(text) || !!nIn || hasKids || livesWithParent;
+  const interests = topicsIn(text);
+  // 지역·나이가 없어도 상황을 말한 문장 ('기초연금 못 받고 계세요', '치매 진단 받으셨어요', '실직했어요') → 맞춤 찾기로 (QA 2차 N5)
+  const signalish = signals.length > 0 || benefitsNo.length > 0 || interests.length > 0 || p.activity !== "unknown" || p.care !== null || p.disability !== "unknown";
+  const sentence = HONORIFIC.test(text) || SELF_RE.test(text) || VERB_END.test(text);
+  if (mode === null && HONORIFIC.test(text) && (signalish || regionFound || !!age || familyWord)) {
+    // 높임말로 남의 상황을 말함 → 부모님 대신 찾기
+    mode = opt.hint ?? "parent";
+    understood.push({ key: "target", label: mode === "parent" ? "부모님 대신 찾기" : "내 복지 찾기" });
+  }
   return {
     mode,
     profile: p,
     understood,
     notes,
-    looksLikeSituation: regionFound || !!age || familyWord || !!inc,
+    looksLikeSituation: regionFound || !!age || familyWord || !!inc || (signalish && sentence),
     regionTerms,
     ageRange: age?.range,
     ...(inc ? { income: inc.income } : {}),
@@ -748,6 +837,9 @@ export function parseSituation(raw: string, regions: RegionIndex | null, today: 
     ...(regionChoices ? { regionChoices } : {}),
     ...(age?.choices ? { ageChoices: age.choices } : {}),
     ...(benefitsNo.length ? { benefitsNo } : {}),
+    ...(interests.length ? { interests } : {}),
+    ...(kidAges.length && mode !== "parent" ? { childAges: kidAges } : {}),
+    ...(age?.other && mode === "parent" ? { otherAge: age.other } : {}),
   };
 }
 
@@ -758,10 +850,17 @@ export function understoodLine(ps: ParsedSituation, skip: Understood["key"][] = 
 }
 
 /** 해석 결과 → 입력 화면의 v2 입력 (소득·자녀 수). 자녀 수 3 = 3명 이상 */
-export function parsedExtras(ps: ParsedSituation): { incomeManwon?: number; childCount?: 0 | 1 | 2 | 3 } {
+export function parsedExtras(ps: ParsedSituation): {
+  incomeManwon?: number; childCount?: 0 | 1 | 2 | 3; ageSpan?: [number, number]; interests?: TopicId[];
+  otherAge?: { band: AgeBand; label: string };
+} {
   return {
     ...(ps.income ? { incomeManwon: ps.income.manwon } : {}),
     ...(ps.childCount !== undefined ? { childCount: Math.min(3, ps.childCount) as 0 | 1 | 2 | 3 } : {}),
+    // '30대'처럼 범위만 말했으면 그 범위로 판정 (정확한 나이대를 알면 그것으로)
+    ...(ps.profile.age === "unknown" && ps.ageRange ? { ageSpan: ps.ageRange } : {}),
+    ...(ps.interests?.length ? { interests: ps.interests } : {}),
+    ...(ps.otherAge ? { otherAge: { band: ps.otherAge.band, label: ps.otherAge.label } } : {}),
   };
 }
 

@@ -73,7 +73,8 @@ function mergeParsedX(prev: Extras, ps: ParsedSituation): Extras {
   // 문장에서 읽은 월 소득·자녀 수 (예: '월급은 세후 400정도' → 400, '자녀 2명' → 2)
   const ex = parsedExtras(ps);
   if (ex.childCount !== undefined && ex.childCount !== 2) traits.multi_child = ex.childCount === 3;
-  return { ...prev, benefits, traits, ...ex };
+  // 문장에서 읽은 나이 범위·관심 주제·다른 분 나이는 새 문장 기준으로 바꾼다 (지난 문장 것이 남지 않게)
+  return { ...prev, benefits, traits, ...ex, ageSpan: ex.ageSpan ?? null, interests: ex.interests, otherAge: ex.otherAge ?? null };
 }
 
 /** 확인 화면의 '알아들은 내용' — 지역·나이·상황 한 줄, 같이 사는 사람(가정이면 바로 바꾸는 단추), 소득 */
@@ -238,7 +239,7 @@ function Form({ initial, initialX, initialMode, wantPrefill }: { initial: Profil
     setHhAlt(false);
   };
   const fillFromText = () => {
-    const r = parseSituation(text, regions);
+    const r = parseSituation(text, regions, undefined, { hint: mode });
     applyParsed(r);
     setUnderstood(r);
   };
