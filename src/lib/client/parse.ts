@@ -313,6 +313,7 @@ const AGE_SUFFIX = "(?:세|살|이신|이세요|이셔|이심|이시고|이에�
  */
 const KOR_AGE_RE = new RegExp(`(?<![가-힣])(?:(${NATIVE_TENS})\\s*(${NATIVE_ONES})?|(${SINO_TENS})\\s*(${SINO_ONES})?)\\s*${AGE_SUFFIX}`, "g");
 const OVER_RE = new RegExp(`(?<![\\d가-힣])([2-9]0|${TENS_W})\\s*(?:세|살)?\\s*(?:이|가|이\\s*)?\\s*(?:넘|훌쩍\\s*넘|넘으|넘은|넘었|넘긴|이상\\s*되)`, "g");
+const BARE_NATIVE_RE = new RegExp(`(?<![가-힣])(스물|서른|마흔|쉰|예순|일흔|여든|아흔)(하나|둘|셋|넷|다섯|여섯|일곱|여덟|아홉)?(?=\\s|$|[,.!?~]|이고|이며|인데|이신데|이셔서|이시고)`, "g");
 function korAge(tens: string, ones?: string): number | null {
   const t = KOR_TENS[tens] ?? (tens === "스무" ? 20 : undefined);
   if (!t) return null;
@@ -345,6 +346,20 @@ function parseAge(text: string, today: Today, self = false) {
     const d = Number(m[1]);
     const r: [number, number] = m[2] === "초반" ? [d, d + 3] : m[2] === "중반" ? [d + 3, d + 6] : m[2] === "후반" ? [d + 6, d + 9] : [d, d + 9];
     ranges.push({ r, label: `${d}대${m[2] ? ` ${m[2]}` : ""}`, decade: true });
+  }
+  // '이십대 후반', '삼십대 초반' (QA 3차 R1)
+  for (const m of text.matchAll(/(?<![가-힣])(이십|삼십|사십|오십|육십|칠십|팔십|구십)\s*대\s*(초반|중반|후반)?/g)) {
+    const d = KOR_TENS[m[1]];
+    const r: [number, number] = m[2] === "초반" ? [d, d + 3] : m[2] === "중반" ? [d + 3, d + 6] : m[2] === "후반" ? [d + 6, d + 9] : [d, d + 9];
+    ranges.push({ r, label: `${d}대${m[2] ? ` ${m[2]}` : ""}`, decade: true });
+  }
+  // 조사 없이 끝나는 고유어 나이: '아빠는 예순다섯 평택 사세요', '엄마 일흔둘' (QA 3차 R1)
+  for (const m of text.matchAll(BARE_NATIVE_RE)) {
+    if (m[1] === "쉰" && !m[2]) continue; // '쉰'은 '쉬다'일 수 있음
+    const after = text.slice(m.index! + m[0].length);
+    if (/^\s*(?:(?:명|개|번|가지|마리|권|장|대|채|군데|시간|분|년|달|평|살|세)(?![가-힣])|넘|이상|이하|미만)/.test(after)) continue;
+    const a = korAge(m[1], m[2]);
+    if (a && a >= 20 && a < 110) ranges.push({ r: [a, a], label: `만 ${a}세` });
   }
   for (const [w, a] of [["칠순", 70], ["팔순", 80], ["구순", 90], ["망구", 81]] as const) {
     if (text.includes(w)) ranges.push({ r: [a, a + 1], label: `${w} (만 ${a}세 안팎)` });
@@ -603,14 +618,16 @@ export function parseSituation(raw: string, regions: RegionIndex | null, today: 
   const SALARY_RE = /(월급|급여|봉급|실수령|세후|세전|연봉|맞벌이|외벌이)/;
   const lpM = text.match(LIVE_PARENT_RE);
   // 말하는 사람이 엄마·아빠인 표현('…엄마예요', '엄마 혼자 애 키워요')은 부모님 대신 찾기가 아님 (QA 1차 C1)
-  const selfParent = SELF_PARENT_RE.test(text) || /(?:^|\s)(?:엄마|아빠)\s*(?:혼자|홀로)\s*(?:서\s*)?(?:애|아이|자녀|아들|딸|애기|애들)/.test(text);
+  // '싱글맘·싱글대디·미혼모' — 말하는 사람이 자녀를 키우는 한부모 (QA 3차 R1)
+  const singleMom = /(싱글\s*(?:맘|대디|파파)|미혼\s*(?:모|부)(?!\s*(?:시설|센터|보호)))/.test(text);
+  const selfParent = SELF_PARENT_RE.test(text) || singleMom || /(?:^|\s)(?:엄마|아빠)\s*(?:혼자|홀로)\s*(?:서\s*)?(?:애|아이|자녀|아들|딸|애기|애들)/.test(text);
 
   const selfHint =
     selfParent || SELF_RE.test(text) || (childN !== null && childN > 0) || (!!inc && SALARY_RE.test(text)) || /(아내|와이프|남편|신랑|배우자|집사람|자영업|프리랜서|회사원|직장인)/.test(text);
   // '부모님 모시고 살아요' — 부모님은 함께 사는 가족이고 찾는 사람은 본인
   const livesWithParent = !!lpM && (/모시|모셔/.test(lpM[2]) || selfHint);
   // 말하는 사람이 엄마·아빠이고 자녀 낱말만 있으면(수 없음) 자녀 1명으로 본다 ('지적장애 있는 딸', '혼자 애 키워요')
-  if (selfParent && childN === null && /(?<![가-힣])(?:딸|아들|아이|애|애기|아기)(?:이|가|이랑|랑|하고|과|와|을|를|은|는|\s|$)/.test(text)) {
+  if (selfParent && childN === null && (singleMom || /(?<![가-힣])(?:딸|아들|아이|애|애기|아기)(?:이|가|이랑|랑|하고|과|와|을|를|은|는|\s|$)/.test(text))) {
     childN = 1;
     childAssumed = true;
   }
@@ -633,7 +650,18 @@ export function parseSituation(raw: string, regions: RegionIndex | null, today: 
   if (mode === "self") understood.push({ key: "target", label: "내 복지 찾기" });
 
   // 나이
-  const age = parseAge(text, today, mode === "self");
+  let age = parseAge(text, today, mode === "self");
+  // 할아버지·할머니를 대신 찾는데 나이를 말하지 않았으면 만 65세 이상으로 보고 확인 화면에 보여 준다 (QA 3차 R1)
+  if (!age && mode === "parent" && parentWord && /(할머니|할아버지|할매|할배|조부모)/.test(parentWord)) {
+    age = {
+      band: "unknown",
+      range: [65, 120],
+      label: "나이를 말하지 않아 만 65세 이상으로 봤어요 (나이대 확인 필요)",
+      notes: [],
+      choices: ["65-69", "70-74", "75-79", "80+"],
+      other: undefined,
+    };
+  }
   if (age) {
     p.age = age.band;
     understood.push({ key: "age", label: age.label });
