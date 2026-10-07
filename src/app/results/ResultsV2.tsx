@@ -34,6 +34,8 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
   const [data, setData] = useState<Loaded | null>(null);
   const [skipped, setSkipped] = useState<DimId[]>([]);
   const [details, setDetails] = useState<Record<string, Program>>({});
+  /** 상세 묶음을 다 받아 온 '먼저 확인할 5가지' 목록 (QA 3차 R5: 받기 전에는 신청처를 '불러오는 중'으로) */
+  const [detailsFor, setDetailsFor] = useState<string>("");
   const [toast, setToast] = useState<string | null>(null);
   const [autoOpen, setAutoOpen] = useState(false);
   const [autoLimit, setAutoLimit] = useState(FIRST);
@@ -65,7 +67,8 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
       const out: Record<string, Program> = {};
       ps.forEach((p) => p && (out[p.id] = p));
       setDetails(out);
-    });
+      setDetailsFor(pickIds);
+    }).catch(() => alive && setDetailsFor(pickIds));
     return () => {
       alive = false;
     };
@@ -273,7 +276,7 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
               </p>
               <ol className="picks">
                 {picks.map((g, i) => (
-                  <Pick key={g[0].s.program.id} item={g[0]} i={i} detail={details[g[0].s.program.id]} sit={sit} mode={mode} />
+                  <Pick key={g[0].s.program.id} item={g[0]} i={i} detail={details[g[0].s.program.id]} loading={detailsFor !== pickIds && !details[g[0].s.program.id]} sit={sit} mode={mode} />
                 ))}
               </ol>
             </section>
@@ -450,9 +453,9 @@ function IncomeAsk({ sit, onApply, onSkip }: { sit: Situation; onApply: (s: Situ
 const BUCKET_ICON: Record<Bucket, "check" | "info" | "alert" | "x"> = { fit: "check", office: "info", ask: "alert", no: "x" };
 
 /** 먼저 확인할 카드: 번호 · 지원형태 · 이름 · 판단(쉬운 말) · 신청방법/기관/문의/가져갈 것 */
-function Pick({ item, i, detail, sit, mode }: { item: V2Item; i: number; detail?: Program; sit: Situation; mode: FindMode }) {
+function Pick({ item, i, detail, loading, sit, mode }: { item: V2Item; i: number; detail?: Program; loading?: boolean; sit: Situation; mode: FindMode }) {
   const p = item.s.program;
-  const how = howTo(detail, p);
+  const how = howTo(detail, p, sit.profile.sido);
   const href = `/p/${encodeURIComponent(p.id)}`;
   return (
     <li className="card pick" data-testid="pick" data-bucket={item.bucket}>
@@ -473,22 +476,30 @@ function Pick({ item, i, detail, sit, mode }: { item: V2Item; i: number; detail?
       <ul className="rows">
         <li>
           <span className="k">신청방법</span>
-          <span className="v">
-            {how.place}
-            {how.channels.length > 0 && ` (${how.channels.map((c) => CHANNEL_LABEL[c]).join(", ")})`}
+          <span className="v" data-testid="pick-place">
+            {loading ? (
+              <span className="muted" aria-live="polite">
+                신청처 불러오는 중…
+              </span>
+            ) : (
+              <>
+                {how.place}
+                {how.channels.length > 0 && ` (${how.channels.map((c) => CHANNEL_LABEL[c]).join(", ")})`}
+              </>
+            )}
           </span>
         </li>
         <li>
           <span className="k">담당기관</span>
           <span className="v">{p.provider || p.owner || orgText(p)}</span>
         </li>
-        {how.phone && (
+        {how.phone && !loading && (
           <li>
             <span className="k">문의</span>
             <span className="v">{how.phone}</span>
           </li>
         )}
-        {how.bring.length > 0 && (
+        {how.bring.length > 0 && !loading && (
           <li>
             <span className="k">가져갈 것</span>
             <span className="v">{how.bring.join(", ")}</span>

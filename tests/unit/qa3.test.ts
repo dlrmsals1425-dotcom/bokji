@@ -142,3 +142,25 @@ describe("R4 원문보다 좁은 소득 규칙을 원문 비율로", () => {
     expect(sourceMedianCapForWiden({ target: "중위소득 120% 이하(국비) / 120% 초과(군비)" })).toBeNull();
   });
 });
+
+describe("N6 잔여 · R6", () => {
+  it("국민임대 '우선 공급 - 장애인 등'은 자격 조건이 아님 → '등록 장애인' 문구 없음", () => {
+    const sit = sitOf("남양주 사는데 월세가 너무 부담돼요");
+    const r = classifyOne(byId("n.gov24-SD0000005037"), sit);
+    expect(plainLine(r, sit, "self")).not.toMatch(/장애/);
+    expect(plainLine(r, sit, "self")).not.toMatch(/보훈/);
+  });
+  it("장애인 대상 사업의 장애 조건은 그대로 (이름에 장애)", async () => {
+    const { onlyInPriority } = await import("@/lib/client/v2");
+    expect(onlyInPriority("○ 우선 공급\n- 장애인 등\n○ 일반공급\n- 무주택", /장애/)).toBe(true);
+    expect(onlyInPriority("○ 등록 장애인\n○ 우선 공급\n- 장애인 등", /장애/)).toBe(false);
+  });
+  it("경기 사용자에게 장기전세 문의처는 서울주택도시공사가 아니라 LH", () => {
+    const id = "n.gov24-999000000024";
+    const d = JSON.parse(readFileSync(`public/bundles/v1/details/${detailBucket(id)}.json`, "utf8"))[id] as Program;
+    const g = howTo(d, d, "41000");
+    expect(g.place).toMatch(/LH/);
+    expect(`${g.place} ${g.phone}`).not.toMatch(/서울주택도시공사/);
+    expect(howTo(d, d, "11000").phone).toMatch(/서울주택도시공사/);
+  });
+});

@@ -704,7 +704,24 @@ export function softIrrelevant(r: Reason, p: Program): boolean {
   if (!l?.soft) return false;
   const re = SOFT_TOPIC[l.field];
   if (!re) return false;
-  return !re.test(`${p.name}\n${(p.target ?? "").replace(/&#13;/g, "\n")}`);
+  if (!re.test(`${p.name}\n${(p.target ?? "").replace(/&#13;/g, "\n")}`)) return true;
+  // 우선 공급·가점 항목에만 나오면 자격 조건이 아님 (QA 3차 N6: 국민임대 '우선 공급 - 장애인 등') — 소득은 제외
+  return l.field !== "income" && !re.test(p.name) && onlyInPriority(p.target ?? "", re);
+}
+const PRIORITY_WORD = /우선\s*(?:공급|선정|지원|순위|입주|배정|대상)?|특별\s*공급|가점|우대|배점|순위/;
+/** 주제 낱말이 모두 '우선 공급'류 소제목 아래나 우선·가점 문구가 있는 줄에만 나오는지 */
+export function onlyInPriority(target: string, re: RegExp): boolean {
+  const lines = target.replace(/&#13;/g, "\n").split("\n");
+  let inPri = false;
+  let seen = false;
+  for (const line of lines) {
+    const head = /^\s*(?:[○●□■◎◆▶]|\d+[.)]|[가-하][.)])/.test(line);
+    if (head) inPri = PRIORITY_WORD.test(line);
+    if (!re.test(line)) continue;
+    seen = true;
+    if (!(inPri || PRIORITY_WORD.test(line))) return false;
+  }
+  return seen;
 }
 
 export function classifyBase(p: Program, s: Situation): BaseResult {

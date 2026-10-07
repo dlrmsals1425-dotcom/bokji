@@ -126,8 +126,33 @@ export function placeOf(p: Pick<Program, "name" | "applyMethod" | "provider" | "
 /** 읍·면·동 주민센터가 신청을 받는 계열 (원문 신청방법이 비어 있을 때만 쓰는 기본값) */
 const CENTER_OK = /((?:생계|의료|주거|교육|해산|장제)\s*급여|수급|차상위|기초\s*생활|기초\s*연금|긴급\s*(?:복지|지원)|자활|희망\s*저축|바우처|수당|돌봄|장애인\s*등록|장애\s*정도|급식|보육료|드림\s*스타트|디딤\s*씨앗|응급\s*안전|고독사|사례\s*관리|찾아가는|요금\s*감면|주간\s*활동|방과\s*후\s*활동|자립\s*수당|정착금|경로당|장례)/;
 
-export function howTo(detail: Program | undefined | null, lead: Program): HowTo {
-  const p = detail ?? lead;
+/** 한 시·도만 맡는 지방 공사 (QA 3차 R6: 남양주 사용자에게 장기전세 '문의: 서울주택도시공사') */
+const REGIONAL_ORGS: [RegExp, string][] = [
+  [/서울\s*주택\s*도시\s*공사|SH\s*(?:공사|콜센터)|i-sh\.co\.kr/i, "11000"],
+  [/경기\s*주택\s*도시\s*공사|경기\s*도시\s*공사|GH\s*(?:공사|콜센터)|gh\.or\.kr/i, "41000"],
+  [/부산\s*도시\s*공사/, "26000"],
+  [/대구\s*도시\s*(?:개발\s*)?공사/, "27000"],
+  [/인천\s*도시\s*공사|iH\s*공사|ih\.co\.kr/i, "28000"],
+  [/광주\s*도시\s*공사/, "29000"],
+  [/대전\s*도시\s*공사/, "30000"],
+  [/울산\s*도시\s*공사/, "31000"],
+];
+const regionalSido = (t: string | undefined) => (t ? REGIONAL_ORGS.find(([re]) => re.test(t))?.[1] : undefined);
+/** 다른 시·도의 지방 공사가 문의처면, 접수기관 목록에서 전국 기관(예: LH)으로 바꾼다 */
+function localizeContact(p: Program, sido?: string | null): Program {
+  if (!sido) return p;
+  const first = (p.contact ?? "").split(/\n/)[0];
+  const cs = regionalSido(first) ?? regionalSido(p.applyUrl);
+  if (!cs || cs === sido.slice(0, 2) + "000") return p;
+  const entries = (p.provider ?? "").split(/\s*[,/]\s*/).map((e) => e.split(/[;:]/).map((x) => x.trim()));
+  const alt = entries.find(([name, phone]) => name && phone && /\d{3,4}-\d{4}/.test(phone) && !regionalSido(name) && !/콜\s*센터|홈페이지/.test(name));
+  const contact = alt ? `${alt[0]} ☎ ${alt[1]}` : undefined;
+  const altPlace = alt ? KNOWN_PLACES.find(([re]) => re.test(alt[0]))?.[1] ?? alt[0] : undefined;
+  return { ...p, contact, applyUrl: regionalSido(p.applyUrl) ? undefined : p.applyUrl, applyPlace: p.applyPlace ?? (altPlace ? `${altPlace} (사는 지역 공고 확인)` : "사는 지역 주택 공급 기관 공고 확인") };
+}
+
+export function howTo(detail: Program | undefined | null, lead: Program, sido?: string | null): HowTo {
+  const p = localizeContact(detail ?? lead, sido);
   const apply = (p.applyMethod ?? "").replace(/\s+/g, " ").trim();
   const contact = (p.contact ?? "").split(/\n/)[0]?.replace(/☎\s*/g, "").trim() || undefined;
   const channels: Channel[] = [];
