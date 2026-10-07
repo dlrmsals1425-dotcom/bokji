@@ -1,4 +1,7 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = { title: "찾을 수 없는 페이지" };
 
 export default function NotFound() {
   return (

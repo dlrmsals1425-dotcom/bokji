@@ -54,14 +54,6 @@ export function SiteHeader() {
             <button type="button" className="btn btn-sm toggle" aria-pressed={large} onClick={() => setSettings({ large: !large })} data-testid="large-text">
               {large ? "글자 보통" : "글자 크게"}
             </button>
-            <button
-              type="button"
-              className="btn btn-quiet hide-sm"
-              disabled
-              title="로그인은 정밀 매칭·저장·알림·신청 지원과 함께 준비 중입니다. 지금은 로그인 없이 모든 검색·추천을 쓸 수 있어요."
-            >
-              로그인 준비 중
-            </button>
           </div>
         </div>
         {nav("mnav")}

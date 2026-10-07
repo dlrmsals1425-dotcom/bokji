@@ -28,7 +28,7 @@ test.describe("로그인 없는 전체 흐름 (상황 먼저 · 기본)", () => 
     await page.goto("/");
     await expect(page.getByRole("heading", { level: 1 })).toContainText("내 조건");
     await expect(page.locator("input[type=password]")).toHaveCount(0);
-    await expect(page.getByRole("button", { name: /로그인 준비 중/ })).toBeDisabled();
+    await expect(page.getByText("로그인 준비 중")).toHaveCount(0); // QA 2차 L3
 
     await page.getByTestId("start-self").click();
     await expect(page).toHaveURL(/\/situation\?for=self/);

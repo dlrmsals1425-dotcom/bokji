@@ -25,7 +25,9 @@ async function lookup(id: string): Promise<{ name: string; summary?: string } | 
 export async function generateMetadata({ params }: PageProps<"/p/[id]">): Promise<Metadata> {
   const { id } = await params;
   const p = await lookup(decodeURIComponent(id));
-  if (!p || p === "missing") return { title: "서비스 상세" };
+  // QA 2차 N8: 없는 서비스는 문서 제목도 '찾을 수 없는 페이지'
+  if (p === "missing") return { title: "찾을 수 없는 페이지" };
+  if (!p) return { title: "서비스 상세" };
   const name = normalizeText(p.name);
   const desc = p.summary ? normalizeText(p.summary).slice(0, 120) : `${name} — 지원 대상·신청 방법`;
   return { title: name, description: desc, openGraph: { title: `${name} · 복지나침반`, description: desc } };
