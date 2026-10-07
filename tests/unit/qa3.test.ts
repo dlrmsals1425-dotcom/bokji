@@ -3,15 +3,14 @@ import { existsSync, readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { parseSituation, parsedExtras } from "@/lib/client/parse";
 import {
-  DIM_BY_ID, EMPTY_EXTRAS, needsStatus, explainItem, SPECIAL_STATUS, answersFor, buildView, classifyOne, needsOccupation, notForPersons, plainLine, scoreV2, topPicksV2, withTopic,
+  EMPTY_EXTRAS, needsStatus, explainItem, buildView, classifyOne, plainLine, scoreV2, topPicksV2,
   type Extras, type Situation,
 } from "@/lib/client/v2";
 import { howTo, parseDocs } from "@/lib/client/howto";
-import { refineProgram, refineRule, textMedianCap } from "@/lib/data/refine";
+import { refineProgram } from "@/lib/data/refine";
 import { detailBucket } from "@/lib/data/bucket";
 import { EMPTY_PROFILE, type Profile } from "@/lib/engine/profile";
 import type { Program, RegionIndex } from "@/lib/data/types";
-import type { Rule } from "@/lib/engine/types";
 
 const regions = JSON.parse(readFileSync("public/bundles/v1/regions.json", "utf8")) as RegionIndex;
 const today = { year: 2026, month: 10, day: 7 };
