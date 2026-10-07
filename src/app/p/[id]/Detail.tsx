@@ -313,6 +313,15 @@ export function Detail({ id }: { id: string }) {
                   <dt>신청 방법</dt>
                   <dd>
                     <LongText text={p.applyMethod} />
+                    {p.applyNote && (
+                      <p className="small muted" data-testid="apply-note">
+                        수동 보강 — 원문에 신청 방법이 없어 공식 누리집에서 확인해 옮겼어요 ({p.applyNote.checkedAt} 확인,{" "}
+                        <a href={p.applyNote.source} target="_blank" rel="noopener noreferrer">
+                          출처
+                        </a>
+                        ).
+                      </p>
+                    )}
                   </dd>
                 </>
               )}

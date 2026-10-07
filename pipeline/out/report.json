@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-10-07T05:57:25.142Z",
+  "generatedAt": "2026-10-07T09:59:48.677Z",
   "dataAsOf": {
     "bokjiro": "복지로 OpenAPI 수집 2026-10-07 (서비스별 최종수정일 표시) · 색인 2026-09-24",
     "icare": "2026-04 등 (메뉴판 문서별 원문 기준월), 수집 2026-10-01",
@@ -135,15 +135,15 @@
       "programs": 3001,
       "curatedOrVerified": 12,
       "structured": 979,
-      "autoRules": 1661,
-      "noRule": 349
+      "autoRules": 1672,
+      "noRule": 338
     },
     "nationalCurated": 65,
     "nationalStructured": 890,
     "coverage": {
-      "applyMethod": 12864,
-      "contact": 13384,
-      "either": 13418,
+      "applyMethod": 12882,
+      "contact": 13402,
+      "either": 13436,
       "total": 23575
     },
     "bokjiroApi": {

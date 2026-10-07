@@ -39,7 +39,8 @@ export function loadManual(dir: string, regions: RegionIndex, log: (m: string) =
   const out: SourceRecord[] = [];
   for (const f of fs.readdirSync(dir).filter((x) => x.endsWith(".json")).sort()) {
     const j = JSON.parse(fs.readFileSync(path.join(dir, f), "utf8")) as { programs: ManualEntry[] };
-    for (const e of j.programs) {
+    // programs 가 없는 파일(예: apply-places.json — 신청처 수동 보강)은 사업 목록이 아님
+    for (const e of j.programs ?? []) {
       let sidoCode: string | undefined;
       let sigunguCodes: string[] | undefined;
       let regionLabel: string | undefined;

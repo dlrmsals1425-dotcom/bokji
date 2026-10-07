@@ -9,6 +9,9 @@
  *  - pipeline/out/report.json · report.md · review-queue-gyeonggi.csv · review-curated.csv
  */
 import { OWNER_FIX, refineRule } from "../../src/lib/data/refine";
+import applyPlacesJson from "../curated/apply-places.json";
+/** 수동 보강 신청처 (id → 창구·방법·문의·출처) */
+const APPLY_PLACES = new Map(applyPlacesJson.items.map((x: { id: string; place: string; applyMethod: string; contact: string; applyUrl?: string; source: string }) => [x.id, x]));
 import fs from "node:fs";
 import path from "node:path";
 import { RegionIndex, PILOT_SIDO } from "./normalize/regions";
@@ -214,7 +217,7 @@ function main() {
         trust: members.some((m) => m.trust === "A") ? "A" : rec.trust,
         badges: rec.badges.length ? rec.badges : undefined,
         // 규칙 다듬기 (공공부조 관문 법정 기준·장기요양등급 — src/lib/data/refine.ts)
-        rule: refineRule({ name: rec.name, target: pick("target") }, rule),
+        rule: refineRule({ name: rec.name, target: pick("target"), criteria: pick("criteria") }, rule),
         mergedCount: members.length > 1 ? members.length : undefined,
         sector: sectorFinal,
         applyType: apply.type,
@@ -222,6 +225,15 @@ function main() {
         ...(operatorWhy ? { operatorReason: operatorWhy } : {}),
         aliases: [...new Set([...(rec.aliases ?? []), ...(rec.scope !== "national" && regionDisplayName(rec.name, tokensFor(rec)) !== rec.name ? [rec.name] : [])])].slice(0, 8) || undefined,
       };
+      // 수동 보강 신청처 (원문 신청방법이 비어 있어 주민센터로 잘못 안내되던 핵심 사업 — QA 2차 N4)
+      const ap = APPLY_PLACES.get(id);
+      if (ap && !p.applyMethod) {
+        p.applyMethod = ap.applyMethod;
+        p.contact = p.contact ?? ap.contact;
+        p.applyUrl = p.applyUrl ?? ap.applyUrl;
+        p.applyPlace = ap.place;
+        p.applyNote = { source: ap.source, checkedAt: applyPlacesJson.checkedAt };
+      }
       programs.push({ p, rec, sigungu: sgg });
     }
   }
@@ -242,10 +254,11 @@ function main() {
   const cut = (t: string | undefined, n: number) => (t && t.length > n ? t.slice(0, n - 1) + "…" : t);
   const slim = (p: Program): Program => ({
     id: p.id, name: p.name, summary: cut(p.summary, 160) ?? "", category: p.category, tags: p.tags, orgType: p.orgType, scope: p.scope, region: p.region,
-    owner: p.owner, provider: p.provider, target: cut(p.target, 120), deadline: cut(p.deadline, 60),
+    owner: p.owner, provider: p.provider, target: cut(p.target, 400), deadline: cut(p.deadline, 60),
     sources: p.sources.map((x) => ({ source: x.source, id: x.id }) as SourceRef), trust: p.trust, badges: p.badges,
-    rule: { id: p.rule.id, origin: p.rule.origin, review: p.rule.review, logic: p.rule.logic, unstructured: p.rule.unstructured, unstructuredCore: p.rule.unstructuredCore, ...(p.rule.meansTest ? { meansTest: true } : {}), ...(p.rule.refined ? { refined: true } : {}) },
+    rule: { id: p.rule.id, origin: p.rule.origin, review: p.rule.review, logic: p.rule.logic, unstructured: p.rule.unstructured, unstructuredCore: p.rule.unstructuredCore, ...(p.rule.meansTest ? { meansTest: true } : {}), ...(p.rule.recBand ? { recBand: true } : {}), ...(p.rule.refined ? { refined: p.rule.refined } : {}) },
     mergedCount: p.mergedCount, aliases: p.aliases, sector: p.sector, applyType: p.applyType === "unknown" ? undefined : p.applyType, hasApply: !!(p.applyMethod || p.contact) || undefined,
+    ...(p.applyPlace ? { applyPlace: p.applyPlace } : {}),
   });
   const detailShards = new Map<string, Record<string, Program>>();
   for (const { p } of programs) {

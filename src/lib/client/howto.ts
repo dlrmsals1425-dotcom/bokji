@@ -94,7 +94,9 @@ const BY_NAME: [RegExp, string, string][] = [
 ];
 
 /** 신청하러 갈 곳 (원문 신청 방법 → 접수기관 → 문의처 순, 모르면 '원문에 적힌 곳') */
-export function placeOf(p: Pick<Program, "name" | "applyMethod" | "provider" | "contact" | "applyUrl">, channels: Channel[] = []): string {
+export function placeOf(p: Pick<Program, "name" | "applyMethod" | "provider" | "contact" | "applyUrl" | "applyPlace">, channels: Channel[] = []): string {
+  // 수동 보강한 창구가 있으면 그대로 (QA 2차 N4: 실업급여 → 고용센터 등)
+  if (p.applyPlace) return p.applyPlace;
   const apply = (p.applyMethod ?? "").replace(/\s+/g, " ").trim();
   if (/(신청\s*(?:이|은)?\s*없이|별도\s*(?:신청|가입)\s*(?:사항|절차)?\s*(?:없|불필요|불요)|신청\s*불필요|직접\s*신청하지\s*않아도|자동(?:적)?으로\s*(?:제공|지급|지원))/.test(apply)) {
     const c = (p.contact ?? "").split(/\n/)[0]?.split(/☎/)[0]?.trim();
@@ -118,8 +120,11 @@ export function placeOf(p: Pick<Program, "name" | "applyMethod" | "provider" | "
   if (apply) return contactOrg && contactOrg.length < 24 ? `원문에 적힌 곳 (문의: ${contactOrg})` : "원문에 적힌 곳 (모르면 ☎129)";
   const byName = BY_NAME.find(([re]) => re.test(p.name));
   if (byName) return byName[1];
-  return CENTER;
+  // 원문에 신청 정보가 전혀 없을 때: 주민센터가 접수하는 공공부조·돌봄·수당 계열만 주민센터, 그 밖에는 담당 기관 (QA 2차 N4)
+  return CENTER_OK.test(p.name) ? CENTER : "담당 기관에 문의 (모르면 ☎129)";
 }
+/** 읍·면·동 주민센터가 신청을 받는 계열 (원문 신청방법이 비어 있을 때만 쓰는 기본값) */
+const CENTER_OK = /((?:생계|의료|주거|교육|해산|장제)\s*급여|수급|차상위|기초\s*생활|기초\s*연금|긴급\s*(?:복지|지원)|자활|희망\s*저축|바우처|수당|돌봄|장애인\s*등록|장애\s*정도|급식|보육료|드림\s*스타트|디딤\s*씨앗|응급\s*안전|고독사|사례\s*관리|찾아가는|요금\s*감면|주간\s*활동|방과\s*후\s*활동|자립\s*수당|정착금|경로당|장례)/;
 
 export function howTo(detail: Program | undefined | null, lead: Program): HowTo {
   const p = detail ?? lead;

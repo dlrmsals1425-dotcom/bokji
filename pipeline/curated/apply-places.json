@@ -1,0 +1,138 @@
+{
+  "about": "수동 보강 (신청처·문의): 핵심 복지 100선(복지로 색인) 중 원문 신청방법이 비어 있어 '주소지 행정복지센터(주민센터)'로 잘못 안내되던 사업의 신청 창구·문의처. 기관 공식 누리집(정부24·부처·공단)에서 직접 확인한 내용만 옮긴다. 원문이 바뀌면 이 파일을 고친다. (QA 2차 N4)",
+  "checkedAt": "2026-10-07",
+  "items": [
+    {
+      "id": "n.welfare100-unemployment-benefit",
+      "place": "가까운 고용센터 (고용24에서 구직 등록 후 방문)",
+      "applyMethod": "고용24(www.work24.go.kr)에서 구직 등록과 온라인 사전교육 → 신분증을 가지고 거주지 관할 고용센터(고용복지플러스센터)에 방문해 수급자격 인정 신청. 수급자격 인정 뒤 실업인정은 대부분 고용24에서 온라인으로 신청.",
+      "contact": "고용노동부 고객상담센터 ☎1350",
+      "applyUrl": "https://www.work24.go.kr",
+      "source": "https://www.work24.go.kr/cm/c/f/1100/selecSystInfo.do?systId=SI00000411"
+    },
+    {
+      "id": "n.welfare100-earned-income-tax-credit",
+      "place": "국세청 홈택스·손택스 (안내문을 받았으면 ARS ☎1544-9944)",
+      "applyMethod": "개별 신청 안내를 받은 경우 모바일 안내문·ARS(☎1544-9944)·홈택스/손택스·서면으로 신청. 안내를 받지 않았어도 요건을 갖추면 홈택스/손택스·서면으로 신청. 정기신청 5월, 반기신청 3월·9월.",
+      "contact": "장려금 상담센터 ☎1566-3636",
+      "applyUrl": "https://www.hometax.go.kr",
+      "source": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/105100000001"
+    },
+    {
+      "id": "n.welfare100-legal-aid",
+      "place": "대한법률구조공단 (상담 예약 ☎132)",
+      "applyMethod": "대한법률구조공단 누리집(www.klac.or.kr) 또는 ☎132로 상담 예약 → 가까운 공단 지부·출장소에 방문 상담 → 법률구조 신청서 제출 (주민등록등본, 법률구조 대상자임을 소명하는 자료, 주장 사실을 입증할 자료).",
+      "contact": "대한법률구조공단 ☎132",
+      "applyUrl": "https://www.klac.or.kr",
+      "source": "https://www.easylaw.go.kr/CSP/CnpClsMainBtr.laf?ccfNo=2&cciNo=1&cnpClsNo=1&csmSeq=616&popMenu=ov"
+    },
+    {
+      "id": "n.welfare100-mental-health-center",
+      "place": "시·군·구 정신건강복지센터·보건소 (전화 또는 방문)",
+      "applyMethod": "해당 지역 보건소 또는 정신건강복지센터에 전화하거나 방문.",
+      "contact": "정신건강상담전화 ☎1577-0199 (자살 위기 상담은 ☎109)",
+      "source": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/GMW000000140"
+    },
+    {
+      "id": "n.welfare100-dementia-screening-treatment",
+      "place": "주소지 보건소 치매안심센터",
+      "applyMethod": "주소지 관할(또는 실거주지) 보건소 치매안심센터에 방문. 치매치료관리비는 방문·우편·팩스·전자우편으로도 신청 (치매약 처방전, 통장 사본, 주민등록등본, 건강보험료 납부확인서 등).",
+      "contact": "치매상담콜센터 ☎1899-9988",
+      "source": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200000125"
+    },
+    {
+      "id": "n.welfare100-disability-primary-doctor",
+      "place": "장애인 건강주치의로 등록된 의료기관",
+      "applyMethod": "국민건강보험공단 건강iN에서 '장애인 건강주치의 의료기관'을 찾아 방문 전 전화로 확인 → 장애인복지카드를 가지고 의료기관에 방문해 이용 신청.",
+      "contact": "국민건강보험공단 ☎1577-1000",
+      "applyUrl": "https://www.nhis.or.kr/nhis/healthin/retrieveDapsHltFdrHsptSearch.do",
+      "source": "https://www.nhis.or.kr/nhis/healthin/retrieveDapsHltFdrHsptSearch.do"
+    },
+    {
+      "id": "n.welfare100-preterm-infant-medical",
+      "place": "아기 주소지 관할 보건소 (e보건소·아이마중 앱 신청 가능)",
+      "applyMethod": "영아 주민등록 주소지 관할 보건소에 방문하거나 e보건소(e-health.go.kr)·아이마중 앱으로 신청 (최종 퇴원일로부터 6개월 이내).",
+      "contact": "관할 보건소 (모르면 ☎129)",
+      "applyUrl": "https://e-health.go.kr",
+      "source": "https://www.gov.kr/portal/service/serviceInfo/SME000000110"
+    },
+    {
+      "id": "n.welfare100-visiting-health-care",
+      "place": "주소지 보건소",
+      "applyMethod": "주소지 보건소에 방문하거나 전화로 문의·신청 (보건소마다 접수 방식이 다를 수 있음).",
+      "contact": "관할 보건소 (모르면 ☎129)",
+      "source": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200000082"
+    },
+    {
+      "id": "n.welfare100-crisis-pregnancy-protected-birth",
+      "place": "위기임산부 상담 ☎1308 (365일 24시간)",
+      "applyMethod": "전국 어디서나 ☎1308(365일 24시간) 또는 카카오톡 채널 '위기임산부 상담 1308'로 상담 → 거주 지역상담기관으로 연결.",
+      "contact": "위기임산부 상담 ☎1308",
+      "source": "https://www.ncrc.or.kr/ncrc1308.do"
+    },
+    {
+      "id": "n.welfare100-violence-victim-support",
+      "place": "여성긴급전화 ☎1366 (365일 24시간)·지역 상담소",
+      "applyMethod": "국번 없이 ☎1366(365일 24시간)으로 상담 → 상담소·보호시설·경찰·의료·법률 기관 연계. 지역 상담소·보호시설은 성평등가족부 '시설찾기'에서 확인.",
+      "contact": "여성긴급전화 ☎1366",
+      "source": "https://www.mogef.go.kr/cc/wcc/cc_wcc_f001.do"
+    },
+    {
+      "id": "n.welfare100-suicide-prevention",
+      "place": "자살예방상담전화 ☎109 (24시간)·정신건강복지센터",
+      "applyMethod": "☎109(24시간)로 상담 → 위험도가 높으면 본인 동의를 받아 주소지 정신건강복지센터·자살예방센터로 연계되어 대면상담·사례관리.",
+      "contact": "자살예방상담전화 ☎109",
+      "source": "https://129.go.kr/109"
+    },
+    {
+      "id": "n.welfare100-child-abuse-protection",
+      "place": "아동학대 신고 ☎112",
+      "applyMethod": "아동학대가 의심되면 누구든 국번 없이 ☎112에 신고 → 경찰 또는 시·군·구 아동학대전담공무원이 조사. 신고자 신원은 법으로 보호됨.",
+      "contact": "☎112",
+      "source": "https://www.ncrc.or.kr/ncrc/cm/cntnts/cntntsView.do?cntntsId=1484&mi=1030"
+    },
+    {
+      "id": "n.welfare100-purchased-rental-housing",
+      "place": "LH청약플러스 (입주자 모집공고)",
+      "applyMethod": "LH청약플러스(apply.lh.or.kr)에서 지역별 입주자 모집공고를 확인한 뒤 공고 기간에 인터넷·모바일로 신청.",
+      "contact": "LH 마이홈 콜센터 ☎1600-1004",
+      "applyUrl": "https://apply.lh.or.kr",
+      "source": "https://apply.lh.or.kr/lhapply/apply/wt/wrtanc/selectWrtancList.do?mi=1026"
+    },
+    {
+      "id": "n.welfare100-foster-care",
+      "place": "가정위탁지원센터 또는 읍·면·동 행정복지센터",
+      "applyMethod": "관할 읍·면·동 행정복지센터 또는 가정위탁지원센터에 문의·신청 (아동의 보호자는 아동 거주지 시·군·구에 가정위탁보호 신청서 제출).",
+      "contact": "가정위탁 상담 ☎1577-1406",
+      "source": "https://www.ncrc.or.kr/ncrc/cm/cntnts/cntntsView.do?cntntsId=1247&mi=1280"
+    },
+    {
+      "id": "n.welfare100-food-bank",
+      "place": "주소지 행정복지센터 (상담·신청 후 푸드뱅크·마켓 이용)",
+      "applyMethod": "거주지 행정복지센터(주민센터)에서 상담·신청 → 지자체·푸드뱅크가 선정하면 푸드뱅크·푸드마켓에서 이용.",
+      "contact": "전국푸드뱅크 ☎1688-1377",
+      "source": "https://www.foodbank1377.org/guide/useInfo.do"
+    },
+    {
+      "id": "n.welfare100-just-give-food",
+      "place": "가까운 그냥드림 코너 (푸드뱅크·푸드마켓)",
+      "applyMethod": "별도 신청 없이 신분 확인 후 바로 물품을 받을 수 있음. 이후 상담을 거쳐 읍·면·동 맞춤형복지팀으로 연계.",
+      "contact": "전국푸드뱅크 ☎1688-1377",
+      "source": "https://www.mohw.go.kr/board.es?act=view&bid=0027&list_no=1488074&mid=a10503000000"
+    },
+    {
+      "id": "n.welfare100-senior-eye-surgery",
+      "place": "주소지 보건소",
+      "applyMethod": "주소지 관할 보건소에 신청 (지원신청서, 안과 진단서·진료소견서, 해당 자격 증명서 등). 방문 또는 우편 접수.",
+      "contact": "한국실명예방재단 ☎02-718-1102 (모르면 ☎129)",
+      "source": "https://www.gov.kr/svc/135200000015"
+    },
+    {
+      "id": "n.welfare100-dementia-public-guardianship",
+      "place": "주소지 보건소 치매안심센터",
+      "applyMethod": "주민등록 주소지 관할 보건소 치매안심센터에 방문·우편·팩스·전자우편으로 신청 (다른 지역에서 신청하면 주소지 센터로 이송).",
+      "contact": "치매상담콜센터 ☎1899-9988",
+      "source": "https://www.hanam.go.kr/health/contents.do?key=13736"
+    }
+  ]
+}

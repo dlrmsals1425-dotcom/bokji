@@ -118,6 +118,10 @@ export interface Program {
   operatorReason?: string;
   /** 목록 번들 전용: 신청방법·연락처가 있는지 (상세 필드는 details 샤드에) */
   hasApply?: boolean;
+  /** 수동 보강한 신청 창구 (원문 신청방법이 비어 있던 핵심 사업 — pipeline/curated/apply-places.json) */
+  applyPlace?: string;
+  /** 신청 창구·문의를 수동 보강했을 때 출처 (공식 누리집 주소·확인일) */
+  applyNote?: { source: string; checkedAt: string };
 }
 
 export type Sector = "agri" | "business" | "operator";

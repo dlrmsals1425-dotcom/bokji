@@ -12,11 +12,12 @@ describe("howTo: 신청 방법 요약", () => {
     expect(h.phone).toBe("보건복지상담센터 129");
     expect(h.fallback).toBe(false);
   });
-  it("신청 정보가 없으면 주민센터·129 안내로 대신한다", () => {
+  it("신청 정보가 없으면 주민센터(공공부조 계열)·담당 기관과 129 안내로 대신한다", () => {
     const h = howTo(undefined, base);
     expect(h.fallback).toBe(true);
-    expect(h.place).toContain("주민센터");
+    expect(h.place).toMatch(/주민센터|담당 기관/);
     expect(h.phone).toContain("129");
+    expect(howTo(undefined, { ...base, name: "주거급여", applyMethod: undefined, contact: undefined, applyUrl: undefined }).place).toContain("주민센터");
   });
   it("구비 서류는 짧은 항목 4개까지", () => {
     expect(parseDocs("○ 신청서\n○ 신분증\n○ 통장 사본\n○ 가족관계증명서\n○ 임대차계약서")).toEqual(["신청서", "신분증", "통장 사본", "가족관계증명서"]);
@@ -44,6 +45,10 @@ describe("신청처 (QA 1차 H3)", () => {
   it("원문에 신청 방법이 있지만 창구를 모르면 '원문에 적힌 곳', 비어 있으면 주민센터·이름으로", () => {
     expect(P("EM 발효액 배부", "방문 신청", { contact: "자원순환과 ☎ 031-000-0000" })).toBe("원문에 적힌 곳 (문의: 자원순환과)");
     expect(placeOf({ name: "노인장기요양보험", applyMethod: "" })).toBe("국민건강보험공단 지사");
-    expect(placeOf({ name: "어떤 사업", applyMethod: "" })).toBe("주소지 행정복지센터(주민센터)");
+    // QA 2차 N4: 신청 정보가 전혀 없으면 공공부조·돌봄·수당 계열만 주민센터, 그 밖에는 담당 기관
+    expect(placeOf({ name: "어떤 사업", applyMethod: "" })).toBe("담당 기관에 문의 (모르면 ☎129)");
+    expect(placeOf({ name: "국민기초생활보장 생계급여", applyMethod: "" })).toBe("주소지 행정복지센터(주민센터)");
+    // 수동 보강 창구가 있으면 그대로
+    expect(placeOf({ name: "실업급여", applyMethod: "고용24 …", applyPlace: "가까운 고용센터 (고용24에서 구직 등록 후 방문)" })).toContain("고용센터");
   });
 });
