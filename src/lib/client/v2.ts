@@ -655,6 +655,8 @@ const STATUS_KINDS: { re: RegExp; label: string; strong: boolean; lead?: number;
   { re: /자격(?:증)?(?:을|의)?\s*취득(?:자|한\s*(?:사람|자|분))|자격증?\s*소지자|검정을\s*받으려는|시험\s*응시(?:자|료)|응시\s*(?:료|수수료)/, label: "자격 취득·시험 응시", strong: true },
   { re: /(?<![가-힣])(?:종사자|전문\s*인력|현장\s*교사|실습생을\s*지도|교원|강사|담당자|실무자)(?!\s*(?:제외|자녀))/, label: "종사자·전문인력", strong: false },
   { re: /\S+\s*분야\s*(?:구직자|취업\s*준비생)/, label: "특정 분야 구직·종사", strong: true },
+  // (QA 3차 P5) 기능 판정 점수 — 장애인 대소변흡수용품 '수정바델지수 배뇨조절 2점 이하'
+  { re: /바델\s*지수|배뇨\s*(?:·|,|및)?\s*(?:배변\s*)?조절|배변\s*(?:·|,|및)?\s*(?:배뇨\s*)?조절|일상\s*생활\s*(?:수행\s*)?능력\s*(?:평가|점수)|ADL\s*(?:평가|점수)/, label: "건강·기능 판정 (배뇨 조절 등)", strong: true },
   { re: /대학(?:원)?\s*재학|대학(?:원)?생(?!\s*자녀)|사업\s*참여\s*대학/, label: "대학 재학", strong: false, skip: (s) => s.profile.activity === "student", coveredBy: "student" },
 ];
 const STATUS_ORDINARY = new RegExp(`${OCC_ORDINARY.source}|시민|도민|청년|신혼|고령자|노인가족|취업\\s*준비|재직자|자녀`);

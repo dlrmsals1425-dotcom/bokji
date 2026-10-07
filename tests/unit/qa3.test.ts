@@ -229,3 +229,15 @@ describe("N4 잔여 신청처", () => {
     expect(`${h.place} ${h.phone}`).not.toMatch(/출산정책과/);
   });
 });
+
+describe("P5 대소변흡수용품", () => {
+  it("'수정바델지수 배뇨조절 2점 이하' 조건 → 신청할 때 확인, 먼저 확인할 5가지에 없음", () => {
+    const sido = load("public/bundles/v1/sido/41000.json").map(refineProgram);
+    const p = sido.find((x) => x.id === "s41000.gov24-641000000143")!;
+    expect(needsStatus(p)).toMatch(/기능 판정/);
+    const sit = sitOf("고양시 사는 52살 엄마예요 지적장애 있는 딸이랑 셋이 살아요");
+    const r = classifyOne(p, sit);
+    expect(r.bucket).not.toBe("fit");
+    expect(picksOf(sit).picks.map((g) => g.s.program.name)).not.toContain(p.name);
+  });
+});
