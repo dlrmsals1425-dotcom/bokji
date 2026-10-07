@@ -161,6 +161,10 @@ describe("N6 잔여 · R6", () => {
     expect(g.place).toMatch(/LH/);
     expect(`${g.place} ${g.phone}`).not.toMatch(/서울주택도시공사/);
     expect(howTo(d, d, "11000").phone).toMatch(/서울주택도시공사/);
+    // 담당기관 줄에도 SH가 남지 않음
+    expect(g.agency).toMatch(/한국토지주택공사/);
+    expect(g.agency).not.toMatch(/SH|서울주택/);
+    expect(howTo(d, d, "11000").agency).toBeUndefined();
   });
 });
 

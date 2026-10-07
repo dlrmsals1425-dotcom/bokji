@@ -69,6 +69,8 @@ export interface HowTo {
   bring: string[];
   /** 원문에 신청 정보가 없어 일반 안내로 대신했는지 */
   fallback: boolean;
+  /** 다른 시·도 지방 공사를 뺀 담당기관 (지역에 맞게 바꾼 경우만) */
+  agency?: string;
 }
 
 const CENTER = "주소지 행정복지센터(주민센터)";
@@ -147,8 +149,9 @@ function localizeContact(p: Program, sido?: string | null): Program {
   const entries = (p.provider ?? "").split(/\s*[,/]\s*/).map((e) => e.split(/[;:]/).map((x) => x.trim()));
   const alt = entries.find(([name, phone]) => name && phone && /\d{3,4}-\d{4}/.test(phone) && !regionalSido(name) && !/콜\s*센터|홈페이지/.test(name));
   const contact = alt ? `${alt[0]} ☎ ${alt[1]}` : undefined;
+  const agencies = [...new Set(entries.map(([name]) => name).filter((n) => n && !regionalSido(n) && !/콜\s*센터|홈페이지/.test(n)))];
   const altPlace = alt ? KNOWN_PLACES.find(([re]) => re.test(alt[0]))?.[1] ?? alt[0] : undefined;
-  return { ...p, contact, applyUrl: regionalSido(p.applyUrl) ? undefined : p.applyUrl, applyPlace: p.applyPlace ?? (altPlace ? `${altPlace} (사는 지역 공고 확인)` : "사는 지역 주택 공급 기관 공고 확인") };
+  return { ...p, contact, provider: agencies.length ? agencies.join(", ") : alt?.[0], applyUrl: regionalSido(p.applyUrl) ? undefined : p.applyUrl, applyPlace: p.applyPlace ?? (altPlace ? `${altPlace} (사는 지역 공고 확인)` : "사는 지역 주택 공급 기관 공고 확인") };
 }
 
 export function howTo(detail: Program | undefined | null, lead: Program, sido?: string | null): HowTo {
@@ -168,6 +171,7 @@ export function howTo(detail: Program | undefined | null, lead: Program, sido?: 
     phone: contact ?? (fallback ? (byName?.[2] ?? "보건복지상담센터 129") : undefined),
     bring: parseDocs(p.documents, p.name),
     fallback,
+    agency: p !== (detail ?? lead) ? p.provider : undefined,
   };
 }
 

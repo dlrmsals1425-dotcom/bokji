@@ -491,7 +491,7 @@ function Pick({ item, i, detail, loading, sit, mode }: { item: V2Item; i: number
         </li>
         <li>
           <span className="k">담당기관</span>
-          <span className="v">{p.provider || p.owner || orgText(p)}</span>
+          <span className="v">{how.agency || p.provider || p.owner || orgText(p)}</span>
         </li>
         {how.phone && !loading && (
           <li>
