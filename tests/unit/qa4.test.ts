@@ -177,3 +177,19 @@ describe("N3 · S4 · S5 · S7", () => {
     expect(names(sitOf("화성 동탄 살아요 실직했어요")).join(" ")).not.toMatch(/북한이탈|출소/);
   });
 });
+
+describe("R4 잔여 (원문이 분명한 것만)", () => {
+  it("경북 산모·신생아: '150% 이하 … (150% 초과 가정은 예외지원)' → 150%로 넓힘, 넘는 가구도 빼지 않음", async () => {
+    const { sourceMedianCapForWiden } = await import("@/lib/data/refine");
+    const t = "○ 산모 및 배우자 등 해당가구의 건강보험료 본인부담금 합산액이 기준중위소득 150%이하 금액에 해당하는 출산가정(150%초과 가정은 예외지원)";
+    expect(sourceMedianCapForWiden({ target: t })).toBe(150);
+    const g = load("public/bundles/v1/sigungu/47750.json").map(refineProgram).find((p) => p.id === "g47750.gov24-516000000144")!;
+    const inc = JSON.stringify(g.rule.logic);
+    expect(inc).toContain('"lte":150');
+    expect(inc).toContain('"soft":true');
+  });
+  it("안양 반려동물 '120% 미만 … 우선지원'은 모호해 그대로 (넓히지 않음)", async () => {
+    const { sourceMedianCapForWiden } = await import("@/lib/data/refine");
+    expect(sourceMedianCapForWiden({ target: "- (공통사항) 중위소득 120% 미만 사회적 배려계층 우선지원" })).toBeNull();
+  });
+});

@@ -109,8 +109,9 @@ export function sourceMedianCapForWiden(p: { target?: string; criteria?: string 
       caps.push(n);
     }
     // 기준 위쪽도 지원하는 사업('120% 초과(군비)')은 상한을 넓히지 않음
-    if ([...t.matchAll(MEDIAN_OVER)].length) return null;
-    overs.push(...[...t.matchAll(/(\d{2,3})\s*%\s*(?:초과|넘는)/g)].map((m) => Number(m[1])));
+    if ([...t.matchAll(MEDIAN_OVER)].some((m) => !/^[^\n]{0,12}예외/.test(t.slice((m.index ?? 0) + m[0].length)))) return null;
+    // '150% 초과 가정은 예외지원'은 기준 위쪽을 막지 않는 말 → 상한(150%)으로 넓혀도 됨 (QA 4차 R4 잔여: 경북 산모·신생아)
+    overs.push(...[...t.matchAll(/(\d{2,3})\s*%\s*(?:초과|넘는)(?![^\n]{0,12}예외)/g)].map((m) => Number(m[1])));
   }
   if (!caps.length) return null;
   const cap = Math.max(...caps);
@@ -120,7 +121,8 @@ export function sourceMedianCapForWiden(p: { target?: string; criteria?: string 
 const INCOME_TEXT = /(소득|중위|수급|차상위|저소득|기초\s*생활|생계|의료\s*급여|취약|빈곤|형편|재산|가난|어려운|위기)/;
 export const REC_TEXT = /(수급자|수급권자|차상위|기초\s*생활\s*보장|생계\s*급여|의료\s*급여|주거\s*급여)/;
 const MED_TEXT = /중위\s*(?:소득\s*)?(?:의\s*)?\d{2,3}\s*%/;
-export const REFINE_VERSION = 5;
+const EXCEPT_ABOVE = /\d{2,3}\s*%\s*(?:초과|넘는)[^\n]{0,12}예외/;
+export const REFINE_VERSION = 6;
 
 export function refineRule(p: { name: string; target?: string; criteria?: string }, rule: Rule): Rule {
   if (rule.refined === REFINE_VERSION) return rule;
@@ -151,7 +153,8 @@ export function refineRule(p: { name: string; target?: string; criteria?: string
     if (wcap !== null) {
       logic = mapLeaves(logic, (l) => {
         if (l.field !== "incomeBands" || l.soft || wcap <= incomeMax(l) + 5 || !contiguousFromZero(l.bands)) return l;
-        return { field: "income", lte: wcap, label: `기준 중위소득 ${wcap}% 이하 (원문)` };
+        // 기준 위쪽 '예외 지원'이 있으면 넘는 가구도 빼지 않고 신청처 확인으로 (soft)
+        return { field: "income", lte: wcap, label: `기준 중위소득 ${wcap}% 이하 (원문)`, ...(EXCEPT_ABOVE.test(`${p.target ?? ""}\n${p.criteria ?? ""}`) ? { soft: true } : {}) };
       });
     }
     if (cap !== null) {
@@ -166,7 +169,8 @@ export function refineRule(p: { name: string; target?: string; criteria?: string
   }
   // QA 2차 N7: 수기 규칙의 '저소득' soft 소득 잎이 원문 비율(±5%p)과 같으면 원문이 확인해 준 기준 → soft를 푼다
   // (같은 'any' 묶음의 수급 soft 잎도 함께: 수급 아님·소득 초과가 분명하면 대상 아님)
-  if (logic) {
+  // (기준 위쪽 '예외 지원'이 있는 사업은 풀지 않음: 넘는 가구도 신청처 확인)
+  if (logic && !EXCEPT_ABOVE.test(`${p.target ?? ""}\n${p.criteria ?? ""}`)) {
     const cap = sourceMedianCap(p);
     if (cap !== null) logic = hardenConfirmed(logic, cap);
   }
