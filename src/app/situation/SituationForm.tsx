@@ -17,7 +17,7 @@ import { saveFiller, saveMode, useExtras, useMode, useProfile } from "@/lib/clie
 import { saveSituation } from "@/lib/client/start";
 import { EMPTY_EXTRAS, SUPPORT_LEVELS, extrasFromProfile, incomeExplain, type Extras } from "@/lib/client/v2";
 import type { RegionIndex } from "@/lib/data/types";
-import { AGE_BANDS, AGE_LABEL, CHILD_BUCKETS, CHILD_LABEL, EMPTY_PROFILE, ageRange, type Benefit, type ChildBucket, type Profile } from "@/lib/engine/profile";
+import { AGE_BANDS, AGE_LABEL, CHILD_BUCKETS, CHILD_LABEL, EMPTY_PROFILE, ageRange, type AgeBand, type Benefit, type ChildBucket, type Profile } from "@/lib/engine/profile";
 
 export function SituationForm() {
   const stored = useProfile();
@@ -65,6 +65,8 @@ function mergeParsedX(prev: Extras, ps: ParsedSituation): Extras {
   const q = ps.profile;
   const benefits = { ...prev.benefits };
   q.benefits?.forEach((b) => (benefits[b] = true));
+  // '기초연금 안 받아요', '수급자는 아니에요' (QA 1차 C2)
+  ps.benefitsNo?.forEach((b) => (benefits[b] = false));
   const traits = { ...prev.traits };
   q.traits?.forEach((t) => (traits[t] = true));
   // 문장에서 읽은 월 소득·자녀 수 (예: '월급은 세후 400정도' → 400, '자녀 2명' → 2)
@@ -103,6 +105,83 @@ function UnderstoodLines({ ps, alt, onAlt, suffix }: { ps: ParsedSituation; alt:
         </p>
       )}
     </>
+  );
+}
+
+/**
+ * 확인 화면에서 바로 채우기 (QA 1차 H2·H4): 지역을 못 읽었거나 두 곳으로 읽히면 여기서 고르고,
+ * 나이·가구원 수를 모르면 단추 하나로 고른다 (긴 입력 화면 맨 위로 돌아가지 않아도 됨)
+ */
+function QuickFill({ ps, p, mode, regions, setP }: { ps: ParsedSituation; p: Profile; mode: FindMode; regions: RegionIndex | null; setP: (f: (prev: Profile) => Profile) => void }) {
+  const parent = mode === "parent";
+  const sido = regions?.sidos.find((s) => s.code === p.sido);
+  const ages: AgeBand[] = ps.ageChoices?.length ? ps.ageChoices : parent ? ["60-64", "65-69", "70-74", "75-79", "80+"] : ["19-24", "25-29", "30-34", "35-39", "40-49", "50-59", "60-64", "65-69", "70-74", "75-79", "80+"];
+  // 해석 결과 기준으로 보여 준다 (고른 뒤에도 단추가 남아 있어 바꿀 수 있게)
+  const needRegion = !ps.profile.sigungu;
+  const needAge = ps.profile.age === "unknown";
+  const needHh = ps.profile.householdSize === "unknown";
+  if (!needRegion && !needAge && !needHh) return null;
+  return (
+    <div className="pf-quick" data-testid="prefill-quick">
+      {needRegion && (
+        <div className="pf-q" data-testid="prefill-region">
+          <p className="pf-qh">{parent ? "부모님이 사시는 곳" : "사는 곳"} <span className="req">(필수)</span></p>
+          {ps.regionChoices && (
+            <div className="pf-chips" role="group" aria-label="지역 고르기">
+              {ps.regionChoices.map((c) => (
+                <button key={c.label} type="button" className={`btn btn-sm ${p.sido === c.sido && p.sigungu === c.sigungu ? "btn-primary" : "btn-ghost"}`} aria-pressed={p.sido === c.sido && p.sigungu === c.sigungu} onClick={() => setP((prev) => ({ ...prev, sido: c.sido, sigungu: c.sigungu }))} data-testid="prefill-region-choice">
+                  {c.label}
+                </button>
+              ))}
+            </div>
+          )}
+          <div className="select-row">
+            <div>
+              <label htmlFor="pf-sido" className="label small">시·도</label>
+              <select id="pf-sido" className="select" value={p.sido ?? ""} onChange={(e) => setP((prev) => ({ ...prev, sido: e.target.value || null, sigungu: null }))}>
+                <option value="">선택하세요</option>
+                {regions?.sidos.map((s) => (
+                  <option key={s.code} value={s.code}>{s.name}</option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label htmlFor="pf-sigungu" className="label small">시·군·구</label>
+              <select id="pf-sigungu" className="select" value={p.sigungu ?? ""} disabled={!sido} onChange={(e) => setP((prev) => ({ ...prev, sigungu: e.target.value || null }))} data-testid="prefill-sigungu">
+                <option value="">{sido ? "선택하세요" : "시·도를 먼저 고르세요"}</option>
+                {sido?.sigungus.map((g) => (
+                  <option key={g.code} value={g.code}>{g.name}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+        </div>
+      )}
+      {needAge && (
+        <div className="pf-q" data-testid="prefill-age">
+          <p className="pf-qh">{parent ? "부모님 나이" : "나이"} <span className="small muted">(만 나이 · 모르면 넘어가도 돼요)</span></p>
+          <div className="pf-chips" role="group" aria-label="나이대 고르기">
+            {ages.map((a) => (
+              <button key={a} type="button" className={`btn btn-sm ${p.age === a ? "btn-primary" : "btn-ghost"}`} aria-pressed={p.age === a} onClick={() => setP((prev) => ({ ...prev, age: a }))}>
+                {AGE_LABEL[a]}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+      {needHh && (
+        <div className="pf-q" data-testid="prefill-hh">
+          <p className="pf-qh">함께 사는 가족 <span className="small muted">({parent ? "부모님 포함" : "본인 포함"} · 소득 기준을 정할 때 써요)</span></p>
+          <div className="pf-chips" role="group" aria-label="가구원 수 고르기">
+            {([1, 2, 3, 4, 5, 6] as const).map((n) => (
+              <button key={n} type="button" className={`btn btn-sm ${p.householdSize === n ? "btn-primary" : "btn-ghost"}`} aria-pressed={p.householdSize === n} onClick={() => setP((prev) => ({ ...prev, householdSize: n }))}>
+                {householdLabel(mode, n)}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -282,10 +361,11 @@ function Form({ initial, initialX, initialMode, wantPrefill }: { initial: Profil
                     ))}
                   </ul>
                 )}
+                <QuickFill ps={prefill.parsed} p={p} mode={mode} regions={regions} setP={setP} />
                 <p className="small muted">
                   {p.sigungu
                     ? "맞으면 결과 보기를 누르세요. 나머지는 '모름'으로 두고 찾은 뒤, 결과 화면 맨 위에서 꼭 필요한 것만 물어봐요. 아래에서 더 답해도 돼요."
-                    : "시·군·구를 알 수 없어 바로 결과를 볼 수 없어요. 아래에서 사는 곳을 골라 주세요."}{" "}
+                    : "사는 곳(시·군·구)을 위에서 고르면 바로 결과를 볼 수 있어요."}{" "}
                   문장은 이 기기에서만 해석하며 어디에도 보내지 않아요.
                 </p>
                 <div className="pf-actions">
@@ -325,6 +405,14 @@ function Form({ initial, initialX, initialMode, wantPrefill }: { initial: Profil
                       ) : (
                         <p className="pf-l">알아들은 내용이 없어요. 아래 질문에 직접 답해 주세요.</p>
                       )}
+                      {understood.notes.length > 0 && (
+                        <ul className="pf-notes" data-testid="v2-understood-notes">
+                          {understood.notes.map((n) => (
+                            <li key={n}>{n}</li>
+                          ))}
+                        </ul>
+                      )}
+                      <QuickFill ps={understood} p={p} mode={mode} regions={regions} setP={setP} />
                     </div>
                   </div>
                 )}

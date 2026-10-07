@@ -32,7 +32,7 @@ const CASES: [string, Partial<{ mode: string | null; sido: string | null; sigung
   ["분당 사시는 부모님 1955년생 치매", { mode: "parent", sigungu: "41130", age: "70-74" }],
   ["성남시 수정구 아버지 혼자 사심 80대", { mode: "parent", sigungu: "41130", age: "80+", hh: 1 }],
   ["경기 광주시 70대 후반 아버지", { mode: "parent", sido: "41000", sigungu: "41610", age: "75-79" }],
-  ["광주에 사시는 어머니 홀로 계세요", { mode: "parent", sido: "12000", sigungu: null, hh: 1 }],
+  ["광주에 사시는 어머니 홀로 계세요", { mode: "parent", sido: null, sigungu: null, hh: 1 }], // 광주광역시·경기 광주시 중 고르게 (QA 1차 H4)
   ["서울 중구 사는 저는 30대 초반 월세", { mode: "self", sido: "11000", sigungu: "11140", age: "30-34" }],
   ["중구에 사는 65세", { sido: null, sigungu: null, age: "65-69", situ: true }],
   ["부산 해운대구 70세 어머니 기초연금 받고 계심", { mode: "parent", sigungu: "26350", age: "70-74" }],

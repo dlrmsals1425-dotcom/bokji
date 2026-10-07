@@ -20,6 +20,7 @@ const owner = parseSituation(OWNER, JSON.parse(fs.readFileSync(path.join(B, "reg
 const SCENARIOS = [...PRESETS.map((p) => ({ id: p.id, title: p.title, profile: p.profile })), { id: "owner-sentence", title: `운영자 문장 '${OWNER}'`, profile: owner.profile }];
 
 const DIM_LABEL: Record<DimId, string> = {
+  age: "나이 (만)",
   support: "기초생활수급(생계·의료·주거·교육급여)·차상위 여부",
   basicPension: "기초연금 수급(소득 하위 70%)",
   income: "가구 소득 (기준 중위소득 %)",

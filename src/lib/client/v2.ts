@@ -5,7 +5,7 @@
  */
 import { evaluateCond, evaluateRule } from "../engine/evaluate";
 import {
-  BASIC_PENSION_THRESHOLD_2026, BENEFITS, CHILD_LABEL, HOUSEHOLD_TRAITS, INCOME_BANDS, ageRange, incomeBandFor, incomeRange, medianWon,
+  AGE_BANDS, AGE_LABEL, BASIC_PENSION_THRESHOLD_2026, BENEFITS, CHILD_LABEL, HOUSEHOLD_TRAITS, INCOME_BANDS, ageRange, incomeBandFor, incomeRange, medianWon,
   type Benefit, type HouseholdTrait, type IncomeBand, type Profile,
 } from "../engine/profile";
 import type { Cond, EvalOptions, Evaluation, Leaf, Reason } from "../engine/types";
@@ -271,7 +271,7 @@ export function gateState(g: Gate, s: Situation, prof: Profile): GateState {
 
 /* ---------------- 추가 질문 (차원) ---------------- */
 
-export type DimId = "support" | "basicPension" | "income" | "disability" | "care" | "ltcGrade" | "alone" | "veteran" | "singleParent" | "multicultural" | "housing" | "activity" | "illness" | "children";
+export type DimId = "age" | "support" | "basicPension" | "income" | "disability" | "care" | "ltcGrade" | "alone" | "veteran" | "singleParent" | "multicultural" | "housing" | "activity" | "illness" | "children";
 
 export interface Answer {
   key: string;
@@ -384,13 +384,24 @@ export const DIMS: Dim[] = [
     ],
   },
   {
+    // 가구원 수 (QA 1차 H2·M2: 소득 기준·1인 가구 혜택이 이 답으로 정해짐) — id 는 예전 '혼자 사세요?' 질문과 같게 둔다
     id: "alone",
-    q: (m) => subj(m, "혼자 사시나요?", "부모님이 혼자 사시나요?"),
+    q: (m) => subj(m, "함께 사는 가족은 본인 포함 몇 명인가요?", "부모님 댁에는 부모님 포함 몇 분이 사시나요?"),
+    help: "소득 기준(기준 중위소득)과 1인 가구 혜택이 이 답으로 정해져요.",
     isUnknown: (s) => s.profile.householdSize === "unknown",
     answers: [
-      { key: "yes", label: "예, 혼자", apply: (s) => withP(s, { householdSize: 1 }) },
-      { key: "no", label: "아니요, 함께 살아요", apply: (s) => withP(s, { householdSize: 2 }) },
+      { key: "yes", label: "1명 (혼자)", apply: (s) => withP(s, { householdSize: 1 }) },
+      ...([2, 3, 4, 5] as const).map((n) => ({ key: String(n), label: `${n}명`, apply: (s: Situation) => withP(s, { householdSize: n }) })),
+      { key: "6", label: "6명 이상", apply: (s) => withP(s, { householdSize: 6 }) },
     ],
+  },
+  {
+    // 나이 (QA 1차 H2: 나이를 모르면 나이로 정해지는 혜택이 많아 가장 먼저 묻는다)
+    id: "age",
+    q: (m) => subj(m, "나이(만)가 어떻게 되세요?", "부모님 나이(만)가 어떻게 되세요?"),
+    isUnknown: (s) => s.profile.age === "unknown",
+    hide: (a, s) => s.mode === "parent" && ["0-18", "19-24", "25-29", "30-34", "35-39"].includes(a.key),
+    answers: AGE_BANDS.filter((b) => b !== "0-18").map((b) => ({ key: b, label: AGE_LABEL[b], apply: (s: Situation) => withP(s, { age: b }) })),
   },
   {
     id: "veteran",
@@ -477,7 +488,8 @@ export function dimsFor(p: Program): DimId[] {
         if (l.anyOf.some((b) => RECIPIENT_KINDS.includes(b))) out.add("support");
         if (l.anyOf.includes("basic_pension")) out.add("basicPension");
         break;
-      case "income": case "incomeBands": out.add("income"); break;
+      case "age": out.add("age"); break;
+      case "income": case "incomeBands": out.add("income"); out.add("alone"); break;
       case "disability": out.add("disability"); break;
       case "care": out.add("care"); break;
       case "trait":
@@ -503,6 +515,7 @@ export function dimsFor(p: Program): DimId[] {
   if (gate?.kind === "low" || gate?.kind === "median") {
     out.add("support");
     out.add("income");
+    out.add("alone");
   }
   if (gate?.kind === "basicPension") out.add("basicPension");
   return [...out];
@@ -684,7 +697,9 @@ export function buildView(scored: Scored[], sit: Situation, maxQuestions = 3): V
     const sc = Math.max(0, g[0].s.score);
     weight.set(id, (weight.get(id) ?? 0) + sc * sc + 0.01);
   }
-  const ranked = [...count].sort((a, b) => (weight.get(b[0]) ?? 0) - (weight.get(a[0]) ?? 0)).slice(0, maxQuestions);
+  // 나이·가구원 수를 모르면 그것부터 (정해지는 혜택이 있을 때) — QA 1차 H2·M2
+  const first = (id: DimId) => (id === "age" ? 2 : id === "alone" ? 1 : 0);
+  const ranked = [...count].sort((a, b) => first(b[0]) - first(a[0]) || (weight.get(b[0]) ?? 0) - (weight.get(a[0]) ?? 0)).slice(0, maxQuestions);
   const union = new Set(ranked.flatMap(([, v]) => [...v]));
   return {
     ...out,
