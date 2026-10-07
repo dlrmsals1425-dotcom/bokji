@@ -71,28 +71,71 @@ export interface HowTo {
   fallback: boolean;
 }
 
+const CENTER = "주소지 행정복지센터(주민센터)";
+const CENTER_RE = /(행정복지센터|주민센터|읍[･·ㆍ]?\s*면[･·ㆍ]?\s*동|(?:읍|면|동|읍[･·ㆍ,]?\s*면)\s*사무소)/;
+/** 원문 신청 방법에 자주 나오는 창구 (QA 1차 H3: 원문이 다른 곳을 가리키는데 주민센터로 바뀌던 문제) */
+const KNOWN_PLACES: [RegExp, string][] = [
+  [/건강\s*보험\s*공단|건보\s*공단/, "국민건강보험공단 지사"],
+  [/국민\s*연금\s*공단/, "국민연금공단 지사"],
+  [/보훈\s*(?:지\s*\(?\s*방\s*\)?\s*)?청|보훈\s*지청/, "관할 보훈(지)청"],
+  [/고용\s*(?:복지\s*\+?\s*)?센터/, "가까운 고용센터"],
+  [/법률\s*구조\s*공단/, "대한법률구조공단"],
+  [/근로\s*복지\s*공단/, "근로복지공단"],
+  [/서민\s*금융\s*진흥원|서민금융\s*통합\s*지원\s*센터/, "서민금융통합지원센터"],
+  [/(?:수탁|취급)\s*은행[^.。\n]{0,16}?\)|(?:수탁|취급)\s*은행/, "수탁은행 창구"],
+  [/(?:LH|한국\s*토지\s*주택\s*공사)/, "LH(한국토지주택공사)"],
+];
+/** 그 밖의 기관 이름 (공단·재단·진흥원·공사·협회) — 상담·콜센터는 빼고 */
+const ORG_RE = /([가-힣A-Za-z]{2,18}(?:공단|재단|진흥원|공사|협회))/;
+/** 이름으로 정해지는 창구 (원문에 신청 방법이 비어 있을 때) */
+const BY_NAME: [RegExp, string, string][] = [
+  [/장기\s*요양/, "국민건강보험공단 지사", "국민건강보험공단 1577-1000"],
+  [/국민\s*연금/, "국민연금공단 지사", "국민연금공단 1355"],
+];
+
+/** 신청하러 갈 곳 (원문 신청 방법 → 접수기관 → 문의처 순, 모르면 '원문에 적힌 곳') */
+export function placeOf(p: Pick<Program, "name" | "applyMethod" | "provider" | "contact" | "applyUrl">, channels: Channel[] = []): string {
+  const apply = (p.applyMethod ?? "").replace(/\s+/g, " ").trim();
+  if (/(신청\s*(?:이|은)?\s*없이|별도\s*(?:신청|가입)\s*(?:사항|절차)?\s*(?:없|불필요|불요)|신청\s*불필요|직접\s*신청하지\s*않아도|자동(?:적)?으로\s*(?:제공|지급|지원))/.test(apply)) {
+    const c = (p.contact ?? "").split(/\n/)[0]?.split(/☎/)[0]?.trim();
+    return c && c.length < 24 ? `따로 신청하지 않아도 돼요 (문의: ${c})` : "따로 신청하지 않아도 돼요";
+  }
+  if (/(보건소|보건\s*의료원|보건\s*지소)/.test(apply) && !CENTER_RE.test(apply)) return /보건\s*의료원/.test(apply) ? "보건의료원(보건소)" : "가까운 보건소";
+  const known = KNOWN_PLACES.find(([re]) => re.test(apply))?.[1];
+  const org = known ?? ORG_RE.exec(apply.replace(/[가-힣A-Za-z]*(?:콜\s*센터|상담\s*센터)/g, " "))?.[1];
+  if (CENTER_RE.test(apply)) return known ? `${CENTER} 또는 ${known}` : /보건소/.test(apply) ? `${CENTER} 또는 보건소` : CENTER;
+  const visit = channels.includes("visit");
+  if (!visit && channels.includes("online") && (apply || p.applyUrl)) return org ? `온라인 신청 (${org})` : "온라인 신청";
+  if (org) return org;
+  const hall = /(시청|군청|구청|시·군·구청|시군구청|도청|시군구\s*:|해당\s*(?:시군|시·군|구·군|시|군|구)\s)/.exec(apply);
+  if (hall) return hall[1] === "도청" ? "도청 담당 부서" : "시·군·구청 담당 부서";
+  const welfare = /([가-힣]{2,14}(?:복지관|복지센터|지원센터|가족센터))/.exec(apply.replace(/(?:콜|상담)\s*센터/g, " "));
+  if (welfare) return welfare[1];
+  if (/(유치원|어린이집|학교)(?:에서|에\s*(?:방문|신청)|\s*(?:방문|통해|통하여))/.test(apply)) return "다니는 학교·유치원·어린이집";
+  if (p.provider && p.provider !== "주민센터" && p.provider.length < 24) return p.provider;
+  if (p.provider === "주민센터") return CENTER;
+  const contactOrg = (p.contact ?? "").split(/\n/)[0]?.split(/☎/)[0]?.trim();
+  if (apply) return contactOrg && contactOrg.length < 24 ? `원문에 적힌 곳 (문의: ${contactOrg})` : "원문에 적힌 곳 (모르면 ☎129)";
+  const byName = BY_NAME.find(([re]) => re.test(p.name));
+  if (byName) return byName[1];
+  return CENTER;
+}
+
 export function howTo(detail: Program | undefined | null, lead: Program): HowTo {
   const p = detail ?? lead;
   const apply = (p.applyMethod ?? "").replace(/\s+/g, " ").trim();
   const contact = (p.contact ?? "").split(/\n/)[0]?.replace(/☎\s*/g, "").trim() || undefined;
   const channels: Channel[] = [];
-  if (/(행정복지센터|주민센터|읍[･·]?\s*면[･·]?\s*동|보건소|방문|창구|지사)/.test(apply)) channels.push("visit");
-  if (/(온라인|복지로|정부24|홈페이지|누리집|https?:|www\.|플랫폼)/.test(apply) || p.applyUrl) channels.push("online");
+  if (/(행정복지센터|주민센터|읍[･·ㆍ]?\s*면[･·ㆍ]?\s*동|보건소|방문|창구|지사|지청|은행|센터)/.test(apply.replace(/(?:콜|상담)\s*센터/g, " "))) channels.push("visit");
+  if (/(온라인|복지로|정부24|고용24|홈페이지|누리집|인터넷|https?:|www\.|플랫폼|앱|어플)/.test(apply) || p.applyUrl) channels.push("online");
   if (/(전화|유선)/.test(apply) || contact) channels.push("phone");
-  const center = "주소지 행정복지센터(주민센터)";
-  const place = /보건소/.test(apply)
-    ? "가까운 보건소"
-    : /(행정복지센터|주민센터|읍[･·]?\s*면[･·]?\s*동)/.test(apply)
-      ? center
-      : p.provider && p.provider !== "주민센터" && p.provider.length < 24
-        ? p.provider
-        : center;
+  const byName = BY_NAME.find(([re]) => re.test(p.name));
   const fallback = !apply && !contact && !p.applyUrl;
   if (fallback) channels.push("visit", "phone");
   return {
     channels: [...new Set(channels)],
-    place,
-    phone: contact ?? (fallback ? "보건복지상담센터 129" : undefined),
+    place: placeOf(p, channels),
+    phone: contact ?? (fallback ? (byName?.[2] ?? "보건복지상담센터 129") : undefined),
     bring: parseDocs(p.documents),
     fallback,
   };
