@@ -640,6 +640,7 @@ const UNIVERSAL_LOW = /(예방\s*접종|건강\s*검진|검진비|철도|공공\
 const ILLNESS_NAME = /(수술|질환|치료비|환자|투병|난치|희귀|암\s*검진|치매)/;
 export function rankAdj(i: V2Item, sit: Situation): number {
   const p = i.s.program;
+  if (VICTIM_RE.test(p.name)) return -6;
   if (isBasicPension(p) && pensionLikely(sit)) return 4;
   if (i.base.why === MEANS_WHY) return 2;
   if (UNIVERSAL_LOW.test(p.name)) return -2;
@@ -650,7 +651,14 @@ export function rankAdj(i: V2Item, sit: Situation): number {
 
 const MAIN: Filters = { tier: "eligible", category: null, org: null, q: "" };
 /** 본문 대상: 자동 제공·기관 선정·기본 숨김(교육청·복지 외 분야·기관 운영) 제외 */
-export const inMain = (p: Program) => !autoLike(p) && !hiddenByDefault(p, MAIN);
+export const inMain = (p: Program) => !autoLike(p) && !hiddenByDefault(p, MAIN) && !notForPersons(p);
+
+/** 개인이 받는 혜택이 아닌 사업 (QA 1차 C3·M1): 언론사·사회적기업·단체 대상, 공공기관 시설 체험 행사 */
+const ORG_TARGET = /^[\s○ㅇ\-·•*]*(?:지원\s*대상\s*[:：]?\s*)?(?:신문|인터넷\s*신문|인터넷\s*뉴스|잡지|방송사|언론사|정기\s*간행물|사회적\s*기업|예비\s*사회적\s*기업|지원\s*대상\s*단체)(?=[\s,·、(]|사|$)/;
+const ORG_NAME = /(기획\s*취재|언론사|신문사|방송사|렛츠런\s*파크|경마)/;
+export const notForPersons = (p: Program) => ORG_NAME.test(p.name) || ORG_TARGET.test((p.target ?? "").replace(/&#13;/g, "\n"));
+/** 피해자·특정 사건 대상 사업 — 숨기지는 않되(필요한 분이 있음) 먼저 확인할 것·목록 앞에는 두지 않는다 (QA 1차 M1) */
+export const VICTIM_RE = /(피해\s*아동|피해자|피해\s*청소년|학대|성착취|성매매|가정\s*폭력|성폭력|보호\s*전문\s*기관|범죄|유가족|참사|사건)/;
 
 export function scoreV2(programs: Program[], sit: Situation): Scored[] {
   const { profile, opts } = toEval(sit, false);
@@ -897,11 +905,13 @@ export function situationChips(s: Situation): string[] {
  * 내 상황을 콕 집은 사업(specific)을 먼저 채우고, 같은 계열(양육비 이행 원스톱/지원 등)은 하나만.
  * '답하면 정해져요'·'뺐어요'는 넣지 않는다 (애매한 것을 맨 위에 올리지 않음).
  */
-export function topPicksV2(view: Pick<V2View, "fit" | "office">, n = 5, sit?: Situation): V2Item[][] {
+export function topPicksV2(view: Pick<V2View, "fit" | "office"> & Partial<Pick<V2View, "ask">>, n = 5, sit?: Situation): V2Item[][] {
   // '받으실 수 있어요'에 +2 (v1 추천의 '조건 충족' 가산과 같게) — 관련도가 확실히 높은 '신청할 때 확인'(장애인 활동지원 등)은 앞설 수 있다
   // 순위 보정: 기초연금 가능성 높음 +4, 소득 기준 안의 공공부조 +2, 보편 서비스(예방접종 등) −2
   const key = (g: V2Item[]) => g[0].s.score + (g[0].bucket === "fit" ? 2 : 0) + (g[0].reviewed ? 0.5 : 0) + (sit ? rankAdj(g[0], sit) : 0);
-  const pool = [...view.fit, ...view.office].sort((a, b) => key(b) - key(a) || a[0].s.program.name.localeCompare(b[0].s.program.name, "ko"));
+  // 기초연금은 '이미 받고 계신지'만 남아 '답하면 정해져요'여도 받으실 가능성이 높으면 먼저 확인할 것에 넣는다 (QA 1차 H1)
+  const pension = sit && pensionLikely(sit) ? (view.ask ?? []).filter((g) => isBasicPension(g[0].s.program)) : [];
+  const pool = [...view.fit, ...view.office, ...pension].sort((a, b) => key(b) - key(a) || a[0].s.program.name.localeCompare(b[0].s.program.name, "ko"));
   const out: V2Item[][] = [];
   const fams = new Set<string>();
   for (const pass of [true, false]) {
@@ -909,6 +919,7 @@ export function topPicksV2(view: Pick<V2View, "fit" | "office">, n = 5, sit?: Si
       if (out.length >= n) break;
       if (out.includes(g)) continue;
       if (pass && g[0].s.specific === false) continue;
+      if (VICTIM_RE.test(g[0].s.program.name)) continue;
       const fk = familyKey(g[0].s.program.name);
       if (fams.has(fk)) continue;
       fams.add(fk);
