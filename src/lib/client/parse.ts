@@ -800,6 +800,9 @@ export function parseSituation(raw: string, regions: RegionIndex | null, today: 
     p.benefits = benefits;
     signals.push(benefits.map((b) => BENEFIT_LABEL[b]).join("·"));
   }
+  // 아니라고 말한 것도 확인 화면에 보여 준다 (QA 3차 R7: '기초연금 못 받고 계세요' → '알아들은 내용이 없어요'인데 답은 채워지던 문제)
+  if (benefitsNo.includes("basic_pension")) signals.push(mode === "parent" ? "기초연금 안 받으심" : "기초연금 안 받음");
+  if (benefitsNo.includes("livelihood")) signals.push("기초생활수급·차상위 아님");
 
   let housing: Housing | null = null;
   if (/월세/.test(text)) housing = "monthly";

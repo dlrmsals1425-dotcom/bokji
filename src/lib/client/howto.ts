@@ -166,18 +166,25 @@ export function howTo(detail: Program | undefined | null, lead: Program, sido?: 
     channels: [...new Set(channels)],
     place: placeOf(p, channels),
     phone: contact ?? (fallback ? (byName?.[2] ?? "보건복지상담센터 129") : undefined),
-    bring: parseDocs(p.documents),
+    bring: parseDocs(p.documents, p.name),
     fallback,
   };
 }
 
 /** 구비 서류 원문 → 짧은 항목 최대 4개 */
-export function parseDocs(s?: string): string[] {
+export function parseDocs(s?: string, name?: string): string[] {
   if (!s) return [];
-  const t = s.replace(/본인 확인 필요:[\s\S]*$/, "").replace(/관련 서식·안내:[\s\S]*$/, "");
+  // 괄호 안 쉼표로는 나누지 않는다 (QA 3차 L1: '임신 여부 확인 서류(임신확인서, 임신진단서 …)'의 예시가 따로 '가져갈 것'이 되던 문제)
+  const t = s
+    .replace(/본인 확인 필요:[\s\S]*$/, "")
+    .replace(/관련 서식·안내:[\s\S]*$/, "")
+    .replace(/\(([^()]*)\)/g, (_m, inner: string) => `(${inner.replace(/[,·]/g, "\u2063")})`);
   const parts = t
     .split(/\s*(?:○|ㅇ|(?<![A-Za-z])-(?![A-Za-z])|·|•|\n|,)\s*/)
     .map((x) => x.replace(/[*※].*$/, "").replace(/^\d+[.)]\s*/, "").trim())
+    .map((x) => x.replace(/\u2063/g, ","))
+    // 여러 대상 중 임신부만 내는 서류는 빼고 (예: 인플루엔자 접종 — 어르신 카드에 '임신진단서'), 임신·출산 사업이면 그대로
+    .filter((x) => !name || /(임신|임산부|산모|출산|태아|난임)/.test(name) || !/(임신|산모|임산부)/.test(x))
     .filter((x) => x && !/^(해당\s*없음|본인\s*신청|대리\s*신청|없음)$/.test(x) && x.length <= 28);
   return [...new Set(parts)].slice(0, 4);
 }

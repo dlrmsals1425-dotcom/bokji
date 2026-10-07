@@ -698,13 +698,28 @@ const SOFT_TOPIC: Partial<Record<Leaf["field"], RegExp>> = {
   benefit: /(수급|차상위|기초\s*연금|생계|의료\s*급여|주거\s*급여)/,
   // 원문에 소득 이야기가 없는데 정부24 코드에서 온 '저소득' soft 잎 (예: 장기요양인정 '가구 소득이 월 128만원 이하는 맞아요')
   income: /(소득|중위|수급|차상위|저소득|기초\s*생활|생계|의료\s*급여|취약|빈곤|형편)/,
+  incomeBands: /(소득|중위|수급|차상위|저소득|기초\s*생활|생계|의료\s*급여|취약|빈곤|형편)/,
+};
+/** 가구 특성별 낱말 (QA 3차 L1: 생계급여의 '북한이탈주민' 제외 문구 때문에 '1인 가구' soft 조건이 남던 문제) */
+const SOFT_TRAIT: Record<string, RegExp> = {
+  single: /(1인|독거|홀몸|혼자|단독)/,
+  single_parent: /(한부모|조손|미혼\s*[모부])/,
+  multi_child: /다자녀/,
+  veteran: /(보훈|유공|참전)/,
+  multicultural: /(다문화|결혼\s*이민|북한|탈북)/,
 };
 export function softIrrelevant(r: Reason, p: Program): boolean {
   const l = r.leaf;
   if (!l?.soft) return false;
-  const re = SOFT_TOPIC[l.field];
+  const tv = l.field === "trait" && "anyOf" in l ? (l.anyOf as string[]).map((k) => SOFT_TRAIT[k]).filter(Boolean) : [];
+  const re = tv.length ? new RegExp(tv.map((x) => x.source).join("|")) : SOFT_TOPIC[l.field];
   if (!re) return false;
-  if (!re.test(`${p.name}\n${(p.target ?? "").replace(/&#13;/g, "\n")}`)) return true;
+  // 금액표('1인 가구 : 820,556원')와 예시 줄('(예) 독거노인')은 조건이 아님 (QA 3차 L1)
+  const body = (p.target ?? "")
+    .replace(/&#13;/g, "\n")
+    .replace(/\d\s*인\s*가구\s*[:：]?\s*[\d,.]+\s*(?:원|만\s*원)?/g, " ")
+    .replace(/^[\s\-·•*]*(?:\(예\)|예\)|예시|예:)[^\n]*$/gm, " ");
+  if (!re.test(`${p.name}\n${body}`)) return true;
   // 우선 공급·가점 항목에만 나오면 자격 조건이 아님 (QA 3차 N6: 국민임대 '우선 공급 - 장애인 등') — 소득은 제외
   return l.field !== "income" && !re.test(p.name) && onlyInPriority(p.target ?? "", re);
 }
@@ -734,7 +749,10 @@ export function classifyBase(p: Program, s: Situation): BaseResult {
   const ev0 = evaluateRule(p.rule, profile, opts);
   // 사업과 무관한 soft 조건(출처 태그)은 화면 문구에서 뺀다 — 판정 등급은 그대로 (N6)
   const ev = ev0.reasons.some((x) => softIrrelevant(x, p)) ? { ...ev0, reasons: ev0.reasons.filter((x) => !softIrrelevant(x, p)) } : ev0;
-  const { gate, priority, partialRec } = textGate(p);
+  const tg = textGate(p);
+  // 생계·의료·주거급여 등 제도 자체는 신청해서 수급자가 되는 것 — '수급자 대상' 관문은 순환 설명이라 쓰지 않음 (QA 3차 R7: 소득 90 > 82만원을 먼저)
+  const gate = p.rule.meansTest && tg.gate?.kind === "recipient" ? null : tg.gate;
+  const { priority, partialRec } = tg;
   const gs = gate ? gateState(gate, s, profile) : undefined;
   const r = { ev, gate, gateState: gs, priority, process };
   const recMet = RECIPIENT_KINDS.some((k) => inferExtras(s).benefits[k] === true);
@@ -1099,6 +1117,9 @@ export function plainLine(i: V2Item, sit: Situation, mode: FindMode): string {
       if (i.base.gate && i.base.gateState === "no") return `${gateLine(i.base.gate, profile)} 대상이라 맞지 않아요.`;
       const un = ev.reasons.find((r) => r.kind === "unmet");
       if (un && !un.leaf && /중 해당하는 항목이 없어요$/.test(un.text)) return `${short(un.text.replace(/없어요$/, "없어"))} 맞지 않아요.`;
+      // 소득 초과는 숫자를 먼저 (QA 3차 R7: '월 90만원 > 기준 82만원')
+      if (un && (un.leaf?.field === "income" || un.leaf?.field === "incomeBands") && sit.x.incomeManwon != null)
+        return `입력하신 소득 월 ${sit.x.incomeManwon.toLocaleString("ko-KR")}만원이 기준(${short(reasonPlain(un, profile)).replace(/^가구 소득이 /, "").replace(/\s*\((\d+인 가구) 기준\)/, ", $1")})보다 많아 맞지 않아요.`;
       return un ? `${short(reasonPlain(un, profile))} 대상이라 맞지 않아요.` : "입력하신 상황과 맞지 않아요.";
     }
   }

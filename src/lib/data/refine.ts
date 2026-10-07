@@ -116,9 +116,11 @@ export function sourceMedianCapForWiden(p: { target?: string; criteria?: string 
   const cap = Math.max(...caps);
   return overs.some((n) => n >= cap) ? null : cap;
 }
+/** 원문에 소득·형편 이야기가 있는지 (없으면 정부24 소득 코드는 참고만) */
+const INCOME_TEXT = /(소득|중위|수급|차상위|저소득|기초\s*생활|생계|의료\s*급여|취약|빈곤|형편|재산|가난|어려운|위기)/;
 export const REC_TEXT = /(수급자|수급권자|차상위|기초\s*생활\s*보장|생계\s*급여|의료\s*급여|주거\s*급여)/;
 const MED_TEXT = /중위\s*(?:소득\s*)?(?:의\s*)?\d{2,3}\s*%/;
-export const REFINE_VERSION = 4;
+export const REFINE_VERSION = 5;
 
 export function refineRule(p: { name: string; target?: string; criteria?: string }, rule: Rule): Rule {
   if (rule.refined === REFINE_VERSION) return rule;
@@ -135,6 +137,11 @@ export function refineRule(p: { name: string; target?: string; criteria?: string
       // 소득 잎을 법정 기준으로 바꾼다 (수급 중이면 맞음으로 보는 'any' 안의 수급 잎은 그대로)
       logic = mapLeaves(logic!, (l) => (inc.includes(l) ? { ...leaf, label: l.field === "income" && l.lte <= cap ? l.label : mt.label } : l));
     }
+  }
+  else if (rule.origin === "gov24_conditions" && logic && !INCOME_TEXT.test(`${p.name}\n${p.target ?? ""}\n${p.criteria ?? ""}`)) {
+    // (QA 3차 L1) 원문(이름·대상·선정기준)에 소득 이야기가 전혀 없는데 정부24 소득 코드만 있음 (예: 온가족보듬사업 '다양한 모든 가족')
+    // → 코드로 빼지 않고 화면 문구에도 쓰지 않는다 (soft: v2 softIrrelevant 가 숨김)
+    logic = mapLeaves(logic, (l) => (l.field === "incomeBands" && !l.soft ? { ...l, soft: true, label: `${l.label} (정부24 분류, 원문에 소득 기준 없음)` } : l));
   }
   else if (rule.origin === "gov24_conditions" && logic) {
     // 정부24 소득 코드는 0~50/51~75/76~100/101~200 네 구간뿐이라 원문 '중위소득 N%'가 위로 반올림됨 → 원문 비율로 좁힘

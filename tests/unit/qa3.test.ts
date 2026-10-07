@@ -3,10 +3,10 @@ import { existsSync, readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { parseSituation, parsedExtras } from "@/lib/client/parse";
 import {
-  DIM_BY_ID, EMPTY_EXTRAS, needsStatus, SPECIAL_STATUS, answersFor, buildView, classifyOne, needsOccupation, notForPersons, plainLine, scoreV2, topPicksV2, withTopic,
+  DIM_BY_ID, EMPTY_EXTRAS, needsStatus, explainItem, SPECIAL_STATUS, answersFor, buildView, classifyOne, needsOccupation, notForPersons, plainLine, scoreV2, topPicksV2, withTopic,
   type Extras, type Situation,
 } from "@/lib/client/v2";
-import { howTo } from "@/lib/client/howto";
+import { howTo, parseDocs } from "@/lib/client/howto";
 import { refineProgram, refineRule, textMedianCap } from "@/lib/data/refine";
 import { detailBucket } from "@/lib/data/bucket";
 import { EMPTY_PROFILE, type Profile } from "@/lib/engine/profile";
@@ -173,5 +173,41 @@ describe("N3 나이 모를 때 일관성", () => {
     expect(n2.length).toBeGreaterThan(0);
     expect(n2.join(" ")).toMatch(/가족돌봄/);
     expect(n2.join(" ")).not.toMatch(/가족돌봄수당/); // 경기 가족돌봄수당은 손자녀 돌봄 — 부모 모시기와 무관
+  });
+});
+
+describe("L1·R7 문구", () => {
+  const P1B: Situation = {
+    profile: { ...EMPTY_PROFILE, sido: "41000", sigungu: "41270", age: "70-74", householdSize: 1, housing: "own" },
+    x: { ...EMPTY_EXTRAS, incomeManwon: 90, benefits: { livelihood: false, medical: false, housing: false, education: false, near_poverty: false, basic_pension: false } },
+    mode: "self",
+  };
+  it("인플루엔자 '가져갈 것'에 임신진단서 없음, 괄호 안 쉼표로 나누지 않음", () => {
+    const docs = "신분증(주민등록증)\n산모수첩 및 임신여부를 확인 할 수 있는 서류(임신확인서, 임신진단서, 의사소견서 등)";
+    expect(parseDocs(docs, "인플루엔자 국가예방접종 지원")).toEqual(["신분증(주민등록증)"]);
+    expect(parseDocs("주민등록등(초)본, 신분증(주민등록증, 운전면허증 등)")).toEqual(["주민등록등(초)본", "신분증(주민등록증, 운전면허증 등)"]);
+  });
+  it("생계급여: 이유가 '수급자 대상'(순환)이 아니라 '소득 90만원 > 기준 82만원'", () => {
+    const r = classifyOne(byId("n.gov24-WII000001410"), P1B);
+    expect(r.bucket).toBe("no");
+    const line = plainLine(r, P1B, "self");
+    expect(line).toMatch(/월 90만원/);
+    expect(line).toMatch(/82만원/);
+    expect(line).not.toMatch(/수급자·차상위계층인 분 대상/);
+  });
+  it("생계급여·방문건강관리 상세에 '1인 가구 관련 조건' 없음", () => {
+    for (const id of ["n.gov24-WII000001410", "n.gov24-135200000082"]) {
+      const r = classifyOne(byId(id), P1B);
+      expect(JSON.stringify(explainItem(r, P1B)), id).not.toMatch(/1인 가구 관련 조건/);
+    }
+  });
+  it("온가족보듬사업: 원문에 없는 '월 256만원 이하' 문구 없음", () => {
+    const sit = sitOf("시흥 사는 37살 직장인이고 초등학생 아이 둘 혼자 키우는 엄마예요 월 180 벌어요 월세");
+    const r = classifyOne(byId("n.gov24-SD0000003474"), sit);
+    expect(plainLine(r, sit, "self")).not.toMatch(/만원 이하/);
+  });
+  it("'기초연금 못 받고 계세요' → 확인 화면에 '기초연금 안 받음'", () => {
+    const r = P("기초연금 못 받고 계세요", "parent");
+    expect(r.understood.map((u) => u.label).join(" ")).toMatch(/기초연금 안 받/);
   });
 });
