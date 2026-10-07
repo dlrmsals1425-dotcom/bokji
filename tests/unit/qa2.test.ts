@@ -167,6 +167,8 @@ describe("C3 직업·자격·기부 사업, N6 무관한 soft 조건", () => {
     const p = byId("n.gov24-999000000089");
     const sit: Situation = { profile: { ...EMPTY_PROFILE, age: "70-74", householdSize: 1 }, x: { ...EMPTY_EXTRAS, incomeManwon: 90 }, mode: "self" };
     expect(plainLine(classifyOne(p, sit), sit, "self")).not.toMatch(/등록 장애인/);
+    // 원문에 소득 조건이 없으므로 소득 줄도 없음
+    expect(plainLine(classifyOne(p, sit), sit, "self")).not.toMatch(/가구 소득/);
   });
   it("조사 '은/는'을 받침에 맞춤 ('만 6~64세는')", () => {
     expect(withTopic("만 6~64세")).toBe("만 6~64세는");
@@ -276,5 +278,13 @@ describe("한부모 문장 (나이 모름)", () => {
     const { picks } = picksOf(sitOf("시흥에서 아이 둘 혼자 키우는 엄마예요 월 180 벌어요"));
     expect(picks[0].s.program.name).toContain("아동양육비");
     expect(picks.map((i) => i.s.program.name).join(" ")).not.toMatch(/위기아동|청소년한부모/);
+  });
+});
+
+describe("집 설비 조건", () => {
+  it("서민층 가스시설 개선(LPG 호스 사용 가구)은 소득만 맞아도 '받으실 수 있어요'가 아님", () => {
+    const p = byId("n.gov24-145000000004");
+    const sit: Situation = { profile: { ...EMPTY_PROFILE, age: "70-74", householdSize: 1 }, x: { ...EMPTY_EXTRAS, incomeManwon: 90 }, mode: "self" };
+    expect(classifyOne(p, sit).bucket).toBe("office");
   });
 });

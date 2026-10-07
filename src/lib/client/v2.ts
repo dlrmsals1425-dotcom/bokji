@@ -634,6 +634,8 @@ const SOFT_TOPIC: Partial<Record<Leaf["field"], RegExp>> = {
   householdSize: /(1인|독거|홀몸|혼자|단독)/,
   trait: /(보훈|유공|한부모|조손|다문화|결혼\s*이민|북한|다자녀|1인|독거|홀몸)/,
   benefit: /(수급|차상위|기초\s*연금|생계|의료\s*급여|주거\s*급여)/,
+  // 원문에 소득 이야기가 없는데 정부24 코드에서 온 '저소득' soft 잎 (예: 장기요양인정 '가구 소득이 월 128만원 이하는 맞아요')
+  income: /(소득|중위|수급|차상위|저소득|기초\s*생활|생계|의료\s*급여|취약|빈곤|형편)/,
 };
 export function softIrrelevant(r: Reason, p: Program): boolean {
   const l = r.leaf;
@@ -668,6 +670,7 @@ export function classifyBase(p: Program, s: Situation): BaseResult {
   const og = OFFICE_GROUPS.find(([re]) => re.test(p.name));
   if (og) return { base: "open", ...r, why: og[1] };
   if (needsOccupation(p)) return { base: "open", ...r, why: OCCUPATION_WHY };
+  if (EQUIP_RE.test((p.target ?? "").slice(0, 600))) return { base: "open", ...r, why: EQUIP_WHY };
   if (isBasicPension(p) && pensionLikely(s)) return { base: "open", ...r, why: PENSION_WHY };
   if (partialRec && !recMet) return { base: "open", ...r, why: p.rule.recBand ? RECBAND_WHY : "대상 유형이 여럿이에요 — 수급·차상위가 아니면 다른 유형(원문)에 해당하는지 신청할 때 확인" };
   if (ev.reasons.some((x) => x.kind === "note" && /법인·시설·단체/.test(x.text))) return { base: "open", ...r, why: "법인·시설·단체 대상 조건이 있어요 — 개인이 받을 수 있는지 문의" };
@@ -676,6 +679,9 @@ export function classifyBase(p: Program, s: Situation): BaseResult {
   return { base: "open", ...r };
 }
 
+/** 집 설비 조건 (QA 2차 5-2: 서민층 가스시설 개선 — LPG 호스를 쓰는 가구만) — 간편 입력으로는 묻지 않음 */
+const EQUIP_RE = /(LPG|엘피지|액화\s*석유\s*가스|고무\s*호스|가스\s*호스)/;
+const EQUIP_WHY = "집 설비 조건(LPG 가스 호스 사용 등)이 있어요 — 해당하는지 신청할 때 확인";
 const RECBAND_WHY = "원문 대상이 수급·차상위(또는 그에 준하는 저소득층)예요 — 소득만으로 정하지 않고 신청할 때 확인";
 const MEANS_WHY = "재산·부양 조사를 거쳐 정해져요 — 소득만 보면 신청해 볼 만해요";
 const CRISIS = /긴급\s*(복지|지원|생계)|위기\s*가구/;
