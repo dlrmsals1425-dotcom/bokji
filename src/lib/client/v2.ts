@@ -131,9 +131,11 @@ export type Gate =
 const RECIPIENT_KINDS: Benefit[] = ["livelihood", "medical", "housing", "education", "near_poverty"];
 const PRIORITY = /(저소득|기초\s*생활\s*수급자?|수급자|차상위\s*(계층)?|취약\s*계층|의료\s*급여\s*수급자|기초\s*연금\s*수급자)[^.。\n]{0,15}우선/g;
 const EXCLUDED = /(수급자|차상위|의료\s*급여)[^.。\n]{0,8}(은|는)?\s*제외/;
-const RECIPIENT_RE = /(기초\s*생활\s*(보장\s*)?수급|생계\s*급여|의료\s*급여|주거\s*급여|수급자|수급권자|차상위)/;
+const RECIPIENT_RE = /(기초\s*생활\s*(보장\s*)?수급|생계\s*급여|의료\s*급여|주거\s*급여|수급자|수급권자|차상위|(?:생계|의료|주거|교육)(?:\s*[·,ㆍ]\s*(?:생계|의료|주거|교육))*\s*수급\s*(?:가구|세대))/;
 const LOW_RE = /(저소득|취약\s*계층|형편이?\s*어려운|생계가?\s*어려운|경제적(으로)?\s*어려운|소외\s*계층|빈곤)/;
-const MEDIAN_RE = /중위\s*소득\s*(\d{2,3})\s*%\s*(이하|이내|미만)/;
+const MEDIAN_RE = /중위\s*(?:소득\s*)?(?:의\s*)?(\d{2,3})\s*%\s*(이하|이내|미만)/;
+const RECIPIENT_PAREN = new RegExp(`${RECIPIENT_RE.source}\\s*\\(\\s*(?:기준\\s*)?중위`);
+const DEFINED_LOW = /(저소득\s*층?|소외\s*계층|취약\s*계층)[^()\n]{0,6}\(([^()]*)\)/g;
 const BASIC_PENSION_RE = /기초\s*연금\s*(수급|대상|받)/;
 
 /** 기초생활보장이 아닌 다른 제도의 '수급자' (기초연금은 따로 기초연금 관문으로) */
@@ -150,7 +152,8 @@ function leavesOf(c: Cond | null, out: Leaf[] = []): Leaf[] {
   return out;
 }
 
-const gateCache = new WeakMap<Program, { gate: Gate | null; priority: boolean; partial: boolean }>();
+type GateInfo = { gate: Gate | null; priority: boolean; partial: boolean; partialRec?: boolean };
+const gateCache = new WeakMap<Program, GateInfo>();
 
 /**
  * 규칙이 소득·수급을 다루지 않는데 원문에 소득·수급 대상이 적힌 경우의 관문.
@@ -158,7 +161,7 @@ const gateCache = new WeakMap<Program, { gate: Gate | null; priority: boolean; p
  *  - '…우선' 은 관문이 아님 (priority 로 따로 알림)
  *  - 대상이 여러 유형(○ 줄)으로 나뉘고 소득·수급 조건이 없는 유형이 있으면 관문 없음 (partial)
  */
-export function textGate(p: Program): { gate: Gate | null; priority: boolean; partial: boolean } {
+export function textGate(p: Program): GateInfo {
   const hit = gateCache.get(p);
   if (hit) return hit;
   const target = (p.target ?? "").replace(/&#13;/g, "\n").slice(0, 300);
@@ -170,6 +173,7 @@ export function textGate(p: Program): { gate: Gate | null; priority: boolean; pa
   PRIORITY.lastIndex = 0;
   let gate: Gate | null = null;
   let partial = false;
+  let partialRec = false;
   // 규칙이 수급을 '확정 조건'으로 다루면 관문을 따로 두지 않는다 (soft = 원천 태그처럼 배타적이지 않은 신호는 제외).
   // 소득 조건(API 코드)이 있어도 원문 대상이 '수급자·차상위'뿐이면 그 문구가 더 좁으므로 관문으로 본다
   //   예) 문화누리카드: 코드는 '중위 75% 이하', 원문은 '기초생활수급자 및 차상위계층' → 수급·차상위 아님이면 뺀다
@@ -193,23 +197,40 @@ export function textGate(p: Program): { gate: Gate | null; priority: boolean; pa
     // 장기요양·활동지원 사업 안에서 홀로 쓰인 '수급자'는 그 제도의 수급자 (예: '시설급여 가능한 수급자')
     const coreX = /장기\s*요양|요양\s*등급|활동\s*지원/.test(core) ? core.replace(/(?<!기초\s*생활\s*)(?<!급여\s*)수급(?:권)?자/g, " ") : core;
     if (INCOME_FREE.test(text)) partial = false;
-    else if (!nameGate && lines.length >= 2 && gated.length && gated.length < lines.length) partial = true;
+    else if (!nameGate && lines.length >= 2 && gated.length && gated.length < lines.length) {
+      partial = true;
+      // 유형 중 하나가 수급·차상위 (예: 장제급여 — 수급자 사망 / 의사자) → 수급·차상위가 아니면 다른 유형인지 확인해야 함
+      partialRec = gated.some((l) => { const x = l.replace(/^(저소득\s*층?|취약\s*계층)\s*[:：]/, ""); return RECIPIENT_RE.test(x.replace(OTHER_RECIPIENT, " ")) && !LOW_RE.test(x) && !MEDIAN_RE.test(x); });
+    }
     else {
       const m = MEDIAN_RE.exec(coreX);
       const rec = RECIPIENT_RE.exec(coreX);
-      const low = LOW_RE.exec(coreX);
-      if (m) {
-        if (!hasIncome || incomeMax >= 100) gate = { kind: "median", pct: Number(m[1]), text: m[0] };
+      // 이름의 '취약계층'·'저소득' 같은 넓은 말은 대상 문구가 수급·차상위로 좁혀 두었으면 보지 않는다
+      //   예) '경기도 취약계층 주택화재 안심보험' — 대상: 기초생활보장수급자와 차상위계층
+      // '경제적 소외계층(기초생활수급자, 차상위계층)' 처럼 괄호로 풀어 쓴 넓은 말도 (괄호 안에 '등'이 없으면) 수급·차상위
+      const linesX = coreX.slice(coreX.indexOf("\n") + 1).replace(DEFINED_LOW, (all, _w: string, inner: string) => (RECIPIENT_RE.test(inner) && !/등|포함|중위|소득/.test(inner) ? inner : all));
+      const low = rec && !RECIPIENT_RE.test(p.name) ? LOW_RE.exec(linesX) : LOW_RE.exec(coreX);
+      if (rec && RECIPIENT_PAREN.test(coreX)) {
+        // '생계·의료수급가구(중위 40% 이하)' — 괄호의 비율은 수급 가구 설명일 뿐, 대상은 수급 가구
+        gate = { kind: "recipient", text: rec[0] };
+      } else if (m) {
+        // 원문 비율이 소득 코드보다 좁을 때만 관문 (넓히지 않음 — QA 1차 C3: 원문 120%인데 코드는 200%까지)
+        const pct = Number(m[1]);
+        if (!hasIncome || pct < incomeMax) gate = { kind: "median", pct, text: m[0] };
       } else if (rec) {
-        // 소득 코드가 50% 이하면 수급·차상위 기준과 같으니 코드로 충분
-        if (!hasIncome || incomeMax > 50) gate = low ? { kind: "low", text: low[0] } : { kind: "recipient", text: rec[0] };
+        // 원문 대상이 '수급자·차상위'뿐이면 소득 코드(0~50%)가 있어도 수급·차상위 여부로 정한다
+        //   (QA 1차 C3: 소득 구간만 맞는 비수급자에게 '의료급여 틀니'가 '받으실 수 있어요'로 나옴)
+        // '저소득' 같은 넓은 말이 함께 있으면 소득 코드가 50% 이하일 때 코드로 충분
+        if (low) {
+          if (!hasIncome || incomeMax > 50) gate = { kind: "low", text: low[0] };
+        } else gate = { kind: "recipient", text: rec[0] };
       } else if (low) {
         if (!hasIncome) gate = { kind: "low", text: low[0] };
       } else if (BASIC_PENSION_RE.test(coreX) && !hasIncome) gate = { kind: "basicPension", text: "기초연금 수급" };
     }
     if (!gate && !partial && !hasIncome && unaskedLow) gate = { kind: "low", text: LOW_RE.exec(unaskedLow.label)![0] };
   }
-  const out = { gate, priority, partial };
+  const out: GateInfo = { gate, priority, partial, ...(partialRec ? { partialRec } : {}) };
   gateCache.set(p, out);
   return out;
 }
@@ -524,22 +545,28 @@ export function classifyBase(p: Program, s: Situation): BaseResult {
   const opts = proc ? { ...t.opts, facts: { ...t.opts.facts, ltcGrade: true } } : t.opts;
   const process = proc ? LTC_PROCESS : undefined;
   const ev = evaluateRule(p.rule, profile, opts);
-  const { gate, priority } = textGate(p);
+  const { gate, priority, partialRec } = textGate(p);
   const gs = gate ? gateState(gate, s, profile) : undefined;
   const r = { ev, gate, gateState: gs, priority, process };
+  const recMet = RECIPIENT_KINDS.some((k) => inferExtras(s).benefits[k] === true);
   if (ev.tier === "ineligible") return { base: "no", ...r };
   if (gs === "no") return { base: "no", ...r };
   if (!p.rule.logic || p.rule.unstructuredCore) return { base: "open", ...r };
+  // 생계·의료·주거·교육급여, 차상위 확인: 소득이 기준 안이어도 재산·부양 조사를 거쳐 정해짐 → 최대 '신청할 때 확인'
+  if (p.rule.meansTest) return { base: "open", ...r, why: evaluateCond(p.rule.logic, profile, opts).tri === "T" && gs !== "unknown" ? MEANS_WHY : "재산·부양 조사를 거쳐 정해져요 — 신청할 때 확인" };
   // 긴급지원은 소득 기준이 맞아도 '갑작스러운 위기'가 있어야 함 → 신청할 때 확인
   if (CRISIS.test(p.name) || NAMED_GROUP.test(p.name)) return { base: "open", ...r };
   const og = OFFICE_GROUPS.find(([re]) => re.test(p.name));
   if (og) return { base: "open", ...r, why: og[1] };
+  if (isBasicPension(p) && pensionLikely(s)) return { base: "open", ...r, why: PENSION_WHY };
+  if (partialRec && !recMet) return { base: "open", ...r, why: "대상 유형이 여럿이에요 — 수급·차상위가 아니면 다른 유형(원문)에 해당하는지 신청할 때 확인" };
   if (ev.reasons.some((x) => x.kind === "note" && /법인·시설·단체/.test(x.text))) return { base: "open", ...r, why: "법인·시설·단체 대상 조건이 있어요 — 개인이 받을 수 있는지 문의" };
   const tri = evaluateCond(p.rule.logic, profile, opts).tri;
   if (tri === "T" && gs !== "unknown") return { base: p.rule.review === "auto" ? "autoFit" : "fit", ...r };
   return { base: "open", ...r };
 }
 
+const MEANS_WHY = "재산·부양 조사를 거쳐 정해져요 — 소득만 보면 신청해 볼 만해요";
 const CRISIS = /긴급\s*(복지|지원|생계)|위기\s*가구/;
 /** 이름 괄호 안에 따로 정한 대상 집단 — 예) 무료 소송대리 서비스(가족관계미등록자), (미혼모·부), (장애인1~3급) */
 const NAMED_GROUP = /\(([^()]*(?:자|인|가족|민|대상|모|부|급|사건[^()]*))\)\s*$/;
@@ -577,6 +604,35 @@ export function classify(s: Scored, sit: Situation): V2Item {
   if (base.base !== "open") return { s, reviewed, bucket: base.base, base, dims: [] };
   const dims = decidingDims(s.program, sit, "open");
   return { s, reviewed, bucket: dims.length ? "ask" : "office", base, dims };
+}
+
+/* ---------------- 순위 보정 (QA 1차 H1) ---------------- */
+
+/** 기초연금 사업 자체 */
+export const isBasicPension = (p: Program) => /^기초\s*연금$/.test(p.name.trim());
+/**
+ * 기초연금을 받을 가능성이 높음: 만 65세 이상, 아직 안 받음(또는 모름), 월 소득을 알고 선정기준액의 70% 이하
+ * (소득인정액에는 재산 환산액이 더해지므로 '확정'이 아니라 '가능성 높음')
+ */
+export function pensionLikely(s: Situation): boolean {
+  if (s.profile.age === "unknown" || ageRange(s.profile.age)[0] < 65) return false;
+  if (inferExtras(s).benefits.basic_pension === true) return false;
+  if (s.x.incomeManwon === null) return false;
+  const t = s.profile.householdSize === "unknown" || s.profile.householdSize === 1 ? BASIC_PENSION_THRESHOLD_2026.single : BASIC_PENSION_THRESHOLD_2026.couple;
+  return s.x.incomeManwon * 10000 <= t * 0.7;
+}
+export const PENSION_WHY = "소득만 보면 받으실 가능성이 높아요 — 재산(소득인정액)에 따라 달라요";
+/** 누구나 받거나 안내 위주인 보편 서비스 (예방접종·검진·할인·상담 창구) — 앞자리를 핵심 급여에 양보 */
+const UNIVERSAL_LOW = /(예방\s*접종|건강\s*검진|검진비|철도|공공\s*할인|생활\s*체육|스포츠\s*강좌|말벗|정신\s*건강\s*복지\s*센터|방문\s*건강\s*관리|안부)/;
+const ILLNESS_NAME = /(수술|질환|치료비|환자|투병|난치|희귀|암\s*검진|치매)/;
+export function rankAdj(i: V2Item, sit: Situation): number {
+  const p = i.s.program;
+  if (isBasicPension(p) && pensionLikely(sit)) return 4;
+  if (i.base.why === MEANS_WHY) return 2;
+  if (UNIVERSAL_LOW.test(p.name)) return -2;
+  // 병·수술이 있어야 하는 사업은 병을 말하지 않았으면 뒤로 (예: '노인 무릎인공관절 수술'이 1순위가 되던 문제)
+  if (sit.x.facts.illness !== true && (ILLNESS_NAME.test(p.name) || leavesOf(p.rule.logic).some((l) => l.field === "unasked" && FACT_PATTERNS.illness.test(l.label)))) return -2;
+  return 0;
 }
 
 const MAIN: Filters = { tier: "eligible", category: null, org: null, q: "" };
@@ -617,7 +673,7 @@ export function buildView(scored: Scored[], sit: Situation, maxQuestions = 3): V
     }
   }
   // 정렬: 관련도 + '나를 콕 집은' 사업 먼저
-  const key = (g: V2Item[]) => g[0].s.score + (g[0].s.specific ? 1 : 0);
+  const key = (g: V2Item[]) => g[0].s.score + (g[0].s.specific ? 1 : 0) + rankAdj(g[0], sit);
   for (const b of ORDER) out[b].sort((a, c) => key(c) - key(a));
   // 질문 순서: 정해지는 혜택의 관련도 제곱 합 — 관련 높은 혜택(기초연금·돌봄 등)을 정하는 질문 먼저, 그다음 많이 정하는 질문
   const count = new Map<DimId, Set<string>>();
@@ -826,9 +882,10 @@ export function situationChips(s: Situation): string[] {
  * 내 상황을 콕 집은 사업(specific)을 먼저 채우고, 같은 계열(양육비 이행 원스톱/지원 등)은 하나만.
  * '답하면 정해져요'·'뺐어요'는 넣지 않는다 (애매한 것을 맨 위에 올리지 않음).
  */
-export function topPicksV2(view: Pick<V2View, "fit" | "office">, n = 5): V2Item[][] {
+export function topPicksV2(view: Pick<V2View, "fit" | "office">, n = 5, sit?: Situation): V2Item[][] {
   // '받으실 수 있어요'에 +2 (v1 추천의 '조건 충족' 가산과 같게) — 관련도가 확실히 높은 '신청할 때 확인'(장애인 활동지원 등)은 앞설 수 있다
-  const key = (g: V2Item[]) => g[0].s.score + (g[0].bucket === "fit" ? 2 : 0) + (g[0].reviewed ? 0.5 : 0);
+  // 순위 보정: 기초연금 가능성 높음 +4, 소득 기준 안의 공공부조 +2, 보편 서비스(예방접종 등) −2
+  const key = (g: V2Item[]) => g[0].s.score + (g[0].bucket === "fit" ? 2 : 0) + (g[0].reviewed ? 0.5 : 0) + (sit ? rankAdj(g[0], sit) : 0);
   const pool = [...view.fit, ...view.office].sort((a, b) => key(b) - key(a) || a[0].s.program.name.localeCompare(b[0].s.program.name, "ko"));
   const out: V2Item[][] = [];
   const fams = new Set<string>();

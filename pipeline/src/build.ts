@@ -8,6 +8,7 @@
  *  - public/bundles/v1/national.json, sido/{code}.json, sigungu/{code}.json, regions.json, meta.json
  *  - pipeline/out/report.json · report.md · review-queue-gyeonggi.csv · review-curated.csv
  */
+import { OWNER_FIX, refineRule } from "../../src/lib/data/refine";
 import fs from "node:fs";
 import path from "node:path";
 import { RegionIndex, PILOT_SIDO } from "./normalize/regions";
@@ -196,7 +197,7 @@ function main() {
         region: rec.scope === "national" ? undefined : {
           sido: rec.sidoCode!, sigungu: sgg, label: sggInfo ? `${sidoInfo?.short ?? ""} ${sggInfo.name}`.trim() : sidoInfo?.name ?? rec.regionLabel ?? "",
         },
-        owner: pick("owner"),
+        owner: OWNER_FIX[id] ?? pick("owner"),
         provider: pick("provider"),
         target: pick("target"),
         criteria: pick("criteria"),
@@ -212,7 +213,8 @@ function main() {
         sources: uniqSources,
         trust: members.some((m) => m.trust === "A") ? "A" : rec.trust,
         badges: rec.badges.length ? rec.badges : undefined,
-        rule,
+        // 규칙 다듬기 (공공부조 관문 법정 기준·장기요양등급 — src/lib/data/refine.ts)
+        rule: refineRule({ name: rec.name, target: pick("target") }, rule),
         mergedCount: members.length > 1 ? members.length : undefined,
         sector: sectorFinal,
         applyType: apply.type,
@@ -242,7 +244,7 @@ function main() {
     id: p.id, name: p.name, summary: cut(p.summary, 160) ?? "", category: p.category, tags: p.tags, orgType: p.orgType, scope: p.scope, region: p.region,
     owner: p.owner, provider: p.provider, target: cut(p.target, 120), deadline: cut(p.deadline, 60),
     sources: p.sources.map((x) => ({ source: x.source, id: x.id }) as SourceRef), trust: p.trust, badges: p.badges,
-    rule: { id: p.rule.id, origin: p.rule.origin, review: p.rule.review, logic: p.rule.logic, unstructured: p.rule.unstructured, unstructuredCore: p.rule.unstructuredCore },
+    rule: { id: p.rule.id, origin: p.rule.origin, review: p.rule.review, logic: p.rule.logic, unstructured: p.rule.unstructured, unstructuredCore: p.rule.unstructuredCore, ...(p.rule.meansTest ? { meansTest: true } : {}), ...(p.rule.refined ? { refined: true } : {}) },
     mergedCount: p.mergedCount, aliases: p.aliases, sector: p.sector, applyType: p.applyType === "unknown" ? undefined : p.applyType, hasApply: !!(p.applyMethod || p.contact) || undefined,
   });
   const detailShards = new Map<string, Record<string, Program>>();

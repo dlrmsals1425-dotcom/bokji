@@ -63,6 +63,10 @@ export interface Rule {
   evidence?: string;
   reviewer?: string;
   reviewedAt?: string;
+  /** 공공부조 관문 제도 자체 (재산·부양 조사가 따로 있음) → 조건이 맞아도 '신청할 때 확인' */
+  meansTest?: boolean;
+  /** src/lib/data/refine.ts 를 이미 적용함 */
+  refined?: boolean;
 }
 
 export type Tier = "eligible" | "likely" | "check" | "ineligible";

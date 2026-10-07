@@ -46,7 +46,7 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
   const sit: Situation = useMemo(() => situationOf(profile, extras ?? null, mode), [profile, extras, mode]);
   const scored = useMemo(() => (data ? scoreV2(data.programs, sit) : []), [data, sit]);
   const view = useMemo(() => buildView(scored, sit, 12), [scored, sit]);
-  const picks = useMemo(() => topPicksV2(view, 5), [view]);
+  const picks = useMemo(() => topPicksV2(view, 5, sit), [view, sit]);
   const autos = useMemo(() => (data ? autoV2(data.programs, sit) : []), [data, sit]);
 
   // 먼저 확인할 5가지는 신청 방법(어디서·무엇을 가져가서)을 보여 주려고 상세 묶음을 따로 불러온다
