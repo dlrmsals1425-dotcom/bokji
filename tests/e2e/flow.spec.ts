@@ -19,8 +19,8 @@ test.describe("로그인 없는 전체 흐름", () => {
     const loginBtn = page.getByRole("button", { name: /로그인 준비 중/ });
     await expect(loginBtn).toBeDisabled();
 
-    await page.getByTestId("start").click();
-    await expect(page).toHaveURL(/\/check$/);
+    await page.getByTestId("start-self").click();
+    await expect(page).toHaveURL(/\/check/);
 
     // 1단계: 지역은 필수
     await page.getByTestId("next").click();
@@ -192,9 +192,10 @@ test.describe("로그인 없는 전체 흐름", () => {
     await expect(page.getByRole("link", { name: /12개 질문에 답하면/ })).toBeVisible();
   });
 
-  test("홈의 예시 상황 4개: 한 번에 결과 + 예시 안내 + 추천 5개 @mobile", async ({ page }) => {
+  test("홈의 예시 상황: 한 번에 결과 + 예시 안내 + 추천 5개 @mobile", async ({ page }) => {
     const cases: [string, RegExp][] = [
       ["suwon-senior", /수원시/],
+      ["parent-care", /수원시/],
       ["seongnam-single-parent", /성남시/],
       ["goyang-youth", /고양시/],
       ["bucheon-disability", /부천시/],
@@ -202,10 +203,14 @@ test.describe("로그인 없는 전체 흐름", () => {
     for (const [id, region] of cases) {
       await page.goto("/");
       await page.getByTestId(`preset-${id}`).click();
-      await expect(page).toHaveURL(/\/results$/);
+      await expect(page).toHaveURL(id === "parent-care" ? /\/results\?for=parent/ : /\/results/);
       await expect(page.getByRole("heading", { level: 1 })).toContainText(region, { timeout: 20_000 });
       await expect(page.getByTestId("example-banner")).toContainText("예시 상황");
       await expect(page.getByTestId("top-picks").locator("ol > li")).toHaveCount(5);
+      if (id === "parent-care") {
+        await expect(page.getByTestId("parent-results-banner")).toBeVisible();
+        await expect(page.getByTestId("proxy-apply-note")).toBeVisible();
+      }
     }
     // 직접 입력(저장)하면 예시 표시가 사라진다
     await page.goto("/check");
@@ -238,5 +243,40 @@ test.describe("로그인 없는 전체 흐름", () => {
     await expect(sec.getByTestId("apply-badge").filter({ hasText: /자동 제공|기관 추천/ })).toHaveCount(n);
     await page.getByTestId("auto-toggle").click();
     await expect(sec.getByTestId("program-card")).toHaveCount(0);
+  });
+
+  test("부모님 복지 찾기: 홈 CTA → 입력(부모님 문구) → 결과(대리 신청 안내) @mobile", async ({ page }) => {
+    await page.goto("/");
+    await expect(page.getByTestId("start-self")).toBeVisible();
+    await expect(page.getByTestId("start-parent")).toBeVisible();
+    await page.getByTestId("start-parent").click();
+    await expect(page).toHaveURL(/for=parent/);
+    await expect(page.getByRole("heading", { level: 1 })).toContainText("부모님 복지");
+    await expect(page.getByTestId("parent-banner")).toBeVisible();
+    await expect(page.getByTestId("mode-parent")).toHaveAttribute("aria-pressed", "true");
+    await expect(page.getByRole("heading", { name: /부모님은 어디에/ })).toBeVisible();
+    await page.getByLabel("시·도").selectOption({ label: "경기도 (시범 지역)" });
+    await page.getByLabel("시·군·구").selectOption({ label: "수원시" });
+    await page.getByTestId("next").click();
+    await pick(page, "부모님 나이", "70~74세");
+    await pick(page, "함께 사는 가구원 수 (부모님 포함)", "2명");
+    await page.getByTestId("next").click();
+    await pick(page, "자녀·손자녀(또는 임신) 나이대", "해당 없음");
+    await page.getByTestId("next").click();
+    await pick(page, "주거 형태", "자가");
+    await page.getByTestId("next").click();
+    await pick(page, "돌봄이 필요한 상황", "일상생활 도움 필요");
+    await page.getByTestId("finish").click();
+    await expect(page).toHaveURL(/\/results\?for=parent/);
+    await expect(page.getByTestId("parent-results-banner")).toBeVisible({ timeout: 20_000 });
+    await expect(page.getByRole("heading", { level: 1 })).toContainText("부모님께 신청해 드릴 수 있는");
+    await expect(page.getByTestId("top-picks")).toBeVisible();
+    await expect(page.getByTestId("proxy-apply-note")).toContainText("주민센터");
+    await expect(page.getByTestId("proxy-apply-note")).toContainText("법률 자문이 아닙니다");
+    // URL 예시로도 열림
+    await page.goto("/results?for=parent&example=parent-care");
+    await expect(page.getByTestId("example-banner")).toBeVisible({ timeout: 20_000 });
+    await expect(page.getByTestId("parent-results-banner")).toBeVisible();
+    await expect(page.getByTestId("top-picks").locator("ol > li")).toHaveCount(5);
   });
 });

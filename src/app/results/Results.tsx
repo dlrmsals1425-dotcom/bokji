@@ -7,10 +7,11 @@ import { TierBadge, orgText } from "@/components/Badges";
 import { Icon } from "@/components/Icon";
 import { CHANNEL_LABEL, TIER_PLAIN, firstLine, howTo, metReasons, toCheck } from "@/lib/client/howto";
 import type { Program } from "@/lib/data/types";
-import { clearProfile, saveProfile, useExample, useProfile } from "@/lib/client/storage";
+import { clearProfile, saveFiller, saveMode, saveProfile, useExample, useMode, useProfile } from "@/lib/client/storage";
 import { loadForRegion, loadProgram, type Loaded } from "@/lib/client/bundles";
 import { applyFilters, autoGroups, eduCount, facetCounts, groupVariants, industryCount, operatorCount, scoreAll, topPicks, type Filters, type Group } from "@/lib/client/results";
 import { PRESETS } from "@/lib/client/presets";
+import { MODE_ENTRY, parseFindMode, resultsCopy, resultsPath, type FindMode } from "@/lib/client/mode";
 import { profileChips } from "@/lib/client/summary";
 import { CATEGORIES, ORG_TYPE_LABEL, type Category, type OrgType } from "@/lib/data/types";
 import { TIER_LABEL, type Tier } from "@/lib/engine/types";
@@ -37,30 +38,48 @@ function Skeleton({ label }: { label: string }) {
 
 export function Results() {
   const profile = useProfile();
-  // /results?example=<예시 id> 링크로 예시 상황을 바로 연다 (데모·성능 점검용)
+  const mode = useMode();
+  // /results?example=<id>&for=parent 링크로 예시·모드를 바로 연다
   useEffect(() => {
-    const id = new URLSearchParams(window.location.search).get("example");
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("example");
+    const forParam = parseFindMode(params.get("for"));
     const preset = PRESETS.find((x) => x.id === id);
     if (preset) {
-      saveProfile(preset.profile, preset.id);
-      window.history.replaceState(null, "", "/results");
+      const m = forParam ?? preset.mode ?? "self";
+      saveProfile(preset.profile, preset.id, m);
+      if (m === "parent") saveFiller("child");
+      window.history.replaceState(null, "", resultsPath(m));
+    } else if (forParam) {
+      saveMode(forParam);
+      window.history.replaceState(null, "", resultsPath(forParam));
     }
   }, []);
-  if (profile === undefined) return <Skeleton label="불러오는 중…" />;
-  if (profile === null)
+  if (profile === undefined || mode === undefined) return <Skeleton label="불러오는 중…" />;
+  if (profile === null) {
+    const copy = resultsCopy(mode);
     return (
       <div className="narrow page">
-        <h1 className="h1">아직 입력한 정보가 없어요</h1>
-        <p className="lead">12개 간단한 질문에 답하면 받을 수 있을 만한 서비스를 찾아드려요. 로그인은 필요 없어요.</p>
-        <Link href="/check" className="btn btn-primary btn-lg">
-          맞춤 찾기 시작
-        </Link>
+        <h1 className="h1">{copy.emptyTitle}</h1>
+        <p className="lead">{copy.emptyLead}</p>
+        <div className="path-choice path-choice-compact" role="group" aria-label="찾기 대상 고르기">
+          <Link href={MODE_ENTRY.self.href} className="path-card" data-testid="empty-start-self">
+            <span className="path-t">{copy.emptySelf}</span>
+            <span className="path-d">{MODE_ENTRY.self.desc}</span>
+          </Link>
+          <Link href={MODE_ENTRY.parent.href} className="path-card path-parent" data-testid="empty-start-parent">
+            <span className="path-t">{copy.emptyParent}</span>
+            <span className="path-d">{MODE_ENTRY.parent.desc}</span>
+          </Link>
+        </div>
       </div>
     );
-  return <ResultsInner profile={profile} key={JSON.stringify(profile)} />;
+  }
+  return <ResultsInner profile={profile} mode={mode} key={JSON.stringify(profile) + mode} />;
 }
 
-function ResultsInner({ profile }: { profile: Profile }) {
+function ResultsInner({ profile, mode }: { profile: Profile; mode: FindMode }) {
+  const copy = resultsCopy(mode);
   const router = useRouter();
   const [data, setData] = useState<Loaded | null>(null);
   const [f, setF] = useState<Filters>({ tier: "eligible", category: null, org: null, q: "" });
@@ -136,7 +155,7 @@ function ResultsInner({ profile }: { profile: Profile }) {
   const share = async () => {
     const top = picks.map((g) => `· ${g.lead.program.name}`);
     const text = [
-      `복지나침반에서 ${data.label} 기준으로 찾아본 결과: 조건 충족 ${total.eligible}개, 가능성 있음 ${total.likely}개, 확인 필요 ${total.check}개`,
+      copy.shareLead(data.label, total.eligible, total.likely, total.check),
       ...top,
       "(입력한 개인 정보는 공유되지 않아요. 직접 확인해 보세요)",
     ].join("\n");
@@ -172,31 +191,42 @@ function ResultsInner({ profile }: { profile: Profile }) {
               </Link>
             </li>
             <li>
-              <Link href="/check">맞춤 찾기</Link>
+              <Link href={copy.checkHref}>{copy.crumbCheck}</Link>
             </li>
             <li>
               <span aria-current="page">결과</span>
             </li>
           </ol>
+          {mode === "parent" && (
+            <p className="notice warm" data-testid="parent-results-banner" role="note">
+              <Icon name="heart" size={18} />
+              <span>
+                <strong>부모님 복지 찾기</strong> — 자녀·가족이 대신 알아본 결과입니다. 판정은 부모님 상황을 기준으로 했습니다.
+              </span>
+            </p>
+          )}
           {preset && (
             <p className="notice warm" data-testid="example-banner" role="note">
               <Icon name="info" size={18} />
               <span>
                 <strong>예시 상황으로 보는 중입니다.</strong> {preset.title}({preset.desc})인 경우로 계산했습니다. 실제 개인 정보가 아닙니다.{" "}
-                <Link href="/check">내 상황으로 다시 입력</Link>
+                <Link href={copy.checkHref}>{copy.reenterLabel}</Link>
               </span>
             </p>
           )}
           <h1 className="h1" id="res-h">
-            {place}에서 신청할 수 있는 복지 서비스
+            {place}
+            {copy.h1Suffix}
           </h1>
           <p className="situation">
             <span>
-              <Icon name="mapPin" size={16} className="icon-inline" /> {chips.join(" · ")}
+              <Icon name="mapPin" size={16} className="icon-inline" />{" "}
+              {copy.situationPrefix ? `${copy.situationPrefix}: ` : ""}
+              {chips.join(" · ")}
             </span>
             <span className="muted">(12개 중 {answered}개 입력)</span>
-            <Link href="/check" className="no-print">
-              입력 수정
+            <Link href={copy.checkHref} className="no-print">
+              {copy.editLabel}
             </Link>
           </p>
           <div className="tiles no-print" aria-label="판정 결과별 개수">
@@ -226,7 +256,7 @@ function ResultsInner({ profile }: { profile: Profile }) {
               <p className="notice warm" style={{ marginBottom: "1.5rem" }}>
                 <Icon name="alert" size={18} />
                 <span>
-                  입력한 항목이 적어 &lsquo;확인 필요&rsquo;가 많습니다. <Link href="/check">항목을 더 입력</Link>하면 더 정확해집니다.
+                  {copy.sparseWarn} <Link href={copy.checkHref}>항목을 더 입력</Link>
                 </span>
               </p>
             )}
@@ -236,9 +266,9 @@ function ResultsInner({ profile }: { profile: Profile }) {
                 <div className="sec-head" style={{ marginBottom: "1rem" }}>
                   <div>
                     <h2 className="h2" id="picks-h">
-                      먼저 확인할 서비스 {picks.length}가지
+                      {copy.picksTitle(picks.length)}
                     </h2>
-                    <p>내 상황과 가장 관련 깊은 순서입니다. 모두 직접 신청해야 받을 수 있어요.</p>
+                    <p>{copy.picksLead}</p>
                   </div>
                 </div>
                 <ol className="picks">
@@ -250,9 +280,9 @@ function ResultsInner({ profile }: { profile: Profile }) {
             )}
 
             <h2 className="h2" id="list-h">
-              {picks.length > 0 ? "그 밖에 신청할 수 있는 서비스" : "신청할 수 있는 서비스"}
+              {copy.listTitle(picks.length > 0)}
             </h2>
-            <p className="body">모두 {(total.eligible + total.likely + total.check).toLocaleString("ko-KR")}개를 판단 결과에 따라 나누었습니다.</p>
+            <p className="body">{copy.listLead((total.eligible + total.likely + total.check).toLocaleString("ko-KR"))}</p>
 
             <div className="refine no-print">
               <div className="grow">
@@ -420,6 +450,14 @@ function ResultsInner({ profile }: { profile: Profile }) {
                   </div>
                 )}
               </details>
+            )}
+            {copy.proxyNote && (
+              <p className="notice" data-testid="proxy-apply-note" role="note" style={{ marginTop: "1.5rem" }}>
+                <Icon name="info" size={18} />
+                <span>
+                  <strong>가족이 대신 신청할 때</strong> — {copy.proxyNote}
+                </span>
+              </p>
             )}
             <p className="disclaimer">
               이 결과는 공개된 자격 조건과 입력하신 정보만으로 계산한 안내이며, 실제 선정은 소득·재산 조사 등 기관 심사로 결정됩니다. 검수 전인 자동 변환

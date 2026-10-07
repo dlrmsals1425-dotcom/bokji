@@ -4,42 +4,90 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Icon } from "@/components/Icon";
 import { MultiGroup, RadioGroup, opts } from "@/components/Choice";
-import { clearProfile, saveProfile, setSettings, useProfile, useSettings } from "@/lib/client/storage";
+import { clearProfile, saveFiller, saveMode, saveProfile, setSettings, useFiller, useMode, useProfile, useSettings } from "@/lib/client/storage";
 import { loadRegions } from "@/lib/client/bundles";
 import type { RegionIndex } from "@/lib/data/types";
+import { FILLER_LABEL, parseFindMode, resultsPath, wizardCopy, type FindMode, type FillerRole } from "@/lib/client/mode";
 import {
   ACTIVITIES, ACTIVITY_LABEL, AGE_BANDS, AGE_LABEL, BENEFITS, BENEFIT_LABEL, CARE_LABEL, CARE_NEEDS, CARS, CAR_LABEL,
-  CHILD_BUCKETS, CHILD_LABEL, DISABILITY, DISABILITY_LABEL, DISABILITY_SEVERITY, EMPTY_PROFILE, HOUSEHOLD_TRAITS, HOUSING,
+  CHILD_BUCKETS, CHILD_LABEL, DISABILITY, DISABILITY_SEVERITY, EMPTY_PROFILE, HOUSEHOLD_TRAITS, HOUSING,
   HOUSING_LABEL, INCOME_BANDS, INCOME_LABEL, MEDIAN_INCOME_2026, SEVERITY_LABEL, TRAIT_LABEL, answeredCount, type Profile,
 } from "@/lib/engine/profile";
 
-const STEPS = ["사는 곳", "나와 가구", "자녀", "소득·주거", "활동·돌봄·장애"] as const;
-const QUESTION = ["어디에 사시나요?", "나와 함께 사는 가구에 대해 알려 주세요", "자녀가 있나요?", "소득과 주거 형편은 어떤가요?", "지금 하시는 일과 돌봄이 필요한 상황"] as const;
-
 export function Wizard() {
   const stored = useProfile();
-  if (stored === undefined) return <div className="narrow page muted">불러오는 중…</div>;
-  return <WizardInner initial={stored ?? EMPTY_PROFILE} editing={!!stored} />;
+  const storedMode = useMode();
+  const storedFiller = useFiller();
+  if (stored === undefined || storedMode === undefined || storedFiller === undefined) {
+    return <div className="narrow page muted">불러오는 중…</div>;
+  }
+  return <WizardInner initial={stored ?? EMPTY_PROFILE} editing={!!stored} initialMode={storedMode} initialFiller={storedFiller} />;
 }
 
-function WizardInner({ initial, editing }: { initial: Profile; editing: boolean }) {
+function WizardInner({
+  initial,
+  editing,
+  initialMode,
+  initialFiller,
+}: {
+  initial: Profile;
+  editing: boolean;
+  initialMode: FindMode;
+  initialFiller: FillerRole;
+}) {
   const router = useRouter();
   const settings = useSettings();
   const [p, setP] = useState<Profile>(initial);
   const [step, setStep] = useState(0);
   const [regions, setRegions] = useState<RegionIndex | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [mode, setModeState] = useState<FindMode>(initialMode);
+  const [filler, setFillerState] = useState<FillerRole>(initialFiller);
   const titleRef = useRef<HTMLHeadingElement>(null);
+  const copy = wizardCopy(mode);
 
   useEffect(() => {
     loadRegions().then(setRegions);
   }, []);
 
+  // URL ?for=parent|self → 모드 반영 (마운트 시 1회). editing 의존 금지:
+  // finish()에서 saveProfile → editing true 로 effect가 다시 돌면 replaceState가
+  // router.push('/results?for=parent')를 덮어 /check에 머물게 된다.
+  useEffect(() => {
+    const m = parseFindMode(new URLSearchParams(window.location.search).get("for"));
+    if (m) {
+      setModeState(m);
+      saveMode(m);
+      if (m === "parent") {
+        setFillerState("child");
+        saveFiller("child");
+      }
+      const url = m === "parent" ? "/check?for=parent" : "/check";
+      window.history.replaceState(null, "", url);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- mount-only URL bootstrap
+  }, []);
+
   const set = <K extends keyof Profile>(k: K, v: Profile[K]) => setP((prev) => ({ ...prev, [k]: v }));
+
+  const applyMode = (next: FindMode) => {
+    setModeState(next);
+    saveMode(next);
+    if (next === "parent") {
+      setFillerState("child");
+      saveFiller("child");
+    }
+    const url = next === "parent" ? "/check?for=parent" : "/check";
+    window.history.replaceState(null, "", url);
+  };
 
   const go = (next: number) => {
     if (step === 0 && next > 0 && !p.sigungu) {
-      setError("결과를 보려면 사는 시군구를 선택해 주세요. 지역마다 받을 수 있는 서비스가 달라요.");
+      setError(
+        mode === "parent"
+          ? "결과를 보려면 부모님이 사시는 시군구를 선택해 주세요. 지역마다 받을 수 있는 서비스가 달라요."
+          : "결과를 보려면 사는 시군구를 선택해 주세요. 지역마다 받을 수 있는 서비스가 달라요.",
+      );
       return;
     }
     setError(null);
@@ -53,14 +101,17 @@ function WizardInner({ initial, editing }: { initial: Profile; editing: boolean 
   const finish = () => {
     if (!p.sigungu) {
       setStep(0);
-      setError("사는 시군구를 선택해 주세요.");
+      setError(mode === "parent" ? "부모님이 사시는 시군구를 선택해 주세요." : "사는 시군구를 선택해 주세요.");
       return;
     }
-    saveProfile(p);
-    router.push("/results");
+    saveMode(mode);
+    if (mode === "parent") saveFiller(filler);
+    saveProfile(p, undefined, mode);
+    router.push(resultsPath(mode));
   };
 
   const sido = regions?.sidos.find((s) => s.code === p.sido);
+  const disabilityOpts = DISABILITY.map((v) => ({ value: v, label: copy.disabilityLabels[v] }));
 
   return (
     <>
@@ -73,15 +124,25 @@ function WizardInner({ initial, editing }: { initial: Profile; editing: boolean 
               </Link>
             </li>
             <li>
-              <span aria-current="page">맞춤 찾기</span>
+              <span aria-current="page">{copy.crumb}</span>
             </li>
           </ol>
           <h1 className="h1" style={{ marginBottom: "0.25rem" }}>
-            맞춤 찾기
+            {copy.pageTitle}
           </h1>
-          <p className="small muted">12개 중 {answeredCount(p)}개 입력 · 모르는 항목은 &lsquo;모름&rsquo;으로 넘어가도 됩니다</p>
-          <ol className="stepper" aria-label={`입력 단계 (${STEPS.length}단계 중 ${step + 1}단계)`}>
-            {STEPS.map((s, i) => (
+          <p className="small muted">
+            {copy.progressHint} {answeredCount(p)}개 입력 · 모르는 항목은 &lsquo;모름&rsquo;으로 넘어가도 됩니다
+          </p>
+          <div className="mode-switch" role="group" aria-label="찾기 대상">
+            <button type="button" className={mode === "self" ? "on" : ""} aria-pressed={mode === "self"} onClick={() => applyMode("self")} data-testid="mode-self">
+              내 복지
+            </button>
+            <button type="button" className={mode === "parent" ? "on" : ""} aria-pressed={mode === "parent"} onClick={() => applyMode("parent")} data-testid="mode-parent">
+              부모님 복지
+            </button>
+          </div>
+          <ol className="stepper" aria-label={`입력 단계 (${copy.steps.length}단계 중 ${step + 1}단계)`}>
+            {copy.steps.map((s, i) => (
               <li key={s} className={i < step ? "done" : i === step ? "now" : ""} aria-current={i === step ? "step" : undefined}>
                 <span className="dot" aria-hidden="true">
                   {i < step ? <Icon name="check" size={16} strokeWidth={3} /> : i + 1}
@@ -95,16 +156,37 @@ function WizardInner({ initial, editing }: { initial: Profile; editing: boolean 
       <div className="form-body">
         <div className="narrow">
           <div className="form-panel">
+            {copy.banner && (
+              <p className="notice warm" data-testid="parent-banner" role="note">
+                <Icon name="heart" size={18} />
+                <span>{copy.banner}</span>
+              </p>
+            )}
             <p className="eyebrow">
-              {step + 1}단계 · {STEPS[step]}
+              {step + 1}단계 · {copy.steps[step]}
             </p>
             <h2 className="h2" tabIndex={-1} ref={titleRef}>
-              {QUESTION[step]}
+              {copy.questions[step]}
             </h2>
 
       {step === 0 && (
         <>
-          <p className="body">주민등록상 주소지를 골라 주세요. 그 지역에서만 하는 서비스와 신청하는 곳을 알려 드리는 데 씁니다.</p>
+          <p className="body">{copy.regionBody}</p>
+          {mode === "parent" && (
+            <RadioGroup
+              name="filler"
+              legend="작성하시는 분 (안내 문구용)"
+              hint="매칭에는 쓰이지 않아요. 결과 안내 말투만 바꿉니다."
+              options={(Object.keys(FILLER_LABEL) as FillerRole[]).map((v) => ({ value: v, label: FILLER_LABEL[v] }))}
+              value={filler}
+              onChange={(v) => {
+                if (v === "unknown") return;
+                setFillerState(v);
+                saveFiller(v);
+              }}
+              showUnknown={false}
+            />
+          )}
           {error && (
             <p role="alert" className="error">
               <Icon name="alert" size={18} /> {error}
@@ -157,17 +239,17 @@ function WizardInner({ initial, editing }: { initial: Profile; editing: boolean 
 
       {step === 1 && (
         <>
-          <RadioGroup name="age" legend="본인 나이" options={opts(AGE_BANDS, AGE_LABEL)} value={p.age} onChange={(v) => set("age", v)} />
+          <RadioGroup name="age" legend={copy.ageLegend} options={opts(AGE_BANDS, AGE_LABEL)} value={p.age} onChange={(v) => set("age", v)} />
           <RadioGroup
             name="hh"
-            legend="함께 사는 가구원 수 (본인 포함)"
+            legend={copy.hhLegend}
             options={[1, 2, 3, 4, 5, 6].map((v) => ({ value: v as 1 | 2 | 3 | 4 | 5 | 6, label: v === 6 ? "6명 이상" : `${v}명` }))}
             value={p.householdSize}
             onChange={(v) => set("householdSize", v)}
           />
           <MultiGroup
             name="traits"
-            legend="가구 특성"
+            legend={copy.traitsLegend}
             options={opts(HOUSEHOLD_TRAITS, TRAIT_LABEL)}
             value={p.traits}
             onChange={(v) => set("traits", v)}
@@ -178,12 +260,12 @@ function WizardInner({ initial, editing }: { initial: Profile; editing: boolean 
       {step === 2 && (
         <MultiGroup
           name="children"
-          legend="자녀(또는 임신) 나이대"
-          hint="가구 안에 자녀가 있으면 모두 골라 주세요."
+          legend={copy.childrenLegend}
+          hint={copy.childrenHint}
           options={opts(CHILD_BUCKETS, CHILD_LABEL)}
           value={p.children}
           onChange={(v) => set("children", v)}
-          noneLabel="자녀 없음"
+          noneLabel={copy.childrenNone}
         />
       )}
 
@@ -191,8 +273,8 @@ function WizardInner({ initial, editing }: { initial: Profile; editing: boolean 
         <>
           <RadioGroup
             name="income"
-            legend="가구 소득 (기준 중위소득 대비)"
-            hint="정확히 몰라도 괜찮아요. 수급 중이면 아래 '수급·자격'만 골라도 돼요."
+            legend={copy.incomeLegend}
+            hint={copy.incomeHint}
             options={opts(INCOME_BANDS, INCOME_LABEL)}
             value={p.income}
             onChange={(v) => set("income", v)}
@@ -209,13 +291,13 @@ function WizardInner({ initial, editing }: { initial: Profile; editing: boolean 
           </details>
           <MultiGroup
             name="benefits"
-            legend="받고 있는 수급·자격"
+            legend={copy.benefitsLegend}
             options={opts(BENEFITS, BENEFIT_LABEL)}
             value={p.benefits}
             onChange={(v) => set("benefits", v)}
           />
-          <RadioGroup name="housing" legend="주거 형태" options={opts(HOUSING, HOUSING_LABEL)} value={p.housing} onChange={(v) => set("housing", v)} />
-          <RadioGroup name="car" legend="가구 차량" options={opts(CARS, CAR_LABEL)} value={p.car} onChange={(v) => set("car", v)} />
+          <RadioGroup name="housing" legend={copy.housingLegend} options={opts(HOUSING, HOUSING_LABEL)} value={p.housing} onChange={(v) => set("housing", v)} />
+          <RadioGroup name="car" legend={copy.carLegend} options={opts(CARS, CAR_LABEL)} value={p.car} onChange={(v) => set("car", v)} />
         </>
       )}
 
@@ -223,7 +305,7 @@ function WizardInner({ initial, editing }: { initial: Profile; editing: boolean 
         <>
           <RadioGroup
             name="activity"
-            legend="취업·활동 상태"
+            legend={copy.activityLegend}
             options={opts(ACTIVITIES, ACTIVITY_LABEL)}
             value={p.activity}
             onChange={(v) => set("activity", v)}
@@ -234,15 +316,15 @@ function WizardInner({ initial, editing }: { initial: Profile; editing: boolean 
             </p>
             <MultiGroup
               name="care"
-              legend="돌봄이 필요한 상황"
+              legend={copy.careLegend}
               options={opts(CARE_NEEDS, CARE_LABEL)}
               value={p.care}
               onChange={(v) => set("care", v)}
             />
             <RadioGroup
               name="disability"
-              legend="장애"
-              options={opts(DISABILITY, DISABILITY_LABEL)}
+              legend={copy.disabilityLegend}
+              options={disabilityOpts}
               value={p.disability}
               onChange={(v) => setP((prev) => ({ ...prev, disability: v, disabilitySeverity: v === "self" || v === "member" ? prev.disabilitySeverity : "unknown" }))}
               unknownLabel="응답 안 함"
@@ -250,7 +332,7 @@ function WizardInner({ initial, editing }: { initial: Profile; editing: boolean 
             {(p.disability === "self" || p.disability === "member") && (
               <RadioGroup
                 name="severity"
-                legend="장애 정도"
+                legend={copy.severityLegend}
                 options={opts(DISABILITY_SEVERITY, SEVERITY_LABEL)}
                 value={p.disabilitySeverity}
                 onChange={(v) => set("disabilitySeverity", v)}
@@ -271,18 +353,18 @@ function WizardInner({ initial, editing }: { initial: Profile; editing: boolean 
           </Link>
         )}
         <div className="grow">
-          {step > 0 && step < STEPS.length - 1 && (
+          {step > 0 && step < copy.steps.length - 1 && (
             <button type="button" className="btn btn-text" onClick={finish}>
-              지금까지 입력으로 결과 보기
+              {copy.finishEarly}
             </button>
           )}
-          {step < STEPS.length - 1 ? (
+          {step < copy.steps.length - 1 ? (
             <button type="button" className="btn btn-primary" onClick={() => go(step + 1)} data-testid="next">
               다음 <Icon name="arrowRight" size={18} />
             </button>
           ) : (
             <button type="button" className="btn btn-primary" onClick={finish} data-testid="finish">
-              결과 보기 <Icon name="arrowRight" size={18} />
+              {copy.finish} <Icon name="arrowRight" size={18} />
             </button>
           )}
         </div>
@@ -304,6 +386,8 @@ function WizardInner({ initial, editing }: { initial: Profile; editing: boolean 
                 onClick={() => {
                   clearProfile();
                   setP(EMPTY_PROFILE);
+                  setModeState("self");
+                  setFillerState("child");
                   setStep(0);
                 }}
               >

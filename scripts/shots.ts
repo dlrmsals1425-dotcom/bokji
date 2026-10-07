@@ -2,6 +2,7 @@
 import { chromium, type Page } from "@playwright/test";
 import path from "node:path";
 import { PRESETS } from "../src/lib/client/presets";
+import { resultsPath } from "../src/lib/client/mode";
 
 const BASE = process.argv[2] ?? "http://localhost:3217";
 const OUT = path.resolve(__dirname, "../shots");
@@ -68,7 +69,7 @@ async function main() {
   const tall = await browser.newContext({ viewport: { width: 1280, height: 1300 }, locale: "ko-KR", deviceScaleFactor: 1 });
   const t = await tall.newPage();
   for (const ps of PRESETS) {
-    await t.goto(`${BASE}/results?example=${ps.id}`);
+    await t.goto(`${BASE}${resultsPath(ps.mode ?? "self", ps.id)}`);
     await t.getByTestId("top-picks").waitFor();
     await t.getByTestId("result-list").getByTestId("program-card").first().waitFor();
     await t.waitForLoadState("networkidle");
@@ -109,6 +110,41 @@ async function main() {
   await m.waitForLoadState("networkidle");
   await m.evaluate(() => window.scrollTo(0, 0));
   await m.screenshot({ path: `${OUT}/scenario-bucheon-disability-mobile.png` });
+
+  // 부모님 복지(대리 효도) 경로 스크린샷
+  await page.goto(BASE + "/");
+  await page.waitForLoadState("networkidle");
+  await page.getByTestId("start-parent").scrollIntoViewIfNeeded();
+  await page.screenshot({ path: `${OUT}/home-paths-desktop.png` });
+
+  await page.goto(BASE + "/check?for=parent");
+  await page.getByTestId("parent-banner").waitFor();
+  await page.getByLabel("시·도").selectOption("41000");
+  await page.getByLabel("시·군·구").selectOption("41110");
+  await page.getByTestId("next").click();
+  const pickP = (legend: string, opt: string) => page.getByRole("group", { name: legend }).getByText(opt, { exact: true }).click();
+  await pickP("부모님 나이", "70~74세");
+  await pickP("함께 사는 가구원 수 (부모님 포함)", "2명");
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await page.screenshot({ path: `${OUT}/parent-input-desktop.png` });
+
+  await page.goto(`${BASE}${resultsPath("parent", "parent-care")}`);
+  await page.getByTestId("top-picks").waitFor();
+  await page.getByTestId("parent-results-banner").waitFor();
+  await page.waitForLoadState("networkidle");
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await page.setViewportSize({ width: 1280, height: 1300 });
+  await page.screenshot({ path: `${OUT}/parent-results-desktop.png` });
+  await page.setViewportSize({ width: 1280, height: 800 });
+
+  await m.goto(`${BASE}${resultsPath("parent", "parent-care")}`);
+  await m.getByTestId("top-picks").waitFor();
+  await m.waitForLoadState("networkidle");
+  await m.evaluate(() => window.scrollTo(0, 0));
+  await m.screenshot({ path: `${OUT}/parent-results-mobile.png` });
+  await m.goto(BASE + "/check?for=parent");
+  await m.getByTestId("parent-banner").waitFor();
+  await m.screenshot({ path: `${OUT}/parent-input-mobile.png` });
 
   await browser.close();
   console.log("saved to", OUT);

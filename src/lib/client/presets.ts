@@ -1,11 +1,14 @@
 /** 홈 화면 '예시 상황' 원클릭 프리셋 (실제 개인 정보가 아닌 데모용 가상 상황) */
 import { EMPTY_PROFILE, type Profile } from "../engine/profile";
+import type { FindMode } from "./mode";
 
 export interface Preset {
   id: string;
   title: string;
   desc: string;
   profile: Profile;
+  /** 부모님 복지(대리 효도) 경로 — 프로필은 부모님 상황 */
+  mode?: FindMode;
 }
 
 const base = (p: Partial<Profile>): Profile => ({ ...EMPTY_PROFILE, sido: "41000", ...p });
@@ -18,6 +21,16 @@ export const PRESETS: Preset[] = [
     profile: base({
       sigungu: "41110", age: "75-79", householdSize: 1, traits: ["single"], children: [], income: "unknown",
       benefits: ["basic_pension"], housing: "own", car: "0", activity: "none", care: ["daily"], disability: "none",
+    }),
+  },
+  {
+    id: "parent-care",
+    title: "부모님 돌보기",
+    desc: "50대 자녀가 수원 70대 부모 돌봄 · 일상 도움 필요 · 기초연금 관심",
+    mode: "parent",
+    profile: base({
+      sigungu: "41110", age: "70-74", householdSize: 2, traits: [], children: [], income: "100",
+      benefits: [], housing: "own", car: "0", activity: "none", care: ["daily"], disability: "none",
     }),
   },
   {

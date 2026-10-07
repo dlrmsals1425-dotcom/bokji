@@ -4,6 +4,7 @@ import { HeroArt } from "@/components/HeroArt";
 import { Icon, type IconName } from "@/components/Icon";
 import { ResumeBanner } from "@/components/ResumeBanner";
 import { PresetButtons } from "@/components/PresetButtons";
+import { MODE_ENTRY } from "@/lib/client/mode";
 import { TIER_PLAIN } from "@/lib/client/howto";
 
 const n = (v: number) => v.toLocaleString("ko-KR");
@@ -29,12 +30,13 @@ export default function Home() {
           <div>
             <p className="eyebrow">로그인·주민등록번호 없이</p>
             <h1 id="hero-h">
-              <em>내 조건</em>으로 받을 수 있는
+              <em>내 조건</em>으로, 또는
               <br />
-              복지 서비스를 찾아 드려요
+              <em>부모님 대신</em> 복지를 찾아 드려요
             </h1>
             <p className="lead">
               중앙정부·시도·시군구·공공기관 서비스 {n(c.uniquePrograms)}개 가운데, 직접 신청해야 받을 수 있는 것을 이유와 함께 알려 드립니다.
+              30·40대에게는 본인보다 부모님 돌봄·장애 관련 지원을 대신 알아보는 길이 더 유용할 때가 많아요.
             </p>
             <form action="/search" role="search" className="hero-search">
               <label htmlFor="home-q" className="sr-only">
@@ -48,16 +50,35 @@ export default function Home() {
             <p className="hero-keys">
               <span>많이 찾는 말</span>
               <Link href="/search?q=기초연금">기초연금</Link>
-              <Link href="/search?q=에너지바우처">에너지바우처</Link>
-              <Link href="/search?q=월세">월세</Link>
+              <Link href="/search?q=노인맞춤돌봄">노인맞춤돌봄</Link>
+              <Link href="/search?q=장기요양">장기요양</Link>
               <Link href="/search?q=돌봄">돌봄</Link>
             </p>
-            <div className="hero-cta">
-              <Link href="/check" className="btn btn-primary btn-lg" data-testid="start">
-                맞춤 찾기 시작 <Icon name="arrowRight" size={20} strokeWidth={2.2} />
+            <div className="path-choice" role="group" aria-label="찾기 대상 고르기">
+              <Link href={MODE_ENTRY.self.href} className="path-card" data-testid="start-self">
+                <span className="path-ic" aria-hidden="true">
+                  <Icon name="users" size={28} strokeWidth={1.7} />
+                </span>
+                <span className="path-t">{MODE_ENTRY.self.title}</span>
+                <span className="path-d">{MODE_ENTRY.self.desc}</span>
+                <span className="path-go">
+                  시작하기 <Icon name="arrowRight" size={18} strokeWidth={2.2} />
+                </span>
               </Link>
-              <span className="small muted">질문 12개 · 약 3분 · 모르는 항목은 &lsquo;모름&rsquo;</span>
+              <Link href={MODE_ENTRY.parent.href} className="path-card path-parent" data-testid={MODE_ENTRY.parent.testId}>
+                <span className="path-ic" aria-hidden="true">
+                  <Icon name="heart" size={28} strokeWidth={1.7} />
+                </span>
+                <span className="path-t">{MODE_ENTRY.parent.title}</span>
+                <span className="path-d">{MODE_ENTRY.parent.desc}</span>
+                <span className="path-go">
+                  대신 알아보기 <Icon name="arrowRight" size={18} strokeWidth={2.2} />
+                </span>
+              </Link>
             </div>
+            <p className="small muted" style={{ marginTop: "0.75rem" }}>
+              질문 12개 · 약 3분 · 모르는 항목은 &lsquo;모름&rsquo; · 부모님 찾기도 같은 질문 구조
+            </p>
             <ResumeBanner />
           </div>
           <HeroArt />
@@ -97,7 +118,9 @@ export default function Home() {
               <h2 className="h2" id="ex-h">
                 예시 상황으로 먼저 보기
               </h2>
-              <p>입력 없이 결과 화면을 미리 볼 수 있어요. 실제 개인 정보가 아닌 예시이며, 결과 화면에서 내 상황으로 다시 입력할 수 있습니다.</p>
+              <p>
+                입력 없이 결과 화면을 미리 볼 수 있어요. 실제 개인 정보가 아닌 예시이며, &lsquo;부모님 돌보기&rsquo;는 자녀가 대신 알아보는 경로입니다.
+              </p>
             </div>
           </div>
           <PresetButtons />
@@ -117,8 +140,8 @@ export default function Home() {
           <ol className="howto">
             <li>
               <span className="n">1</span>
-              <h3>사는 곳과 상황 입력</h3>
-              <p>지역, 나이, 가구, 받고 있는 지원 등 12가지. 모르면 건너뛰어도 됩니다.</p>
+              <h3>대상과 상황 입력</h3>
+              <p>내 복지 또는 부모님 복지를 고른 뒤, 지역·나이·가구·돌봄 등 12가지. 모르면 건너뛰어도 됩니다.</p>
             </li>
             <li>
               <span className="n">2</span>
@@ -128,7 +151,7 @@ export default function Home() {
             <li>
               <span className="n">3</span>
               <h3>먼저 신청할 것 확인</h3>
-              <p>내 상황과 가장 관련 깊은 5가지와 어디서·어떻게 신청하는지 알려 드립니다.</p>
+              <p>가장 관련 깊은 5가지와 어디서·어떻게 신청하는지, 가족이 대신 낼 수 있는지도 안내합니다.</p>
             </li>
           </ol>
           <dl className="tiers3">

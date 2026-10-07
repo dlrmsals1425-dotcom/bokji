@@ -7,9 +7,13 @@
  */
 import { useSyncExternalStore } from "react";
 import { EMPTY_PROFILE, type Profile } from "../engine/profile";
+import type { FindMode, FillerRole } from "./mode";
 
 const PROFILE_KEY = "bn.profile.v1";
 const SETTINGS_KEY = "bn.settings.v1";
+const EXAMPLE_KEY = "bn.example.v1";
+const MODE_KEY = "bn.mode.v1";
+const FILLER_KEY = "bn.filler.v1";
 
 export interface Settings {
   large: boolean;
@@ -24,7 +28,7 @@ function emit() {
 function subscribe(cb: () => void) {
   listeners.add(cb);
   const onStorage = (e: StorageEvent) => {
-    if (e.key === PROFILE_KEY || e.key === SETTINGS_KEY || e.key === EXAMPLE_KEY) emit();
+    if (e.key === PROFILE_KEY || e.key === SETTINGS_KEY || e.key === EXAMPLE_KEY || e.key === MODE_KEY || e.key === FILLER_KEY) emit();
   };
   window.addEventListener("storage", onStorage);
   return () => {
@@ -66,11 +70,13 @@ export function setSettings(patch: Partial<Settings>) {
   if (prev.shared !== next.shared) {
     const from = prev.shared ? sessionStorage : localStorage;
     const to = next.shared ? sessionStorage : localStorage;
-    const raw = safeGet(from, PROFILE_KEY);
-    try {
-      from.removeItem(PROFILE_KEY);
-      if (raw) to.setItem(PROFILE_KEY, raw);
-    } catch {}
+    for (const key of [PROFILE_KEY, EXAMPLE_KEY, MODE_KEY, FILLER_KEY]) {
+      const raw = safeGet(from, key);
+      try {
+        from.removeItem(key);
+        if (raw) to.setItem(key, raw);
+      } catch {}
+    }
   }
   emit();
 }
@@ -97,16 +103,18 @@ function readProfile(): Profile | null {
   return profileCache.value;
 }
 
-const EXAMPLE_KEY = "bn.example.v1";
-
-/** exampleId: 홈의 '예시 상황'으로 채운 경우 그 id (결과 화면에 '예시' 안내를 띄운다). 직접 입력하면 지운다 */
-export function saveProfile(p: Profile, exampleId?: string) {
+/** exampleId: 홈의 '예시 상황'으로 채운 경우 그 id. mode: 본인/부모님 찾기 */
+export function saveProfile(p: Profile, exampleId?: string, mode?: FindMode) {
   try {
     profileStore().setItem(PROFILE_KEY, JSON.stringify(p));
     if (exampleId) profileStore().setItem(EXAMPLE_KEY, exampleId);
     else {
       localStorage.removeItem(EXAMPLE_KEY);
       sessionStorage.removeItem(EXAMPLE_KEY);
+    }
+    if (mode) {
+      profileStore().setItem(MODE_KEY, mode);
+      modeCache = { raw: mode, value: mode };
     }
   } catch {}
   emit();
@@ -121,14 +129,64 @@ export function useExample(): string | null | undefined {
   return useSyncExternalStore(subscribe, readExample, () => undefined);
 }
 
+/* ---------- find mode (self | parent) ---------- */
+let modeCache: { raw: string | null; value: FindMode } = { raw: null, value: "self" };
+function readMode(): FindMode {
+  const raw = safeGet(profileStore(), MODE_KEY);
+  if (raw !== modeCache.raw) {
+    modeCache = { raw, value: raw === "parent" ? "parent" : "self" };
+  }
+  return modeCache.value;
+}
+
+export function saveMode(mode: FindMode) {
+  try {
+    profileStore().setItem(MODE_KEY, mode);
+    modeCache = { raw: mode, value: mode };
+  } catch {}
+  emit();
+}
+
+export function useMode(): FindMode | undefined {
+  return useSyncExternalStore(subscribe, readMode, () => undefined);
+}
+
+/* ---------- filler role (copy only) ---------- */
+let fillerCache: { raw: string | null; value: FillerRole } = { raw: null, value: "child" };
+function readFiller(): FillerRole {
+  const raw = safeGet(profileStore(), FILLER_KEY);
+  if (raw !== fillerCache.raw) {
+    const v = raw === "relative" || raw === "other" || raw === "child" ? raw : "child";
+    fillerCache = { raw, value: v };
+  }
+  return fillerCache.value;
+}
+
+export function saveFiller(role: FillerRole) {
+  try {
+    profileStore().setItem(FILLER_KEY, role);
+    fillerCache = { raw: role, value: role };
+  } catch {}
+  emit();
+}
+
+export function useFiller(): FillerRole | undefined {
+  return useSyncExternalStore(subscribe, readFiller, () => undefined);
+}
+
 /** '이 기기에서 지우기' — 두 저장소 모두에서 삭제 */
 export function clearProfile() {
   try {
-    localStorage.removeItem(PROFILE_KEY);
-    sessionStorage.removeItem(PROFILE_KEY);
-    localStorage.removeItem(EXAMPLE_KEY);
-    sessionStorage.removeItem(EXAMPLE_KEY);
+    for (const store of [localStorage, sessionStorage]) {
+      store.removeItem(PROFILE_KEY);
+      store.removeItem(EXAMPLE_KEY);
+      store.removeItem(MODE_KEY);
+      store.removeItem(FILLER_KEY);
+    }
   } catch {}
+  profileCache = { raw: null, value: null };
+  modeCache = { raw: null, value: "self" };
+  fillerCache = { raw: null, value: "child" };
   emit();
 }
 

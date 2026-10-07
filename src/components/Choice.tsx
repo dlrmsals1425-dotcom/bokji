@@ -14,10 +14,12 @@ export function RadioGroup<V extends string | number>(props: {
   value: V | "unknown";
   onChange: (v: V | "unknown") => void;
   unknownLabel?: string;
+  /** false 이면 '모름' 선택지를 숨김 (작성자 역할 등) */
+  showUnknown?: boolean;
   name: string;
 }) {
   const id = useId();
-  const { legend, hint, options, value, onChange, unknownLabel = "모름 / 건너뛰기", name } = props;
+  const { legend, hint, options, value, onChange, unknownLabel = "모름 / 건너뛰기", showUnknown = true, name } = props;
   return (
     <fieldset className="field" aria-describedby={hint ? `${id}-h` : undefined}>
       <legend>{legend}</legend>
@@ -33,13 +35,17 @@ export function RadioGroup<V extends string | number>(props: {
             <span>{o.label}</span>
           </label>
         ))}
-        <p className="or" aria-hidden="true">
-          또는
-        </p>
-        <label className="opt unknown">
-          <input type="radio" name={name} checked={value === "unknown"} onChange={() => onChange("unknown")} />
-          <span>{unknownLabel}</span>
-        </label>
+        {showUnknown && (
+          <>
+            <p className="or" aria-hidden="true">
+              또는
+            </p>
+            <label className="opt unknown">
+              <input type="radio" name={name} checked={value === "unknown"} onChange={() => onChange("unknown")} />
+              <span>{unknownLabel}</span>
+            </label>
+          </>
+        )}
       </div>
     </fieldset>
   );

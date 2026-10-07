@@ -7,6 +7,8 @@ const PAGES: { name: string; path: string; preset?: string }[] = [
   { name: "홈", path: "/" },
   { name: "입력", path: "/check" },
   { name: "결과(예시: 수원 어르신)", path: "/results", preset: "suwon-senior" },
+  { name: "입력(부모님)", path: "/check?for=parent" },
+  { name: "결과(부모님 돌보기)", path: "/results", preset: "parent-care" },
   { name: "상세(기초연금)", path: "/p/n.gov24-SSE000000170" },
   { name: "상세(대체 안내)", path: "/p/g41110.icare-0085-1489588-1-1-30" },
   { name: "검색", path: "/search?q=기초연금" },

@@ -145,6 +145,31 @@ p { margin: 0; }
 .hero-keys { display: flex; flex-wrap: wrap; gap: 0.25rem 0.875rem; margin: 0.75rem 0 0 1.375rem; font-size: 0.9375rem; color: var(--muted); }
 .hero-keys a { color: var(--ink-2); }
 .hero-cta { display: flex; flex-wrap: wrap; gap: 0.75rem 1rem; align-items: center; margin-top: 1.75rem; }
+
+/* 본인 vs 부모님 찾기 진입 */
+.path-choice { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.875rem; margin-top: 1.75rem; max-width: 36rem; }
+.path-choice-compact { max-width: none; margin-top: 1.25rem; }
+.path-card { display: flex; flex-direction: column; gap: 0.375rem; padding: 1.125rem 1.25rem; background: #fff; border: 2px solid var(--line-2); border-radius: var(--radius); text-decoration: none; color: var(--ink); box-shadow: var(--shadow); transition: border-color .15s, box-shadow .15s; }
+.path-card:hover { border-color: var(--primary); box-shadow: 0 8px 24px -12px rgba(37, 110, 244, 0.35); }
+.path-card.path-parent { border-color: var(--secondary); background: linear-gradient(180deg, #fff 60%, var(--secondary-5)); }
+.path-card.path-parent:hover { border-color: var(--secondary); }
+.path-ic { width: 2.75rem; height: 2.75rem; border-radius: 0.875rem; background: var(--primary-5); color: var(--primary-60); display: grid; place-items: center; margin-bottom: 0.25rem; }
+.path-parent .path-ic { background: var(--secondary-5); color: var(--secondary); }
+.path-t { font-weight: 800; font-size: 1.125rem; letter-spacing: -0.02em; }
+.path-d { color: var(--ink-2); font-size: 0.9375rem; line-height: 1.5; flex: 1; }
+.path-go { color: var(--primary-60); font-weight: 700; font-size: 0.9375rem; display: inline-flex; align-items: center; gap: 0.25rem; margin-top: 0.25rem; }
+.path-parent .path-go { color: var(--secondary); }
+@media (max-width: 34rem) { .path-choice { grid-template-columns: minmax(0, 1fr); } }
+
+/* 입력 모드 전환 */
+.mode-switch { display: inline-flex; gap: 0.25rem; padding: 0.25rem; background: var(--surface-2); border-radius: 999px; margin: 0.75rem 0 1rem; }
+.mode-switch button { border: 0; background: transparent; color: var(--ink-2); font-weight: 700; font-size: 0.9375rem; padding: 0.5rem 1rem; border-radius: 999px; cursor: pointer; min-height: 2.5rem; }
+.mode-switch button.on { background: #fff; color: var(--primary-60); box-shadow: var(--shadow); }
+.mode-switch button:focus-visible { outline: 3px solid var(--focus); outline-offset: 1px; }
+
+.preset-tag { display: inline-block; margin-left: 0.5rem; padding: 0.125rem 0.5rem; font-size: 0.75rem; font-weight: 700; border-radius: 999px; background: var(--secondary-5); color: var(--secondary); vertical-align: middle; }
+.preset.preset-parent { border-color: color-mix(in srgb, var(--secondary) 35%, var(--line-2)); }
+.preset.preset-parent:hover { border-color: var(--secondary); }
 .hero-art { justify-self: end; width: 100%; max-width: 22rem; color: var(--primary); }
 @media (max-width: 52rem) { .hero-grid { grid-template-columns: minmax(0, 1fr); } .hero-art { display: none; } .hero h1 { font-size: 1.875rem; } .hero { padding: 2.25rem 0 2.25rem; } }
 
@@ -160,7 +185,7 @@ p { margin: 0; }
 html[data-large="1"] .quick { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 
 /* 예시 상황 카드 */
-.presets { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; list-style: none; padding: 0; margin: 0; }
+.presets { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 1rem; list-style: none; padding: 0; margin: 0; }
 .preset { display: flex; flex-direction: column; gap: 0.5rem; width: 100%; height: 100%; text-align: left; cursor: pointer; padding: 1.25rem; background: #fff; border: 1px solid var(--line-2); border-radius: var(--radius); box-shadow: var(--shadow); color: var(--ink); }
 .preset:hover { border-color: var(--primary); }
 .preset .p-ic { width: 2.75rem; height: 2.75rem; border-radius: 0.875rem; background: var(--secondary-5); color: var(--secondary); display: grid; place-items: center; }
