@@ -36,7 +36,8 @@ export function SiteHeader() {
         <div className="wrap">
           <span className="util-note">
             <Icon name="shieldCheck" size={15} />
-            공공데이터로 만든 복지 안내 서비스 · 로그인 없이 이용
+            <span className="hide-sm">공공데이터로 만든 복지 안내 서비스 · 로그인 없이 이용</span>
+            <span className="show-sm">공공데이터 복지 안내 · 로그인 없음</span>
           </span>
           <span className="util-right hide-sm">상담 보건복지상담센터 129</span>
         </div>

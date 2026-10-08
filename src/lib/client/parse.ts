@@ -10,7 +10,7 @@ import {
   ageRange, type AgeBand, type Benefit, type HouseholdTrait, type Housing, type Profile,
 } from "../engine/profile";
 import type { FindMode } from "./mode";
-import { topicsIn, PREGNANT_RE, type TopicId } from "./topics";
+import { TOPICS, topicsIn, PREGNANT_RE, type TopicId } from "./topics";
 export { PREGNANT_RE };
 import type { ChildBucket } from "../engine/profile";
 
@@ -77,6 +77,8 @@ export interface ParsedSituation {
 }
 
 /** 자녀 수·나이를 셀 때 지우는 임신 표현 ('임신 7개월'의 '7개월'은 아이 나이가 아님 — QA 4차 S2) */
+/** 자녀·동생 등 다른 가족이 대학생 (QA 5차 U1) — 본인 학생 신호가 아님 */
+const CHILD_STUDENT = /(?:아들|딸|자녀|아이|애|동생|손자|손녀|조카)\S{0,2}\s*(?:\S+\s*)?(?:(?:대학(?:교)?|대학원)\s*생|대학원생|휴학|재학|복학)|(?:(?:대학(?:교)?|대학원)\s*생|대학원생)\s*(?:인\s*)?(?:아들|딸|자녀|아이|애|동생|손자|손녀|조카)/;
 const PREGNANT_STRIP = /(?:임신|임산부|임부)\s*(?:한\s*지\s*)?(?:중\s*)?(?:이고\s*|이에요\s*|예요\s*)?\d{1,2}\s*(?:주|개월)(?:\s*(?:차|째))?|(?:배|뱃)\s*속\s*(?:에\s*)?(?:있는\s*)?(?:아기|애기|아이|애)|태아|출산\s*(?:을\s*)?(?:예정|앞두|앞둔)(?:인|이에요|이고)?\s*(?:아기|애기|아이)?/g;
 
 export interface ParseOptions {
@@ -855,6 +857,10 @@ export function parseSituation(raw: string, regions: RegionIndex | null, today: 
   else if (mode === "self" && /(자영업|장사\s*(?:해|하고|를)|가게\s*(?:를\s*)?(?:해|운영)|프리랜서)/.test(text)) {
     p.activity = "self_employed";
     signals.push("자영업·프리랜서");
+  } else if (mode !== "parent" && TOPICS.student.say.test(text) && !CHILD_STUDENT.test(text)) {
+    // QA 5차 U1: '대학생·대학원생·휴학생·재학 중·복학' → 하는 일 '학생' (자녀·동생이 대학생인 문장은 제외)
+    p.activity = "student";
+    signals.push("대학생 (하는 일: 학생)");
   } else if (mode === "self" && /(월급|급여|봉급|연봉|맞벌이|직장\s*(?:에|을|다니|다녀|인)|회사\s*(?:에\s*)?(?:다니|다녀)|회사원|직장인)/.test(text) && !/(퇴사|그만두|실직|휴직)/.test(text)) {
     p.activity = "employed";
     signals.push("직장에 다님");
@@ -870,7 +876,8 @@ export function parseSituation(raw: string, regions: RegionIndex | null, today: 
   for (const s of signals) understood.push({ key: "signal", label: s });
 
   const familyWord = !!parentWord || ALONE_RE.test(text) || COUPLE_RE.test(text) || !!nIn || hasKids || livesWithParent;
-  const interests = topicsIn(text);
+  // 대학생 주제는 본인이 학생일 때만 (자녀가 대학생·부모님 대신 찾기 문장은 아님)
+  const interests = topicsIn(text).filter((k) => k !== "student" || p.activity === "student");
   // 지역·나이가 없어도 상황을 말한 문장 ('기초연금 못 받고 계세요', '치매 진단 받으셨어요', '실직했어요') → 맞춤 찾기로 (QA 2차 N5)
   const signalish = signals.length > 0 || benefitsNo.length > 0 || interests.length > 0 || p.activity !== "unknown" || p.care !== null || p.disability !== "unknown";
   const sentence = HONORIFIC.test(text) || SELF_RE.test(text) || VERB_END.test(text);

@@ -12,7 +12,7 @@ import type { Cond, EvalOptions, Evaluation, Leaf, Reason } from "../engine/type
 import type { Program } from "../data/types";
 import { autoLike, familyKey, groupVariants, hiddenByDefault, scoreAll, type Filters, type Group, type Scored } from "./results";
 import type { FindMode } from "./mode";
-import { programTopics, type TopicId } from "./topics";
+import { TOPICS, programTopics, type TopicId } from "./topics";
 
 /* ---------------- 입력 (12개 항목 + 항목별 '모름') ---------------- */
 
@@ -610,8 +610,9 @@ const LTC_PROCESS = "신청하면 국민건강보험공단이 방문 조사로 �
 /** 간편 입력이 묻지 않는 대상 집단 (이름에 적힘) → 조건이 다 맞아도 '신청할 때 확인' */
 const OFFICE_GROUPS: [RegExp, string][] = [
   [/(발달\s*장애|지적\s*장애|자폐|시각\s*장애|중도\s*시각|청각\s*장애|언어\s*장애|지체\s*장애|뇌병변|척수\s*장애|정신\s*장애|신장\s*장애|농아|점자|수어|보조견)/, "장애 유형은 묻지 않았어요 — 이 유형에 해당하는지 신청할 때 확인"],
-  [/(간호사|간호조무사|요양보호사|건설\s*기능|건설\s*근로|건설\s*노동|농업인|어업인|임업인|농어업인|예술인|선원|해녀|장병|제대\s*군인|소방관|택시|화물)/, "직업·신분 조건이 있어요 — 해당하는지 신청할 때 확인"],
+  [/(창업농|영농|후계농|교직원|공무원|광업|광산|탄광|진폐|분진\s*사업장|종사\s*근로자|간호사|간호조무사|요양보호사|건설\s*기능|건설\s*근로|건설\s*노동|농업인|어업인|임업인|농어업인|예술인|선원|해녀|장병|제대\s*군인|소방관|택시|화물)/, "직업·신분 조건이 있어요 — 해당하는지 신청할 때 확인"],
   [/(운영\s*지원|기관\s*지원|대관|설치\s*운영)/, "기관·시설을 지원하는 사업이에요 — 이용할 수 있는지 문의"],
+  [/(도서민|섬\s*주민|도서\s*지역\s*주민)/, "사는 곳 조건(섬 지역)이 있어요 — 해당하는지 신청할 때 확인"],
 ];
 
 /**
@@ -649,7 +650,19 @@ export function needsOccupation(p: Program): boolean {
  * 종사자·전문인력, 특정 분야 구직자, 대학 재학. 나이 코드만 맞는다고 '받으실 수 있어요'로 두지 않는다.
  * strong: 대상 문구 어디에 있어도 조건 (일반 개인 낱말이 함께 있어도). weak: 이름에 있거나, 대상에 일반 개인 유형이 없을 때만.
  */
-const STATUS_KINDS: { re: RegExp; label: string; strong: boolean; lead?: number; skip?: (s: Situation) => boolean; coveredBy?: string }[] = [
+/** 학교 밖·가정 밖·학업중단·고립은둔·위기 청소년 (QA 5차 C3b). '(위기)청소년'처럼 괄호로 덧붙인 말은 누구나 이용하는 상담이라 아님 */
+export const YOUTH_STATUS_RE = /학교\s*밖|가정\s*밖|학업\s*(?:을\s*)?중단|미취학\s*[·ㆍ]?\s*학업|은둔\s*(?:형\s*)?(?:청년|청소년|고립)|고립\s*[·ㆍ]?\s*(?:은둔|운둔)|(?<!\()위기\s*청소년|가출\s*청소년|청소년\s*쉼터/;
+/** 학교에 다니지 않는다는 처지 (학생이면 맞지 않음) */
+export const OUT_OF_SCHOOL_RE = /학교\s*밖|학업\s*(?:을\s*)?중단|미취학\s*[·ㆍ]?\s*학업/;
+function youthStatusLabel(m: string): string {
+  if (/학교\s*밖/.test(m)) return "학교 밖 청소년";
+  if (/가정\s*밖|가출|쉼터/.test(m)) return "가정 밖 청소년";
+  if (/학업|미취학/.test(m)) return "학업 중단·미취학";
+  if (/은둔|고립|운둔/.test(m)) return "고립·은둔 청년";
+  return "위기 청소년";
+}
+type StatusKind = { re: RegExp; label: string; strong: boolean; lead?: number; skip?: (s: Situation) => boolean; coveredBy?: string; labelOf?: (m: string) => string; inclusive?: RegExp };
+const STATUS_KINDS: StatusKind[] = [
   { re: /(육아기\s*근로\s*시간\s*단축|육아\s*휴직)[^\n]{0,30}(실시|사용|중인|한\s*(?:근로자|사람|자))|근로\s*시간\s*단축\s*급여|육아\s*휴직\s*등?\s*급여/, label: "육아휴직·근로시간 단축 사용", strong: true, lead: 160 },
   { re: /(산업체|기업)\s*재직\s*(?:기간|경력|요건)|재직\s*(?:기간|경력)\s*(?:이\s*)?\d|\d+\s*년\s*이상\s*재직|재직\s*요건/, label: "재직 기간·소속", strong: true },
   { re: /자격(?:증)?(?:을|의)?\s*취득(?:자|한\s*(?:사람|자|분))|자격증?\s*소지자|검정을\s*받으려는|시험\s*응시(?:자|료)|응시\s*(?:료|수수료)/, label: "자격 취득·시험 응시", strong: true },
@@ -662,6 +675,11 @@ const STATUS_KINDS: { re: RegExp; label: string; strong: boolean; lead?: number;
   { re: /소년\s*[·ㆍ]?\s*소녀\s*가장|소년\s*[·ㆍ]?\s*소녀\s*가정/, label: "소년·소녀가장 가정", strong: true, lead: 1 },
   { re: /(?:특허\s*)?심판\s*(?:사건\s*)?(?:의\s*)?당사자|(?:소송|사건|재판|심판|분쟁)\s*(?:의\s*)?당사자|심판\s*청구인|구술\s*심리/, label: "심판·소송 사건 당사자", strong: true },
   { re: /대학(?:원)?\s*재학|대학(?:원)?생(?!\s*자녀)|사업\s*참여\s*대학/, label: "대학 재학", strong: false, skip: (s) => s.profile.activity === "student", coveredBy: "student" },
+  // (QA 5차 C3b) 학교 밖·가정 밖·학업중단·고립은둔·위기 청소년 — 나이 코드(9~24세)만으로 '받으실 수 있어요'가 되던 사업.
+  // 대상 문구에서는 그 처지만 적힌 줄일 때만 조건 ('중고생 및 학교 밖 청소년', '학교 밖 청소년 포함'처럼 일반 학생과 함께면 조건 아님)
+  // (QA 5차) 이름에 특별한 처지(시설 보호·위탁·자립준비·출소 등)가 적힌 사업 — 이름만 본다 (lead 1)
+  { re: /(출소|자살\s*(?:시도|유족)|보호\s*대상\s*아동|유기\s*(?:및|·)?\s*위기\s*아동|가정\s*위탁|위탁\s*(?:아동|가정|부모)|아동\s*복지\s*시설|시설\s*(?:보호|입소|퇴소)|자립\s*준비|보호\s*종료|요보호|그룹\s*홈|공동\s*생활\s*가정)/, label: "특별한 처지", strong: true, lead: 1, labelOf: (m) => m.replace(/\s+/g, " ") },
+  { re: YOUTH_STATUS_RE, label: "학교 밖·가정 밖 청소년 등", strong: true, labelOf: youthStatusLabel, inclusive: /(및|또는|포함|[,，、]|우선|\S\s*등\s|도\s*(?:지원|신청|가능|포함|참여)|해당\s*연령|중\s)/ },
 ];
 const STATUS_ORDINARY = new RegExp(`${OCC_ORDINARY.source}|시민|도민|청년|신혼|고령자|노인가족|취업\\s*준비|재직자|자녀`);
 export function needsStatus(p: Program, s?: Situation): string | null {
@@ -675,17 +693,23 @@ export function needsStatus(p: Program, s?: Situation): string | null {
     const scope = k.lead ? text.slice(0, p.name.length + 1 + k.lead) : text;
     for (const m of scope.matchAll(new RegExp(k.re.source, "g"))) {
       const idx = m.index ?? 0;
-      if (idx < p.name.length) return k.label;
+      const label = k.labelOf ? k.labelOf(m[0]) : k.label;
+      if (idx < p.name.length) return label;
       const start = text.lastIndexOf("\n", idx) + 1;
       const endN = text.indexOf("\n", idx);
       const line = text.slice(start, endN < 0 ? undefined : endN);
       if (OCC_EXCLUDE.test(line)) continue;
+      if (k.inclusive?.test(line)) continue;
+      // '○ 수급 청소년 ○ 한부모 ○ 다문화 ○ 학교 밖 청소년'처럼 대상 집단을 여러 줄로 나열한 것 중 하나 (QA 5차 C3b: 청소년 성장 지원 서비스)
+      if (k.inclusive && GROUP_BULLETS(text) >= 3) continue;
       if (!k.strong && (ordinary || STATUS_ORDINARY.test(line))) continue;
-      return k.label;
+      return label;
     }
   }
   return null;
 }
+const GROUP_BULLETS = (text: string) => text.split("\n").filter((l) => /^\s*[-○ㅇ·•*□]/.test(l) && /(청소년|가정|가족|계층|가장|아동|자녀)\s*(?:\([^)]*\))?\s*$/.test(l)).length;
+const STUDENT_NO_WHY = "학교에 다니지 않는 청소년(학교 밖·학업 중단) 대상이라, 학생이라고 하셔서 맞지 않아요.";
 export const statusWhy = (label: string) => `따로 조건(${label})이 있어요 — 말씀하신 내용으로는 알 수 없어 신청할 때 확인`;
 /** 세부 서비스·대상을 지자체가 정하는 묶음 사업 (지역사회서비스투자사업, 청년성장프로젝트 등) */
 const BUNDLE_RE = /자율적으로\s*(?:설정|정|선정)|지역사회서비스\s*투자|지역사회서비스\s*청년\s*사업단/;
@@ -802,6 +826,8 @@ export function classifyBase(p0: Program, s: Situation): BaseResult {
   const og = OFFICE_GROUPS.find(([re]) => re.test(p.name));
   if (og) return { base: "open", ...r, why: og[1] };
   if (needsOccupation(p)) return { base: "open", ...r, why: OCCUPATION_WHY };
+  // 학생이라고 했으면 '학교 밖 청소년'·'학업 중단' 대상은 맞지 않음 (QA 5차 U1)
+  if (s.profile.activity === "student" && (OUT_OF_SCHOOL_RE.test(p.name) || (!!needsStatus(p) && /학교 밖|학업 중단/.test(needsStatus(p) ?? "")))) return { base: "no", ...r, why: STUDENT_NO_WHY };
   const st = needsStatus(p, s);
   if (st) return { base: "open", ...r, why: statusWhy(st) };
   if (BUNDLE_RE.test(`${p.name}\n${(p.target ?? "").slice(0, 400)}`)) return { base: "open", ...r, why: BUNDLE_WHY };
@@ -889,9 +915,10 @@ export function pensionPossible(s: Situation): boolean {
 /** 기초연금을 말함 ('기초연금 받고 싶어요') + 아직 안 받음 + 65세 미만이 아님 */
 const pensionWanted = (s: Situation) => !!s.x.interests?.includes("basic_pension") && inferExtras(s).benefits.basic_pension !== true && (ageBoundsOf(s)?.[1] ?? 120) >= 65;
 /** 간편 입력이 묻지 않는 특별한 신분·처지 대상 (시설 보호아동·가정위탁·자립준비청년 등) — 목록에는 두되 먼저 확인할 것에는 넣지 않음 */
-export const SPECIAL_STATUS = /(출소|자살\s*(?:시도|유족)|출생\s*미등록|소년\s*[·ㆍ]?\s*소녀\s*가장|보호\s*대상\s*아동|유기\s*(?:및|·)?\s*위기\s*아동|가정\s*위탁|위탁\s*(?:아동|가정|부모)|아동\s*복지\s*시설|시설\s*(?:보호|입소|퇴소|아동)|자립\s*준비|보호\s*종료|입양|요보호|소년\s*소녀\s*가정|그룹\s*홈|공동\s*생활\s*가정)/;
+export const SPECIAL_STATUS = /(출소|자살\s*(?:시도|유족)|출생\s*미등록|소년\s*[·ㆍ]?\s*소녀\s*가장|보호\s*대상\s*아동|유기\s*(?:및|·)?\s*위기\s*아동|가정\s*위탁|위탁\s*(?:아동|가정|부모)|아동\s*복지\s*시설|시설\s*(?:보호|입소|퇴소|아동)|자립\s*준비|보호\s*종료|입양|요보호|소년\s*소녀\s*가정|그룹\s*홈|공동\s*생활\s*가정|학교\s*밖|가정\s*밖|학업\s*(?:을\s*)?중단|은둔|고립\s*[·ㆍ]?\s*(?:청년|청소년|은둔)|위기\s*청소년|가출|청소년\s*쉼터|자립\s*지원관)/;
 /** 추천에서 뺄 이유가 적힌 '신청할 때 확인' (법인·시설·단체·직업 조건) */
 const PREG_CORE = /(행복\s*카드|건강\s*보험\s*임신\s*[·ㆍ]?\s*출산\s*진료비|산모\s*[·ㆍ]?\s*신생아\s*건강\s*관리|모자\s*보건\s*수첩|외래\s*진료비\s*본인\s*부담률|엽산제|첫\s*만남|산후\s*조리비)/;
+const STUDENT_CORE = /(국가\s*장학금\s*(?:Ⅰ|I|1)\s*유형|국가\s*근로\s*장학|취업\s*후\s*상환\s*학자금|학자금\s*(?:대출\s*)?이자)/;
 const PREG_SPECIAL = /(위기\s*임신|보호\s*출산|청소년\s*산모|고위험|분만\s*취약)/;
 /** 임신·출산·여성 대상 사업 — 성별·임신 신호가 없으면 먼저 확인할 것에 두지 않는다 (QA 4차 S4: '군 제대' 청년 1위 '임신 사전건강관리') */
 const GENDERED_NAME = /(임신|임산부|난임|불임|난자|정자|산모|산전|출산|모성|여성|경력\s*(?:단절|보유)\s*여성)/;
@@ -900,7 +927,7 @@ export function familySignal(sit: Situation): boolean {
   const t = sit.x.interests ?? [];
   return t.includes("pregnancy") || t.includes("baby") || t.includes("newlywed") || !!sit.profile.children?.some((c) => c === "pregnant" || c === "0-1");
 }
-const OCC_QUOTE = /원문의 대상 요건 확인 \('(?:종사자|교직원|교사|교원|선수|강사|임직원|직원|사업자|대표|소속|회원|단체|기관|재직|경력)/;
+const OCC_QUOTE = /원문의 대상 요건 확인 \('(?:폐업|소상공인|종사자|교직원|교사|교원|선수|강사|임직원|직원|사업자|대표|소속|회원|단체|기관|재직|경력)/;
 const TRAIT_NAME: [RegExp, HouseholdTraitKey, TopicId?][] = [
   [/(한부모|조손|미혼\s*[모부]|양육비\s*이행)/, "single_parent", "single_parent"],
   [/다자녀/, "multi_child"],
@@ -917,11 +944,42 @@ export function traitGatedWithoutSignal(name: string, sit: Situation): boolean {
   }
   return false;
 }
-const PICK_BLOCK_WHY = /(법인·시설·단체|기관·시설|직업·신분|직업·자격|개인이 신청해 받는 혜택이 아니에요|따로 조건\(|지자체가 따로 정해요)/;
+const FEE_DISCOUNT = /(주차|입장료|관람료|(?:이용|사용)\s*(?:요금|료)\s*(?:감면|할인|면제))/;
+const GROUP_DIMS: DimId[] = ["support", "disability", "singleParent", "veteran", "multicultural"];
+const DISABILITY_NAME = /장애(?!\s*(?:물|없는|예방))|발달\s*지연/;
+/**
+ * 말한 주제에 해당하는 사업: 이름, 또는 대상 문구 앞부분 — 단 대상 문구의 그 줄이 '우선 선발·가점'이면 주제 사업이 아님
+ * (QA 5차 Q1: '실직했어요' → 산림보호지원단 '장기실업자 등 취업취약계층 우선선발')
+ */
+const TOPIC_PRIORITY = /우선\s*(?:선발|선정|순위|대상|지원|배정|공급|입주)?|가점|우대|배점/;
+export function topicalOf(p: Program, sit: Situation): TopicId[] {
+  const byName = programTopics(p.name, sit.x.interests);
+  const all = programTopics(p.name, sit.x.interests, p.target);
+  return all.filter((k) => {
+    if (byName.includes(k)) return true;
+    const tgt = (TOPICS[k] as { tgt?: RegExp }).tgt;
+    const lines = (p.target ?? "").slice(0, 200).replace(/&#13;/g, "\n").split("\n").filter((l) => !!tgt && tgt.test(l));
+    // '장기실업자 … 우선선발'처럼 우선·가점만 주는 줄은 주제 사업으로 보지 않음 ('신혼부부 특별공급'은 전용 물량이라 주제 사업)
+    return lines.some((l) => !TOPIC_PRIORITY.test(l));
+  });
+}
+/** 청년 사업이 아닌 청소년 사업 이름 */
+const YOUTH_NAME = /청소년(?!\s*(?:자녀|부모|가정|가족))/;
+const TRAIT_KEYS = ["single_parent", "multi_child", "veteran", "multicultural"] as const;
+/** 판정 이유에 아직 정해지지 않은 가구 특성 조건이 있고 그 특성을 말하지 않았음 */
+export function traitReasonWithoutSignal(i: V2Item, sit: Situation): boolean {
+  const tr = inferExtras(sit).traits;
+  return i.base.ev.reasons.some((r) => {
+    if (r.kind === "met" || r.leaf?.field !== "trait" || !("anyOf" in r.leaf)) return false;
+    const keys = (r.leaf.anyOf as string[]).filter((k) => (TRAIT_KEYS as readonly string[]).includes(k));
+    return keys.length > 0 && !keys.some((k) => tr[k as (typeof TRAIT_KEYS)[number]] === true || (sit.profile.traits ?? []).includes(k as (typeof TRAIT_KEYS)[number]));
+  });
+}
+const PICK_BLOCK_WHY = /(사는 곳 조건|법인·시설·단체|기관·시설|직업·신분|직업·자격|개인이 신청해 받는 혜택이 아니에요|따로 조건\(|지자체가 따로 정해요)/;
 export const PENSION_WHY = "소득만 보면 받으실 가능성이 높아요 — 재산(소득인정액)에 따라 달라요";
 /** 누구나 받거나 안내 위주인 보편 서비스 (예방접종·검진·할인·상담 창구) — 앞자리를 핵심 급여에 양보 */
 const UNIVERSAL_LOW = /(예방\s*접종|건강\s*검진|검진비|철도|공공\s*할인|생활\s*체육|스포츠\s*강좌|말벗|정신\s*건강\s*복지\s*센터|방문\s*건강\s*관리|안부)/;
-const ILLNESS_NAME = /(수술|질환|치료비|환자|투병|난치|희귀|암\s*검진|치매)/;
+const ILLNESS_NAME = /(상병|수술|질환|치료비|환자|투병|난치|희귀|암\s*검진|치매)/;
 export function rankAdj(i: V2Item, sit: Situation): number {
   const p = i.s.program;
   if (VICTIM_RE.test(p.name)) return -6;
@@ -931,9 +989,13 @@ export function rankAdj(i: V2Item, sit: Situation): number {
   if (sit.x.interests?.includes("pregnancy")) {
     if (PREG_CORE.test(p.name)) return 5;
     if (PREG_SPECIAL.test(p.name)) return 0;
-  }
-  // 문장에서 말한 주제(신혼·실직·아기·치매·월세 등)의 사업은 앞으로
-  if (programTopics(p.name, sit.x.interests, p.target).length) return 3;
+  } else if (PREG_SPECIAL.test(p.name)) return -4;
+  // 대학생: 누구나 신청하는 국가장학금·근로장학금·학자금 대출(이자 지원)을 앞에 (QA 5차 U1)
+  if (sit.x.interests?.includes("student")) {
+    if (STUDENT_CORE.test(p.name)) return 5;
+  } // 위기·고위험 임신 신호 없이 영아 가구 1위가 되던 문제 (QA 5차 P2b)
+  // 문장에서 말한 주제(신혼·실직·아기·치매·월세·대학생 등)의 사업은 앞으로 — 이름에 주제가 있으면 +3, 대상 문구에만 있으면 +1 (QA 5차 Q1)
+  if (topicalOf(p, sit).length) return 3;
   if (SPECIAL_STATUS.test(p.name)) return -4;
   if (i.base.why === MEANS_WHY) return 2;
   if (UNIVERSAL_LOW.test(p.name)) return -2;
@@ -1172,21 +1234,22 @@ export function plainLine(i: V2Item, sit: Situation, mode: FindMode): string {
       // 개인 대상이 아닌 사업은 '맞은 조건'을 앞에 쓰지 않는다
       const metLead = met.length && i.base.why !== NOT_FOR_PERSON_WHY ? `${withTopic([...new Set(met)].slice(0, 2).join(" · "))} 맞아요. ` : "";
       const named = NAMED_GROUP.exec(i.s.program.name);
-      if (named) return `${metLead}신청할 때 확인: '${named[1]}'에 해당하는 분만 받을 수 있어요.`;
+      if (named) return `${metLead}확인할 것: '${named[1]}'에 해당하는 분만 받을 수 있어요.`;
       if (CRISIS.test(i.s.program.name)) return `${metLead}갑작스러운 위기(실직·질병·사고 등)가 생겼을 때 받는 지원이에요.`;
-      if (i.base.why) return `${metLead}신청할 때 확인: ${i.base.why.replace(/ — /, ". ")}`;
-      if (i.base.base === "autoFit") return `${metLead}신청할 때 확인: 세부 자격 (조건을 원문에서 자동으로 정리했어요)`;
+      if (i.base.why) return `${metLead}확인할 것: ${i.base.why.replace(/ — /, ". ")}`;
+      if (i.base.base === "autoFit") return `${metLead}확인할 것: 세부 자격 (조건을 원문에서 자동으로 정리했어요)`;
       // 장애가 있는 가족 이름으로 신청 — 나이도 그 가족 기준 (QA 4차 S3)
       const proxy = ev.reasons.find((r) => r.kind === "unknown" && r.field === "disability" && PROXY.test(r.text));
       if (proxy) {
         const ageL = ev.reasons.find((r) => r.leaf?.field === "unasked" && r.leaf.label.endsWith(MEMBER_AGE));
         const who = proxy.leaf ? plainLeaf(proxy.leaf, profile) : "장애인 본인";
-        return `${metLead}신청할 때 확인: ${who} — 장애가 있는 가족 이름으로 신청 (${ageL ? `그 가족이 ${ageL.leaf!.label.slice(0, -MEMBER_AGE.length).trim()}인지 확인` : "그 가족 기준으로 확인"})`;
+        return `${metLead}확인할 것: ${who} — 장애가 있는 가족 이름으로 신청 (${ageL ? `그 가족이 ${ageL.leaf!.label.slice(0, -MEMBER_AGE.length).trim()}인지 확인` : "그 가족 기준으로 확인"})`;
       }
       const unk = ev.reasons.find((r) => r.kind === "unknown") ?? ev.reasons.find((r) => r.kind === "note");
-      return `${metLead}신청할 때 확인: ${unk ? short(reasonPlain(unk, profile), 60) : "세부 자격(원문)"}`;
+      return `${metLead}확인할 것: ${unk ? short(reasonPlain(unk, profile), 60) : "세부 자격(원문)"}`;
     }
     case "no": {
+      if (i.base.why === STUDENT_NO_WHY) return STUDENT_NO_WHY;
       if (i.base.gate && i.base.gateState === "no") return `${gateLine(i.base.gate, profile)} 대상이라 맞지 않아요.`;
       const un = ev.reasons.find((r) => r.kind === "unmet");
       if (un && !un.leaf && /중 해당하는 항목이 없어요$/.test(un.text)) return `${short(un.text.replace(/없어요$/, "없어"))} 맞지 않아요.`;
@@ -1266,7 +1329,8 @@ export function topPicksV2(view: Pick<V2View, "fit" | "office"> & Partial<Pick<V
   const pensionFirst = !!sit && (pensionLikely(sit) || pensionPossible(sit) || pensionWanted(sit));
   const pension = pensionFirst ? (view.ask ?? []).filter((g) => isBasicPension(g[0].s.program)) : [];
   // 문장에서 말한 주제의 사업은 '답하면 정해져요'여도 후보로 (예: '실직했어요' → 실업급여, '돌 안 된 아기' → 부모급여)
-  const topical = sit?.x.interests?.length ? (view.ask ?? []).filter((g) => programTopics(g[0].s.program.name, sit.x.interests, g[0].s.program.target).length && !isBasicPension(g[0].s.program)) : [];
+  // (대상 문구에만 주제 낱말이 있는 '답하면 정해져요'는 넣지 않음 — QA 5차 Q1: '실직했어요'에 대상 '장기실업자 우선'인 산림보호지원단)
+  const topical = sit?.x.interests?.length ? (view.ask ?? []).filter((g) => topicalOf(g[0].s.program, sit).length && !isBasicPension(g[0].s.program)) : [];
   const pool = [...view.fit, ...view.office, ...pension, ...topical].sort((a, b) => key(b) - key(a) || a[0].s.program.name.localeCompare(b[0].s.program.name, "ko"));
   // 나이를 정확히 모르면 나이로 정해지는 혜택은 앞에 두지 않는다 (범위에 걸치는 것은 '답하면 정해져요')
   const ageUnknown = !!sit && sit.profile.age === "unknown";
@@ -1279,7 +1343,7 @@ export function topPicksV2(view: Pick<V2View, "fit" | "office"> & Partial<Pick<V
       if (out.includes(g)) continue;
       const p = g[0].s.program;
       const forced = pension.includes(g);
-      const onTopic = forced || (!!sit && programTopics(p.name, sit.x.interests, p.target).length > 0);
+      const onTopic = forced || (!!sit && topicalOf(p, sit).length > 0);
       if (pass && g[0].s.specific === false && !onTopic) continue;
       // 내 상황과 이어지는 근거가 있는 것만 (QA 2차 N3: 조건 없이 누구나 맞는 상담 창구·나이만 걸친 자동 정리 사업이 1~5위를 채우던 문제)
       if (!onTopic && sit && !hasSubstance(g[0], sit)) continue;
@@ -1288,6 +1352,16 @@ export function topPicksV2(view: Pick<V2View, "fit" | "office"> & Partial<Pick<V
       if (g[0].base.why && PICK_BLOCK_WHY.test(g[0].base.why)) continue;
       // 이름에 대상 집단(한부모·다자녀·보훈·다문화·북한이탈)이 있는데 그 신호가 없으면 먼저 확인할 것에 두지 않는다 (QA 4차 S7: 월세 문장에 '한부모가족 임대주택')
       if (sit && !forced && traitGatedWithoutSignal(p.name, sit)) continue;
+      // 조건 문구에 가구 특성(다문화·북한이탈·한부모 등)이 남아 있는데 그 신호가 없으면 넣지 않음 (QA 5차 Q1: 대학생 문장에 '청년도전지원사업(다문화·북한이탈 조건)')
+      if (sit && !forced && traitReasonWithoutSignal(g[0], sit)) continue;
+      // 대상 집단(수급·장애·한부모 등) 질문으로만 정해지는 '답하면 정해져요'는 이름이 주제와 맞을 때만 (QA 5차 Q1: '실직했어요'에 산림보호지원단·공공산림가꾸기)
+      if (sit && !forced && g[0].bucket === "ask" && g[0].dims.length > 0 && g[0].dims.every((d) => GROUP_DIMS.includes(d)) && !programTopics(p.name, sit.x.interests).length) continue;
+      // 주차·입장·관람 요금 감면은 먼저 확인할 것에 두지 않음 (QA 5차 Q1: '실직했어요' 5번째 '아트센터 주차장 이용요금 감면')
+      if (!onTopic && FEE_DISCOUNT.test(p.name)) continue;
+      // 이름에 장애가 적힌 사업은 장애를 말하지 않았으면 넣지 않음 (QA 5차 Q1: '실직했어요'에 '장애학생 취업지원')
+      if (sit && !forced && DISABILITY_NAME.test(p.name) && sit.profile.disability !== "self" && sit.profile.disability !== "member") continue;
+      // '청소년'(9~24세) 사업은 성인(만 19세 이상)에게 나이만 맞은 것 — 먼저 확인할 것에는 두지 않음 (QA 5차 C3b: 22세 대학생에게 청소년 상담·동반자)
+      if (sit && !onTopic && YOUTH_NAME.test(p.name) && (ageBoundsOf(sit)?.[0] ?? 0) >= 19 && !(sit.profile.children ?? []).some((c) => c === "6-12" || c === "13-18")) continue;
       if (sit && !forced && !familySignal(sit) && (GENDERED_NAME.test(p.name) || g[0].base.ev.reasons.some((r) => r.kind !== "met" && GENDERED_WHY.test(r.text)))) continue;
       // '30대 중반'처럼 범위로 말했으면 범위 전체가 맞는 사업은 둔다 (QA 4차 R1: 두 나이대에 걸치면 추천이 1개뿐이던 문제)
       if (ageUnknown && !forced && ((!spanKnown && g[0].dims.includes("age")) || g[0].base.ev.reasons.some((r) => r.kind === "unknown" && r.field === "age"))) continue;

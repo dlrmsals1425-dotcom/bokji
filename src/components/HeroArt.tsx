@@ -1,4 +1,4 @@
-/** 홈 머리 띠 그림 (직접 그린 단순 도형: 안내서 한 장 + 나침반 + 집) */
+/** 홈 머리 띠 그림 (직접 그린 단순 도형: 안내서 한 장 + 하트 나침반 상징 + 집) */
 export function HeroArt() {
   return (
     <svg className="hero-art" viewBox="0 0 360 300" aria-hidden="true" focusable="false">
@@ -18,13 +18,10 @@ export function HeroArt() {
           </g>
         ))}
       </g>
-      {/* 나침반 */}
+      {/* 하트 나침반 (복지나침반 상징 — /brand/logo-symbol.svg) */}
       <g transform="translate(272 214)">
-        <circle r="38" fill="#fff" stroke="#256ef4" strokeWidth="3" />
-        <circle r="30" fill="none" stroke="#d8e5fd" strokeWidth="2" />
-        <path d="M0-24 7 0H-7Z" fill="#256ef4" />
-        <path d="M0 24 7 0H-7Z" fill="#b1cefb" />
-        <circle r="3.5" fill="#fff" stroke="#256ef4" strokeWidth="2" />
+        <circle r="40" fill="#fff" stroke="#d8e5fd" strokeWidth="3" />
+        <image href="/brand/logo-symbol.svg" x="-27" y="-23" width="54" height="49.4" />
       </g>
       {/* 집 */}
       <g transform="translate(52 150)" fill="none" stroke="#346fb2" strokeWidth="3" strokeLinejoin="round" strokeLinecap="round">

@@ -64,6 +64,8 @@ p { margin: 0; }
 .util { background: var(--surface); border-bottom: 1px solid var(--line-2); font-size: 0.8125rem; color: var(--ink-2); }
 .util .wrap { display: flex; align-items: center; gap: 0.75rem; min-height: 2.25rem; }
 .util-note { display: inline-flex; gap: 0.375rem; align-items: center; }
+.show-sm { display: none; }
+@media (max-width: 56rem) { .show-sm { display: inline; } .util-note { white-space: nowrap; } }
 .util-right { margin-left: auto; display: flex; gap: 0.5rem; align-items: center; }
 .site-header { background: #fff; border-bottom: 1px solid var(--line-2); position: relative; z-index: 30; }
 .site-header .wrap { display: flex; align-items: center; gap: 2rem; min-height: 4.5rem; }
