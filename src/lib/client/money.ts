@@ -145,7 +145,37 @@ export function moneyView(m: Money, name = ""): MoneyView | null {
   if (m.won < SMALL_WON && UNIT_WORD.test(m.quote)) return null;
   const distinctN = new Set([...m.quote.matchAll(HH_PAIR)].map((x) => x[1])).size;
   if (!HH_ANY.test(m.quote) && (HH_TABLE.test(m.quote) || distinctN >= 2)) return { money: m, label: "가구원 수에 따라 달라요" };
-  return { money: m, label: moneyLabel(m) };
+  return { money: m, label: wording(m, before, after) };
+}
+
+/*
+ * 금액 표현을 원문 그대로 (6차 검증 낮음): '600만원 내외' → 약, '자녀 1인당', 수급·차상위와 일반이 다르면 범위, 품목별 금액은 품목마다.
+ * 모두 인용 원문에 그 말이 있을 때만 바꾼다.
+ */
+/** 두 품목이 가운뎃점으로 이어진 경우만 ('기저귀(월 9만원) · 조제분유(월 11만원)') — 낱말 앞은 띄어쓰기·문장부호 */
+const ITEM_PAIR = /(?<![가-힣\d])([가-힣]{2,6})\s*\(\s*(?:(월|연)\s*)?(\d+(?:,\d{3})*)\s*(만|천)?\s*원\s*\)\s*[·ㆍ]\s*([가-힣]{2,6})\s*\(\s*(?:(월|연)\s*)?(\d+(?:,\d{3})*)\s*(만|천)?\s*원\s*\)/;
+const ITEM_STOP = /^(?:이상|이하|미만|만원|천원|시간|학년|않은|심한)$/;
+const GENERAL_RE = /(?:일반|그\s*외|그\s*밖)[^\d]{0,24}(\d+(?:,\d{3})*(?:\.\d+)?)\s*(억|천만|만|천)?\s*원/;
+const APPROX_AFTER = /^\s*(?:내외|정도|안팎|가량|상당)/;
+const APPROX_BEFORE = /약\s*$/;
+/** 금액 바로 앞의 '자녀(아동) 1인당' — 사이에 다른 금액이 있으면 아님 ('1명당 연 100만원, 연 최대 500만원') */
+const PER_CHILD = /(자녀|아동|아이)\s*(?:1|한)\s*(?:인|명)\s*당(?![^\d]*\d[\d,]*\s*(?:만|천)?\s*원)[^\d]*$/;
+const wonOf = (n: string, unit?: string) => Math.round(Number(n.replace(/,/g, "")) * (unit ? WON_UNIT[unit] : 1));
+
+function wording(m: Money, before: string, after: string): string {
+  const per = MONEY_PER_LABEL[m.per];
+  const ip = m.quote.match(ITEM_PAIR);
+  const items = ip ? [{ name: ip[1], per: ip[2], won: wonOf(ip[3], ip[4]) }, { name: ip[5], per: ip[6], won: wonOf(ip[7], ip[8]) }] : [];
+  if (items.length && items.some((x) => x.won === m.won) && !items.some((x) => ITEM_STOP.test(x.name))) return items.map((x) => `${x.name} ${x.per ? `${x.per} ` : ""}${formatWon(x.won)}`).join(" · ");
+  const g = /(수급|차상위)/.test(m.quote) ? m.quote.match(GENERAL_RE) : null;
+  const lo = g ? wonOf(g[1], g[2]) : 0;
+  if (lo > 0 && lo < m.won) {
+    const range = lo % 10000 === 0 && m.won % 10000 === 0 ? `${(lo / 10000).toLocaleString("ko-KR")}~${formatWon(m.won)}` : `${formatWon(lo)}~${formatWon(m.won)}`;
+    return `${per ? `${per} ` : ""}${range}`;
+  }
+  const base = APPROX_AFTER.test(after) || APPROX_BEFORE.test(before) ? `${per ? `${per} ` : ""}약 ${formatWon(m.won)}` : moneyLabel(m);
+  const pc = before.match(PER_CHILD);
+  return pc ? `${base} (${pc[1] === "아동" ? "아동" : "자녀"} 1인당)` : base;
 }
 
 /** 금액이 원문에 있는 사업 (순서는 넘겨준 관련도 순서 그대로, 혜택이 아닌 금액은 건너뜀) */
