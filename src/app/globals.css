@@ -649,3 +649,8 @@ html[data-large="1"] .fgrid fieldset + fieldset { border-left: 0; border-top: 1p
   .sum-rows > li { border-color: #ccc; }
 }
 @page { size: A4; margin: 12mm; }
+
+/* 카드 안내 (부모 동의 필요 · 만 24세까지) — 원문에 적힌 경우에만 */
+.card-notes { display: flex; flex-wrap: wrap; gap: 0.375rem; margin: 0.5rem 0 0; }
+.note-chip { display: inline-block; padding: 0.125rem 0.5rem; border-radius: var(--radius-sm); border: 1px solid var(--line, #c9ced6); font-size: 0.875rem; color: var(--ink); background: var(--surface, #fff); }
+.teen-note strong { font-weight: 700; }

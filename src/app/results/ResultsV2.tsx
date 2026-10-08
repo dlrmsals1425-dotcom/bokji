@@ -19,9 +19,10 @@ import { saveSituation, situationOf } from "@/lib/client/start";
 import { PRESETS } from "@/lib/client/presets";
 import { checkPath, coupleNote, resultsCopy, type FindMode } from "@/lib/client/mode";
 import {
-  BUCKET_LABEL, LOW_INCOME_PCT, answersFor, autoV2, buildView, classify, inferredNoRecipient, plainLine, scoreV2, situationChips, topPicksV2,
+  BUCKET_LABEL, LOW_INCOME_PCT, ageBoundsOf, ageSpanOf, answersFor, autoV2, buildView, classify, inferredNoRecipient, plainLine, scoreV2, situationChips, topPicksV2,
   type Bucket, type DimId, type Situation, type V2Item,
 } from "@/lib/client/v2";
+import { consentUnderAge, parentConsent, youthUpTo24 } from "@/lib/client/cardNotes";
 import type { Program } from "@/lib/data/types";
 import { ageRange, type Profile } from "@/lib/engine/profile";
 
@@ -30,6 +31,12 @@ const MORE = 20;
 /** QA 2차 M1: '신청할 때 확인'은 상위 20개를 먼저 */
 const OFFICE_TOP = 20;
 const SHEET_KEY = "bn.sheet.v1";
+/** '이것을 알려 주시면' 한 줄용 짧은 이름 (QA 5차 검증 N8) */
+const DIM_INFO: Partial<Record<DimId, string>> = {
+  support: "기초생활수급·차상위 여부", basicPension: "기초연금 수급 여부", income: "가구 소득", disability: "장애 여부", care: "돌봄이 필요한지",
+  ltcGrade: "장기요양등급", alone: "혼자 사는지", age: "나이", veteran: "보훈대상 여부", singleParent: "한부모 여부", multicultural: "다문화가족 여부",
+  housing: "사는 집 형태", activity: "하는 일(학생·구직 등)", illness: "앓는 병", children: "자녀",
+};
 
 export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode }) {
   const extras = useExtras();
@@ -151,6 +158,15 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
 
   // 나이를 모르면 먼저 확인할 것이 크게 달라지므로 질문을 위에, 아니면 '먼저 확인할 것'을 맨 위에 (QA 1차 H5)
   const askFirst = questions.some((q) => q.dim.id === "age");
+  const teen = isTeenSelf(sit, mode);
+  // 먼저 확인할 것이 5개보다 적을 때 — 무엇을 알려 주면 더 고를 수 있는지 한 줄 (QA 5차 검증 N8)
+  const moreInfo = questions.map((q) => DIM_INFO[q.dim.id]).filter(Boolean).slice(0, 2);
+  const moreHint =
+    picks.length > 0 && picks.length < 5 && !(picks.length < 3 && askFirst)
+      ? moreInfo.length
+        ? `먼저 확인할 것이 ${picks.length}개뿐이에요. 이것을 알려 주시면 더 골라 드릴 수 있어요: ${moreInfo.join(", ")}.`
+        : `먼저 확인할 것이 ${picks.length}개뿐이에요. 상황을 조금 더 적어 주시면(하는 일, 함께 사는 사람 등) 더 골라 드릴 수 있어요.`
+      : null;
   const followUp = (
     <section className="v2-follow no-print" aria-labelledby="fq-h" data-testid="v2-followup">
             {questions.length > 0 ? (
@@ -305,6 +321,7 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
 
       <div className="wrap page">
         <div className="v2-main">
+          {teen && <TeenNote />}
           {data && (
             <Summary
               view={view}
@@ -327,6 +344,11 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
                 {parent ? "부모님 상황에 가장 관련 깊은 순서예요." : "내 상황에 가장 관련 깊은 순서예요."}{" "}
                 {picks.some((g) => g[0].bucket === "ask") ? "‘답하면 정해져요’인 것은 위 질문에 답하면 바로 정해져요." : "‘받으실 수 있어요’를 먼저 넣었어요."}
               </p>
+              {moreHint && (
+                <p className="body muted" data-testid="picks-more-hint">
+                  {moreHint}
+                </p>
+              )}
               <ol className="picks">
                 {picks.map((g, i) => (
                   <Pick
@@ -567,6 +589,7 @@ function Pick({ item, i, detail, loading, sit, mode, inSheet, onSheet }: { item:
       <p className={`v2-why w-${item.bucket}`}>
         <Icon name={BUCKET_ICON[item.bucket]} size={16} /> <span>{plainLine(item, sit, mode)}</span>
       </p>
+      <CardNotes p={detail ?? p} sit={sit} mode={mode} />
       <ul className="rows">
         <li>
           <span className="k">신청방법</span>
@@ -691,6 +714,7 @@ function V2Card({ item, more, sit, mode, sheet }: { item: V2Item; more: number; 
       <p className={`v2-why w-${item.bucket}`}>
         <Icon name={BUCKET_ICON[item.bucket]} size={16} /> <span>{plainLine(item, sit, mode)}</span>
       </p>
+      <CardNotes p={p} sit={sit} mode={mode} />
       <p className="meta">
         <span>{orgText(p)}</span>
         {where && <span>{where.length > 30 ? where.slice(0, 29) + "…" : where}</span>}
@@ -700,5 +724,60 @@ function V2Card({ item, more, sit, mode, sheet }: { item: V2Item; more: number; 
       </p>
       {sheet && <SheetToggle on={sheet.has(p.id)} name={p.name} onChange={(on) => sheet.toggle(p.id, on)} />}
     </article>
+  );
+}
+
+/** 만 19세 미만 본인 (QA 5차 검증 N2) */
+function isTeenSelf(sit: Situation, mode: FindMode): boolean {
+  if (mode !== "self") return false;
+  const b = ageBoundsOf(sit);
+  return !!b && b[1] <= 18;
+}
+
+/** 카드 안내 — 원문에 적힌 경우에만 (추측해서 붙이지 않음) */
+function CardNotes({ p, sit, mode }: { p: Program; sit: Situation; mode: FindMode }) {
+  const teen = isTeenSelf(sit, mode);
+  const consent0 = teen ? parentConsent(p) : null;
+  // '만 14세 미만은 동의' 처럼 나이가 한정돼 있으면 그 나이 이상인 사람에게는 붙이지 않음
+  const under = consent0 ? consentUnderAge(consent0) : null;
+  const span = ageSpanOf(sit) ?? ageBoundsOf(sit);
+  const consent = consent0 && !(under !== null && span && span[0] >= under) ? consent0 : null;
+  // 이름은 '청소년'이지만 원문상 만 24세까지 — 19~24세 성인도 이용 가능 (QA 5차 검증)
+  const upTo24 = !teen && mode !== "parent" && youthUpTo24(p);
+  if (!consent && !upTo24) return null;
+  return (
+    <p className="card-notes">
+      {consent && (
+        <span className="note-chip" data-testid="note-consent" title={`원문: “…${consent}…”`}>
+          {under !== null ? `만 ${under}세 미만은 부모(보호자) 동의 필요` : "부모(보호자) 동의 필요"} — 원문에 적혀 있어요
+        </span>
+      )}
+      {upTo24 && (
+        <span className="note-chip" data-testid="note-upto24">
+          만 24세까지 이용할 수 있어요
+        </span>
+      )}
+    </p>
+  );
+}
+
+/**
+ * 만 19세 미만 본인에게 — 연락처는 우리 데이터의 원문에서만 옮김:
+ * 청소년전화1388 운영 지원(n.gov24-WII000000790): 유선 1388 / 휴대전화 지역번호+1388
+ * 학교 밖 청소년 지원센터 운영(n.gov24-WII000000810): 문자 #1388, ☎ 1388
+ * 학교 밖 청소년 건강검진 지원(n.gov24-138300000033): 꿈드림 누리집 www.kdream.or.kr
+ */
+function TeenNote() {
+  return (
+    <aside className="notice teen-note" data-testid="teen-note" aria-label="청소년 상담 안내">
+      <Icon name="info" size={18} />
+      <span>
+        <strong>혼자 고민하지 않아도 돼요.</strong> 청소년전화 <strong>1388</strong>(휴대전화는 지역번호+1388, 문자 #1388)에서 상담할 수 있어요. 학교에 다니지 않는다면 가까운{" "}
+        <strong>학교밖청소년지원센터 ‘꿈드림’</strong>(☎ 1388 · www.kdream.or.kr)이 상담·검정고시·건강검진을 도와줘요. 출처:{" "}
+        <Link href={`/p/${encodeURIComponent("n.gov24-WII000000790")}`}>청소년전화1388 운영 지원</Link>,{" "}
+        <Link href={`/p/${encodeURIComponent("n.gov24-WII000000810")}`}>학교 밖 청소년 지원센터 운영</Link>,{" "}
+        <Link href={`/p/${encodeURIComponent("n.gov24-138300000033")}`}>학교 밖 청소년 건강검진 지원</Link> 원문
+      </span>
+    </aside>
   );
 }

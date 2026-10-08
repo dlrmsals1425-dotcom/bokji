@@ -78,7 +78,11 @@ export interface ParsedSituation {
 
 /** 자녀 수·나이를 셀 때 지우는 임신 표현 ('임신 7개월'의 '7개월'은 아이 나이가 아님 — QA 4차 S2) */
 /** 자녀·동생 등 다른 가족이 대학생 (QA 5차 U1) — 본인 학생 신호가 아님 */
-const CHILD_STUDENT = /(?:아들|딸|자녀|아이|애|동생|손자|손녀|조카)\S{0,2}\s*(?:\S+\s*)?(?:(?:대학(?:교)?|대학원)\s*생|대학원생|휴학|재학|복학)|(?:(?:대학(?:교)?|대학원)\s*생|대학원생)\s*(?:인\s*)?(?:아들|딸|자녀|아이|애|동생|손자|손녀|조카)/;
+const CHILD_STUDENT = /(?:아들|딸|자녀|아이|애|동생|손자|손녀|조카)\S{0,2}\s*(?:\S+\s*)?(?:(?:대학(?:교)?|대학원)\s*(?:생|신입생|새내기)|대학원생|휴학|재학|복학)|(?:(?:대학(?:교)?|대학원)\s*(?:생|신입생|새내기)|대학원생)\s*(?:인\s*)?(?:아들|딸|자녀|아이|애|동생|손자|손녀|조카)/;
+/** 학교 낱말 (자녀 나이로 읽는 말 — 본인이 10대면 본인 이야기) */
+const SCHOOL_WORDS = /초등\s*(?:학생|학교|생)?|초딩|중학생|중학교|고등학생|고등학교|고딩|중딩|고교생?|유치원/g;
+/** 대학생 자녀 (QA 5차 검증 N7: '대학생 아들 둔 50대 엄마' → 자녀 19세 이상) — 동생·손자·조카는 자녀가 아님 */
+const CHILD_COLLEGE = /(?:아들|딸|자녀|아이|애)\S{0,2}\s*(?:\S+\s*)?(?:(?:대학(?:교)?|대학원)\s*(?:생|신입생|새내기)|대학원생)|(?:(?:대학(?:교)?|대학원)\s*(?:생|신입생|새내기)|대학원생)\s*(?:인\s*)?(?:아들|딸|자녀|아이|애)/;
 const PREGNANT_STRIP = /(?:임신|임산부|임부)\s*(?:한\s*지\s*)?(?:중\s*)?(?:이고\s*|이에요\s*|예요\s*)?\d{1,2}\s*(?:주|개월)(?:\s*(?:차|째))?|(?:배|뱃)\s*속\s*(?:에\s*)?(?:있는\s*)?(?:아기|애기|아이|애)|태아|출산\s*(?:을\s*)?(?:예정|앞두|앞둔)(?:인|이에요|이고)?\s*(?:아기|애기|아이)?/g;
 
 export interface ParseOptions {
@@ -322,6 +326,9 @@ const AGE_SUFFIX = "(?:세|살|이신|이세요|이셔|이심|이시고|이에�
 const KOR_AGE_RE = new RegExp(`(?<![가-힣])(?:(${NATIVE_TENS})\\s*(${NATIVE_ONES})?|(${SINO_TENS})\\s*(${SINO_ONES})?)\\s*${AGE_SUFFIX}`, "g");
 const OVER_RE = new RegExp(`(?<![\\d가-힣])([2-9]0|${TENS_W})\\s*(?:세|살)?\\s*(?:이|가|이\\s*)?\\s*(?:넘|훌쩍\\s*넘|넘으|넘은|넘었|넘긴|이상\\s*되)`, "g");
 const BARE_NATIVE_RE = new RegExp(`(?<![가-힣])(스물|서른|마흔|쉰|예순|일흔|여든|아흔)(하나|둘|셋|넷|다섯|여섯|일곱|여덟|아홉)?(?=\\s|$|[,.!?~]|이고|이며|인데|이신데|이셔서|이시고)`, "g");
+const TEEN_ONES: Record<string, number> = { 하나: 1, 한: 1, 둘: 2, 두: 2, 셋: 3, 세: 3, 넷: 4, 네: 4, 다섯: 5, 여섯: 6, 일곱: 7, 여덟: 8, 아홉: 9, 일: 1, 이: 2, 삼: 3, 사: 4, 오: 5, 육: 6, 칠: 7, 팔: 8, 구: 9 };
+/** '열일곱살', '열여섯 살', '십칠세' — '살·세'가 붙을 때만 ('열 명' 등 제외) */
+const TEEN_AGE_RE = /(?<![가-힣])(열|십)\s*(하나|한|둘|두|셋|세|넷|네|다섯|여섯|일곱|여덟|아홉|일|이|삼|사|오|육|칠|팔|구)?\s*(?:살|세)(?!\s*(?:이상|이하|미만|초과|부터|까지|넘|이후|요))/g;
 function korAge(tens: string, ones?: string): number | null {
   const t = KOR_TENS[tens] ?? (tens === "스무" ? 20 : undefined);
   if (!t) return null;
@@ -348,6 +355,13 @@ function parseAge(text: string, today: Today, self = false) {
     if (/^\s*(?:짜리\s*)?(?:된\s*)?(?:첫째|둘째|셋째|막내|큰애|작은애|아이|애기|아기|애|아들|딸|손자|손녀|쌍둥이)/.test(text.slice(m.index! + m[0].length))) continue;
     const a = Number(m[1]);
     if (a > 0 && a < 120) ranges.push({ r: [a, a], label: `만 ${a}세` });
+  }
+  // 10대 고유어·한자어 나이: '열일곱살', '열여섯 살', '십칠세' (QA 5차 검증 N2) — 자녀 나이('아들 열살')는 위와 같이 뺀다
+  for (const m of text.matchAll(TEEN_AGE_RE)) {
+    if (/(?:아이|애|애기|아기|자녀|아들|딸|첫째|둘째|셋째|막내|큰애|작은애|쌍둥이|동생|손자|손녀|조카)(?:들|는|은|가|이)?\s*$/.test(text.slice(Math.max(0, m.index! - 10), m.index!))) continue;
+    if (/^\s*(?:짜리\s*)?(?:된\s*)?(?:첫째|둘째|셋째|막내|큰애|작은애|아이|애기|아기|애|아들|딸|손자|손녀|쌍둥이|동생|조카)/.test(text.slice(m.index! + m[0].length))) continue;
+    const a = 10 + (m[2] ? TEEN_ONES[m[2]] ?? 0 : 0);
+    if (a >= 10 && a <= 19) ranges.push({ r: [a, a], label: `만 ${a}세` });
   }
   // 60대 · 70대 후반
   for (const m of text.matchAll(/([2-9]0)\s*대\s*(초반|중반|후반)?/g)) {
@@ -516,6 +530,7 @@ function childAges(text: string): ChildBucket[] {
   if (/초등\s*(?:학생|학교|생)?|초딩/.test(text)) add("6-12");
   if (/중학생|중학교|고등학생|고등학교|고딩|중딩/.test(text)) add("13-18");
   if (/유치원/.test(text)) add("2-5");
+  if (CHILD_COLLEGE.test(text)) add("19+");
   return [...new Set(out)];
 }
 
@@ -556,6 +571,11 @@ const PARENT_RE = /(부모|어머니|어머님|엄마|아버지|아버님|아빠
 const PARENT_PREFIX_OK = /(?:울|우리|저희|내|제|친정|시|홀|늙으신|연로하신|편찮으신)$/;
 /** 말하는 사람이 엄마·아빠 (예: '아이 둘 키우는 엄마예요', '52살 엄마인데') — 부모님 대신 찾기가 아님 */
 const SELF_PARENT_RE = /(?<!(?:우리|울|저희|제|내|친정|시)\s?)(?:엄마|아빠|애엄마|애아빠)(?:예요|에요|이에요|입니다|인데요?|이고|고요?|라서|로서|임|이야|야|랍니다)(?=[\s.,!?~]|$)/;
+/**
+ * '(자녀 낱말) 키우는/둔/있는 엄마·아빠' — 어미('예요')가 없어도 말하는 사람이 엄마·아빠 (QA 5차 검증 N1: '고등학생 딸 키우는 엄마 안산'을 부모님 대신 찾기로 읽던 문제).
+ * '우리 엄마'처럼 소유 낱말이 바로 앞에 있으면 아님.
+ */
+const KID_RAISING_PARENT = /(?:아이|애|애기|아기|자녀|아들|딸|쌍둥이|자식|애들|아이들|남매|형제|자매)(?:들)?\s*(?:(?:\d+|하나|둘|셋|넷|한|두|세)\s*(?:명)?\s*)?(?:을|를)?\s*(?:키우는|키우고\s*있는|기르는|둔|두고\s*있는|있는|가진|낳은|양육하는)\s*(?:(?:\d+\s*대|[2-6]0\s*대|(?:이|삼|사|오)십\s*대|워킹|직장인|전업|싱글|평범한|초보)\s*)?(?<!(?:우리|울|저희|제|내|친정|시)\s?)(?:엄마|아빠|애엄마|애아빠|맘|대디|부모)(?![가-힣]*(?:께서|님))/;
 /**
  * 부정·바람·모름 (QA 1차 C2): 낱말 바로 뒤에 이런 말이 오면 '그렇다'로 읽지 않는다.
  *   '기초연금 받고 싶어요', '받으시는지 모르겠어요', '치매는 없으심', '장애는 아니고', '받을 수 있나요'
@@ -629,7 +649,7 @@ export function parseSituation(raw: string, regions: RegionIndex | null, today: 
   const kidText = pregnant ? text.replace(PREGNANT_STRIP, " ") : text;
   let childN = countChildren(kidText);
   let childAssumed = false;
-  const kidAges = childAges(kidText);
+  let kidAges = childAges(kidText);
   // 나이만 말한 자녀 ('돌 안 된 아기 있어요', '첫째 7살 둘째 3살') → 그 수만큼
   if (childN === null && kidAges.length) childN = kidAges.length;
   const inc = parseIncome(text);
@@ -638,7 +658,7 @@ export function parseSituation(raw: string, regions: RegionIndex | null, today: 
   // 말하는 사람이 엄마·아빠인 표현('…엄마예요', '엄마 혼자 애 키워요')은 부모님 대신 찾기가 아님 (QA 1차 C1)
   // '싱글맘·싱글대디·미혼모' — 말하는 사람이 자녀를 키우는 한부모 (QA 3차 R1)
   const singleMom = /(싱글\s*(?:맘|대디|파파)|미혼\s*(?:모|부)(?!\s*(?:시설|센터|보호)))/.test(text);
-  const selfParent = SELF_PARENT_RE.test(text) || singleMom || /(?:^|\s)(?:엄마|아빠)\s*(?:혼자|홀로)\s*(?:서\s*)?(?:애|아이|자녀|아들|딸|애기|애들)/.test(text);
+  const selfParent = SELF_PARENT_RE.test(text) || KID_RAISING_PARENT.test(text) || singleMom || /(?:^|\s)(?:엄마|아빠)\s*(?:혼자|홀로)\s*(?:서\s*)?(?:애|아이|자녀|아들|딸|애기|애들)/.test(text);
 
   const selfHint =
     selfParent ||
@@ -685,6 +705,20 @@ export function parseSituation(raw: string, regions: RegionIndex | null, today: 
     p.age = age.band;
     understood.push({ key: "age", label: age.label });
     notes.push(...age.notes);
+  }
+  // (QA 5차 검증 N2) 말하는 사람 본인이 만 19세 미만 ('고등학교 자퇴한 열일곱살이에요') — 본인 이야기로 본다.
+  // '고등학교·중학생' 같은 학교 낱말은 본인 이야기라 자녀·3인 가구로 바꾸지 않는다 (자녀 수를 직접 말한 경우만 자녀)
+  const teenSelf = !!age && age.range[1] <= 18 && mode !== "parent" && !selfParent;
+  if (teenSelf) {
+    if (mode !== "self") {
+      mode = "self";
+      understood.push({ key: "target", label: "내 복지 찾기" });
+    }
+    const noSchool = kidText.replace(SCHOOL_WORDS, " ");
+    kidAges = childAges(noSchool);
+    childN = countChildren(noSchool);
+    if (childN === null && kidAges.length) childN = kidAges.length;
+    childAssumed = false;
   }
 
   // 가구
@@ -865,6 +899,8 @@ export function parseSituation(raw: string, regions: RegionIndex | null, today: 
     p.activity = "employed";
     signals.push("직장에 다님");
   }
+  // (QA 5차 검증 N2) 자퇴·학교 안 다님·학업 중단 → 학교 밖 청소년 (본인 이야기일 때만)
+  if (mode !== "parent" && !selfParent && TOPICS.out_of_school.say.test(text) && p.activity !== "student") signals.push("학교에 다니지 않음 (학교 밖 청소년)");
   if (mode !== "parent" && pregnant) {
     p.children = ["pregnant", ...kidAges];
     signals.push("임신 중");
@@ -877,7 +913,7 @@ export function parseSituation(raw: string, regions: RegionIndex | null, today: 
 
   const familyWord = !!parentWord || ALONE_RE.test(text) || COUPLE_RE.test(text) || !!nIn || hasKids || livesWithParent;
   // 대학생 주제는 본인이 학생일 때만 (자녀가 대학생·부모님 대신 찾기 문장은 아님)
-  const interests = topicsIn(text).filter((k) => k !== "student" || p.activity === "student");
+  const interests = topicsIn(text).filter((k) => (k !== "student" || p.activity === "student") && (k !== "out_of_school" || (mode !== "parent" && !selfParent && p.activity !== "student")));
   // 지역·나이가 없어도 상황을 말한 문장 ('기초연금 못 받고 계세요', '치매 진단 받으셨어요', '실직했어요') → 맞춤 찾기로 (QA 2차 N5)
   const signalish = signals.length > 0 || benefitsNo.length > 0 || interests.length > 0 || p.activity !== "unknown" || p.care !== null || p.disability !== "unknown";
   const sentence = HONORIFIC.test(text) || SELF_RE.test(text) || VERB_END.test(text);
@@ -922,7 +958,7 @@ export function parsedExtras(ps: ParsedSituation): {
     ...(ps.income ? { incomeManwon: ps.income.manwon } : {}),
     ...(ps.childCount !== undefined ? { childCount: Math.min(3, ps.childCount) as 0 | 1 | 2 | 3 } : {}),
     // '30대'처럼 범위만 말했으면 그 범위로 판정 (정확한 나이대를 알면 그것으로)
-    ...(ps.profile.age === "unknown" && ps.ageRange ? { ageSpan: ps.ageRange } : {}),
+    ...((ps.profile.age === "unknown" || (ps.profile.age === "0-18" && ps.ageRange && ps.ageRange[1] <= 18)) && ps.ageRange ? { ageSpan: ps.ageRange } : {}),
     ...(ps.interests?.length ? { interests: ps.interests } : {}),
     ...(ps.otherAge ? { otherAge: { band: ps.otherAge.band, label: ps.otherAge.label } } : {}),
   };
