@@ -80,7 +80,7 @@ const KNOWN_PLACES: [RegExp, string][] = [
   [/건강\s*보험\s*공단|건보\s*공단/, "국민건강보험공단 지사"],
   [/국민\s*연금\s*공단/, "국민연금공단 지사"],
   [/보훈\s*(?:지\s*\(?\s*방\s*\)?\s*)?청|보훈\s*지청/, "관할 보훈(지)청"],
-  [/고용\s*(?:복지\s*\+?\s*)?센터/, "가까운 고용센터"],
+  [/고용\s*(?:복지\s*(?:\+|플러스)?\s*)?센터/, "가까운 고용센터"],
   [/법률\s*구조\s*공단/, "대한법률구조공단"],
   [/근로\s*복지\s*공단/, "근로복지공단"],
   [/서민\s*금융\s*진흥원|서민금융\s*통합\s*지원\s*센터/, "서민금융통합지원센터"],
@@ -175,8 +175,8 @@ export function howTo(detail: Program | undefined | null, lead: Program, sido?: 
   };
 }
 
-/** 구비 서류 원문 → 짧은 항목 최대 4개 */
-export function parseDocs(s?: string, name?: string): string[] {
+/** 구비 서류 원문 → 짧은 항목 최대 max개 (카드는 4개, 준비물 한 장은 전부) */
+export function parseDocs(s?: string, name?: string, max = 4): string[] {
   if (!s) return [];
   // 괄호 안 쉼표로는 나누지 않는다 (QA 3차 L1: '임신 여부 확인 서류(임신확인서, 임신진단서 …)'의 예시가 따로 '가져갈 것'이 되던 문제)
   const t = s
@@ -190,7 +190,7 @@ export function parseDocs(s?: string, name?: string): string[] {
     // 여러 대상 중 임신부만 내는 서류는 빼고 (예: 인플루엔자 접종 — 어르신 카드에 '임신진단서'), 임신·출산 사업이면 그대로
     .filter((x) => !name || /(임신|임산부|산모|출산|태아|난임)/.test(name) || !/(임신|산모|임산부)/.test(x))
     .filter((x) => x && !/^(해당\s*없음|본인\s*신청|대리\s*신청|없음)$/.test(x) && x.length <= 28);
-  return [...new Set(parts)].slice(0, 4);
+  return [...new Set(parts)].slice(0, max);
 }
 
 /** 긴 원문에서 첫 문장만 짧게 */

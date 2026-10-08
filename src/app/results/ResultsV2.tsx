@@ -9,6 +9,9 @@ import { useRouter } from "next/navigation";
 import { Icon } from "@/components/Icon";
 import { SupportTags } from "@/components/ProgramCard";
 import { ApplyBadge, orgText } from "@/components/Badges";
+import { IncomeAsk } from "./IncomeAsk";
+import { Summary } from "./Summary";
+import { VisitSheet } from "./VisitSheet";
 import { loadForRegion, loadProgram, loadRegions, type Loaded } from "@/lib/client/bundles";
 import { CHANNEL_LABEL, firstLine, howTo } from "@/lib/client/howto";
 import { clearProfile, useExample, useExtras } from "@/lib/client/storage";
@@ -16,7 +19,7 @@ import { saveSituation, situationOf } from "@/lib/client/start";
 import { PRESETS } from "@/lib/client/presets";
 import { checkPath, coupleNote, resultsCopy, type FindMode } from "@/lib/client/mode";
 import {
-  BUCKET_LABEL, LOW_INCOME_PCT, answersFor, autoV2, buildView, classify, incomeExplain, inferredNoRecipient, plainLine, scoreV2, situationChips, topPicksV2,
+  BUCKET_LABEL, LOW_INCOME_PCT, answersFor, autoV2, buildView, classify, inferredNoRecipient, plainLine, scoreV2, situationChips, topPicksV2,
   type Bucket, type DimId, type Situation, type V2Item,
 } from "@/lib/client/v2";
 import type { Program } from "@/lib/data/types";
@@ -26,6 +29,7 @@ const FIRST = 10;
 const MORE = 20;
 /** QA 2차 M1: '신청할 때 확인'은 상위 20개를 먼저 */
 const OFFICE_TOP = 20;
+const SHEET_KEY = "bn.sheet.v1";
 
 export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode }) {
   const extras = useExtras();
@@ -40,6 +44,25 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
   const [autoOpen, setAutoOpen] = useState(false);
   const [autoLimit, setAutoLimit] = useState(FIRST);
   const [pilotSidos, setPilotSidos] = useState<string[] | null>(null);
+  /** 준비물 한 장: 먼저 확인할 5가지에서 뺀 것·직접 담은 것 (사업 id만, 이 탭에만) */
+  const [marks, setMarksRaw] = useState<{ add: string[]; remove: string[] }>(() => {
+    if (typeof window === "undefined") return { add: [], remove: [] };
+    try {
+      const v = JSON.parse(window.sessionStorage.getItem(SHEET_KEY) ?? "null");
+      return v && Array.isArray(v.add) && Array.isArray(v.remove) ? v : { add: [], remove: [] };
+    } catch {
+      return { add: [], remove: [] };
+    }
+  });
+  const setMarks = (f: (m: { add: string[]; remove: string[] }) => { add: string[]; remove: string[] }) =>
+    setMarksRaw((m) => {
+      const v = f(m);
+      try {
+        window.sessionStorage.setItem(SHEET_KEY, JSON.stringify(v));
+      } catch {}
+      return v;
+    });
+  const [sheetOpen, setSheetOpen] = useState(false);
   useEffect(() => {
     loadRegions().then((r) => setPilotSidos(r ? r.sidos.filter((x) => x.pilot).map((x) => x.code) : null));
   }, []);
@@ -59,20 +82,32 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
 
   // 먼저 확인할 5가지는 신청 방법(어디서·무엇을 가져가서)을 보여 주려고 상세 묶음을 따로 불러온다
   const pickIds = picks.map((g) => g[0].s.program.id).join("|");
+  // 준비물 한 장에 담긴 혜택: 먼저 확인할 5가지(뺀 것 제외) + 직접 담은 것 (지금 결과에 있는 것만)
+  const itemById = useMemo(() => {
+    const m = new Map<string, V2Item>();
+    for (const b of ["fit", "office", "ask"] as const) for (const g of view[b]) m.set(g[0].s.program.id, g[0]);
+    return m;
+  }, [view]);
+  const sheetItems = useMemo(() => {
+    const ids = [...picks.map((g) => g[0].s.program.id).filter((id) => !marks.remove.includes(id)), ...marks.add.filter((id) => !pickIds.split("|").includes(id))];
+    return [...new Set(ids)].map((id) => itemById.get(id)).filter((x): x is V2Item => !!x);
+  }, [picks, marks, itemById, pickIds]);
+  const sheetIds = sheetItems.map((i) => i.s.program.id).join("|");
+  const wantIds = sheetOpen ? [...new Set([...pickIds.split("|"), ...sheetIds.split("|")])].filter(Boolean).join("|") : pickIds;
   useEffect(() => {
-    if (!pickIds) return;
+    if (!wantIds) return;
     let alive = true;
-    Promise.all(pickIds.split("|").map((id) => loadProgram(id))).then((ps) => {
+    Promise.all(wantIds.split("|").map((id) => loadProgram(id))).then((ps) => {
       if (!alive) return;
       const out: Record<string, Program> = {};
       ps.forEach((p) => p && (out[p.id] = p));
-      setDetails(out);
-      setDetailsFor(pickIds);
-    }).catch(() => alive && setDetailsFor(pickIds));
+      setDetails((d) => ({ ...d, ...out }));
+      setDetailsFor(wantIds);
+    }).catch(() => alive && setDetailsFor(wantIds));
     return () => {
       alive = false;
     };
-  }, [pickIds]);
+  }, [wantIds]);
 
   if (!data || extras === undefined) {
     return (
@@ -89,6 +124,13 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
 
   const parent = mode === "parent";
   const copy = resultsCopy(mode);
+  const sheetCtl: SheetCtl = {
+    has: (id) => sheetIds.split("|").includes(id),
+    toggle: (id, on) =>
+      setMarks((m) => (pickIds.split("|").includes(id)
+        ? { ...m, remove: on ? m.remove.filter((x) => x !== id) : [...m.remove, id] }
+        : { ...m, add: on ? [...m.add.filter((x) => x !== id), id] : m.add.filter((x) => x !== id) })),
+  };
   const preset = PRESETS.find((x) => x.id === example);
   const place = data.label.split(" ").pop();
   const questions = view.questions.filter((q) => !skipped.includes(q.dim.id)).slice(0, 3);
@@ -263,6 +305,17 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
 
       <div className="wrap page">
         <div className="v2-main">
+          {data && (
+            <Summary
+              view={view}
+              picks={picks}
+              sit={sit}
+              mode={mode}
+              question={askFirst ? undefined : questions[0]}
+              onApply={apply}
+              onSkip={(d) => setSkipped((s) => [...s, d])}
+            />
+          )}
           {askFirst && followUp}
 
           {picks.length > 0 && (
@@ -276,10 +329,51 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
               </p>
               <ol className="picks">
                 {picks.map((g, i) => (
-                  <Pick key={g[0].s.program.id} item={g[0]} i={i} detail={details[g[0].s.program.id]} loading={detailsFor !== pickIds && !details[g[0].s.program.id]} sit={sit} mode={mode} />
+                  <Pick
+                    key={g[0].s.program.id}
+                    item={g[0]}
+                    i={i}
+                    detail={details[g[0].s.program.id]}
+                    loading={!detailsFor.split("|").includes(g[0].s.program.id) && !details[g[0].s.program.id]}
+                    sit={sit}
+                    mode={mode}
+                    inSheet={!marks.remove.includes(g[0].s.program.id)}
+                    onSheet={(on) => setMarks((m) => ({ ...m, remove: on ? m.remove.filter((x) => x !== g[0].s.program.id) : [...m.remove, g[0].s.program.id] }))}
+                  />
                 ))}
               </ol>
             </section>
+          )}
+
+          {sheetItems.length > 0 && (
+            <div className="sheet-cta no-print" data-testid="sheet-cta">
+              <p>
+                <strong>방문처별 준비물 한 장</strong> — 담은 혜택 {sheetItems.length}개를 신청하는 곳별로 묶고, 가져갈 것은 한 번씩만 적어 드려요. 인쇄하거나 이미지로 저장해 카카오톡으로 보낼 수 있어요.
+              </p>
+              <button
+                type="button"
+                className="btn btn-tonal btn-sm"
+                aria-expanded={sheetOpen}
+                aria-controls="visit-sheet"
+                onClick={() => {
+                  setSheetOpen((o) => !o);
+                  if (!sheetOpen) setTimeout(() => document.getElementById("visit-sheet")?.scrollIntoView({ block: "start" }), 50);
+                }}
+                data-testid="sheet-open"
+              >
+                <Icon name="listChecks" size={18} /> {sheetOpen ? "준비물 한 장 접기" : "준비물 한 장 보기"}
+              </button>
+            </div>
+          )}
+          {sheetOpen && sheetItems.length > 0 && (
+            <VisitSheet
+              entries={sheetItems.map((i) => ({ program: details[i.s.program.id] ?? i.s.program, bucket: i.bucket }))}
+              region={data.label}
+              sido={profile.sido}
+              loading={!sheetIds.split("|").every((id) => detailsFor.split("|").includes(id) || details[id])}
+              extra={sheetItems.filter((i) => !pickIds.split("|").includes(i.s.program.id)).length}
+              onClose={() => setSheetOpen(false)}
+            />
           )}
 
           {/* '장인어른 모시고 삽니다' — 모시는 분께 맞는 혜택은 그분 기준으로 따로 찾아야 정확함 (QA 4차 N3) */}
@@ -304,8 +398,9 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
 
           {!askFirst && followUp}
 
-          <BucketList id="v2-fit" bucket="fit" title={picks.some((g) => g[0].bucket === "fit") ? `그 밖에 받으실 수 있는 혜택` : "받으실 수 있는 혜택"} lead="답하신 상황으로 공개된 지원 조건이 모두 맞아요." groups={view.fit.filter((g) => !picked.has(g))} sit={sit} mode={mode} />
+          <BucketList sheet={sheetCtl} id="v2-fit" bucket="fit" title={picks.some((g) => g[0].bucket === "fit") ? `그 밖에 받으실 수 있는 혜택` : "받으실 수 있는 혜택"} lead="답하신 상황으로 공개된 지원 조건이 모두 맞아요." groups={view.fit.filter((g) => !picked.has(g))} sit={sit} mode={mode} />
           <BucketList
+            sheet={sheetCtl}
             id="v2-office"
             bucket="office"
             title="신청할 때 확인이 필요한 혜택"
@@ -382,6 +477,19 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
             <button type="button" className="link-btn" onClick={() => window.print()}>
               <Icon name="printer" size={18} /> 인쇄하거나 PDF로 저장
             </button>
+            {sheetItems.length > 0 && (
+              <button
+                type="button"
+                className="link-btn"
+                onClick={() => {
+                  setSheetOpen(true);
+                  setTimeout(() => document.getElementById("visit-sheet")?.scrollIntoView({ block: "start" }), 50);
+                }}
+                data-testid="sheet-open-2"
+              >
+                <Icon name="listChecks" size={18} /> 방문처별 준비물 한 장
+              </button>
+            )}
             <button type="button" className="link-btn" onClick={share} data-testid="share">
               <Icon name="share" size={18} /> 가족에게 보내기 (입력값 제외)
             </button>
@@ -426,47 +534,20 @@ function Count({ href, cls, label, n, testId }: { href: string; cls: string; lab
   );
 }
 
-function IncomeAsk({ sit, onApply, onSkip }: { sit: Situation; onApply: (s: Situation) => void; onSkip: () => void }) {
-  const [t, setT] = useState("");
-  const size = sit.profile.householdSize === "unknown" ? null : sit.profile.householdSize;
-  const n = t ? Number(t) : null;
-  const ex = n !== null && size ? incomeExplain(n, size) : null;
-  return (
-    <div>
-      <div className="btn-row v2-answers">
-        <label htmlFor="fq-income" className="sr-only">
-          한 달 소득 (만원)
-        </label>
-        <input
-          id="fq-income"
-          className="input v2-income-in"
-          inputMode="numeric"
-          placeholder="예: 300"
-          value={t}
-          onChange={(e) => setT(e.target.value.replace(/[^0-9]/g, "").slice(0, 5))}
-          data-testid="v2-a-income-input"
-        />
-        <span>만원 / 월</span>
-        <button type="button" className="btn btn-ghost btn-sm" disabled={n === null} onClick={() => n !== null && onApply({ ...sit, x: { ...sit.x, incomeManwon: n } })} data-testid="v2-a-income-ok">
-          확인
-        </button>
-        <button type="button" className="btn btn-quiet" onClick={onSkip} data-testid="v2-skip-income">
-          모름
-        </button>
-      </div>
-      {ex && (
-        <p className="small" aria-live="polite">
-          {ex.line}
-        </p>
-      )}
-    </div>
-  );
-}
-
 const BUCKET_ICON: Record<Bucket, "check" | "info" | "alert" | "x"> = { fit: "check", office: "info", ask: "alert", no: "x" };
 
 /** 먼저 확인할 카드: 번호 · 지원형태 · 이름 · 판단(쉬운 말) · 신청방법/기관/문의/가져갈 것 */
-function Pick({ item, i, detail, loading, sit, mode }: { item: V2Item; i: number; detail?: Program; loading?: boolean; sit: Situation; mode: FindMode }) {
+type SheetCtl = { has: (id: string) => boolean; toggle: (id: string, on: boolean) => void };
+
+function SheetToggle({ on, name, onChange }: { on: boolean; name: string; onChange: (on: boolean) => void }) {
+  return (
+    <button type="button" className="link-btn sheet-toggle no-print" aria-pressed={on} aria-label={`${name} — 준비물 한 장에 ${on ? "담겨 있음 (누르면 뺌)" : "담기"}`} onClick={() => onChange(!on)} data-testid="sheet-toggle">
+      <Icon name={on ? "check" : "listChecks"} size={16} /> {on ? "준비물 한 장에 담김" : "준비물 한 장에 담기"}
+    </button>
+  );
+}
+
+function Pick({ item, i, detail, loading, sit, mode, inSheet, onSheet }: { item: V2Item; i: number; detail?: Program; loading?: boolean; sit: Situation; mode: FindMode; inSheet: boolean; onSheet: (on: boolean) => void }) {
   const p = item.s.program;
   const how = howTo(detail, p, sit.profile.sido);
   const href = `/p/${encodeURIComponent(p.id)}`;
@@ -526,15 +607,16 @@ function Pick({ item, i, detail, loading, sit, mode }: { item: V2Item; i: number
         <Link href={`${href}#sec-apply`} className="btn btn-ghost btn-sm">
           신청 방법 보기
         </Link>
+        <SheetToggle on={inSheet} name={p.name} onChange={onSheet} />
       </div>
     </li>
   );
 }
 
 function BucketList({
-  id, title, lead, groups, sit, mode, collapsed, top,
+  id, title, lead, groups, sit, mode, collapsed, top, sheet,
 }: {
-  id: string; bucket: Bucket; title: string; lead: string; groups: V2Item[][]; sit: Situation; mode: FindMode; collapsed?: boolean; top?: number;
+  id: string; bucket: Bucket; title: string; lead: string; groups: V2Item[][]; sit: Situation; mode: FindMode; collapsed?: boolean; top?: number; sheet?: SheetCtl;
 }) {
   // 뒤로 가기로 돌아와도 펼친 '더 보기'를 유지 (QA 3차 M3) — 이 탭 안에서만, 목록 길이만 기억
   const memKey = `bokji-v2-limit-${id}-${groups.length}`;
@@ -565,7 +647,7 @@ function BucketList({
       )}
       <div className="v2-list">
         {groups.slice(0, limit).map((g) => (
-          <V2Card key={g[0].s.program.id} item={g[0]} more={g.length - 1} sit={sit} mode={mode} />
+          <V2Card key={g[0].s.program.id} item={g[0]} more={g.length - 1} sit={sit} mode={mode} sheet={sheet} />
         ))}
       </div>
       {groups.length > limit && (
@@ -595,7 +677,7 @@ function BucketList({
   );
 }
 
-function V2Card({ item, more, sit, mode }: { item: V2Item; more: number; sit: Situation; mode: FindMode }) {
+function V2Card({ item, more, sit, mode, sheet }: { item: V2Item; more: number; sit: Situation; mode: FindMode; sheet?: SheetCtl }) {
   const p = item.s.program;
   const where = p.provider || p.owner;
   return (
@@ -616,6 +698,7 @@ function V2Card({ item, more, sit, mode }: { item: V2Item; more: number; sit: Si
         {!item.reviewed && <span title="원문에서 자동으로 정리한 조건이에요">자동 정리 조건</span>}
         {more > 0 && <span>다른 기관 같은 사업 {more}개</span>}
       </p>
+      {sheet && <SheetToggle on={sheet.has(p.id)} name={p.name} onChange={(on) => sheet.toggle(p.id, on)} />}
     </article>
   );
 }

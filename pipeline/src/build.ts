@@ -27,10 +27,12 @@ import { CURATED } from "../rules/curated";
 import { classifyOperator, classifySector } from "./normalize/sector";
 import { classifyApplyType, type ApplyResult } from "./normalize/applyType";
 import { normalizeUrl } from "./normalize/names";
+import { extractMoney } from "./normalize/money";
+import { extractDue } from "./normalize/due";
 import { detailBucket } from "../../src/lib/data/bucket";
 import type { Bundle, BuildMeta, LocalOperation, Program, RegionIndex as RegionIndexJson, SourceRef } from "../../src/lib/data/types";
 import type { Cond, Rule } from "../../src/lib/engine/types";
-import { normalizeDeep } from "../../src/lib/data/text";
+import { normalizeDeep, normalizeText } from "../../src/lib/data/text";
 
 const ROOT = path.resolve(__dirname, "../..");
 const ICDASH = process.env.ICDASH_DIR ?? "/workspace/icdash";
@@ -235,6 +237,11 @@ function main() {
         p.applyPlace = ap.place;
         p.applyNote = { source: ap.source, checkedAt: applyPlacesJson.checkedAt };
       }
+      // 지원 금액·신청 기한 (원문 지원내용·신청기한에서 규칙으로 추출 — pipeline/src/normalize/money.ts·due.ts)
+      const money = extractMoney({ name: rec.name, benefit: p.benefit ? normalizeText(p.benefit) : undefined, sector: sectorFinal });
+      const due = extractDue({ deadline: p.deadline ? normalizeText(p.deadline) : undefined, benefit: p.benefit ? normalizeText(p.benefit) : undefined, applyMethod: p.applyMethod ? normalizeText(p.applyMethod) : undefined });
+      if (money) p.money = money;
+      if (due) p.due = due;
       programs.push({ p, rec, sigungu: sgg });
     }
   }
@@ -260,6 +267,8 @@ function main() {
     rule: { id: p.rule.id, origin: p.rule.origin, review: p.rule.review, logic: p.rule.logic, unstructured: p.rule.unstructured, unstructuredCore: p.rule.unstructuredCore, ...(p.rule.meansTest ? { meansTest: true } : {}), ...(p.rule.recBand ? { recBand: true } : {}), ...(p.rule.refined ? { refined: p.rule.refined } : {}) },
     mergedCount: p.mergedCount, aliases: p.aliases, sector: p.sector, applyType: p.applyType === "unknown" ? undefined : p.applyType, hasApply: !!(p.applyMethod || p.contact) || undefined,
     ...(p.applyPlace ? { applyPlace: p.applyPlace } : {}),
+    ...(p.money ? { money: p.money } : {}),
+    ...(p.due ? { due: p.due } : {}),
   });
   const detailShards = new Map<string, Record<string, Program>>();
   for (const { p } of programs) {
@@ -325,6 +334,13 @@ function main() {
   const nationalStructured = national.programs.filter((p) => p.rule.review === "structured").length;
   const filled = (k: "applyMethod" | "contact") => uniquePrograms.filter((x) => x.p[k] && String(x.p[k]).trim()).length;
   const coverage = { applyMethod: filled("applyMethod"), contact: filled("contact"), either: uniquePrograms.filter((x) => x.p.applyMethod || x.p.contact).length, total: uniquePrograms.length };
+  const tally = <T,>(f: (p: Program) => T | undefined) => uniquePrograms.reduce((m: Record<string, number>, x) => { const v = f(x.p); if (v !== undefined) m[String(v)] = (m[String(v)] ?? 0) + 1; return m; }, {});
+  const moneyDue = {
+    benefitText: filled("benefit" as "applyMethod"),
+    deadlineText: uniquePrograms.filter((x) => x.p.deadline && !/^(상시|수시|연중)/.test(x.p.deadline.trim())).length,
+    money: tally((p) => p.money?.per),
+    due: tally((p) => p.due?.kind),
+  };
 
   const meta: BuildMeta = {
     schema: 1,
@@ -336,7 +352,7 @@ function main() {
       icare: "2026-04 등 (메뉴판 문서별 원문 기준월), 수집 " + icareFetched,
       gov24: gov24.length ? `수집 ${g24list.fetchedAt?.slice(0, 10)}` : "미수집",
     },
-    counts: { raw, excluded, uniquePrograms: uniquePrograms.length, placements: programs.length, byOrg, byScope, bySector, byApplyType, bySource, bySourceOrg, dedup: { ...stats, regionalCopySamples: undefined }, localOps: localOpsCount, rulesByReview: reviewCounts, rulesByOrigin: originCounts, pilot, nationalCurated, nationalStructured, coverage, bokjiroApi },
+    counts: { raw, excluded, uniquePrograms: uniquePrograms.length, placements: programs.length, byOrg, byScope, bySector, byApplyType, bySource, bySourceOrg, dedup: { ...stats, regionalCopySamples: undefined }, localOps: localOpsCount, rulesByReview: reviewCounts, rulesByOrigin: originCounts, pilot, nationalCurated, nationalStructured, coverage, moneyDue, bokjiroApi },
     gov24: gov24Status
       ? { status: gov24Status.status, detail: gov24Status.detail, services: gov24.length || undefined }
       : { status: "unavailable", detail: "수집 기록 없음 (npm run ingest:gov24 미실행)" },
@@ -381,6 +397,7 @@ function main() {
     `- 공공서비스(혜택) API: **${meta.gov24.status}** — ${meta.gov24.detail}`,
     `- 복지로 OpenAPI: 목록 중앙 ${bokjiroApi.list.central} · 지자체 ${bokjiroApi.list.local} / 상세 중앙 ${bokjiroApi.detail.central} · 지자체 ${bokjiroApi.detail.local} / 색인 보강 ${bokjiroApi.enriched} · 신규 ${bokjiroApi.added} · 색인에만 있음 ${bokjiroApi.indexOnly}`,
     `- 신청방법 채움 ${coverage.applyMethod}/${coverage.total} · 연락처 ${coverage.contact}/${coverage.total} · 둘 중 하나 ${coverage.either}/${coverage.total}`,
+    `- 지원 금액 추출(사업 단위): ${Object.entries(moneyDue.money).map(([k, v]) => `${k} ${v}`).join(" / ")} (합계 ${Object.values(moneyDue.money).reduce((a, b) => a + b, 0)}, 지원내용 있음 ${moneyDue.benefitText}) · 신청 기한 추출: ${Object.entries(moneyDue.due).map(([k, v]) => `${k} ${v}`).join(" / ")} (합계 ${Object.values(moneyDue.due).reduce((a, b) => a + b, 0)}, '상시' 아닌 신청기한 칸 ${moneyDue.deadlineText})`,
     `- 원천 레코드: ${Object.entries(raw).map(([k, v]) => `${k} ${v}`).join(" / ")}`,
     `- 노출 제외: ${Object.entries(excluded).map(([k, v]) => `${k} ${v}`).join(" / ") || "없음"}`,
     `- 통합돌봄 D1 완전 중복 ${stats.d1Exact} · D2 실질 중복 ${stats.d2Substantive}`,

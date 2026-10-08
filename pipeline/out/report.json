@@ -1,8 +1,8 @@
 {
   "schema": 1,
-  "generatedAt": "2026-10-07T11:58:30.980Z",
+  "generatedAt": "2026-10-08T14:57:47.456Z",
   "dataAsOf": {
-    "bokjiro": "복지로 OpenAPI 수집 2026-10-07 (서비스별 최종수정일 표시) · 색인 2026-09-24",
+    "bokjiro": "복지로 OpenAPI 수집 2026-10-08 (서비스별 최종수정일 표시) · 색인 2026-09-24",
     "icare": "2026-04 등 (메뉴판 문서별 원문 기준월), 수집 2026-10-01",
     "gov24": "수집 2026-10-02"
   },
@@ -145,6 +145,21 @@
       "contact": 13405,
       "either": 13439,
       "total": 23575
+    },
+    "moneyDue": {
+      "benefitText": 13421,
+      "deadlineText": 3532,
+      "money": {
+        "max": 2978,
+        "year": 387,
+        "month": 1084,
+        "once": 235
+      },
+      "due": {
+        "period": 464,
+        "after": 432,
+        "annual": 455
+      }
     },
     "bokjiroApi": {
       "list": {

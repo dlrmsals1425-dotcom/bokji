@@ -120,11 +120,45 @@ export interface Program {
   hasApply?: boolean;
   /** 수동 보강한 신청 창구 (원문 신청방법이 비어 있던 핵심 사업 — pipeline/curated/apply-places.json) */
   applyPlace?: string;
+  /** 원문 기준 지원 금액 (규칙 추출, 있을 때만) */
+  money?: Money;
+  /** 원문 기준 신청 기한·기간 (규칙 추출, 있을 때만) */
+  due?: Due;
   /** 신청 창구·문의를 수동 보강했을 때 출처 (공식 누리집 주소·확인일) */
   applyNote?: { source: string; checkedAt: string };
 }
 
 export type Sector = "agri" | "business" | "operator";
+
+/**
+ * 원문 '지원내용'에서 규칙으로 뽑은 지원 금액 (파이프라인 pipeline/src/normalize/money.ts, LLM 없음).
+ * 여러 금액이 있으면 같은 주기 중 가장 큰 값 — 화면에는 '원문 기준 최대'로만 쓴다.
+ */
+export interface Money {
+  /** month 매월 · year 해마다 · once 한 번 · max 주기가 원문에 없음 */
+  per: "month" | "year" | "once" | "max";
+  /** 원 단위 */
+  won: number;
+  /** 근거 원문 (금액이 든 구절, 최대 80자) */
+  quote: string;
+}
+
+/**
+ * 원문 '신청기한'(없으면 지원내용·신청방법)에서 규칙으로 뽑은 신청 기한·기간 (pipeline/src/normalize/due.ts).
+ * after: 사건 뒤 n일·개월 이내 · period: 연도가 적힌 접수 기간 · annual: 매년 몇 월
+ */
+export interface Due {
+  kind: "after" | "period" | "annual";
+  /** 화면 문구 (예: '출생 후 60일 이내', '매년 3~4월', '2026.3.2 ~ 2026.3.31') */
+  text: string;
+  /** 근거 원문 (최대 80자) */
+  quote: string;
+  /** period: 시작·끝 (YYYY-MM-DD) */
+  from?: string;
+  to?: string;
+  /** annual: 신청 받는 달 (1~12, 예: 3~6월 → [3,4,5,6], '6월, 12월' → [6,12]) */
+  months?: number[];
+}
 
 /** 신청 유형 (운영자 방향 2026-10-02: 직접 신청해야 받는 혜택을 앞에, 자동·기관 선정 혜택은 아래 접힌 영역) */
 export type ApplyType = "self" | "auto" | "institution" | "unknown";

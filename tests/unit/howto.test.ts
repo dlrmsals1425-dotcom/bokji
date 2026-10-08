@@ -52,3 +52,11 @@ describe("신청처 (QA 1차 H3)", () => {
     expect(placeOf({ name: "실업급여", applyMethod: "고용24 …", applyPlace: "가까운 고용센터 (고용24에서 구직 등록 후 방문)" })).toContain("고용센터");
   });
 });
+
+describe("placeOf: '고용복지플러스센터'도 고용센터로 (준비물 한 장 묶음)", () => {
+  it("국민내일배움카드 원문 그대로", () => {
+    const apply = "거주지 읍/면/동 주민센터, 고용노동부 소속기관(관할 고용복지플러스센터) 에서 ‘서비스 신청’";
+    expect(placeOf({ name: "국민내일배움카드제 직업훈련지원", applyMethod: apply })).toBe("주소지 행정복지센터(주민센터) 또는 가까운 고용센터");
+    expect(placeOf({ name: "x", applyMethod: "가까운 고용복지+센터 방문" }, ["visit"])).toBe("가까운 고용센터");
+  });
+});
