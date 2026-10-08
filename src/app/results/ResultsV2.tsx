@@ -333,6 +333,22 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
               onSkip={(d) => setSkipped((s) => [...s, d])}
             />
           )}
+          {/* 한눈에 보기 바로 아래 준비물 한 장 (QA 7차 V2: 모바일에서 기존 버튼이 y≈4,000px 아래) */}
+          {data && sheetItems.length > 0 && !sheetOpen && (
+            <p className="sum-sheet no-print">
+              <button
+                type="button"
+                className="btn btn-ghost btn-sm"
+                onClick={() => {
+                  setSheetOpen(true);
+                  setTimeout(() => document.getElementById("visit-sheet")?.scrollIntoView({ block: "start" }), 50);
+                }}
+                data-testid="sum-sheet-open"
+              >
+                <Icon name="listChecks" size={18} /> 가져갈 서류 한 장으로 보기
+              </button>
+            </p>
+          )}
           {askFirst && followUp}
 
           {picks.length > 0 && (
