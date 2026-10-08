@@ -9,6 +9,8 @@ import { buildVisitSheet, SHEET_STATUS, type SheetEntry, type SheetPlace } from 
 import { renderSheetPng } from "@/lib/client/sheetImage";
 
 const FILE = "복지나침반-방문처별-준비물.png";
+/** 인쇄할 때 이 곳 수 이상이면 2단 (QA 7차 V3: A4 한 장에 맞춤) */
+const PRINT_TWO_COLS = 4;
 /** 문의 문구에서 전화번호만 ('한부모상담전화 1577-4206' → '15774206'). 번호가 없으면 null */
 function telOf(text: string): string | null {
   const m = text.match(/(?<!\d)(0\d{1,2}-?\d{3,4}-?\d{4}|1[5-9]\d{2}-?\d{4}|1\d{2})(?!\d)/);
@@ -186,7 +188,7 @@ export function VisitSheet({ entries, region, sido, loading, extra, onClose }: {
       )}
       {mounted && !loading &&
         createPortal(
-          <div className="sheet-print-root" aria-hidden="true">
+          <div className="sheet-print-root" aria-hidden="true" data-cols={places.length >= PRINT_TWO_COLS ? 2 : 1}>
             <SheetBody places={places} region={region} date={date} forPrint />
           </div>,
           document.body,
