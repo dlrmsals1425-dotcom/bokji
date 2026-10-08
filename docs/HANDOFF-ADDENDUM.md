@@ -1,0 +1,80 @@
+# 인수인계 보충 (47bc438 이후)
+
+47bc438(로고) 이후에 바뀐 것만 적었습니다. 기본 구조·명령·보안 규칙은 `AGENTS.md`·`CLAUDE.md`·`README.md`가 기준입니다.
+
+## 커밋
+
+| 커밋 | 내용 |
+|---|---|
+| 1ea7b5a | QA 5차 — C3b·U1·Q1·P2b·L1·H1·U2 (아래) |
+| 8b25e7e | 기능 A '방문처별 준비물 한 장' + 기능 B '한눈에 보기'(금액·기한), 파이프라인 money·due 추출, 번들 재생성 |
+| 9f192b4 | QA 6차 후속 — 5차 검증 N1·N2·N3·N4·N5·N7·N8 + 청소년상담 만 24세 안내 (N6 제외) |
+| (이 문서) | docs/HANDOFF-ADDENDUM.md |
+
+작성자는 모두 `Yonghwan Kwon <230966293+yonghwan86@users.noreply.github.com>` (Vercel 자동 배포 조건). main 푸시 = https://bokji-compass.vercel.app 배포.
+
+## QA 5차 (1ea7b5a)
+
+- C3b: 학교 밖·가정 밖·학업 중단·고립은둔 등 특수 신분 청소년 사업은 나이만으로 '받으실 수 있어요'로 두지 않음 (`needsStatus`, `STATUS_KINDS` in `v2.ts`). '및·포함·또는'으로 일반 학생과 함께 적힌 경우는 조건 아님.
+- U1: 대학생·대학원생·휴학생 문장 → 학생, 상위 5개에 장학금·학자금 (`topics.ts` student).
+- Q1·P2b: 먼저 확인할 5가지 관련도 — 장애·광업·임신 등 신호 없는 신분 한정 사업 감점/제외 (`topPicksV2`, `rankAdj`).
+- L1: 카드 '확인할 것:' 문구 정리. H1: 홈 그림 하트 나침반(`HeroArt.tsx`). U2: 390px '글자 크게'에서 머리 안내 줄 한 줄.
+- 리뷰어 검증(round5/verify): 7개 항목 프로덕션 통과, 회귀 없음.
+
+## 기능 A — 방문처별 준비물 한 장 (8b25e7e)
+
+- 결과 화면 '먼저 확인할 5가지' 아래 `sheet-cta` → 펼치면 `VisitSheet`.
+- 대상: 상위 5개(기본 담김, 빼기 가능) + 다른 목록 카드에서 '준비물 한 장에 담기'로 고른 것. 고른 상태는 `sessionStorage["bn.sheet.v1"]`(`{add, remove}` 사업 id만) — 상황 문장·나이·소득은 저장·전송하지 않음.
+- 신청하는 곳(주민센터·구청·고용센터·온라인 등, `howto.ts` KNOWN_PLACES)별로 묶고, 곳마다: 신청할 혜택·분류, 가져갈 것(같은 서류는 한 번만, 어느 혜택에 필요한지 '(모두)' 또는 혜택 이름), 해당하면 낼 서류, 신청서 서식(원문 첨부), 대리 신청 서류, 문의 전화. 원문에 구비서류가 없으면 '구비서류가 원문에 없어요 — 창구에 문의'. 원문이 '해당 없음'이면 그렇게 표시.
+- 인쇄: `html[data-print="sheet"]` + `@media print`로 이 장만, A4·여백 12mm, 한 장 목표(e2e에서 높이 < A4×1.05 확인). 인쇄·이미지에는 **지역 이름만**(나이·소득 없음).
+- PNG: `sheetImage.ts`가 캔버스로 1080px 폭 이미지를 그려 `복지나침반-방문처별-준비물.png` 저장. Web Share(파일 공유 가능한 브라우저에서만 '보내기' 단추). 모두 브라우저 안에서만.
+- 모듈: `src/lib/client/visit.ts`(502줄: 서류 문장 분해·정규화·묶기, `sheetDocs`·`buildVisitSheet`), `src/lib/client/sheetImage.ts`(128), `src/app/results/VisitSheet.tsx`(180).
+- 커버리지(상세 23,578건 기준, `sheetDocs`): 구비서류 목록을 뽑은 사업 4,831(20.5%), 원문이 '해당 없음' 3,852(16.3%), 원문에 구비서류 없음 → '창구에 문의' 14,895(63.2%). 신청서 서식 이름이 있는 사업 501.
+
+## 기능 B — 한눈에 보기 (금액·기한) (8b25e7e)
+
+- 결과 맨 위 `Summary`(`money-summary`): ① 받으실 수 있어요 N개 + 원문 금액('월/연/1회 최대 ○원', **원문 기준 최대, 더하지 않음**) ② 한 가지만 더 답하시면 N개가 정해져요 — 그 자리에서 답하기(소득은 `IncomeAsk` 입력, 나머지는 보기 단추) ③ 신청 기한이 있는 것(날짜 있는 것 먼저, '출생 후 1년 이내' 같은 사건 기준은 뒤). 나이를 먼저 물어야 할 때는 ②를 빼고 기존 질문이 위에.
+- 파이프라인 규칙 추출(LLM 없음): `pipeline/src/normalize/money.ts`(90줄), `due.ts`(85줄) → 번들 `money`·`due` 필드. 클라이언트 표시 규칙 `src/lib/client/money.ts`(110줄: 대출·융자·보증 금액/기한 제외, 사망 후 기한은 장제·유족 사업만).
+- 커버리지(`pipeline/out/report.md`): 금액 4,684건(지원내용 있는 13,421건 중 — max 2,978 / 연 387 / 월 1,084 / 1회 235), 기한 1,351건('상시' 아닌 신청기한 칸 3,532건 중 — 기간 464 / 사건 후 432 / 매년 455).
+- 표본 점검 20건: `docs/money-due-spot-check.md` (✓12 △6 ✗2 → ✗2와 가스냉방은 규칙 수정·테스트 추가).
+- 번들 크기: 전체 76.76MB → 78.19MB(+1.9%), national.json 1,852KB → 1,899KB(gzip 317KB → 332KB).
+
+## QA 6차 후속 (9f192b4)
+
+자세한 전·후 표는 `docs/fixes-round6.md`.
+
+- N1: '(자녀) 키우는/둔 엄마·아빠'(어미 없이)도 본인 찾기, 자녀 나이는 같은 구절의 학생 낱말에서.
+- N2: 본인 나이 19세 미만('열일곱살이에요' 등)은 본인 프로필(자녀·3인 가구로 바꾸지 않음). 자퇴·학교 안 다님·학업 중단 = 학교 밖 청소년 → 데이터에 있는 학교 밖 청소년 사업이 맨 위, 무상교육·교육급여 등 재학생 대상은 '맞지 않아요'. 결과 위 1388·꿈드림 안내(연락처는 데이터 원문 3건에서만 — 출처 링크 포함). '부모(보호자) 동의 필요'는 원문 문구가 있을 때만(나이 한정 그대로).
+  - `고등학교 자퇴한 열일곱살이에요 수원`: 전 = 자녀 13~18세·3인, 상위에 고등학교 무상교육 → 후 = 본인 만 17세, 학교 밖 청소년 건강검진·지원센터·꿈이음·권리침해 모니터링·교통비
+  - `학교 안 다니는 열여섯살 안산`: 전 = 지역만 읽음 → 후 = 본인 만 16세, 건강검진·지원센터·장학금·꿈이음·모니터링
+  - `고등학생 딸 키우는 엄마 안산`: 전 = 부모님 대신 찾기, 0개 → 후 = 본인·3인·자녀 13~18세, 5개('예요' 문장과 같음)
+- N3: 대학 신입생·새내기·입학·합격 = 학생. 성별 모르면 사회복무요원·병역·예비군 사업은 상위 5개에서 뺌.
+- N4: 이름이 장애인 대상인데 규칙 필수 조건에 장애가 없으면 — 장애 모름 '신청할 때 확인', 없음 '맞지 않아요'.
+- N5 청년도전지원사업 조건 문구, N7 대학생 자녀 19+, N8 5개 미만일 때 '이것을 알려 주시면' 한 줄, 청소년상담·동반자 카드 '만 24세까지 이용할 수 있어요'.
+- 새 모듈: `src/lib/client/cardNotes.ts`(36줄: `parentConsent`, `consentUnderAge`, `youthUpTo24`).
+- 페르소나 30문장 상위 5개 변화 없음. 분류 개수만: 장애인 이름 사업 1~8개 '답하면 정해져요' → '신청할 때 확인'.
+
+## 테스트 (9f192b4 기준)
+
+- vitest 501개 통과: `tests/unit` 413 + `pipeline/tests` 88.
+  - 47bc438 이후 추가: qa5 22, visit 12, money-client 6, howto +1, pipeline money 14, qa6 25.
+- Playwright 95개 통과(10개 파일; desktop-chromium 전체 + mobile-chromium 390×844 `@mobile`). 추가: qa5 8, features 7(요약·인라인 소득·묶음·담기/빼기·PNG·인쇄 에뮬레이션·axe), qa6 4(10대 학교 밖·부모 문장·동의 표시·axe).
+- axe serious/critical 0 (주요 화면 + 기능 화면). `tests/unit/rule-audit.test.ts` 통과. lint·tsc 통과.
+- 명령: `npx vitest run`, `fuser -k 3218/tcp; npx playwright test`(먼저 `npm run build:safe`), 프로덕션 `E2E_BASE_URL=https://bokji-compass.vercel.app npx playwright test`.
+
+## 주요 파일 크기 (줄)
+
+v2.ts 1,600 · parse.ts 1,005 · ResultsV2.tsx 783 · visit.ts 502 · VisitSheet.tsx 180 · sheetImage.ts 128 · money.ts(client) 110 · Summary.tsx 95 · pipeline money.ts 90 · due.ts 85 · topics.ts 85 · cardNotes.ts 36.
+
+## 스크린샷 (`shots/`)
+
+- 기능: feature-summary-desktop/mobile.png, feature-visit-sheet-desktop/mobile.png, feature-visit-sheet-print.pdf(1쪽)·.png
+- 6차: r6-teen-out-of-school-mobile.png, r6-parent-self-mobile.png, r6-consent-note-mobile.png
+
+## 알아 둘 것·한계
+
+- `build:safe`는 `logs/tmp/*.ts`까지 타입 검사함 — 깨진 임시 .ts를 두면 빌드 실패.
+- 금액은 원문 문장에서 규칙으로 뽑은 '최대' 값이라 가구·소득에 따라 실제와 다를 수 있음(화면에 명시). 기한은 '상시'·'예산 소진 시' 등은 표시 안 함.
+- 준비물 한 장의 서류는 원문 구비서류 칸 기준 — 63%는 원문에 없어 '창구에 문의'. 신청처는 원문 신청방법·수동 보강(apply-places) 기준.
+- 10대 본인 화면 문구는 성인 말투 그대로(가구 소득 질문 등). 자녀 나이를 안 말한 '아이 키우는 엄마'는 본인 나이부터 물음.
+- `DATA_GO_KR_SERVICE_KEY`는 출력·로그·커밋·Vercel 환경변수 금지(커밋은 `logs/tmp/commit.sh`가 키 검사 + gitleaks). `vercel login` 금지. 강제 푸시·히스토리 재작성은 소유자 확인 후에만.
