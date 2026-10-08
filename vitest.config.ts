@@ -6,5 +6,6 @@ export default defineConfig({
   test: {
     include: ["tests/unit/**/*.test.ts", "pipeline/tests/**/*.test.ts"],
     environment: "node",
+    setupFiles: ["tests/setup-date.ts"],
   },
 });
