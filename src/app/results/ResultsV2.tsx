@@ -394,6 +394,7 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
               sido={profile.sido}
               loading={!sheetIds.split("|").every((id) => detailsFor.split("|").includes(id) || details[id])}
               extra={sheetItems.filter((i) => !pickIds.split("|").includes(i.s.program.id)).length}
+              teen={isTeenSelf(sit, mode)}
               onClose={() => setSheetOpen(false)}
             />
           )}

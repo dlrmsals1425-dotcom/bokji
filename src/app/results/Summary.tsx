@@ -6,8 +6,8 @@
  *  3) 신청 기한이 있는 것 (가까운 순, 지난 것·모르는 것은 안 보임)
  */
 import Link from "next/link";
-import { dueRows, moneyLabel, moneyRows } from "@/lib/client/money";
-import { answersFor, type DimId, type Situation, type V2Item, type V2View } from "@/lib/client/v2";
+import { moneyLabel, moneyRows, summaryDueRows } from "@/lib/client/money";
+import { answersFor, needsChildren, teenSelf, type DimId, type Situation, type V2Item, type V2View } from "@/lib/client/v2";
 import type { FindMode } from "@/lib/client/mode";
 import type { Program } from "@/lib/data/types";
 import { IncomeAsk } from "./IncomeAsk";
@@ -21,8 +21,9 @@ export function Summary({ view, picks, sit, mode, question, onApply, onSkip, now
   const firstPicks = (ps: Program[]) => [...ps.filter((p) => pickIds.has(p.id)), ...ps.filter((p) => !pickIds.has(p.id))];
   const fitMoney = moneyRows(firstPicks(lead(view.fit)), 4);
   const decided = question ? view.ask.filter((g) => question.keys.includes(g[0].s.group)) : [];
-  const askMoney = moneyRows(firstPicks(lead(decided)), 3);
-  const dues = dueRows([...lead(picks), ...lead(view.fit), ...lead(view.office.slice(0, 20))], now ?? new Date(), 4);
+  // 10대 본인에게는 자녀가 있어야 받는 사업(기저귀·부모급여 등)을 금액 예시로 보이지 않음 (QA 7차 T1)
+  const askMoney = moneyRows(firstPicks(lead(decided)).filter((p) => !(teenSelf(sit) && needsChildren(p))), 3);
+  const dues = summaryDueRows(lead(picks), lead(view.fit), lead(view.office), sit.profile.children, now ?? new Date(), 4);
   const parent = mode === "parent";
   if (!view.fit.length && !question && !dues.length) return null;
   return (

@@ -42,6 +42,9 @@ describe("기한 (가까운 순, 지난 것·모르는 것은 안 보임)", () =
         P({ id: "past", name: "국가장학금", due: { kind: "period", text: "2026.5.22~6.22", quote: "", from: "2026-05-22", to: "2026-06-22" } }),
       ],
       NOW,
+      4,
+      // '출생 후' 기한은 아기·임신이 있을 때만 (QA 7차 P3)
+      { children: ["0-1"] },
     );
     expect(rows.map((r) => r.program.id)).toEqual(["near", "far", "after"]);
   });

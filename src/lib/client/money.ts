@@ -4,6 +4,7 @@
  * - 기한은 지난 것은 빼고 가까운 순서. 사건 뒤 n일 이내(출생 후 60일 등)는 날짜와 무관하게 맨 앞.
  */
 import type { Due, Money, Program } from "../data/types";
+import type { ChildBucket } from "../engine/profile";
 
 /** 349700 → '34만 9,700원', 1000000 → '100만원', 9500 → '9,500원' */
 export function formatWon(won: number): string {
@@ -79,7 +80,9 @@ export interface DueRow {
   due: DueView;
 }
 /** 기한이 있는 사업을 가까운 순으로 (지난 것·모르는 것은 뺌) */
-export function dueRows(programs: Program[], now: Date = new Date(), limit = 4): DueRow[] {
+/** 출생·출산 뒤 기한 ('출생 후 1년 이내') — 아기(0~1세)나 임신이 있을 때만 맞는 기한 */
+const BIRTH_DUE = /출생|출산|태어/;
+export function dueRows(programs: Program[], now: Date = new Date(), limit = 4, opts: { children?: ChildBucket[] | null } = {}): DueRow[] {
   const seen = new Set<string>();
   const rows: DueRow[] = [];
   for (const p of programs) {
@@ -88,12 +91,26 @@ export function dueRows(programs: Program[], now: Date = new Date(), limit = 4):
     // 대출·대부는 금액처럼 요약에서 뺀다. '사망 후 N개월'은 장제·유족 사업이 아니면 맨 위 요약에 두지 않는다
     if (/대출|대부|융자|보증/.test(p.name)) continue;
     if (p.due.kind === "after" && /사망/.test(p.due.text) && !/장제|장례|유족|사망|상조/.test(p.name)) continue;
+    // (QA 7차 P3) 열두 달 내내 접수 = 사실상 상시 ('매년 3~2월'), '출생 후 N'은 아기·임신이 있을 때만
+    if (p.due.kind === "annual" && new Set(p.due.months ?? []).size >= 12) continue;
+    if (p.due.kind === "after" && BIRTH_DUE.test(p.due.text) && !(opts.children ?? []).some((c) => c === "0-1" || c === "pregnant")) continue;
     const v = dueView(p.due, now);
     if (v) rows.push({ program: p, due: v });
   }
   // 날짜가 있는 것(가까운 순) 먼저, '출생 후 1년 이내'처럼 사건 기준인 것은 그다음
   const rank = (d: DueRow) => (d.due.days < 0 ? Number.MAX_SAFE_INTEGER : d.due.days);
   return rows.sort((a, b) => rank(a) - rank(b)).slice(0, limit);
+}
+
+/**
+ * 한눈에 보기의 '신청 기한이 있는 것' (QA 7차 P3): 먼저 확인할 5가지 + 받으실 수 있어요에서만.
+ * '신청할 때 확인'은 먼저 확인할 5가지에 든 것만 (상황과 무관한 '청소년자문단 운영 지원' 같은 줄이 섞이던 문제) — 출생 뒤 기한은 예외.
+ */
+export function summaryDueRows(picks: Program[], fit: Program[], office: Program[], children: ChildBucket[] | null | undefined, now: Date = new Date(), limit = 4): DueRow[] {
+  const inPicks = new Set(picks.map((p) => p.id));
+  // 출생 뒤 기한은 아기·임신이 있으면 '신청할 때 확인'이어도 둔다 (dueRows 가 아기·임신일 때만 남김)
+  const officeDue = office.filter((p) => inPicks.has(p.id) || (p.due?.kind === "after" && BIRTH_DUE.test(p.due.text)));
+  return dueRows([...picks, ...fit, ...officeDue], now, limit, { children });
 }
 
 /** 금액이 원문에 있는 사업 (순서는 넘겨준 관련도 순서 그대로) */

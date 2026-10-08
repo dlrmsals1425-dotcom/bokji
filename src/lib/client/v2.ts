@@ -5,7 +5,7 @@
  */
 import { evaluateCond, evaluateRule } from "../engine/evaluate";
 import {
-  AGE_BANDS, AGE_LABEL, BASIC_PENSION_THRESHOLD_2026, BENEFITS, CHILD_LABEL, HOUSEHOLD_TRAITS, INCOME_BANDS, ageRange, incomeBandFor, incomeRange, medianWon,
+  AGE_BANDS, AGE_LABEL, BASIC_PENSION_THRESHOLD_2026, EMPTY_PROFILE, BENEFITS, CHILD_LABEL, HOUSEHOLD_TRAITS, INCOME_BANDS, ageRange, incomeBandFor, incomeRange, medianWon,
   type Benefit, type HouseholdTrait, type IncomeBand, type Profile,
 } from "../engine/profile";
 import type { Cond, EvalOptions, Evaluation, Leaf, Reason } from "../engine/types";
@@ -355,7 +355,13 @@ const seniorOf = (s: Situation) => {
 /** 기초연금·장기요양 질문: 부모님 찾기는 나이를 모를 때도, 본인 찾기는 60세 이상이라고 답했을 때만 */
 const seniorQuestion = (s: Situation) => (s.mode === "self" ? seniorOf(s) === "yes" : seniorOf(s) !== "no");
 /** 자녀·임신 질문: 본인 찾기에서 60세 미만(또는 나이 모름)일 때만 */
-const childQuestion = (s: Situation) => s.mode === "self" && seniorOf(s) !== "yes";
+/** 만 19세 미만 본인 (QA 5차 검증 N2, 7차 T1) */
+export const teenSelf = (s: Situation) => s.mode === "self" && (ageBoundsOf(s)?.[1] ?? 120) <= 18;
+/** 자녀가 있어야 받는 사업 (자녀·자녀 나이 조건) — 10대 본인 화면의 금액 예시에서 뺀다 (QA 7차 T1) */
+export const needsChildren = (p: Program) =>
+  leavesOf(p.rule.logic).some((l) => !l.soft && (l.field === "children" || l.field === "childAge")) && evaluateRule(p.rule, { ...EMPTY_PROFILE, children: [] }).tier === "ineligible";
+// 10대 본인에게는 자녀 질문을 하지 않는다 (QA 7차 T1: '학교 안 다니는 열여섯살'에 '함께 사는 자녀가 있나요?')
+const childQuestion = (s: Situation) => s.mode === "self" && seniorOf(s) !== "yes" && !teenSelf(s);
 
 export const dimAvailable = (d: Dim, s: Situation) => !d.avail || d.avail(s);
 
@@ -408,7 +414,10 @@ export const DIMS: Dim[] = [
   },
   {
     id: "income",
-    q: (m) => subj(m, "가구 전체의 한 달 소득은 얼마쯤인가요?", "부모님 가구의 한 달 소득은 얼마쯤인가요?"),
+    q: (m, s) =>
+      s && teenSelf(s)
+        ? "집 전체(부모님·보호자 포함) 한 달 소득은 얼마쯤인가요? 잘 모르면 '모름'을 눌러도 돼요."
+        : subj(m, "가구 전체의 한 달 소득은 얼마쯤인가요?", "부모님 가구의 한 달 소득은 얼마쯤인가요?"),
     help: "일해서 버는 돈·연금·임대료 등을 모두 더한 금액이에요. 대략이면 충분해요.",
     isUnknown: (s) => s.x.incomeManwon === null && s.profile.income === "unknown",
     answers: INCOME_BANDS.map((b) => ({ key: b, label: b, apply: (s: Situation) => withP(withX(s, { incomeManwon: null }), { income: b }) })),
@@ -1407,6 +1416,8 @@ export function topPicksV2(view: Pick<V2View, "fit" | "office"> & Partial<Pick<V
       // 이름에 장애가 적힌 사업은 장애를 말하지 않았으면 넣지 않음 (QA 5차 Q1: '실직했어요'에 '장애학생 취업지원')
       if (sit && !forced && DISABILITY_NAME.test(p.name) && sit.profile.disability !== "self" && sit.profile.disability !== "member") continue;
       // '청소년'(9~24세) 사업은 성인(만 19세 이상)에게 나이만 맞은 것 — 먼저 확인할 것에는 두지 않음 (QA 5차 C3b: 22세 대학생에게 청소년 상담·동반자)
+      // 10대 본인에게 대학생 사업은 먼저 확인할 것에 두지 않음 (QA 7차: 중학생에게 '대학생 청소년교육지원장학금')
+      if (sit && !onTopic && teenSelf(sit) && /대학(?:생|교)|대학원/.test(p.name)) continue;
       if (sit && !onTopic && YOUTH_NAME.test(p.name) && (ageBoundsOf(sit)?.[0] ?? 0) >= 19 && !(sit.profile.children ?? []).some((c) => c === "6-12" || c === "13-18")) continue;
       if (sit && !forced && !familySignal(sit) && (GENDERED_NAME.test(p.name) || g[0].base.ev.reasons.some((r) => r.kind !== "met" && GENDERED_WHY.test(r.text)))) continue;
       // '30대 중반'처럼 범위로 말했으면 범위 전체가 맞는 사업은 둔다 (QA 4차 R1: 두 나이대에 걸치면 추천이 1개뿐이던 문제)
