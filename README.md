@@ -184,3 +184,9 @@ npm run pipeline && npm run build
 - **데이터 갱신**: 로컬에서 `npm run ingest:gov24 && npm run ingest:bokjiro && npm run pipeline` → `public/bundles/v1` 커밋 → 푸시(또는 `vercel --prod`).
 - CLI 배포: `vercel link --yes --project bokji-compass` → `vercel --prod --yes`.
 
+## 글꼴·로고 저작권 (NOTICE)
+
+- 로고(`public/brand/`), 앱 아이콘(`src/app/icon.svg`, `src/app/apple-icon.png`, `public/icons/`), 공유 이미지(`public/og.png`)의 글자는 **Pretendard** 글꼴에서 글자 모양을 윤곽선(path)으로 변환한 것입니다. 글꼴 파일은 포함하지 않습니다.
+- Pretendard — SIL Open Font License 1.1. Copyright (c) 2021, Kil Hyung-jin, with Reserved Font Name Pretendard.
+- 하트·나침반 바늘 그림은 코드로 직접 그린 도형입니다.
+- 화면에서는 `/about#credits`에 같은 표기가 있습니다.

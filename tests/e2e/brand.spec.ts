@@ -1,0 +1,48 @@
+import { expect, test } from "@playwright/test";
+
+/** 새 앱 아이콘(B)·머리글 로고(E2) 반영 확인 */
+const ASSETS: [string, RegExp][] = [
+  ["/favicon.ico", /image\/(x-icon|vnd\.microsoft\.icon)/],
+  ["/icon.svg", /image\/svg\+xml/],
+  ["/apple-icon.png", /image\/png/],
+  ["/manifest.webmanifest", /application\/manifest\+json/],
+  ["/og.png", /image\/png/],
+  ["/icons/icon-192.png", /image\/png/],
+  ["/icons/icon-512.png", /image\/png/],
+  ["/icons/icon-maskable-512.png", /image\/png/],
+  ["/brand/logo-e2.svg", /image\/svg\+xml/],
+  ["/brand/logo-symbol.svg", /image\/svg\+xml/],
+];
+
+test.describe("브랜드", () => {
+  test("아이콘·매니페스트·공유 이미지가 올바른 형식으로 제공됨", async ({ request }) => {
+    for (const [path, type] of ASSETS) {
+      const r = await request.get(path);
+      expect(r.status(), path).toBe(200);
+      expect(r.headers()["content-type"], path).toMatch(type);
+    }
+    const m = await (await request.get("/manifest.webmanifest")).json();
+    expect(m.theme_color).toBe("#1D4ED8");
+    expect(m.icons.map((i: { src: string }) => i.src)).toEqual(["/icons/icon-192.png", "/icons/icon-512.png", "/icons/icon-maskable-512.png"]);
+    expect(m.icons[2].purpose).toBe("maskable");
+  });
+
+  test("머리글 로고: 이름 '복지나침반', 홈 링크, 아이콘·테마 색 태그, '글자 크게'에서 함께 커짐 @mobile", async ({ page }) => {
+    await page.goto("/");
+    const logo = page.locator("header.site-header a.logo img");
+    await expect(logo).toHaveAttribute("alt", "복지나침반");
+    await expect(logo).toHaveAttribute("src", "/brand/logo-e2.svg");
+    await expect(page.locator("header.site-header a.logo")).toHaveAttribute("href", "/");
+    await expect(page.getByRole("link", { name: "복지나침반 홈" })).toBeVisible();
+    expect(await logo.evaluate((i: HTMLImageElement) => i.complete && i.naturalWidth > 0)).toBe(true);
+    await expect(page.locator('meta[name="theme-color"]')).toHaveAttribute("content", "#1D4ED8");
+    await expect(page.locator('link[rel="manifest"]')).toHaveCount(1);
+    await expect(page.locator('link[rel="icon"][type="image/svg+xml"]')).toHaveCount(1);
+    await expect(page.locator('link[rel="apple-touch-icon"]')).toHaveCount(1);
+    const h0 = (await logo.boundingBox())!.height;
+    expect(Math.round(h0)).toBe(32);
+    await page.getByTestId("large-text").click();
+    await expect.poll(async () => Math.round((await logo.boundingBox())!.height)).toBe(40);
+    await expect(page.locator("footer .foot-brand img")).toHaveAttribute("src", "/brand/logo-symbol.svg");
+  });
+});

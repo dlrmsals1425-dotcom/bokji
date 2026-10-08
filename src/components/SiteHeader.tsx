@@ -11,12 +11,10 @@ const NAV = [
   { href: "/about", label: "데이터·판정 기준" },
 ];
 
+/** 하트 나침반 심볼 (푸터 등 작은 표시). 장식이므로 대체 텍스트 없음 — 옆에 '복지나침반' 글자가 함께 나옴 */
 export function LogoMark() {
-  return (
-    <span className="logo-mark" aria-hidden="true">
-      <Icon name="compass" size={20} strokeWidth={2} />
-    </span>
-  );
+  // eslint-disable-next-line @next/next/no-img-element -- 벡터 로고: 최적화 불필요, rem 크기로 '글자 크게'와 함께 커짐
+  return <img className="logo-symbol" src="/brand/logo-symbol.svg" alt="" aria-hidden="true" width={31} height={28} />;
 }
 
 export function SiteHeader() {
@@ -46,8 +44,8 @@ export function SiteHeader() {
       <header className="site-header">
         <div className="wrap">
           <Link href="/" className="logo" aria-label="복지나침반 홈">
-            <LogoMark />
-            복지나침반
+            {/* eslint-disable-next-line @next/next/no-img-element -- 벡터 로고(글자는 윤곽선), rem 높이로 '글자 크게'와 함께 커짐 */}
+            <img className="logo-img" src="/brand/logo-e2.svg" alt="복지나침반" width={138} height={32} />
           </Link>
           {nav("header-nav")}
           <div className="header-actions">
