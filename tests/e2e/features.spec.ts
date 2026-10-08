@@ -42,7 +42,9 @@ test.describe("한눈에 보기 (금액·기한)", () => {
     const next = page.getByTestId("sum-next");
     await expect(next).toContainText(/한 가지만 더 답하시면 \d+개가 정해져요/);
     await expect(next).toContainText("소득");
-    await expect(next.getByTestId("sum-next-money")).toContainText("최대");
+    // 생계급여·긴급복지는 원문이 가구원 수별 표라 큰 가구 금액 대신 '가구원 수에 따라 달라요' (QA 7차 M2)
+    await expect(next.getByTestId("sum-next-money")).toContainText(/최대|가구원 수에 따라 달라요/);
+    await expect(next.getByTestId("sum-next-money")).not.toContainText("241만 8,150원");
     const before = await page.getByTestId("sum-fit").innerText();
     await next.getByTestId("sum-a-income-input").fill("80");
     await next.getByTestId("sum-a-income-ok").click();

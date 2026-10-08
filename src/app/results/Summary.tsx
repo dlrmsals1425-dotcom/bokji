@@ -6,7 +6,7 @@
  *  3) 신청 기한이 있는 것 (가까운 순, 지난 것·모르는 것은 안 보임)
  */
 import Link from "next/link";
-import { moneyLabel, moneyRows, summaryDueRows } from "@/lib/client/money";
+import { moneyRows, summaryDueRows } from "@/lib/client/money";
 import { answersFor, needsChildren, teenSelf, type DimId, type Situation, type V2Item, type V2View } from "@/lib/client/v2";
 import type { FindMode } from "@/lib/client/mode";
 import type { Program } from "@/lib/data/types";
@@ -38,9 +38,9 @@ export function Summary({ view, picks, sit, mode, question, onApply, onSkip, now
           </p>
           {fitMoney.length > 0 ? (
             <ul className="sum-money">
-              {fitMoney.map(({ program: p, money }) => (
+              {fitMoney.map(({ program: p, money, label }) => (
                 <li key={p.id}>
-                  <Link href={`/p/${encodeURIComponent(p.id)}`}>{p.name}</Link> <span className="sum-amt" title={`원문: ${money.quote}`}>{moneyLabel(money)}</span>
+                  <Link href={`/p/${encodeURIComponent(p.id)}`}>{p.name}</Link> <span className="sum-amt" title={`원문: ${money.quote}`}>{label}</span>
                 </li>
               ))}
             </ul>
@@ -56,7 +56,7 @@ export function Summary({ view, picks, sit, mode, question, onApply, onSkip, now
             <p className="small">{question.dim.q(mode, sit)}</p>
             {askMoney.length > 0 && (
               <p className="small muted" data-testid="sum-next-money">
-                그중 금액이 원문에 있는 것: {askMoney.map(({ program: p, money }) => `${p.name} ${moneyLabel(money)}`).join(" · ")}
+                그중 금액이 원문에 있는 것: {askMoney.map(({ program: p, label }) => `${p.name} ${label}`).join(" · ")}
               </p>
             )}
             {question.dim.id === "income" ? (
