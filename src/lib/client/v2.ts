@@ -675,6 +675,8 @@ const STATUS_KINDS: StatusKind[] = [
   // (QA 4차 C3·S3) 특수 신분·사건 당사자 — 자녀·본인 나이 코드만으로 '받으실 수 있어요'가 되던 사업
   { re: /출생\s*(?:미등록|신고\s*(?:가\s*)?(?:되지|안\s*된|못\s*한))|출생\s*등록(?:을|이)?\s*(?:되지|못|안)|가족\s*관계\s*미등록/, label: "출생 등록이 안 된 아동", strong: true },
   { re: /소년\s*[·ㆍ]?\s*소녀\s*가장|소년\s*[·ㆍ]?\s*소녀\s*가정/, label: "소년·소녀가장 가정", strong: true, lead: 1 },
+  // (QA 7차 P4) 소년법 보호처분 등 — 처분 여부는 간편 입력으로 묻지 않음 ('청소년회복지원시설운영' 대상: 제1호 보호자 감호위탁)
+  { re: /소년법|보호\s*처분|감호\s*위탁|소년원|보호\s*관찰\s*(?:대상|청소년|중)/, label: "보호처분 등 법원 처분을 받은 청소년", strong: true },
   { re: /(?:특허\s*)?심판\s*(?:사건\s*)?(?:의\s*)?당사자|(?:소송|사건|재판|심판|분쟁)\s*(?:의\s*)?당사자|심판\s*청구인|구술\s*심리/, label: "심판·소송 사건 당사자", strong: true },
   { re: /대학(?:원)?\s*재학|대학(?:원)?생(?!\s*자녀)|사업\s*참여\s*대학/, label: "대학 재학", strong: false, skip: (s) => s.profile.activity === "student", coveredBy: "student" },
   // (QA 5차 C3b) 학교 밖·가정 밖·학업중단·고립은둔·위기 청소년 — 나이 코드(9~24세)만으로 '받으실 수 있어요'가 되던 사업.
@@ -954,10 +956,22 @@ export function pensionPossible(s: Situation): boolean {
 /** 기초연금을 말함 ('기초연금 받고 싶어요') + 아직 안 받음 + 65세 미만이 아님 */
 const pensionWanted = (s: Situation) => !!s.x.interests?.includes("basic_pension") && inferExtras(s).benefits.basic_pension !== true && (ageBoundsOf(s)?.[1] ?? 120) >= 65;
 /** 간편 입력이 묻지 않는 특별한 신분·처지 대상 (시설 보호아동·가정위탁·자립준비청년 등) — 목록에는 두되 먼저 확인할 것에는 넣지 않음 */
-export const SPECIAL_STATUS = /(출소|자살\s*(?:시도|유족)|출생\s*미등록|소년\s*[·ㆍ]?\s*소녀\s*가장|보호\s*대상\s*아동|유기\s*(?:및|·)?\s*위기\s*아동|가정\s*위탁|위탁\s*(?:아동|가정|부모)|아동\s*복지\s*시설|시설\s*(?:보호|입소|퇴소|아동)|자립\s*준비|보호\s*종료|입양|요보호|소년\s*소녀\s*가정|그룹\s*홈|공동\s*생활\s*가정|학교\s*밖|가정\s*밖|학업\s*(?:을\s*)?중단|은둔|고립\s*[·ㆍ]?\s*(?:청년|청소년|은둔)|위기\s*청소년|가출|청소년\s*쉼터|자립\s*지원관)/;
+export const SPECIAL_STATUS = /(회복\s*지원\s*시설|보호\s*처분|소년원|감호\s*위탁|출소|자살\s*(?:시도|유족)|출생\s*미등록|소년\s*[·ㆍ]?\s*소녀\s*가장|보호\s*대상\s*아동|유기\s*(?:및|·)?\s*위기\s*아동|가정\s*위탁|위탁\s*(?:아동|가정|부모)|아동\s*복지\s*시설|시설\s*(?:보호|입소|퇴소|아동)|자립\s*준비|보호\s*종료|입양|요보호|소년\s*소녀\s*가정|그룹\s*홈|공동\s*생활\s*가정|학교\s*밖|가정\s*밖|학업\s*(?:을\s*)?중단|은둔|고립\s*[·ㆍ]?\s*(?:청년|청소년|은둔)|위기\s*청소년|가출|청소년\s*쉼터|자립\s*지원관)/;
 /** 추천에서 뺄 이유가 적힌 '신청할 때 확인' (법인·시설·단체·직업 조건) */
 const PREG_CORE = /(행복\s*카드|건강\s*보험\s*임신\s*[·ㆍ]?\s*출산\s*진료비|산모\s*[·ㆍ]?\s*신생아\s*건강\s*관리|모자\s*보건\s*수첩|외래\s*진료비\s*본인\s*부담률|엽산제|첫\s*만남|산후\s*조리비)/;
 const OUT_OF_SCHOOL_CORE = /(학교\s*밖\s*청소년\s*(?:지원|건강\s*검진|자립|교통비|교육|급식)|꿈드림|검정\s*고시)/;
+/** 복지로 생애주기 태그 규칙 (자동 변환) — 이름과 무관하게 '청소년 자녀'·'성인' 같은 넓은 태그만 있음 */
+const LIFECYCLE_TAG = /^복지로 생애주기/;
+const CHILD_NAME = /(아동|아이|어린이|청소년|자녀|학생|학교|교육|교복|급식|가족|양육|보육|출산|임신|영유아|청년)/;
+const metOnlyByChild = (i: V2Item) => {
+  const met = i.base.ev.reasons.filter((r) => r.kind === "met");
+  // '성인(만 19세 이상)' 같은 넓은 태그로 맞은 나이는 내 상황과 이어진 근거가 아님
+  return met.some((r) => r.field === "childAge" || r.field === "children") && met.filter((r) => r.field === "age").every((r) => /성인|19세\s*이상/.test(r.text));
+};
+/** 선발형 장학금 (QA 7차 N6) */
+const SELECTIVE_SCHOLARSHIP = /(?=.*(?:장학|학자금))(?=.*(?:우수|성적|이공계|인문\s*100|특기|인재|수석|영재|전공))/;
+/** 자녀 본인이 참여하는 체험·창업·캠프·참여기구 (QA 7차 P4) */
+const KID_SELF_ACTIVITY = /(비즈쿨|창업|체험|캠프|동아리|자문단|참여\s*기구|어울림\s*마당|축제|경진\s*대회|공모전|봉사\s*활동)/;
 const STUDENT_CORE = /(국가\s*장학금\s*(?:Ⅰ|I|1)\s*유형|국가\s*근로\s*장학|취업\s*후\s*상환\s*학자금|학자금\s*(?:대출\s*)?이자)/;
 const PREG_SPECIAL = /(위기\s*임신|보호\s*출산|청소년\s*산모|고위험|분만\s*취약)/;
 /** 임신·출산·여성 대상 사업 — 성별·임신 신호가 없으면 먼저 확인할 것에 두지 않는다 (QA 4차 S4: '군 제대' 청년 1위 '임신 사전건강관리') */
@@ -1021,7 +1035,7 @@ const PICK_BLOCK_WHY = /(사는 곳 조건|법인·시설·단체|기관·시설
 export const PENSION_WHY = "소득만 보면 받으실 가능성이 높아요 — 재산(소득인정액)에 따라 달라요";
 /** 누구나 받거나 안내 위주인 보편 서비스 (예방접종·검진·할인·상담 창구) — 앞자리를 핵심 급여에 양보 */
 const UNIVERSAL_LOW = /(예방\s*접종|건강\s*검진|검진비|철도|공공\s*할인|생활\s*체육|스포츠\s*강좌|말벗|정신\s*건강\s*복지\s*센터|방문\s*건강\s*관리|안부)/;
-const ILLNESS_NAME = /(상병|수술|질환|치료비|환자|투병|난치|희귀|암\s*검진|치매)/;
+const ILLNESS_NAME = /(상병|수술|질환|치료비|환자|투병|난치|희귀|암\s*검진|치매|당뇨|투석|혈우)/;
 export function rankAdj(i: V2Item, sit: Situation): number {
   const p = i.s.program;
   if (VICTIM_RE.test(p.name)) return -6;
@@ -1038,6 +1052,11 @@ export function rankAdj(i: V2Item, sit: Situation): number {
   } // 위기·고위험 임신 신호 없이 영아 가구 1위가 되던 문제 (QA 5차 P2b)
   // 학교 밖 청소년: 학교밖청소년지원센터(꿈드림) 지원·건강검진·검정고시를 앞에 (QA 5차 검증 N2)
   if (sit.x.interests?.includes("out_of_school") && OUT_OF_SCHOOL_CORE.test(p.name)) return 6;
+  // 성적·전공·분야로 뽑는 장학금(이공계 우수학생 등)은 그 신호가 없으니 일반 장학금보다 뒤로 (QA 7차 N6)
+  if (SELECTIVE_SCHOLARSHIP.test(p.name)) return -2;
+  // 부모(자녀) 화면: 자녀 본인이 참여하는 체험·창업·캠프 사업은 뒤로 (QA 7차 P4: '고등학생 딸 키우는 엄마'에 '청소년비즈쿨')
+  const teen = sit.mode === "self" && (ageBoundsOf(sit)?.[1] ?? 120) <= 18;
+  if (!teen && KID_SELF_ACTIVITY.test(p.name) && (sit.profile.children ?? []).some((c) => c === "6-12" || c === "13-18")) return -3;
   // 문장에서 말한 주제(신혼·실직·아기·치매·월세·대학생 등)의 사업은 앞으로 — 이름에 주제가 있으면 +3, 대상 문구에만 있으면 +1 (QA 5차 Q1)
   if (topicalOf(p, sit).length) return 3;
   if (SPECIAL_STATUS.test(p.name)) return -4;
@@ -1394,6 +1413,8 @@ export function topPicksV2(view: Pick<V2View, "fit" | "office"> & Partial<Pick<V
       if (VICTIM_RE.test(p.name) || (SPECIAL_STATUS.test(p.name) && !(onTopic && sit?.x.interests?.includes("out_of_school") && OUT_OF_SCHOOL_RE.test(p.name)))) continue;
       // 남성만·병역 대상(사회복무요원 등)은 성별을 모르면 먼저 확인할 것에 두지 않음 (QA 5차 검증 N3)
       if (!onTopic && (MALE_ONLY_NAME.test(p.name) || g[0].base.ev.reasons.some((r) => r.kind !== "met" && MALE_ONLY_WHY.test(r.text)))) continue;
+      // 복지로 생애주기 태그가 자녀 나이로만 맞은 사업은 이름이 아동·청소년·교육·가족 사업일 때만 (QA 7차 P4: 고등학생 딸 엄마에 '대지급금')
+      if (sit && !onTopic && LIFECYCLE_TAG.test((p.rule.logic as { label?: string } | null)?.label ?? "") && !CHILD_NAME.test(p.name) && metOnlyByChild(g[0])) continue;
       // '법인·시설·단체 대상', '직업·자격 조건'이 적힌 항목은 추천하지 않는다 (QA 2차 M1·N3)
       if (g[0].base.why && PICK_BLOCK_WHY.test(g[0].base.why)) continue;
       // 이름에 대상 집단(한부모·다자녀·보훈·다문화·북한이탈)이 있는데 그 신호가 없으면 먼저 확인할 것에 두지 않는다 (QA 4차 S7: 월세 문장에 '한부모가족 임대주택')
