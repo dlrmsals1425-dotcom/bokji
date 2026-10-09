@@ -19,13 +19,13 @@ import { saveSituation, situationOf } from "@/lib/client/start";
 import { PRESETS } from "@/lib/client/presets";
 import { checkPath, coupleNote, resultsCopy, type FindMode } from "@/lib/client/mode";
 import {
-  BUCKET_LABEL, LOW_INCOME_PCT, ageBoundsOf, ageSpanOf, answersFor, autoV2, buildView, classify, inferredNoRecipient, plainLine, scoreV2, situationChips, topPicksV2,
+  BUCKET_LABEL, LOW_INCOME_PCT, cohabitParentPicks, cohabitParentSit, ageBoundsOf, ageSpanOf, answersFor, autoV2, buildView, classify, inferredNoRecipient, plainLine, scoreV2, situationChips, topPicksV2,
   type Bucket, type DimId, type Situation, type V2Item,
 } from "@/lib/client/v2";
 import { consentUnderAge, parentConsent, youthUpTo24 } from "@/lib/client/cardNotes";
 import type { Program } from "@/lib/data/types";
 import { dateLabel, periodEnded } from "@/lib/client/period";
-import { ageRange, type Profile } from "@/lib/engine/profile";
+import { AGE_LABEL, ageRange, type Profile } from "@/lib/engine/profile";
 
 const FIRST = 10;
 const MORE = 20;
@@ -428,6 +428,7 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
               </span>
             </p>
           )}
+          {!parent && sit.x.interests?.includes("eldercare") && data && <CohabitParent programs={data.programs} sit={sit} />}
 
           {picks.length < 3 && askFirst && (
             <p className="notice" data-testid="picks-need-age" role="note">
@@ -788,6 +789,43 @@ function isTeenSelf(sit: Situation, mode: FindMode): boolean {
   if (mode !== "self") return false;
   const b = ageBoundsOf(sit);
   return !!b && b[1] <= 18;
+}
+
+/** 함께 사는 부모님께 맞는 혜택 (결정 1b): 그분 나이대를 고르면 같은 지역 부모님 찾기 기준 먼저 확인할 5가지. 고른 나이는 이 화면에서만 씀(저장·전송 안 함) */
+const COHAB_BANDS = ["60-64", "65-69", "70-74", "75-79", "80+"] as const;
+function CohabitParent({ programs, sit }: { programs: Program[]; sit: Situation }) {
+  const [band, setBand] = useState<(typeof COHAB_BANDS)[number] | null>(null);
+  const picks = useMemo(() => (band ? cohabitParentPicks(programs, sit, band) : []), [programs, sit, band]);
+  const ps = band ? cohabitParentSit(sit, band) : null;
+  return (
+    <section className="v2-sec cohab no-print" aria-labelledby="cohab-h" data-testid="cohab-parent">
+      <h2 className="h2" id="cohab-h">
+        함께 사시는 부모님께 맞는 혜택
+      </h2>
+      <p className="body">장인·장모·시부모님 등 함께 사시는 분의 나이대를 고르시면, 그분 기준으로 먼저 확인할 혜택을 보여 드려요. 이 기기 안에서만 계산해요.</p>
+      <div className="btn-row v2-answers" role="group" aria-label="함께 사시는 분 나이대">
+        {COHAB_BANDS.map((b) => (
+          <button key={b} type="button" className={`btn btn-sm ${band === b ? "btn-primary" : "btn-ghost"}`} aria-pressed={band === b} onClick={() => setBand(b)} data-testid={`cohab-age-${b}`}>
+            {AGE_LABEL[b]}
+          </button>
+        ))}
+      </div>
+      {band && ps && (
+        <>
+          {picks.length > 0 ? (
+            <div className="v2-list" data-testid="cohab-picks">
+              {picks.map((g) => (
+                <V2Card key={g[0].s.program.id} item={g[0]} more={g.length - 1} sit={ps} mode="parent" />
+              ))}
+            </div>
+          ) : (
+            <p className="muted">이 나이대로 먼저 확인할 혜택을 고르지 못했어요.</p>
+          )}
+          <p className="small muted">그분 나이대만으로 고른 것이에요. 소득·건강·장기요양 등을 더 답하시려면 &lsquo;부모님 기준으로 따로 찾기&rsquo;를 이용하세요.</p>
+        </>
+      )}
+    </section>
+  );
 }
 
 /** 원문 신청기간이 끝난 사업 */
