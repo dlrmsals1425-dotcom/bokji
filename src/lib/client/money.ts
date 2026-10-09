@@ -116,6 +116,18 @@ const WAGE_BEFORE = /(?:임금|(?<!중개\s?)보수|월\s*급여|급여\s*[:：]
 /** 보험 사업의 보장액 (사망·후유장해·진단비 등). 유족에게 주는 위로금·장제비는 보험 사업이 아니라 그대로 둔다 */
 const INSURANCE_NAME = /보험/;
 const PREMIUM_BEFORE = /보험료/;
+/** 보험 사업의 금액 중 보장액만 (PR #1 리뷰: '건강보험 임신·출산 진료비'의 140만원·'고용보험 미적용자 출산급여'의 150만원은 혜택) */
+/** 이름이 보험 상품 자체(시민안전보험·상해보험·화재보험·배상책임보험 등) — 금액은 보장액 (보험료 지원 금액만 혜택) */
+const INSURANCE_PRODUCT = /(?:안전|상해|화재|배상\s*책임|안심|농기계|자전거|단체)\s*보험(?!\s*료)/;
+/** 그 밖의 '보험' 이름(건강보험 진료비·고용보험 출산급여·보험료 지원)은 금액 앞뒤에 보장 낱말이 있을 때만 */
+const COVER_BEFORE = /(?:사망|후유\s*장[해애]|상해|보장|보험금|진단비|장례비|배상\s*책임|부상)[^\n]{0,24}$/;
+const COVER_AFTER = /^\s*(?:보장|한도)/;
+/** 금액 바로 뒤 '이하인' — 대상 기준값 ('22,800원(…2,640원) 이하인 노인') */
+const CRITERION_AFTER = /^[\s)）]*이하\s*인/;
+/** '총 … 지원한도액 : 15,800천원' — 사업 전체 한도 */
+const BUDGET_BEFORE = /총[^\d]{0,16}한도\s*액?\s*[:：]?\s*$/;
+/** 가구원 수가 기준값을 설명하는 말 ('2인 가구 기준 중위소득의 475/1000') — 금액 표가 아님 */
+const HH_BENCHMARK = /[(（]?\s*\d\s*인\s*가구\s*기준\s*중위\s*소득[^)）]*[)）]?/g;
 /** 금액 바로 앞뒤의 단가 ('시간당 5천원 중 3천원', '9,000원(1식)', '1박 1만원'). '임신·출산 1회당'은 한 번 주는 돈이라 뺌 */
 const UNIT_BEFORE = /(?:시간\s*당|(?<![임출][신산]\s?)(?<!\d)1?\s*회\s*당|건\s*당|(?<!\d)1\s*식|(?<!\d)1\s*일\s*당?|(?<!\d)1\s*박|30\s*분\s*당)[^\d]{0,8}(?:[\d,.]+\s*(?:만|천)?\s*원\s*중\s*)?$/;
 const UNIT_AFTER = /^\s*(?:\/\s*(?:1\s*인\s*[·,]\s*)?(?:1\s*식|1\s*박|1\s*일|1?\s*회|1?\s*시간)|\(\s*(?:1\s*식|1\s*박|1?\s*회\s*당|시간\s*당)\s*\))/;
@@ -125,16 +137,16 @@ const SMALL_WON = 50_000;
 const WON_RE = /(\d+(?:,\d{3})*(?:\.\d+)?)\s*(억|천만|만|천)?\s*(?:(\d+(?:,\d{3})*)\s*(천)?)?\s*원/g;
 const WON_UNIT: Record<string, number> = { 억: 1e8, 천만: 1e7, 만: 1e4, 천: 1e3 };
 
-/** 인용 안에서 이 금액이 적힌 자리의 앞뒤 (못 찾으면 인용 전체를 앞으로 본다) */
-function around(m: Money): { before: string; after: string } {
-  let hit: { before: string; after: string } | null = null;
+/** 인용 안에서 이 금액이 적힌 자리의 앞뒤 (못 찾으면 인용 전체를 앞으로 본다). fullBefore: 인용 처음부터 금액 앞까지 */
+function around(m: Money): { before: string; after: string; fullBefore: string } {
+  let hit: { before: string; after: string; fullBefore: string } | null = null;
   for (const x of m.quote.matchAll(WON_RE)) {
     const v = Math.round(Number(x[1].replace(/,/g, "")) * (x[2] ? WON_UNIT[x[2]] : 1) + (x[3] ? Number(x[3].replace(/,/g, "")) * (x[4] ? 1e3 : 1) : 0));
     if (v !== m.won) continue;
     const i = x.index ?? 0;
-    hit = { before: m.quote.slice(Math.max(0, i - 24), i), after: m.quote.slice(i + x[0].length, i + x[0].length + 12) };
+    hit = { before: m.quote.slice(Math.max(0, i - 24), i), after: m.quote.slice(i + x[0].length, i + x[0].length + 12), fullBefore: m.quote.slice(0, i) };
   }
-  return hit ?? { before: m.quote, after: "" };
+  return hit ?? { before: m.quote, after: "", fullBefore: m.quote };
 }
 
 export interface MoneyView {
@@ -144,13 +156,17 @@ export interface MoneyView {
 }
 /** 요약에 쓸 금액 문구. 혜택이 아닌 금액(임금·보험 보장액·단가)이면 null */
 export function moneyView(m: Money, name = ""): MoneyView | null {
-  const { before, after } = around(m);
+  const { before, after, fullBefore } = around(m);
   if (WAGE_BEFORE.test(before)) return null;
-  if (INSURANCE_NAME.test(name) && !PREMIUM_BEFORE.test(before)) return null;
+  if (INSURANCE_NAME.test(name) && !PREMIUM_BEFORE.test(before) && (INSURANCE_PRODUCT.test(name) || COVER_BEFORE.test(before) || COVER_AFTER.test(after))) return null;
+  if (CRITERION_AFTER.test(after) || BUDGET_BEFORE.test(before)) return null;
   if (UNIT_BEFORE.test(before) || UNIT_AFTER.test(after)) return null;
-  if (m.won < SMALL_WON && UNIT_WORD.test(m.quote)) return null;
-  const distinctN = new Set([...m.quote.matchAll(HH_PAIR)].map((x) => x[1])).size;
-  if (!HH_ANY.test(m.quote) && (HH_TABLE.test(m.quote) || distinctN >= 2)) return { money: m, label: "가구원 수에 따라 달라요" };
+  // 작은 금액: 그 금액 자리 앞뒤에 단가 낱말이 있으면 단가. 바로 앞이 '월·연'이면 기간 합계라 그대로 ('1일 1식 500원 지원(월 10,000원)')
+  const tail = before.split(/\d[\d,.]*\s*(?:만|천)?\s*원/).pop() ?? before;
+  if (m.won < SMALL_WON && UNIT_WORD.test(fullBefore + after) && !/(?:월|연|매월|매달)\s*$/.test(tail)) return null;
+  const hhText = m.quote.replace(HH_BENCHMARK, " ");
+  const distinctN = new Set([...hhText.matchAll(HH_PAIR)].map((x) => x[1])).size;
+  if (!HH_ANY.test(hhText) && (HH_TABLE.test(hhText) || distinctN >= 2)) return { money: m, label: "가구원 수에 따라 달라요" };
   return { money: m, label: wording(m, before, after) };
 }
 
