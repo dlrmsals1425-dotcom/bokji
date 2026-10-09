@@ -3,7 +3,7 @@
  * 결과 (기본 화면): 답한 상황과 맞지 않는 혜택은 본문에서 빼고, '모름'으로 남은 조건은 맨 위 짧은 질문(최대 3개)으로 다시 거른다.
  * 답하면 바로 다시 계산 (기기 안에서만). 예전 결과 화면은 /results?v=1 (비교용).
  */
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Icon } from "@/components/Icon";
@@ -24,6 +24,7 @@ import {
 } from "@/lib/client/v2";
 import { consentUnderAge, parentConsent, youthUpTo24 } from "@/lib/client/cardNotes";
 import type { Program } from "@/lib/data/types";
+import { dateLabel, periodEnded } from "@/lib/client/period";
 import { ageRange, type Profile } from "@/lib/engine/profile";
 
 const FIRST = 10;
@@ -168,7 +169,7 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
         : `먼저 확인할 것이 ${picks.length}개뿐이에요. 상황을 조금 더 적어 주시면(하는 일, 함께 사는 사람 등) 더 골라 드릴 수 있어요.`
       : null;
   const followUp = (
-    <section className="v2-follow no-print" aria-labelledby="fq-h" data-testid="v2-followup">
+    <section className="v2-follow no-print" id="v2-followup" aria-labelledby="fq-h" data-testid="v2-followup">
             {questions.length > 0 ? (
               <>
                 <h2 className="h2" id="fq-h">
@@ -436,8 +437,38 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
             id="v2-ask"
             bucket="ask"
             title="질문에 답하면 정해지는 혜택"
-            lead="맨 위 질문에 답하시면 '받으실 수 있어요' 또는 '맞지 않아요'로 옮겨요."
+            lead="위 '이것만 알려주시면' 질문에 답하시면 '받으실 수 있어요' 또는 '맞지 않아요'로 옮겨요."
             groups={view.ask.filter((g) => !picked.has(g))}
+            sit={sit}
+            mode={mode}
+            collapsed
+            action={
+              // 질문이 멀리 위에 있어 어디서 답하는지 안 보이던 문제 (운영자 피드백 2026-10-09)
+              questions.length > 0 ? (
+                <a href="#v2-followup" className="btn btn-tonal btn-sm" data-testid="v2-ask-go">
+                  <Icon name="listChecks" size={18} /> 질문에 답하러 가기
+                </a>
+              ) : skipped.length > 0 ? (
+                <button
+                  type="button"
+                  className="btn btn-tonal btn-sm"
+                  onClick={() => {
+                    setSkipped([]);
+                    setTimeout(() => document.getElementById("v2-followup")?.scrollIntoView({ block: "start" }), 50);
+                  }}
+                  data-testid="v2-ask-go"
+                >
+                  <Icon name="listChecks" size={18} /> &lsquo;모름&rsquo;으로 넘긴 질문 다시 답하기
+                </button>
+              ) : null
+            }
+          />
+          <BucketList
+            id="v2-closed"
+            bucket="no"
+            title="신청 기간이 지난 혜택"
+            lead="원문에 적힌 이번 신청 기간이 끝났어요. 해마다 다시 접수하는 사업도 있으니 다음 공고는 문의처에서 확인하세요."
+            groups={view.closed ?? []}
             sit={sit}
             mode={mode}
             collapsed
@@ -637,9 +668,9 @@ function Pick({ item, i, detail, loading, sit, mode, inSheet, onSheet }: { item:
 }
 
 function BucketList({
-  id, title, lead, groups, sit, mode, collapsed, top, sheet,
+  id, title, lead, groups, sit, mode, collapsed, top, sheet, action,
 }: {
-  id: string; bucket: Bucket; title: string; lead: string; groups: V2Item[][]; sit: Situation; mode: FindMode; collapsed?: boolean; top?: number; sheet?: SheetCtl;
+  id: string; bucket: Bucket; title: string; lead: string; groups: V2Item[][]; sit: Situation; mode: FindMode; collapsed?: boolean; top?: number; sheet?: SheetCtl; action?: ReactNode;
 }) {
   // 뒤로 가기로 돌아와도 펼친 '더 보기'를 유지 (QA 3차 M3) — 이 탭 안에서만, 목록 길이만 기억
   const memKey = `bokji-v2-limit-${id}-${groups.length}`;
@@ -682,12 +713,15 @@ function BucketList({
   );
   if (collapsed) {
     return (
-      <details className="details v2-sec" id={id} data-testid={id}>
-        <summary>
-          <span className="h3">{head}</span> <Icon name="chevronDown" size={18} />
-        </summary>
-        <div className="details-body">{body}</div>
-      </details>
+      <div className="v2-sec">
+        <details className="details" id={id} data-testid={id}>
+          <summary>
+            <span className="h3">{head}</span> <Icon name="chevronDown" size={18} />
+          </summary>
+          <div className="details-body">{body}</div>
+        </details>
+        {action && <p className="bucket-action no-print">{action}</p>}
+      </div>
     );
   }
   return (
@@ -715,6 +749,7 @@ function V2Card({ item, more, sit, mode, sheet }: { item: V2Item; more: number; 
         <Icon name={BUCKET_ICON[item.bucket]} size={16} /> <span>{plainLine(item, sit, mode)}</span>
       </p>
       <CardNotes p={p} sit={sit} mode={mode} />
+      <ClosedNote p={p} />
       <p className="meta">
         <span>{orgText(p)}</span>
         {where && <span>{where.length > 30 ? where.slice(0, 29) + "…" : where}</span>}
@@ -732,6 +767,17 @@ function isTeenSelf(sit: Situation, mode: FindMode): boolean {
   if (mode !== "self") return false;
   const b = ageBoundsOf(sit);
   return !!b && b[1] <= 18;
+}
+
+/** 원문 신청기간이 끝난 사업 */
+function ClosedNote({ p }: { p: Program }) {
+  const d = periodEnded(p);
+  if (!d) return null;
+  return (
+    <p className="small closed-note" data-testid="closed-note">
+      <Icon name="info" size={16} /> 이번 신청 기간이 {dateLabel(d)}에 끝났어요 (원문 기준). 다음 접수는 문의처에서 확인하세요.
+    </p>
+  );
 }
 
 /** 카드 안내 — 원문에 적힌 경우에만 (추측해서 붙이지 않음) */
