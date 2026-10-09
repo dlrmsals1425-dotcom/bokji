@@ -218,8 +218,8 @@ html[data-large="1"] .presets { grid-template-columns: repeat(2, minmax(0, 1fr))
 /* 폼 */
 fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
 legend { padding: 0; }
-.label { display: block; font-weight: 700; margin-bottom: 0.375rem; font-size: 1rem; }
-.hint { color: var(--muted); font-size: 0.9375rem; margin: -0.125rem 0 0.75rem; }
+.label { display: block; font-weight: 700; margin-bottom: 0.375rem; font-size: 1.0625rem; }
+.hint { color: var(--muted); font-size: 1rem; margin: -0.125rem 0 0.75rem; }
 .input, .select { width: 100%; font-size: 1.0625rem; border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 0.5rem 0.875rem; min-height: 3rem; background: #fff; }
 .input:hover, .select:hover { border-color: var(--ink-2); }
 .select:disabled { color: var(--muted); background: var(--surface); }
@@ -244,7 +244,7 @@ legend { padding: 0; }
 .opt input[type="radio"]:checked::after { content: ""; width: 0.5rem; height: 0.5rem; border-radius: 50%; background: #fff; }
 .opt input[type="checkbox"]:checked::after { content: ""; width: 0.6875rem; height: 0.375rem; border-left: 2px solid #fff; border-bottom: 2px solid #fff; transform: translateY(-0.0625rem) rotate(-45deg); }
 .opt input:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
-.opt span { line-height: 1.4; font-weight: 600; font-size: 1rem; }
+.opt span { line-height: 1.4; font-weight: 600; font-size: 1.0625rem; }
 .opt.unknown span { color: var(--ink-2); font-weight: 500; }
 .or { display: none; }
 .sensitive { margin-top: 2rem; padding: 0.25rem 0 0 1.25rem; border-left: 0.25rem solid var(--secondary-10); }
@@ -669,3 +669,7 @@ html[data-large="1"] .fgrid fieldset + fieldset { border-left: 0; border-top: 1p
 /* 신청 기간이 끝난 사업 · 접힌 목록 옆 바로 가기 (운영자 피드백 2026-10-09) */
 .closed-note { display: flex; gap: 0.375rem; align-items: flex-start; color: var(--ink-2); margin: 0.375rem 0 0; }
 .bucket-action { margin: 0.5rem 0 0; }
+
+/* 입력 화면 '더 답하기' (결정 5b): 드문 신분 질문을 접어 둠 */
+.sf-more { margin-top: 2rem; }
+.sf-more .details-body .field:first-child { margin-top: 0.5rem; }
