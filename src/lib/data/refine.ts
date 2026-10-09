@@ -160,7 +160,7 @@ export const EMPLOYMENT_SUPPORT_NOTES = ["만 15~69세 구직자 (원문)"];
 const RULE_FIX: Record<string, Pick<Rule, "logic" | "unstructured">> = {
   "R-n.gov24-149200005007": { logic: EMPLOYMENT_SUPPORT_LOGIC, unstructured: EMPLOYMENT_SUPPORT_NOTES },
 };
-/** 이미 다듬은(REFINE_VERSION) 번들 규칙에도 이 고침만 덧씌운다 — 버전을 올려 전체를 다시 다듬으면 원문 비율 보정이 한 번 더 걸리는 규칙이 있다 */
+/** 이미 다듬은 번들 규칙에도 이 고침을 덧씌운다 — 다시 다듬을 때는 원문을 보는 단계를 건너뛰므로(#11) 수기 규칙 고침은 여기서 직접 반영한다 */
 const withFix = (rule: Rule): Rule => (RULE_FIX[rule.id] && rule.logic !== RULE_FIX[rule.id].logic ? { ...rule, ...RULE_FIX[rule.id] } : rule);
 
 export function refineRule(p: { name: string; target?: string; criteria?: string }, rule: Rule): Rule {
