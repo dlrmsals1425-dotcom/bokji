@@ -178,15 +178,25 @@ export function howTo(detail: Program | undefined | null, lead: Program, sido?: 
 /** 구비 서류 원문 → 짧은 항목 최대 max개 (카드는 4개, 준비물 한 장은 전부) */
 export function parseDocs(s?: string, name?: string, max = 4): string[] {
   if (!s) return [];
+  // (QA 8차) 정부24 '본인 확인 필요' 서류(예: 주민등록등본 또는 초본)도 원문 서류라 뒤에 붙인다 — 빠뜨리면 준비물 요약을 믿고 신청할 때 빠짐
+  const self = /본인 확인 필요:\s*([^\n]*)/.exec(s)?.[1];
+  const main = parseDocsMain(s, name, max);
+  const extra = self ? parseDocsMain(self, name, max).filter((x) => !main.includes(x)) : [];
+  return [...main, ...extra].slice(0, max);
+}
+function parseDocsMain(s: string, name: string | undefined, max: number): string[] {
   // 괄호 안 쉼표로는 나누지 않는다 (QA 3차 L1: '임신 여부 확인 서류(임신확인서, 임신진단서 …)'의 예시가 따로 '가져갈 것'이 되던 문제)
   const t = s
     .replace(/본인 확인 필요:[\s\S]*$/, "")
+    .replace(/담당 공무원이 확인:[\s\S]*$/, "")
     .replace(/관련 서식·안내:[\s\S]*$/, "")
     .replace(/\(([^()]*)\)/g, (_m, inner: string) => `(${inner.replace(/[,·]/g, "\u2063")})`);
   const parts = t
     .split(/\s*(?:○|ㅇ|(?<![A-Za-z])-(?![A-Za-z])|·|•|\n|,)\s*/)
-    .map((x) => x.replace(/[*※].*$/, "").replace(/^\d+[.)]\s*/, "").trim())
+    .map((x) => x.replace(/[*※].*$/, "").replace(/^\d+[.)]\s*/, "").replace(/^\(\s*필수\s*\)\s*/, "").trim())
     .map((x) => x.replace(/\u2063/g, ","))
+    // 괄호 속 대체 서류가 길면 괄호를 줄인다 (QA 8차: '면접확인서(또는 면접확인서 대체서약서, 면접증빙서류)'가 길어서 빠지던 문제)
+    .map((x) => (x.length > 28 ? x.replace(/^([^()]{2,20})\((?:또는|혹은)[^()]*\)$/, "$1(또는 대체 서류)") : x))
     // 여러 대상 중 임신부만 내는 서류는 빼고 (예: 인플루엔자 접종 — 어르신 카드에 '임신진단서'), 임신·출산 사업이면 그대로
     .filter((x) => !name || /(임신|임산부|산모|출산|태아|난임)/.test(name) || !/(임신|산모|임산부)/.test(x))
     .filter((x) => x && !/^(해당\s*없음|본인\s*신청|대리\s*신청|없음)$/.test(x) && x.length <= 28);

@@ -17,6 +17,10 @@ const MODE_KEY = "bn.mode.v1";
 const FILLER_KEY = "bn.filler.v1";
 /** v2 시험판: 항목별 '모름'까지 담은 상황 답 (기기에만 저장) */
 const EXTRAS_KEY = "bn.facts.v1";
+/** (QA 8차) 본인·부모님 답을 따로 — 대상을 바꿔도 다른 사람의 나이·소득·하는 일이 넘어가지 않게 (기기에만 저장) */
+const DRAFT_KEY = "bn.drafts.v1";
+/** (QA 8차) 서비스 검색에서 고른 시·도/시·군·구 — 새로고침해도 유지 (주소에는 싣지 않음) */
+const SEARCH_REGION_KEY = "bn.searchRegion.v1";
 
 export interface Settings {
   large: boolean;
@@ -31,7 +35,7 @@ function emit() {
 function subscribe(cb: () => void) {
   listeners.add(cb);
   const onStorage = (e: StorageEvent) => {
-    if (e.key === PROFILE_KEY || e.key === SETTINGS_KEY || e.key === EXAMPLE_KEY || e.key === MODE_KEY || e.key === FILLER_KEY || e.key === EXTRAS_KEY) emit();
+    if (e.key === PROFILE_KEY || e.key === SETTINGS_KEY || e.key === EXAMPLE_KEY || e.key === MODE_KEY || e.key === FILLER_KEY || e.key === EXTRAS_KEY || e.key === DRAFT_KEY || e.key === SEARCH_REGION_KEY) emit();
   };
   window.addEventListener("storage", onStorage);
   return () => {
@@ -73,7 +77,7 @@ export function setSettings(patch: Partial<Settings>) {
   if (prev.shared !== next.shared) {
     const from = prev.shared ? sessionStorage : localStorage;
     const to = next.shared ? sessionStorage : localStorage;
-    for (const key of [PROFILE_KEY, EXAMPLE_KEY, MODE_KEY, FILLER_KEY, EXTRAS_KEY]) {
+    for (const key of [PROFILE_KEY, EXAMPLE_KEY, MODE_KEY, FILLER_KEY, EXTRAS_KEY, DRAFT_KEY, SEARCH_REGION_KEY]) {
       const raw = safeGet(from, key);
       try {
         from.removeItem(key);
@@ -126,9 +130,65 @@ export function saveProfile(p: Profile, exampleId?: string, mode?: FindMode, x?:
     if (mode) {
       profileStore().setItem(MODE_KEY, mode);
       modeCache = { raw: mode, value: mode };
+      if (x) writeDraft(mode, { profile: p, x });
     }
   } catch {}
   emit();
+}
+
+/* ---------- 서비스 검색 지역 ---------- */
+export interface SearchRegion {
+  sido: string | null;
+  sigungu: string | null;
+}
+let searchRegionCache: { raw: string | null; value: SearchRegion | null } = { raw: null, value: null };
+function readSearchRegion(): SearchRegion | null {
+  const raw = safeGet(profileStore(), SEARCH_REGION_KEY);
+  if (raw !== searchRegionCache.raw) {
+    let value: SearchRegion | null = null;
+    try {
+      const v = JSON.parse(raw ?? "null");
+      const ok = (x: unknown) => x === null || (typeof x === "string" && /^\d{5}$/.test(x));
+      if (v && typeof v === "object" && ok(v.sido) && ok(v.sigungu)) value = { sido: v.sido, sigungu: v.sigungu };
+    } catch {}
+    searchRegionCache = { raw, value };
+  }
+  return searchRegionCache.value;
+}
+export function saveSearchRegion(r: SearchRegion) {
+  try {
+    profileStore().setItem(SEARCH_REGION_KEY, JSON.stringify(r));
+  } catch {}
+  emit();
+}
+/** undefined = 확인 전(SSR), null = 고른 적 없음 */
+export function useSearchRegion(): SearchRegion | null | undefined {
+  return useSyncExternalStore(subscribe, readSearchRegion, () => undefined);
+}
+
+/* ---------- 대상별 답 (본인 / 부모님) ---------- */
+export interface Draft {
+  profile: Profile;
+  x: Extras;
+}
+function readDrafts(): Partial<Record<FindMode, Draft>> {
+  try {
+    const v = JSON.parse(safeGet(profileStore(), DRAFT_KEY) ?? "null");
+    return v && typeof v === "object" ? v : {};
+  } catch {
+    return {};
+  }
+}
+function writeDraft(mode: FindMode, d: Draft) {
+  try {
+    profileStore().setItem(DRAFT_KEY, JSON.stringify({ ...readDrafts(), [mode]: d }));
+  } catch {}
+}
+/** 이 대상(본인/부모님)으로 마지막에 저장한 답 (없으면 null — 다른 대상의 답을 대신 쓰지 않는다) */
+export function readDraft(mode: FindMode): Draft | null {
+  const d = readDrafts()[mode];
+  if (!d || typeof d !== "object" || !d.profile || !d.x) return null;
+  return { profile: { ...EMPTY_PROFILE, ...d.profile }, x: d.x };
 }
 
 function readExample(): string | null {
@@ -194,6 +254,8 @@ export function clearProfile() {
       store.removeItem(MODE_KEY);
       store.removeItem(FILLER_KEY);
       store.removeItem(EXTRAS_KEY);
+      store.removeItem(DRAFT_KEY);
+      store.removeItem(SEARCH_REGION_KEY);
     }
   } catch {}
   extrasCache = { raw: null, value: null };

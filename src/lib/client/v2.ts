@@ -22,6 +22,9 @@ export const FACT_PATTERNS = {
   ltcGrade: /장기\s*요양\s*(등급|인정|수급)|요양\s*등급|등급\s*판정/,
   pension70: /소득\s*하위\s*70|선정\s*기준액/,
   illness: /질병|질환|환자|투병|희귀|난치|중증\s*환자/,
+  /** (QA 8차) 어린이집·유치원 이용 — 보육료·유아학비는 다닐 때, 가정양육수당은 다니지 않을 때 (한 질문으로 둘 다 정함) */
+  daycare: /어린이집·유치원에 다님/,
+  homeCare: /어린이집·유치원에 다니지 않음/,
 } as const;
 export type FactId = keyof typeof FACT_PATTERNS;
 
@@ -123,6 +126,7 @@ export function toEval(s: Situation, strict = false): { profile: Profile; opts: 
   const size = sizeOf(p);
   const traitsMap = { ...x.traits };
   if (size !== null) traitsMap.single = size === 1;
+  if (traitsMap.single_parent === undefined && noChildSelf(s)) traitsMap.single_parent = false;
   // 자녀 수 → 다자녀 (3명 이상은 다자녀, 0·1명은 아님, 2명은 사업마다 달라 모름으로 둔다)
   if (traitsMap.multi_child === undefined && x.childCount !== undefined && x.childCount !== null && x.childCount !== 2) traitsMap.multi_child = x.childCount === 3;
   const tKnown = HOUSEHOLD_TRAITS.filter((t) => traitsMap[t] !== undefined);
@@ -322,7 +326,7 @@ export function gateState(g: Gate, s: Situation, prof: Profile): GateState {
 
 /* ---------------- 추가 질문 (차원) ---------------- */
 
-export type DimId = "age" | "support" | "basicPension" | "income" | "disability" | "care" | "ltcGrade" | "alone" | "veteran" | "singleParent" | "multicultural" | "housing" | "activity" | "illness" | "children";
+export type DimId = "age" | "support" | "basicPension" | "income" | "disability" | "care" | "ltcGrade" | "alone" | "veteran" | "singleParent" | "multicultural" | "housing" | "activity" | "illness" | "children" | "daycare";
 
 export interface Answer {
   key: string;
@@ -358,6 +362,12 @@ const seniorQuestion = (s: Situation) => (s.mode === "self" ? seniorOf(s) === "y
 /** 자녀·임신 질문: 본인 찾기에서 60세 미만(또는 나이 모름)일 때만 */
 /** 만 19세 미만 본인 (QA 5차 검증 N2, 7차 T1) */
 export const teenSelf = (s: Situation) => s.mode === "self" && (ageBoundsOf(s)?.[1] ?? 120) <= 18;
+/**
+ * (QA 8차) 본인 찾기에서 자녀가 없다고 답함 (임신 중 아님, 10대 본인 아님) → '혼자 자녀를 키우는 한부모 가구'는 아님.
+ * 입력 화면도 자녀 없음이면 한부모를 묻지 않는다 — 결과 화면에서 다시 묻지 않게.
+ */
+export const noChildSelf = (s: Situation) =>
+  s.mode === "self" && !teenSelf(s) && (s.x.childCount === 0 || (Array.isArray(s.profile.children) && s.profile.children.length === 0)) && !(s.profile.children ?? []).includes("pregnant");
 /** 자녀가 있어야 받는 사업 (자녀·자녀 나이 조건) — 10대 본인 화면의 금액 예시에서 뺀다 (QA 7차 T1) */
 export const needsChildren = (p: Program) =>
   leavesOf(p.rule.logic).some((l) => !l.soft && (l.field === "children" || l.field === "childAge")) && evaluateRule(p.rule, { ...EMPTY_PROFILE, children: [] }).tier === "ineligible";
@@ -493,7 +503,7 @@ export const DIMS: Dim[] = [
   {
     id: "singleParent",
     q: (m) => subj(m, "혼자 자녀를 키우는 한부모 가구인가요? (조부모가 손주를 키우는 조손 가구 포함)", "부모님이 손주를 키우고 계신가요 (조손 가구)?"),
-    isUnknown: (s) => s.x.traits.single_parent === undefined,
+    isUnknown: (s) => s.x.traits.single_parent === undefined && !noChildSelf(s),
     answers: [
       { key: "yes", label: "예", apply: (s) => withX(s, { traits: { ...s.x.traits, single_parent: true } }) },
       { key: "no", label: "아니요", apply: (s) => withX(s, { traits: { ...s.x.traits, single_parent: false } }) },
@@ -535,6 +545,18 @@ export const DIMS: Dim[] = [
     answers: [
       { key: "yes", label: "예", apply: (s) => withX(s, { facts: { ...s.x.facts, illness: true } }) },
       { key: "no", label: "아니요", apply: (s) => withX(s, { facts: { ...s.x.facts, illness: false } }) },
+    ],
+  },
+  {
+    // (QA 8차) 보육료(어린이집 이용)와 가정양육수당(이용 안 함)은 함께 받을 수 없어 이 답으로 정해진다
+    id: "daycare",
+    q: (m) => subj(m, "자녀가 어린이집이나 유치원에 다니나요?", "손주가 어린이집이나 유치원에 다니나요?"),
+    help: "어린이집·유치원에 다니면 보육료·유아학비를, 집에서 키우면 가정양육수당을 받아요 (둘 다 받을 수는 없어요).",
+    isUnknown: (s) => s.x.facts.daycare === undefined && s.x.facts.homeCare === undefined,
+    answers: [
+      { key: "yes", label: "예, 다녀요", apply: (s) => withX(s, { facts: { ...s.x.facts, daycare: true, homeCare: false } }) },
+      { key: "no", label: "아니요, 집에서 키워요", apply: (s) => withX(s, { facts: { ...s.x.facts, daycare: false, homeCare: true } }) },
+      { key: "both", label: "다니는 아이도, 집에 있는 아이도 있어요", apply: (s) => withX(s, { facts: { ...s.x.facts, daycare: true, homeCare: true } }) },
     ],
   },
   {
@@ -583,7 +605,7 @@ export function dimsFor(p: Program): DimId[] {
       case "unasked":
         for (const [k, re] of Object.entries(FACT_PATTERNS)) {
           if (!re.test(l.label)) continue;
-          out.add(k === "pension70" ? "basicPension" : (k as DimId));
+          out.add(k === "pension70" ? "basicPension" : k === "homeCare" ? "daycare" : (k as DimId));
         }
         break;
     }
@@ -696,6 +718,13 @@ const STATUS_KINDS: StatusKind[] = [
   // (QA 5차) 이름에 특별한 처지(시설 보호·위탁·자립준비·출소 등)가 적힌 사업 — 이름만 본다 (lead 1)
   { re: /(출소|자살\s*(?:시도|유족)|보호\s*대상\s*아동|유기\s*(?:및|·)?\s*위기\s*아동|가정\s*위탁|위탁\s*(?:아동|가정|부모)|아동\s*복지\s*시설|시설\s*(?:보호|입소|퇴소)|자립\s*준비|보호\s*종료|요보호|그룹\s*홈|공동\s*생활\s*가정)/, label: "특별한 처지", strong: true, lead: 1, labelOf: (m) => m.replace(/\s+/g, " ") },
   // (QA 5차 검증 N5) 청년도전지원사업: 대상이 구직단념청년(6개월간 취업·교육·훈련 이력 없음)·자립준비청년 등 — '다문화·북한이탈'이 아님
+  // (QA 8차) 원문 대상이 '취업면접에 참여한 청년'·'훈련을 이수한 자'처럼 이미 한 일을 요구 — 간편 입력으로는 알 수 없음 (면접수당이 '받으실 수 있어요'였음)
+  {
+    re: /[가-힣]{0,6}(?:면접|시험|교육|훈련|과정|프로그램)(?:에|을|를)?\s*(?:참여|참가|응시|수료|이수)한(?:\s*(?:자|사람|청년|분|학생))?/,
+    label: "원문에 적힌 참여·이수 조건",
+    strong: true,
+    labelOf: (m) => `${m.replace(/\s*(?:자|사람|분)$/, "").trim()} 분`.replace(/(청년|학생) 분$/, "$1"),
+  },
   { re: /구직\s*단념\s*청년/, label: "구직단념 청년(6개월간 취업·교육·훈련 없음)·자립준비청년 등", strong: true },
   { re: YOUTH_STATUS_RE, label: "학교 밖·가정 밖 청소년 등", strong: true, labelOf: youthStatusLabel, inclusive: /(및|또는|포함|[,，、]|우선|\S\s*등\s|도\s*(?:지원|신청|가능|포함|참여)|해당\s*연령|중\s)/ },
 ];
@@ -1602,7 +1631,10 @@ export function answerText(field: Leaf["field"] | "gate", sit: Situation, leaf?:
         if (k === "pension70" && x.benefits.basic_pension === true) return "기초연금 받음";
         const v = x.facts[k as FactId];
         if (v === undefined) return undefined;
-        return { ltcGrade: v ? "장기요양등급 있음" : "장기요양등급 없음", pension70: v ? "해당" : "해당 없음", illness: v ? "치료 중인 병 있음" : "치료 중인 병 없음" }[k as FactId];
+        return {
+          ltcGrade: v ? "장기요양등급 있음" : "장기요양등급 없음", pension70: v ? "해당" : "해당 없음", illness: v ? "치료 중인 병 있음" : "치료 중인 병 없음",
+          daycare: v ? "어린이집·유치원에 다님" : "어린이집·유치원에 다니지 않음", homeCare: v ? "집에서 키움" : "어린이집·유치원에 다님",
+        }[k as FactId];
       }
       return undefined;
     }

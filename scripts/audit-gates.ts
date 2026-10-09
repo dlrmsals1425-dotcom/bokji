@@ -35,6 +35,7 @@ const DIM_LABEL: Record<DimId, string> = {
   housing: "주거 형태",
   activity: "일·구직 상태",
   illness: "질병·진단 (치매·암·희귀질환 등)",
+  daycare: "어린이집·유치원 이용 여부",
 };
 
 /** 걸린 '모름' 사실들을 함께 답했을 때 정해지는지 (모든 답 조합, 사실 3개까지) */

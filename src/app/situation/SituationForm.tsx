@@ -5,6 +5,7 @@
  * 부모님 복지: 기초연금·장기요양을 묻고 자녀 질문은 묻지 않는다.
  * 답은 이 기기에만 저장한다 (주소에는 싣지 않음).
  */
+import { sidoOptionLabel } from "@/lib/client/regionLabel";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -14,11 +15,12 @@ import { RadioGroup } from "@/components/Choice";
 import { loadRegions } from "@/lib/client/bundles";
 import { clearPrefill, parseSituation, parsedExtras, readPrefill, understoodLine, type ParsedSituation, type Prefill } from "@/lib/client/parse";
 import { householdLabel, parseFindMode, resultsPath, type FindMode } from "@/lib/client/mode";
-import { saveFiller, saveMode, useExtras, useMode, useProfile } from "@/lib/client/storage";
+import { readDraft, saveFiller, saveMode, useExtras, useMode, useProfile, type Draft } from "@/lib/client/storage";
 import { saveSituation } from "@/lib/client/start";
+import { parseManwonInput } from "@/lib/client/incomeInput";
 import { EMPTY_EXTRAS, SUPPORT_LEVELS, extrasFromProfile, incomeExplain, type Extras } from "@/lib/client/v2";
 import type { RegionIndex } from "@/lib/data/types";
-import { AGE_BANDS, AGE_LABEL, CHILD_BUCKETS, CHILD_LABEL, EMPTY_PROFILE, ageRange, type AgeBand, type Benefit, type ChildBucket, type Profile } from "@/lib/engine/profile";
+import { ACTIVITY_LABEL, AGE_BANDS, AGE_LABEL, CHILD_BUCKETS, HOUSING_LABEL, CHILD_LABEL, EMPTY_PROFILE, ageRange, type AgeBand, type Benefit, type ChildBucket, type Profile } from "@/lib/engine/profile";
 
 export function SituationForm() {
   const stored = useProfile();
@@ -29,9 +31,20 @@ export function SituationForm() {
   const fresh = params.get("new") === "1";
   const wantPrefill = params.get("prefill") === "1";
   if (stored === undefined || storedMode === undefined || storedX === undefined) return <div className="narrow page muted">불러오는 중…</div>;
-  const p0 = fresh || !stored ? EMPTY_PROFILE : stored;
-  const x0: Extras = fresh || !stored ? EMPTY_EXTRAS : (storedX ?? extrasFromProfile(stored));
-  return <Form initial={p0} initialX={x0} initialMode={urlMode ?? storedMode} wantPrefill={wantPrefill} />;
+  const mode0 = urlMode ?? storedMode;
+  const d0 = fresh ? null : startingAnswers(mode0, storedMode, stored, storedX);
+  return <Form initial={d0?.profile ?? EMPTY_PROFILE} initialX={d0?.x ?? EMPTY_EXTRAS} initialMode={mode0} wantPrefill={wantPrefill} />;
+}
+
+/**
+ * 이 대상(본인/부모님)의 지난 답 (QA 8차: 내 복지 답이 부모님 복지로, 부모님 답이 내 복지로 넘어가던 문제).
+ * 대상별로 저장한 답이 있으면 그것, 없으면 지금 저장된 답이 같은 대상의 것일 때만 — 다른 사람의 답은 쓰지 않고 '모름'으로 시작한다.
+ */
+function startingAnswers(mode: FindMode, storedMode: FindMode, stored: Profile | null, storedX: Extras | null): Draft | null {
+  const d = readDraft(mode);
+  if (d) return d;
+  if (stored && storedMode === mode) return { profile: stored, x: storedX ?? extrasFromProfile(stored) };
+  return null;
 }
 
 type Tri3 = "yes" | "no" | "unknown";
@@ -75,6 +88,18 @@ function mergeParsedX(prev: Extras, ps: ParsedSituation): Extras {
   if (ex.childCount !== undefined && ex.childCount !== 2) traits.multi_child = ex.childCount === 3;
   // 문장에서 읽은 나이 범위·관심 주제·다른 분 나이는 새 문장 기준으로 바꾼다 (지난 문장 것이 남지 않게)
   return { ...prev, benefits, traits, ...ex, ageSpan: ex.ageSpan ?? null, interests: ex.interests, otherAge: ex.otherAge ?? null };
+}
+
+/** 문장을 다시 읽을 때, 문장에 없어 그대로 남는 지난 답 (사람이 알 수 있게 보여 준다 — QA 8차) */
+function keptAnswers(p: Profile, x: Extras, r: ParsedSituation): string[] {
+  const q = r.profile;
+  const out: string[] = [];
+  if (p.age !== "unknown" && q.age === "unknown") out.push(`나이 ${AGE_LABEL[p.age as AgeBand]}`);
+  if (p.householdSize !== "unknown" && q.householdSize === "unknown") out.push(`가구원 ${p.householdSize}명`);
+  if (x.incomeManwon !== null && !r.income) out.push(`소득 월 ${x.incomeManwon.toLocaleString("ko-KR")}만원`);
+  if (p.activity !== "unknown" && q.activity === "unknown") out.push(`하는 일 '${ACTIVITY_LABEL[p.activity]}'`);
+  if (p.housing !== "unknown" && q.housing === "unknown") out.push(`집 '${HOUSING_LABEL[p.housing]}'`);
+  return out;
 }
 
 /** 확인 화면의 '알아들은 내용' — 지역·나이·상황 한 줄, 같이 사는 사람(가정이면 바로 바꾸는 단추), 소득 */
@@ -143,7 +168,7 @@ function QuickFill({ ps, p, mode, regions, setP }: { ps: ParsedSituation; p: Pro
               <select id="pf-sido" className="select" value={p.sido ?? ""} onChange={(e) => setP((prev) => ({ ...prev, sido: e.target.value || null, sigungu: null }))}>
                 <option value="">선택하세요</option>
                 {regions?.sidos.map((s) => (
-                  <option key={s.code} value={s.code}>{s.name}</option>
+                  <option key={s.code} value={s.code}>{sidoOptionLabel({ code: s.code, name: s.name })}</option>
                 ))}
               </select>
             </div>
@@ -200,6 +225,11 @@ function Form({ initial, initialX, initialMode, wantPrefill }: { initial: Profil
   // 보훈·다문화를 이미 답했으면(문장·저장된 답) '더 답하기'를 펼친 채로 (결정 5b)
   const [moreOpen, setMoreOpen] = useState(() => x.traits.veteran !== undefined || x.traits.multicultural !== undefined);
   const [understood, setUnderstood] = useState<ParsedSituation | null>(null);
+  /** 이 화면에서 대상을 바꿀 때 두고 온 답 · 가져올 수 있는 다른 대상의 답 (QA 8차) */
+  const [drafts, setDrafts] = useState<Partial<Record<FindMode, Draft>>>({});
+  const [carry, setCarry] = useState<{ from: FindMode; draft: Draft } | null>(null);
+  /** 문장에 없어 그대로 둔 지난 답 (QA 8차) */
+  const [kept, setKept] = useState<string[]>([]);
   const [regions, setRegions] = useState<RegionIndex | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [incomeText, setIncomeText] = useState(() => {
@@ -233,18 +263,49 @@ function Form({ initial, initialX, initialMode, wantPrefill }: { initial: Profil
       return { ...prev, traits: t };
     });
 
-  const applyParsed = (r: ParsedSituation) => {
-    setP((prev) => mergeParsed(prev, r.profile));
-    setX((prev) => mergeParsedX(prev, r));
+  /**
+   * 대상 바꾸기 (QA 8차): 지금 적은 답은 이 화면 안에 두고, 바꾼 대상의 지난 답(없으면 모두 '모름')으로 시작한다.
+   * 다른 대상의 답이 필요하면 '가져오기' 단추로 직접 고른다. 돌아오면 적던 답이 그대로 있다.
+   */
+  const switchMode = (next: FindMode): Draft => {
+    if (next === mode) return { profile: p, x };
+    const here = { profile: p, x };
+    const there = drafts[next] ?? readDraft(next) ?? { profile: EMPTY_PROFILE, x: EMPTY_EXTRAS };
+    setDrafts((d) => ({ ...d, [mode]: here }));
+    setCarry({ from: mode, draft: here });
+    setP(there.profile);
+    setX(there.x);
+    setIncomeText(there.x.incomeManwon !== null ? String(there.x.incomeManwon) : "");
+    setMode(next);
+    setUnderstood(null);
+    setKept([]);
+    setHhAlt(false);
+    return there;
+  };
+  const carryOver = (all: boolean) => {
+    if (!carry) return;
+    if (all) {
+      setP(carry.draft.profile);
+      setX(carry.draft.x);
+      setIncomeText(carry.draft.x.incomeManwon !== null ? String(carry.draft.x.incomeManwon) : "");
+    } else setP((prev) => ({ ...prev, sido: carry.draft.profile.sido, sigungu: carry.draft.profile.sigungu }));
+    setCarry(null);
+  };
+  const applyParsed = (r: ParsedSituation, base?: Draft) => {
+    const b0 = base ?? { profile: p, x };
+    setP(mergeParsed(b0.profile, r.profile));
+    setX(mergeParsedX(b0.x, r));
     if (r.income) setIncomeText(String(r.income.manwon));
-    if (r.mode) setMode(r.mode);
     setHhAlt(false);
   };
   const fillFromText = async () => {
     // 지역 목록을 아직 못 받았으면 기다렸다가 읽는다 (빨리 누르면 지역을 놓치던 문제)
     const rg = regions ?? (await loadRegions().catch(() => null));
     const r = parseSituation(text, rg, undefined, { hint: mode });
-    applyParsed(r);
+    // 문장이 다른 대상(예: 부모님 이야기)이면 그 대상의 답에서 시작한다 — 지금 대상의 답을 섞지 않음
+    const base = r.mode && r.mode !== mode ? switchMode(r.mode) : { profile: p, x };
+    setKept(keptAnswers(base.profile, base.x, r));
+    applyParsed(r, base);
     setUnderstood(r);
   };
   /** 같이 사는 사람: 배우자 포함(가정) ↔ 배우자 없이(한부모) */
@@ -259,6 +320,7 @@ function Form({ initial, initialX, initialMode, wantPrefill }: { initial: Profil
   const sido = regions?.sidos.find((s) => s.code === p.sido);
   const size = p.householdSize === "unknown" ? null : p.householdSize;
   const income = x.incomeManwon;
+  const incomeError = parseManwonInput(incomeText).error;
   const explain = income !== null && size ? incomeExplain(income, size) : null;
   const ageKnown = p.age !== "unknown";
   const senior60 = ageKnown && ageRange(p.age as Exclude<Profile["age"], "unknown">)[1] >= 60;
@@ -294,6 +356,12 @@ function Form({ initial, initialX, initialMode, wantPrefill }: { initial: Profil
     router.push(resultsPath(mode));
   };
   const submit = () => {
+    if (incomeError) {
+      setError(null);
+      document.getElementById("income")?.scrollIntoView({ block: "center" });
+      document.getElementById("income")?.focus();
+      return;
+    }
     if (!p.sigungu) {
       setError(parent ? "부모님이 사시는 시·군·구를 골라 주세요." : "사는 시·군·구를 골라 주세요.");
       document.getElementById("sit-region")?.scrollIntoView({ block: "center" });
@@ -332,13 +400,24 @@ function Form({ initial, initialX, initialMode, wantPrefill }: { initial: Profil
             사는 곳만 꼭 골라 주세요. 나머지는 아는 만큼만 답하고 모르면 &lsquo;모름&rsquo;으로 두세요 — 결과 화면에서 꼭 필요한 것만 다시 물어봐요. 답은 이 기기에만 저장돼요.
           </p>
           <div className="mode-switch" role="group" aria-label="찾기 대상">
-            <button type="button" className={!parent ? "on" : ""} aria-pressed={!parent} onClick={() => setMode("self")} data-testid="mode-self">
+            <button type="button" className={!parent ? "on" : ""} aria-pressed={!parent} onClick={() => switchMode("self")} data-testid="mode-self">
               내 복지
             </button>
-            <button type="button" className={parent ? "on" : ""} aria-pressed={parent} onClick={() => setMode("parent")} data-testid="mode-parent">
+            <button type="button" className={parent ? "on" : ""} aria-pressed={parent} onClick={() => switchMode("parent")} data-testid="mode-parent">
               부모님 복지
             </button>
           </div>
+          {carry && carry.draft.profile.sigungu && (
+            <p className="small carry-row" data-testid="mode-carry">
+              {parent ? "부모님 복지" : "내 복지"} 답은 따로 저장돼요 (다른 사람의 나이·소득이 섞이지 않게).{" "}
+              <button type="button" className="btn btn-ghost btn-sm" onClick={() => carryOver(false)} data-testid="carry-region">
+                {carry.from === "parent" ? "부모님" : "내"} 사는 곳만 가져오기
+              </button>{" "}
+              <button type="button" className="btn btn-ghost btn-sm" onClick={() => carryOver(true)} data-testid="carry-all">
+                {carry.from === "parent" ? "부모님" : "내"} 답 모두 가져오기
+              </button>
+            </p>
+          )}
         </div>
       </div>
       <div className="form-body">
@@ -419,6 +498,11 @@ function Form({ initial, initialX, initialMode, wantPrefill }: { initial: Profil
                           ))}
                         </ul>
                       )}
+                      {kept.length > 0 && (
+                        <p className="pf-l small" data-testid="v2-understood-kept">
+                          문장에 없어 전에 고른 답을 그대로 두었어요: {kept.join(", ")}. 맞지 않으면 아래에서 바꿔 주세요.
+                        </p>
+                      )}
                       <QuickFill ps={understood} p={p} mode={mode} regions={regions} setP={setP} />
                     </div>
                   </div>
@@ -444,8 +528,7 @@ function Form({ initial, initialX, initialMode, wantPrefill }: { initial: Profil
                     <option value="">선택하세요</option>
                     {regions?.sidos.map((s) => (
                       <option key={s.code} value={s.code}>
-                        {s.name}
-                        {s.pilot ? " (시범 지역)" : ""}
+                        {sidoOptionLabel(s)}
                       </option>
                     ))}
                   </select>
@@ -542,14 +625,18 @@ function Form({ initial, initialX, initialMode, wantPrefill }: { initial: Profil
                   <input
                     id="income"
                     className="input"
-                    inputMode="numeric"
-                    aria-describedby="inc-h inc-band"
+                    inputMode="decimal"
+                    maxLength={12}
+                    aria-describedby={incomeError ? "inc-h inc-err" : "inc-h inc-band"}
+                    aria-invalid={incomeError ? true : undefined}
                     value={incomeText}
                     placeholder="예: 300"
                     onChange={(e) => {
-                      const t = e.target.value.replace(/[^0-9]/g, "").slice(0, 5);
+                      // 적은 글자를 지우거나 바꾸지 않는다 (QA 8차: '100.5' → 1005, '-100' → 100 이던 문제)
+                      const t = e.target.value;
                       setIncomeText(t);
-                      setX((prev) => ({ ...prev, incomeManwon: t ? Number(t) : null }));
+                      const r = parseManwonInput(t);
+                      setX((prev) => ({ ...prev, incomeManwon: r.value }));
                     }}
                     data-testid="v2-income"
                   />
@@ -557,7 +644,7 @@ function Form({ initial, initialX, initialMode, wantPrefill }: { initial: Profil
                   <label className="opt unknown v2-inline">
                     <input
                       type="checkbox"
-                      checked={income === null}
+                      checked={income === null && !incomeText.trim()}
                       onChange={() => {
                         setIncomeText("");
                         setX((prev) => ({ ...prev, incomeManwon: null }));
@@ -566,6 +653,11 @@ function Form({ initial, initialX, initialMode, wantPrefill }: { initial: Profil
                     <span>모름</span>
                   </label>
                 </div>
+                {incomeError && (
+                  <p className="error" id="inc-err" role="alert" data-testid="v2-income-error">
+                    {incomeError}
+                  </p>
+                )}
                 <p className="small" id="inc-band" aria-live="polite" data-testid="v2-income-band">
                   {explain ? explain.line : income !== null && !size ? "함께 사는 가족 수를 고르면 기준을 계산해 드려요." : ""}
                 </p>

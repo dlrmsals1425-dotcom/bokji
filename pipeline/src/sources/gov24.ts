@@ -1,3 +1,4 @@
+import { fixSwapped } from "../normalize/swap";
 import type { SourceRecord } from "./record";
 import { financialBadge, isEupmyeondongLevel } from "./record";
 import { cleanName, cleanOrg, cleanText, nameKey } from "../normalize/names";
@@ -77,16 +78,18 @@ export function loadGov24(
     const cond = condById.get(id);
     const draft = cond ? rulesFromSupportConditions(cond) : null;
     // 지원조건 코드가 하나라도 있을 때만 원문 보완 (코드가 전혀 없으면 '구조화 조건 없음'으로 둔다)
-    const sup = draft?.logic ? supplementFromText(draft.logic, [str("지원대상", d) ?? str("지원대상"), str("선정기준", d), str("서비스목적요약")].filter(Boolean).join(" ")) : null;
+    // (QA 8차) 원천에서 지원대상·지원내용 칸이 뒤바뀐 경우 바로잡은 뒤 원문 보완에 쓴다
+    const tb = fixSwapped({ target: str("지원대상", d) ?? str("지원대상"), benefit: str("지원내용", d) ?? str("지원내용") });
+    const sup = draft?.logic ? supplementFromText(draft.logic, [tb.target, str("선정기준", d), str("서비스목적요약")].filter(Boolean).join(" ")) : null;
     const rec: SourceRecord = {
       source: "gov24",
       sourceId: id,
       name,
       key: nameKey(name),
       summary: str("서비스목적요약") ?? str("서비스목적", d) ?? "",
-      target: str("지원대상", d) ?? str("지원대상"),
+      target: tb.target,
       criteria: str("선정기준", d) ?? str("선정기준"),
-      benefit: str("지원내용", d) ?? str("지원내용"),
+      benefit: tb.benefit,
       applyMethod: str("신청방법", d) ?? str("신청방법"),
       applyChannel: str("신청방법"),
       supportType: str("지원유형", d) ?? str("지원유형"),

@@ -36,7 +36,7 @@ const SHEET_KEY = "bn.sheet.v1";
 const DIM_INFO: Partial<Record<DimId, string>> = {
   support: "기초생활수급·차상위 여부", basicPension: "기초연금 수급 여부", income: "가구 소득", disability: "장애 여부", care: "돌봄이 필요한지",
   ltcGrade: "장기요양등급", alone: "혼자 사는지", age: "나이", veteran: "보훈대상 여부", singleParent: "한부모 여부", multicultural: "다문화가족 여부",
-  housing: "사는 집 형태", activity: "하는 일(학생·구직 등)", illness: "앓는 병", children: "자녀",
+  housing: "사는 집 형태", activity: "하는 일(학생·구직 등)", illness: "앓는 병", children: "자녀", daycare: "어린이집·유치원 이용",
 };
 
 export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode }) {

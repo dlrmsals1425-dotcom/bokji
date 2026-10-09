@@ -137,8 +137,14 @@ export function relevance(p: Program, ev: Evaluation, pr: Profile): number {
 const REGION_HEAD = /^(?:(?:서울|부산|대구|인천|광주|대전|울산|세종|경기|강원|충북|충남|전북|전남|경북|경남|제주)(?:특별시|광역시|특별자치시|특별자치도|도)?|[가-힣]{1,4}(?:특례시|시|군|구))\s+/;
 
 /** 같은 사업의 지역 변형(경기도 ○○ / 수원시 ○○ / (장안구) ○○)을 한데 묶는 키 */
+/**
+ * 출처마다 이름이 조금 다른 같은 제도 (QA 8차: 복지로·백과의 '노인장기요양보험'과 정부24의 '노인장기요양보험(장기요양인정)'이 따로 나옴).
+ * 괄호 안을 모두 지우면 다른 사업이 묶이므로(예: '건강백세운동교실(건보)') 확인한 것만 적는다.
+ */
+const SAME_PROGRAM: Record<string, string> = { "노인장기요양보험(장기요양인정)": "노인장기요양보험" };
+
 export function variantKey(name: string): string {
-  let s = name.normalize("NFC");
+  let s = (SAME_PROGRAM[name.trim()] ?? name).normalize("NFC");
   s = s.replace(/[(（[]\s*[가-힣\s]*(?:특례시|시|군|구|도|본청)\s*[)）\]]/g, " ");
   for (let i = 0; i < 3; i++) s = s.trimStart().replace(REGION_HEAD, "");
   s = s.replace(/[^0-9A-Za-z가-힣()]/g, "").toLowerCase();

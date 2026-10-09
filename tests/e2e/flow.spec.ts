@@ -186,7 +186,8 @@ test.describe("로그인 없는 전체 흐름 (상황 먼저 · 기본)", () => 
       ["suwon-senior", /수원시/, "기초연금"],
       ["parent-care", /수원시/, "노인장기요양보험"],
       ["seongnam-single-parent", /성남시/, "아동양육비"],
-      ["goyang-youth", /고양시/, "면접"],
+      // (QA 8차) 면접수당은 '취업면접에 참여한 청년' 조건을 확인하지 않아 '신청할 때 확인'으로 — 5가지에서 빠짐
+      ["goyang-youth", /고양시/, "구직자 취업역량강화"],
       ["bucheon-disability", /부천시/, "일상돌봄"],
     ];
     for (const [id, region, top] of cases) {
