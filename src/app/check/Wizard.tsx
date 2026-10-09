@@ -1,4 +1,5 @@
 "use client";
+import { sidoOptionLabel } from "@/lib/client/regionLabel";
 import { replaceUrl } from "@/lib/client/url";
 import { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -273,8 +274,7 @@ function WizardInner({
                 <option value="">선택하세요</option>
                 {regions?.sidos.map((s) => (
                   <option key={s.code} value={s.code}>
-                    {s.name}
-                    {s.pilot ? " (시범 지역)" : ""}
+                    {sidoOptionLabel(s)}
                   </option>
                 ))}
               </select>

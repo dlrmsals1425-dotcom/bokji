@@ -122,7 +122,7 @@ export function canonicalDoc(s: string): { key: string; item: string } {
     [/금융\s*정보.*동의서/, "금융정보 제공 동의서"],
     [/개인\s*정보.*동의서/, "개인정보 수집·이용 동의서"],
     [/가족\s*관계\s*증명(?:서|원)/, "가족관계증명서"],
-    [/주민\s*등록\s*등\s*\(\s*초\s*\)\s*본/, "주민등록등본 또는 초본"],
+    [/주민\s*등록\s*등\s*\(\s*초\s*\)\s*본|주민\s*등록\s*등본\s*(?:또는|혹은|,|\/)\s*(?:주민\s*등록\s*)?초본/, "주민등록등본 또는 초본"],
     [/주민\s*등록\s*등본/, "주민등록등본"],
     [/임대차\s*계약서/, "임대차계약서"],
   ];
@@ -175,7 +175,7 @@ export function formNames(documents?: string): string[] {
 }
 /** 서류 이름으로 끝나는지 (문장·안내는 빼려고) */
 const DOC_NOUN =
-  /(서|증|위임장|본|사본|증명|확인|계약|통장|신분|사진|카드|명세|영수증|자료|서류|진단|소견|수첩|판결문|등본|초본|원)$/;
+  /(서|증|위임장|본|사본|증명|확인|계약|통장|신분|사진|카드|명세|영수증|자료|서류|진단|소견|수첩|판결문|공고문|등본|초본|원)$/;
 const COND_HEAD =
   /(선택\s*서류|해당자|해당하는\s*경우|경우에\s*따라|불일치|필요\s*시|필요한\s*경우)/;
 
@@ -186,11 +186,16 @@ export function sheetDocs(documents?: string, name = ""): SheetDocs {
   const raw = (documents ?? "")
     .replace(/관련 서식·안내:[\s\S]*$/, "")
     .replace(/본인 확인 필요:[\s\S]*$/, "")
+    .replace(/담당 공무원이 확인:[\s\S]*$/, "")
     .trim();
+  // (QA 8차) 정부24 '본인 확인 필요' 서류도 원문에 적힌 서류라 '모두 가져갈 것'에 함께 적는다 (빼면 '원문에 없어요'가 되던 문제)
+  const selfLine = /본인 확인 필요:\s*([^\n]*)/.exec(documents ?? "")?.[1]?.trim();
+  const selfDocs = selfLine && !/^해당\s*없음$/.test(selfLine) ? sheetDocs(selfLine, name) : null;
+  const selfItems = selfDocs ? [...selfDocs.core, ...selfDocs.cond] : [];
   if (!raw)
-    return { core: [], cond: [], proxy: [], forms, state: "missing", more: 0 };
+    return { core: selfItems, cond: [], proxy: [], forms, state: selfItems.length ? "listed" : "missing", more: 0 };
   if (/^해당\s*없음$/.test(raw))
-    return { core: [], cond: [], proxy: [], forms, state: "none", more: 0 };
+    return { core: selfItems, cond: [], proxy: [], forms, state: selfItems.length ? "listed" : "none", more: 0 };
   const core: string[] = [];
   const cond: string[] = [];
   const proxy: string[] = [];
@@ -220,9 +225,9 @@ export function sheetDocs(documents?: string, name = ""): SheetDocs {
       condMode = true;
       continue;
     }
-    if (/^\(\s*필수\s*\)/.test(line)) {
+    if (/^[○ㅇ●□■\-·•\s]*\(\s*필수\s*\)/.test(line)) {
       condMode = false;
-      line = line.replace(/^\(\s*필수\s*\)\s*/, "");
+      line = line.replace(/^[○ㅇ●□■\-·•\s]*\(\s*필수\s*\)\s*/, "");
     }
     // '- 가구단위 증빙서류: 가족관계증명원, …' · '④ 보호 종료된 자립 준비 청년: …' → 이름표 뒤만
     // (공통·필수가 아닌 대상별 이름표면 해당하는 분만)
@@ -342,6 +347,7 @@ export function sheetDocs(documents?: string, name = ""): SheetDocs {
       if (!list.includes(it)) list.push(it);
     }
   }
+  for (const d of selfItems) if (!core.includes(d) && !cond.includes(d)) core.push(d);
   const state =
     core.length || cond.length || proxy.length
       ? "listed"

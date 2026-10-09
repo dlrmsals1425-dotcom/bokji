@@ -88,7 +88,10 @@ describe.skipIf(!hasBundles)("P1b 73세 1인 월 90만원 (실제 번들)", () =
     expect(pensionLikely(s)).toBe(true);
     const picks = topPicksV2(view, 5, s).map((g) => g[0].s.program.name);
     expect(picks[0]).toBe("기초연금");
-    expect(picks.join("|")).not.toMatch(/무릎인공관절|예방접종/);
+    // (QA 8차) 장기요양인정 신청은 '일상생활에 도움 필요 없음'이라고 답해서 5개에서 빠지고, 65세 이상 무료 폐렴구균 접종(받으실 수 있어요)이 5번째로 —
+    // 무릎인공관절·독감 접종처럼 기간·진단이 걸린 사업이 앞을 차지하지 않는지는 그대로 본다
+    expect(picks.join("|")).not.toMatch(/무릎인공관절|인플루엔자/);
+    expect(picks.slice(0, 4).join("|")).not.toMatch(/예방접종/);
   });
   it("원문 대상이 수급·차상위뿐이면 소득 구간만으로 맞음 처리하지 않음 (textGate)", () => {
     const fire = programs.find((x) => x.id === "s41000.gov24-641000000852")!;

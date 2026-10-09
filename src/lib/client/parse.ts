@@ -503,7 +503,8 @@ function parseIncome(text: string): { income: ParsedIncome; kw: string; notes: s
     }
     if (!kw) continue;
     const annual = ANNUAL_KW.test(kw);
-    const monthly = annual ? Math.round(v / 12) : Math.round(v);
+    // 월 금액은 소수 첫째 자리까지 그대로 (QA 8차: '100.5만원'이 101로 바뀌던 문제) — 연봉은 12로 나눠 만원 단위로
+    const monthly = annual ? Math.round(v / 12) : Math.round(v * 10) / 10;
     if (monthly < 0 || monthly > 99999) continue;
     n = v;
     const tail = after.match(/^\s*(?:정도|쯤|가량|안팎|남짓|좀|조금)?/)?.[0] ?? "";
@@ -601,6 +602,8 @@ const NEG_AFTER = /^[^.,!?\n]{0,6}?(?:없|아니|아냐|않|안\s*(?:받|해|돼
 /** 앞에 붙는 부정 ('안 받아요', '못 받으세요', '기초연금은 안') */
 const NEG_BEFORE = /(?:안|못|않)\s*$/;
 /** 문장에서 re 가 '그렇다'는 뜻으로 한 번이라도 쓰였는지 */
+/** 일하지 않음 ('매일·생일'의 '일'은 아님, '일자리'는 아님) */
+const NOT_WORKING_RE = /무직|은퇴(?:했|하셨|하고|한|해서|후)|(?<![가-힣])일\s*(?:을|은|도|는)?\s*(?:안\s*(?:해|하|함)|하지\s*(?:않|못)|못\s*(?:해|하)|쉬고|그만\s*두)|직장\s*(?:이|은)?\s*없/;
 function affirmed(text: string, re: RegExp): boolean {
   const g = new RegExp(re.source, re.flags.includes("g") ? re.flags : re.flags + "g");
   for (const m of text.matchAll(g)) {
@@ -926,6 +929,10 @@ export function parseSituation(raw: string, regions: RegionIndex | null, today: 
   } else if (mode === "self" && /(월급|급여|봉급|연봉|맞벌이|직장\s*(?:에|을|다니|다녀|인)|회사\s*(?:에\s*)?(?:다니|다녀)|회사원|직장인)/.test(text) && !/(퇴사|그만두|실직|휴직)/.test(text)) {
     p.activity = "employed";
     signals.push("직장에 다님");
+  } else if (NOT_WORKING_RE.test(text)) {
+    // (QA 8차) '일하지 않아요·일 안 해요·무직·은퇴했어요' → 하는 일 '일하지 않음' (예전 답의 '구직 중'이 남지 않게)
+    p.activity = "none";
+    signals.push("일하지 않음");
   }
   // 10대 본인이 '학생·중학생·고3' (학교 밖이 아니면) → 하는 일 학생 (QA 7차: '열일곱살 알바하는 학생')
   if (teenSelf && p.activity === "unknown" && !TOPICS.out_of_school.say.test(text) && (/(?<![가-힣대원])학생/.test(text) || GRADE_RE.test(text))) {

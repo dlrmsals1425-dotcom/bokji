@@ -157,8 +157,21 @@ export const EMPLOYMENT_SUPPORT_LOGIC: Cond = {
   ],
 };
 export const EMPLOYMENT_SUPPORT_NOTES = ["만 15~69세 구직자 (원문)"];
+/**
+ * (QA 8차) 노인장기요양보험(장기요양인정) 신청 — 원문 신청 가능 대상은 '만 65세 이상 또는 65세 미만 노인성 질병(치매·뇌혈관성 질환 등)',
+ * 선정 절차는 일상생활에 다른 사람의 도움이 필요한 정도로 등급을 정한다. 원문에 소득 기준이 없는데 정부24 코드에서 '소득 기준 확인'이 붙어
+ * 같은 제도(노인장기요양보험)가 '받으실 수 있어요'와 '신청할 때 확인'으로 따로 나오던 문제.
+ */
+export const LTC_APPLY_LOGIC: Cond = {
+  all: [
+    { any: [{ field: "age", min: 65, label: "만 65세 이상" }, { field: "unasked", label: "만 65세 미만은 치매·뇌혈관성 질환 등 노인성 질병 (원문)" }] },
+    // 도움이 필요한 정도는 신청 뒤 방문 조사로 정해서 '필요 없음'이라고 답해도 빼지 않고 확인으로 (soft)
+    { field: "care", anyOf: ["daily"], label: "일상생활에 다른 사람의 도움이 필요함 (원문 등급 기준)", soft: true },
+  ],
+};
 const RULE_FIX: Record<string, Pick<Rule, "logic" | "unstructured">> = {
   "R-n.gov24-149200005007": { logic: EMPLOYMENT_SUPPORT_LOGIC, unstructured: EMPLOYMENT_SUPPORT_NOTES },
+  "R-n.gov24-999000000089": { logic: LTC_APPLY_LOGIC, unstructured: [] },
 };
 /** 이미 다듬은 번들 규칙에도 이 고침을 덧씌운다 — 다시 다듬을 때는 원문을 보는 단계를 건너뛰므로(#11) 수기 규칙 고침은 여기서 직접 반영한다 */
 const withFix = (rule: Rule): Rule => (RULE_FIX[rule.id] && rule.logic !== RULE_FIX[rule.id].logic ? { ...rule, ...RULE_FIX[rule.id] } : rule);
@@ -249,8 +262,33 @@ function hardenConfirmed(c: Cond, cap: number): Cond {
   return confirmedIncome(c, cap) && !/원문 확인/.test(c.label) ? { ...c, soft: undefined } : c;
 }
 
+/**
+ * (QA 8차) 어린이집·유치원 이용 여부로 갈리는 사업 — 보육료·유아학비는 다닐 때, 가정양육수당은 다니지 않을 때.
+ * 간편 입력이 묻지 않는 조건이라 '묻지 않는 조건' 잎으로 덧붙여, 이용 여부를 답하기 전에는 '받으실 수 있어요'로 두지 않는다.
+ * (시간제보육은 집에서 키우는 아이가 시간 단위로 맡기는 것이라 제외)
+ */
+const DAYCARE_NAME = /보육료|유아\s*학비|누리\s*과정/;
+const HOMECARE_NAME = /가정\s*양육\s*수당/;
+export const DAYCARE_LEAF_LABEL = "어린이집·유치원에 다님";
+export const HOMECARE_LEAF_LABEL = "어린이집·유치원에 다니지 않음";
+/** 원문 메모 중 이 잎과 같은 내용 (잎으로 옮겼으니 '참고'로 다시 쓰지 않음) */
+const DAYCARE_NOTE = /^어린이집(?:·유치원)?(?:을|에)\s*(?:이용하는|다니지\s*않는)\s*경우$/;
+function daycareLeaf(p: Pick<Program, "name">): Leaf | null {
+  if (HOMECARE_NAME.test(p.name)) return { field: "unasked", label: HOMECARE_LEAF_LABEL, hint: "어린이집·유치원·종일제 아이돌봄을 이용하지 않고 집에서 키우는 아이가 받아요 (보육료와 함께 받을 수 없어요)." };
+  if (DAYCARE_NAME.test(p.name) && !/시간제\s*보육/.test(p.name)) return { field: "unasked", label: DAYCARE_LEAF_LABEL, hint: "어린이집·유치원에 다니는 아이가 받아요 (가정양육수당과 함께 받을 수 없어요)." };
+  return null;
+}
+function withDaycare(p: Pick<Program, "name">, rule: Rule): Rule {
+  const leaf = daycareLeaf(p);
+  if (!leaf || !rule.logic || leaves(rule.logic).some((l) => l.field === "unasked" && l.label === leaf.label)) return rule;
+  const logic: Cond = "all" in rule.logic ? { ...rule.logic, all: [...rule.logic.all, leaf] } : { all: [rule.logic, leaf] };
+  return { ...rule, logic, unstructured: rule.unstructured.filter((u) => !DAYCARE_NOTE.test(u)) };
+}
+
 export function refineProgram<T extends Program>(p: T): T {
-  if (p.rule?.refined === REFINE_VERSION && !OWNER_FIX[p.id] && !RULE_FIX[p.rule.id]) return p;
+  const dc = p.rule?.logic ? daycareLeaf(p) : null;
+  if (p.rule?.refined === REFINE_VERSION && !OWNER_FIX[p.id] && !RULE_FIX[p.rule.id] && !dc) return p;
   const owner = OWNER_FIX[p.id] ?? p.owner;
-  return { ...p, owner, rule: p.rule ? refineRule(p, p.rule) : p.rule };
+  const rule = p.rule ? refineRule(p, p.rule) : p.rule;
+  return { ...p, owner, rule: rule && dc ? withDaycare(p, rule) : rule };
 }

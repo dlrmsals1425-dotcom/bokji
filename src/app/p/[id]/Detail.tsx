@@ -8,6 +8,7 @@ import { supportTypes } from "@/lib/client/facets";
 import { loadLocalOps, loadProgram } from "@/lib/client/bundles";
 import { useExtras, useMode, useProfile } from "@/lib/client/storage";
 import { saveSituation, situationOf } from "@/lib/client/start";
+import { parseManwonInput } from "@/lib/client/incomeInput";
 import { checkPath, type FindMode } from "@/lib/client/mode";
 import { dateLabel, periodEnded } from "@/lib/client/period";
 import { BUCKET_LABEL, DIM_BY_ID, answersFor, classifyOne, dimAvailable, dimsFor, explainItem, incomeExplain, plainLine, type ExplainLine, type Situation, type V2Item } from "@/lib/client/v2";
@@ -45,6 +46,9 @@ const TRUST_LABEL = {
   B: "B · 기관 공식 문서·누리집 기반",
   C: "C · 2차 정보",
 } as const;
+
+/** 원문에 없는 항목 표시 (QA 8차: '원문 확인'·'아직 정리되지 않았습니다'·빈칸이 섞여 있던 것을 한 가지로) */
+const NOT_IN_SOURCE = "원문에 없어요";
 
 export function Detail({ id }: { id: string }) {
   const profile = useProfile();
@@ -145,11 +149,11 @@ export function Detail({ id }: { id: string }) {
           </div>
           <div>
             <dt>지원형태</dt>
-            <dd>{kind ?? "원문 확인"}</dd>
+            <dd>{kind ?? NOT_IN_SOURCE}</dd>
           </div>
           <div>
             <dt>신청기간</dt>
-            <dd>{p.deadline ? firstLine(p.deadline, 40) : "원문 확인"}</dd>
+            <dd>{p.deadline ? firstLine(p.deadline, 40) : NOT_IN_SOURCE}</dd>
           </div>
           <div>
             <dt>신청 창구</dt>
@@ -381,12 +385,8 @@ export function Detail({ id }: { id: string }) {
               <Icon name="fileText" size={18} /> 신청·문의
             </h2>
             <dl className="summary stacked">
-              {p.owner && (
-                <>
-                  <dt>소관기관</dt>
-                  <dd>{p.owner}</dd>
-                </>
-              )}
+              <dt>소관기관</dt>
+              <dd>{p.owner ?? NOT_IN_SOURCE}</dd>
               {p.provider && (
                 <>
                   <dt>집행·신청처</dt>
@@ -395,17 +395,13 @@ export function Detail({ id }: { id: string }) {
               )}
               <dt>기관 유형</dt>
               <dd>{ORG_TYPE_LABEL[p.orgType]}</dd>
-              {p.contact && (
-                <>
-                  <dt>문의</dt>
-                  <dd>{p.contact}</dd>
-                </>
-              )}
+              <dt>문의</dt>
+              <dd>{p.contact ?? NOT_IN_SOURCE}</dd>
             </dl>
             {!hasApplyInfo && (
               <div className="inset" data-testid="apply-fallback">
                 <p>
-                  <strong>신청처·연락처 정보가 아직 정리되지 않았습니다.</strong>
+                  <strong>원문에 신청처·연락처가 없어요.</strong>
                 </p>
                 <p>
                   {p.scope === "national"
@@ -663,7 +659,9 @@ function ExplainBlock({ item, sit, mode }: { item: V2Item; sit: Situation; mode:
 function DetailIncome({ sit, onApply, onSkip }: { sit: Situation; onApply: (s: Situation) => void; onSkip: () => void }) {
   const [t, setT] = useState("");
   const size = sit.profile.householdSize === "unknown" ? null : sit.profile.householdSize;
-  const n = t ? Number(t) : null;
+  // 적은 글자를 바꾸지 않고 해석 (QA 8차) — 알아볼 수 없으면 확인 단추를 막고 이유를 보여 준다
+  const parsed = parseManwonInput(t);
+  const n = parsed.value;
   const ex = n !== null && size ? incomeExplain(n, size) : null;
   return (
     <div>
@@ -671,7 +669,9 @@ function DetailIncome({ sit, onApply, onSkip }: { sit: Situation; onApply: (s: S
         <label htmlFor="dq-income" className="sr-only">
           한 달 소득 (만원)
         </label>
-        <input id="dq-income" className="input v2-income-in" inputMode="numeric" placeholder="예: 300" value={t} onChange={(e) => setT(e.target.value.replace(/[^0-9]/g, "").slice(0, 5))} />
+        <input id="dq-income" className="input v2-income-in" inputMode="decimal" placeholder="예: 300" value={t} maxLength={12}
+          aria-invalid={parsed.error ? true : undefined}
+          onChange={(e) => setT(e.target.value)} />
         <span>만원 / 월</span>
         <button type="button" className="btn btn-ghost btn-sm" disabled={n === null} onClick={() => n !== null && onApply({ ...sit, x: { ...sit.x, incomeManwon: n } })}>
           확인
@@ -680,6 +680,11 @@ function DetailIncome({ sit, onApply, onSkip }: { sit: Situation; onApply: (s: S
           모름
         </button>
       </div>
+      {parsed.error && (
+        <p className="error" id={"dq-income-err"} role="alert">
+          {parsed.error}
+        </p>
+      )}
       {ex && (
         <p className="small" aria-live="polite">
           {ex.line}

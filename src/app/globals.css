@@ -168,6 +168,7 @@ p { margin: 0; }
 .mode-switch { display: inline-flex; gap: 0.25rem; padding: 0.25rem; background: var(--surface-2); border-radius: 999px; margin: 0.75rem 0 1rem; }
 .mode-switch button { border: 0; background: transparent; color: var(--ink-2); font-weight: 700; font-size: 0.9375rem; padding: 0.5rem 1rem; border-radius: 999px; cursor: pointer; min-height: 2.5rem; }
 .mode-switch button.on { background: #fff; color: var(--primary-60); box-shadow: var(--shadow); }
+.carry-row { margin: -0.5rem 0 1rem; display: flex; flex-wrap: wrap; gap: 0.25rem 0.5rem; align-items: center; }
 .mode-switch button:focus-visible { outline: 3px solid var(--focus); outline-offset: 1px; }
 
 .preset-tag { display: inline-block; margin-left: 0.5rem; padding: 0.125rem 0.5rem; font-size: 0.75rem; font-weight: 700; border-radius: 999px; background: var(--secondary-5); color: var(--secondary); vertical-align: middle; }

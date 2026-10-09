@@ -1,4 +1,5 @@
 "use client";
+import { sidoOptionLabel } from "@/lib/client/regionLabel";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
@@ -6,23 +7,36 @@ import { ProgramCard } from "@/components/ProgramCard";
 import { Icon } from "@/components/Icon";
 import { EMPTY_SELECTION, HOUSEHOLD, LIFE, TOPICS, matchesSelection, parseSelection, selectionQuery, selectionSize, type FacetSelection } from "@/lib/client/facets";
 import { loadForRegion, loadRegions, type Loaded } from "@/lib/client/bundles";
-import { useProfile } from "@/lib/client/storage";
+import { saveSearchRegion, useExtras, useMode, useProfile, useSearchRegion } from "@/lib/client/storage";
+import { situationOf } from "@/lib/client/start";
+import { classifyOne, plainLine } from "@/lib/client/v2";
 import { evaluateProgram, matchesQuery, nameHitScore, queryHitCount } from "@/lib/client/results";
 import { isGibberish, queryTokens } from "@/lib/client/query";
 import { CrisisHelp } from "@/components/CrisisHelp";
 import { parseSituation, prefillPath, savePrefill, understoodLine } from "@/lib/client/parse";
-import type { RegionIndex } from "@/lib/data/types";
+import type { Program, RegionIndex } from "@/lib/data/types";
+import type { Situation } from "@/lib/client/v2";
 
 const PAGE = 30;
+
+function judgeOf(p: Program, sit: Situation) {
+  const it = classifyOne(p, sit);
+  return { bucket: it.bucket, line: plainLine(it, sit, sit.mode ?? "self") };
+}
 
 export function Search() {
   const params = useSearchParams();
   const router = useRouter();
   const profile = useProfile();
+  const extras = useExtras();
+  const storedMode = useMode();
+  // (QA 8차) 저장된 상황이 있으면 맞춤 결과·상세와 같은 판정(받으실 수 있어요·신청할 때 확인 …)으로 보여 준다
+  const sit = useMemo(() => (profile ? situationOf(profile, extras ?? null, storedMode ?? "self") : null), [profile, extras, storedMode]);
   const q = params.get("q") ?? "";
   const [input, setInput] = useState(q);
   const [regions, setRegions] = useState<RegionIndex | null>(null);
-  const [pick, setPick] = useState<{ sido: string | null; sigungu: string | null } | null>(null);
+  // (QA 8차) 고른 검색 지역은 이 기기에 기억 — 새로고침·다시 열기에도 유지 (주소에는 싣지 않음)
+  const pick = useSearchRegion() ?? null;
   const [data, setData] = useState<Loaded | null>(null);
   const [limit, setLimit] = useState(PAGE);
 
@@ -40,6 +54,7 @@ export function Search() {
   useEffect(() => {
     loadRegions().then(setRegions);
   }, []);
+  const choose = (r: { sido: string | null; sigungu: string | null }) => saveSearchRegion(r);
   useEffect(() => {
     let alive = true;
     loadForRegion(sido, sigungu).then((d) => alive && setData(d));
@@ -153,11 +168,11 @@ export function Search() {
             <label htmlFor="s-sido" className="label">
               시·도
             </label>
-            <select id="s-sido" className="select" value={chosenSido ?? ""} onChange={(e) => setPick({ sido: e.target.value || null, sigungu: null })}>
+            <select id="s-sido" className="select" value={chosenSido ?? ""} onChange={(e) => choose({ sido: e.target.value || null, sigungu: null })}>
               <option value="">전국 공통만</option>
               {regions?.sidos.map((s) => (
                 <option key={s.code} value={s.code}>
-                  {s.name}
+                  {sidoOptionLabel({ code: s.code, name: s.name })}
                 </option>
               ))}
             </select>
@@ -166,7 +181,7 @@ export function Search() {
             <label htmlFor="s-sigungu" className="label">
               시·군·구
             </label>
-            <select id="s-sigungu" className="select" value={autoRegion ? "" : (sigungu ?? "")} disabled={!sidoObj || autoRegion} onChange={(e) => setPick({ sido, sigungu: e.target.value || null })}>
+            <select id="s-sigungu" className="select" value={autoRegion ? "" : (sigungu ?? "")} disabled={!sidoObj || autoRegion} onChange={(e) => choose({ sido, sigungu: e.target.value || null })}>
               <option value="">{sidoObj ? "시도 사업까지" : "시·도 먼저"}</option>
               {sidoObj?.sigungus.map((g) => (
                 <option key={g.code} value={g.code}>
@@ -279,7 +294,7 @@ export function Search() {
           ) : (
             <div className="list">
               {hits.slice(0, limit).map((p) => (
-                <ProgramCard key={p.id} p={p} ev={profile ? evaluateProgram(p, profile) : undefined} />
+                <ProgramCard key={p.id} p={p} judge={sit ? judgeOf(p, sit) : undefined} ev={!sit && profile ? evaluateProgram(p, profile) : undefined} />
               ))}
             </div>
           )}
