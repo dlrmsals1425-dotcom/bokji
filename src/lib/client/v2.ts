@@ -978,6 +978,8 @@ const metOnlyByChild = (i: V2Item) => {
   // '성인(만 19세 이상)' 같은 넓은 태그로 맞은 나이는 내 상황과 이어진 근거가 아님
   return met.some((r) => r.field === "childAge" || r.field === "children") && met.filter((r) => r.field === "age").every((r) => /성인|19세\s*이상/.test(r.text));
 };
+/** 체험·견학 행사 (관람료·체험활동비 '지원'은 혜택이라 뺌) */
+const EXPERIENCE_NAME = /(견학|탐방|투어|캠프|체험\s*(?:학습|행사|프로그램|교실|마당)|(?<!건강)체험(?!\s*활동비|.*(?:지원|할인|비)))/;
 /** 선발형 장학금 (QA 7차 N6) */
 const SELECTIVE_SCHOLARSHIP = /(?=.*(?:장학|학자금))(?=.*(?:우수|성적|이공계|인문\s*100|특기|인재|수석|영재|전공))/;
 /** 자녀 본인이 참여하는 체험·창업·캠프·참여기구 (QA 7차 P4) */
@@ -1049,6 +1051,8 @@ const ILLNESS_NAME = /(상병|수술|질환|치료비|환자|투병|난치|희�
 export function rankAdj(i: V2Item, sit: Situation): number {
   const p = i.s.program;
   if (VICTIM_RE.test(p.name)) return -6;
+  // 체험·견학·탐방·캠프 사업은 받는 혜택이 아니라 행사 참여 — 목록 맨 뒤로, 먼저 확인할 것에는 두지 않음 (결정 3b, 2026-10-09: '발전소 시설 견학')
+  if (EXPERIENCE_NAME.test(p.name)) return -6;
   if (isBasicPension(p) && (pensionLikely(sit) || pensionWanted(sit))) return 6;
   if (isBasicPension(p) && pensionPossible(sit)) return 4;
   // 임신: 누구나 받는 기본 사업(행복카드·산모신생아·모자보건수첩 등)을 앞에, 위기·고위험·청소년 산모 사업은 뒤에 (QA 4차 S1)
@@ -1157,7 +1161,9 @@ export function buildView(scored: Scored[], sit: Situation, maxQuestions = 3, no
   }
   // 정렬: 관련도 + '나를 콕 집은' 사업 먼저
   const key = (g: V2Item[]) => g[0].s.score + (g[0].s.specific ? 1 : 0) + rankAdj(g[0], sit);
-  for (const b of ORDER) out[b].sort((a, c) => key(c) - key(a));
+  // 체험·견학 행사는 각 목록 맨 뒤 (결정 3b)
+  const exp = (g: V2Item[]) => (EXPERIENCE_NAME.test(g[0].s.program.name) ? 1 : 0);
+  for (const b of ORDER) out[b].sort((a, c) => exp(a) - exp(c) || key(c) - key(a));
   // 질문 순서: 정해지는 혜택의 관련도 제곱 합 — 관련 높은 혜택(기초연금·돌봄 등)을 정하는 질문 먼저, 그다음 많이 정하는 질문
   const count = new Map<DimId, Set<string>>();
   const weight = new Map<DimId, number>();
