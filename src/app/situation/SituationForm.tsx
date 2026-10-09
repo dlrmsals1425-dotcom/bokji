@@ -197,6 +197,8 @@ function Form({ initial, initialX, initialMode, wantPrefill }: { initial: Profil
   const [p, setP] = useState<Profile>(() => (prefill ? mergeParsed(EMPTY_PROFILE, prefill.parsed.profile) : initial));
   const [x, setX] = useState<Extras>(() => (prefill ? mergeParsedX(EMPTY_EXTRAS, prefill.parsed) : initialX));
   const [text, setText] = useState("");
+  // 보훈·다문화를 이미 답했으면(문장·저장된 답) '더 답하기'를 펼친 채로 (결정 5b)
+  const [moreOpen, setMoreOpen] = useState(() => x.traits.veteran !== undefined || x.traits.multicultural !== undefined);
   const [understood, setUnderstood] = useState<ParsedSituation | null>(null);
   const [regions, setRegions] = useState<RegionIndex | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -715,24 +717,32 @@ function Form({ initial, initialX, initialMode, wantPrefill }: { initial: Profil
                 unknownLabel="잘 모르겠어요"
                 onChange={(v) => set("housing", v)}
               />
-              <RadioGroup
-                name="veteran"
-                legend={parent ? "부모님이 국가유공자·참전유공자 등 보훈 대상이신가요?" : "국가유공자 등 보훈 대상(또는 그 가족)인가요?"}
-                options={YN}
-                value={triOf(x.traits.veteran)}
-                unknownLabel="잘 모르겠어요"
-                onChange={(v) => setTrait("veteran", boolOf(v))}
-              />
-              {askFamily && (
+              {/* 드문 신분(보훈·다문화)은 접어 둠 — 입력 화면이 길다는 지적 (결정 5b). 이미 답했으면 펼친 채로 */}
+              <details className="details sf-more" open={moreOpen} onToggle={(e) => setMoreOpen((e.currentTarget as HTMLDetailsElement).open)} data-testid="sf-more">
+                <summary>
+                  더 답하기 <span className="small muted">(보훈·다문화 — 해당하는 분만)</span> <Icon name="chevronDown" size={18} />
+                </summary>
+                <div className="details-body">
                 <RadioGroup
-                  name="multicultural"
-                  legend="다문화 가족(결혼이민)이거나 북한이탈주민인가요?"
+                  name="veteran"
+                  legend={parent ? "부모님이 국가유공자·참전유공자 등 보훈 대상이신가요?" : "국가유공자 등 보훈 대상(또는 그 가족)인가요?"}
                   options={YN}
-                  value={triOf(x.traits.multicultural)}
+                  value={triOf(x.traits.veteran)}
                   unknownLabel="잘 모르겠어요"
-                  onChange={(v) => setTrait("multicultural", boolOf(v))}
+                  onChange={(v) => setTrait("veteran", boolOf(v))}
                 />
-              )}
+                {askFamily && (
+                  <RadioGroup
+                    name="multicultural"
+                    legend="다문화 가족(결혼이민)이거나 북한이탈주민인가요?"
+                    options={YN}
+                    value={triOf(x.traits.multicultural)}
+                    unknownLabel="잘 모르겠어요"
+                    onChange={(v) => setTrait("multicultural", boolOf(v))}
+                  />
+                )}
+                </div>
+              </details>
             </section>
 
             <div className="btn-row" style={{ marginTop: "1.5rem" }}>
