@@ -6,8 +6,12 @@
  *  3) 원천 자료의 담당 부처가 틀린 사업 고침
  *  4) (QA 2차 C3) 원문(대상 + 선정기준 전문)의 '중위소득 N%'로 소득 코드를 좁히고,
  *     원문이 수급·차상위인데 정부24 소득 코드(0~50%)만 있는 규칙에 recBand 표시 → 소득 구간만으로 '받으실 수 있어요'가 되지 않게 (v2 textGate)
- * 원칙: 원문에 맞춘다 — 코드가 원문보다 넓으면 좁히고, (QA 3차 R4) 원문 비율이 코드보다 넓으면 원문 비율로 넓힌다. 여러 번 적용해도 결과가 같다.
- * REFINE_VERSION 이 바뀌면 이전 번들의 규칙도 읽을 때 다시 다듬는다 (좁히기만 하므로 다시 적용해도 안전).
+ * 원칙: 원문에 맞춘다 — 코드가 원문보다 넓으면 좁히고, (QA 3차 R4) 원문 비율이 코드보다 넓으면 원문 비율로 넓힌다. 같은 원문으로 여러 번 적용해도 결과가 같다.
+ * 원문을 보는 단계(위 4·소득 코드 참고 처리·soft 풀기·recBand)는 다듬지 않은 규칙(refined 없음)에만 적용한다.
+ *  파이프라인은 상세 전문(대상 + 선정기준)으로 다듬지만, 읽을 때 쓰는 요약 번들에는 선정기준이 없고 대상도 400자에서 잘려 있다.
+ *  요약만 보고 다시 다듬으면 원문보다 좁아질 수 있다 (예: 안성 취약계층 응급지원 — 대상 90%, 선정기준 100% → 90%로 좁아짐).
+ * REFINE_VERSION 이 바뀌면 이전 번들의 규칙도 읽을 때 다시 다듬지만, 이때는 원문을 보지 않는 단계(1 공공부조 관문·2 장기요양등급·3 담당 부처)만 다시 적용한다.
+ *  원문을 보는 단계를 바꿨다면 번들을 다시 만들거나(npm run pipeline) 사업별 고침으로 반영한다.
  * (원문의 '수급자'·'중위소득 N%' 문구는 v2 textGate 가 소득 코드보다 좁으면 관문으로 건다)
  */
 import type { Cond, Leaf, Rule } from "../engine/types";
@@ -162,6 +166,9 @@ const withFix = (rule: Rule): Rule => (RULE_FIX[rule.id] && rule.logic !== RULE_
 export function refineRule(p: { name: string; target?: string; criteria?: string }, rule: Rule): Rule {
   if (rule.refined === REFINE_VERSION) return withFix(rule);
   rule = withFix(rule);
+  // 이전 버전(숫자)이 이미 상세 전문으로 다듬은 규칙: 원문을 보는 단계는 건너뜀 (요약 번들에는 전문이 없음 — 맨 위 설명)
+  // 옛 표시 refined: true 는 원문 대조 단계가 생기기 전이라 다시 전부 적용한다
+  const textDone = typeof rule.refined === "number";
   let logic = rule.logic;
   let meansTest: true | undefined;
   const mt = meansTestOf(p.name);
@@ -175,6 +182,9 @@ export function refineRule(p: { name: string; target?: string; criteria?: string
       // 소득 잎을 법정 기준으로 바꾼다 (수급 중이면 맞음으로 보는 'any' 안의 수급 잎은 그대로)
       logic = mapLeaves(logic!, (l) => (inc.includes(l) ? { ...leaf, label: l.field === "income" && l.lte <= cap ? l.label : mt.label } : l));
     }
+  }
+  else if (textDone) {
+    // 원문 대조(소득 코드 참고 처리·좁히기·넓히기)는 이미 적용됨
   }
   else if (rule.origin === "gov24_conditions" && logic && !INCOME_TEXT.test(`${p.name}\n${p.target ?? ""}\n${p.criteria ?? ""}`)) {
     // (QA 3차 L1) 원문(이름·대상·선정기준)에 소득 이야기가 전혀 없는데 정부24 소득 코드만 있음 (예: 온가족보듬사업 '다양한 모든 가족')
@@ -206,7 +216,7 @@ export function refineRule(p: { name: string; target?: string; criteria?: string
   // QA 2차 N7: 수기 규칙의 '저소득' soft 소득 잎이 원문 비율(±5%p)과 같으면 원문이 확인해 준 기준 → soft를 푼다
   // (같은 'any' 묶음의 수급 soft 잎도 함께: 수급 아님·소득 초과가 분명하면 대상 아님)
   // (기준 위쪽 '예외 지원'이 있는 사업은 풀지 않음: 넘는 가구도 신청처 확인)
-  if (logic && !EXCEPT_ABOVE.test(`${p.target ?? ""}\n${p.criteria ?? ""}`)) {
+  if (logic && !textDone && !EXCEPT_ABOVE.test(`${p.target ?? ""}\n${p.criteria ?? ""}`)) {
     const cap = sourceMedianCap(p);
     if (cap !== null) logic = hardenConfirmed(logic, cap);
   }
@@ -216,7 +226,7 @@ export function refineRule(p: { name: string; target?: string; criteria?: string
   }
   // 원문이 수급·차상위(비율 없음)인데 규칙은 정부24 소득 코드 0~50%뿐 → 소득 구간만으로 맞음 판정 금지 표시
   let recBand: true | undefined = rule.recBand ? true : undefined;
-  if (!meansTest && rule.origin === "gov24_conditions" && logic) {
+  if (!meansTest && !textDone && rule.origin === "gov24_conditions" && logic) {
     const ls = leaves(logic);
     const band = ls.filter((l) => !l.soft && l.field === "incomeBands");
     const src = `${p.target ?? ""}\n${p.criteria ?? ""}`.replace(/&#13;/g, "\n");
