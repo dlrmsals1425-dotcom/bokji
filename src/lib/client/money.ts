@@ -149,6 +149,71 @@ function around(m: Money): { before: string; after: string; fullBefore: string }
   return hit ?? { before: m.quote, after: "", fullBefore: m.quote };
 }
 
+/** 가구원 수별 표에서 뽑은 금액의 기본 문구 (상세 원문 표를 읽으면 householdLabel 로 바꾼다) */
+export const HH_LABEL = "가구원 수에 따라 달라요";
+
+/*
+ * byHh: 가구원 수별 금액 표 (원문 지원내용 — 상세 샤드의 benefit). 번들을 다시 만들지 않고 화면에서 읽는다.
+ * 표로 보려면 두 칸 이상이고, 요약에 뽑힌 금액이 표 안에 있어야 한다 (다른 표·예시 한 줄을 잘못 읽지 않게).
+ */
+export interface HhTable {
+  /** 가구원 수 → 금액(원) */
+  rows: Partial<Record<number, number>>;
+  /** 'N인 이상' 칸 (그보다 큰 가구에도 같은 금액) */
+  openTop?: number;
+  /** 기초연금처럼 단독·부부 가구 */
+  single?: number;
+  couple?: number;
+}
+const HH_ROW = /(?:[(（]\s*)?(\d)\s*인\s*(이상\s*)?(?:가구|세대)?\s*(?:기준\s*)?[)）]?\s*[:：]?\s*(?:최고\s*|최대\s*)?(\d+(?:,\d{3})*(?:\.\d+)?)\s*(억|천만|만|천)?\s*원/g;
+const HH_SINGLE = /단독\s*(?:가구|세대)\s*(?:최고|최대)?\s*(\d+(?:,\d{3})*)\s*(만|천)?\s*원/;
+const HH_COUPLE = /부부\s*(?:가구|세대)\s*(?:최고|최대)?\s*(\d+(?:,\d{3})*)\s*(만|천)?\s*원/;
+const hhWon = (n: string, u?: string) => Math.round(Number(n.replace(/,/g, "")) * (u ? WON_UNIT[u] : 1));
+
+export function householdTable(benefit: string, m: Money): HhTable | null {
+  const text = benefit.replace(/&#13;|\r/g, "\n").replace(/\s+/g, " ");
+  const s1 = text.match(HH_SINGLE);
+  const s2 = text.match(HH_COUPLE);
+  if (s1 && s2) {
+    const single = hhWon(s1[1], s1[2]);
+    const couple = hhWon(s2[1], s2[2]);
+    if (single === m.won || couple === m.won) return { rows: {}, single, couple };
+  }
+  const rows: Partial<Record<number, number>> = {};
+  let openTop: number | undefined;
+  // '1인 5만원, 2인 7만원'처럼 가구·세대 낱말 없는 줄은 원문이 가구원 수 이야기일 때만 (봉양수당의 1인·2인은 모시는 어르신 수)
+  const aboutHousehold = /가구원|가구\s*구성원|세대원|가구\s*수|세대\s*수/.test(text);
+  for (const x of text.matchAll(HH_ROW)) {
+    const n = Number(x[1]);
+    if (n < 1 || rows[n] !== undefined) continue;
+    if (!/가구|세대|[(（]/.test(x[0]) && !aboutHousehold) continue;
+    rows[n] = hhWon(x[3], x[4]);
+    if (x[2]) openTop = n;
+  }
+  const vals = Object.values(rows);
+  if (vals.length < 2 || !vals.includes(m.won)) return null;
+  return { rows, ...(openTop ? { openTop } : {}) };
+}
+
+/** 원문 표로 만든 문구: 가구원 수를 알면 그 칸, 모르면 범위. 맞는 칸이 없으면 null (지어내지 않음) */
+export function householdLabel(m: Money, benefit: string | undefined, size: 1 | 2 | 3 | 4 | 5 | 6 | "unknown"): string | null {
+  const t = benefit ? householdTable(benefit, m) : null;
+  if (!t) return null;
+  const per = MONEY_PER_LABEL[m.per];
+  const pre = per ? `${per} ` : "";
+  if (t.single !== undefined && t.couple !== undefined) {
+    return size === 1 ? `단독가구 ${pre}최대 ${formatWon(t.single)}` : `${pre}최대 단독 ${formatWon(t.single)} · 부부 ${formatWon(t.couple)}`;
+  }
+  if (size !== "unknown") {
+    const v = t.rows[size] ?? (t.openTop && size >= t.openTop ? t.rows[t.openTop] : undefined);
+    return v === undefined ? null : `${size}인 가구 ${pre}최대 ${formatWon(v)}`;
+  }
+  const ns = Object.keys(t.rows).map(Number).sort((a, b) => a - b);
+  const lo = ns[0];
+  const hi = ns[ns.length - 1];
+  return `${pre}${lo}인 ${formatWon(t.rows[lo]!)} ~ ${hi}인${t.openTop === hi ? " 이상" : ""} ${formatWon(t.rows[hi]!)}`;
+}
+
 export interface MoneyView {
   money: Money;
   /** 화면 문구: '월 최대 100만원' 또는 '가구원 수에 따라 달라요' */
@@ -166,7 +231,7 @@ export function moneyView(m: Money, name = ""): MoneyView | null {
   if (m.won < SMALL_WON && UNIT_WORD.test(fullBefore + after) && !/(?:월|연|매월|매달)\s*$/.test(tail)) return null;
   const hhText = m.quote.replace(HH_BENCHMARK, " ");
   const distinctN = new Set([...hhText.matchAll(HH_PAIR)].map((x) => x[1])).size;
-  if (!HH_ANY.test(hhText) && (HH_TABLE.test(hhText) || distinctN >= 2)) return { money: m, label: "가구원 수에 따라 달라요" };
+  if (!HH_ANY.test(hhText) && (HH_TABLE.test(hhText) || distinctN >= 2)) return { money: m, label: HH_LABEL };
   return { money: m, label: wording(m, before, after) };
 }
 

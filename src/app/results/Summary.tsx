@@ -5,8 +5,10 @@
  *  2) 한 가지만 더 답하시면 N개가 정해져요 + 그중 금액이 있는 것 + 그 자리에서 답하기
  *  3) 신청 기한이 있는 것 (가까운 순, 지난 것·모르는 것은 안 보임)
  */
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { moneyRows, summaryDueRows } from "@/lib/client/money";
+import { HH_LABEL, householdLabel, moneyRows, summaryDueRows } from "@/lib/client/money";
+import { loadProgram } from "@/lib/client/bundles";
 import { answersFor, needsChildren, teenSelf, type DimId, type Situation, type V2Item, type V2View } from "@/lib/client/v2";
 import type { FindMode } from "@/lib/client/mode";
 import type { Program } from "@/lib/data/types";
@@ -24,6 +26,24 @@ export function Summary({ view, picks, sit, mode, question, onApply, onSkip, now
   // 10대 본인에게는 자녀가 있어야 받는 사업(기저귀·부모급여 등)을 금액 예시로 보이지 않음 (QA 7차 T1)
   const askMoney = moneyRows(firstPicks(lead(decided)).filter((p) => !(teenSelf(sit) && needsChildren(p))), 3);
   const dues = summaryDueRows(lead(picks), lead(view.fit), lead(view.office), sit.profile.children, now ?? new Date(), 4);
+  // byHh: '가구원 수에 따라 달라요'인 줄만 상세 원문(지원내용)을 불러와 내 가구원 수 칸으로 (이 기기 안에서만, 많아야 7건)
+  const hhIds = [...fitMoney, ...askMoney].filter((r) => r.label === HH_LABEL).map((r) => r.program.id).join("|");
+  const [benefits, setBenefits] = useState<Record<string, string>>({});
+  useEffect(() => {
+    if (!hhIds) return;
+    let alive = true;
+    Promise.all(hhIds.split("|").map((id) => loadProgram(id).catch(() => null))).then((ps) => {
+      if (!alive) return;
+      const out: Record<string, string> = {};
+      ps.forEach((p) => p?.benefit && (out[p.id] = p.benefit));
+      setBenefits((b) => ({ ...b, ...out }));
+    });
+    return () => {
+      alive = false;
+    };
+  }, [hhIds]);
+  const size = sit.profile.householdSize;
+  const labelOf = (r: (typeof fitMoney)[number]) => (r.label === HH_LABEL ? householdLabel(r.money, benefits[r.program.id], size) ?? r.label : r.label);
   const parent = mode === "parent";
   if (!view.fit.length && !question && !dues.length) return null;
   return (
@@ -38,7 +58,7 @@ export function Summary({ view, picks, sit, mode, question, onApply, onSkip, now
           </p>
           {fitMoney.length > 0 ? (
             <ul className="sum-money">
-              {fitMoney.map(({ program: p, money, label }) => (
+              {fitMoney.map((r) => ({ ...r, label: labelOf(r) })).map(({ program: p, money, label }) => (
                 <li key={p.id}>
                   <Link href={`/p/${encodeURIComponent(p.id)}`}>{p.name}</Link> <span className="sum-amt" title={`원문: ${money.quote}`}>{label}</span>
                 </li>
@@ -56,7 +76,7 @@ export function Summary({ view, picks, sit, mode, question, onApply, onSkip, now
             <p className="small">{question.dim.q(mode, sit)}</p>
             {askMoney.length > 0 && (
               <p className="small muted" data-testid="sum-next-money">
-                그중 금액이 원문에 있는 것: {askMoney.map(({ program: p, label }) => `${p.name} ${label}`).join(" · ")}
+                그중 금액이 원문에 있는 것: {askMoney.map((r) => `${r.program.name} ${labelOf(r)}`).join(" · ")}
               </p>
             )}
             {question.dim.id === "income" ? (
