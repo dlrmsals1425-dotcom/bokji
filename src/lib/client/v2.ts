@@ -364,6 +364,8 @@ export const needsChildren = (p: Program) =>
 // 10대 본인에게는 자녀 질문을 하지 않는다 (QA 7차 T1: '학교 안 다니는 열여섯살'에 '함께 사는 자녀가 있나요?')
 const childQuestion = (s: Situation) => s.mode === "self" && seniorOf(s) !== "yes" && !teenSelf(s);
 
+/** 자녀가 있다고 했지만 자녀 나이·본인 나이를 모름 ('아이 키우는 엄마 안산') → 자녀 나이부터 묻는다 (결정 2b, 인수 문서 K1) */
+export const childAgeFirst = (s: Situation) => s.mode === "self" && s.profile.children === null && (s.x.childCount ?? 0) > 0 && s.profile.age === "unknown";
 export const dimAvailable = (d: Dim, s: Situation) => !d.avail || d.avail(s);
 
 const withX = (s: Situation, patch: Partial<Extras>): Situation => ({ ...s, x: { ...s.x, ...patch } });
@@ -1177,7 +1179,9 @@ export function buildView(scored: Scored[], sit: Situation, maxQuestions = 3, no
   // 나이를 모르면 나이부터 (QA 1차 H2). 가구원 수는 소득을 말했을 때만 앞에 둔다.
   // 월 소득을 말했는데 가구원 수를 모르면 소득 판단에 가구원 수가 꼭 필요하므로 나이 다음으로 (QA 1차 M2)
   const incomeKnown = sit.x.incomeManwon != null;
-  const first = (id: DimId) => (id === "age" ? 2 : id === "alone" && incomeKnown ? 1 : 0);
+  // (결정 2b) 자녀 나이를 모르는 부모 문장은 자녀 나이부터 — 아동 혜택은 부모 나이 없이도 정해져 먼저 확인할 것이 바로 채워짐
+  const childFirst = childAgeFirst(sit);
+  const first = (id: DimId) => (id === "children" && childFirst ? 3 : id === "age" ? 2 : id === "alone" && incomeKnown ? 1 : 0);
   const value = (id: DimId) => (weight.get(id) ?? 0) * questionPrior(id, sit);
   // 보훈·다문화처럼 드문 신분은 먼저 묻지 않는다 (입력 화면에서는 언제든 답할 수 있음)
   const ranked = [...count]
