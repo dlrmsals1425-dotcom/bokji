@@ -10,6 +10,7 @@ import {
 } from "../engine/profile";
 import type { Cond, EvalOptions, Evaluation, Leaf, Reason } from "../engine/types";
 import type { Program } from "../data/types";
+import { closedSince } from "./period";
 import { autoLike, familyKey, groupVariants, hiddenByDefault, scoreAll, type Filters, type Group, type Scored } from "./results";
 import type { FindMode } from "./mode";
 import { TOPICS, programTopics, type TopicId } from "./topics";
@@ -1103,6 +1104,8 @@ export interface V2View {
   questions: { dim: Dim; groups: number; keys: string[] }[];
   /** 위 질문 몇 개로 정해지는 혜택 수 (묶음) */
   unlock: number;
+  /** 원문 신청기간이 끝난 혜택 (받으실 수 있어요·확인·답하면에서 뺀 것 — 다음 접수는 공고 확인) */
+  closed?: V2Item[][];
 }
 
 const ORDER: Bucket[] = ["fit", "ask", "office", "no"];
@@ -1133,7 +1136,7 @@ export function questionPrior(id: DimId, sit: Situation): number {
   }
 }
 
-export function buildView(scored: Scored[], sit: Situation, maxQuestions = 3): V2View {
+export function buildView(scored: Scored[], sit: Situation, maxQuestions = 3, now: Date = new Date()): V2View {
   const items = scored.map((x) => classify(x, sit));
   const seen = new Set<string>();
   const out: Record<Bucket, V2Item[][]> = { fit: [], ask: [], office: [], no: [] };
@@ -1146,6 +1149,11 @@ export function buildView(scored: Scored[], sit: Situation, maxQuestions = 3): V
       seen.add(g.key);
       out[b].push([g.lead, ...g.variants].map((x) => byScored.get(x)!));
     }
+  }
+  // 신청 기간이 끝난 사업은 받으실 수 있어요·확인·답하면에서 빼서 따로 (운영자 피드백 2026-10-09)
+  const closed: V2Item[][] = [];
+  for (const b of ["fit", "office", "ask"] as const) {
+    out[b] = out[b].filter((g) => (closedSince(g[0].s.program, now) ? (closed.push(g), false) : true));
   }
   // 정렬: 관련도 + '나를 콕 집은' 사업 먼저
   const key = (g: V2Item[]) => g[0].s.score + (g[0].s.specific ? 1 : 0) + rankAdj(g[0], sit);
@@ -1175,6 +1183,7 @@ export function buildView(scored: Scored[], sit: Situation, maxQuestions = 3): V
     ...out,
     questions: ranked.map(([id, v]) => ({ dim: DIM_BY_ID[id], groups: v.size, keys: [...v] })),
     unlock: union.size,
+    closed,
   };
 }
 

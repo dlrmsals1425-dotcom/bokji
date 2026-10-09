@@ -665,3 +665,7 @@ html[data-large="1"] .fgrid fieldset + fieldset { border-left: 0; border-top: 1p
 .card-notes { display: flex; flex-wrap: wrap; gap: 0.375rem; margin: 0.5rem 0 0; }
 .note-chip { display: inline-block; padding: 0.125rem 0.5rem; border-radius: var(--radius-sm); border: 1px solid var(--line, #c9ced6); font-size: 0.875rem; color: var(--ink); background: var(--surface, #fff); }
 .teen-note strong { font-weight: 700; }
+
+/* 신청 기간이 끝난 사업 · 접힌 목록 옆 바로 가기 (운영자 피드백 2026-10-09) */
+.closed-note { display: flex; gap: 0.375rem; align-items: flex-start; color: var(--ink-2); margin: 0.375rem 0 0; }
+.bucket-action { margin: 0.5rem 0 0; }

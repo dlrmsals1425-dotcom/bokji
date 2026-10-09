@@ -9,6 +9,7 @@ import { loadLocalOps, loadProgram } from "@/lib/client/bundles";
 import { useExtras, useMode, useProfile } from "@/lib/client/storage";
 import { saveSituation, situationOf } from "@/lib/client/start";
 import { checkPath, type FindMode } from "@/lib/client/mode";
+import { dateLabel, periodEnded } from "@/lib/client/period";
 import { BUCKET_LABEL, DIM_BY_ID, answersFor, classifyOne, dimAvailable, dimsFor, explainItem, incomeExplain, plainLine, type ExplainLine, type Situation, type V2Item } from "@/lib/client/v2";
 import { SOURCE_LABEL, ORG_TYPE_LABEL, type LocalOperation, type Program } from "@/lib/data/types";
 import { blocksLength, normalizeText, textBlocks, type TextBlock } from "@/lib/data/text";
@@ -155,6 +156,11 @@ export function Detail({ id }: { id: string }) {
             <dd>{how.channels.length ? how.channels.map((c) => CHANNEL_LABEL[c]).join(", ") : how.place}</dd>
           </div>
         </dl>
+        {periodEnded(p) && (
+          <p className="notice warm" role="note" data-testid="detail-closed">
+            이번 신청 기간이 {dateLabel(periodEnded(p)!)}에 끝났어요 (원문 기준). 해마다 다시 접수하는 사업도 있으니 다음 공고는 문의처에서 확인하세요.
+          </p>
+        )}
         {((item && sit) || (p.applyType && p.applyType !== "unknown")) && (
           <div className="d-judge">
             {item && sit && (
