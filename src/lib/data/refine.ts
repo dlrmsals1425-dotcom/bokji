@@ -128,8 +128,44 @@ const MED_TEXT = /중위\s*(?:소득\s*)?(?:의\s*)?\d{2,3}\s*%/;
 const EXCEPT_ABOVE = /\d{2,3}\s*%\s*(?:초과|넘는)[^\n]{0,12}예외/;
 export const REFINE_VERSION = 6;
 
+/**
+ * (QA 7차 M4) 수기 규칙 고침 — 번들을 다시 만들기 전까지 읽을 때 바꾼다. pipeline/rules/curated.ts 도 이 상수를 쓴다.
+ * 국민취업지원제도: '일 안 함'은 구직 중인지 모르므로 '맞음'이 아니라 확인으로 (예: 75~79세 은퇴 어르신에게 '받으실 수 있어요'였음).
+ * 원문 대상 '15세~69세 구직자'의 나이 상한은 판정 조건으로 넣지 않고 확인할 조건 문구로만 둔다 — 조건으로 넣으면 나이가 '맞음'으로 잡혀
+ * 구직 문장들의 상위 5개 순위가 바뀌고, 나이를 모르는 '실직했어요'에서는 먼저 확인할 것에서 빠진다 (소유자 결정 2026-10-09).
+ */
+export const EMPLOYMENT_SUPPORT_LOGIC: Cond = {
+  all: [
+    {
+      any: [
+        { field: "activity", anyOf: ["job_seeking"], label: "구직자" },
+        { field: "activity", anyOf: ["none"], label: "구직자 (일하지 않으면 구직 중인지 신청할 때 확인)", capU: true },
+      ],
+      label: "구직자",
+    },
+    {
+      any: [
+        { field: "age", min: 19, max: 34, label: "청년 (만 19~34세)", capU: true },
+        {
+          any: [
+            { field: "benefit", anyOf: ["livelihood", "medical", "housing", "education", "near_poverty"], label: "저소득 구직자", soft: true },
+            { field: "income", lte: 50, label: "저소득 구직자", soft: true },
+          ],
+        },
+      ],
+    },
+  ],
+};
+export const EMPLOYMENT_SUPPORT_NOTES = ["만 15~69세 구직자 (원문)"];
+const RULE_FIX: Record<string, Pick<Rule, "logic" | "unstructured">> = {
+  "R-n.gov24-149200005007": { logic: EMPLOYMENT_SUPPORT_LOGIC, unstructured: EMPLOYMENT_SUPPORT_NOTES },
+};
+/** 이미 다듬은(REFINE_VERSION) 번들 규칙에도 이 고침만 덧씌운다 — 버전을 올려 전체를 다시 다듬으면 원문 비율 보정이 한 번 더 걸리는 규칙이 있다 */
+const withFix = (rule: Rule): Rule => (RULE_FIX[rule.id] && rule.logic !== RULE_FIX[rule.id].logic ? { ...rule, ...RULE_FIX[rule.id] } : rule);
+
 export function refineRule(p: { name: string; target?: string; criteria?: string }, rule: Rule): Rule {
-  if (rule.refined === REFINE_VERSION) return rule;
+  if (rule.refined === REFINE_VERSION) return withFix(rule);
+  rule = withFix(rule);
   // 이전 버전(숫자)이 이미 상세 전문으로 다듬은 규칙: 원문을 보는 단계는 건너뜀 (요약 번들에는 전문이 없음 — 맨 위 설명)
   // 옛 표시 refined: true 는 원문 대조 단계가 생기기 전이라 다시 전부 적용한다
   const textDone = typeof rule.refined === "number";
@@ -214,7 +250,7 @@ function hardenConfirmed(c: Cond, cap: number): Cond {
 }
 
 export function refineProgram<T extends Program>(p: T): T {
-  if (p.rule?.refined === REFINE_VERSION && !OWNER_FIX[p.id]) return p;
+  if (p.rule?.refined === REFINE_VERSION && !OWNER_FIX[p.id] && !RULE_FIX[p.rule.id]) return p;
   const owner = OWNER_FIX[p.id] ?? p.owner;
   return { ...p, owner, rule: p.rule ? refineRule(p, p.rule) : p.rule };
 }

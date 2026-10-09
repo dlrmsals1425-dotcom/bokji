@@ -9,6 +9,13 @@ import { buildVisitSheet, SHEET_STATUS, type SheetEntry, type SheetPlace } from 
 import { renderSheetPng } from "@/lib/client/sheetImage";
 
 const FILE = "복지나침반-방문처별-준비물.png";
+/** 인쇄할 때 이 곳 수 이상이면 2단 (QA 7차 V3: A4 한 장에 맞춤) */
+const PRINT_TWO_COLS = 4;
+/** 문의 문구에서 전화번호만 ('한부모상담전화 1577-4206' → '15774206'). 번호가 없으면 null */
+function telOf(text: string): string | null {
+  const m = text.match(/(?<!\d)(0\d{1,2}-?\d{3,4}-?\d{4}|1[5-9]\d{2}-?\d{4}|1\d{2})(?!\d)/);
+  return m ? m[1].replace(/-/g, "") : null;
+}
 
 function SheetBody({ places, region, date, forPrint }: { places: SheetPlace[]; region: string; date: string; forPrint?: boolean }) {
   return (
@@ -59,7 +66,7 @@ function SheetBody({ places, region, date, forPrint }: { places: SheetPlace[]; r
                 {pl.proxy.length > 0 && <p className="vs-note">가족이 대신 신청할 때: {pl.proxy.join(", ")}</p>}
                 {pl.programs.some((p) => p.docs === "missing") && (
                   <p className="vs-note" data-testid={forPrint ? undefined : "vs-ask"}>
-                    구비서류가 원문에 없어요 — 창구에 문의: {pl.programs.filter((p) => p.docs === "missing").map((p) => p.name).join(", ")}
+                    가기 전에 전화로 물어볼 것 — 구비서류가 원문에 없어요: {pl.programs.filter((p) => p.docs === "missing").map((p) => p.name).join(", ")}
                   </p>
                 )}
                 {(pl.trimmed > 0 || pl.programs.some((p) => p.more > 0)) && (
@@ -70,7 +77,18 @@ function SheetBody({ places, region, date, forPrint }: { places: SheetPlace[]; r
                 )}
               </>
             )}
-            {pl.phones.length > 0 && <p className="vs-note">문의: {pl.phones.map((x) => x.phone).join(" / ")}</p>}
+            {pl.phones.length > 0 && (
+              <p className="vs-note" data-testid={forPrint ? undefined : "vs-phones"}>
+                문의:{" "}
+                {pl.phones.map((x, i) => (
+                  <span key={x.phone}>
+                    {i > 0 && " / "}
+                    {/* 화면에서는 눌러서 바로 전화 (QA 7차 V1). 인쇄·이미지는 글자 그대로 */}
+                    {!forPrint && telOf(x.phone) ? <a href={`tel:${telOf(x.phone)}`}>{x.phone}</a> : x.phone}
+                  </span>
+                ))}
+              </p>
+            )}
           </li>
         ))}
       </ol>
@@ -79,7 +97,7 @@ function SheetBody({ places, region, date, forPrint }: { places: SheetPlace[]; r
   );
 }
 
-export function VisitSheet({ entries, region, sido, loading, extra, onClose }: { entries: SheetEntry[]; region: string; sido?: string | null; loading: boolean; extra: number; onClose: () => void }) {
+export function VisitSheet({ entries, region, sido, loading, extra, teen, onClose }: { entries: SheetEntry[]; region: string; sido?: string | null; loading: boolean; extra: number; teen?: boolean; onClose: () => void }) {
   const places = useMemo(() => buildVisitSheet(entries, sido), [entries, sido]);
   const date = useMemo(() => new Date().toLocaleDateString("ko-KR"), []);
   // 이 컴포넌트는 사용자가 버튼을 눌러야 열리므로(클라이언트에서만 렌더) 초기값에서 바로 확인한다
@@ -146,6 +164,12 @@ export function VisitSheet({ entries, region, sido, loading, extra, onClose }: {
       <p className="small muted vs-lead no-print">
         &lsquo;먼저 확인할 5가지&rsquo;{extra > 0 ? `와 직접 담은 ${extra}개` : ""}를 신청하는 곳별로 묶고, 가져갈 것은 한 번씩만 적었어요. 이 기기에서만 만들었고 나이·소득 같은 입력값은 넣지 않았어요.
       </p>
+      {/* 10대 본인 (QA 7차 T1) */}
+      {teen && (
+        <p className="small vs-lead no-print" data-testid="vs-teen">
+          부모님이나 선생님께 이 화면을 보여 드려도 좋아요.
+        </p>
+      )}
       {loading ? <p className="muted">신청 방법·구비서류를 불러오는 중…</p> : <SheetBody places={places} region={region} date={date} />}
       <div className="btn-row vs-actions no-print">
         <button type="button" className="btn btn-primary btn-sm" onClick={printSheet} disabled={loading} data-testid="vs-print">
@@ -170,7 +194,7 @@ export function VisitSheet({ entries, region, sido, loading, extra, onClose }: {
       )}
       {mounted && !loading &&
         createPortal(
-          <div className="sheet-print-root" aria-hidden="true">
+          <div className="sheet-print-root" aria-hidden="true" data-cols={places.length >= PRINT_TWO_COLS ? 2 : 1}>
             <SheetBody places={places} region={region} date={date} forPrint />
           </div>,
           document.body,

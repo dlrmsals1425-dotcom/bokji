@@ -8,6 +8,7 @@
  * - 경기도(파일럿) 사업은 WLF ID 로 등록한다.
  */
 import type { Cond } from "../../src/lib/engine/types";
+import { EMPLOYMENT_SUPPORT_LOGIC, EMPLOYMENT_SUPPORT_NOTES } from "../../src/lib/data/refine";
 import {
   activity, age, all, any, benefit, care, children, disability, housing, income, kid, lowIncomeSoft, resident,
   trait, unasked, RECIPIENT, RECIPIENT_NEAR,
@@ -172,7 +173,8 @@ export const CURATED: Record<string, CuratedRule> = {
     source: YOUTH_LAW,
   },
   "unemployment-benefit": { logic: all(activity(["job_seeking"], "구직 중"), unasked("비자발적 이직 + 고용보험 가입 기간", "고용보험 이력은 고용센터에서 확인해요.")) },
-  "national-employment-support": { logic: all(activity(["job_seeking", "none"], "구직자"), any(undefined, age(19, 34, "청년 (만 19~34세)", { capU: true }), lowIncomeSoft("저소득 구직자"))), source: YOUTH_LAW },
+  // 원문 '15세~69세 구직자' (QA 7차 M4) — 읽을 때 고치는 refine.ts 와 같은 규칙을 쓴다
+  "national-employment-support": { logic: EMPLOYMENT_SUPPORT_LOGIC, unstructured: EMPLOYMENT_SUPPORT_NOTES, source: YOUTH_LAW },
   "earned-income-tax-credit": { logic: all(activity(["employed", "self_employed"], "일하는 가구 (근로·사업소득)"), unasked("가구 유형별 소득·재산 기준", "국세청 신청 안내에서 확인해요.")) },
 
   /* ---------- 기타 ---------- */

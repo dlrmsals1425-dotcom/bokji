@@ -54,8 +54,10 @@ describe.skipIf(!hasBundles)("규칙 다듬기 멱등성", () => {
       for (const p of load(f)) {
         if (typeof p.rule?.refined !== "number") continue;
         n++;
+        // 지금 버전으로 읽은 규칙(사업별 고침 RULE_FIX 포함)과 같아야 함
+        const cur = refineProgram(p).rule;
         const again = refineProgram({ ...p, rule: { ...p.rule, refined: REFINE_VERSION - 1 } });
-        if (JSON.stringify(again.rule.logic) !== JSON.stringify(p.rule.logic) || !!again.rule.meansTest !== !!p.rule.meansTest || !!again.rule.recBand !== !!p.rule.recBand) diff.push(`${p.id} ${p.name}`);
+        if (JSON.stringify(again.rule.logic) !== JSON.stringify(cur.logic) || !!again.rule.meansTest !== !!cur.meansTest || !!again.rule.recBand !== !!cur.recBand) diff.push(`${p.id} ${p.name}`);
       }
     }
     expect(n).toBeGreaterThan(20000);

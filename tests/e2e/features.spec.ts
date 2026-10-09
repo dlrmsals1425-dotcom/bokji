@@ -42,7 +42,9 @@ test.describe("한눈에 보기 (금액·기한)", () => {
     const next = page.getByTestId("sum-next");
     await expect(next).toContainText(/한 가지만 더 답하시면 \d+개가 정해져요/);
     await expect(next).toContainText("소득");
-    await expect(next.getByTestId("sum-next-money")).toContainText("최대");
+    // 생계급여·긴급복지는 원문이 가구원 수별 표라 큰 가구 금액 대신 '가구원 수에 따라 달라요' (QA 7차 M2)
+    await expect(next.getByTestId("sum-next-money")).toContainText(/최대|가구원 수에 따라 달라요/);
+    await expect(next.getByTestId("sum-next-money")).not.toContainText("241만 8,150원");
     const before = await page.getByTestId("sum-fit").innerText();
     await next.getByTestId("sum-a-income-input").fill("80");
     await next.getByTestId("sum-a-income-ok").click();
@@ -63,7 +65,9 @@ test.describe("방문처별 준비물 한 장", () => {
     const health = places.filter({ hasText: "가까운 보건소" });
     await expect(health.getByTestId("vs-bring")).toContainText("신분증 (모두)");
     await expect(health.getByTestId("vs-bring").locator("li", { hasText: "신분증" })).toHaveCount(1);
-    await expect(sheet.getByTestId("vs-ask").first()).toContainText("창구에 문의");
+    // 원문에 서류가 없으면 '가기 전에 전화로 물어볼 것' (QA 7차 V1 표시)
+    await expect(sheet.getByTestId("vs-ask").first()).toContainText("전화로 물어볼 것");
+    await expect(sheet.getByTestId("vs-phones").locator("a[href^='tel:']").first()).toBeVisible();
     await expect(sheet).toContainText("경기도 부천시 기준");
     await expect(sheet.locator(".vs-head")).not.toContainText(/72|일흔|세|만원|소득|혼자/);
   });
