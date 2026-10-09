@@ -5,7 +5,7 @@
  */
 import { evaluateCond, evaluateRule } from "../engine/evaluate";
 import {
-  AGE_BANDS, AGE_LABEL, BASIC_PENSION_THRESHOLD_2026, EMPTY_PROFILE, BENEFITS, CHILD_LABEL, HOUSEHOLD_TRAITS, INCOME_BANDS, ageRange, incomeBandFor, incomeRange, medianWon,
+  AGE_BANDS, AGE_LABEL, BASIC_PENSION_THRESHOLD_2026, EMPTY_PROFILE, type AgeBand, BENEFITS, CHILD_LABEL, HOUSEHOLD_TRAITS, INCOME_BANDS, ageRange, incomeBandFor, incomeRange, medianWon,
   type Benefit, type HouseholdTrait, type IncomeBand, type Profile,
 } from "../engine/profile";
 import type { Cond, EvalOptions, Evaluation, Leaf, Reason } from "../engine/types";
@@ -1412,6 +1412,15 @@ export function situationChips(s: Situation): string[] {
  * 내 상황을 콕 집은 사업(specific)을 먼저 채우고, 같은 계열(양육비 이행 원스톱/지원 등)은 하나만.
  * '답하면 정해져요'·'뺐어요'는 넣지 않는다 (애매한 것을 맨 위에 올리지 않음).
  */
+/**
+ * 함께 사는 부모님(장인·장모·시부모님 포함)께 맞는 혜택 (결정 1b, 인수 문서 H2): 같은 지역, 고른 나이대만으로 부모님 찾기 기준 먼저 확인할 것.
+ * 본인 답(나이·소득·가구)은 그분 상황이 아니라 쓰지 않는다. 더 정확히는 '부모님 기준으로 따로 찾기'.
+ */
+export const cohabitParentSit = (sit: Situation, band: AgeBand): Situation => ({ profile: { ...EMPTY_PROFILE, sido: sit.profile.sido, sigungu: sit.profile.sigungu, age: band }, x: { ...EMPTY_EXTRAS }, mode: "parent" });
+export function cohabitParentPicks(programs: Program[], sit: Situation, band: AgeBand, n = 5): V2Item[][] {
+  const ps = cohabitParentSit(sit, band);
+  return topPicksV2(buildView(scoreV2(programs, ps), ps, 12), n, ps);
+}
 export function topPicksV2(view: Pick<V2View, "fit" | "office"> & Partial<Pick<V2View, "ask">>, n = 5, sit?: Situation): V2Item[][] {
   // '받으실 수 있어요'에 +2 (v1 추천의 '조건 충족' 가산과 같게) — 관련도가 확실히 높은 '신청할 때 확인'(장애인 활동지원 등)은 앞설 수 있다
   // 순위 보정: 기초연금 가능성 높음 +4, 소득 기준 안의 공공부조 +2, 보편 서비스(예방접종 등) −2
