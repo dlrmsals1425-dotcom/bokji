@@ -65,7 +65,9 @@ test.describe("방문처별 준비물 한 장", () => {
     const health = places.filter({ hasText: "가까운 보건소" });
     await expect(health.getByTestId("vs-bring")).toContainText("신분증 (모두)");
     await expect(health.getByTestId("vs-bring").locator("li", { hasText: "신분증" })).toHaveCount(1);
-    await expect(sheet.getByTestId("vs-ask").first()).toContainText("창구에 문의");
+    // 원문에 서류가 없으면 '가기 전에 전화로 물어볼 것' (QA 7차 V1 표시)
+    await expect(sheet.getByTestId("vs-ask").first()).toContainText("전화로 물어볼 것");
+    await expect(sheet.getByTestId("vs-phones").locator("a[href^='tel:']").first()).toBeVisible();
     await expect(sheet).toContainText("경기도 부천시 기준");
     await expect(sheet.locator(".vs-head")).not.toContainText(/72|일흔|세|만원|소득|혼자/);
   });

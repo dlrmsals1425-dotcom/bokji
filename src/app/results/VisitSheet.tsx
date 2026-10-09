@@ -11,6 +11,11 @@ import { renderSheetPng } from "@/lib/client/sheetImage";
 const FILE = "복지나침반-방문처별-준비물.png";
 /** 인쇄할 때 이 곳 수 이상이면 2단 (QA 7차 V3: A4 한 장에 맞춤) */
 const PRINT_TWO_COLS = 4;
+/** 문의 문구에서 전화번호만 ('한부모상담전화 1577-4206' → '15774206'). 번호가 없으면 null */
+function telOf(text: string): string | null {
+  const m = text.match(/(?<!\d)(0\d{1,2}-?\d{3,4}-?\d{4}|1[5-9]\d{2}-?\d{4}|1\d{2})(?!\d)/);
+  return m ? m[1].replace(/-/g, "") : null;
+}
 
 function SheetBody({ places, region, date, forPrint }: { places: SheetPlace[]; region: string; date: string; forPrint?: boolean }) {
   return (
@@ -61,7 +66,7 @@ function SheetBody({ places, region, date, forPrint }: { places: SheetPlace[]; r
                 {pl.proxy.length > 0 && <p className="vs-note">가족이 대신 신청할 때: {pl.proxy.join(", ")}</p>}
                 {pl.programs.some((p) => p.docs === "missing") && (
                   <p className="vs-note" data-testid={forPrint ? undefined : "vs-ask"}>
-                    구비서류가 원문에 없어요 — 창구에 문의: {pl.programs.filter((p) => p.docs === "missing").map((p) => p.name).join(", ")}
+                    가기 전에 전화로 물어볼 것 — 구비서류가 원문에 없어요: {pl.programs.filter((p) => p.docs === "missing").map((p) => p.name).join(", ")}
                   </p>
                 )}
                 {(pl.trimmed > 0 || pl.programs.some((p) => p.more > 0)) && (
@@ -72,7 +77,18 @@ function SheetBody({ places, region, date, forPrint }: { places: SheetPlace[]; r
                 )}
               </>
             )}
-            {pl.phones.length > 0 && <p className="vs-note">문의: {pl.phones.map((x) => x.phone).join(" / ")}</p>}
+            {pl.phones.length > 0 && (
+              <p className="vs-note" data-testid={forPrint ? undefined : "vs-phones"}>
+                문의:{" "}
+                {pl.phones.map((x, i) => (
+                  <span key={x.phone}>
+                    {i > 0 && " / "}
+                    {/* 화면에서는 눌러서 바로 전화 (QA 7차 V1). 인쇄·이미지는 글자 그대로 */}
+                    {!forPrint && telOf(x.phone) ? <a href={`tel:${telOf(x.phone)}`}>{x.phone}</a> : x.phone}
+                  </span>
+                ))}
+              </p>
+            )}
           </li>
         ))}
       </ol>
