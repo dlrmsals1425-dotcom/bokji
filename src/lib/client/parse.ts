@@ -80,7 +80,24 @@ export interface ParsedSituation {
 /** 자녀·동생 등 다른 가족이 대학생 (QA 5차 U1) — 본인 학생 신호가 아님 */
 const CHILD_STUDENT = /(?:아들|딸|자녀|아이|애|동생|손자|손녀|조카)\S{0,2}\s*(?:\S+\s*)?(?:(?:대학(?:교)?|대학원)\s*(?:생|신입생|새내기)|대학원생|휴학|재학|복학)|(?:(?:대학(?:교)?|대학원)\s*(?:생|신입생|새내기)|대학원생)\s*(?:인\s*)?(?:아들|딸|자녀|아이|애|동생|손자|손녀|조카)/;
 /** 학교 낱말 (자녀 나이로 읽는 말 — 본인이 10대면 본인 이야기) */
-const SCHOOL_WORDS = /초등\s*(?:학생|학교|생)?|초딩|중학생|중학교|고등학생|고등학교|고딩|중딩|고교생?|유치원/g;
+const SCHOOL_WORDS = /초등\s*(?:학생|학교|생)?|초딩|중학생|중학교|고등학생|고등학교|고딩|중딩|고교생?|유치원|(?<![가-힣])(?:고|중)\s*[1-3](?!\d)(?!\s*(?:명|개|살|세|시|월|일|번|회|층|년|주|분))|(?<![가-힣])고삼(?![가-힣]*차)/g;
+/**
+ * 학년 (QA 7차): '고3·고삼·중2·고등학교 2학년' → 만 나이 범위. '구직 중 3개월'처럼 단위가 붙으면 학년이 아님.
+ * 중학생 만 12~15세, 고등학생 만 15~18세 (학년을 말하면 그 학년의 만 나이 두 해)
+ */
+const GRADE_RE = /(?<![가-힣])(?:(고|중)\s*([1-3])(?!\d)(?!\s*(?:명|개|살|세|시|월|일|번|회|층|년|주|분))|(고)(삼)(?![가-힣]*차)|(고등|중)학교\s*([1-3])\s*학년)|(중학생|중딩|고등학생|고딩|고교생)/;
+function gradeAge(m: RegExpMatchArray): { r: [number, number]; word: string } {
+  if (m[7]) return /중/.test(m[7]) ? { r: [12, 15], word: "중학생" } : { r: [15, 18], word: "고등학생" };
+  const lvl = m[1] ?? m[3] ?? (m[5] === "중" ? "중" : "고");
+  const g = Number(m[2] ?? (m[4] ? 3 : m[6]));
+  const lo = (lvl === "중" ? 11 : 14) + g;
+  return { r: [lo, lo + 1], word: `${lvl === "중" ? "중" : "고"}${g}` };
+}
+/** 학교·학년 낱말이 자녀·손주 이야기인지 ('고3 아들', '딸이 중학생') */
+const KIN_NEAR_BEFORE = /(?:아들|딸|자녀|아이|애|동생|손자|손녀|조카)\S{0,2}\s*$/;
+const KIN_NEAR_AFTER = /^\s*(?:인\s*)?(?:아들|딸|자녀|아이|애|동생|손자|손녀|조카)/;
+/** '부모님이 안 계셔요', '엄마 아빠 다 돌아가셨어요' — 부모님 대신 찾기가 아니라 보호자가 없는 본인 (QA 7차 P1) */
+const NO_PARENTS_RE = /(?:부모(?:님)?|엄마\s*(?:랑|와|하고)?\s*아빠|어머니\s*(?:랑|와|하고)?\s*아버지)(?:\s*(?:이|가|은|는|께서|도|두\s*분|모두|다|둘\s*다))*\s*(?:안\s*계|없|돌아가)/g;
 /** 대학생 자녀 (QA 5차 검증 N7: '대학생 아들 둔 50대 엄마' → 자녀 19세 이상) — 동생·손자·조카는 자녀가 아님 */
 const CHILD_COLLEGE = /(?:아들|딸|자녀|아이|애)\S{0,2}\s*(?:\S+\s*)?(?:(?:대학(?:교)?|대학원)\s*(?:생|신입생|새내기)|대학원생)|(?:(?:대학(?:교)?|대학원)\s*(?:생|신입생|새내기)|대학원생)\s*(?:인\s*)?(?:아들|딸|자녀|아이|애)/;
 const PREGNANT_STRIP = /(?:임신|임산부|임부)\s*(?:한\s*지\s*)?(?:중\s*)?(?:이고\s*|이에요\s*|예요\s*)?\d{1,2}\s*(?:주|개월)(?:\s*(?:차|째))?|(?:배|뱃)\s*속\s*(?:에\s*)?(?:있는\s*)?(?:아기|애기|아이|애)|태아|출산\s*(?:을\s*)?(?:예정|앞두|앞둔)(?:인|이에요|이고)?\s*(?:아기|애기|아이)?/g;
@@ -352,14 +369,14 @@ function parseAge(text: string, today: Today, self = false) {
   for (const m of text.matchAll(/(?:만\s*)?(\d{1,3})\s*(?:세|살)(?!\s*(?:이상|이하|미만|초과|부터|까지|넘|이후))/g)) {
     // '아이 3살', '첫째 7살' — 자녀 나이는 본인 나이가 아님
     if (/(?:아이|애|애기|아기|자녀|아들|딸|첫째|둘째|셋째|막내|큰애|작은애|쌍둥이)(?:들|는|은|가|이)?\s*(?:\d+\s*명\s*)?(?:(?:하나|둘|셋)\s*)?$/.test(text.slice(Math.max(0, m.index! - 10), m.index!))) continue;
-    if (/^\s*(?:짜리\s*)?(?:된\s*)?(?:첫째|둘째|셋째|막내|큰애|작은애|아이|애기|아기|애|아들|딸|손자|손녀|쌍둥이)/.test(text.slice(m.index! + m[0].length))) continue;
+    if (/^\s*(?:짜리\s*)?(?:된\s*)?(?:(?:고|중)\s*[1-3]\s*|고삼\s*|(?:중|고등|초등|대)학생\s*)?(?:첫째|둘째|셋째|막내|큰애|작은애|아이|애기|아기|애|아들|딸|손자|손녀|쌍둥이)/.test(text.slice(m.index! + m[0].length))) continue;
     const a = Number(m[1]);
     if (a > 0 && a < 120) ranges.push({ r: [a, a], label: `만 ${a}세` });
   }
   // 10대 고유어·한자어 나이: '열일곱살', '열여섯 살', '십칠세' (QA 5차 검증 N2) — 자녀 나이('아들 열살')는 위와 같이 뺀다
   for (const m of text.matchAll(TEEN_AGE_RE)) {
     if (/(?:아이|애|애기|아기|자녀|아들|딸|첫째|둘째|셋째|막내|큰애|작은애|쌍둥이|동생|손자|손녀|조카)(?:들|는|은|가|이)?\s*$/.test(text.slice(Math.max(0, m.index! - 10), m.index!))) continue;
-    if (/^\s*(?:짜리\s*)?(?:된\s*)?(?:첫째|둘째|셋째|막내|큰애|작은애|아이|애기|아기|애|아들|딸|손자|손녀|쌍둥이|동생|조카)/.test(text.slice(m.index! + m[0].length))) continue;
+    if (/^\s*(?:짜리\s*)?(?:된\s*)?(?:(?:고|중)\s*[1-3]\s*|고삼\s*|(?:중|고등|초등|대)학생\s*)?(?:첫째|둘째|셋째|막내|큰애|작은애|아이|애기|아기|애|아들|딸|손자|손녀|쌍둥이|동생|조카)/.test(text.slice(m.index! + m[0].length))) continue;
     const a = 10 + (m[2] ? TEEN_ONES[m[2]] ?? 0 : 0);
     if (a >= 10 && a <= 19) ranges.push({ r: [a, a], label: `만 ${a}세` });
   }
@@ -528,7 +545,7 @@ function childAges(text: string): ChildBucket[] {
   const ageKid = new RegExp(`(?<![\\d가-힣])(\\d{1,2}|한|두|세|네|다섯|여섯|일곱|여덟|아홉|열)\\s*(?:살|세)\\s*(?:짜리\\s*)?(?:된\\s*)?${KID}`, "g");
   for (const m of text.matchAll(ageKid)) add(childBucketOf(/^\d+$/.test(m[1]) ? Number(m[1]) : KN_AGE[m[1]] ?? -1));
   if (/초등\s*(?:학생|학교|생)?|초딩/.test(text)) add("6-12");
-  if (/중학생|중학교|고등학생|고등학교|고딩|중딩/.test(text)) add("13-18");
+  if (/중학생|중학교|고등학생|고등학교|고딩|중딩/.test(text) || GRADE_RE.test(text)) add("13-18");
   if (/유치원/.test(text)) add("2-5");
   if (CHILD_COLLEGE.test(text)) add("19+");
   return [...new Set(out)];
@@ -660,8 +677,9 @@ export function parseSituation(raw: string, regions: RegionIndex | null, today: 
   const singleMom = /(싱글\s*(?:맘|대디|파파)|미혼\s*(?:모|부)(?!\s*(?:시설|센터|보호)))/.test(text);
   const selfParent = SELF_PARENT_RE.test(text) || KID_RAISING_PARENT.test(text) || singleMom || /(?:^|\s)(?:엄마|아빠)\s*(?:혼자|홀로)\s*(?:서\s*)?(?:애|아이|자녀|아들|딸|애기|애들)/.test(text);
 
+  const noParents = new RegExp(NO_PARENTS_RE.source).test(text);
   const selfHint =
-    selfParent ||
+    selfParent || noParents ||
     pregnant || SELF_RE.test(text) || (childN !== null && childN > 0) || (!!inc && SALARY_RE.test(text)) || /(아내|와이프|남편|신랑|배우자|집사람|자영업|프리랜서|회사원|직장인)/.test(text);
   // '부모님 모시고 살아요' — 부모님은 함께 사는 가족이고 찾는 사람은 본인
   const livesWithParent = !!lpM && (/모시|모셔/.test(lpM[2]) || selfHint);
@@ -673,7 +691,8 @@ export function parseSituation(raw: string, regions: RegionIndex | null, today: 
 
   // 대상 (부모님 / 본인)
   // '저는 엄마고 우리 엄마는 일흔이세요' — 말하는 사람이 엄마여도 '우리 엄마·저희 어머니'가 따로 있으면 그분을 찾는다 (QA 2차 N1)
-  const parentWord = selfParent ? findParentWord(text.replace(NOT_PARENT_TARGET, " "), true) : findParentWord(text.replace(NOT_PARENT_TARGET, " "));
+  const parentText = text.replace(NOT_PARENT_TARGET, " ").replace(NO_PARENTS_RE, " ");
+  const parentWord = selfParent ? findParentWord(parentText, true) : findParentWord(parentText);
   let mode: FindMode | null = null;
   if (parentWord && !livesWithParent) {
     mode = "parent";
@@ -683,7 +702,7 @@ export function parseSituation(raw: string, regions: RegionIndex | null, today: 
     mode = "self";
   }
   // 부모님 복지 탭에서 시작했으면, 분명히 본인 이야기('저는·제가'·'…엄마예요'·'부모님 모시고')가 아닌 한 부모님 찾기 (QA 2차 N1)
-  const clearlySelf = SELF_RE.test(text) || selfParent || livesWithParent;
+  const clearlySelf = SELF_RE.test(text) || selfParent || livesWithParent || noParents;
   if (opt.hint === "parent" && mode === "self" && !clearlySelf) mode = "parent";
   if (mode === "parent" && !understood.some((u) => u.key === "target")) understood.push({ key: "target", label: "부모님 대신 찾기" });
   if (mode === "self") understood.push({ key: "target", label: "내 복지 찾기" });
@@ -700,6 +719,15 @@ export function parseSituation(raw: string, regions: RegionIndex | null, today: 
       choices: ["65-69", "70-74", "75-79", "80+"],
       other: undefined,
     };
+  }
+  // 나이를 말하지 않은 본인 중·고등학생 ('중학생인데…', '고3인데…') → 학년의 만 나이 (QA 7차 P1)
+  if (!age && mode !== "parent" && !selfParent) {
+    const g = text.match(GRADE_RE);
+    const i = g?.index ?? 0;
+    if (g && !KIN_NEAR_BEFORE.test(text.slice(Math.max(0, i - 8), i)) && !KIN_NEAR_AFTER.test(text.slice(i + g[0].length))) {
+      const { r, word } = gradeAge(g);
+      age = { band: "0-18", range: r, label: `만 ${r[0]}~${r[1]}세 (${word})`, notes: [], choices: undefined, other: undefined };
+    }
   }
   if (age) {
     p.age = age.band;
@@ -899,6 +927,12 @@ export function parseSituation(raw: string, regions: RegionIndex | null, today: 
     p.activity = "employed";
     signals.push("직장에 다님");
   }
+  // 10대 본인이 '학생·중학생·고3' (학교 밖이 아니면) → 하는 일 학생 (QA 7차: '열일곱살 알바하는 학생')
+  if (teenSelf && p.activity === "unknown" && !TOPICS.out_of_school.say.test(text) && (/(?<![가-힣대원])학생/.test(text) || GRADE_RE.test(text))) {
+    p.activity = "student";
+    signals.push("중·고등학생 (하는 일: 학생)");
+  }
+  if (mode === "self" && noParents) signals.push("부모님이 안 계심");
   // (QA 5차 검증 N2) 자퇴·학교 안 다님·학업 중단 → 학교 밖 청소년 (본인 이야기일 때만)
   if (mode !== "parent" && !selfParent && TOPICS.out_of_school.say.test(text) && p.activity !== "student") signals.push("학교에 다니지 않음 (학교 밖 청소년)");
   if (mode !== "parent" && pregnant) {
