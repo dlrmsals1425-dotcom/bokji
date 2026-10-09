@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import meta from "../../../public/bundles/v1/meta.json";
 import { TIER_PLAIN } from "@/lib/client/howto";
 import { LOW_INCOME_PCT } from "@/lib/client/v2";
-import { BASIC_PENSION_THRESHOLD_2026, MEDIAN_INCOME_2026 } from "@/lib/engine/profile";
+import { BASIC_PENSION_THRESHOLD_2026, MEDIAN_INCOME_BY_YEAR } from "@/lib/engine/profile";
 
 export const metadata: Metadata = { title: "데이터·판정 기준" };
 
@@ -113,7 +113,7 @@ export default function About() {
         </h3>
         <ul className="bullets">
           <li>
-            한 달 소득을 적으면 함께 사는 가족 수 기준으로 <strong>2026년 기준 중위소득</strong>(보건복지부 고시) 대비 몇 %인지 계산해, 원문의 소득 기준(예: 중위소득 80%
+            한 달 소득을 적으면 함께 사는 가족 수 기준으로 <strong>그해 기준 중위소득</strong>(보건복지부 고시 — 2026년 값, 2027년 1월 1일부터는 2027년 값) 대비 몇 %인지 계산해, 원문의 소득 기준(예: 중위소득 80%
             이하)과 그대로 비교합니다.
           </li>
           <li>
@@ -127,27 +127,33 @@ export default function About() {
           </li>
           <li>건강보험료로 소득을 미루어 짐작하지 않습니다. 실제 선정은 재산을 포함한 소득인정액으로 신청처에서 정합니다.</li>
         </ul>
-        <table className="median-table" style={{ marginTop: "0.75rem" }}>
-          <caption className="sr-only">2026년 가구원 수별 기준 중위소득 (월)</caption>
-          <thead>
-            <tr>
-              <th scope="col">가구원 수</th>
-              <th scope="col">기준 중위소득 100%</th>
-              <th scope="col">{LOW_INCOME_PCT}% (숫자 없는 &lsquo;저소득&rsquo;)</th>
-              <th scope="col">50% (차상위)</th>
-            </tr>
-          </thead>
-          <tbody>
-            {([1, 2, 3, 4, 5, 6] as const).map((k) => (
-              <tr key={k}>
-                <td>{k}인</td>
-                <td>{man(MEDIAN_INCOME_2026[k])}</td>
-                <td>{man((MEDIAN_INCOME_2026[k] * LOW_INCOME_PCT) / 100)}</td>
-                <td>{man(MEDIAN_INCOME_2026[k] / 2)}</td>
+        {/* 빌드 때 미리 만드는 화면이라 '올해'를 고르지 않고 두 해를 적용 날짜와 함께 보여 준다 (Y1) */}
+        {([
+          [2026, "2026년 (2026년 12월 31일까지)"],
+          [2027, "2027년 (2027년 1월 1일부터)"],
+        ] as const).map(([year, title]) => (
+          <table className="median-table" style={{ marginTop: "0.75rem" }} key={year}>
+            <caption>{title} 가구원 수별 기준 중위소득 (월)</caption>
+            <thead>
+              <tr>
+                <th scope="col">가구원 수</th>
+                <th scope="col">기준 중위소득 100%</th>
+                <th scope="col">{LOW_INCOME_PCT}% (숫자 없는 &lsquo;저소득&rsquo;)</th>
+                <th scope="col">50% (차상위)</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {([1, 2, 3, 4, 5, 6] as const).map((k) => (
+                <tr key={k}>
+                  <td>{k}인</td>
+                  <td>{man(MEDIAN_INCOME_BY_YEAR[year][k])}</td>
+                  <td>{man((MEDIAN_INCOME_BY_YEAR[year][k] * LOW_INCOME_PCT) / 100)}</td>
+                  <td>{man(MEDIAN_INCOME_BY_YEAR[year][k] / 2)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ))}
       </section>
 
       <section>

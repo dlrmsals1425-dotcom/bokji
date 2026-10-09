@@ -13,7 +13,7 @@ import { FILLER_LABEL, householdLabel, parseFindMode, resultsPath, withV1, wizar
 import {
   ACTIVITIES, ACTIVITY_LABEL, AGE_BANDS, AGE_LABEL, BENEFITS, BENEFIT_LABEL, CARE_LABEL, CARE_NEEDS, CARS, CAR_LABEL,
   CHILD_BUCKETS, CHILD_LABEL, DISABILITY, DISABILITY_SEVERITY, EMPTY_PROFILE, HOUSEHOLD_TRAITS, HOUSING,
-  HOUSING_LABEL, INCOME_BANDS, INCOME_LABEL, MEDIAN_INCOME_2026, SEVERITY_LABEL, TRAIT_LABEL, answeredCount, type Profile,
+  HOUSING_LABEL, INCOME_BANDS, INCOME_LABEL, MEDIAN_INCOME_2026, MEDIAN_INCOME_2027, SEVERITY_LABEL, TRAIT_LABEL, answeredCount, type Profile,
 } from "@/lib/engine/profile";
 
 export function Wizard() {
@@ -352,7 +352,8 @@ function WizardInner({
             </summary>
             <p className="details-body small">
               2026년 기준 중위소득(월)은 1인 가구 {MEDIAN_INCOME_2026[1]!.toLocaleString("ko-KR")}원, 4인 가구{" "}
-              {MEDIAN_INCOME_2026[4]!.toLocaleString("ko-KR")}원입니다(보건복지부 고시). 다른 가구원 수의 금액과 소득인정액 계산은 복지로
+              {MEDIAN_INCOME_2026[4]!.toLocaleString("ko-KR")}원이고, 2027년 1월 1일부터는 1인 {MEDIAN_INCOME_2027[1]!.toLocaleString("ko-KR")}원, 4인{" "}
+              {MEDIAN_INCOME_2027[4]!.toLocaleString("ko-KR")}원입니다(보건복지부 고시). 다른 가구원 수의 금액과 소득인정액 계산은 복지로
               &lsquo;모의계산&rsquo;에서 확인하세요.
             </p>
           </details>

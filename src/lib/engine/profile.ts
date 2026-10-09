@@ -177,11 +177,13 @@ export function answeredCount(p: Profile): number {
   return n;
 }
 
+type HhSize = 1 | 2 | 3 | 4 | 5 | 6;
+
 /**
  * 2026년 기준 중위소득(월, 원) — 보건복지부 보도자료 (중앙생활보장위원회 의결, 2025-08)
  * https://www.mohw.go.kr/board.es?act=view&bid=0027&list_no=1487098&mid=a10503010100 (확인 2026-10-07)
  */
-export const MEDIAN_INCOME_2026: Record<1 | 2 | 3 | 4 | 5 | 6, number> = {
+export const MEDIAN_INCOME_2026: Record<HhSize, number> = {
   1: 2564238,
   2: 4199292,
   3: 5359036,
@@ -191,23 +193,52 @@ export const MEDIAN_INCOME_2026: Record<1 | 2 | 3 | 4 | 5 | 6, number> = {
 };
 
 /**
+ * 2027년 기준 중위소득(월, 원) — 보건복지부 보도자료 2026-07-28 '내년 기준 중위소득 6.70% 역대 최대 인상'
+ * (제80차 중앙생활보장위원회 의결, 2027-01-01 적용). 본문 표에서 옮김 — 같은 표의 2026년 값이 위 상수와 같음.
+ * https://mohw.go.kr/board.es?act=view&bid=0027&list_no=1491453&mid=a10503010100 (확인 2026-10-09)
+ */
+export const MEDIAN_INCOME_2027: Record<HhSize, number> = {
+  1: 2736042,
+  2: 4480645,
+  3: 5718091,
+  4: 6929885,
+  5: 8063019,
+  6: 9129201,
+};
+
+/** 연도별 기준 중위소득. 새해 표는 보건복지부 고시·보도자료에서 직접 확인한 값만 넣는다 (추측 금지) */
+export const MEDIAN_INCOME_BY_YEAR: Record<number, Record<HhSize, number>> = { 2026: MEDIAN_INCOME_2026, 2027: MEDIAN_INCOME_2027 };
+const MEDIAN_YEARS = Object.keys(MEDIAN_INCOME_BY_YEAR).map(Number).sort((a, b) => a - b);
+
+/** 서울 날짜의 연도 */
+export const seoulYear = (now: Date = new Date()) => new Date(now.getTime() + 9 * 3600_000).getUTCFullYear();
+
+/** 그날(서울 기준) 적용되는 기준 중위소득 표 — 그해 표가 없으면 가장 가까운 지난해 표 */
+export function medianIncomeFor(now: Date = new Date()): { year: number; table: Record<HhSize, number> } {
+  const y = seoulYear(now);
+  const year = [...MEDIAN_YEARS].reverse().find((x) => x <= y) ?? MEDIAN_YEARS[0];
+  return { year, table: MEDIAN_INCOME_BY_YEAR[year] };
+}
+
+/**
  * 2026년 기초연금 선정기준액(월 소득인정액) — 보건복지부 보도자료 2026-01-01
  * https://www.mohw.go.kr/board.es?act=view&bid=0027&list_no=1488478&mid=a10503010100 (확인 2026-10-07)
+ * TODO(Y1b): 2027년 선정기준액은 2027년 1월 초 고시 예정 — 2026-10-09 현재 미발표. 고시 원문 확인 후 연도별 표로 바꾼다.
  */
 export const BASIC_PENSION_THRESHOLD_2026 = { single: 2470000, couple: 3952000 } as const;
 
-/** 월 가구 소득(원) → 기준 중위소득 대비 % */
-export function medianPercent(monthlyWon: number, size: 1 | 2 | 3 | 4 | 5 | 6): number {
-  return (monthlyWon / MEDIAN_INCOME_2026[size]) * 100;
+/** 월 가구 소득(원) → 기준 중위소득 대비 % (그날 적용되는 해의 표) */
+export function medianPercent(monthlyWon: number, size: HhSize, now: Date = new Date()): number {
+  return (monthlyWon / medianIncomeFor(now).table[size]) * 100;
 }
 
 /** 월 가구 소득(원) → 소득 구간 (상한 이하 첫 구간) */
-export function incomeBandFor(monthlyWon: number, size: 1 | 2 | 3 | 4 | 5 | 6): IncomeBand {
-  const pct = medianPercent(monthlyWon, size);
+export function incomeBandFor(monthlyWon: number, size: HhSize, now: Date = new Date()): IncomeBand {
+  const pct = medianPercent(monthlyWon, size, now);
   return INCOME_BANDS.find((b) => b !== "200+" && pct <= Number(b)) ?? "200+";
 }
 
 /** 기준 중위소득 X% 의 월 금액(원) */
-export function medianWon(pct: number, size: 1 | 2 | 3 | 4 | 5 | 6): number {
-  return Math.floor((MEDIAN_INCOME_2026[size] * pct) / 100);
+export function medianWon(pct: number, size: HhSize, now: Date = new Date()): number {
+  return Math.floor((medianIncomeFor(now).table[size] * pct) / 100);
 }
