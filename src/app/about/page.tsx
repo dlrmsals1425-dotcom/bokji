@@ -188,7 +188,7 @@ export default function About() {
         <h2 className="h2" id="credits">글꼴·로고 저작권 표기</h2>
         <ul className="bullets">
           <li>
-            로고·앱 아이콘·공유 이미지의 글자는 Pretendard 글꼴의 글자 모양을 윤곽선으로 바꿔 쓴 것입니다. Pretendard는 SIL Open Font License 1.1로 배포됩니다. Copyright (c) 2021, Kil Hyung-jin, with Reserved Font Name Pretendard.
+            로고·앱 아이콘·공유 이미지의 글자는 Pretendard 글꼴의 글자 모양을 윤곽선으로 바꿔 쓴 것이고, 본문 글꼴도 Pretendard(v1.3.9)를 이 사이트 안에 두어 씁니다. Pretendard는 SIL Open Font License 1.1로 배포됩니다. Copyright (c) 2021, Kil Hyung-jin, with Reserved Font Name Pretendard.
           </li>
           <li>로고의 하트·나침반 바늘 그림은 이 서비스를 위해 직접 그린 도형입니다.</li>
         </ul>

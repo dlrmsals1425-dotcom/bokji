@@ -1,4 +1,6 @@
 import type { Metadata, Viewport } from "next";
+// Pretendard v1.3.9 (SIL OFL 1.1, fonts/…/LICENSE.txt) — 사이트 안에 둔 동적 서브셋: 외부 CDN 연결 없이 쓰는 글자 조각만 받음 (결정 6b)
+import "./fonts/pretendard-1.3.9/pretendardvariable-dynamic-subset.css";
 import "./globals.css";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
@@ -38,11 +40,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="ko" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: settingsBootstrap }} />
-        <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
-        <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
-        />
       </head>
       <body>
         <a className="skip" href="#main">
