@@ -432,7 +432,11 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
           {picks.length < 3 && askFirst && (
             <p className="notice" data-testid="picks-need-age" role="note">
               <Icon name="info" size={18} />
-              <span>{parent ? "부모님 나이" : "나이"}를 알려 주시면 먼저 확인할 혜택을 골라 드려요. 나이로 정해지는 혜택이 많아서, 모르는 채로는 고르지 않았어요.</span>
+              <span>
+                {questions[0]?.dim.id === "children"
+                  ? "자녀 나이를 알려 주시면 먼저 확인할 혜택을 골라 드려요. 아동 혜택은 자녀 나이로 정해져요."
+                  : `${parent ? "부모님 나이" : "나이"}를 알려 주시면 먼저 확인할 혜택을 골라 드려요. 나이로 정해지는 혜택이 많아서, 모르는 채로는 고르지 않았어요.`}
+              </span>
             </p>
           )}
 
