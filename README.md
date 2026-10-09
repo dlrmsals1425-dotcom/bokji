@@ -186,7 +186,8 @@ npm run pipeline && npm run build
 
 ## 글꼴·로고 저작권 (NOTICE)
 
-- 로고(`public/brand/`), 앱 아이콘(`src/app/icon.svg`, `src/app/apple-icon.png`, `public/icons/`), 공유 이미지(`public/og.png`)의 글자는 **Pretendard** 글꼴에서 글자 모양을 윤곽선(path)으로 변환한 것입니다. 글꼴 파일은 포함하지 않습니다.
+- 로고(`public/brand/`), 앱 아이콘(`src/app/icon.svg`, `src/app/apple-icon.png`, `public/icons/`), 공유 이미지(`public/og.png`)의 글자는 **Pretendard** 글꼴에서 글자 모양을 윤곽선(path)으로 변환한 것입니다.
+- 본문 글꼴은 Pretendard v1.3.9 동적 서브셋을 사이트 안에 둡니다(`src/app/fonts/pretendard-1.3.9/`, 라이선스 `LICENSE.txt` 동봉 — 외부 CDN 연결 없음).
 - Pretendard — SIL Open Font License 1.1. Copyright (c) 2021, Kil Hyung-jin, with Reserved Font Name Pretendard.
 - 하트·나침반 바늘 그림은 코드로 직접 그린 도형입니다.
 - 화면에서는 `/about#credits`에 같은 표기가 있습니다.
