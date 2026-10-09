@@ -130,8 +130,9 @@ export const REFINE_VERSION = 6;
 
 export function refineRule(p: { name: string; target?: string; criteria?: string }, rule: Rule): Rule {
   if (rule.refined === REFINE_VERSION) return rule;
-  // 이전 버전이 이미 상세 전문으로 다듬은 규칙: 원문을 보는 단계는 건너뜀 (요약 번들에는 전문이 없음 — 맨 위 설명)
-  const textDone = !!rule.refined;
+  // 이전 버전(숫자)이 이미 상세 전문으로 다듬은 규칙: 원문을 보는 단계는 건너뜀 (요약 번들에는 전문이 없음 — 맨 위 설명)
+  // 옛 표시 refined: true 는 원문 대조 단계가 생기기 전이라 다시 전부 적용한다
+  const textDone = typeof rule.refined === "number";
   let logic = rule.logic;
   let meansTest: true | undefined;
   const mt = meansTestOf(p.name);

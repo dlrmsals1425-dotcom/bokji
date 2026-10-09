@@ -19,6 +19,14 @@ const gyeonggi = all.filter((f) => f === "national.json" || /^(sido|sigungu)\/41
 const details: Record<string, Program> = {};
 if (hasBundles) for (const f of fs.readdirSync(path.join(ROOT, "details"))) Object.assign(details, JSON.parse(fs.readFileSync(path.join(ROOT, "details", f), "utf8")));
 
+describe("옛 표시 refined: true", () => {
+  it("원문 대조 단계가 생기기 전 표시라 원문 대조를 다시 적용한다", () => {
+    const rule = { id: "r", origin: "gov24_conditions" as const, review: "structured" as const, logic: { field: "incomeBands" as const, bands: [[0, 50], [50, 75], [75, 100]] as [number, number][], label: "x" }, unstructured: [], unstructuredCore: false };
+    expect(refineRule({ name: "x", target: "기준 중위소득 90% 이하" }, { ...rule, refined: true }).logic).toMatchObject({ field: "income", lte: 90 });
+    expect(refineRule({ name: "x", target: "기준 중위소득 90% 이하" }, { ...rule, refined: 5 }).logic).toEqual(rule.logic);
+  });
+});
+
 describe.skipIf(!hasBundles)("규칙 다듬기 멱등성", () => {
   it("같은 원문으로 두 번 다듬어도 한 번 다듬은 것과 같다 (전국 + 경기, 요약·상세)", () => {
     const diff: string[] = [];
