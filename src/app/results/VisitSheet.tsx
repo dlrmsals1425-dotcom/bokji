@@ -79,7 +79,7 @@ function SheetBody({ places, region, date, forPrint }: { places: SheetPlace[]; r
   );
 }
 
-export function VisitSheet({ entries, region, sido, loading, extra, onClose }: { entries: SheetEntry[]; region: string; sido?: string | null; loading: boolean; extra: number; onClose: () => void }) {
+export function VisitSheet({ entries, region, sido, loading, extra, teen, onClose }: { entries: SheetEntry[]; region: string; sido?: string | null; loading: boolean; extra: number; teen?: boolean; onClose: () => void }) {
   const places = useMemo(() => buildVisitSheet(entries, sido), [entries, sido]);
   const date = useMemo(() => new Date().toLocaleDateString("ko-KR"), []);
   // 이 컴포넌트는 사용자가 버튼을 눌러야 열리므로(클라이언트에서만 렌더) 초기값에서 바로 확인한다
@@ -146,6 +146,12 @@ export function VisitSheet({ entries, region, sido, loading, extra, onClose }: {
       <p className="small muted vs-lead no-print">
         &lsquo;먼저 확인할 5가지&rsquo;{extra > 0 ? `와 직접 담은 ${extra}개` : ""}를 신청하는 곳별로 묶고, 가져갈 것은 한 번씩만 적었어요. 이 기기에서만 만들었고 나이·소득 같은 입력값은 넣지 않았어요.
       </p>
+      {/* 10대 본인 (QA 7차 T1) */}
+      {teen && (
+        <p className="small vs-lead no-print" data-testid="vs-teen">
+          부모님이나 선생님께 이 화면을 보여 드려도 좋아요.
+        </p>
+      )}
       {loading ? <p className="muted">신청 방법·구비서류를 불러오는 중…</p> : <SheetBody places={places} region={region} date={date} />}
       <div className="btn-row vs-actions no-print">
         <button type="button" className="btn btn-primary btn-sm" onClick={printSheet} disabled={loading} data-testid="vs-print">
