@@ -7,6 +7,7 @@ import { PRESETS } from "@/lib/client/presets";
 import { refineProgram } from "@/lib/data/refine";
 import { inLegacyArea, legacyAreas } from "@/lib/data/legacyArea";
 import type { Program } from "@/lib/data/types";
+import { parseSituation } from "@/lib/client/parse";
 
 const B = "public/bundles/v1/";
 const load = (f: string): Program[] => (existsSync(B + f) ? JSON.parse(readFileSync(B + f, "utf8")).programs : []);
@@ -72,5 +73,37 @@ describe("② 원문이 요구하는 사건·이미 한 일·자격은 '신청�
     const pre = PRESETS.find((x) => x.id === "bucheon-disability")!;
     const s = situationOf({ ...pre.profile, disability: "self", age: "30-34" }, pre.x, "self");
     expect(classifyOne(p, s).base.why ?? "").not.toMatch(/카드/);
+  });
+});
+
+describe("② 전국 표본 대조로 찾은 과대 판정 — 다시 '받으실 수 있어요'가 되지 않음 (tests/fixtures/nationwide-overclaims.json)", () => {
+  const rows = JSON.parse(readFileSync("tests/fixtures/nationwide-overclaims.json", "utf8")) as { id: string; name: string; preset: string; region: string; requirement: string }[];
+  const regions = JSON.parse(readFileSync(B + "regions.json", "utf8")) as { sidos: { code: string; name: string; sigungus: { code: string; name: string }[] }[] };
+  const fileOf = (id: string) => (id.startsWith("n.") ? "national.json" : `${id[0] === "s" ? "sido" : "sigungu"}/${id.slice(1, 6)}.json`);
+  it("61건 (2026-10-10, 경기도 밖 표본 207건 → 다른 모델 검토 95건 중 공통 규칙으로 고친 것)", () => expect(rows.length).toBe(61));
+  it.each(rows.map((r) => [r.name, r] as const))("%s", (_n, r) => {
+    const [sidoName, sggName] = r.region.split(" ");
+    const sd = regions.sidos.find((s) => s.name === sidoName)!;
+    const sgg = sd.sigungus.find((g) => g.name === sggName)!;
+    const p = load(fileOf(r.id)).find((x) => x.id === r.id)!;
+    expect(classifyOne(refineProgram(p), at(r.preset, sd.code, sgg.code)).bucket).not.toBe("fit");
+  });
+});
+
+describe("② 전국 지역 문장", () => {
+  it.each([
+    ["인천 영종도 살아요 65세", "28000", "28155"],
+    ["인천 동구 살아요", "28000", "28125"],
+    ["대구 군위 어르신", "27000", "27720"],
+    ["세종시 20대", "36000", "36110"],
+    ["전남 목포 사는 70세", "12000", "12110"],
+  ])("%s", (t, sido, sgg) => {
+    const r = parseSituation(t, JSON.parse(readFileSync(B + "regions.json", "utf8")), { year: 2026, month: 10, day: 11 });
+    expect([r.profile.sido, r.profile.sigungu]).toEqual([sido, sgg]);
+  });
+  it("인천 중구 → 제물포구·영종구 중 고르기 (2026-07 개편 안내)", () => {
+    const r = parseSituation("인천 중구 살아요", JSON.parse(readFileSync(B + "regions.json", "utf8")), { year: 2026, month: 10, day: 11 });
+    expect(r.regionChoices?.map((c) => c.label)).toEqual(["인천 제물포구", "인천 영종구"]);
+    expect(r.notes.join()).toMatch(/2026년 7월/);
   });
 });

@@ -145,6 +145,9 @@ const GU_TO_CITY: [string, string, string[]][] = [
   ["44000", "천안시", ["동남구", "서북구"]],
   ["52000", "전주시", ["완산구", "덕진구"]],
   ["48000", "창원시", ["의창구", "성산구", "마산합포구", "마산회원구", "진해구", "마산", "진해"]],
+  // (전국 확대 ②) 인천 2026-07-01 개편: 영종도 → 영종구, 검단 → 검단구 (구 이름이 아닌 생활권 낱말)
+  ["28000", "영종구", ["영종도", "용유도", "운서동"]],
+  ["28000", "검단구", ["검단신도시"]],
 ];
 
 /** 시군구 이름에서 '시·군·구'를 뗀 낱말 중 흔한 일반 낱말과 겹치는 것 (예: 고령자, 장수, 음성) → 줄임말로는 읽지 않음 */
@@ -213,8 +216,9 @@ function regionHits(text: string, regions: RegionIndex): RegionHit[] {
     if (name.length >= 3 && stem.length >= 2 && !STEM_BLOCK.has(stem)) {
       push(stem, (i) => ({ start: i, end: i + stem.length, term: stem, sigungus: cands }), true);
     } else if (name.length >= 3 && stem.length >= 2 && !STEM_NEVER.has(stem)) {
-      // QA 1차 H4: 화성·고양·구리·이천 등 — 뒤에 '사는·에서·거주' 등이 올 때만
-      push(stem, (i) => (RESIDE_AFTER.test(text.slice(i + stem.length)) ? { start: i, end: i + stem.length, term: stem, sigungus: cands } : null), true);
+      // QA 1차 H4: 화성·고양·구리·이천 등 — 뒤에 '사는·에서·거주' 등이 올 때만, 또는 바로 앞에 그 시·도 이름이 있을 때 ('대구 군위', '인천 영종')
+      const sidoBefore = (i: number) => cands.some((c) => (SIDO_ALIAS[c.sido] ?? []).some((a) => new RegExp(`${a}\\s*$`).test(text.slice(Math.max(0, i - 8), i))));
+      push(stem, (i) => (RESIDE_AFTER.test(text.slice(i + stem.length)) || sidoBefore(i) ? { start: i, end: i + stem.length, term: stem, sigungus: cands } : null), true);
     }
   }
   for (const [sido, city, words] of GU_TO_CITY) {
@@ -247,7 +251,25 @@ function gwangjuChoice(text: string, regions: RegionIndex, hits: RegionHit[]) {
   };
 }
 
+/**
+ * (전국 확대 ②) 2026-07-01 인천 개편으로 없어진 구 이름: 동구 → 제물포구, 중구 → 제물포구(내륙)·영종구(영종도), 서구 → 서해구·검단구.
+ * 행정표준코드 pipeline/data/sigungu_codes_20260701.tsv · 경계 자료(vuski/admdongkor ver20260701)의 개편 내용.
+ */
+function incheonOld(text: string, regions: RegionIndex) {
+  const m = /인천\s*(?:광역\s*)?시?\s*(중구|동구|서구)/.exec(text);
+  const ic = regions.sidos.find((x) => x.code === "28000");
+  if (!m || !ic) return null;
+  const code = (n: string) => ic.sigungus.find((g) => g.name === n)?.code ?? null;
+  const pick = (names: string[]) => names.map((n) => ({ sido: "28000", sigungu: code(n), label: `인천 ${n}` })).filter((c) => c.sigungu);
+  if (m[1] === "동구") return { sido: "28000", sigungu: code("제물포구"), note: "인천 동구는 2026년 7월부터 제물포구예요.", choices: undefined };
+  if (m[1] === "중구") return { sido: "28000", sigungu: null, note: "인천 중구는 2026년 7월부터 제물포구(내륙)와 영종구(영종도)로 나뉘었어요. 사는 곳을 골라 주세요.", choices: pick(["제물포구", "영종구"]) };
+  if (/검단/.test(text)) return null;
+  return { sido: "28000", sigungu: null, note: "인천 서구는 2026년 7월부터 서해구와 검단구로 나뉘었어요. 사는 곳을 골라 주세요.", choices: pick(["서해구", "검단구"]) };
+}
+
 function resolveRegion(text: string, regions: RegionIndex) {
+  const io = incheonOld(text, regions);
+  if (io) return { sido: io.sido, sigungu: io.sigungu, notes: [io.note], terms: ["인천", "인천시", "인천광역시"].filter((t) => text.includes(t)), any: true, choices: io.choices as { sido: string; sigungu: string | null; label: string }[] | undefined };
   const hits = regionHits(text, regions);
   const gw = gwangjuChoice(text, regions, hits);
   if (gw) {
@@ -283,6 +305,11 @@ function resolveRegion(text: string, regions: RegionIndex) {
     sido = [...sidoSet][0];
   } else if (sidoSet.size > 1) {
     notes.push("시·도가 여러 곳으로 읽혀요. 지역을 골라 주세요.");
+  }
+  // 시·군·구가 하나뿐인 시·도 (세종특별자치시) → 그 시·군·구로
+  if (sido && !sigungu) {
+    const only = regions.sidos.find((x) => x.code === sido)?.sigungus;
+    if (only?.length === 1) sigungu = only[0].code;
   }
   const used = sigungu ? cands.filter((c) => c.code === sigungu).map((c) => c.h.term) : [];
   const usedSido = sido ? sidoHits.filter((h) => h.sido === sido).map((h) => h.term) : [];

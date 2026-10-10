@@ -1,0 +1,490 @@
+[
+ {
+  "id": "g11215.gov24-304000000134",
+  "name": "광진119주택 지원",
+  "preset": "suwon-senior",
+  "region": "서울특별시 광진구",
+  "requirement": "화재·재해 등으로 인한 긴급주거상실",
+  "category": "event"
+ },
+ {
+  "id": "s11000.gov24-O00021400004",
+  "name": "장사시설 이용요금 면제",
+  "preset": "suwon-senior",
+  "region": "서울특별시 광진구",
+  "requirement": "무연고 행려사망자 (사망 사건)",
+  "category": "event"
+ },
+ {
+  "id": "s11000.gov24-611000019644",
+  "name": "서울형 아이돌봄비 지원",
+  "preset": "seongnam-single-parent",
+  "region": "서울특별시 광진구",
+  "requirement": "만 24~36개월 영아가 있는 양육공백 가정",
+  "category": "demographic"
+ },
+ {
+  "id": "s12000.gov24-646000000186",
+  "name": "우리동네 복지기동대-생활안전지원금 지급",
+  "preset": "suwon-senior",
+  "region": "전남광주통합특별시 영암군",
+  "requirement": "위기상황에 처한 가구 (긴급복지지원법 제2조 사유)",
+  "category": "event"
+ },
+ {
+  "id": "s12000.gov24-O00093800002",
+  "name": "또래상담",
+  "preset": "seongnam-single-parent",
+  "region": "전남광주통합특별시 영암군",
+  "requirement": "학교 내 또래상담자",
+  "category": "status"
+ },
+ {
+  "id": "s12000.gov24-O00093800005",
+  "name": "청소년상담 전문교육 서비스",
+  "preset": "seongnam-single-parent",
+  "region": "전남광주통합특별시 영암군",
+  "requirement": "청소년상담사",
+  "category": "status"
+ },
+ {
+  "id": "s12000.gov24-O00093300002",
+  "name": "전남 중소기업 면접비 지원",
+  "preset": "goyang-youth",
+  "region": "전남광주통합특별시 영암군",
+  "requirement": "5인이상 300인미만 중소기업의 면접자",
+  "category": "action"
+ },
+ {
+  "id": "s26000.gov24-626000000618",
+  "name": "부산 청년 일하는 기쁨카드 지원",
+  "preset": "seongnam-single-parent",
+  "region": "부산광역시 사하구",
+  "requirement": "부산소재 중소기업에 3개월 이상 재직 중",
+  "category": "status"
+ },
+ {
+  "id": "s26000.gov24-626000000121",
+  "name": "아동양육시설등지원",
+  "preset": "seongnam-single-parent",
+  "region": "부산광역시 사하구",
+  "requirement": "아동복지시설 입소 아동",
+  "category": "status"
+ },
+ {
+  "id": "s26000.gov24-O00079200001",
+  "name": "청년문화육성지원",
+  "preset": "seongnam-single-parent",
+  "region": "부산광역시 사하구",
+  "requirement": "부산에서 활동하는 청년예술가",
+  "category": "status"
+ },
+ {
+  "id": "g27710.gov24-348000000363",
+  "name": "신혼부부 결혼 축하 바우처 지원",
+  "preset": "seongnam-single-parent",
+  "region": "대구광역시 달성군",
+  "requirement": "2026. 1. 1. 이후 혼인신고 한 가정",
+  "category": "event"
+ },
+ {
+  "id": "s28000.gov24-628000000160",
+  "name": "고령운전자 운전면허 자진반납 지원",
+  "preset": "suwon-senior",
+  "region": "인천광역시 서해구",
+  "requirement": "고령운전자 운전면허 자진반납 (사업명)",
+  "category": "action"
+ },
+ {
+  "id": "s28000.gov24-O00091100004",
+  "name": "공연티켓할인(문화누리카드)",
+  "preset": "suwon-senior",
+  "region": "인천광역시 서해구",
+  "requirement": "문화누리카드 소지자",
+  "category": "status"
+ },
+ {
+  "id": "g28275.gov24-356100000004",
+  "name": "중소기업 재직청년 복지공유제 지원",
+  "preset": "seongnam-single-parent",
+  "region": "인천광역시 서해구",
+  "requirement": "중소기업에 6개월 이상 재직 중인 청년",
+  "category": "status"
+ },
+ {
+  "id": "s28000.gov24-O00026200005",
+  "name": "긴급취약계층 임시주택 지원",
+  "preset": "seongnam-single-parent",
+  "region": "인천광역시 서해구",
+  "requirement": "화재 및 수해 등 재해발생 인천시 주민",
+  "category": "event"
+ },
+ {
+  "id": "s28000.gov24-628000000149",
+  "name": "장애인 이동기기·자세유지 기구 보급",
+  "preset": "bucheon-disability",
+  "region": "인천광역시 서해구",
+  "requirement": "중증장애인 척추 등 신체변형 대상자",
+  "category": "status"
+ },
+ {
+  "id": "s30000.gov24-630000000677",
+  "name": "대전광역시 가족센터 주관 사회적 관계망 형성 프로그램 안내",
+  "preset": "seongnam-single-parent",
+  "region": "대전광역시 서구",
+  "requirement": "25~39세 미혼남녀",
+  "category": "demographic"
+ },
+ {
+  "id": "s30000.gov24-630000000155",
+  "name": "장애인 활동지원(추가)",
+  "preset": "bucheon-disability",
+  "region": "대전광역시 서구",
+  "requirement": "유형별로 추가지원이 필요한 자 (활동지원 수급자)",
+  "category": "status"
+ },
+ {
+  "id": "s31000.gov24-631000000718",
+  "name": "(외)조부모 손주 돌봄수당 지원",
+  "preset": "suwon-senior",
+  "region": "울산광역시 울주군",
+  "requirement": "(외)조부모 손주 돌봄 / 아동 가구",
+  "category": "status"
+ },
+ {
+  "id": "s31000.gov24-631000000132",
+  "name": "울산 청년가구 주거비 지원사업 지원 신청",
+  "preset": "seongnam-single-parent",
+  "region": "울산광역시 울주군",
+  "requirement": "19세~39세 무주택 미혼 청년가구 세대주, 임차보증금 1억원이하 월세 50만원 이하",
+  "category": "status"
+ },
+ {
+  "id": "s31000.gov24-631000000728",
+  "name": "3(손)자녀 이상 가정 상·하수도요금 감면",
+  "preset": "seongnam-single-parent",
+  "region": "울산광역시 울주군",
+  "requirement": "18세 미만 (손)자녀가 3명 이상인 가정",
+  "category": "demographic"
+ },
+ {
+  "id": "g36110.gov24-569000000393",
+  "name": "청년월세 지원사업 변경신청(세종시 거주)",
+  "preset": "seongnam-single-parent",
+  "region": "세종특별자치시 세종특별자치시",
+  "requirement": "기존 청년월세지원 대상자 중 변경신청 (기존 대상자만 신청 가능)",
+  "category": "action"
+ },
+ {
+  "id": "g36110.gov24-569000000348",
+  "name": "장애인 활동지원(추가)",
+  "preset": "bucheon-disability",
+  "region": "세종특별자치시 세종특별자치시",
+  "requirement": "서비스 국비지원대상자 중 시간부족으로 추가지원이 필요한 자",
+  "category": "status"
+ },
+ {
+  "id": "s44000.gov24-O00109000017",
+  "name": "구직자 면접수당 지원",
+  "preset": "goyang-youth",
+  "region": "충청남도 공주시",
+  "requirement": "선정된 기업 및 기관의 면접 참여 구직자",
+  "category": "action"
+ },
+ {
+  "id": "s44000.gov24-644000000218",
+  "name": "장애인 보장구 수리 지원",
+  "preset": "bucheon-disability",
+  "region": "충청남도 공주시",
+  "requirement": "보장구를 이용하는 등록장애인",
+  "category": "status"
+ },
+ {
+  "id": "g44150.gov24-450000000102",
+  "name": "공주시한마음장학회 장애인가정자녀 장학생 선발",
+  "preset": "bucheon-disability",
+  "region": "충청남도 공주시",
+  "requirement": "장애인가정자녀장학생 선발",
+  "category": "selection"
+ },
+ {
+  "id": "s47000.gov24-647000000159",
+  "name": "경상북도 아이돌봄 본인부담금 지원",
+  "preset": "seongnam-single-parent",
+  "region": "경상북도 포항시",
+  "requirement": "양육공백이 발생하여 아이돌봄서비스를 이용하는 가정",
+  "category": "action"
+ },
+ {
+  "id": "s47000.gov24-647000000123",
+  "name": "청년근로자 사랑채움",
+  "preset": "seongnam-single-parent",
+  "region": "경상북도 포항시",
+  "requirement": "중소,중견기업에 근무 중인 19세~39세 미혼 청년",
+  "category": "status"
+ },
+ {
+  "id": "s47000.gov24-O00015100002",
+  "name": "분양대금 금융기관 협약대출",
+  "preset": "seongnam-single-parent",
+  "region": "경상북도 포항시",
+  "requirement": "분양계약자",
+  "category": "status"
+ },
+ {
+  "id": "s47000.gov24-647000000190",
+  "name": "20대 결혼 축하 혼수 비용 지원",
+  "preset": "goyang-youth",
+  "region": "경상북도 포항시",
+  "requirement": "혼인신고 후 1년 미만 부부",
+  "category": "event"
+ },
+ {
+  "id": "s47000.gov24-647000000130",
+  "name": "장애인용 하이패스 감면 단말기 보급",
+  "preset": "bucheon-disability",
+  "region": "경상북도 포항시",
+  "requirement": "장애인통합복지카드(통행료할인카드) 소지자",
+  "category": "status"
+ },
+ {
+  "id": "g48310.gov24-537000000106",
+  "name": "저소득 틈새 지원",
+  "preset": "suwon-senior",
+  "region": "경상남도 거제시",
+  "requirement": "통합사례관리 대상자 (사례관리를 받고 있는 대상자)",
+  "category": "selection"
+ },
+ {
+  "id": "s48000.gov24-648000001031",
+  "name": "고령운전자 운전면허 자진반납 지원",
+  "preset": "suwon-senior",
+  "region": "경상남도 거제시",
+  "requirement": "65세 이상 운전면허증 자진반납자",
+  "category": "action"
+ },
+ {
+  "id": "s48000.gov24-648000001140",
+  "name": "손주돌봄 지원",
+  "preset": "seongnam-single-parent",
+  "region": "경상남도 거제시",
+  "requirement": "손자녀를 돌보는 조부모",
+  "category": "status"
+ },
+ {
+  "id": "g48310.gov24-537000000137",
+  "name": "민간보육교사 명절휴가비 지급",
+  "preset": "seongnam-single-parent",
+  "region": "경상남도 거제시",
+  "requirement": "정부미지원 어린이집 보육교사(담임교사) 근무자",
+  "category": "status"
+ },
+ {
+  "id": "g48310.gov24-537000000208",
+  "name": "어린이집 생애최초 입학축하금 지원",
+  "preset": "seongnam-single-parent",
+  "region": "경상남도 거제시",
+  "requirement": "어린이집에 생애최초 입학",
+  "category": "event"
+ },
+ {
+  "id": "g48310.gov24-537000001435",
+  "name": "거제시 유치원생 및 초등학생 입학축하금 지원",
+  "preset": "seongnam-single-parent",
+  "region": "경상남도 거제시",
+  "requirement": "유치원 및 초등학교에 최초 입학하는 학생",
+  "category": "event"
+ },
+ {
+  "id": "g48310.gov24-537000000112",
+  "name": "장애인 보장구 수리 지원",
+  "preset": "bucheon-disability",
+  "region": "경상남도 거제시",
+  "requirement": "보장구를 사용하는 장애인",
+  "category": "status"
+ },
+ {
+  "id": "s50000.gov24-650000000324",
+  "name": "노인 생활안전사고 예방 지원사업",
+  "preset": "suwon-senior",
+  "region": "제주특별자치도 제주시",
+  "requirement": "장기요양 등급 외 A, B 판정을 받은 자",
+  "category": "status"
+ },
+ {
+  "id": "s50000.gov24-650000000262",
+  "name": "저소득층 위기가정 지원",
+  "preset": "suwon-senior",
+  "region": "제주특별자치도 제주시",
+  "requirement": "위기상황 발생 후 1년 이내 가정",
+  "category": "event"
+ },
+ {
+  "id": "s50000.gov24-650000000234",
+  "name": "고령운전자 운전면허 자진반납 지원",
+  "preset": "suwon-senior",
+  "region": "제주특별자치도 제주시",
+  "requirement": "운전면허를 자진반납한 65세 이상 도민",
+  "category": "action"
+ },
+ {
+  "id": "s50000.gov24-O00030500002",
+  "name": "기존주택 매입 사업",
+  "preset": "suwon-senior",
+  "region": "제주특별자치도 제주시",
+  "requirement": "기존주택등 매도 신청자",
+  "category": "status"
+ },
+ {
+  "id": "s50000.gov24-650000000230",
+  "name": "조손가정 학습 지원",
+  "preset": "seongnam-single-parent",
+  "region": "제주특별자치도 제주시",
+  "requirement": "경제적으로 어려운 조손 가정",
+  "category": "demographic"
+ },
+ {
+  "id": "s50000.gov24-650000000252",
+  "name": "장애인 자동차운전면허 취득교육비 지원",
+  "preset": "bucheon-disability",
+  "region": "제주특별자치도 제주시",
+  "requirement": "도내 등록 장애인 중 운전면허 취득한 자",
+  "category": "status"
+ },
+ {
+  "id": "g51750.gov24-O00037600007",
+  "name": "보건의료인력대상 역량강화 교육(의료인, 보건교사, 119구급대원, 요양시설 관계자 등)",
+  "preset": "seongnam-single-parent",
+  "region": "강원특별자치도 영월군",
+  "requirement": "영월·정선·평창군 내 의료인, 보건교사, 119구급대원, 요양시설 관계자",
+  "category": "status"
+ },
+ {
+  "id": "s51000.gov24-642000000712",
+  "name": "강원특별자치도 청년 취업준비 쿠폰 지원",
+  "preset": "goyang-youth",
+  "region": "강원특별자치도 영월군",
+  "requirement": "기준중위소득 120%초과 ~ 180%이하(만18세~34세 이하), 최종학력 졸업(중퇴)",
+  "category": "income"
+ },
+ {
+  "id": "s51000.gov24-642000000688",
+  "name": "장애인활동지원 추가사업",
+  "preset": "bucheon-disability",
+  "region": "강원특별자치도 영월군",
+  "requirement": "기능제한 점수 360점 이상 또는 탈시설 장애인",
+  "category": "status"
+ },
+ {
+  "id": "s51000.gov24-642000000717",
+  "name": "장애인 차량 하이패스 감면단말기 설치 지원",
+  "preset": "bucheon-disability",
+  "region": "강원특별자치도 영월군",
+  "requirement": "통합복지카드를 소지한 장애인",
+  "category": "status"
+ },
+ {
+  "id": "s52000.gov24-654000000032",
+  "name": "어린이집 필요경비 지원",
+  "preset": "seongnam-single-parent",
+  "region": "전북특별자치도 임실군",
+  "requirement": "어린이집 이용 2-5세 영유아",
+  "category": "status"
+ },
+ {
+  "id": "s52000.gov24-654000000039",
+  "name": "농번기 돌봄지원(확대 지원)",
+  "preset": "seongnam-single-parent",
+  "region": "전북특별자치도 임실군",
+  "requirement": "농번기 돌봄지원 (농업인 가구 대상 사업)",
+  "category": "status"
+ },
+ {
+  "id": "s52000.gov24-645000000115",
+  "name": "장애인 활동지원(추가)",
+  "preset": "bucheon-disability",
+  "region": "전북특별자치도 임실군",
+  "requirement": "국고보조 장애인활동지원 대상자 중 추가시간이 필요한 장애인",
+  "category": "status"
+ },
+ {
+  "id": "g11410.gov24-312000000121",
+  "name": "정신적장애인 시민옹호인 양성 지원",
+  "preset": "bucheon-disability",
+  "region": "서울특별시 서대문구",
+  "requirement": "정신적 장애인 (장애 유형)",
+  "category": "status"
+ },
+ {
+  "id": "s12000.gov24-629000000804",
+  "name": "광주형 청년일자리 공제",
+  "preset": "seongnam-single-parent",
+  "region": "전남광주통합특별시 동구",
+  "requirement": "광주 소재 중소기업에 정규직으로 재직하고 있는 19세~39세",
+  "category": "status"
+ },
+ {
+  "id": "s12000.gov24-629000000815",
+  "name": "삼삼오오 이웃돌봄",
+  "preset": "seongnam-single-parent",
+  "region": "전남광주통합특별시 동구",
+  "requirement": "돌봄 아동을 둔 3~5가구의 자조모임",
+  "category": "organisation"
+ },
+ {
+  "id": "g44710.gov24-455000000121",
+  "name": "대장암 자가검진 키트 지급",
+  "preset": "seongnam-single-parent",
+  "region": "충청남도 금산군",
+  "requirement": "고위험군 : 대장암 가족력, 대장질환 의심자 등",
+  "category": "status"
+ },
+ {
+  "id": "g47230.gov24-510000000377",
+  "name": "하수도요금 감면(중수도)",
+  "preset": "suwon-senior",
+  "region": "경상북도 영천시",
+  "requirement": "중수도를 설치하여 사용하는 자 / 재이용수를 공급받아 사용하는 자",
+  "category": "status"
+ },
+ {
+  "id": "g48270.gov24-536000000107",
+  "name": "밀양형 청년내일채움공제",
+  "preset": "seongnam-single-parent",
+  "region": "경상남도 밀양시",
+  "requirement": "정규직 취업자로 청년내일채움공제에 가입되어 있고 15~34세 청년",
+  "category": "status"
+ },
+ {
+  "id": "g50130.gov24-O00107100003",
+  "name": "아동 건강검진비 지원",
+  "preset": "seongnam-single-parent",
+  "region": "제주특별자치도 서귀포시",
+  "requirement": "지역아동센터 및 드림스타트를 이용하는 아동",
+  "category": "status"
+ },
+ {
+  "id": "g50130.gov24-O00107100002",
+  "name": "장애인 건강검진비 지원",
+  "preset": "bucheon-disability",
+  "region": "제주특별자치도 서귀포시",
+  "requirement": "사회복지시설을 이용하거나 거주하는 장애인",
+  "category": "status"
+ },
+ {
+  "id": "g52190.gov24-O00100600003",
+  "name": "장애인 무료 건강검진 및 나들이 지원",
+  "preset": "bucheon-disability",
+  "region": "전북특별자치도 남원시",
+  "requirement": "협약이 체결된 장애인 기관 장애인 중 추천을 받은 자",
+  "category": "selection"
+ },
+ {
+  "id": "g52190.gov24-470000000121",
+  "name": "취약가구 소식/안심 서비스 제공",
+  "preset": "bucheon-disability",
+  "region": "전북특별자치도 남원시",
+  "requirement": "중증질환, 중증장애가구, 자살위험가구 등 1인(청중장년층) 관내 취약가구 (3인 가구 불일치)",
+  "category": "demographic"
+ }
+]
