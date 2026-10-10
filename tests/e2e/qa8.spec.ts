@@ -81,3 +81,14 @@ test("검색 지역은 새로고침해도 유지 (주소에는 싣지 않음), �
   await expect(page.locator(".search-count h2")).toHaveText(count);
   expect(await names()).toEqual(before);
 });
+
+test("'91년생, 여자아이 2명, 남편외벌이, 월급 400만원' → 자녀 2명, 한부모 '아니요', 하는 일은 직장 아님 @mobile", async ({ page }) => {
+  await page.goto("/situation?for=self&new=1");
+  await expect(page.getByTestId("v2-text")).toBeVisible({ timeout: 20_000 });
+  await page.getByTestId("v2-text").fill("91년생, 여자아이 2명, 남편외벌이, 월급 400만원");
+  await page.getByTestId("v2-fill").click();
+  await expect(page.getByTestId("v2-understood")).toContainText("자녀 2명");
+  await expect(page.getByRole("group", { name: /자녀는 몇 명/ }).getByRole("radio", { name: "2명" })).toBeChecked();
+  await expect(page.getByRole("group", { name: /한부모 가구인가요/ }).getByRole("radio", { name: "아니요" })).toBeChecked();
+  await expect(page.getByRole("group", { name: /지금 하고 있는 일/ }).getByRole("radio", { name: "직장에 다녀요" })).not.toBeChecked();
+});

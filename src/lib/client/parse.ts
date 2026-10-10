@@ -66,6 +66,8 @@ export interface ParsedSituation {
   ageChoices?: AgeBand[];
   /** 문장에서 '받지 않는다'고 한 수급·연금 (예: '기초연금 안 받아요') */
   benefitsNo?: Benefit[];
+  /** 문장으로 '아님'이 정해진 가구 특성 (예: 남편·아내를 말함 → 한부모 아님) */
+  traitsNo?: HouseholdTrait[];
   /** 문장에서 말한 관심 주제 (예: '기초연금 받고 싶어요' → basic_pension) — 먼저 확인할 것의 순서에만 쓴다 */
   interests?: TopicId[];
   /** 문장에서 읽은 자녀 나이대 (예: '돌 안 된 아기' → 0~1세) */
@@ -519,7 +521,8 @@ function parseIncome(text: string): { income: ParsedIncome; kw: string; notes: s
 /* ---------------- 자녀·배우자·함께 사는 부모님 ---------------- */
 
 const KN_COUNT: Record<string, number> = { 한: 1, 하나: 1, 둘: 2, 두: 2, 셋: 3, 세: 3, 넷: 4, 네: 4, 다섯: 5, 여섯: 6 };
-const CHILD_WORD = "(?:자녀|아이|애기|애|아기|자식|아들|딸|쌍둥이)";
+// (QA 8차 후속) '여자아이 2명'·'남자아이 하나'·'딸아이' — 긴 낱말을 먼저 (앞 글자 검사 때문에 '아이'만으로는 못 읽음)
+const CHILD_WORD = "(?:여자\\s*아이|남자\\s*아이|여자\\s*애|남자\\s*애|딸아이|아들아이|딸래미|아들래미|여아|남아|자녀|아이|애기|애|아기|자식|아들|딸|쌍둥이)";
 const NUMW = "(\\d+|하나|둘|셋|넷|다섯|여섯|한|두|세|네)";
 /** '자녀는 2명', '아이 둘', '아들 하나' */
 const CHILD_AFTER = new RegExp(`(?<![가-힣])(${CHILD_WORD})(?:들)?\\s*(?:은|는|이|가|도)?\\s*(?:\\d+\\s*(?:살|세|개월)\\s*(?:짜리)?\\s*)?${NUMW}\\s*(명|분)?`, "g");
@@ -527,6 +530,10 @@ const CHILD_AFTER = new RegExp(`(?<![가-힣])(${CHILD_WORD})(?:들)?\\s*(?:은|
 const CHILD_BEFORE = new RegExp(`(?<![가-힣\\d])${NUMW}\\s*(명의?|명인)?\\s*(${CHILD_WORD})`, "g");
 const NO_CHILD_RE = /(?<![가-힣])(?:자녀|아이|애|자식)\s*(?:는|가|도|은)?\s*(?:없|안\s*키)|무자녀|딩크/;
 const SPOUSE_RE = /(아내|와이프|남편|신랑|배우자|부부|맞벌이|외벌이|집사람|기혼|결혼\s*(?:했|해서|한|하고))/;
+/** 함께 사는 배우자를 말함 ('부부'·'맞벌이' 포함, '외벌이' 하나만으로는 아님) */
+const SPOUSE_PERSON = /(아내|와이프|남편|신랑|배우자|집사람|맞벌이|부부)/;
+/** 버는 사람이 배우자 ('남편 외벌이', '남편이 벌어요', '아내 월급') — 월급 낱말이 있어도 본인 직장으로 보지 않음 */
+const SPOUSE_EARNER = /(남편|아내|와이프|신랑|배우자|집사람)\s*(?:이|가|은|는|만|혼자|혼자서)?\s*(?:외벌이|벌어|벌고|버는|월급|급여|직장|회사)/;
 const SINGLE_PARENT_RE = /(한부모|이혼|사별|돌싱|미혼모|미혼부|싱글\s*(?:맘|대디)|(?:혼자|홀로)\s*(?:서\s*)?(?:(?:애|아이|자녀|아들|딸|애기)\s*(?:들)?\s*(?:을|를|은|는)?\s*(?:\d+\s*명|하나|둘|셋|넷|한\s*명|두\s*명|세\s*명)?\s*)?(?:키우|키워|키운|기르|길러|양육))/;
 /** '두 아이 엄마', '애 아빠', '한부모' — 부모님 대신 찾기가 아님 (말하는 사람이 부모) */
 const NOT_PARENT_TARGET = /(?:(?:\d+|한|두|세|네)\s*)?(?:아이|애|애기|아기|자녀|아들|딸|쌍둥이)(?:들)?\s*(?:둘|셋|넷|하나)?\s*(?:의\s*)?(?:엄마|아빠)|한부모|학부모/g;
@@ -535,7 +542,7 @@ const LIVE_PARENT_RE = /(양가\s*부모님|시부모님|부모님|어머니|어
 /** 자녀 나이 (QA 2차 N3): '돌 안 된 아기', '갓난아기', '생후 5개월', '첫째 7살', '3살 딸', '초등학생 아들' */
 const KN_AGE: Record<string, number> = { 한: 1, 두: 2, 세: 3, 네: 4, 다섯: 5, 여섯: 6, 일곱: 7, 여덟: 8, 아홉: 9, 열: 10 };
 const childBucketOf = (age: number): ChildBucket | null => (age < 0 ? null : age <= 1 ? "0-1" : age <= 5 ? "2-5" : age <= 12 ? "6-12" : age <= 18 ? "13-18" : "19+");
-const KID = "(?:첫째|둘째|셋째|막내|큰애|작은애|큰아이|작은아이|아이|애기|아기|애|아들|딸|딸아이|손자|손녀|쌍둥이)";
+const KID = "(?:첫째|둘째|셋째|막내|큰애|작은애|큰아이|작은아이|여자\\s*아이|남자\\s*아이|아이|애기|아기|애|아들|딸|딸아이|손자|손녀|쌍둥이)";
 function childAges(text: string): ChildBucket[] {
   const out: ChildBucket[] = [];
   const add = (b: ChildBucket | null) => b && out.push(b);
@@ -910,6 +917,9 @@ export function parseSituation(raw: string, regions: RegionIndex | null, today: 
   if (affirmed(text, /(국가\s*유공자|보훈|참전)/)) traits.push("veteran");
   if (affirmed(text, /(다문화|결혼\s*이민|북한\s*이탈|탈북)/)) traits.push("multicultural");
   if (traits.length) p.traits = [...new Set(traits)];
+  // (QA 8차 후속) 남편·아내와 산다고 했으면 한부모 아님 — 입력·결과 화면에서 다시 묻지 않게 ('이혼·사별'을 말했으면 정하지 않음)
+  const traitsNo: HouseholdTrait[] = [];
+  if (mode !== "parent" && SPOUSE_PERSON.test(text) && !SINGLE_PARENT_RE.test(text) && !traits.includes("single_parent")) traitsNo.push("single_parent");
   // 가구 문구에 이미 '한부모'가 들어가면 신호로 다시 쓰지 않는다
   const sigTraits = traits.filter((t) => t !== "single" && !(t === "single_parent" && singleParentInferred));
   if (sigTraits.length) signals.push(sigTraits.map((t) => ({ single_parent: "한부모·조손", multi_child: "다자녀", veteran: "보훈", multicultural: "다문화·북한이탈" })[t as Exclude<HouseholdTrait, "single">]).join("·"));
@@ -926,7 +936,11 @@ export function parseSituation(raw: string, regions: RegionIndex | null, today: 
     // QA 5차 U1: '대학생·대학원생·휴학생·재학 중·복학' → 하는 일 '학생' (자녀·동생이 대학생인 문장은 제외)
     p.activity = "student";
     signals.push("대학생 (하는 일: 학생)");
-  } else if (mode === "self" && /(월급|급여|봉급|연봉|맞벌이|직장\s*(?:에|을|다니|다녀|인)|회사\s*(?:에\s*)?(?:다니|다녀)|회사원|직장인)/.test(text) && !/(퇴사|그만두|실직|휴직)/.test(text)) {
+  } else if (mode === "self" && SPOUSE_EARNER.test(text) && /외벌이/.test(text)) {
+    // (QA 8차 후속) '남편 외벌이, 월급 400' — 버는 사람은 배우자 한 명 → 본인은 일하지 않음 (월급은 가구 소득으로)
+    p.activity = "none";
+    signals.push("배우자 외벌이 (본인은 일하지 않음)");
+  } else if (mode === "self" && /(월급|급여|봉급|연봉|맞벌이|직장\s*(?:에|을|다니|다녀|인)|회사\s*(?:에\s*)?(?:다니|다녀)|회사원|직장인)/.test(text) && !/(퇴사|그만두|실직|휴직)/.test(text) && !SPOUSE_EARNER.test(text)) {
     p.activity = "employed";
     signals.push("직장에 다님");
   } else if (NOT_WORKING_RE.test(text)) {
@@ -977,6 +991,7 @@ export function parseSituation(raw: string, regions: RegionIndex | null, today: 
     ...(regionChoices ? { regionChoices } : {}),
     ...(age?.choices ? { ageChoices: age.choices } : {}),
     ...(benefitsNo.length ? { benefitsNo } : {}),
+    ...(traitsNo.length ? { traitsNo } : {}),
     ...(interests.length ? { interests } : {}),
     ...(kidAges.length && mode !== "parent" ? { childAges: kidAges } : {}),
     ...(age?.other && mode === "parent" ? { otherAge: age.other } : {}),

@@ -193,3 +193,25 @@ describe("기본값", () => {
     expect(EMPTY_PROFILE.activity).toBe("unknown");
   });
 });
+
+describe("QA8 후속 (2026-10-10) '91년생, 여자아이 2명, 남편외벌이, 월급 400만원'", () => {
+  const P = (t: string) => parseSituation(t, regions, { year: 2026, month: 10, day: 10 });
+  it("여자아이·남자아이·딸아이도 자녀로 셈 → 자녀 2명, 배우자 포함 4인 가구", () => {
+    const r = P("91년생, 여자아이 2명, 남편외벌이, 월급 400만원");
+    expect(r.childCount).toBe(2);
+    expect(r.profile.householdSize).toBe(4);
+    expect(P("남자아이 하나 키워요").childCount).toBe(1);
+    expect(P("딸아이 둘이에요").childCount).toBe(2);
+    expect(P("여자아이 5살").childAges).toContain("2-5");
+  });
+  it("남편·아내를 말했으면 한부모 아님 (다시 묻지 않음), 이혼·사별이면 그대로", () => {
+    expect(P("91년생, 여자아이 2명, 남편외벌이, 월급 400만원").traitsNo).toContain("single_parent");
+    expect(P("남편과 이혼하고 아이 둘 키워요").traitsNo ?? []).not.toContain("single_parent");
+  });
+  it("'남편 외벌이'의 월급은 남편 것 — 본인을 '직장에 다님'으로 보지 않음", () => {
+    const r = P("91년생, 여자아이 2명, 남편외벌이, 월급 400만원");
+    expect(r.profile.activity).not.toBe("employed");
+    expect(r.income?.manwon).toBe(400);
+    expect(P("월급 300만원 받는 직장인이에요").profile.activity).toBe("employed");
+  });
+});
