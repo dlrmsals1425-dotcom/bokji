@@ -85,6 +85,13 @@ export default function About() {
           </li>
           <li>보건복지부 통합돌봄 지방정부 서비스 메뉴판 — {n(c.raw.icare)}건 · {meta.dataAsOf.icare}</li>
           <li>복지로 기반 핵심 복지 100선 요약 — {n(c.raw.welfare100)}건</li>
+          <li>
+            시·군·구 경계(&lsquo;현재 위치로 내 지역 예시 보기&rsquo;에만 사용) — 통계청 SGIS 행정동 경계를 정리한{" "}
+            <a href="https://github.com/vuski/admdongkor" target="_blank" rel="noopener noreferrer">
+              vuski/admdongkor
+            </a>{" "}
+            2026-07-01판 (CC BY 4.0, 공공누리 제1유형). 시·군·구로 합치고 단순화해 씀
+          </li>
         </ul>
         <p className="small muted" style={{ marginTop: "0.5rem" }}>
           신청 방법이 있는 서비스 {n(c.coverage.applyMethod)}개({Math.round((100 * c.coverage.applyMethod) / c.coverage.total)}%), 연락처가 있는 서비스 {n(c.coverage.contact)}개({Math.round((100 * c.coverage.contact) / c.coverage.total)}%).
@@ -185,6 +192,7 @@ export default function About() {
           <li>입력값은 서버로 보내지 않습니다. 지역별 서비스 묶음을 내려받아 이 기기 안에서 판정합니다.</li>
           <li>입력값은 이 브라우저에만 저장되며 &lsquo;이 기기에서 지우기&rsquo;로 언제든 삭제할 수 있습니다. 공용 기기 모드에서는 브라우저를 닫으면 사라집니다.</li>
           <li>장애·돌봄 같은 민감 정보는 선택 입력입니다.</li>
+          <li>&lsquo;현재 위치로 내 지역 예시 보기&rsquo;는 누를 때만 위치 권한을 묻고, 위치(좌표)는 이 기기 안에서 시·군·구로만 바꾼 뒤 버립니다. 보내거나 저장하지 않습니다.</li>
         </ul>
       </section>
 

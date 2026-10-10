@@ -16,7 +16,7 @@ import { loadForRegion, loadProgram, loadRegions, type Loaded } from "@/lib/clie
 import { CHANNEL_LABEL, firstLine, howTo } from "@/lib/client/howto";
 import { clearProfile, useExample, useExtras } from "@/lib/client/storage";
 import { saveSituation, situationOf } from "@/lib/client/start";
-import { PRESETS } from "@/lib/client/presets";
+import { presetById } from "@/lib/client/presets";
 import { checkPath, coupleNote, resultsCopy, type FindMode } from "@/lib/client/mode";
 import {
   BUCKET_LABEL, LOW_INCOME_PCT, cohabitParentPicks, cohabitParentSit, ageBoundsOf, ageSpanOf, answersFor, autoV2, buildView, classify, inferredNoRecipient, plainLine, scoreV2, situationChips, topPicksV2,
@@ -139,7 +139,7 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
         ? { ...m, remove: on ? m.remove.filter((x) => x !== id) : [...m.remove, id] }
         : { ...m, add: on ? [...m.add.filter((x) => x !== id), id] : m.add.filter((x) => x !== id) })),
   };
-  const preset = PRESETS.find((x) => x.id === example);
+  const preset = presetById(example);
   const place = data.label.split(" ").pop();
   const questions = view.questions.filter((q) => !skipped.includes(q.dim.id)).slice(0, 3);
   const unlock = new Set(questions.flatMap((q) => q.keys)).size;

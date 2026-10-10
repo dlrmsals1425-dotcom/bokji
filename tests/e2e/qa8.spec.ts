@@ -92,3 +92,29 @@ test("'91년생, 여자아이 2명, 남편외벌이, 월급 400만원' → 자�
   await expect(page.getByRole("group", { name: /한부모 가구인가요/ }).getByRole("radio", { name: "아니요" })).toBeChecked();
   await expect(page.getByRole("group", { name: /지금 하고 있는 일/ }).getByRole("radio", { name: "직장에 다녀요" })).not.toBeChecked();
 });
+
+test.describe("전국 확대 ③ 현재 위치로 내 지역 예시", () => {
+  test("용인 위치 → '경기 용인시' 예시 5개, 받으실 수 있어요 많은 순, 누르면 그 지역 결과 @mobile", async ({ page, context }) => {
+    await context.grantPermissions(["geolocation"]);
+    await context.setGeolocation({ latitude: 37.2411, longitude: 127.1776 });
+    await page.goto("/");
+    await page.getByTestId("locate-btn").click();
+    await expect(page.getByTestId("locate-status")).toContainText("경기 용인시 기준", { timeout: 30_000 });
+    const fits = await page.getByTestId("preset-fit").allInnerTexts();
+    expect(fits).toHaveLength(5);
+    const ns = fits.map((t) => Number(/(\d+)개/.exec(t)![1]));
+    expect([...ns].sort((a, b) => b - a)).toEqual(ns);
+    await page.getByTestId("preset-suwon-senior").click();
+    await expect(page.getByRole("heading", { level: 1 })).toContainText("용인시", { timeout: 20_000 });
+    await expect(page.getByTestId("example-banner")).toContainText("경기 용인시 1인 어르신");
+  });
+  test("위치 권한이 없으면 지역을 직접 고르기 — 서울 광진구", async ({ page }) => {
+    await page.goto("/");
+    await page.getByTestId("locate-btn").click();
+    await expect(page.getByTestId("locate-status")).toContainText("위치를 확인하지 못했어요", { timeout: 20_000 });
+    await page.locator("#pp-sido").selectOption("11000");
+    await page.getByTestId("locate-sigungu").selectOption({ label: "광진구" });
+    await expect(page.getByTestId("locate-status")).toContainText("서울 광진구 기준", { timeout: 30_000 });
+    await expect(page.getByTestId("preset-goyang-youth")).toContainText("서울 광진구 구직 청년");
+  });
+});
