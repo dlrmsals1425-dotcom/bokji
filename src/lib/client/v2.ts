@@ -210,6 +210,13 @@ const gateCache = new WeakMap<Program, GateInfo>();
  *  - '…우선' 은 관문이 아님 (priority 로 따로 알림)
  *  - 대상이 여러 유형(○ 줄)으로 나뉘고 소득·수급 조건이 없는 유형이 있으면 관문 없음 (partial)
  */
+/** 수급·차상위와 나란히 적히는 다른 대상 집단 (한 줄 목록에서 '수급자 전용'이 아님을 알아보려고) */
+// (나이·노인·청년은 '65세 이상 의료급여 수급권자'처럼 함께 맞아야 하는 조건으로 쓰여서 넣지 않음)
+const OTHER_GROUP = /장애|유공|보훈|한부모|조손|다문화|탈북|북한\s*이탈|다자녀|임산부|독립|5\s*[.·]\s*18|의사자|의상자/;
+const RECIPIENT_RE_G = new RegExp(RECIPIENT_RE.source, "g");
+/** 수급자를 빼는 줄 ('생계 및 의료급여 대상자가 아닌 자') */
+const NEG_REC_LINE = /[^\n]*(?:수급|급여|차상위)[^\n]*(?:아닌\s*(?:자|사람|분|가구)|아니어야)[^\n]*/g;
+const NEG_REC = new RegExp(NEG_REC_LINE.source);
 export function textGate(p: Program): GateInfo {
   const hit = gateCache.get(p);
   if (hit) return hit;
@@ -247,7 +254,9 @@ export function textGate(p: Program): GateInfo {
     // '장기요양 수급자'·'활동지원 수급자'·'기초연금 수급자' 같은 말의 '수급자'는 기초생활수급이 아님
     const core = `${p.name}\n${lines.join("\n")}`.replace(OTHER_RECIPIENT, (_m, w: string) => (/기초\s*연금/.test(w) ? "기초연금 받는 분" : " ")).replace(/(건강\s*보험\s*적용자\s*\+?\s*)?의료\s*급여\s*적용자/g, " ");
     // 장기요양·활동지원 사업 안에서 홀로 쓰인 '수급자'는 그 제도의 수급자 (예: '시설급여 가능한 수급자')
-    const coreX = /장기\s*요양|요양\s*등급|활동\s*지원/.test(core) ? core.replace(/(?<!기초\s*생활\s*)(?<!급여\s*)수급(?:권)?자/g, " ") : core;
+    const coreX0 = /장기\s*요양|요양\s*등급|활동\s*지원/.test(core) ? core.replace(/(?<!기초\s*생활\s*)(?<!급여\s*)수급(?:권)?자/g, " ") : core;
+    // (QA 9차) '생계 및 의료급여 대상자가 아닌 자'처럼 수급자를 빼는 줄은 수급 관문이 아님 (한부모가정 의료보험)
+    const coreX = coreX0.replace(NEG_REC_LINE, " ");
     if (INCOME_FREE.test(text)) partial = false;
     else if (!nameGate && lines.length >= 2 && gated.length && gated.length < lines.length) {
       partial = true;
@@ -275,6 +284,10 @@ export function textGate(p: Program): GateInfo {
         // '저소득' 같은 넓은 말이 함께 있으면 소득 코드가 50% 이하일 때 코드로 충분
         if (low) {
           if (!hasIncome || incomeMax > 50) gate = { kind: "low", text: low[0] };
+        } else if (OTHER_GROUP.test(linesX.replace(RECIPIENT_RE_G, " ").replace(OTHER_RECIPIENT, " "))) {
+          // (QA 9차 검토) '기초생활수급자, 차상위계층, 장애인, 국가유공자'처럼 한 줄에 다른 대상 집단이 함께 있음 → 수급·차상위가 아니면 다른 유형인지 확인
+          partial = true;
+          partialRec = true;
         } else gate = { kind: "recipient", text: rec[0] };
       } else if (low) {
         if (!hasIncome) gate = { kind: "low", text: low[0] };
@@ -284,7 +297,8 @@ export function textGate(p: Program): GateInfo {
   }
   // (QA 2차 C3) 원문(선정기준 전문 포함)이 수급·차상위인데 규칙은 소득 코드 0~50%뿐 (refine.ts recBand)
   //  → 소득 구간만 맞는 비수급자는 '신청할 때 확인' (수급·차상위면 그대로)
-  if (p.rule.recBand && gate?.kind !== "recipient") partialRec = true;
+  // ('생계 및 의료급여 대상자가 아닌 자'처럼 수급자를 빼는 원문은 제외)
+  if (p.rule.recBand && gate?.kind !== "recipient" && !NEG_REC.test(p.target ?? "")) partialRec = true;
   const out: GateInfo = { gate, priority, partial, ...(partialRec ? { partialRec } : {}) };
   gateCache.set(p, out);
   return out;
@@ -783,7 +797,7 @@ export function disabilityNameGate(p: Program, s: Situation): "no" | "open" | nu
 const STUDENT_NO_WHY = "학교에 다니지 않는 청소년(학교 밖·학업 중단) 대상이라, 학생이라고 하셔서 맞지 않아요.";
 export const statusWhy = (label: string) => `따로 조건(${label})이 있어요 — 말씀하신 내용으로는 알 수 없어 신청할 때 확인`;
 /** 세부 서비스·대상을 지자체가 정하는 묶음 사업 (지역사회서비스투자사업, 청년성장프로젝트 등) */
-const BUNDLE_RE = /자율적으로\s*(?:설정|정|선정)|지역사회서비스\s*투자|지역사회서비스\s*청년\s*사업단/;
+const BUNDLE_RE = /자율적으로\s*(?:설정|정|선정)|지역사회서비스\s*투자|지역사회서비스\s*청년\s*사업단|서비스\s*(?:별|에\s*따라)\s*상이/;
 const BUNDLE_WHY = "서비스마다 대상(소득·필요 등)을 지자체가 따로 정해요 — 신청할 때 확인";
 
 /** 원문 대상에 시설·기관 유형 줄이 함께 있음 (예: '수급·차상위 가구 / 사회복지시설') — 개인은 다른 줄로 판정 */
@@ -871,22 +885,28 @@ export function forDisabledMember(p: Program, s: Situation): Program {
 }
 
 export function classifyBase(p0: Program, s: Situation): BaseResult {
-  const p = forDisabledMember(p0, s);
   // soft 조건(원천 태그 등)은 답과 달라도 빼지 않는다 — 배타적이지 않은 신호라서 (감사 2026-10-07: 장애인연금·장기요양 등이 잘못 빠짐)
+  // 다만 (QA 9차) 답으로 '아님'이 정해진 soft 조건은 확인할 것에서 빼고, 복지로 대상 특성 태그가 모두 '아님'이면 맞지 않음 (answeredSoft)
   const t = toEval(s, false);
   const profile = t.profile;
+  const ans = answeredSoft(forDisabledMember(p0, s), profile, t.opts);
+  const p = ans.p;
   const proc = LTC_APPLY.test(p.name) && !LTC_AFTER.test(p.name);
   const opts = proc ? { ...t.opts, facts: { ...t.opts.facts, ltcGrade: true } } : t.opts;
   const process = proc ? LTC_PROCESS : undefined;
   const ev0 = evaluateRule(p.rule, profile, opts);
   // 사업과 무관한 soft 조건(출처 태그)은 화면 문구에서 뺀다 — 판정 등급은 그대로 (N6)
-  const ev = ev0.reasons.some((x) => softIrrelevant(x, p)) ? { ...ev0, reasons: ev0.reasons.filter((x) => !softIrrelevant(x, p)) } : ev0;
+  const dropReason = (x: Reason) => softIrrelevant(x, p) || (!!x.leaf && ans.hide.has(x.leaf as Leaf));
+  const ev = ev0.reasons.some(dropReason) ? { ...ev0, reasons: ev0.reasons.filter((x) => !dropReason(x)) } : ev0;
   const tg = textGate(p);
   // 생계·의료·주거급여 등 제도 자체는 신청해서 수급자가 되는 것 — '수급자 대상' 관문은 순환 설명이라 쓰지 않음 (QA 3차 R7: 소득 90 > 82만원을 먼저)
   const gate = p.rule.meansTest && tg.gate?.kind === "recipient" ? null : tg.gate;
   const { priority, partialRec } = tg;
   const gs = gate ? gateState(gate, s, profile) : undefined;
   const r = { ev, gate, gateState: gs, priority, process };
+  if (ans.no && ev.tier !== "ineligible") return { base: "no", ...r, why: `대상 특성(${ans.no}) 중 해당하는 것이 없다고 답하셨어요 — 맞지 않아요` };
+  const ansNo = ev.tier !== "ineligible" ? answeredNoOf(p, s) : null;
+  if (ansNo) return { base: "no", ...r, why: ansNo };
   const recMet = RECIPIENT_KINDS.some((k) => inferExtras(s).benefits[k] === true);
   if (ev.tier === "ineligible") return { base: "no", ...r };
   if (gs === "no") return { base: "no", ...r };
@@ -894,6 +914,8 @@ export function classifyBase(p0: Program, s: Situation): BaseResult {
   const outOfSchool = !!s.x.interests?.includes("out_of_school");
   if (outOfSchool && IN_SCHOOL_ONLY.test(p.name)) return { base: "no", ...r, why: IN_SCHOOL_NO_WHY };
   if (notForPersons(p)) return { base: "open", ...r, why: NOT_FOR_PERSON_WHY };
+  const meal = mealWhy(p, s);
+  if (meal) return { base: "open", ...r, why: meal };
   if (!p.rule.logic || p.rule.unstructuredCore) return { base: "open", ...r };
   // 생계·의료·주거·교육급여, 차상위 확인: 소득이 기준 안이어도 재산·부양 조사를 거쳐 정해짐 → 최대 '신청할 때 확인'
   if (p.rule.meansTest) return { base: "open", ...r, why: evaluateCond(p.rule.logic, profile, opts).tri === "T" && gs !== "unknown" ? MEANS_WHY : "재산·부양 조사를 거쳐 정해져요 — 신청할 때 확인" };
@@ -931,7 +953,7 @@ export function classifyBase(p0: Program, s: Situation): BaseResult {
  * 이름 + 지원대상 앞부분만 본다 (선정기준·제외 문구까지 보면 너무 넓어짐).
  */
 const PRECONDITIONS: [RegExp, string, RegExp?][] = [
-  [/화재|재해|재난|수해|위기\s*(?:상황|가정|가구)|긴급\s*(?:주거|복지)|주거\s*상실|행려|무연고/, "갑작스러운 위기·재해를 겪은 경우", /보험|진화대|예방|대비|안전\s*점검/],
+  [/화재|재해|재난|수해|위기\s*(?:상황|가정|가구)|긴급\s*(?:주거|복지)|주거\s*상실|행려|무연고|실종/, "갑작스러운 위기·재해를 겪은 경우", /보험|진화대|예방|대비|안전\s*점검/],
   [/혼인\s*신고|결혼\s*축하|입학\s*축하|생애\s*최초\s*입학|최초\s*(?:로\s*)?입학/, "결혼·입학 같은 일이 있을 때"],
   [/자진\s*반납|면접\s*(?:에\s*)?(?:참여|참가|자)|변경\s*신청|(?:서비스|어린이집)\s*(?:를|을)?\s*이용\s*(?:하는|중인)|운전\s*면허\s*(?:를\s*)?취득|(?<!수)수료(?:한|자|생|증|\s*후)|어린이집\s*(?:을\s*)?이용/, "이미 한 일(면허 반납·면접·수료·서비스 이용 등)"],
   [/상담자|상담사|예술가|예술인|분양\s*계약|매도\s*신청|보육\s*교사|의료인|구급\s*대원|입소\s*아동|시설\s*입소|탈\s*시설/, "직업·신분·시설 이용 조건", /제외|응시자|근로자\s*[,·]|노무\s*제공자/],
@@ -944,20 +966,67 @@ const PRECONDITIONS: [RegExp, string, RegExp?][] = [
   [/사례\s*관리\s*대상|장학생\s*선발|선정\s*(?:된|하여)|추천\s*(?:을\s*)?받은|추천(?:한|하는)\s*(?:자|사람|분)/, "기관이 선정·추천하는 경우"],
   // (2차 표본) 재직·가입, 질병 위험, 설비, 기관 이용, 모임, 정신적 장애
   [/정규직|재직자|(?<!보험\s*)(?<!연금\s*)가입자|공제\s*가입/, "재직·가입 조건"],
-  [/가족력|고위험|의심(?:되는|자)/, "질병 위험·진단 조건", /우선/],
+  [/가족력|고위험|의심(?:되는|자)|심화\s*평가|(?:검진|검사|평가)\s*결과/, "질병 위험·진단 조건", /우선/],
   [/설치(?:한|하여|하고)|설치\s*(?:가구|세대|자)/, "설비 설치 조건", /제외/],
   [/(?:센터|드림\s*스타트|시설|기관)\s*(?:을|를)?\s*이용(?:하는|하거나|\s*중인|\s*아동|자)|(?:시설|기관)에\s*(?:거주|입소)/, "기관·시설 이용 조건"],
   [/자조\s*모임|모임\s*(?:을|를)?\s*(?:구성|결성)|\d\s*~\s*\d\s*가구/, "모임·단체 조건"],
   [/정신(?:적)?\s*장애/, "장애 유형 조건(정신적 장애)", /제외|[·,]\s*정신|정신\s*장애\s*[·,]/],
+  // (QA 9차, 남은 과대판정 34건 원문 확인) 취업·졸업·모집 시기·건강보험료·다른 서비스 이용·부양의무자·처방·기기 수리·재산
+  [/취직한|취업한\s*(?:자|사람|중장년|청년|분)|졸업\s*후\s*\d+\s*년\s*이내/, "취업·졸업 시기 조건"],
+  [/(?:건강\s*)?보험료\s*(?:부과\s*)?(?:금액|액)?\s*(?:이|가)?\s*최저|최저\s*보험료/, "건강보험료 기준"],
+  [/맞춤\s*돌봄\s*서비스\s*(?:내|대상자|이용자|지원\s*대상)|(?:아이\s*)?돌봄\s*(?:서비스\s*)?본인\s*부담금?\s*(?:추가\s*)?지원/, "다른 돌봄 서비스를 이용하는 경우"],
+  [/부양\s*의무자/, "부양의무자 기준"],
+  [/처방전|진료\s*(?:를\s*)?받은/, "진료·처방 조건"],
+  [/이동\s*기기|보조\s*기기|휠체어/, "장애·돌봄 판정 조건", /렌탈|대여/],
+  [/재산\s*(?:이|가)?\s*\d|참여\s*조건에\s*부합|훈련\s*비\s*지원/, "재산 기준·참여 조건(간편 입력으로는 묻지 않음)"],
 ];
 /** 소득 하한 ('중위소득 120% 초과 ~ 180% 이하') — 대상 문구 어디에 있어도 */
 const INCOME_FLOOR = /중위\s*소득\s*\d{2,3}\s*%\s*초과\s*(?:[~∼\-]|부터)?\s*(?:기준\s*중위\s*소득\s*)?\d{2,3}\s*%\s*이하|중위\s*소득\s*\d{2,3}\s*%\s*초과\s*(?:인|하는)\s*(?:가구|세대|자|사람)/;
-export function preconditionOf(p: Program, s: Situation): string | null {
-  // 이름 + 지원대상 첫 줄만 — 여러 대상 집단을 줄줄이 적은 원문('수급자 / 다자녀 / 조손가족 …')의 한 줄을 조건으로 보지 않게
-  // (첫 줄이 '아래 기준을 모두 충족'·'(기업) …'처럼 머리말이면 둘째 줄까지)
+/** 지원대상 첫 줄 (첫 줄이 '아래 기준을 모두 충족'·'(기업) …'처럼 머리말이면 둘째 줄까지) */
+function targetFirst(p: Program): string {
   const lines = (p.target ?? "").replace(/&#13;/g, "\n").split(/\n|\s\/\s/).map((l) => l.trim()).filter((l) => l.replace(/^[○◦·•❍〇ㅇ\-\s]+/, "").length > 0);
   const head = lines[0] ?? "";
-  const first = /아래|다음|동시에|모두\s*충족|선정\s*기준|^\(\S+\)|^\[[^\]]*\]$|:\s*$/.test(head) ? `${head}\n${lines[1] ?? ""}` : head;
+  return /아래|다음|동시에|모두\s*충족|선정\s*기준|^\(\S+\)|^\[[^\]]*\]$|:\s*$/.test(head) ? `${head}\n${lines[1] ?? ""}` : head;
+}
+/**
+ * (QA 9차) 답으로 맞지 않음이 분명한 원문 대상 → '맞지 않아요'
+ *  - 지원대상 첫 줄이 기초생활 수급·차상위'뿐'인데 수급·차상위가 아니라고 답함(또는 소득으로 아님이 분명) — 다른 대상 집단이 함께 적혔으면 아님
+ */
+export function answeredNoOf(p: Program, s: Situation): string | null {
+  // '[저소득층 노인 의치 지원]' 같은 머리말은 빼고 본다
+  // '65세 이상 노인 중 의료급여수급자…'처럼 '… 중' 앞은 함께 맞아야 하는 조건이라 뒤만 본다
+  const first0 = targetFirst(p).replace(/^\[[^\]]*\]\s*/, "");
+  const first = /\s중\s+(.+)$/.exec(first0)?.[1] ?? first0;
+  const ls = leavesOf(p.rule.logic);
+  const notRec = RECIPIENT_KINDS.every((k) => inferExtras(s).benefits[k] === false);
+  if (!notRec || ls.some((l) => l.field === "benefit" && !l.soft)) return null;
+  const REC = /기초\s*생활\s*(?:보장\s*)?수급(?:자|권자|가구)?|(?:생계|의료|주거|교육)\s*급여\s*수급(?:자|권자|가구)?|차상위\s*(?:계층|본인\s*부담\s*경감\s*(?:대상)?자?)?|국민\s*기초\s*생활\s*(?:보장\s*)?(?:법|수급자)?/g;
+  if (!REC.test(first)) return null;
+  // 수급·차상위 낱말을 지운 뒤에도 다른 대상 집단(장애인·유공자·한부모·노인 등)이나 '등·소외·취약·또는'이 남으면 목록 중 하나라 맞지 않음으로 보내지 않는다
+  // (이름의 '소외·취약계층'도 열린 목록 — 이름의 '노인·저소득층'은 함께 맞아야 하는 조건이라 보지 않음)
+  // 여러 줄 목록('○ 수급자 ○ 한부모가족 ○ 다자녀 …')의 첫 줄만 보지 않게 지원대상 전체(앞 500자)를 본다
+  // ('[…]' 머리말과 줄마다 '… 중' 앞의 함께 맞아야 하는 조건은 빼고)
+  const rest = (p.target ?? "").replace(/&#13;/g, "\n").replace(/^\[[^\]]*\]\s*/, "").split("\n").map((l) => /\s중\s+(.+)$/.exec(l)?.[1] ?? l).join("\n").slice(0, 500).replace(REC, " ");
+  if (/소외|취약/.test(p.name) || /제외|저소득|소외|취약|등\s*\)|등\s|등\s*$|우선|하위\s*\d|중위\s*소득|건강\s*보험|또는|이거나|장애|유공|보훈|한부모|조손|다문화|탈북|북한|미혼|다자녀|고령|노인|어르신|청년|대학생|학생|임산부|소년|가장|독거|아동|청소년|자녀|기초\s*연금|시설|주민|가구원\s*중|1\s*인\s*가구|외국인|근로자|기증|의사자|의상자|희생|공헌/.test(rest)) return null;
+  return "원문 대상이 기초생활 수급자·차상위예요 — 해당하지 않는다고 하셔서 맞지 않아요";
+}
+
+/** (QA 9차) 결식 우려 아동 급식: 수급·차상위·한부모 가구가 아니면 담임교사·사회복지사 추천 등 별도 경로로만 — 소득이 기준 중위소득 60%를 넘으면 그 이유를 적는다 */
+function mealWhy(p: Program, s: Situation): string | null {
+  const t = `${p.name} ${targetFirst(p)}`;
+  if (!/결식/.test(t) || /노인|어르신/.test(t) || (incomePctOf(s) ?? 0) <= LOW_INCOME_PCT || !RECIPIENT_KINDS.every((k) => inferExtras(s).benefits[k] === false)) return null;
+  return "결식 우려 아동 대상이에요 — 수급·차상위·한부모 가구가 아니면 담임교사·사회복지사 등의 추천이 있어야 해요";
+}
+
+export function preconditionOf(p: Program, s: Situation, now: Date = new Date()): string | null {
+  // 이름 + 지원대상 첫 줄만 — 여러 대상 집단을 줄줄이 적은 원문('수급자 / 다자녀 / 조손가족 …')의 한 줄을 조건으로 보지 않게
+  const first = targetFirst(p);
+  // 지난해 모집 공고 ('2025년 모집내용 (2026년 지원완료 예정)') — 올해 새로 받는지 확인
+  const ym = /(20\d\d)\s*년\s*모집/.exec(first);
+  if (ym && Number(ym[1]) < now.getFullYear()) return `원문이 ${ym[1]}년 모집 내용이에요 — 올해 새로 받는지 신청처에 확인`;
+  // 취약·소외계층·저소득층 대상(원문에 소득 기준 숫자 없음)인데 규칙에 수급 조건이 없고, 소득이 기준 중위소득 60%를 넘음
+  if (/취약\s*계층|소외\s*계층|저소득\s*층/.test(first) && !/제외|우선|중위\s*소득\s*\d/.test(first) && !leavesOf(p.rule.logic).some((l) => l.field === "benefit" && !l.soft) && (incomePctOf(s) ?? 0) > LOW_INCOME_PCT)
+    return "저소득·취약계층 대상이에요 — 소득으로 보아 해당하는지 신청할 때 확인";
   const text = `${p.name}\n${first.slice(0, 220)}`;
   if (INCOME_FLOOR.test((p.target ?? "").slice(0, 400))) return "원문 조건(소득이 일정 기준을 넘는 경우 — 소득 하한)이 있어요 — 해당하는지 신청할 때 확인";
   for (const [re, label, unless] of PRECONDITIONS) if (re.test(text) && !unless?.test(text)) return `원문 조건(${label})이 있어요 — 해당하는지 신청할 때 확인`;
@@ -969,10 +1038,6 @@ export function preconditionOf(p: Program, s: Situation): string | null {
   // 원문 첫 줄이 1인 가구·독거 대상인데 규칙에 가구 조건이 없고, 함께 사는 사람이 있다고 답함
   if (/1\s*인\s*(?:\([^)]*\))?\s*(?:관내\s*)?(?:취약\s*)?가구|독거|홀몸|홀로\s*사는/.test(first) && !ls.some((l) => l.field === "householdSize" || (l.field === "trait" && "anyOf" in l && (l.anyOf as string[]).includes("single"))) && typeof s.profile.householdSize === "number" && s.profile.householdSize > 1)
     return "1인 가구 대상이에요 — 함께 사는 가족이 있다고 하셔서 신청할 때 확인";
-  // 원문 첫 줄이 수급자·차상위 대상인데 규칙에 수급 조건이 없고, 수급·차상위가 아니라고 답함 (또는 소득으로 미루어 아님)
-  // 기초생활보장 수급·차상위만 ('구직급여 수급자'·'장기요양 수급자' 같은 다른 제도의 수급자는 아님)
-  if (/기초\s*생활\s*(?:보장\s*)?수급|(?:생계|의료|주거|교육)\s*급여\s*수급|차상위|국민\s*기초/.test(first) && !/제외|저소득|등\s*\)/.test(first) && !ls.some((l) => (l.field === "benefit" || l.field === "income" || l.field === "incomeBands") && !l.soft) && RECIPIENT_KINDS.every((k) => inferExtras(s).benefits[k] === false))
-    return "원문 대상이 수급자·차상위예요 — 해당하지 않는다고 하셔서 신청할 때 확인";
   // 원문이 노인·어르신 대상인데 규칙에 나이 조건이 없고, 말한 나이가 60세 미만
   if (/노인|어르신/.test(first) && b && !ls.some((l) => l.field === "age") && b[1] < 60) return "노인 대상이에요 — 나이 조건을 신청할 때 확인";
   // 원문이 'N~M개월' 아이 대상인데 규칙에 자녀 나이 조건이 없음 (서울형 아이돌봄비 '24~36개월 영아')
@@ -982,6 +1047,26 @@ export function preconditionOf(p: Program, s: Situation): string | null {
   if (/영아|영유아|(?<!청소년\s*및\s*)아동|자녀/.test((p.target ?? "").slice(0, 120)) && !ls.some((l) => l.field === "children" || l.field === "childAge") && Array.isArray(s.profile.children) && s.profile.children.length === 0)
     return "자녀(아동) 대상이에요 — 자녀가 없다고 하셔서 신청할 때 확인";
   return null;
+}
+
+/**
+ * (QA 9차, 2026-10-11) 답으로 '아님'이 정해진 soft 조건 정리.
+ *  - soft 조건을 단단한 조건으로 봤을 때 답과 어긋나면(예: 장애 없음 ↔ '장애 관련 조건', 소득 100% ↔ '저소득') 화면 문구에서 뺀다
+ *    → '확인할 것: 등록 장애인'처럼 답과 다른 말이 남지 않음 (판정 등급은 그대로 — 이 때문에 맞음·맞지 않음이 바뀌지 않음)
+ *  - 복지로 대상 특성 태그는 대상 목록 전체가 아니라 부분 신호라('저소득 가구' 태그 하나뿐인 긴급복지·근로장려금 등) 이것만으로 맞지 않음으로 보내지 않는다
+ */
+const SOFT_GROUP: ReadonlySet<Leaf["field"]> = new Set(["benefit", "disability", "trait", "income", "incomeBands"]);
+function answeredSoft(p: Program, profile: Profile, opts: EvalOptions): { p: Program; no: string | null; hide: Set<Leaf> } {
+  const logic = p.rule.logic;
+  const none = { p, no: null, hide: new Set<Leaf>() };
+  if (!logic) return none;
+  const soft = leavesOf(logic).filter((l) => l.soft && SOFT_GROUP.has(l.field));
+  if (!soft.length) return none;
+  const isF = (l: Leaf) => evaluateCond({ ...l, soft: undefined } as Cond, profile, opts).tri === "F";
+  const hide = new Set(soft.filter(isF));
+  if (!hide.size) return none;
+  // 판정 등급은 그대로 두고(빼면 독거노인 등 대상 집단이 사라져 '받으실 수 있어요'가 됨), 화면 문구에서만 뺀다
+  return { p, no: null, hide };
 }
 
 /** 집 설비 조건 (QA 2차 5-2: 서민층 가스시설 개선 — LPG 호스를 쓰는 가구만) — 간편 입력으로는 묻지 않음 */
