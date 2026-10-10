@@ -83,6 +83,8 @@ function mergeParsedX(prev: Extras, ps: ParsedSituation): Extras {
   ps.benefitsNo?.forEach((b) => (benefits[b] = false));
   const traits = { ...prev.traits };
   q.traits?.forEach((t) => (traits[t] = true));
+  // 남편·아내를 말했으면 한부모 아님 (QA 8차 후속)
+  ps.traitsNo?.forEach((t) => (traits[t] = false));
   // 문장에서 읽은 월 소득·자녀 수 (예: '월급은 세후 400정도' → 400, '자녀 2명' → 2)
   const ex = parsedExtras(ps);
   if (ex.childCount !== undefined && ex.childCount !== 2) traits.multi_child = ex.childCount === 3;
