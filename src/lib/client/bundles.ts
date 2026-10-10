@@ -3,6 +3,7 @@
 import type { Bundle, LocalOperation, Program, RegionIndex } from "../data/types";
 import { detailBucket } from "../data/bucket";
 import { normalizeDeep } from "../data/text";
+import { inLegacyArea } from "../data/legacyArea";
 import { refineProgram } from "../data/refine";
 
 export const BUNDLE_BASE = "/bundles/v1";
@@ -37,7 +38,9 @@ export async function loadForRegion(sido: string | null, sigungu: string | null)
     sigungu ? getJSON<Bundle>(`sigungu/${sigungu}.json`) : Promise.resolve(null),
   ]);
   // 규칙 다듬기(refine.ts)는 번들을 만들 때도 적용되지만, 이전에 만든 번들에도 같은 결과가 나오게 읽을 때 한 번 더 (멱등)
-  const programs = [...(sg?.programs ?? []), ...(sd?.programs ?? []), ...(nat?.programs ?? [])].map(refineFor);
+  // 전남광주통합특별시: 옛 광주시·옛 전남도 사업은 그 옛 지역 주민에게만 (legacyArea.ts)
+  const sdPrograms = (sd?.programs ?? []).filter((p) => inLegacyArea(p, sigungu));
+  const programs = [...(sg?.programs ?? []), ...sdPrograms, ...(nat?.programs ?? [])].map(refineFor);
   const localOps = { ...(sd?.localOps ?? {}), ...(sg?.localOps ?? {}) };
   return { programs, localOps, label: sg?.label ?? sd?.label ?? "전국" };
 }

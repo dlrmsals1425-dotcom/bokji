@@ -12,7 +12,7 @@ import { clearProfile, saveMode, useExample, useMode, useProfile } from "@/lib/c
 import { startPreset } from "@/lib/client/start";
 import { loadForRegion, loadProgram, type Loaded } from "@/lib/client/bundles";
 import { applyFilters, autoGroups, eduCount, facetCounts, groupVariants, industryCount, operatorCount, scoreAll, topPicks, type Filters, type Group } from "@/lib/client/results";
-import { PRESETS } from "@/lib/client/presets";
+import { PRESETS, presetById } from "@/lib/client/presets";
 import { MODE_ENTRY, coupleNote, parseFindMode, resultsCopy, resultsPath, withV1, type FindMode } from "@/lib/client/mode";
 import { profileChips } from "@/lib/client/summary";
 import { CATEGORIES, ORG_TYPE_LABEL, type Category, type OrgType } from "@/lib/data/types";
@@ -95,7 +95,7 @@ function ResultsInner({ profile, mode }: { profile: Profile; mode: FindMode }) {
   const [f, setF] = useState<Filters>({ tier: "eligible", category: null, org: null, q: "" });
   const [limit, setLimit] = useState(FIRST);
   const example = useExample();
-  const preset = PRESETS.find((x) => x.id === example);
+  const preset = presetById(example);
   const [toast, setToast] = useState<string | null>(null);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [details, setDetails] = useState<Record<string, Program>>({});

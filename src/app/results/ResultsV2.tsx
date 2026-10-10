@@ -16,7 +16,7 @@ import { loadForRegion, loadProgram, loadRegions, type Loaded } from "@/lib/clie
 import { CHANNEL_LABEL, firstLine, howTo } from "@/lib/client/howto";
 import { clearProfile, useExample, useExtras } from "@/lib/client/storage";
 import { saveSituation, situationOf } from "@/lib/client/start";
-import { PRESETS } from "@/lib/client/presets";
+import { presetById } from "@/lib/client/presets";
 import { checkPath, coupleNote, resultsCopy, type FindMode } from "@/lib/client/mode";
 import {
   BUCKET_LABEL, LOW_INCOME_PCT, cohabitParentPicks, cohabitParentSit, ageBoundsOf, ageSpanOf, answersFor, autoV2, buildView, classify, inferredNoRecipient, plainLine, scoreV2, situationChips, topPicksV2,
@@ -139,7 +139,7 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
         ? { ...m, remove: on ? m.remove.filter((x) => x !== id) : [...m.remove, id] }
         : { ...m, add: on ? [...m.add.filter((x) => x !== id), id] : m.add.filter((x) => x !== id) })),
   };
-  const preset = PRESETS.find((x) => x.id === example);
+  const preset = presetById(example);
   const place = data.label.split(" ").pop();
   const questions = view.questions.filter((q) => !skipped.includes(q.dim.id)).slice(0, 3);
   const unlock = new Set(questions.flatMap((q) => q.keys)).size;
@@ -286,7 +286,7 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
             <p className="notice" data-testid="non-pilot-note" role="note">
               <Icon name="info" size={18} />
               <span>
-                <strong>시범 지역(경기도) 밖이에요.</strong> 이 지역 사업은 조건을 사람이 아직 검수하지 않아 &lsquo;신청할 때 확인&rsquo;이 많을 수 있어요.
+                <strong>경기도 밖 지역이에요.</strong> 이 지역 사업도 공공서비스 API 지원조건과 원문 자동 점검으로 판정하지만, 사람이 조건을 하나하나 검수한 곳은 아직 경기도뿐이에요. 신청 전에 원문을 꼭 확인하세요.
               </span>
             </p>
           )}

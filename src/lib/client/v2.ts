@@ -910,6 +910,9 @@ export function classifyBase(p0: Program, s: Situation): BaseResult {
   const st0 = needsStatus(p, s);
   const st = st0 && outOfSchool && /학교 밖 청소년|학업 중단/.test(st0) ? null : st0;
   if (st) return { base: "open", ...r, why: statusWhy(st) };
+  // (전국 확대 ②) 원문이 요구하는 사건·이미 한 일·묻지 않은 자격 — 나이·소득이 맞아도 '신청할 때 확인'
+  const pre = preconditionOf(p, s);
+  if (pre) return { base: "open", ...r, why: pre };
   if (BUNDLE_RE.test(`${p.name}\n${(p.target ?? "").slice(0, 400)}`)) return { base: "open", ...r, why: BUNDLE_WHY };
   if (EQUIP_RE.test((p.target ?? "").slice(0, 600))) return { base: "open", ...r, why: EQUIP_WHY };
   if (isBasicPension(p) && pensionLikely(s)) return { base: "open", ...r, why: PENSION_WHY };
@@ -919,6 +922,66 @@ export function classifyBase(p0: Program, s: Situation): BaseResult {
   const tri = evaluateCond(p.rule.logic, profile, opts).tri;
   if (tri === "T" && gs !== "unknown") return { base: p.rule.review === "auto" ? "autoFit" : "fit", ...r };
   return { base: "open", ...r };
+}
+
+/**
+ * (전국 확대 ②, 2026-10-10) 원문 대상이 간편 입력으로 알 수 없는 사건·이미 한 일·자격을 요구하는지.
+ * 경기도 밖 정부24 지원조건을 'API 지원조건'으로 올리면서 142개 '받으실 수 있어요'를 원문과 대조(다른 모델 검토 포함)해
+ * 71개가 과대 판정이었던 유형을 모았다. 맞으면 '신청할 때 확인'으로만 바꾼다 (빼지 않음 — 해당하면 받을 수 있음).
+ * 이름 + 지원대상 앞부분만 본다 (선정기준·제외 문구까지 보면 너무 넓어짐).
+ */
+const PRECONDITIONS: [RegExp, string, RegExp?][] = [
+  [/화재|재해|재난|수해|위기\s*(?:상황|가정|가구)|긴급\s*(?:주거|복지)|주거\s*상실|행려|무연고/, "갑작스러운 위기·재해를 겪은 경우", /보험|진화대|예방|대비|안전\s*점검/],
+  [/혼인\s*신고|결혼\s*축하|입학\s*축하|생애\s*최초\s*입학|최초\s*(?:로\s*)?입학/, "결혼·입학 같은 일이 있을 때"],
+  [/자진\s*반납|면접\s*(?:에\s*)?(?:참여|참가|자)|변경\s*신청|(?:서비스|어린이집)\s*(?:를|을)?\s*이용\s*(?:하는|중인)|운전\s*면허\s*(?:를\s*)?취득|(?<!수)수료(?:한|자|생|증|\s*후)|어린이집\s*(?:을\s*)?이용/, "이미 한 일(면허 반납·면접·수료·서비스 이용 등)"],
+  [/상담자|상담사|예술가|예술인|분양\s*계약|매도\s*신청|보육\s*교사|의료인|구급\s*대원|입소\s*아동|시설\s*입소|탈\s*시설/, "직업·신분·시설 이용 조건", /제외|응시자|근로자\s*[,·]|노무\s*제공자/],
+  [/보장구|기능\s*제한|등급\s*외|추가\s*(?:지원|시간)\s*이?\s*필요|신체\s*변형|활동\s*지원[^\n]{0,4}\(?\s*추가|추가\s*사업/, "장애·돌봄 판정 조건"],
+  [/농번기|농업인|농가|어업인/, "농어업인 가구 조건"],
+  [/자녀\s*(?:가\s*)?[2-9]\s*명\s*이상|[2-9]\s*\(?\s*손?\s*\)?\s*자녀\s*이상/, "자녀 수 조건", /\([^)]*[2-9]\s*자녀[^)]*\)|우대|금리/],
+  // '부 또는 모 및 조부모', '한부모 및 조손'처럼 한부모와 함께 적힌 것은 조건이 아님
+  [/(?:외\s*\)?\s*)?조부모|손\s*(?:자녀|주)\s*(?:를|을)?\s*(?:돌보|돌봄|양육|키우)|조손/, "조부모가 손자녀를 돌보는 가정", /부\s*또는\s*모\s*(?:및|또는)\s*조부모|한부모\s*(?:및|또는)\s*조손|한부모\s*[·,]\s*조손|한부모\s*가족\s*\(|유공자|보상금/],
+  [/카드\s*\)?\s*(?:를\s*)?소지|(?:중소|중견)\s*(?:[·,]\s*중견\s*)?기업\s*(?:에\s*)?(?:\d+\s*개월\s*이상\s*)?(?:재직|근무)|재직\s*중|미혼\s*(?:청년|남녀|인|자)/, "재직·미혼·카드 소지 같은 조건", /^(?![\s\S]*통행료)[\s\S]*장애인\s*(?:통합\s*)?복지\s*카드|(?:구직|취업)\s*(?:또는|및|·)\s*재직|재직\s*(?:또는|및)/],
+  [/사례\s*관리\s*대상|장학생\s*선발|선정\s*(?:된|하여)|추천\s*(?:을\s*)?받은|추천(?:한|하는)\s*(?:자|사람|분)/, "기관이 선정·추천하는 경우"],
+  // (2차 표본) 재직·가입, 질병 위험, 설비, 기관 이용, 모임, 정신적 장애
+  [/정규직|재직자|(?<!보험\s*)(?<!연금\s*)가입자|공제\s*가입/, "재직·가입 조건"],
+  [/가족력|고위험|의심(?:되는|자)/, "질병 위험·진단 조건", /우선/],
+  [/설치(?:한|하여|하고)|설치\s*(?:가구|세대|자)/, "설비 설치 조건", /제외/],
+  [/(?:센터|드림\s*스타트|시설|기관)\s*(?:을|를)?\s*이용(?:하는|하거나|\s*중인|\s*아동|자)|(?:시설|기관)에\s*(?:거주|입소)/, "기관·시설 이용 조건"],
+  [/자조\s*모임|모임\s*(?:을|를)?\s*(?:구성|결성)|\d\s*~\s*\d\s*가구/, "모임·단체 조건"],
+  [/정신(?:적)?\s*장애/, "장애 유형 조건(정신적 장애)", /제외|[·,]\s*정신|정신\s*장애\s*[·,]/],
+];
+/** 소득 하한 ('중위소득 120% 초과 ~ 180% 이하') — 대상 문구 어디에 있어도 */
+const INCOME_FLOOR = /중위\s*소득\s*\d{2,3}\s*%\s*초과\s*(?:[~∼\-]|부터)?\s*(?:기준\s*중위\s*소득\s*)?\d{2,3}\s*%\s*이하|중위\s*소득\s*\d{2,3}\s*%\s*초과\s*(?:인|하는)\s*(?:가구|세대|자|사람)/;
+export function preconditionOf(p: Program, s: Situation): string | null {
+  // 이름 + 지원대상 첫 줄만 — 여러 대상 집단을 줄줄이 적은 원문('수급자 / 다자녀 / 조손가족 …')의 한 줄을 조건으로 보지 않게
+  // (첫 줄이 '아래 기준을 모두 충족'·'(기업) …'처럼 머리말이면 둘째 줄까지)
+  const lines = (p.target ?? "").replace(/&#13;/g, "\n").split(/\n|\s\/\s/).map((l) => l.trim()).filter((l) => l.replace(/^[○◦·•❍〇ㅇ\-\s]+/, "").length > 0);
+  const head = lines[0] ?? "";
+  const first = /아래|다음|동시에|모두\s*충족|선정\s*기준|^\(\S+\)|^\[[^\]]*\]$|:\s*$/.test(head) ? `${head}\n${lines[1] ?? ""}` : head;
+  const text = `${p.name}\n${first.slice(0, 220)}`;
+  if (INCOME_FLOOR.test((p.target ?? "").slice(0, 400))) return "원문 조건(소득이 일정 기준을 넘는 경우 — 소득 하한)이 있어요 — 해당하는지 신청할 때 확인";
+  for (const [re, label, unless] of PRECONDITIONS) if (re.test(text) && !unless?.test(text)) return `원문 조건(${label})이 있어요 — 해당하는지 신청할 때 확인`;
+  // 원문 대상 나이('60세 이상')인데 규칙에 나이 조건이 없고, 말한 나이가 그보다 어림
+  const ls = leavesOf(p.rule.logic);
+  const ageM = /(?:만\s*)?(\d{2})\s*세\s*이상/.exec(first);
+  const b = ageBoundsOf(s);
+  if (ageM && b && !ls.some((l) => l.field === "age") && b[1] < Number(ageM[1])) return `원문 대상 나이(만 ${ageM[1]}세 이상) — 나이 조건을 신청할 때 확인`;
+  // 원문 첫 줄이 1인 가구·독거 대상인데 규칙에 가구 조건이 없고, 함께 사는 사람이 있다고 답함
+  if (/1\s*인\s*(?:\([^)]*\))?\s*(?:관내\s*)?(?:취약\s*)?가구|독거|홀몸|홀로\s*사는/.test(first) && !ls.some((l) => l.field === "householdSize" || (l.field === "trait" && "anyOf" in l && (l.anyOf as string[]).includes("single"))) && typeof s.profile.householdSize === "number" && s.profile.householdSize > 1)
+    return "1인 가구 대상이에요 — 함께 사는 가족이 있다고 하셔서 신청할 때 확인";
+  // 원문 첫 줄이 수급자·차상위 대상인데 규칙에 수급 조건이 없고, 수급·차상위가 아니라고 답함 (또는 소득으로 미루어 아님)
+  // 기초생활보장 수급·차상위만 ('구직급여 수급자'·'장기요양 수급자' 같은 다른 제도의 수급자는 아님)
+  if (/기초\s*생활\s*(?:보장\s*)?수급|(?:생계|의료|주거|교육)\s*급여\s*수급|차상위|국민\s*기초/.test(first) && !/제외|저소득|등\s*\)/.test(first) && !ls.some((l) => (l.field === "benefit" || l.field === "income" || l.field === "incomeBands") && !l.soft) && RECIPIENT_KINDS.every((k) => inferExtras(s).benefits[k] === false))
+    return "원문 대상이 수급자·차상위예요 — 해당하지 않는다고 하셔서 신청할 때 확인";
+  // 원문이 노인·어르신 대상인데 규칙에 나이 조건이 없고, 말한 나이가 60세 미만
+  if (/노인|어르신/.test(first) && b && !ls.some((l) => l.field === "age") && b[1] < 60) return "노인 대상이에요 — 나이 조건을 신청할 때 확인";
+  // 원문이 'N~M개월' 아이 대상인데 규칙에 자녀 나이 조건이 없음 (서울형 아이돌봄비 '24~36개월 영아')
+  const kidLeaf = ls.some((l) => l.field === "children" || l.field === "childAge");
+  if (!kidLeaf && /\d+\s*~\s*\d+\s*개월/.test((p.target ?? "").slice(0, 200))) return "원문 조건(자녀 나이·개월 수)이 있어요 — 해당하는지 신청할 때 확인";
+  // 원문이 영아·아동·자녀 대상인데 규칙에 자녀 조건이 없고, 자녀가 없다고 답함
+  if (/영아|영유아|(?<!청소년\s*및\s*)아동|자녀/.test((p.target ?? "").slice(0, 120)) && !ls.some((l) => l.field === "children" || l.field === "childAge") && Array.isArray(s.profile.children) && s.profile.children.length === 0)
+    return "자녀(아동) 대상이에요 — 자녀가 없다고 하셔서 신청할 때 확인";
+  return null;
 }
 
 /** 집 설비 조건 (QA 2차 5-2: 서민층 가스시설 개선 — LPG 호스를 쓰는 가구만) — 간편 입력으로는 묻지 않음 */

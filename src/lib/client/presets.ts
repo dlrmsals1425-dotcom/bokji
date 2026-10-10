@@ -77,3 +77,41 @@ export const PRESETS: Preset[] = [
     x: { benefits: { ...NO_RECIPIENT, basic_pension: false }, traits: NO_TRAITS, incomeManwon: 400, facts: {}, childCount: 1 },
   },
 ];
+
+/** 예시 제목·설명에 들어간 원래 지역 이름 (현위치로 옮길 때 바꿔 끼움) */
+const PLACE: Record<string, [string, string]> = {
+  "suwon-senior": ["수원시", "수원"],
+  "parent-care": ["수원시", "수원"],
+  "seongnam-single-parent": ["성남시", "성남"],
+  "goyang-youth": ["고양시", "고양"],
+  "bucheon-disability": ["부천시", "부천"],
+};
+
+/** 현위치 예시 id: '<예시 id>@<시·군·구 코드>@<지역 이름>' (지역 이름은 화면 안내용 — 사람 정보 아님) */
+export const placedId = (id: string, sigungu: string, label: string) => `${id}@${sigungu}@${label}`;
+
+/**
+ * (전국 확대 ③) 같은 예시 상황을 다른 시·군·구로 옮긴다 — 상황(나이·가구·소득 등)은 그대로, 지역만.
+ * label 예: '경기 용인시', '서울 광진구'. 제목·설명의 원래 지역 이름을 바꿔 끼운다.
+ */
+export function presetAt(p: Preset, sido: string, sigungu: string, label: string): Preset {
+  const [full, short] = PLACE[p.id] ?? ["", ""];
+  const name = label.split(" ").pop() ?? label;
+  return {
+    ...p,
+    id: placedId(p.id, sigungu, label),
+    title: full && p.title.includes(full) ? p.title.replace(full, label) : `${p.title} (${label})`,
+    desc: short ? p.desc.replace(short, name) : p.desc,
+    profile: { ...p.profile, sido, sigungu },
+  };
+}
+
+/** 저장된 예시 id → 예시 (현위치 예시면 그 지역으로 옮긴 것) */
+export function presetById(id: string | null | undefined): Preset | undefined {
+  if (!id) return undefined;
+  const [base, sigungu, label] = id.split("@");
+  const p = PRESETS.find((x) => x.id === base);
+  // 저장소 값이 손상됐으면(시·군·구 코드가 아님) 원래 예시로
+  if (!p || !sigungu || !label || !/^\d{5}$/.test(sigungu)) return p;
+  return presetAt(p, `${sigungu.slice(0, 2)}000`, sigungu, label.slice(0, 30));
+}

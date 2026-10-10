@@ -674,3 +674,9 @@ html[data-large="1"] .fgrid fieldset + fieldset { border-left: 0; border-top: 1p
 /* 입력 화면 '더 답하기' (결정 5b): 드문 신분 질문을 접어 둠 */
 .sf-more { margin-top: 2rem; }
 .sf-more .details-body .field:first-child { margin-top: 0.5rem; }
+/* 전국 확대 ③: 현재 위치로 내 지역 예시 */
+.preset-locate { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; margin: 0 0 1rem; }
+.preset-locate > p { flex-basis: 100%; margin: 0; }
+.preset-pick { display: flex; flex-wrap: wrap; gap: 0.5rem; flex-basis: 100%; }
+.preset-pick .select { min-width: 10rem; flex: 1 1 10rem; }
+.preset-fit { color: var(--primary-60); }
