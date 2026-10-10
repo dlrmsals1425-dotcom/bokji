@@ -44,3 +44,13 @@ describe("예시를 내 지역으로 옮기기", () => {
     expect(presetById("goyang-youth")?.title).toBe("고양시 구직 청년");
   });
 });
+
+describe("코드 검토(Sonnet) 반영", () => {
+  it("해안 가까운 바다 위 점은 가장 가까운 경계선(선분)의 시·군·구 — 정점이 멀어도", () => {
+    // 부산 해운대 앞바다 약 1km
+    expect(sigunguAt(geo.features, 35.15, 129.17)).toBe("26350");
+  });
+  it("손상된 예시 id는 원래 예시로", () => {
+    expect(presetById("suwon-senior@abc@x")?.title).toBe("수원시 1인 어르신");
+  });
+});

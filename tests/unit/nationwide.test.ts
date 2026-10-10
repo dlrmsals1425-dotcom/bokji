@@ -1,7 +1,7 @@
 /** 전국 확대 (2026-10-10): ① 판정 등급 전국화 ② 전국 점검 — 통합시 옛 지역, 원문 사건·이미 한 일·자격 조건 */
 import { existsSync, readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { classifyOne, type Situation } from "@/lib/client/v2";
+import { classifyOne, preconditionOf, type Situation } from "@/lib/client/v2";
 import { situationOf } from "@/lib/client/start";
 import { PRESETS } from "@/lib/client/presets";
 import { refineProgram } from "@/lib/data/refine";
@@ -105,5 +105,31 @@ describe("② 전국 지역 문장", () => {
     const r = parseSituation("인천 중구 살아요", JSON.parse(readFileSync(B + "regions.json", "utf8")), { year: 2026, month: 10, day: 11 });
     expect(r.regionChoices?.map((c) => c.label)).toEqual(["인천 제물포구", "인천 영종구"]);
     expect(r.notes.join()).toMatch(/2026년 7월/);
+  });
+});
+
+describe("코드 검토(Sonnet) 반영 — 원문 조건 점검이 넓게 걸리지 않음", () => {
+  // 자녀·나이를 모르는 상황 (원문 문구 점검만 보려고)
+  const s0 = at("parent-care", "41000", "41110");
+  const sit: Situation = { ...s0, profile: { ...s0.profile, children: null, age: "unknown" } };
+  const mk = (name: string, target: string) =>
+    ({ id: "n.test", name, target, rule: { logic: { field: "age", min: 0, label: "x" }, unstructured: [] } }) as unknown as Program;
+  it.each([
+    ["응시수수료 면제", "국가공무원 채용시험 응시자 중 수급자"], // '수수료'의 '수료' 아님
+    ["건강보험 임신·출산 진료비", "건강보험 가입자 또는 피부양자 중 임신·출산한 사람"], // 건강보험 가입자
+    ["중증장애아동 가족지원", "기준 중위소득 120% 이하(무료), 120% 초과(40% 본인부담)"], // 소득 상한·본인부담 구간
+    ["지역사회중심재활", "등록 장애인(정신장애 제외)"],
+    ["양육 지원", "자녀 1명 이상을 양육하는 가구"],
+    ["TV수신료 면제", "수급자 가구 (영업 목적 공간에 설치한 수상기는 제외)"],
+    ["독립유공자 보상금", "독립유공자 본인, 자녀·손자녀"],
+  ])("%s", (name, target) => expect(preconditionOf(mk(name, target), sit)).toBeNull());
+  it.each([
+    ["청년 취업준비 쿠폰", "가구소득이 기준중위소득 120%초과 ~ 180%이하인 청년", /소득 하한/],
+    ["손주돌봄 지원", "손자녀를 돌보는 조부모", /조부모/],
+    ["교육비 지원", "자녀가 3명 이상인 가구", /자녀 수/],
+  ])("그대로 잡음: %s", (name, target, why) => expect(preconditionOf(mk(name, target), sit) ?? "").toMatch(why));
+  it("'인천 서구 검단동' → 검단구", () => {
+    const r = parseSituation("인천 서구 검단동 살아요", JSON.parse(readFileSync(B + "regions.json", "utf8")), { year: 2026, month: 10, day: 11 });
+    expect(r.profile.sigungu).toBe("28290");
   });
 });

@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { PRESETS, presetAt, type Preset } from "@/lib/client/presets";
 import { resultsPath } from "@/lib/client/mode";
@@ -57,35 +57,46 @@ export function PresetButtons() {
   const [pickSido, setPickSido] = useState("");
   const [manual, setManual] = useState(false);
 
-  const show = async (sigungu: string) => {
+  // 마지막 요청만 화면에 반영 (지역을 연달아 고르거나 '처음 예시로'를 누르는 동안 늦게 끝난 계산이 덮어쓰지 않게)
+  const seq = useRef(0);
+  const openManual = async () => {
+    setManual(true);
+    if (!regions) setRegions(await loadRegions().catch(() => null));
+  };
+  const fail = async (text: string) => {
+    setStatus({ kind: "error", text });
+    await openManual();
+  };
+  const show = async (sigungu: string, my = ++seq.current) => {
     setStatus({ kind: "busy", text: "이 지역 예시를 계산하고 있어요…" });
-    const rg = regions ?? (await loadRegions());
-    if (!regions) setRegions(rg);
-    const r = rg ? await placePresets(rg, sigungu) : null;
-    if (!r) return setStatus({ kind: "error", text: "이 위치의 시·군·구를 찾지 못했어요. 아래에서 지역을 골라 주세요." });
+    const rg = regions ?? (await loadRegions().catch(() => null));
+    if (!regions && rg) setRegions(rg);
+    const r = rg ? await placePresets(rg, sigungu).catch(() => null) : null;
+    if (my !== seq.current) return;
+    if (!r) return fail("이 지역 예시를 만들지 못했어요. 아래에서 지역을 다시 골라 주세요.");
     setPlaced(r);
     setStatus({ kind: "idle" });
   };
   const locate = async () => {
+    const my = ++seq.current;
     setStatus({ kind: "busy", text: "현재 위치를 확인하고 있어요…" });
+    let sgg: string | null;
     try {
       // 좌표는 이 기기 안에서만 쓰고 저장하지 않아요 — 시·군·구 경계(약 300KB)를 받아 브라우저에서 계산
       const [pos, b] = await Promise.all([currentPosition(), loadBoundaries()]);
-      const sgg = sigunguAt(b, pos.lat, pos.lng);
-      if (!sgg) {
-        setManual(true);
-        return setStatus({ kind: "error", text: "국내 시·군·구 안의 위치가 아니에요. 아래에서 지역을 골라 주세요." });
-      }
-      await show(sgg);
+      sgg = sigunguAt(b, pos.lat, pos.lng);
     } catch {
-      setManual(true);
-      setRegions(regions ?? (await loadRegions().catch(() => null)));
-      setStatus({ kind: "error", text: "위치를 확인하지 못했어요(권한을 허용하지 않았거나 기기가 위치를 지원하지 않아요). 아래에서 지역을 골라 주세요." });
+      if (my === seq.current) await fail("위치를 확인하지 못했어요(권한을 허용하지 않았거나 기기가 위치를 지원하지 않아요). 아래에서 지역을 골라 주세요.");
+      return;
     }
+    if (my !== seq.current) return;
+    if (!sgg) return fail("국내 시·군·구 안의 위치가 아니에요. 아래에서 지역을 골라 주세요.");
+    await show(sgg, my);
   };
-  const openManual = async () => {
-    setManual(true);
-    if (!regions) setRegions(await loadRegions().catch(() => null));
+  const reset = () => {
+    seq.current++;
+    setPlaced(null);
+    setStatus({ kind: "idle" });
   };
 
   const list = placed ? placed.items : PRESETS.map((p) => ({ p, fit: -1 }));
@@ -102,7 +113,7 @@ export function PresetButtons() {
           </button>
         )}
         {placed && (
-          <button type="button" className="btn btn-quiet btn-sm" onClick={() => setPlaced(null)} data-testid="locate-reset">
+          <button type="button" className="btn btn-quiet btn-sm" onClick={reset} data-testid="locate-reset">
             처음 예시로
           </button>
         )}
@@ -113,14 +124,14 @@ export function PresetButtons() {
               ? `${placed.label} 기준 예시예요. 상황은 같고 지역만 바꿨어요 — 이 지역에서 '받으실 수 있어요'가 많은 순서예요.`
               : "위치는 이 기기 안에서만 시·군·구로 바꾸고, 어디에도 보내거나 저장하지 않아요."}
         </p>
-        {manual && regions && (
+        {manual && (
           <div className="preset-pick">
             <label className="sr-only" htmlFor="pp-sido">
               시·도
             </label>
-            <select id="pp-sido" className="select" value={pickSido} onChange={(e) => setPickSido(e.target.value)}>
+            <select id="pp-sido" className="select" value={pickSido} disabled={!regions} onChange={(e) => setPickSido(e.target.value)}>
               <option value="">시·도 고르기</option>
-              {regions.sidos.map((s) => (
+              {regions?.sidos.map((s) => (
                 <option key={s.code} value={s.code}>
                   {sidoOptionLabel({ code: s.code, name: s.name })}
                 </option>
@@ -129,7 +140,7 @@ export function PresetButtons() {
             <label className="sr-only" htmlFor="pp-sgg">
               시·군·구
             </label>
-            <select id="pp-sgg" className="select" value="" disabled={!sidoObj} onChange={(e) => e.target.value && show(e.target.value)} data-testid="locate-sigungu">
+            <select id="pp-sgg" className="select" value="" disabled={!sidoObj || status.kind === "busy"} onChange={(e) => e.target.value && show(e.target.value)} data-testid="locate-sigungu">
               <option value="">{sidoObj ? "시·군·구 고르기" : "시·도 먼저"}</option>
               {sidoObj?.sigungus.map((g) => (
                 <option key={g.code} value={g.code}>

@@ -111,7 +111,7 @@ export function presetById(id: string | null | undefined): Preset | undefined {
   if (!id) return undefined;
   const [base, sigungu, label] = id.split("@");
   const p = PRESETS.find((x) => x.id === base);
-  if (!p || !sigungu || !label) return p;
-  const sido = /^12/.test(sigungu) ? "12000" : `${sigungu.slice(0, 2)}000`;
-  return presetAt(p, sido, sigungu, label);
+  // 저장소 값이 손상됐으면(시·군·구 코드가 아님) 원래 예시로
+  if (!p || !sigungu || !label || !/^\d{5}$/.test(sigungu)) return p;
+  return presetAt(p, `${sigungu.slice(0, 2)}000`, sigungu, label.slice(0, 30));
 }

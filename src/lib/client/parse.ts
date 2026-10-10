@@ -263,7 +263,7 @@ function incheonOld(text: string, regions: RegionIndex) {
   const pick = (names: string[]) => names.map((n) => ({ sido: "28000", sigungu: code(n), label: `인천 ${n}` })).filter((c) => c.sigungu);
   if (m[1] === "동구") return { sido: "28000", sigungu: code("제물포구"), note: "인천 동구는 2026년 7월부터 제물포구예요.", choices: undefined };
   if (m[1] === "중구") return { sido: "28000", sigungu: null, note: "인천 중구는 2026년 7월부터 제물포구(내륙)와 영종구(영종도)로 나뉘었어요. 사는 곳을 골라 주세요.", choices: pick(["제물포구", "영종구"]) };
-  if (/검단/.test(text)) return null;
+  if (/검단/.test(text)) return { sido: "28000", sigungu: code("검단구"), note: "인천 서구 검단은 2026년 7월부터 검단구예요.", choices: undefined };
   return { sido: "28000", sigungu: null, note: "인천 서구는 2026년 7월부터 서해구와 검단구로 나뉘었어요. 사는 곳을 골라 주세요.", choices: pick(["서해구", "검단구"]) };
 }
 
