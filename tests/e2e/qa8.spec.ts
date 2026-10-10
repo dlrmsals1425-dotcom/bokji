@@ -72,12 +72,14 @@ test("검색 지역은 새로고침해도 유지 (주소에는 싣지 않음), �
   await page.locator("#s-sido").selectOption("41000");
   await page.locator("#s-sigungu").selectOption({ label: "용인시" });
   const names = () => page.locator(".prow h3").allInnerTexts();
-  await expect(page.locator(".search-count h2")).toContainText("검색 결과", { timeout: 20_000 });
+  // 시·도 단위 결과가 아니라 고른 시·군·구 결과로 바뀐 뒤에 읽는다 (프로덕션에서 번들 받는 사이 읽어 개수가 달랐음)
+  await expect(page.locator(".search-count")).toContainText("용인시", { timeout: 20_000 });
   const before = await names();
   const count = await page.locator(".search-count h2").innerText();
   expect(page.url()).not.toMatch(/41460|용인|sido|sigungu/);
   await page.reload();
   await expect(page.locator("#s-sigungu")).toHaveValue("41460", { timeout: 20_000 });
+  await expect(page.locator(".search-count")).toContainText("용인시", { timeout: 20_000 });
   await expect(page.locator(".search-count h2")).toHaveText(count);
   expect(await names()).toEqual(before);
 });

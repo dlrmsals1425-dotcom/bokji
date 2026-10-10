@@ -37,7 +37,8 @@ export function Search() {
   const [regions, setRegions] = useState<RegionIndex | null>(null);
   // (QA 8차) 고른 검색 지역은 이 기기에 기억 — 새로고침·다시 열기에도 유지 (주소에는 싣지 않음)
   const pick = useSearchRegion() ?? null;
-  const [data, setData] = useState<Loaded | null>(null);
+  // 받은 데이터와 그 지역 — 지역을 바꾸면 새 데이터가 올 때까지 이전 지역 목록을 새 지역 이름으로 보여 주지 않게
+  const [loaded, setLoaded] = useState<{ key: string; data: Loaded } | null>(null);
   const [limit, setLimit] = useState(PAGE);
 
   const chosenSido = pick ? pick.sido : (profile?.sido ?? null);
@@ -57,12 +58,13 @@ export function Search() {
   const choose = (r: { sido: string | null; sigungu: string | null }) => saveSearchRegion(r);
   useEffect(() => {
     let alive = true;
-    loadForRegion(sido, sigungu).then((d) => alive && setData(d));
+    loadForRegion(sido, sigungu).then((d) => alive && setLoaded({ key: `${sido}/${sigungu}`, data: d }));
     return () => {
       alive = false;
     };
   }, [sido, sigungu]);
 
+  const data = loaded && loaded.key === `${sido}/${sigungu}` ? loaded.data : null;
   const sel = useMemo(() => parseSelection(new URLSearchParams(params.toString())), [params]);
   const active = !!q.trim() || selectionSize(sel) > 0;
   const apply = (nq: string, ns: FacetSelection) => {
