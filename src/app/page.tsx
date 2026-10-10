@@ -171,7 +171,7 @@ export default function Home() {
               공공기관 <b>{n(c.byOrg.public_inst)}</b>
             </span>
             <span>
-              경기도는 시범 지역으로 규칙을 먼저 검수합니다. <Link href="/about">데이터 출처와 기준일</Link>
+              전국 사업을 같은 기준으로 판정하고, 경기도는 사람이 규칙을 먼저 검수했어요. <Link href="/about">데이터 출처와 기준일</Link>
             </span>
           </p>
         </div>

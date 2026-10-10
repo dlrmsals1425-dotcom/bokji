@@ -12,6 +12,10 @@ const man = (won: number) => `${Math.floor(won / 10000).toLocaleString("ko-KR")}
 
 export default function About() {
   const c = meta.counts;
+  // (전국 확대 ①) 번들을 다시 만들기 전이라 meta 집계는 시범 기준 — 정부24 지원조건 규칙은 이제 모두 'API 지원조건' (refine.ts)
+  const byOrigin = (c as unknown as { rulesByOrigin?: Record<string, number> }).rulesByOrigin ?? {};
+  const structuredN = Math.max((c.rulesByReview as Record<string, number>).structured ?? 0, byOrigin.gov24_conditions ?? 0);
+  const autoN = c.rulesByReview.auto - (structuredN - ((c.rulesByReview as Record<string, number>).structured ?? 0));
   return (
     <div className="narrow page">
       <ol className="crumbs" aria-label="현재 위치">
@@ -168,8 +172,8 @@ export default function About() {
         </dl>
         <ul className="bullets" style={{ marginTop: "1rem" }}>
           <li>검수 규칙(1차): {n(c.rulesByReview.curated)}개 — 원문 근거 구절과 대조해 작성한 규칙(AI 보조)이며 최종 사람 검수 진행 중.</li>
-          <li>API 지원조건: {n((c.rulesByReview as Record<string, number>).structured ?? 0)}개 — 공공서비스(혜택) API의 구조화된 지원조건 코드(나이·소득 구간·대상 특성·가구 유형)에서 변환. 전국 사업과 경기도(시범) 사업에만 &lsquo;조건 충족&rsquo;을 허용하고, 원문에 수급·장애 등 추가 요건이 보이면 &lsquo;가능성 있음&rsquo;으로 낮춥니다.</li>
-          <li>자동 변환 규칙: {n(c.rulesByReview.auto)}개 — 복지로 분류 태그·대상 문구, 또는 시범 지역 밖의 API 지원조건. 최대 &lsquo;가능성 있음&rsquo;. 경기도 {n(c.pilot.autoRules)}개는 검수 대기열에 있습니다.</li>
+          <li>API 지원조건: {n(structuredN)}개 — 공공서비스(혜택) API의 구조화된 지원조건 코드(나이·소득 구간·대상 특성·가구 유형)에서 변환. 모든 지역에서 &lsquo;조건 충족&rsquo;을 허용하되(2026-10-10부터 전국), 원문에 수급·장애 등 추가 요건이나 사건·이미 한 일·묻지 않은 자격이 보이면 &lsquo;신청할 때 확인&rsquo;으로 낮춥니다. 전국 표본 142건을 원문과 대조(다른 AI 모델 검토 포함)해 이 점검 규칙을 다듬었습니다.</li>
+          <li>자동 변환 규칙: {n(autoN)}개 — 복지로 분류 태그·대상 문구에서 변환. 최대 &lsquo;가능성 있음&rsquo;. 경기도 {n(c.pilot.autoRules)}개는 검수 대기열에 있습니다.</li>
           <li>조건이 맞지 않는 서비스는 기본으로 숨기고, 원하면 이유와 함께 볼 수 있습니다.</li>
         </ul>
       </section>

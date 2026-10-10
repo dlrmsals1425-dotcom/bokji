@@ -285,10 +285,21 @@ function withDaycare(p: Pick<Program, "name">, rule: Rule): Rule {
   return { ...rule, logic, unstructured: rule.unstructured.filter((u) => !DAYCARE_NOTE.test(u)) };
 }
 
+/**
+ * (전국 확대 ①, 2026-10-10) 공공서비스 API 지원조건 규칙은 지역과 관계없이 'API 지원조건(structured)' 등급.
+ * 시범 기간에는 경기도·전국 사업만 올리고 그 밖의 시·도는 '자동 정리(auto)'로 두어 '받으실 수 있어요'까지 가지 않았다.
+ * 규칙 다듬기(소득 코드 반올림·수급자 전용·원문 조건 등)는 이미 모든 지역에 같게 적용돼 있어 등급만 맞춘다
+ * (pipeline/src/build.ts 도 같게 — 다음 재생성부터는 번들에 바로 들어감). 사람이 '거절'한 규칙은 origin 이 none 이라 해당 없음.
+ */
+const promoteStructured = (p: Pick<Program, "rule">) => p.rule?.review === "auto" && p.rule.origin === "gov24_conditions" && !!p.rule.logic;
+
 export function refineProgram<T extends Program>(p: T): T {
   const dc = p.rule?.logic ? daycareLeaf(p) : null;
-  if (p.rule?.refined === REFINE_VERSION && !OWNER_FIX[p.id] && !RULE_FIX[p.rule.id] && !dc) return p;
+  const promote = promoteStructured(p);
+  if (p.rule?.refined === REFINE_VERSION && !OWNER_FIX[p.id] && !RULE_FIX[p.rule.id] && !dc && !promote) return p;
   const owner = OWNER_FIX[p.id] ?? p.owner;
-  const rule = p.rule ? refineRule(p, p.rule) : p.rule;
-  return { ...p, owner, rule: rule && dc ? withDaycare(p, rule) : rule };
+  let rule = p.rule ? refineRule(p, p.rule) : p.rule;
+  if (rule && dc) rule = withDaycare(p, rule);
+  if (rule && promote) rule = { ...rule, review: "structured" };
+  return { ...p, owner, rule };
 }

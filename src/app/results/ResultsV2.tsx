@@ -286,7 +286,7 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
             <p className="notice" data-testid="non-pilot-note" role="note">
               <Icon name="info" size={18} />
               <span>
-                <strong>시범 지역(경기도) 밖이에요.</strong> 이 지역 사업은 조건을 사람이 아직 검수하지 않아 &lsquo;신청할 때 확인&rsquo;이 많을 수 있어요.
+                <strong>경기도 밖 지역이에요.</strong> 이 지역 사업도 공공서비스 API 지원조건과 원문 자동 점검으로 판정하지만, 사람이 조건을 하나하나 검수한 곳은 아직 경기도뿐이에요. 신청 전에 원문을 꼭 확인하세요.
               </span>
             </p>
           )}

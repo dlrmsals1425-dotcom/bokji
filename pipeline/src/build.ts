@@ -171,8 +171,8 @@ function main() {
           reviewer: "수동 보강: 공식 누리집 원문 대조(AI) · 최종 사람 검수 대기", reviewedAt: draftMember.fetchedAt,
         };
       } else {
-        // 공공서비스 API 구조화 지원조건: 전국 사업·경기도(시범) 사업은 '조건 충족' 판정 허용, 그 밖의 지역은 상한 '가능성 있음'
-        const structured = draftMember.draft.origin === "gov24_conditions" && (rec.scope === "national" || rec.sidoCode === PILOT_SIDO);
+        // 공공서비스 API 구조화 지원조건: 모든 지역에서 '조건 충족' 판정 허용 (전국 확대 ①, 2026-10-10 — 시범 기간에는 전국·경기도만)
+        const structured = draftMember.draft.origin === "gov24_conditions";
         rule = {
           id: ruleId, origin: draftMember.draft.origin, review: structured ? "structured" : "auto", logic: draftMember.draft.logic,
           unstructured: draftMember.draft.unstructured, unstructuredCore: draftMember.draft.core,
