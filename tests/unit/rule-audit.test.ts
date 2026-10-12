@@ -38,7 +38,9 @@ for (const f of files) {
       const inc = ls.filter((l) => !l.soft && (l.field === "income" || l.field === "incomeBands"));
       const max = inc.length ? Math.min(...inc.map(leafMax)) : Infinity;
       const g = textGate(p);
-      if (inc.length && max <= 50 && REC_TEXT.test(src) && !MED.test(src) && !ls.some((l) => !l.soft && l.field === "benefit")) {
+      // (QA 9차) '생계 및 의료급여 대상자가 아닌 자'처럼 수급자를 빼는 원문은 수급자 대상이 아님 (한부모가정 의료보험)
+      const negRec = /(?:수급|급여|차상위)[^\n]*(?:아닌\s*(?:자|사람|분|가구)|아니어야)/.test(src);
+      if (inc.length && max <= 50 && REC_TEXT.test(src) && !MED.test(src) && !negRec && !ls.some((l) => !l.soft && l.field === "benefit")) {
         checkedA++;
         if (!(p.rule.meansTest || g.gate?.kind === "recipient" || g.partialRec)) recBandOnly.push({ id: p.id, name: p.name, why: `소득 ${max}%만으로 판정` });
       }

@@ -169,7 +169,23 @@ export const LTC_APPLY_LOGIC: Cond = {
     { field: "care", anyOf: ["daily"], label: "일상생활에 다른 사람의 도움이 필요함 (원문 등급 기준)", soft: true },
   ],
 };
+/**
+ * (QA 9차) 궁·능·문화유산 관람료 감면 — 원문 '만 24세 이하 및 만 65세 이상'이 정부24 코드에서 '만 24~65세'로 거꾸로 들어옴.
+ * 원문 대상 목록 그대로 '이 중 하나': 나이, 장애인, 국가유공자, (원문의 나머지 유형은 묻지 않으므로 확인할 것으로).
+ */
+const HERITAGE_FREE_LOGIC: Cond = {
+  any: [
+    { field: "age", max: 24, label: "만 24세 이하 (원문)" },
+    { field: "age", min: 65, label: "만 65세 이상 (원문)" },
+    { field: "disability", anyOf: ["self", "member"], label: "장애인 (원문)" },
+    { field: "trait", anyOf: ["veteran"], label: "국가유공자 등 (원문)" },
+    { field: "unasked", label: "원문의 다른 감면 대상 (다자녀 부모·한복 착용 등)" },
+  ],
+  label: "관람료 감면 대상 중 하나 (원문)",
+};
 const RULE_FIX: Record<string, Pick<Rule, "logic" | "unstructured">> = {
+  "R-n.gov24-155000000017": { logic: HERITAGE_FREE_LOGIC, unstructured: [] },
+  "R-n.gov24-155000000015": { logic: HERITAGE_FREE_LOGIC, unstructured: [] },
   "R-n.gov24-149200005007": { logic: EMPLOYMENT_SUPPORT_LOGIC, unstructured: EMPLOYMENT_SUPPORT_NOTES },
   "R-n.gov24-999000000089": { logic: LTC_APPLY_LOGIC, unstructured: [] },
 };
