@@ -16,9 +16,17 @@ export const NATIONAL_OWNER = /^중앙부처\s*\(전국 공통 사업\)$/;
 
 export function orgText(p: Program): string {
   const where = p.scope === "national" ? "전국" : (p.region?.label ?? "");
-  // (QA 8차) 지역 목록에 실린 전국 공통 사업(국가건강검진 등)을 그 지역 사업처럼 보이지 않게 — 상세의 소관기관과 같게
-  if (p.scope !== "national" && NATIONAL_OWNER.test(p.owner ?? "")) return `전국 공통 사업${where ? ` · ${where} 안내` : ""}`;
+  // (QA 8차) 지역 목록에 실린 중앙부처 사업(국가건강검진 등)을 그 지역 사업처럼 보이지 않게.
+  // (2026-10-16) '전국 공통'은 어디서나 받을 수 있다고 읽혀 쓰지 않음 — 메뉴판의 '전국'은 중앙부처 사업이라는 뜻이고 시범사업처럼 일부 지역만 하는 것도 있음
+  if (p.scope !== "national" && NATIONAL_OWNER.test(p.owner ?? "")) return `중앙부처 사업${where ? ` · ${where} 안내` : ""}`;
   return `${ORG_TYPE_LABEL[p.orgType]}${where ? ` · ${where}` : ""}`;
+}
+
+/** 소관기관 표시 — 통합돌봄 메뉴판의 '중앙부처 (전국 공통 사업)'은 어느 지역 안내에 실린 것인지로 */
+export function ownerText(p: Pick<Program, "owner" | "region">): string | undefined {
+  if (!p.owner) return undefined;
+  if (NATIONAL_OWNER.test(p.owner)) return `중앙부처 (${p.region?.label ? `${p.region.label} ` : ""}통합돌봄 안내에 실린 사업)`;
+  return p.owner;
 }
 
 /** 기관 표시에서 이미 적은 지역 이름을 빼고 부서만 (QA 8차: '경기 용인시 · 경기도 용인시 복지여성국…' 중복) */

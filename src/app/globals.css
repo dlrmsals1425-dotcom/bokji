@@ -711,3 +711,7 @@ html[data-large="1"] .fgrid fieldset + fieldset { border-left: 0; border-top: 1p
 
 /* 홈: 찾는 방법 두 갈래 */
 .home-search-label { margin: 1.75rem 0 0.5rem; font-size: 0.9375rem; font-weight: 700; color: var(--ink-2); }
+
+/* 이미 받고 있는 혜택 (2026-10-16) */
+.recv-list { list-style: none; margin: 0.5rem 0 0; padding: 0; display: grid; gap: 0.25rem; }
+.recv-list li { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 0.75rem; }
