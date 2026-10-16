@@ -3,7 +3,7 @@
  * 기기 안에서만 만든다 (상황·입력값은 넣지 않음). 원문에 구비서류가 없으면 지어내지 않고 '창구에 문의'.
  */
 import type { Program } from "../data/types";
-import { howTo } from "./howto";
+import { firstLine, howTo } from "./howto";
 import type { Bucket } from "./v2";
 
 export interface SheetEntry {
@@ -21,6 +21,40 @@ export interface SheetProgram {
   docs: "listed" | "none" | "missing";
   /** 한 장에 다 못 적은 서류 수 (상세 페이지·창구에서 확인) */
   more: number;
+  /** 담당자 확인용 (원문에 있는 것만) */
+  staff: StaffInfo;
+}
+/**
+ * 담당자 확인용 (2026-10-16 소유자): 창구 담당자가 이 한 장만 보고 무엇을 신청하러 왔는지 알고 원문을 찾아볼 수 있게.
+ * 원천 서비스 번호·원문 요약 첫 문장·지원대상 첫 줄·근거 법령·소관(복지로는 담당 부서까지). 원문에 없으면 빈 칸 — 지어내지 않는다.
+ */
+export interface StaffInfo {
+  /** '정부24 서비스 SSE000000170' · '복지로 서비스 WLF00005606' (보건복지부 게시판 내부 번호는 쓰지 않음) */
+  ref: string | null;
+  what: string;
+  target: string;
+  /** '근거 기초연금법(제3조) · 소관 보건복지부' */
+  basis: string;
+}
+const REF_SOURCES: [string, string][] = [
+  ["gov24", "정부24"],
+  ["bokjiro", "복지로"],
+];
+export function staffInfo(p: Pick<Program, "summary" | "target" | "laws" | "owner" | "sources">): StaffInfo {
+  let ref: string | null = null;
+  for (const [src, label] of REF_SOURCES) {
+    const s = p.sources?.find((x) => x.source === src && x.id);
+    if (s) {
+      ref = `${label} 서비스 ${s.id}`;
+      break;
+    }
+  }
+  const what = firstLine(p.summary, 70);
+  const target = firstLine(p.target, 70);
+  const laws = (p.laws ?? []).map((l) => l.trim()).filter(Boolean).slice(0, 2);
+  const owner = p.owner && !/전국\s*공통|^중앙부처$/.test(p.owner) ? p.owner.trim() : "";
+  const basis = [laws.length ? `근거 ${laws.join(", ")}` : "", owner ? `소관 ${owner}` : ""].filter(Boolean).join(" · ");
+  return { ref, what, target: target === what ? "" : target, basis };
 }
 export interface SheetPlace {
   key: string;
@@ -438,6 +472,7 @@ export function buildVisitSheet(
       also: [...new Set(also)],
       docs: docs.state,
       more: docs.more,
+      staff: staffInfo(p),
     });
     const add = (
       map: Map<string, { item: string; for: string[] }>,

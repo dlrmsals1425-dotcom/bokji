@@ -2,6 +2,7 @@
 /**
  * 준비물 한 장 → PNG (브라우저 캔버스에 직접 그림, 외부 라이브러리·서버 없음).
  * 들어가는 것: 지역 이름·날짜·신청하는 곳·혜택 이름·가져갈 것·문의 전화. 나이·소득 등 입력값은 넣지 않는다.
+ * (2026-10-16) 신청하러 갈 곳마다 한 장 — 담당자께 칸(서비스 번호·무엇·대상·근거)을 함께.
  */
 import type { SheetPlace } from "./visit";
 import { SHEET_STATUS } from "./visit";
@@ -37,10 +38,13 @@ function wrap(ctx: CanvasRenderingContext2D, text: string, max: number): string[
 export interface SheetMeta {
   region: string;
   date: string;
+  /** 몇 번째 곳 / 모두 몇 곳 */
+  index: number;
+  total: number;
 }
 
 /** 캔버스에 그리고 PNG Blob 으로 */
-export async function renderSheetPng(places: SheetPlace[], meta: SheetMeta): Promise<Blob> {
+export async function renderSheetPng(pl: SheetPlace, meta: SheetMeta): Promise<Blob> {
   if (typeof document !== "undefined" && document.fonts?.ready) await document.fonts.ready.catch(() => undefined);
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
@@ -56,22 +60,31 @@ export async function renderSheetPng(places: SheetPlace[], meta: SheetMeta): Pro
       y += lh;
     }
   };
-  text("복지나침반 · 방문처별 준비물", 30, 700, C.blue);
+  text(`복지나침반 · 방문처별 준비물${meta.total > 1 ? ` ${meta.index + 1}/${meta.total}` : ""}`, 30, 700, C.blue);
   text(`${meta.region} 기준 · ${meta.date}`, 26, 500, C.muted);
   y += 12;
   lines.push({ op: { kind: "rule" }, y, h: 2 });
   y += 28;
-  places.forEach((pl, i) => {
-    if (i) y += 20;
+  const visit = pl.key !== "none" && pl.key !== "online";
+  const title = pl.key === "none" ? "따로 신청하지 않아도 되는 것" : pl.key === "online" ? "온라인으로 신청할 것" : pl.key === "agency" ? "담당 기관에 먼저 문의할 것" : `${pl.label}에 가져갈 한 장`;
+  {
     const ph = 64;
-    lines.push({ op: { kind: "place", text: `${i + 1}. ${pl.label}` }, y, h: ph });
+    lines.push({ op: { kind: "place", text: title }, y, h: ph });
     y += ph + 16;
-    text("여기서 신청할 것", 26, 700, C.blue);
-    for (const p of pl.programs) {
-      text(`· ${p.name}`, 30, 700, C.ink, PAD + 8);
+    if (visit) {
+      text(`담당자께 — 이 분은 아래 ${pl.programs.length > 1 ? `${pl.programs.length}가지` : "사업"}을 신청(자격 확인 포함)하러 오셨어요. 사업명·서비스 번호로 정부24·복지로 원문을 찾아보실 수 있어요.`, 24, 600, C.ink2);
+      y += 8;
+    }
+    text("신청할 것", 26, 700, C.blue);
+    pl.programs.forEach((p, k) => {
+      text(`${k + 1}. ${p.name}${p.staff.ref ? `  (${p.staff.ref})` : ""}`, 30, 700, C.ink, PAD + 8);
+      if (p.staff.what) text(p.staff.what, 24, 500, C.ink2, PAD + 34);
+      if (p.staff.target) text(`대상(원문): ${p.staff.target}`, 24, 500, C.ink2, PAD + 34);
+      if (p.staff.basis) text(p.staff.basis, 24, 500, C.ink2, PAD + 34);
       const sub = [SHEET_STATUS[p.bucket], ...p.also].filter(Boolean).join(" · ");
       if (sub) text(sub, 24, 500, C.muted, PAD + 34);
-    }
+      y += 6;
+    });
     y += 8;
     if (pl.key !== "none") {
       text(pl.key === "online" ? "준비할 서류" : "가져갈 것", 26, 700, C.blue);
@@ -90,11 +103,11 @@ export async function renderSheetPng(places: SheetPlace[], meta: SheetMeta): Pro
       if (missing.length) text(`구비서류가 원문에 없어요 — 창구에 문의: ${missing.join(", ")}`, 24, 500, C.ink2, PAD + 8);
     }
     if (pl.phones.length) text(`문의: ${pl.phones.map((x) => x.phone).join(" / ")}`, 24, 500, C.ink2, PAD + 8);
-  });
+  }
   y += 24;
   lines.push({ op: { kind: "rule" }, y, h: 2 });
   y += 24;
-  text("원문(정부24·복지로) 기준이에요. 서류는 바뀔 수 있으니 가기 전에 전화로 확인하세요. 보건복지상담센터 129", 22, 500, C.muted);
+  text("원문(정부24·복지로) 기준이에요. 서류는 바뀔 수 있으니 가기 전에 전화로 확인하세요. 보건복지상담센터 129. 최종 자격은 담당 기관이 정해요.", 22, 500, C.muted);
   y += PAD - 20;
 
   const scale = 1;

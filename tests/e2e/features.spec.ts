@@ -69,7 +69,29 @@ test.describe("방문처별 준비물 한 장", () => {
     await expect(sheet.getByTestId("vs-ask").first()).toContainText("전화로 물어볼 것");
     await expect(sheet.getByTestId("vs-phones").locator("a[href^='tel:']").first()).toBeVisible();
     await expect(sheet).toContainText("경기도 부천시 기준");
-    await expect(sheet.locator(".vs-head")).not.toContainText(/72|일흔|세|만원|소득|혼자/);
+    for (const meta of await sheet.locator(".vs-page > .vs-meta").allInnerTexts()) expect(meta).not.toMatch(/72|일흔|세 |만원|소득|혼자/);
+  });
+
+  test("곳마다 한 장 + 담당자께 칸: 무엇을 신청하러 왔는지, 서비스 번호·대상·근거 (원문에 있는 것만) @mobile", async ({ page }) => {
+    await toResults(page, DAD);
+    const sheet = await openSheet(page);
+    const places = sheet.getByTestId("vs-place");
+    const n = await places.count();
+    await expect(sheet.getByRole("heading", { level: 2 })).toContainText(`${n}곳, 곳마다 한 장`);
+    // 각 장에 몇 번째 곳인지, 곳 이름 + '에 가져갈 한 장'
+    await expect(places.first().locator(".vs-meta")).toContainText(`1/${n}`);
+    const center = places.filter({ hasText: "주소지 행정복지센터(주민센터)에 가져갈 한 장" });
+    await expect(center).toHaveCount(1);
+    await expect(center.getByTestId("vs-staff")).toContainText("담당자께");
+    await expect(center.getByTestId("vs-staff")).toContainText("신청(자격 확인 포함)하러 오셨어요");
+    // 서비스 번호(정부24·복지로)와 원문 대상·근거가 혜택마다
+    await expect(sheet.locator(".vs-ref").filter({ hasText: /(정부24|복지로) 서비스 [A-Z0-9]+/ }).first()).toBeVisible();
+    await expect(sheet.locator(".vs-line").filter({ hasText: /^대상\(원문\): / }).first()).toBeVisible();
+    await expect(sheet.locator(".vs-line").filter({ hasText: /소관 / }).first()).toBeVisible();
+    // 다른 곳(보건소)의 혜택은 주민센터 장에 섞이지 않는다
+    const health = places.filter({ hasText: "가까운 보건소" });
+    const healthNames = await health.getByTestId("vs-prog").locator("strong").allInnerTexts();
+    for (const name of healthNames) await expect(center.getByTestId("vs-prog").filter({ hasText: name })).toHaveCount(0);
   });
 
   test("5가지에서 빼기·목록에서 담기가 한 장에 반영 (이 탭에만, 주소에 없음)", async ({ page }) => {
@@ -90,8 +112,8 @@ test.describe("방문처별 준비물 한 장", () => {
   test("이미지로 저장: PNG(가로 1080) 내려받기 @mobile", async ({ page }) => {
     await toResults(page, DAD);
     const sheet = await openSheet(page);
-    const [dl] = await Promise.all([page.waitForEvent("download"), sheet.getByTestId("vs-png").click()]);
-    expect(dl.suggestedFilename()).toBe("복지나침반-방문처별-준비물.png");
+    const [dl] = await Promise.all([page.waitForEvent("download"), sheet.getByTestId("vs-png").first().click()]);
+    expect(dl.suggestedFilename()).toBe("복지나침반-준비물-1.png");
     const buf = readFileSync((await dl.path())!);
     expect(buf.subarray(1, 4).toString()).toBe("PNG");
     expect(buf.readUInt32BE(16)).toBe(1080);
@@ -99,7 +121,7 @@ test.describe("방문처별 준비물 한 장", () => {
     await expect(page.getByTestId("vs-msg")).toContainText("저장했어요");
   });
 
-  test("이 한 장만 인쇄: 인쇄 화면에서 한 장만 보이고, 끝나면 원래대로 @mobile", async ({ page }) => {
+  test("인쇄: 곳마다 한 쪽씩(각 A4 한 장 안), '이 곳 한 장 인쇄'는 그 곳만, 끝나면 원래대로 @mobile", async ({ page }) => {
     await page.addInitScript(() => {
       (window as unknown as { __printed: number }).__printed = 0;
       window.print = () => {
@@ -107,20 +129,30 @@ test.describe("방문처별 준비물 한 장", () => {
       };
     });
     await toResults(page, DAD);
-    await openSheet(page);
+    const sheet = await openSheet(page);
+    const n = await sheet.getByTestId("vs-place").count();
     await page.getByTestId("vs-print").click();
     expect(await page.evaluate(() => (window as unknown as { __printed: number }).__printed)).toBe(1);
     await expect(page.locator("html")).toHaveAttribute("data-print", "sheet");
     await page.emulateMedia({ media: "print" });
     const root = page.locator(".sheet-print-root");
     await expect(root).toBeVisible();
-    await expect(root).toContainText("방문처별 준비물 한 장");
+    await expect(root).toContainText("방문처별 준비물");
     await expect(root).toContainText("가까운 보건소");
     await expect(page.getByTestId("v2-results")).toBeHidden();
     await expect(page.locator("header").first()).toBeHidden();
-    // A4 한 장 높이(297mm ≈ 1123px) 안에 들어가는지
-    const h = await root.evaluate((e) => e.getBoundingClientRect().height);
-    expect(h).toBeLessThan(1123 * 1.05);
+    // 곳마다 한 쪽, 각 쪽은 A4 한 장 높이(297mm ≈ 1123px) 안
+    const pages = root.locator(".vs-page");
+    await expect(pages).toHaveCount(n);
+    for (const h of await pages.evaluateAll((es) => es.map((e) => e.getBoundingClientRect().height))) expect(h).toBeLessThan(1123 * 1.05);
+    await page.evaluate(() => window.dispatchEvent(new Event("afterprint")));
+    // 이 곳 한 장만
+    await page.emulateMedia({ media: "screen" });
+    await sheet.getByTestId("vs-place").filter({ hasText: "가까운 보건소" }).getByTestId("vs-print-place").click();
+    await page.emulateMedia({ media: "print" });
+    await expect(pages).toHaveCount(1);
+    await expect(root).toContainText("가까운 보건소");
+    await expect(root).not.toContainText("주소지 행정복지센터(주민센터)에 가져갈 한 장");
     await page.evaluate(() => window.dispatchEvent(new Event("afterprint")));
     await expect(page.locator("html")).not.toHaveAttribute("data-print", "sheet");
     // 평소 인쇄(결과 전체)에서는 한 장 복사본이 숨겨짐
