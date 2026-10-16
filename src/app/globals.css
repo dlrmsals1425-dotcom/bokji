@@ -736,3 +736,17 @@ html[data-large="1"] .fgrid fieldset + fieldset { border-left: 0; border-top: 1p
 .results-root.v2 .res-head { background: linear-gradient(180deg, #ffeedd 0%, #fff7f0 100%); border-bottom-color: var(--primary-10); }
 .results-root.v2 .res-head .h1 { font-size: clamp(1.75rem, 5vw, 2.5rem); font-weight: 800; letter-spacing: -0.04em; }
 .hero h1 { font-weight: 850; }
+
+/* ---------- 키오스크 모드 (2026-10-16 회의: 주민센터 태블릿, 터치만) ---------- */
+html[data-kiosk="1"] .util, html[data-kiosk="1"] .header-nav, html[data-kiosk="1"] .mnav, html[data-kiosk="1"] .site-footer, html[data-kiosk="1"] .header-actions { display: none; }
+html[data-kiosk="1"] .site-header .logo { pointer-events: none; }
+html[data-kiosk="1"] .gq-opt { min-height: 4rem; font-size: 1.125em; }
+html[data-kiosk="1"] .btn { min-height: 3.5rem; }
+html[data-kiosk="1"] main { padding-bottom: 5.5rem; }
+.kiosk-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; display: flex; justify-content: center; padding: 0.75rem; background: rgba(255, 255, 255, 0.96); border-top: 1px solid var(--line-2); }
+.kiosk-idle { position: fixed; inset: 0; z-index: 60; background: rgba(30, 33, 36, 0.55); display: grid; place-items: center; padding: 1rem; }
+.kiosk-idle-box { background: #fff; border-radius: var(--radius); padding: 1.75rem; max-width: 30rem; width: 100%; box-shadow: var(--shadow); }
+html[data-kiosk="1"] .crumbs { display: none; }
+@media (min-width: 48rem) {
+  html[data-kiosk="1"] .gq-opts { max-width: none; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

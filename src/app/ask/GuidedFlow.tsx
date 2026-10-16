@@ -13,7 +13,7 @@ import { FLOW_LIMIT, QUESTION_NAME, blankSituation, childrenApply, flowAnswers, 
 import { resultsPath, type FindMode } from "@/lib/client/mode";
 import { sidoOptionLabel } from "@/lib/client/regionLabel";
 import { saveSituation } from "@/lib/client/start";
-import { saveFiller } from "@/lib/client/storage";
+import { saveFiller, useSettings } from "@/lib/client/storage";
 import { DIM_BY_ID, type DimId, type Situation } from "@/lib/client/v2";
 import type { Program, RegionIndex } from "@/lib/data/types";
 import { CHILD_BUCKETS, CHILD_LABEL, type ChildBucket } from "@/lib/engine/profile";
@@ -59,6 +59,8 @@ export function GuidedFlow() {
   // 끝 화면의 '질문 더 답하기' — 남은 질문이 있는지는 끝 화면에 들어갈 때 한 번만 계산
   const [canMore, setCanMore] = useState(false);
   const seq = useRef(0);
+  // 키오스크(기관 태블릿)는 그 기관이 있는 시·군·구로 묻고 위치는 쓰지 않는다
+  const kiosk = useSettings()?.kiosk ?? null;
   const headRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
@@ -97,6 +99,12 @@ export function GuidedFlow() {
   const chooseWho = (m: FindMode) => {
     setMode(m);
     setPhase("where");
+    if (kiosk) {
+      seq.current++;
+      setManual(false);
+      setLoc({ kind: "found", where: { sido: kiosk.sido, sigungu: kiosk.sigungu, label: kiosk.label } });
+      return;
+    }
     // 본인 찾기는 바로 현재 위치부터 — 부모님 찾기는 부모님이 사시는 곳이라 직접 고르기부터
     if (m === "self") void locate();
     else {
@@ -299,7 +307,7 @@ export function GuidedFlow() {
                 {loc.kind === "found" && (
                   <>
                     <p className="small muted">
-                      <Icon name="mapPin" size={16} /> 현재 위치로 찾았어요. {parent ? "부모님이 사시는 곳과 같은지 확인해 주세요." : "주소지(주민등록) 기준이에요."}
+                      <Icon name="mapPin" size={16} /> {kiosk ? "이 기관이 있는 곳이에요." : "현재 위치로 찾았어요."} {parent ? "부모님이 사시는 곳과 같은지 확인해 주세요." : "주소지(주민등록) 기준이에요."}
                     </p>
                     <div className="gq-opts">
                       <button type="button" className="gq-opt" onClick={() => start(loc.where)} data-testid="gq-here">
