@@ -141,3 +141,39 @@ describe("질문 이름 (2026-10-16 회의: 상담·발표에서 '3번 질문'�
     expect(new Set(names).size).toBe(names.length);
   });
 });
+
+describe("자녀 질문: 임신 + 자녀 나이 여러 개 + 자녀 수 (2026-10-16 회의: 아이 1명에 임신 중이면 둘다 반영돼야)", () => {
+  const base = () => {
+    const s0 = blankSituation(SUWON.sido, SUWON.sigungu, "self");
+    return answer(s0, "age", "30-34");
+  };
+  const bucketOf = (s: Situation, re: RegExp) => {
+    const v = buildView(scoreV2(progsFor(SUWON.sido, SUWON.sigungu), s), s, 0);
+    for (const b of ["fit", "office", "ask", "no"] as const) if (v[b].some((g) => g.some((i) => re.test(i.s.program.name)))) return b;
+    return null;
+  };
+  it("임신 중 + 2~5세 자녀 1명 → 임신·출산 사업과 영유아 사업이 함께 '해당하지 않아요'가 아님", async () => {
+    const { childrenApply } = await import("@/lib/client/guided");
+    const s = childrenApply(base(), ["pregnant", "2-5"], 1);
+    expect(s.profile.children).toEqual(["pregnant", "2-5"]);
+    expect(s.x.childCount).toBe(1);
+    expect(bucketOf(s, /^건강보험 임신출산 진료비/)).not.toBe("no");
+    expect(bucketOf(s, /^영유아보육료 지원$/)).not.toBe("no");
+    // 예전 한 개만 고르기(임신 중)로는 영유아 사업이 '해당하지 않아요'였다
+    expect(bucketOf(answer(base(), "children", "pregnant"), /^영유아보육료 지원$/)).toBe("no");
+  });
+  it("자녀 3명 이상 → 다자녀로 보고, 2명은 사업마다 달라 모름", async () => {
+    const { childrenApply } = await import("@/lib/client/guided");
+    expect(bucketOf(childrenApply(base(), ["6-12", "13-18"], 3), /^다자녀가구 자동차취득세 감면$/)).not.toBe("no");
+    expect(bucketOf(childrenApply(base(), ["6-12"], 1), /^다자녀가구 자동차취득세 감면$/)).toBe("no");
+  });
+  it("자녀 없음 / 임신만", async () => {
+    const { childrenApply } = await import("@/lib/client/guided");
+    const none = childrenApply(base(), [], 0);
+    expect(none.profile.children).toEqual([]);
+    expect(none.x.childCount).toBe(0);
+    const preg = childrenApply(base(), ["pregnant"], 0);
+    expect(preg.profile.children).toEqual(["pregnant"]);
+    expect(bucketOf(preg, /^건강보험 임신출산 진료비/)).not.toBe("no");
+  });
+});

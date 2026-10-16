@@ -713,6 +713,9 @@ html[data-large="1"] .fgrid fieldset + fieldset { border-left: 0; border-top: 1p
 .gq-opt.gq-unknown { color: var(--ink-2); font-weight: 500; border-style: dashed; }
 .gq-pick { margin-top: 1rem; }
 .gq-checks { margin-top: 1rem; }
+.gq-count .seg { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.5rem; max-width: 30rem; }
+.gq-count .gq-opt { justify-content: center; }
+.gq-opt.on { border-color: var(--primary); background: var(--primary-5); color: var(--primary-70); box-shadow: inset 0 0 0 1px var(--primary); }
 .gq-foot { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--line-2); }
 @media (max-width: 30rem) { .gq-counts b { font-size: 1.125rem; } }
 
