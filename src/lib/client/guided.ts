@@ -40,8 +40,16 @@ const manwon = (won: number) => Math.floor(won / 10000).toLocaleString("ko-KR");
  * - 나이: 본인 찾기는 '18세 이하'도 (10대 본인이 나이에 답하지 못하던 문제 — 시뮬레이션에서 확인)
  * - 소득: 가구원 수에 맞춘 기준 중위소득 금액 구간 (구간 자체는 결과 화면 소득 질문과 같음)
  */
+/** 70~74세·75~79세는 한 보기로 (넓은 구간 — 엔진 profile.ts WIDE_AGE_BANDS) */
+const SEVENTIES: Answer = { key: "70-79", label: AGE_LABEL["70-79"], apply: (x: Situation) => withAge(x, "70-79") };
+function mergeSeventies(list: Answer[]): Answer[] {
+  const i = list.findIndex((a) => a.key === "70-74");
+  if (i < 0 || !list.some((a) => a.key === "75-79")) return list;
+  return [...list.slice(0, i), SEVENTIES, ...list.slice(i).filter((a) => a.key !== "70-74" && a.key !== "75-79")];
+}
+
 export function flowAnswers(d: Dim, s: Situation): Answer[] {
-  const base = answersFor(d, s);
+  const base = d.id === "age" ? mergeSeventies(answersFor(d, s)) : answersFor(d, s);
   if (d.id === "age" && s.mode !== "parent") {
     return [{ key: "0-18", label: AGE_LABEL["0-18"], apply: (x: Situation) => withAge(x, "0-18") }, ...base];
   }
