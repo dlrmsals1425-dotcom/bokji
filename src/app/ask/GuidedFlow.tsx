@@ -9,13 +9,14 @@ import { useRouter } from "next/navigation";
 import { Icon } from "@/components/Icon";
 import { loadForRegion, loadRegions } from "@/lib/client/bundles";
 import { currentPosition, loadBoundaries, sigunguAt } from "@/lib/client/locate";
-import { FLOW_LIMIT, QUESTION_NAME, blankSituation, flowAnswers, flowStep, nextQuestion, rareApply, rarePicks, type FlowStep } from "@/lib/client/guided";
+import { FLOW_LIMIT, QUESTION_NAME, blankSituation, childrenApply, flowAnswers, flowStep, nextQuestion, rareApply, rarePicks, type FlowStep } from "@/lib/client/guided";
 import { resultsPath, type FindMode } from "@/lib/client/mode";
 import { sidoOptionLabel } from "@/lib/client/regionLabel";
 import { saveSituation } from "@/lib/client/start";
 import { saveFiller } from "@/lib/client/storage";
 import { DIM_BY_ID, type DimId, type Situation } from "@/lib/client/v2";
 import type { Program, RegionIndex } from "@/lib/data/types";
+import { CHILD_BUCKETS, CHILD_LABEL, type ChildBucket } from "@/lib/engine/profile";
 
 type Where = { sido: string; sigungu: string; label: string };
 type LocStatus = { kind: "idle" } | { kind: "busy" } | { kind: "found"; where: Where } | { kind: "error"; text: string };
@@ -506,6 +507,10 @@ function Question(props: {
       <p className="gq-step" data-testid="gq-step">
         {extra && n > FLOW_LIMIT ? `더 답하기 · 질문 ${n}` : `질문 ${n} / ${FLOW_LIMIT}`} · {QUESTION_NAME[id]}
       </p>
+      {id === "children" ? (
+        <ChildrenPick sit={sit} busy={busy} headRef={headRef} onAnswer={onAnswer} />
+      ) : (
+        <>
       <h1 className="h2 gq-q" id="gq-h" tabIndex={-1} ref={headRef}>
         {d.q(mode, sit)}
       </h1>
@@ -523,11 +528,102 @@ function Question(props: {
           잘 모르겠어요
         </button>
       </div>
+        </>
+      )}
       {busy && (
         <p className="small muted" role="status">
           다시 판정하고 있어요…
         </p>
       )}
     </section>
+  );
+}
+
+const COUNTS = [
+  { n: 1, label: "1명" },
+  { n: 2, label: "2명" },
+  { n: 3, label: "3명 이상" },
+] as const;
+
+/**
+ * 자녀 질문 (2026-10-16 회의): 임신 중 + 자녀 나이를 모두 고르고, 태어난 자녀가 있으면 몇 명인지.
+ * 한 개만 고르던 보기로는 '아이 1명 + 임신 중'을 함께 답할 수 없었다.
+ */
+function ChildrenPick(props: {
+  sit: Situation;
+  busy: boolean;
+  headRef: React.RefObject<HTMLHeadingElement | null>;
+  onAnswer: (s: Situation | null, label: string) => void;
+}) {
+  const { sit, busy, headRef, onAnswer } = props;
+  const [on, setOn] = useState<ChildBucket[]>([]);
+  const [count, setCount] = useState<1 | 2 | 3 | null>(null);
+  const born = on.filter((c) => c !== "pregnant").length;
+  const min = Math.min(3, born);
+  const ready = on.length > 0 && (born === 0 || (count !== null && count >= min));
+  const toggle = (c: ChildBucket) => {
+    const next = on.includes(c) ? on.filter((k) => k !== c) : [...on, c];
+    setOn(next);
+    const b = next.filter((k) => k !== "pregnant").length;
+    if (b === 0) setCount(null);
+    else if (count !== null && count < Math.min(3, b)) setCount(Math.min(3, b) as 1 | 2 | 3);
+  };
+  return (
+    <>
+      <h1 className="h2 gq-q" id="gq-h" tabIndex={-1} ref={headRef}>
+        임신 중이거나 함께 사는 자녀가 있나요?
+      </h1>
+      <p className="small muted">해당하는 것을 모두 골라 주세요. 자녀가 여럿이면 나이대를 모두 골라요.</p>
+      <div className="opts gq-checks" role="group" aria-label="임신·자녀 나이">
+        {CHILD_BUCKETS.map((c) => (
+          <label className="opt" key={c}>
+            <input type="checkbox" checked={on.includes(c)} disabled={busy} onChange={() => toggle(c)} data-testid={`gq-child-${c}`} />
+            <span>{c === "pregnant" ? "임신 중 (뱃속 아기)" : CHILD_LABEL[c]}</span>
+          </label>
+        ))}
+      </div>
+      {born > 0 && (
+        <div className="gq-count" role="group" aria-labelledby="gq-count-h">
+          <p className="body" id="gq-count-h" style={{ margin: "1rem 0 0.5rem", fontWeight: 700 }}>
+            태어난 자녀는 모두 몇 명인가요?
+          </p>
+          <div className="seg">
+            {COUNTS.map((c) => (
+              <button
+                type="button"
+                key={c.n}
+                className={`gq-opt${count === c.n ? " on" : ""}`}
+                aria-pressed={count === c.n}
+                disabled={busy || c.n < min}
+                onClick={() => setCount(c.n)}
+                data-testid={`gq-child-count-${c.n}`}
+              >
+                {c.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+      <div className="btn-row" style={{ marginTop: "1.25rem" }}>
+        <button
+          type="button"
+          className="btn btn-primary"
+          disabled={busy || !ready}
+          onClick={() => {
+            const picked = CHILD_BUCKETS.filter((c) => on.includes(c)).map((c) => CHILD_LABEL[c]).join(", ");
+            onAnswer(childrenApply(sit, on, born ? count : 0), born && count ? `${picked} · 자녀 ${COUNTS[count - 1].label}` : picked);
+          }}
+          data-testid="gq-child-ok"
+        >
+          고른 것으로 다음
+        </button>
+        <button type="button" className="btn btn-ghost" disabled={busy} onClick={() => onAnswer(childrenApply(sit, [], 0), "자녀 없음")} data-testid="gq-child-none">
+          자녀 없음
+        </button>
+        <button type="button" className="btn btn-ghost" disabled={busy} onClick={() => onAnswer(null, "잘 모르겠어요")} data-testid="gq-a-unknown">
+          잘 모르겠어요
+        </button>
+      </div>
+    </>
   );
 }

@@ -6,7 +6,7 @@
  * 답은 이 기기 안에서만 쓰고 주소에는 싣지 않는다.
  */
 import type { Program } from "../data/types";
-import { AGE_LABEL, EMPTY_PROFILE, INCOME_BANDS, medianWon } from "../engine/profile";
+import { AGE_LABEL, CHILD_BUCKETS, EMPTY_PROFILE, INCOME_BANDS, medianWon, type ChildBucket } from "../engine/profile";
 import type { FindMode } from "./mode";
 import {
   DIMS, DIM_BY_ID, EMPTY_EXTRAS, answersFor, buildView, classifyBase, dimAvailable, scoreV2,
@@ -129,6 +129,16 @@ export function nextQuestion(st: FlowStep, s: Situation, asked: readonly DimId[]
   // 소득 보기는 가구원 수에 맞춘 금액이라, 가구원 수를 모르면 그것부터
   if (best.id === "income" && s.profile.householdSize === "unknown" && !asked.includes("alone")) return { id: "alone", gain: best.gain };
   return best;
+}
+
+/**
+ * 자녀 질문 (2026-10-16 회의): 한 화면에서 임신 여부 + 자녀 나이 모두 고르기 + 자녀 수.
+ * 결과 화면의 자녀 질문(가장 어린 자녀 하나)으로는 '아이 1명 + 임신 중'을 함께 답할 수 없었다.
+ * count = 태어난 자녀 수(0·1·2·3=3명 이상) — 3명 이상이면 다자녀, 2명은 사업마다 달라 모름 (v2 inferExtras 그대로)
+ */
+export function childrenApply(s: Situation, buckets: readonly ChildBucket[], count: 0 | 1 | 2 | 3 | null): Situation {
+  const children = CHILD_BUCKETS.filter((c) => buckets.includes(c));
+  return { ...s, profile: { ...s.profile, children }, x: { ...s.x, childCount: count } };
 }
 
 export interface RarePick {
