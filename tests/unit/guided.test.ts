@@ -1,0 +1,133 @@
+/** 질문 따라 찾기 (2026-10-16): 위치 확인 → 정해지는 혜택이 많은 질문 5개 → 드문 사항 한 번에 고르기 */
+import { existsSync, readFileSync } from "node:fs";
+import { describe, expect, it } from "vitest";
+import {
+  FLOW_LIMIT, RARE_DIMS_FLOW, blankSituation, flowAnswers, flowStep, nextQuestion, rareApply, rarePicks, type FlowStep,
+} from "@/lib/client/guided";
+import { DIM_BY_ID, buildView, scoreV2, type DimId, type Situation } from "@/lib/client/v2";
+import { refineProgram } from "@/lib/data/refine";
+import { medianWon } from "@/lib/engine/profile";
+import type { Program } from "@/lib/data/types";
+
+const load = (f: string): Program[] => (existsSync(f) ? JSON.parse(readFileSync(f, "utf8")).programs : []);
+const cache = new Map<string, Program[]>();
+const progsFor = (sido: string, sigungu: string) => {
+  const k = `${sido}/${sigungu}`;
+  if (!cache.has(k)) cache.set(k, [...load(`public/bundles/v1/sigungu/${sigungu}.json`), ...load(`public/bundles/v1/sido/${sido}.json`), ...load("public/bundles/v1/national.json")].map(refineProgram));
+  return cache.get(k)!;
+};
+const SUWON = { sido: "41000", sigungu: "41110" };
+const answer = (s: Situation, id: DimId, key: string) => {
+  const a = flowAnswers(DIM_BY_ID[id], s).find((x) => x.key === key);
+  if (!a) throw new Error(`${id}:${key} 보기 없음`);
+  return a.apply(s);
+};
+
+describe("다음 질문 고르기", () => {
+  it("위치만 아는 본인 찾기 → 첫 질문은 나이", () => {
+    const s = blankSituation(SUWON.sido, SUWON.sigungu, "self");
+    const st = flowStep(progsFor(SUWON.sido, SUWON.sigungu), s);
+    expect(nextQuestion(st, s, [])?.id).toBe("age");
+  });
+
+  it("보훈·다문화는 하나씩 묻지 않는다 (마지막 '해당하는 것 모두 고르기'로)", () => {
+    let s = blankSituation(SUWON.sido, SUWON.sigungu, "self");
+    const asked: DimId[] = [];
+    const progs = progsFor(SUWON.sido, SUWON.sigungu);
+    for (let i = 0; i < 10; i++) {
+      const q = nextQuestion(flowStep(progs, s), s, asked);
+      if (!q) break;
+      expect(RARE_DIMS_FLOW.has(q.id)).toBe(false);
+      asked.push(q.id);
+      s = flowAnswers(DIM_BY_ID[q.id], s)[0].apply(s);
+    }
+    expect(asked.length).toBeGreaterThanOrEqual(FLOW_LIMIT);
+  });
+
+  it("소득은 가구원 수를 안 다음에만 — 모르면 가구원 수를 먼저 묻는다", () => {
+    let s = blankSituation(SUWON.sido, SUWON.sigungu, "self");
+    s = answer(s, "age", "35-39");
+    const progs = progsFor(SUWON.sido, SUWON.sigungu);
+    const asked: DimId[] = ["age"];
+    for (let i = 0; i < 6; i++) {
+      const q = nextQuestion(flowStep(progs, s), s, asked);
+      if (!q) break;
+      if (q.id === "income") expect(s.profile.householdSize).not.toBe("unknown");
+      asked.push(q.id);
+      s = flowAnswers(DIM_BY_ID[q.id], s)[0].apply(s);
+    }
+    expect(asked).toContain("alone");
+    expect(asked.indexOf("alone")).toBeLessThan(asked.indexOf("income") === -1 ? 99 : asked.indexOf("income"));
+  });
+});
+
+describe("질문 보기", () => {
+  it("본인 찾기 나이에는 '18세 이하'가 있고, 부모님 찾기에는 없다", () => {
+    const self = flowAnswers(DIM_BY_ID.age, blankSituation(SUWON.sido, SUWON.sigungu, "self")).map((a) => a.key);
+    const parent = flowAnswers(DIM_BY_ID.age, blankSituation(SUWON.sido, SUWON.sigungu, "parent")).map((a) => a.key);
+    expect(self[0]).toBe("0-18");
+    expect(parent).not.toContain("0-18");
+    const teen = answer(blankSituation(SUWON.sido, SUWON.sigungu, "self"), "age", "0-18");
+    expect(teen.profile.age).toBe("0-18");
+  });
+
+  it("소득 보기는 가구원 수에 맞춘 원문 기준 중위소득 금액 (4인 60% = medianWon(60, 4))", () => {
+    let s = blankSituation(SUWON.sido, SUWON.sigungu, "self");
+    s = answer(s, "alone", "4");
+    const opts = flowAnswers(DIM_BY_ID.income, s);
+    const b60 = opts.find((a) => a.key === "60")!;
+    expect(b60.label).toContain(`${Math.floor(medianWon(60, 4) / 10000).toLocaleString("ko-KR")}만원`);
+    expect(b60.apply(s).profile.income).toBe("60");
+    expect(opts.map((a) => a.key)).toEqual(["32", "40", "48", "50", "60", "100", "120", "150", "200", "200+"]);
+  });
+});
+
+describe("드문 사항 한 번에 고르기", () => {
+  it("'해당 없음' → 보인 항목 모두 아니요", () => {
+    const s = answer(blankSituation(SUWON.sido, SUWON.sigungu, "self"), "age", "35-39");
+    const picks = rarePicks(s);
+    expect(picks.map((p) => p.key)).toEqual(expect.arrayContaining(["veteran", "multicultural", "disability"]));
+    const r = rareApply(s, []);
+    expect(r.x.traits.veteran).toBe(false);
+    expect(r.x.traits.multicultural).toBe(false);
+    expect(r.profile.disability).toBe("none");
+  });
+  it("고른 것만 예, 나머지는 아니요", () => {
+    const s = answer(blankSituation(SUWON.sido, SUWON.sigungu, "self"), "age", "35-39");
+    const r = rareApply(s, ["veteran"]);
+    expect(r.x.traits.veteran).toBe(true);
+    expect(r.x.traits.multicultural).toBe(false);
+  });
+  it("자녀 없다고 답한 본인에게는 한부모를 보이지 않는다", () => {
+    let s = answer(blankSituation(SUWON.sido, SUWON.sigungu, "self"), "age", "35-39");
+    s = answer(s, "children", "none");
+    expect(rarePicks(s).map((p) => p.key)).not.toContain("singleParent");
+  });
+});
+
+describe("소거해서 계산한 결과 = 처음부터 전부 계산한 결과", () => {
+  const PATHS: { mode: "self" | "parent"; region: { sido: string; sigungu: string }; answers: [DimId, string][] }[] = [
+    { mode: "self", region: SUWON, answers: [["age", "35-39"], ["alone", "yes"], ["income", "100"], ["children", "none"], ["activity", "job_seeking"], ["disability", "none"]] },
+    { mode: "self", region: SUWON, answers: [["age", "40-49"], ["children", "6-12"], ["alone", "4"], ["income", "60"], ["activity", "employed"]] },
+    { mode: "self", region: { sido: "41000", sigungu: "41270" }, answers: [["age", "0-18"], ["alone", "3"], ["income", "50"], ["activity", "none"]] },
+    { mode: "parent", region: { sido: "41000", sigungu: "41190" }, answers: [["age", "75-79"], ["alone", "yes"], ["income", "32"], ["disability", "none"], ["ltcGrade", "no"], ["care", "yes"]] },
+    { mode: "parent", region: { sido: "11000", sigungu: "11215" }, answers: [["age", "65-69"], ["alone", "2"], ["income", "100"], ["basicPension", "yes"]] },
+  ];
+  for (const [i, path] of PATHS.entries()) {
+    it(`경로 ${i + 1} (${path.mode} ${path.region.sigungu})`, () => {
+      const progs = progsFor(path.region.sido, path.region.sigungu);
+      let s = blankSituation(path.region.sido, path.region.sigungu, path.mode);
+      let st: FlowStep = flowStep(progs, s);
+      for (const [id, key] of path.answers) {
+        s = answer(s, id, key);
+        st = flowStep(st.pool, s, st);
+        const full = buildView(scoreV2(progs, s), s, 0);
+        const keys = (gs: { s: { group: string } }[][]) => gs.map((g) => g[0].s.group).sort();
+        expect(keys(st.view.fit)).toEqual(keys(full.fit));
+        expect(keys(st.view.ask)).toEqual(keys(full.ask));
+        expect(keys(st.view.office)).toEqual(keys(full.office));
+        expect(st.counts.no).toBe(full.no.length);
+      }
+    });
+  }
+});

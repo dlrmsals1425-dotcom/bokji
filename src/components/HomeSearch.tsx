@@ -30,9 +30,9 @@ export function HomeSearch() {
       }}
     >
       <label htmlFor="home-q" className="sr-only">
-        서비스 이름이나 상황으로 찾기
+        혜택 이름으로 찾기
       </label>
-      <input id="home-q" name="q" type="search" placeholder="예: 기초연금, 수원 사는 59년생 부모님" autoComplete="off" />
+      <input id="home-q" name="q" type="search" placeholder="예: 기초연금, 장기요양, 노인맞춤돌봄" autoComplete="off" />
       <button type="submit" aria-label="검색">
         <Icon name="search" size={22} strokeWidth={2.2} />
       </button>

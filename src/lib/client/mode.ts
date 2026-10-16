@@ -45,6 +45,29 @@ export const MODE_ENTRY = {
   },
 } as const;
 
+/**
+ * 홈의 찾는 방법 두 갈래 (2026-10-16). '누구를 위해'(나/부모님)는 각 방법 안에서 정한다:
+ * 말로 찾기는 문장에서('어머니', '부모님'), 질문 따라 찾기는 첫 질문에서.
+ */
+export const METHOD_ENTRY = {
+  talk: {
+    title: "말로 찾기",
+    desc: "상황을 한두 문장으로 적으면 알아서 채워요. 나·부모님 모두",
+    example: "예: 수원에 사시는 75세 어머니, 혼자 사세요",
+    meta: "약 1분 · 더 답하고 싶으면 아래 질문까지",
+    href: "/situation",
+    testId: "start-talk",
+  },
+  guided: {
+    title: "질문 따라 찾기",
+    desc: "한 화면에 한 질문, 버튼만 누르면 돼요. 사는 곳은 현재 위치로 확인해요",
+    example: "누구의 복지를 찾으세요? 나 / 부모님",
+    meta: "질문 5개 안팎 · 소득 금액 몰라도 구간으로",
+    href: "/ask",
+    testId: "start-guided",
+  },
+} as const;
+
 /** 상황 입력 화면 (기본: '상황 먼저' 한 화면 입력) */
 export function checkPath(mode: FindMode): string {
   return mode === "parent" ? "/situation?for=parent" : "/situation?for=self";

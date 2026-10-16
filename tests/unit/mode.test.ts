@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
-  MODE_ENTRY, checkPath, isParentMode, parseFindMode, resultsCopy, resultsPath, withV1, wizardCopy,
+  METHOD_ENTRY, MODE_ENTRY, checkPath, isParentMode, parseFindMode, resultsCopy, resultsPath, withV1, wizardCopy,
 } from "@/lib/client/mode";
 import { PRESETS } from "@/lib/client/presets";
 
@@ -42,6 +42,9 @@ describe("찾기 모드 (본인 / 부모님)", () => {
   it("홈 CTA와 parent-care 프리셋", () => {
     expect(MODE_ENTRY.parent.href).toBe("/situation?for=parent");
     expect(MODE_ENTRY.self.href).toBe("/situation?for=self");
+    // 홈 두 갈래 (2026-10-16): 누구를 위해는 각 방법 안에서 — 주소에 입력을 싣지 않는다
+    expect(METHOD_ENTRY.talk.href).toBe("/situation");
+    expect(METHOD_ENTRY.guided.href).toBe("/ask");
     expect(isParentMode("parent")).toBe(true);
     const pc = PRESETS.find((p) => p.id === "parent-care");
     expect(pc?.mode).toBe("parent");
