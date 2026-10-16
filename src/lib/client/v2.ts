@@ -11,7 +11,7 @@ import {
 import type { Cond, EvalOptions, Evaluation, Leaf, Reason } from "../engine/types";
 import type { Program } from "../data/types";
 import { closedSince } from "./period";
-import { autoLike, familyKey, groupVariants, hiddenByDefault, scoreAll, type Filters, type Group, type Scored } from "./results";
+import { SAME_PROGRAM_KEYS, autoLike, familyKey, groupVariants, hiddenByDefault, scoreAll, type Filters, type Group, type Scored } from "./results";
 import type { FindMode } from "./mode";
 import { TOPICS, programTopics, type TopicId } from "./topics";
 
@@ -913,6 +913,9 @@ export function classifyBase(p0: Program, s: Situation): BaseResult {
   // (QA 5차 검증 N2) 학교에 다니지 않는다고 했으면: 재학생 대상(무상교육·교복·입학준비금 등)은 맞지 않음 (교육급여처럼 재산 조사 제도도 재학생 대상이라 먼저 거름), 학교 밖·학업 중단 조건은 말한 처지와 같음
   const outOfSchool = !!s.x.interests?.includes("out_of_school");
   if (outOfSchool && IN_SCHOOL_ONLY.test(p.name)) return { base: "no", ...r, why: IN_SCHOOL_NO_WHY };
+  // (2026-10-16) 입양·가정위탁·학대피해아동 보호 가정, 보호가 끝난 자립준비청년 대상 — 일반 가정에는 그 조건을 분명히 (빼지 않음 — 해당하면 받을 수 있음)
+  const prot = protectionWhy(p);
+  if (prot) return { base: "open", ...r, why: prot };
   if (notForPersons(p)) return { base: "open", ...r, why: NOT_FOR_PERSON_WHY };
   const meal = mealWhy(p, s);
   if (meal) return { base: "open", ...r, why: meal };
@@ -944,6 +947,28 @@ export function classifyBase(p0: Program, s: Situation): BaseResult {
   const tri = evaluateCond(p.rule.logic, profile, opts).tri;
   if (tri === "T" && gs !== "unknown") return { base: p.rule.review === "auto" ? "autoFit" : "fit", ...r };
   return { base: "open", ...r };
+}
+
+/**
+ * (2026-10-16 소유자: '아동용품구입비 지원 — 위기아동 가정보호 및 전문가정위탁…'이 무슨 사업인지, 내가 해당되는지 안 보임)
+ * 입양·가정위탁·학대피해아동 보호처럼 아이를 맡아 보호하는 가정, 보호가 끝난 자립준비청년 대상 사업.
+ * 간편 입력으로 묻지 않는 처지라 '신청할 때 확인'에 두되, 이유를 그 조건으로 분명히 적는다 (복지로 생애주기 태그만 보여 주던 문제).
+ * 이름 + 지원대상 첫 줄만 보고, 출산·출생 가구나 수급·저소득 등 다른 대상과 함께 적힌 것은 빼다 (첫만남이용권 '출생·입양', 디딤씨앗통장).
+ */
+const PROTECT_FAMILY = /가정\s*위탁|위탁\s*(?:가정|아동|부모|보호|양육)|입양|학대\s*피해|보호\s*대상\s*아동|위기\s*아동|소년\s*소녀\s*가정|전문\s*아동\s*보호/;
+const CARE_LEAVER = /자립\s*준비\s*청년|보호\s*종료/;
+/** 다른 대상과 함께 적혔거나(출생·입양, 수급·저소득) 아이 보호 가정이 아닌 것 (유기동물 입양, 학대피해 노인, 가정폭력, 다자녀 '입양아 포함') */
+const PROTECT_OTHER = /출산|출생|임신|임산|산모|신생아|수급|차상위|저소득|한부모|다자녀|셋째|동물|반려|노인|가정\s*폭력/;
+/** 이름에 없고 대상 첫 줄에만 있을 때: 여러 대상 중 하나로 적힌 것 ('자녀 또는 위탁가정', '…, 자립준비청년 등', '장애인, 노인, 가정위탁아동') */
+const PROTECT_LISTED = /또는|포함|장애인|구직|미혼|등\s|등$|,[^,\n]*,/;
+export function protectionWhy(p: Program): string | null {
+  const first = targetFirst(p).slice(0, 220);
+  const text = `${p.name}\n${first}`;
+  if (PROTECT_OTHER.test(text)) return null;
+  const inName = (re: RegExp) => re.test(p.name) || (re.test(first) && !PROTECT_LISTED.test(first));
+  if (inName(CARE_LEAVER)) return "아동복지시설·가정위탁 보호가 끝난 자립준비청년(보호종료아동) 대상이에요 — 해당하면 신청할 때 확인";
+  if (inName(PROTECT_FAMILY)) return "입양·가정위탁·학대피해아동 보호처럼 아이를 맡아 보호하는 가정 대상이에요 — 해당하지 않으면 신청 대상이 아니에요";
+  return null;
 }
 
 /**
@@ -1292,6 +1317,7 @@ export interface V2View {
 }
 
 const ORDER: Bucket[] = ["fit", "ask", "office", "no"];
+const SAME_ORDER: Bucket[] = ["fit", "office", "ask", "no"];
 
 /** 판정·분류·묶음. 같은 사업의 지역 변형은 가장 좋은 분류 하나로 */
 /**
@@ -1323,12 +1349,16 @@ export function buildView(scored: Scored[], sit: Situation, maxQuestions = 3, no
   const items = scored.map((x) => classify(x, sit));
   const seen = new Set<string>();
   const out: Record<Bucket, V2Item[][]> = { fit: [], ask: [], office: [], no: [] };
+  // 출처마다 이름이 다른 같은 제도(SAME_PROGRAM_KEYS)는 판정이 갈리면 조건이 이미 맞은 쪽('신청할 때 확인')을
+  // '답하면 정해져요'보다 앞에 둔다 (2026-10-16: 복지로 '건강보험 임신출산 진료비'는 맞았는데 정부24 이름이 성별·나이를 물어 뒤로 밀림)
+  const sameAt = new Map<string, Bucket>();
+  for (const b of SAME_ORDER) for (const i of items) if (i.bucket === b && SAME_PROGRAM_KEYS.has(i.s.group) && !sameAt.has(i.s.group)) sameAt.set(i.s.group, b);
   for (const b of ORDER) {
     const list = items.filter((i) => i.bucket === b);
     const groups = groupVariants(list.map((i) => i.s));
     const byScored = new Map(list.map((i) => [i.s, i]));
     for (const g of groups) {
-      if (seen.has(g.key)) continue;
+      if (seen.has(g.key) || (sameAt.has(g.key) && sameAt.get(g.key) !== b)) continue;
       seen.add(g.key);
       out[b].push([g.lead, ...g.variants].map((x) => byScored.get(x)!));
     }
