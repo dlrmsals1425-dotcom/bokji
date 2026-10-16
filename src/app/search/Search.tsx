@@ -195,12 +195,14 @@ export function Search() {
           <button
             type="button"
             className="btn btn-ghost"
+            title="검색어와 고른 조건을 지워요. 시·도·시·군·구는 그대로 둬요"
             onClick={() => {
               setInput("");
               apply("", EMPTY_SELECTION);
             }}
+            data-testid="search-reset"
           >
-            초기화
+            검색 조건 초기화
           </button>
           <button type="submit" className="btn btn-primary">
             <Icon name="search" size={18} /> 검색
