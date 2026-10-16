@@ -4,6 +4,7 @@ import path from "node:path";
 import { createHash } from "node:crypto";
 import type { Program } from "../src/lib/data/types";
 import type { ApplicationForm, FormLink, FormsRegion, FormsCoverage, ProgramFormEntry, FormStatus } from "../src/lib/data/forms";
+import { normalizeCensus, censusLinkConflict } from "../src/lib/data/forms";
 import { classifyFormRole, findFormCandidates } from "../src/lib/data/formMatching";
 import { applicationRoute, formStatus, validateFormLink, externalFormUrl, officialFormUrl } from "../src/lib/data/formPublication";
 import { detailBucket } from "../src/lib/data/bucket";
@@ -76,6 +77,11 @@ async function main() {
     forms[raw.id] = { ...forms[raw.id], ...raw };
   }
   if (portalScan?.status === "complete" && (portalScan.checkedPrograms !== programs.size || programs.size !== Object.keys(portalMatches?.programs || {}).length)) throw new Error("Incomplete program-by-program portal search");
+  // 전수 조사 결과는 아직 없을 수 있다. 있으면 모든 사업을 정확히 한 번씩 덮어야 하고,
+  // 모자라거나 남는 입력은 조용히 버리지 않고 빌드를 세운다.
+  const auditPath = path.join(input, "source-audit.json");
+  const census = await readFile(auditPath, "utf8").then(text => normalizeCensus(JSON.parse(text), programs.keys()))
+    .catch((error: NodeJS.ErrnoException) => { if (error.code === "ENOENT") return null; throw error; });
   const links = new Map<string, FormLink[]>();
   const published = new Set<string>();
   for (const review of [...reviews.rows, ...(portalReviews?.rows || [])]) {
@@ -142,13 +148,17 @@ async function main() {
       .filter(item => forms[item.formId] && !approved.some(link => link.formId === item.formId));
     const applyUrl = applicationRoute(program);
     const status = formStatus(approved, candidates.map(item => item.formId), applyUrl);
+    const investigation = census?.programs.get(program.id);
+    const conflict = investigation && censusLinkConflict(program.id, investigation, approved.length > 0);
+    if (conflict) throw new Error("source-audit.json: " + conflict);
     const entry: ProgramFormEntry = { id: program.id, name: program.name, areaKey, status, links: approved,
       candidateFormIds: candidates.map(item => item.formId), ...(applyUrl ? { applyUrl } : {}),
       ...(program.applyType ? { applyType: program.applyType } : {}),
       ...((portalReviews?.programNotes?.[program.id] || reviews.programNotes?.[program.id]) ? { note: portalReviews?.programNotes?.[program.id] || reviews.programNotes?.[program.id] } : {}),
       ...(portalScan ? { portalSearch: { checkedAt: portalEntry?.checkedAt || portalScan.checkedAt,
         outcome: portalScan.status !== "complete" || !portalEntry ? "incomplete" as const : approved.length ? "linked" as const : candidates.length ? "candidate" as const : "not_found" as const,
-        candidateCount: candidates.length, method: "full-index" as const } } : {}) };
+        candidateCount: candidates.length, method: "full-index" as const } } : {}),
+      ...(investigation ? { investigation } : {}) };
     entries.set(areaKey, [...(entries.get(areaKey) || []), entry]);
     const region = regions.get(areaKey)!;
     region.total++; region.counts[status]++; globalCounts[status]++;
@@ -163,8 +173,10 @@ async function main() {
   const coverage: FormsCoverage = { schema: 1, generatedAt, totalPrograms: programs.size, counts: globalCounts,
     totalForms: Object.keys(forms).length, publishedForms: published.size,
     excludedForms: Object.values(forms).filter(form => ["deleted", "administrative", "reference"].includes(form.role)).length,
-    sourceNote: portalScan ? "국가법령정보센터의 법령·자치법규·행정규칙 별표·서식 목록을 전국 사업과 대조했습니다. 연결 확인 자료와 적용 검토 중인 후보를 구분합니다. 기관의 별도 사업 공고에만 있는 서식은 이 목록에 없을 수 있습니다." : "전국 사업 목록의 연결 상태를 집계합니다. 현재 확보한 파일은 고양시 자치법규 서식이며, 원문을 대조한 일부 사업부터 제공하고 있습니다. 전국 신청서를 모두 확보한 상태는 아닙니다.",
-    regions: regionList, ...(portalScan ? { portalScan } : {}) };
+    sourceNote: census ? `수록된 사업 자료 ${programs.size.toLocaleString("ko-KR")}건을 한 건씩 조사한 결과입니다(혜택 가짓수가 아니라 자료 건수입니다). 목록을 맞춰 본 것과 법령 본문·기관 안내 페이지를 실제로 열어 읽은 것은 구분해 적고, 열지 못한 자료도 건수로 남깁니다. 아직 찾지 못했다는 것이 신청서가 없다는 뜻은 아닙니다.`
+      : portalScan ? "국가법령정보센터의 법령·자치법규·행정규칙 별표·서식 목록을 전국 사업과 대조했습니다. 연결 확인 자료와 적용 검토 중인 후보를 구분합니다. 기관의 별도 사업 공고에만 있는 서식은 이 목록에 없을 수 있습니다." : "전국 사업 목록의 연결 상태를 집계합니다. 현재 확보한 파일은 고양시 자치법규 서식이며, 원문을 대조한 일부 사업부터 제공하고 있습니다. 전국 신청서를 모두 확보한 상태는 아닙니다.",
+    regions: regionList, ...(portalScan ? { portalScan } : {}),
+    ...(census ? { investigationSummary: { ...census.summary, checkedAt: census.checkedAt } } : {}) };
   await writeJSON(path.join(output, "v1/coverage.json"), coverage);
   await writeJSON(path.join(output, "v1/catalog.json"), { schema: 1, generatedAt, forms });
   if (portalScan) {
@@ -181,7 +193,8 @@ async function main() {
     }
   }
   await writeJSON(path.join(input, "review-queue.json"), { generatedAt, candidates: reviewQueue });
-  console.log(JSON.stringify({ totalPrograms: programs.size, areas: regions.size, counts: globalCounts, publishedForms: published.size, pdfPreviews: Object.values(forms).filter(form => form.file?.pdf).length, excludedForms: coverage.excludedForms, candidateLinks: reviewQueue.length }, null, 2));
+  console.log(JSON.stringify({ totalPrograms: programs.size, areas: regions.size, counts: globalCounts, publishedForms: published.size, pdfPreviews: Object.values(forms).filter(form => form.file?.pdf).length, excludedForms: coverage.excludedForms, candidateLinks: reviewQueue.length,
+    census: census ? { checkedAt: census.checkedAt, counts: census.summary.counts, lawBodiesRead: census.summary.lawBodiesRead, lawFailures: census.summary.lawFailures, pagesRead: census.summary.pagesRead, pageFailures: census.summary.pageFailures, officialAttachments: census.summary.officialAttachments } : "not supplied" }, null, 2));
 }
 
 main().catch(error => { console.error(error); process.exitCode = 1; });

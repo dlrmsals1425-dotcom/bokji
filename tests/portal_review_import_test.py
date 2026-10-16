@@ -65,6 +65,21 @@ class ReviewFileTest(unittest.TestCase):
         for name in names:self.assertIsNotNone(module.REVIEW_FILE.fullmatch(name))
 
 class BuildTest(unittest.TestCase):
+    def test_official_application_reference_requires_exact_source_and_verified_original(self):
+        p=program('g41280.p',scope='sigungu',region={'sido':'41000','sigungu':'41280'},laws=['고양시 지원 조례'],url='https://www.gov.kr/portal/rcvfvrSvc/dtlEx/EXACT')
+        r=row('law-9',[p['id']],sourceKind='law',scopeBasis='official-application-reference',
+              verificationStatus='verified',officialAttachmentMatched=True,sha256='a'*64,evidenceUrl=p['url'])
+        r['scopeReference']={'kind':'program-documents','referencedLawTitle':r['lawTitle'],'annexNumber':r['annexNumber'],
+                             'basis':'해당 사업 안내의 구비서류에서 특정한 별지 원문을 지정하는 내용을 정확히 대조한 근거입니다.'}
+        out=self.build({p['id']:p},[r])
+        self.assertEqual(out['rows'][0]['scopeReference'],r['scopeReference'])
+        with self.assertRaises(ValueError):self.build({p['id']:p},[{**r,'evidenceUrl':p['url']+'OTHER'}])
+        with self.assertRaises(ValueError):self.build({p['id']:p},[{**r,'sha256':''}])
+        r['evidenceUrl']='https://www.law.go.kr/ordinInfoP.do?ordinSeq=88'
+        r['scopeReference'].update(kind='cited-local-law',sourceLawTitle='고양시 지원 조례',sourceLawId='88',article='제6조')
+        self.assertEqual(self.build({p['id']:p},[r])['rows'][0]['scopeBasis'],'official-application-reference')
+        with self.assertRaises(ValueError):self.build({p['id']:{**p,'laws':[]}},[r])
+
     def build(self,programs,*rounds):
         temp=tempfile.TemporaryDirectory();self.addCleanup(temp.cleanup)
         folder=Path(temp.name);files=[]
@@ -129,6 +144,16 @@ class BuildTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.build({'p1':program('p1')},[row('rule-9',['p1'],formTitle='[별표 1] 지원 기준',role='supporting',
                 roleBasis='검토 기록이 있어도 별표를 신청서로 제공하지 않는다.',roleEvidenceUrl=EVIDENCE,roleCheckedAt='2026-10-16')])
+    def test_only_identified_full_body_exceptions_can_publish_selected_applicant_forms(self):
+        audited=row('ordin-20002811',['p1'],sourceKind='ordin',lawId='1408662',formTitle='[별표 1] 장애인가정 출산지원금 지급 신청서',
+            role='application',roleBasis='현행 조례 제5조제2항 및 실제 첨부 원본 전체 본문에서 신청인 작성 신청서임을 대조했다.',
+            roleEvidenceUrl='https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1408662',roleCheckedAt='2026-10-16',
+            verificationStatus='verified',officialAttachmentMatched=True,sha256='a'*64,
+            reviewedParts=[{'number':'별표 1','title':'출산지원금 지급 신청서','use':'main','author':'신청인'}])
+        self.assertEqual(self.build({'p1':program('p1')},[audited])['forms'][audited['formId']]['role'],'application')
+        for patch in ({'sha256':''},{'reviewedParts':[]},{'lawId':'999'},{'officialAttachmentMatched':False},{'verificationStatus':'candidate'}):
+            with self.subTest(patch=patch),self.assertRaises(ValueError):self.build({'p1':program('p1')},[{**audited,**patch}])
+        with self.assertRaises(ValueError):self.build({'p1':program('p1')},[{**audited,'formId':'ordin-999','annexId':'999'}])
     def test_audited_role_cannot_contradict_an_identified_title(self):
         with self.assertRaises(ValueError):
             self.build({'p1':program('p1')},[row('rule-1',['p1'],role='supporting',roleBasis='신청서가 아니라고 보았다.',

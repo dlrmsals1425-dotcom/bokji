@@ -7,6 +7,20 @@ const form: ApplicationForm = { id: "ordin-1", title: "지원신청서", role: "
 const link: FormLink = { formId: "ordin-1", use: "main", checkedAt: "2026-10-16", evidenceUrl: form.lawUrl, evidenceNote: "제5조에 따른 개인 신청서로 대조했습니다." };
 
 describe("application document publication", () => {
+  it("accepts a source-reviewed national document only for the exact program or cited local delegation", () => {
+    const national={...form,id:"law-9",regionCode:"national",lawTitle:"의료급여법 시행규칙",annexNumber:"001400"};
+    const local={...program,laws:["고양시 지원 조례"],url:"https://www.gov.kr/portal/rcvfvrSvc/dtlEx/EXACT"};
+    const reviewed:FormLink={...link,formId:national.id,scopeBasis:"official-application-reference",evidenceUrl:local.url,
+      scopeReference:{kind:"program-documents",referencedLawTitle:national.lawTitle,annexNumber:"001400",basis:"공식 사업 안내의 구비서류에서 해당 법규의 별지 제14호를 정확히 지목하여 원문을 대조했습니다."}};
+    expect(()=>validateFormLink(local,national,reviewed)).not.toThrow();
+    expect(()=>validateFormLink(local,national,{...reviewed,evidenceUrl:local.url+"OTHER"})).toThrow(/jurisdiction/);
+    expect(()=>validateFormLink(local,national,{...reviewed,scopeReference:{...reviewed.scopeReference!,annexNumber:"001500"}})).toThrow(/jurisdiction/);
+    const delegated:FormLink={...reviewed,evidenceUrl:"https://www.law.go.kr/ordinInfoP.do?ordinSeq=88",
+      scopeReference:{...reviewed.scopeReference!,kind:"cited-local-law",sourceLawTitle:"고양시 지원 조례",sourceLawId:"88",article:"제6조"}};
+    expect(()=>validateFormLink(local,national,delegated)).not.toThrow();
+    expect(()=>validateFormLink({...local,laws:[]},national,delegated)).toThrow(/jurisdiction/);
+    expect(()=>validateFormLink(local,{...national,regionCode:"41110"},delegated)).toThrow(/jurisdiction/);
+  });
   it("requires exact geography and excludes registers, deleted and reference documents", () => {
     expect(() => validateFormLink(program, form, link)).not.toThrow();
     for (const role of ["deleted", "administrative", "reference"] as const) expect(() => validateFormLink(program, { ...form, role }, link)).toThrow();
@@ -35,6 +49,7 @@ describe("application document publication", () => {
     expect(applicationRoute({ applyUrl: "https://www.gov.kr/", applyType: "self" })).toBe("https://www.gov.kr/");
   });
   it("links cannot become executable URLs or arbitrary local downloads", () => {
+    expect(externalFormUrl("https://www.hwandonghae.gangwon.kr/hdh")).toBeNull();
     for (const value of ["javascript:alert(1)", "file:///secret", "https://user:password@example.com"]) expect(externalFormUrl(value)).toBeNull();
     expect(formAssetUrl("/forms/files/ordin-1-012345abcdef.pdf")).toBeTruthy();
     for (const value of ["//evil.test/x.pdf", "/forms/files/../private.hwp", "/forms/files/%2e%2e/private.pdf", "https://evil.test/x.pdf"]) expect(formAssetUrl(value)).toBeNull();
@@ -45,6 +60,11 @@ describe("application document publication", () => {
     expect(() => validateFormLink(implementing, provincial, link)).toThrow();
     expect(() => validateFormLink(implementing, provincial, { ...link, scopeBasis: "provincial-law-reference" })).not.toThrow();
     expect(() => validateFormLink({ ...implementing, laws: [] }, provincial, { ...link, scopeBasis: "provincial-law-reference" })).toThrow();
+  });
+  it("recognizes an explicitly cited national law before a slash and normalized Korean dot", () => {
+    const local={...program,laws:["의료요양 등 지역 돌봄의 통합지원에 관한 법률/고양시 통합지원 조례"]};
+    const national={...form,regionCode:"national",lawTitle:"의료ㆍ요양 등 지역 돌봄의 통합지원에 관한 법률 시행규칙"};
+    expect(()=>validateFormLink(local,national,{...link,scopeBasis:"national-law-reference"})).not.toThrow();
   });
   it("official source-only attachments cannot carry credentials or use another host", () => {
     expect(officialFormUrl("https://www.law.go.kr/LSW/flDownload.do?flSeq=123")).toBeTruthy();

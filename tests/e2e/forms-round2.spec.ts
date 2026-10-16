@@ -26,7 +26,7 @@ test("틀니와 임플란트 서식은 각 치료별 적용 조건을 보이고 
 test("자동 검색에서 놓쳤던 구리 신청서는 원문 대조 후 연결된 원본으로 보인다 @mobile", async ({ page }) => {
   await page.goto("/p/g41310.gov24-398000000114");
   const section = page.getByTestId("application-forms");
-  await expect(section.getByText("신청서 연결 확인", { exact: true })).toBeVisible();
+  await expect(section.getByText("신청 서류 연결 확인", { exact: true })).toBeVisible();
   await expect(section.getByRole("heading", { level: 4 }).first()).toContainText("장애인 휠체어 등 수리 신청서");
   await expect(section.getByRole("link", { name: /법령포털 원본 받기/ }).first()).toHaveAttribute("href", /law\.go\.kr\/LSW\/flDownload\.do/);
   await expect(section.getByTestId("forms-portal-search")).toContainText("원문과 대조해 연결했어요");

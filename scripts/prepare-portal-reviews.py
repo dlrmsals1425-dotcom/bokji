@@ -10,9 +10,11 @@ from another jurisdiction still applies to the program; it is checked against th
 program region and the law the program cites instead of being taken on trust, and
 nothing here invents one the audit did not claim. `role` with `roleBasis`,
 `roleEvidenceUrl` and `roleCheckedAt` may name a supporting form whose title
-cannot identify it; metadata is read only
-when the title says nothing, and administrative, deleted and reference forms stay
-out whether the title or the audit names them.
+cannot identify it. Deleted or agency-only forms remain excluded. A small list
+of separately inspected combined/unnamed attachments can expose the exact
+applicant-written parts only with full-body evidence, an original hash and usage
+conditions. An indirect national form reference must identify the cited local
+delegation or the exact program page, national law and annex number.
 """
 import importlib.util,json,re,sqlite3,sys
 from urllib.parse import urlsplit,parse_qsl
@@ -28,7 +30,10 @@ BLOCKED_ROLES=frozenset({'administrative','deleted','reference'})
 # 제목만으로 역할을 가릴 수 없어 원문을 따로 확인한 서식. 아래 role 메타데이터 규칙보다
 # 먼저 검토된 행이라 id로 남긴다. 새 서식은 메타데이터를 갖춰야 한다.
 AUDITED_SUPPORTING_FORMS=frozenset({'rule-3211497'})
-SCOPE_BASES=frozenset({'provincial-law-reference','national-law-reference'})
+# Explicitly inspected full-body exceptions, never general title-based promotion.
+AUDITED_APPLICATION_EXCEPTIONS={'ordin-20002811':'1408662','ordin-20761903':'2063661','ordin-19399661':'1898059',
+                                'ordin-17191599':'1650349','ordin-21753097':'2121739','ordin-21753099':'2121739'}
+SCOPE_BASES=frozenset({'provincial-law-reference','national-law-reference','official-application-reference'})
 def read(file):return json.loads(file.read_text(encoding='utf-8-sig'))
 def day(value):
     value=str(value)
@@ -61,7 +66,7 @@ def cites_form_law(program,form):
     if isinstance(laws,str):laws=[laws]
     if not isinstance(laws,list):return False
     for entry in laws:
-        for part in str(entry).split('||'):
+        for part in matcher.split_law_citations(entry):
             cited=matcher.normalize_law(part)
             if cited and (cited==target or target in matcher.law_variants(cited) or cited in family):return True
     return False
@@ -78,6 +83,21 @@ def resolve_role(record):
     form_id=record['formId'];declared=str(record.get('role') or '').strip()
     if declared in BLOCKED_ROLES:raise ValueError('Audited row marks a non-applicant form role: '+form_id)
     role=matcher.classify_role(record['formTitle'],'서식')
+    if form_id in AUDITED_APPLICATION_EXCEPTIONS and record.get('role')=='application':
+        parts=record.get('reviewedParts')
+        evidence=record.get('roleEvidenceUrl')
+        if (record.get('lawId')!=AUDITED_APPLICATION_EXCEPTIONS[form_id]
+            or record.get('sourceKind')!='ordin' or record.get('annexId')!=form_id.split('-')[1]
+            or record.get('verificationStatus')!='verified' or record.get('officialAttachmentMatched') is not True
+            or not re.fullmatch(r'[a-f0-9]{64}',str(record.get('sha256') or ''))
+            or not official_url(evidence) or len(str(record.get('roleBasis') or ''))<30
+            or not re.fullmatch(r'\d{4}-\d{2}-\d{2}',day(record.get('roleCheckedAt')))
+            or not isinstance(parts,list) or not parts
+            or not any(p.get('use')=='main' and re.search(r'신청|청구|신고|등록',str(p.get('title') or '')) for p in parts if isinstance(p,dict))
+            or not all(isinstance(p,dict) and all(p.get(k) for k in ('number','title','use','author')) for p in parts)
+            or (len(parts)>1 and not record.get('condition')) or role=='deleted'):
+            raise ValueError('Audited application exception lacks full-body evidence: '+form_id)
+        return 'application',{key:record[key] for key in ('role','roleBasis','roleEvidenceUrl','roleCheckedAt','sha256','reviewedParts')}
     if re.match(r'^\s*\[?\s*별표(?:\s|\d|\]|$)',record['formTitle']):
         raise ValueError('Reference annex cannot be imported as an applicant form: '+form_id)
     if role in BLOCKED_ROLES-{'reference'}:
@@ -100,6 +120,26 @@ def scope_basis(record,program,form):
         # 검토가 밝힌 경우에만 쓰고 여기서 넓히지 않는다.
         return 'provincial-law-reference' if same_province and cites_form_law(program,form) else None
     if declared not in SCOPE_BASES:raise ValueError('Unknown audited scope basis: '+declared+' ('+record['formId']+')')
+    if declared=='official-application-reference':
+        ref=record.get('scopeReference') or {}
+        if (not national_reference or record.get('verificationStatus')!='verified'
+            or record.get('officialAttachmentMatched') is not True
+            or not re.fullmatch(r'[a-f0-9]{64}',str(record.get('sha256') or ''))
+            or matcher.normalize_law(ref.get('referencedLawTitle'))!=matcher.normalize_law(form['lawTitle'])
+            or ref.get('annexNumber')!=form['annexNumber'] or len(str(ref.get('basis') or ''))<30):
+            raise ValueError('Official application reference lacks exact source evidence: '+record['formId'])
+        url=record.get('evidenceUrl')
+        if ref.get('kind')=='cited-local-law':
+            valid=(official_url(url) and dict(parse_qsl(urlsplit(url).query)).get('ordinSeq')==ref.get('sourceLawId')
+                   and bool(re.fullmatch(r'제\d+조(?:의\d+)?(?:제\d+항)?',str(ref.get('article') or '')))
+                   and cites_form_law(program,{'lawTitle':ref.get('sourceLawTitle')}))
+        elif ref.get('kind')=='program-documents':
+            sources=[program.get('url')]+[s.get('url') for s in program.get('sources',[]) if isinstance(s,dict)]
+            host=urlsplit(str(url or '')).hostname or ''
+            valid=url in sources and (host=='gov.kr' or host.endswith(('.go.kr','.gov.kr')))
+        else:valid=False
+        if not valid:raise ValueError('Official application reference does not belong to this program: '+record['formId'])
+        return declared
     supported=same_province if declared=='provincial-law-reference' else national_reference
     if not supported or not cites_form_law(program,form):
         raise ValueError('Audited scope basis does not match the program region and cited law: '+record['formId'])
@@ -124,6 +164,9 @@ def build(programs,files):
                 'regionCode':record.get('regionCode','national'),'regionLabel':record.get('regionLabel','전국 공통'),'effectiveDate':day(record['effectiveDate']),
                 'sourceUrl':record['sourceUrl'],'lawUrl':law_url,'fetchedAt':record['checkedAt'],'sourceKind':kind,'dateKind':record['dateKind'],
                 **({'officialPdfUrl':record['officialPdfUrl']} if record.get('officialPdfUrl') else {})}
+            if record.get('displayTitle'):
+                if not metadata:raise ValueError('Display title needs audited full-body role evidence: '+form_id)
+                forms[form_id]['displayTitle']=record['displayTitle']
             for program_id in record['programIds']:
                 program=programs.get(program_id)
                 if not program:raise ValueError('Unknown audited program: '+program_id)
@@ -131,6 +174,7 @@ def build(programs,files):
                 link['programIds']=[program_id]
                 basis=scope_basis(record,program,forms[form_id])
                 if basis:link['scopeBasis']=basis
+                if basis=='official-application-reference':link['scopeReference']=record['scopeReference']
                 if form_id=='law-17831955':link['condition']=record['condition']+' 의료인이 작성하는 서식으로, 본인이 임의 작성하지 않습니다.'
                 rows.append(link)
     keys=[(row['programIds'][0],row['formId']) for row in rows]

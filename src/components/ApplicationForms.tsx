@@ -4,14 +4,18 @@ import Link from "next/link";
 import type { Program } from "@/lib/data/types";
 import { lawPortalUrl, loadProgramForms, type LoadedProgramForms } from "@/lib/client/forms";
 import { externalFormUrl, formAssetUrl } from "@/lib/data/formPublication";
-import { FORM_STATUS_LABEL, type ApplicationForm } from "@/lib/data/forms";
+import { FORM_STATUS_LABEL, INVESTIGATION_LABEL, INVESTIGATION_NOTE, publicSourceUrl, type ApplicationForm } from "@/lib/data/forms";
 import styles from "./ApplicationForms.module.css";
 
 const SOURCE_LABEL = { ordin: "조례", law: "법령", rule: "행정규칙" } as const;
 const DATE_LABEL = { effective: "시행일", promulgated: "공포일", issued: "발령일" } as const;
 const FILE_TYPE = /\.(hwpx?|pdf|docx?|xlsx?|zip)(?:$|[?#])/i;
 const number = (value: number) => value.toLocaleString("ko-KR");
-const formTitle = (form: ApplicationForm) => form.title.replace(/^\[.*?\]\s*/, "").trim() || form.title;
+const formTitle = (form: ApplicationForm) => {
+  if (form.displayTitle) return form.displayTitle;
+  const shortened = form.title.replace(/^\[.*?\]\s*/, "").trim();
+  return shortened && shortened !== "외" ? shortened : form.title;
+};
 /** 근거와 날짜는 자료 그대로 — 공포일·발령일을 시행일로 적지 않는다. */
 function basisText(form: ApplicationForm) {
   const kind = SOURCE_LABEL[form.sourceKind ?? (form.regionCode === "national" ? "law" : "ordin")];
@@ -35,6 +39,12 @@ export function ApplicationForms({ program, parentMode = false }: { program: Pro
   const candidates = data?.candidateForms ?? [];
   // 받지 못한 후보가 있어도 '없음'으로 보이지 않게, 자료에 적힌 전체 건수를 함께 쓴다.
   const candidateCount = Math.max(portal?.candidateCount ?? 0, (data?.entry.candidateFormIds ?? []).length, candidates.length);
+  const census = data?.entry.investigation;
+  // 공식 안내 페이지의 첨부자료는 '찾은 자료'일 뿐 승인한 신청서가 아니다 — 목록을 따로 둔다.
+  const attachments = (census?.sourceLinks ?? []).filter(link => link.kind === "attachment" && publicSourceUrl(link.url));
+  const pages = (census?.sourceLinks ?? []).filter(link => link.kind === "official_page" && publicSourceUrl(link.url));
+  const hidden = (census?.sourceLinkTotal ?? 0) - (census?.sourceLinks.length ?? 0);
+  const hiddenNames = (census?.documentNameTotal ?? 0) - (census?.documentNames.length ?? 0);
   return (
     <div className={styles.panel} data-testid="application-forms" aria-labelledby="application-forms-title">
       <div className={styles.heading}>
@@ -46,6 +56,7 @@ export function ApplicationForms({ program, parentMode = false }: { program: Pro
       ) : data.entry.status === "available" ? (
         <>
           <p>아래는 원문과의 연결을 확인한 빈 서식이에요. 접수기관의 신청 안내도 함께 확인해 주세요.</p>
+          {!data.entry.links.some(link => link.use === "main") && <p className={styles.note}>현재 연결한 것은 함께 준비하거나 해당되는 경우에 내는 서류예요. 주신청서와 전체 구비서류는 공식 신청 안내에서 확인해 주세요.</p>}
           <ul className={styles.files}>
             {data.entry.links.map(link => {
               const form = data.forms.find(item => item.id === link.formId)!;
@@ -60,8 +71,8 @@ export function ApplicationForms({ program, parentMode = false }: { program: Pro
                 {link.condition && <p>{link.condition}</p>}
                 <div className={styles.actions}>
                   {preview && <a className="btn btn-primary" href={preview} target="_blank" rel="noopener noreferrer">서식 보기·인쇄 <span className="sr-only">(PDF, 새 창)</span></a>}
-                  {hwp && <a className={`btn ${pdf ? "btn-quiet" : "btn-primary"}`} href={hwp} download={form.title + ".hwp"}>한글 원본 받기 <span className="sr-only">(HWP)</span></a>}
-                  {original && <a className={`btn ${preview ? "btn-quiet" : "btn-primary"}`} href={original} target="_blank" rel="noopener noreferrer">법령포털 원본 받기{originalType ? ` (${originalType})` : ""}<span className="sr-only"> (새 창)</span></a>}
+                  {hwp && <a className={`btn ${pdf ? "btn-ghost" : "btn-primary"}`} href={hwp} download={form.title + ".hwp"}>한글 원본 받기 <span className="sr-only">(HWP)</span></a>}
+                  {original && <a className={`btn ${preview ? "btn-ghost" : "btn-primary"}`} href={original} target="_blank" rel="noopener noreferrer">법령포털 원본 받기{originalType ? ` (${originalType})` : ""}<span className="sr-only"> (새 창)</span></a>}
                 </div>
                 <p className={styles.dates}>{basisText(form)} · 연결 확인일 {link.checkedAt}</p>
                 <p className={styles.source}><a href={original ? lawPortalUrl(form.lawUrl) ?? original : externalFormUrl(form.sourceUrl)!} target="_blank" rel="noopener noreferrer">{original ? "근거 법령 원문" : "공식 서식 원본"}<span className="sr-only"> (새 창)</span></a>{externalFormUrl(link.evidenceUrl) && <> · <a href={externalFormUrl(link.evidenceUrl)!} target="_blank" rel="noopener noreferrer">신청 근거 확인<span className="sr-only"> (새 창)</span></a></>}</p>
@@ -72,17 +83,47 @@ export function ApplicationForms({ program, parentMode = false }: { program: Pro
         </>
       ) : (
         <div className={styles.empty}>
-          <p>{data.entry.status === "online" ? "자료에 안내된 온라인 신청 창구를 확인할 수 있어요." : data.entry.status === "review" ? "관련 서식의 적용 여부를 검토하고 있어요. 공식 신청 안내에서 필요한 서류를 확인해 주세요." : "아직 확보한 신청서가 없어요. 신청서가 필요 없다는 뜻은 아니에요."}</p>
+          <p>{attachments.length ? "공식 안내 페이지의 첨부자료를 아래에서 확인할 수 있어요. 이 사업에 사용할 신청서인지 확인이 필요해요." : data.entry.status === "online" ? "자료에 안내된 온라인 신청 창구를 확인할 수 있어요." : data.entry.status === "review" ? "관련 서식의 적용 여부를 검토하고 있어요. 공식 신청 안내에서 필요한 서류를 확인해 주세요." : "아직 연결을 확인한 신청서가 없어요. 신청서가 필요 없다는 뜻은 아니에요."}</p>
           {online && <a className="btn btn-primary" href={online} target="_blank" rel="noopener noreferrer">공식 신청 안내 열기<span className="sr-only"> (새 창)</span></a>}
           {!online && official && <a className="btn btn-quiet" href={official} target="_blank" rel="noopener noreferrer">공식 사업 안내 확인<span className="sr-only"> (새 창)</span></a>}
         </div>
       )}
       {portal && <p className={styles.portal} data-testid="forms-portal-search">{
-        portal.outcome === "not_found" ? `법령포털에 수록된 서식에서는 이 사업에 해당하는 신청서를 찾지 못했어요. 담당기관이 해마다 내는 공고에 서식이 따로 있을 수 있어요. (법령포털 확인일 ${portalDay})`
+        portal.outcome === "not_found" ? `법령포털 서식 목록을 사업명·근거 법규와 대조했지만 연결 후보를 찾지 못했어요. 모든 본문과 파일을 확인했다는 뜻은 아니며, 담당기관 공고에 서식이 따로 있을 수 있어요. (법령포털 확인일 ${portalDay})`
           : portal.outcome === "incomplete" ? `법령포털 서식을 아직 모두 확인하지 못했어요. 서식이 없다는 뜻은 아니에요. (법령포털 확인일 ${portalDay})`
             : portal.outcome === "candidate" ? `법령포털 서식에서 관련 서식 ${number(candidateCount)}개를 찾았고, 이 사업에 적용되는지 확인 중이에요. (법령포털 확인일 ${portalDay})`
               : `법령포털 서식 원문과 대조해 연결했어요. (법령포털 확인일 ${portalDay})`
       }</p>}
+      {census && <section className={styles.census} data-testid="forms-investigation" aria-labelledby="forms-investigation-title">
+        <h4 id="forms-investigation-title" className={styles.censusTitle}>지금까지 확인한 내용 · {INVESTIGATION_LABEL[census.state]}</h4>
+        <p>{INVESTIGATION_NOTE[census.state]}</p>
+        {!!attachments.length && <div className={styles.block} data-testid="forms-source-attachments">
+          <p className={styles.kind}>공식 안내 페이지에 올라온 자료</p>
+          <p className="small">담당기관이 이 사업 안내 페이지에 올려 둔 자료예요. 원래 제목 그대로 적었어요. 이 사업의 신청서가 맞는지, 다른 서류가 더 필요한지는 확인 중이라 연결을 확인한 신청서로는 올리지 않았어요.</p>
+          <ul className={styles.links}>
+            {attachments.map(link => <li key={link.url}><a href={publicSourceUrl(link.url)!} target="_blank" rel="noopener noreferrer">{link.title}<span className="sr-only"> (기관 안내 페이지의 자료, 새 창)</span></a>{link.note && <p className="small muted">확인 메모: {link.note}</p>}</li>)}
+          </ul>
+          {hidden > 0 && <p className="small muted">이 사업에서 찾은 자료는 모두 {number(census.sourceLinkTotal!)}건이고, 그중 {number(census.sourceLinks.length)}건을 보여 드려요.</p>}
+        </div>}
+        {!!census.documentNames.length && <div className={styles.block} data-testid="forms-document-names">
+          <p className={styles.kind}>자료에 적힌 준비서류</p>
+          <ul className={styles.names}>{census.documentNames.map(name => <li key={name}>{name}</li>)}</ul>
+          <p className="small muted">공식 자료에 적힌 이름을 그대로 옮겼어요{hiddenNames > 0 ? ` (모두 ${number(census.documentNameTotal!)}건 중 ${number(census.documentNames.length)}건)` : ""}. 제출할 서류와 양식은 담당기관의 최신 안내도 확인해 주세요.</p>
+        </div>}
+        <details className={styles.detail} data-testid="forms-investigation-detail">
+          <summary>어디까지 확인했는지 보기</summary>
+          <ul className={styles.names}>
+            <li>법령·자치법규 본문: {census.lawChecks.searched ? <>{number(census.lawChecks.searched)}건을 찾아보고 {number(census.lawChecks.read)}건을 실제로 열어 읽었어요. {census.lawChecks.failed ? `${number(census.lawChecks.failed)}건은 확인을 마치지 못했어요.` : "조회 대상으로 정한 본문은 모두 읽었어요."}</> : "자료에서 조회할 법규를 특정하지 못했어요."}</li>
+            <li>기관 안내 페이지: {number(census.pageChecks.attempted)}곳에 조회를 시도해 {number(census.pageChecks.read)}곳을 읽었어요. {census.pageChecks.unattempted ? `${number(census.pageChecks.unattempted)}곳은 접근 제한이나 주소 확인 문제로 조회하지 못했어요. ` : ""}{census.pageChecks.failed ? `총 ${number(census.pageChecks.failed)}곳은 추가 확인이 필요해요.` : "열지 못한 페이지는 없어요."}</li>
+            <li>신청서·준비서류 언급: {census.applicationMentioned ? "공식 자료에서 찾았어요." : "아직 찾지 못했어요(없다는 뜻은 아니에요)."}</li>
+            <li>확인한 날: {census.checkedAt}</li>
+          </ul>
+          {census.note && <p className="small">{census.note}</p>}
+          {!!pages.length && <ul className={styles.links}>
+            {pages.map(link => <li key={link.url}><a href={publicSourceUrl(link.url)!} target="_blank" rel="noopener noreferrer">{link.title}<span className="sr-only"> (출처 페이지, 새 창)</span></a></li>)}
+          </ul>}
+        </details>
+      </section>}
       {data && (!!candidates.length || data.candidatesIncomplete) && <details className={styles.candidates} data-testid="forms-candidates">
         <summary>법령포털에서 찾은 관련 서식 {number(candidateCount)}개 · 적용 여부 확인 중</summary>
         <p className="small">이름과 근거 법령이 비슷해 자동으로 함께 찾은 서식이에요. 이 사업에 적용되는 서식인지 확인 중이라, 신청서로 내려받을 수 있게 제공하지 않아요.</p>
@@ -97,7 +138,8 @@ export function ApplicationForms({ program, parentMode = false }: { program: Pro
           </li>)}
         </ul>}
       </details>}
-      {(program.applyType === "auto" || program.applyType === "institution") && <p className={styles.note}>자료상 {program.applyType === "auto" ? "자동 제공" : "기관 추천·선정"} 방식인 사업이에요. 별도 신청이나 확인이 필요한지는 담당기관에 문의해 주세요.</p>}
+      {(program.applyType === "auto" || program.applyType === "institution") && census?.state !== "automatic" && census?.state !== "institution"
+        && <p className={styles.note}>자료상 {program.applyType === "auto" ? "자동 제공" : "기관 추천·선정"} 방식인 사업이에요. 별도 신청이나 확인이 필요한지는 담당기관에 문의해 주세요.</p>}
       {parentMode && <p className={styles.note}>부모님 대신 신청할 때는 해당 사업의 대리신청 가능 여부와 준비서류를 확인해 주세요. 부모님의 신청서와 대리인의 서류는 다를 수 있어요.</p>}
       {data?.entry.note && <p className="small muted">{data.entry.note}</p>}
       <Link className={styles.coverage} href="/forms">다른 지역의 서식 연결 현황 보기 →</Link>

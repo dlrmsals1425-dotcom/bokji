@@ -11,7 +11,7 @@ const seniorId = "g41280.gov24-394000000111";
 test("confirmed application exposes exact original and real PDF preview @mobile", async ({ page, request }) => {
   await page.goto(`/p/${seniorId}`);
   const section = page.getByTestId("application-forms");
-  await expect(section.getByText("신청서 연결 확인", { exact: true })).toBeVisible();
+  await expect(section.getByText("신청 서류 연결 확인", { exact: true })).toBeVisible();
   const hwp = section.getByRole("link", { name: /한글 원본 받기/ });
   const pdf = section.getByRole("link", { name: /서식 보기·인쇄/ });
   const form = catalog.forms["ordin-19969911"];
@@ -43,10 +43,10 @@ test("candidate or missing forms are explicit and never expose candidate downloa
   await expect(section).toContainText("연결 검토 중");
   await expect(section.getByRole("link", { name: /한글 원본 받기|서식 보기/ })).toHaveCount(0);
   const other: FormsRegionBundle = JSON.parse(readFileSync("public/forms/v1/programs/g41110.json", "utf8"));
-  const missing = other.programs.find(program => program.status === "missing")!;
+  const missing = other.programs.find(program => program.status === "missing" && (!program.investigation || program.investigation.state === "needs_source"))!;
   await page.goto(`/p/${missing.id}`);
   section = page.getByTestId("application-forms");
-  await expect(section).toContainText("아직 확보한 신청서가 없어요");
+  await expect(section).toContainText("아직 연결을 확인한 신청서가 없어요");
   await expect(section.getByRole("link", { name: /한글 원본 받기/ })).toHaveCount(0);
 });
 
@@ -62,17 +62,17 @@ test("source online route is separate from a confirmed application file", async 
 
 test("coverage filters agree with rows and region switching cannot retain Goyang downloads @mobile", async ({ page }) => {
   await page.goto("/forms");
-  await expect(page.getByRole("heading", { name: `수록 사업 ${coverage.totalPrograms.toLocaleString("ko-KR")}건의 연결 상태` })).toBeVisible();
+  await expect(page.getByRole("heading", { name: `수록된 사업 자료 ${coverage.totalPrograms.toLocaleString("ko-KR")}건의 연결 상태` })).toBeVisible();
   await page.getByLabel("연결 상태", { exact: true }).selectOption("available");
-  await expect(page.locator("main ul > li")).toHaveCount(goyang.region.counts.available);
+  await expect(page.getByTestId("forms-results").locator(":scope > li")).toHaveCount(goyang.region.counts.available);
   await page.getByLabel("혜택 이름 검색").fill("장수");
-  await expect(page.locator("main ul > li")).toHaveCount(1);
+  await expect(page.getByTestId("forms-results").locator(":scope > li")).toHaveCount(1);
   await page.getByLabel("혜택 이름 검색").fill("");
   await page.getByLabel("찾을 지역").selectOption("g41110");
   await expect(page.getByText("현재 검색 조건에 맞는 자료가 없어요.", { exact: false })).toBeVisible();
-  await expect(page.locator("main ul > li")).toHaveCount(0);
+  await expect(page.getByTestId("forms-results").locator(":scope > li")).toHaveCount(0);
   await page.getByLabel("연결 상태", { exact: true }).selectOption("all");
-  await expect(page.locator("main ul > li")).toHaveCount(20);
+  await expect(page.getByTestId("forms-results").locator(":scope > li")).toHaveCount(20);
 });
 
 test("failed form metadata can retry without erasing the benefit page", async ({ page }) => {
@@ -92,7 +92,7 @@ test("new forms views keep large-text accessibility and static-only public reque
   page.on("request", request => { if (request.url().includes("/forms/")) requests.push({ url: request.url(), body: request.postData() }); });
   await page.goto("/forms");
   await page.getByLabel("연결 상태", { exact: true }).selectOption("available");
-  await expect(page.locator("main ul > li")).toHaveCount(goyang.region.counts.available);
+  await expect(page.getByTestId("forms-results").locator(":scope > li")).toHaveCount(goyang.region.counts.available);
   await page.getByTestId("large-text").click();
   for (const route of ["/forms", `/p/${seniorId}`]) {
     await page.goto(route);
