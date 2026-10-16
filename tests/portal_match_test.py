@@ -135,6 +135,23 @@ class ClassifyRoleTest(unittest.TestCase):
         self.assertEqual(classify_role("자활기금 사용 신고서", "서식"), "reference")
         self.assertNotEqual(classify_role("산후관리 신청서", "서식"), "administrative")
 
+    def test_bracket_spanning_the_title_keeps_the_application(self):
+        citizen = "[별지 제1호서식 장애인 휠체어 등 수리 신청서]"
+        self.assertEqual(classify_role(citizen, "서식"), "application")
+        self.assertEqual(classify_role("[별지 제1호서식] 신청서", "서식"), "application")
+        self.assertEqual(classify_role("[별지 제1호서식] 지급대상자 명부", "서식"), "administrative")
+        self.assertEqual(classify_role("[별지 제1호서식 지급대상자 명부]", "서식"), "administrative")
+        self.assertEqual(
+            classify_role("[별지 제1호서식 장애인 이동용 보장구 수리업체 지정 신청서]", "서식"),
+            "administrative",
+        )
+        self.assertEqual(classify_role("[별지 제1호서식] <삭제 2017.11.14.>", "서식"), "deleted")
+        self.assertEqual(
+            classify_role("[별지 제1호서식 장애인 휠체어 등 수리 신청서 <삭제 2017.11.14.>]", "서식"),
+            "deleted",
+        )
+        self.assertEqual(classify_role(citizen, "삭제"), "deleted")
+
     def test_other_roles_and_annex(self):
         self.assertEqual(classify_role("[별표 1] 심사기준", "별표"), "reference")
         self.assertEqual(classify_role("노동취약계층 유급병가지원 신청 위임장", "서식"), "delegation")
@@ -311,6 +328,50 @@ class EvaluateCandidateTest(unittest.TestCase):
             prog(name="장수 축하금 지급", laws=[]),
             form(id="long", title="장수축하금 지급 신청서", lawTitle=""),
         ))
+
+    def test_whole_bracket_application_is_candidate_not_confirmation(self):
+        title = "[별지 제1호서식 장애인 휠체어 등 수리 신청서]"
+        law = "구리시 장애인 휠체어 등 수리 지원 조례"
+        program = prog(name="장애인 휠체어 수리 지원", laws=[])
+        found = evaluate_candidate(program, form(id="ordin-11128481", title=title, lawTitle=""))
+        self.assertEqual(found["formId"], "ordin-11128481")
+        self.assertEqual(found["basis"], "title_overlap")
+        self.assertEqual(set(found), {"formId", "score", "reason", "basis", "scopeBasis"})
+        self.assertRegex(found["reason"], "검토 후보")
+        self.assertIn("휠체어", found["reason"])
+        self.assertNotRegex(found["reason"], _FORBIDDEN)
+        self.assertNotIn("approved", found)
+        self.assertNotIn("verified", found)
+        standard = evaluate_candidate(program, form(
+            id="standard", title="[별지 제1호서식] 장애인 휠체어 등 수리 신청서", lawTitle="",
+        ))
+        self.assertEqual(standard["basis"], "title_overlap")
+        self.assertNotIn("approved", standard)
+        compound = evaluate_candidate(
+            prog(name="장애인휠체어 지원", laws=[]),
+            form(id="compound", title=title, lawTitle=""),
+        )
+        self.assertEqual(compound["basis"], "title_overlap")
+        self.assertIn("장애인휠체어", compound["reason"])
+        self.assertNotIn("approved", compound)
+        cited = prog(name="장애인 휠체어 수리 지원", laws=[law])
+        blocked = [
+            form(id="register", title="[별지 제1호서식 지급대상자 명부]", lawTitle=law),
+            form(id="header-register", title="[별지 제1호서식] 지급대상자 명부", lawTitle=law),
+            form(
+                id="vendor",
+                title="[별지 제1호서식 장애인 이동용 보장구 수리업체 지정 신청서]",
+                lawTitle=law,
+            ),
+            form(id="deleted-kind", title=title, declaredKind="삭제", lawTitle=law),
+            form(
+                id="deleted-title",
+                title="[별지 제1호서식 장애인 휠체어 등 수리 신청서 <삭제 2017.11.14.>]",
+                lawTitle=law,
+            ),
+        ]
+        for item in blocked:
+            self.assertIsNone(evaluate_candidate(cited, item), item["id"])
 
     def test_blocked_roles_never_returned(self):
         law = "고양시 노인복지 조례"

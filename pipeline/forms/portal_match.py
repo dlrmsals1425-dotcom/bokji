@@ -45,6 +45,10 @@ _INSTITUTION = re.compile(
     r"기관용|학교용|교육지원청용|공무원용|담당자용|수탁운영|수리업체지정|교부|정산|"
     r"출납|접수부|대장|명부|통지|통보|지정서|점검표|심사기준|관리대장|관리카드|관리부"
 )
+# 닫는 괄호가 제목 끝이면 괄호 안이 서식명이다. 별지 번호만 떼고 그 글자는 남긴다.
+_WHOLE_FORM_BRACKET = re.compile(r"^\s*\[([^\]]*)\]\s*$")
+_LEADING_FORM_BRACKET = re.compile(r"^\s*\[[^\]]*\]\s*")
+_ANNEX_LABEL = re.compile(r"^(?:별지|별표)\s*(?:제\s*\d+\s*호)?\s*(?:서식)?\s*")
 _DIRECT_SCORE = {
     ("exact", "specific"): 86,
     ("exact", "generic"): 40,
@@ -111,7 +115,7 @@ def classify_role(title: str | None, declared_kind: str | None) -> str:
         return "deleted"
     if _is_annex(raw, kind):
         return "reference"
-    body = re.sub(r"^\s*\[[^\]]*\]\s*", "", raw).strip()
+    body = _strip_leading_form_bracket(raw).strip()
     compact = re.sub(r"\s+", "", body)
     if _INSTITUTION.search(compact):
         return "administrative"
@@ -208,6 +212,14 @@ def _strip_trailing_articles(text: str) -> str:
     return current
 
 
+def _strip_leading_form_bracket(text: str) -> str:
+    """앞의 [별지 …]만 뺀다. 괄호가 제목 전체이면 안의 서식명을 남긴다."""
+    whole = _WHOLE_FORM_BRACKET.match(text)
+    if whole:
+        return _ANNEX_LABEL.sub("", whole.group(1).strip(), count=1).strip()
+    return _LEADING_FORM_BRACKET.sub("", text, count=1)
+
+
 def _is_deleted(raw: str, kind: str) -> bool:
     if kind in {"삭제", "deleted", "폐지"}:
         return True
@@ -255,7 +267,7 @@ def _region_words(program: dict | None, form: dict | None) -> set[str]:
 
 def _content_tokens(text: str, skip: set[str]) -> list[str]:
     plain = unicodedata.normalize("NFKC", str(text or ""))
-    plain = re.sub(r"^\s*\[[^\]]*\]\s*", "", plain)
+    plain = _strip_leading_form_bracket(plain)
     plain = _unwrap_non_article_parens(plain)
     plain = plain.casefold()
     found: list[str] = []
@@ -384,7 +396,7 @@ def _title_overlap(program: dict, form: dict) -> list[str] | None:
 
 def _compact_title(text: str) -> str:
     plain = unicodedata.normalize("NFKC", text).casefold()
-    plain = re.sub(r"^\s*\[[^\]]*\]\s*", "", plain)
+    plain = _strip_leading_form_bracket(plain)
     return re.sub(r"[^0-9a-z가-힣]", "", plain)
 
 

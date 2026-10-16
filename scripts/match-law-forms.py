@@ -52,12 +52,15 @@ def authority_applies(program,form,law_cited):
         if re.search(r'전라\s*남도|전남',text):areas.add('jeonnam')
     return legacy in areas if areas else law_cited
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('--allow-incomplete',action='store_true');args=parser.parse_args()
-    folder=ROOT/'logs/law-scan';state=read(folder/'collection-status.json')
+    parser=argparse.ArgumentParser();parser.add_argument('--allow-incomplete',action='store_true')
+    parser.add_argument('--source-dir',type=Path,default=ROOT/'logs/law-scan',help='Existing collected portal index (read only); match cache stays in this checkout')
+    args=parser.parse_args()
+    folder=ROOT/'logs/law-scan';folder.mkdir(parents=True,exist_ok=True)
+    source_folder=args.source_dir.resolve();state=read(source_folder/'collection-status.json')
     if state['status']!='complete' and not args.allow_incomplete:raise RuntimeError('Complete portal index required before final matching')
     state['status']='complete' if state['status']=='complete' else 'incomplete'
     provinces={row['name'].replace(' ',''):row['code'] for row in read(ROOT/'public/bundles/v1/regions.json')['sidos']}
-    source=sqlite3.connect((folder/'annexes.sqlite').as_uri()+'?mode=ro',uri=True)
+    source=sqlite3.connect((source_folder/'annexes.sqlite').as_uri()+'?mode=ro',uri=True)
     index=sqlite3.connect(folder/'match-index.sqlite')
     index.executescript('DROP TABLE IF EXISTS search; DROP TABLE IF EXISTS forms; CREATE TABLE forms(id TEXT PRIMARY KEY,region TEXT,law TEXT,role TEXT,payload TEXT); CREATE INDEX form_law ON forms(law); CREATE INDEX form_region ON forms(region); CREATE VIRTUAL TABLE search USING fts5(id UNINDEXED,title,region UNINDEXED,tokenize="unicode61");')
     indexed=0;eligible=0;unknown=0
@@ -81,9 +84,8 @@ def main():
     for file in sorted((ROOT/'public/bundles/v1/details').glob('*.json')):programs.update(read(file))
     existing=read(ROOT/'pipeline/forms/reviewed-links.json')['rows']
     additional=[]
-    for name in ['national-reviewed.json','municipal-reviewed.json']:
-        path=ROOT/'pipeline/forms/reviews'/name
-        if path.exists():
+    for path in sorted((ROOT/'pipeline/forms/reviews').iterdir()):
+        if path.is_file() and re.fullmatch(r'(national|municipal)-reviewed(?:-round\d+)?\.json',path.name):
             data=read(path);additional.extend(data['rows'] if isinstance(data,dict) else data)
     reviewed_ids={row['formId'] for row in existing+additional}
     matched_ids=set(reviewed_ids);result={};law_cache={};evaluated=0
@@ -118,7 +120,7 @@ def main():
         ordered=sorted(candidates.values(),key=lambda row:(-row['score'],row['formId']))
         result[program_id]={'checkedAt':checked_at,'outcome':'candidate' if ordered else 'not_found','candidateCount':len(ordered),'method':'full-index','candidates':ordered}
         if len(result)%2000==0:print(json.dumps({'event':'matched','programs':len(result),'withCandidates':sum(bool(r['candidates']) for r in result.values()),'candidateComparisons':evaluated}),flush=True)
-    raw_source=sqlite3.connect((folder/'annexes.sqlite').as_uri()+'?mode=ro',uri=True)
+    raw_source=sqlite3.connect((source_folder/'annexes.sqlite').as_uri()+'?mode=ro',uri=True)
     forms={}
     for form_id in sorted(matched_ids):
         record=raw_source.execute('SELECT payload FROM annexes WHERE id=?',(form_id,)).fetchone()
