@@ -1,7 +1,7 @@
 /** 질문 따라 찾기 (2026-10-16): 홈 두 갈래 → 누구 → 사는 곳(현재 위치/직접) → 질문 5개 → 드문 사항 → 결과 */
 import { expect, test, type Page, type Request } from "@playwright/test";
 
-const MARKERS = ["37.26", "127.02", "incomeManwon", "bn.profile", "householdSize", "75-79", "35-39"];
+const MARKERS = ["37.26", "127.02", "incomeManwon", "bn.profile", "householdSize", "75-79", "70-79", "35-39"];
 function expectPrivate(requests: Request[], origin: string) {
   for (const r of requests) {
     const url = decodeURIComponent(r.url());
@@ -53,14 +53,14 @@ test.describe("질문 따라 찾기", () => {
     await expect(page.getByTestId("gq-a-0-18")).toHaveCount(0);
     await expect(page.getByText("질문 1 / 5")).toBeVisible();
     const ask0 = Number(await page.getByTestId("gq-ask").innerText());
-    await page.getByTestId("gq-a-75-79").click();
+    await page.getByTestId("gq-a-70-79").click();
     await expect(page.getByText("질문 2 / 5")).toBeVisible({ timeout: 20_000 });
     expect(Number(await page.getByTestId("gq-ask").innerText())).toBeLessThan(ask0);
 
     // 이전 → 같은 나이 질문으로
     await page.getByTestId("gq-back").click();
     await expect(q).toHaveAttribute("data-dim", "age");
-    await page.getByTestId("gq-a-75-79").click();
+    await page.getByTestId("gq-a-70-79").click();
     await expect(page.getByText("질문 2 / 5")).toBeVisible({ timeout: 20_000 });
 
     const n = await answerAll(page);

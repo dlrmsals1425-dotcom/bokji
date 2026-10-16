@@ -110,7 +110,7 @@ describe("소거해서 계산한 결과 = 처음부터 전부 계산한 결과",
     { mode: "self", region: SUWON, answers: [["age", "35-39"], ["alone", "yes"], ["income", "100"], ["children", "none"], ["activity", "job_seeking"], ["disability", "none"]] },
     { mode: "self", region: SUWON, answers: [["age", "40-49"], ["children", "6-12"], ["alone", "4"], ["income", "60"], ["activity", "employed"]] },
     { mode: "self", region: { sido: "41000", sigungu: "41270" }, answers: [["age", "0-18"], ["alone", "3"], ["income", "50"], ["activity", "none"]] },
-    { mode: "parent", region: { sido: "41000", sigungu: "41190" }, answers: [["age", "75-79"], ["alone", "yes"], ["income", "32"], ["disability", "none"], ["ltcGrade", "no"], ["care", "yes"]] },
+    { mode: "parent", region: { sido: "41000", sigungu: "41190" }, answers: [["age", "70-79"], ["alone", "yes"], ["income", "32"], ["disability", "none"], ["ltcGrade", "no"], ["care", "yes"]] },
     { mode: "parent", region: { sido: "11000", sigungu: "11215" }, answers: [["age", "65-69"], ["alone", "2"], ["income", "100"], ["basicPension", "yes"]] },
   ];
   for (const [i, path] of PATHS.entries()) {
@@ -175,5 +175,30 @@ describe("자녀 질문: 임신 + 자녀 나이 여러 개 + 자녀 수 (2026-10
     const preg = childrenApply(base(), ["pregnant"], 0);
     expect(preg.profile.children).toEqual(["pregnant"]);
     expect(bucketOf(preg, /^건강보험 임신출산 진료비/)).not.toBe("no");
+  });
+});
+
+describe("나이 보기 70~79세 하나로 (2026-10-16 시뮬레이션: 전국 230곳에서 74/75세 경계로 갈리는 혜택 중앙값 0, 최대 3)", () => {
+  it("본인 11개·부모님 6개 보기, 70~74·75~79 대신 70~79", () => {
+    const self = flowAnswers(DIM_BY_ID.age, blankSituation(SUWON.sido, SUWON.sigungu, "self")).map((a) => a.key);
+    const parent = flowAnswers(DIM_BY_ID.age, blankSituation(SUWON.sido, SUWON.sigungu, "parent")).map((a) => a.key);
+    expect(self).toHaveLength(11);
+    expect(parent).toEqual(["40-49", "50-59", "60-64", "65-69", "70-79", "80+"]);
+    expect(self).not.toContain("70-74");
+    expect(flowAnswers(DIM_BY_ID.age, blankSituation(SUWON.sido, SUWON.sigungu, "self")).find((a) => a.key === "70-79")?.label).toBe("70~79세");
+  });
+  it("70~79세로 답한 결과는 70~74세로 답한 결과와 거의 같다 (어르신 혜택·기초연금 그대로)", () => {
+    const s0 = blankSituation(SUWON.sido, SUWON.sigungu, "parent");
+    const a = answer(s0, "age", "70-79");
+    expect(a.profile.age).toBe("70-79");
+    const b = { ...s0, profile: { ...s0.profile, age: "70-74" as const } };
+    const progs = progsFor(SUWON.sido, SUWON.sigungu);
+    const va = buildView(scoreV2(progs, a), a, 0);
+    const vb = buildView(scoreV2(progs, b), b, 0);
+    const bucketOf = (v: typeof va) => new Map((["fit", "office", "ask", "no"] as const).flatMap((k) => v[k].map((g) => [g[0].s.group, k] as const)));
+    const ma = bucketOf(va), mb = bucketOf(vb);
+    const diff = [...mb].filter(([k, v]) => ma.get(k) !== v);
+    expect(diff.length).toBeLessThanOrEqual(5);
+    expect(ma.get(mb.has("기초연금") ? "기초연금" : "")).toBe(mb.get("기초연금"));
   });
 });
