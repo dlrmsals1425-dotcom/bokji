@@ -61,6 +61,7 @@ export function ApplicationForms({ program, parentMode = false }: { program: Pro
             {data.entry.links.map(link => {
               const form = data.forms.find(item => item.id === link.formId)!;
               const hwp = formAssetUrl(form.file?.hwp), pdf = formAssetUrl(form.file?.pdf);
+              const format = form.file?.format ?? (hwp?.endsWith(".hwpx") ? "hwpx" : "hwp");
               // 받아 둔 파일이 없는 서식은 법령포털 원본을 그대로 연다 (후보가 아니라 연결을 확인한 서식만 여기 온다).
               const original = hwp ? null : lawPortalUrl(form.sourceUrl);
               const preview = pdf ?? (original ? lawPortalUrl(form.officialPdfUrl) : null);
@@ -71,7 +72,7 @@ export function ApplicationForms({ program, parentMode = false }: { program: Pro
                 {link.condition && <p>{link.condition}</p>}
                 <div className={styles.actions}>
                   {preview && <a className="btn btn-primary" href={preview} target="_blank" rel="noopener noreferrer">서식 보기·인쇄 <span className="sr-only">(PDF, 새 창)</span></a>}
-                  {hwp && <a className={`btn ${pdf ? "btn-ghost" : "btn-primary"}`} href={hwp} download={form.title + ".hwp"}>한글 원본 받기 <span className="sr-only">(HWP)</span></a>}
+                  {hwp && <a className={`btn ${pdf ? "btn-ghost" : "btn-primary"}`} href={hwp} download={formTitle(form).replace(/\.hwpx?$/i, "") + "." + format}>한글 원본 받기 <span>({format.toUpperCase()})</span></a>}
                   {original && <a className={`btn ${preview ? "btn-ghost" : "btn-primary"}`} href={original} target="_blank" rel="noopener noreferrer">법령포털 원본 받기{originalType ? ` (${originalType})` : ""}<span className="sr-only"> (새 창)</span></a>}
                 </div>
                 <p className={styles.dates}>{basisText(form)} · 연결 확인일 {link.checkedAt}</p>

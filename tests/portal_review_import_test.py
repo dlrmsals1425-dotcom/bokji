@@ -158,6 +158,19 @@ class BuildTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.build({'p1':program('p1')},[row('rule-1',['p1'],role='supporting',roleBasis='신청서가 아니라고 보았다.',
                 roleEvidenceUrl=EVIDENCE,roleCheckedAt='2026-10-16')])
+    def test_individually_read_reference_annex_can_be_a_consent_without_becoming_main_application(self):
+        audited=row('ordin-19307191',['p1'],sourceKind='ordin',lawId='1872429',
+            formTitle='[별표 1] 행정정보 공동이용 사전 동의서(제5조 관련)',role='consent',use='conditional',
+            condition='행정정보 공동이용에 동의하는 경우에 작성한다.',
+            roleBasis='제5조제3항의 별표1 지정과 실제 원본의 예방접종 이용사무 및 대상자 본인 서명란을 대조했다.',
+            roleEvidenceUrl='https://www.law.go.kr/ordinInfoP.do?ordinSeq=1872429',roleCheckedAt='2026-10-17',
+            verificationStatus='verified',officialAttachmentMatched=True,sha256='a'*64,
+            reviewedParts=[{'number':'별표 1','title':'행정정보 공동이용 사전 동의서','use':'additional','author':'대상자 본인'}])
+        output=self.build({'p1':program('p1')},[audited])
+        self.assertEqual(output['forms'][audited['formId']]['role'],'consent')
+        self.assertEqual(output['rows'][0]['use'],'conditional')
+        for patch in ({'role':'application'},{'sha256':''},{'reviewedParts':[]},{'lawId':'999'}):
+            with self.subTest(patch=patch),self.assertRaises(ValueError):self.build({'p1':program('p1')},[{**audited,**patch}])
     def test_agency_designation_form_is_excluded_with_a_program_note(self):
         output=self.build({'p1':program('p1')},[row('law-17831969',['p1'],sourceKind='law',formTitle='대리인 지정서',
             use='conditional',condition='대리 신청하는 경우')])

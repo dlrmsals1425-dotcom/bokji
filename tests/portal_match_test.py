@@ -214,6 +214,7 @@ class ClassifyRoleTest(unittest.TestCase):
     def test_citizen_report_and_postpartum_care(self):
         self.assertEqual(classify_role("[별지 서식]사회재난 피해신고서", "서식"), "application")
         self.assertEqual(classify_role("피해 신고서", "서식"), "application")
+        self.assertEqual(classify_role("야생동물에 의한 농작물 등 피해발생 신고서", "서식"), "application")
         self.assertEqual(classify_role("산후관리 서비스 신청서", "서식"), "application")
         self.assertEqual(classify_role("산후관리사 신청서", "서식"), "application")
         self.assertEqual(classify_role("자활기금 사용 신고서", "서식"), "reference")

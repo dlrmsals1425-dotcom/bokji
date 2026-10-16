@@ -242,7 +242,16 @@ def main():
     # Persist only the screened audit, including when the input came from a raw cache.
     (ROOT/'pipeline/forms/official-page-audit.json').write_text(json.dumps(pages, ensure_ascii=False, separators=(',', ':'))+'\n', encoding='utf-8')
     review_path = ROOT/'pipeline/forms/attachment-reviews.json'
-    result = aggregate(programs, read(ROOT/'pipeline/forms/portal-matches.json')['programs'], approved,
+    matches=read(ROOT/'pipeline/forms/portal-matches.json')['programs']
+    rejected_path=ROOT/'pipeline/forms/reviews/rejected-associations.json'
+    if rejected_path.exists():
+        excluded=read(rejected_path)
+        if excluded.get('schema')!=1 or not isinstance(excluded.get('rows'),list):raise ValueError('Invalid rejected association audit')
+        for row in excluded['rows']:
+            if row['programId'] not in programs or len(row.get('reason',''))<10:raise ValueError('Invalid rejected association')
+            match=matches[row['programId']]
+            match['candidates']=[candidate for candidate in match.get('candidates',[]) if candidate['formId']!=row['formId']]
+    result = aggregate(programs, matches, approved,
                        read(args.law_audit), pages, datetime.now(timezone.utc).date().isoformat(),
                        read(review_path) if review_path.exists() else None)
     (ROOT/'pipeline/forms/source-audit.json').write_text(json.dumps(result, ensure_ascii=False, separators=(',', ':'))+'\n', encoding='utf-8')

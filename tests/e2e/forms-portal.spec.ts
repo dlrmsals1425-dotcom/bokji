@@ -45,6 +45,17 @@ async function serve(page: Page, options: { bundle: FormsRegionBundle; shards?: 
 }
 const panel = (page: Page) => page.getByTestId("application-forms");
 
+for (const format of ["hwp", "hwpx"] as const) test(`stored ${format} preserves its actual download extension @mobile`, async ({page}) => {
+  const original=form("ordin-90001",{title:"[별지 제1호서식] 지원 신청서",file:{hwp:`/forms/files/ordin-90001-012345abcdef.${format}`,format,bytes:123,sha256:"a".repeat(64)}});
+  await serve(page,{bundle:bundle([entry({status:"available",links:[link(original.id)]})]),catalog:catalog([original])});
+  await page.goto(`/p/${PROGRAM}`);
+  const download=panel(page).getByRole('link',{name:/한글 원본 받기/});
+  await expect(download).toHaveAttribute('href',original.file!.hwp);
+  await expect(download).toHaveAttribute('download',`지원 신청서.${format}`);
+  await expect(download).toContainText(`(${format.toUpperCase()})`);
+  await expect(panel(page).getByRole('link',{name:/법령포털 원본 받기/})).toHaveCount(0);
+});
+
 test("sharded catalog fetches only the buckets a benefit needs @mobile", async ({ page }) => {
   const bucket = detailBucket(localForm.id);
   const asked = await serve(page, { bundle: bundle([entry({ status: "available", links: [link(localForm.id)] })], true), shards: { [bucket]: catalog([localForm]) } });

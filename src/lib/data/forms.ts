@@ -25,7 +25,7 @@ export interface ApplicationForm {
   sourceKind?: "ordin" | "law" | "rule";
   dateKind?: "effective" | "promulgated" | "issued";
   officialPdfUrl?: string;
-  file?: { hwp: string; pdf?: string; bytes: number; sha256: string };
+  file?: { hwp: string; format?: "hwp" | "hwpx"; pdf?: string; bytes: number; sha256: string };
 }
 export interface FormLink {
   formId: string;

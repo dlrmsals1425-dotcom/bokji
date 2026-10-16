@@ -69,8 +69,10 @@ test("coverage filters agree with rows and region switching cannot retain Goyang
   await expect(page.getByTestId("forms-results").locator(":scope > li")).toHaveCount(1);
   await page.getByLabel("혜택 이름 검색").fill("");
   await page.getByLabel("찾을 지역").selectOption("g41110");
-  await expect(page.getByText("현재 검색 조건에 맞는 자료가 없어요.", { exact: false })).toBeVisible();
-  await expect(page.getByTestId("forms-results").locator(":scope > li")).toHaveCount(0);
+  const suwon:FormsRegionBundle=JSON.parse(readFileSync("public/forms/v1/programs/g41110.json","utf8"));
+  if (!suwon.region.counts.available) await expect(page.getByText("현재 검색 조건에 맞는 자료가 없어요.", { exact: false })).toBeVisible();
+  await expect(page.getByTestId("forms-results").locator(":scope > li")).toHaveCount(Math.min(20,suwon.region.counts.available));
+  for (const href of await page.getByTestId("forms-results").locator('a[href^="/p/"]').evaluateAll(nodes=>nodes.map(n=>n.getAttribute('href')!))) expect(href).toMatch(/^\/p\/g41110\./);
   await page.getByLabel("연결 상태", { exact: true }).selectOption("all");
   await expect(page.getByTestId("forms-results").locator(":scope > li")).toHaveCount(20);
 });

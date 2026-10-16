@@ -31,9 +31,12 @@ export function officialFormUrl(value: unknown): string | null {
 }
 
 const normalizedLaw = (text: string) => text.normalize("NFKC").replace(/[「」『』\s·ㆍᆞ・･‧․]/g, "").replace(/\(제[^)]*\)/g, "").replace(/제\d+조.*$/, "");
-function referencedFormLaw(program: Program, form: Pick<ApplicationForm, "lawTitle">): boolean {
+function referencedFormLaw(program: Program, form: Pick<ApplicationForm, "lawTitle"> & Partial<Pick<ApplicationForm,"regionCode"|"regionLabel">>): boolean {
   const normalize = (text: string) => normalizedLaw(text).replace(/시행규칙$|시행령$/, "");
-  return (program.laws || []).some(law => law.split(/\|\||\//).some(part => normalize(part) === normalize(form.lawTitle)));
+  // Split a second explicitly qualified local law before removing article tails.
+  // The word "및" inside a single title (e.g. 노인 및 장애인) stays intact.
+  return (program.laws || []).some(law => law.split(/\|\||\/|\s+및\s+(?=[가-힣]+(?:특별자치도|특별자치시|특별시|광역시|도|시|군|구)\s)/).some(part => normalize(part) === normalize(form.lawTitle)
+    || (!!form.regionLabel && form.regionCode===program.region?.sido && normalize(form.regionLabel+part)===normalize(form.lawTitle))));
 }
 
 function reviewedApplicationReference(program: Program, form: ApplicationForm, link: FormLink): boolean {

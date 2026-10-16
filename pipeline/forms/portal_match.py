@@ -222,7 +222,7 @@ def classify_role(title: str | None, declared_kind: str | None) -> str:
     # appear only inside parentheses, as in 별지서식(신청서).
     joined = _PARENS.sub("", compact)
     visible = joined + "".join(_PARENS.findall(compact))
-    if any(word in visible for word in ('피해신고서','신청서','청구서')):
+    if re.search(r'피해(?:발생)?신고서',visible) or any(word in visible for word in ('신청서','청구서')):
         return "application"
     if re.search(r"확인서|증명서|진단서|소견서|사유서|진술서", compact):
         return "supporting"

@@ -32,7 +32,25 @@ BLOCKED_ROLES=frozenset({'administrative','deleted','reference'})
 AUDITED_SUPPORTING_FORMS=frozenset({'rule-3211497'})
 # Explicitly inspected full-body exceptions, never general title-based promotion.
 AUDITED_APPLICATION_EXCEPTIONS={'ordin-20002811':'1408662','ordin-20761903':'2063661','ordin-19399661':'1898059',
-                                'ordin-17191599':'1650349','ordin-21753097':'2121739','ordin-21753099':'2121739'}
+                                'ordin-17191599':'1650349','ordin-21753097':'2121739','ordin-21753099':'2121739',
+                                'ordin-21341739':'1667571','ordin-14476309':'1762395','ordin-16549509':'1880261',
+                                'ordin-17269521':'1699351','ordin-22525343':'1410694',
+                                'ordin-22717307':'2171299','ordin-22750737':'2171301',
+                                'ordin-15375681':'1793155','ordin-16095227':'1782391','ordin-18313473':'1657259',
+                                'ordin-19657853':'2025289','ordin-19761355':'2032635','ordin-22140033':'2152191',
+                                'ordin-14971213':'1704867','ordin-17311341':'1721145','ordin-18776253':'1985771',
+                                'ordin-18978935':'2000657','ordin-19639951':'1982003','ordin-20588823':'1549715',
+                                'ordin-20666309':'1909501','ordin-21335081':'1812545','ordin-22289045':'2157159',
+                                'ordin-22518043':'2126525','ordin-20860689':'2067953',
+                                'ordin-10415813':'962315','ordin-11531359':'1513689','ordin-15475401':'1574609',
+                                'ordin-16102521':'1842719','ordin-17402139':'1921987','ordin-18978933':'2000657',
+                                'ordin-19227331':'1484407','ordin-19639905':'1399895','ordin-19974453':'1557185',
+                                'ordin-20017213':'1842883','ordin-20080511':'1762943','ordin-21060997':'2085069',
+                                'ordin-21297129':'2005839','ordin-21724859':'2119899','ordin-22073507':'1574429',
+                                'ordin-22264889':'2155733','ordin-22289051':'2157159','ordin-22518041':'2126525',
+                                'ordin-21069107':'2086293','ordin-22289049':'2157159','ordin-7130000':'1835761',
+                                'ordin-21438973':'2089655'}
+AUDITED_CONSENT_EXCEPTIONS={'ordin-19307191':'1872429','ordin-19876833':'1246766','ordin-21403833':'2107187'}
 SCOPE_BASES=frozenset({'provincial-law-reference','national-law-reference','official-application-reference'})
 def read(file):return json.loads(file.read_text(encoding='utf-8-sig'))
 def day(value):
@@ -69,6 +87,10 @@ def cites_form_law(program,form):
         for part in matcher.split_law_citations(entry):
             cited=matcher.normalize_law(part)
             if cited and (cited==target or target in matcher.law_variants(cited) or cited in family):return True
+            region=program.get('region') or {}
+            if form.get('regionCode')==region.get('sido') and form.get('regionLabel'):
+                qualified=matcher.normalize_law(form['regionLabel']+part)
+                if qualified and (qualified==target or target in matcher.law_variants(qualified)):return True
     return False
 def role_metadata(record):
     """원문으로 역할을 확인했다는 메타데이터. 근거·출처·확인일이 모두 있어야 인정한다."""
@@ -83,21 +105,24 @@ def resolve_role(record):
     form_id=record['formId'];declared=str(record.get('role') or '').strip()
     if declared in BLOCKED_ROLES:raise ValueError('Audited row marks a non-applicant form role: '+form_id)
     role=matcher.classify_role(record['formTitle'],'서식')
-    if form_id in AUDITED_APPLICATION_EXCEPTIONS and record.get('role')=='application':
+    exception_laws=AUDITED_APPLICATION_EXCEPTIONS if declared=='application' else AUDITED_CONSENT_EXCEPTIONS if declared=='consent' else {}
+    if form_id in exception_laws:
         parts=record.get('reviewedParts')
         evidence=record.get('roleEvidenceUrl')
-        if (record.get('lawId')!=AUDITED_APPLICATION_EXCEPTIONS[form_id]
+        valid_part=lambda p: isinstance(p,dict) and ((declared=='application' and (p.get('use')=='main' or (p.get('use')=='conditional' and record.get('condition'))) and re.search(r'신청|청구|신고|등록',str(p.get('title') or '')))
+            or (declared=='consent' and p.get('use') in ('additional','conditional') and '동의' in str(p.get('title') or '')))
+        if (record.get('lawId')!=exception_laws[form_id]
             or record.get('sourceKind')!='ordin' or record.get('annexId')!=form_id.split('-')[1]
             or record.get('verificationStatus')!='verified' or record.get('officialAttachmentMatched') is not True
             or not re.fullmatch(r'[a-f0-9]{64}',str(record.get('sha256') or ''))
             or not official_url(evidence) or len(str(record.get('roleBasis') or ''))<30
             or not re.fullmatch(r'\d{4}-\d{2}-\d{2}',day(record.get('roleCheckedAt')))
             or not isinstance(parts,list) or not parts
-            or not any(p.get('use')=='main' and re.search(r'신청|청구|신고|등록',str(p.get('title') or '')) for p in parts if isinstance(p,dict))
+            or not any(valid_part(p) for p in parts)
             or not all(isinstance(p,dict) and all(p.get(k) for k in ('number','title','use','author')) for p in parts)
             or (len(parts)>1 and not record.get('condition')) or role=='deleted'):
             raise ValueError('Audited application exception lacks full-body evidence: '+form_id)
-        return 'application',{key:record[key] for key in ('role','roleBasis','roleEvidenceUrl','roleCheckedAt','sha256','reviewedParts')}
+        return declared,{key:record[key] for key in ('role','roleBasis','roleEvidenceUrl','roleCheckedAt','sha256','reviewedParts')}
     if re.match(r'^\s*\[?\s*별표(?:\s|\d|\]|$)',record['formTitle']):
         raise ValueError('Reference annex cannot be imported as an applicant form: '+form_id)
     if role in BLOCKED_ROLES-{'reference'}:

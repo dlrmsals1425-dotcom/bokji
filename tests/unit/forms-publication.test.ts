@@ -61,10 +61,23 @@ describe("application document publication", () => {
     expect(() => validateFormLink(implementing, provincial, { ...link, scopeBasis: "provincial-law-reference" })).not.toThrow();
     expect(() => validateFormLink({ ...implementing, laws: [] }, provincial, { ...link, scopeBasis: "provincial-law-reference" })).toThrow();
   });
+  it("qualifies an abbreviated Sejong citation only within the same province",()=>{
+    const local={...program,region:{sido:"36000",sigungu:"36110",label:"세종"},laws:["아이 돌보는 아빠 장려금 지원 조례"]};
+    const provincial={...form,regionCode:"36000",regionLabel:"세종특별자치시",lawTitle:"세종특별자치시 아이 돌보는 아빠 장려금 지원 조례"};
+    expect(()=>validateFormLink(local,provincial,{...link,scopeBasis:"provincial-law-reference"})).not.toThrow();
+    expect(()=>validateFormLink({...local,region:{sido:"41000",sigungu:"41280",label:"고양"}},provincial,{...link,scopeBasis:"provincial-law-reference"})).toThrow(/jurisdiction/);
+  });
   it("recognizes an explicitly cited national law before a slash and normalized Korean dot", () => {
     const local={...program,laws:["의료요양 등 지역 돌봄의 통합지원에 관한 법률/고양시 통합지원 조례"]};
     const national={...form,regionCode:"national",lawTitle:"의료ㆍ요양 등 지역 돌봄의 통합지원에 관한 법률 시행규칙"};
     expect(()=>validateFormLink(local,national,{...link,scopeBasis:"national-law-reference"})).not.toThrow();
+  });
+  it("retains a second provincial citation after national-law article numbers without splitting internal 및",()=>{
+    const local={...program,region:{sido:"50000",sigungu:"50110",label:"제주 제주시"},laws:["아동복지법 제35조 제2항제3호 및 제4항 및 제주특별자치도 아동급식 지원 조례"]};
+    const provincial={...form,regionCode:"50000",regionLabel:"제주특별자치도",lawTitle:"제주특별자치도 아동급식 지원 조례"};
+    expect(()=>validateFormLink(local,provincial,{...link,scopeBasis:"provincial-law-reference"})).not.toThrow();
+    expect(()=>validateFormLink({...local,laws:["아동복지법 제35조"]},provincial,{...link,scopeBasis:"provincial-law-reference"})).toThrow(/jurisdiction/);
+    expect(()=>validateFormLink({...local,laws:["제주특별자치도 노인 및 장애인 복지 조례"]},{...provincial,lawTitle:"제주특별자치도 노인 및 장애인 복지 조례"},{...link,scopeBasis:"provincial-law-reference"})).not.toThrow();
   });
   it("official source-only attachments cannot carry credentials or use another host", () => {
     expect(officialFormUrl("https://www.law.go.kr/LSW/flDownload.do?flSeq=123")).toBeTruthy();
