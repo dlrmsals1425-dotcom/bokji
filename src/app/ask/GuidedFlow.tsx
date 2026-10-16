@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { Icon } from "@/components/Icon";
 import { loadForRegion, loadRegions } from "@/lib/client/bundles";
 import { currentPosition, loadBoundaries, sigunguAt } from "@/lib/client/locate";
-import { FLOW_LIMIT, blankSituation, flowAnswers, flowStep, nextQuestion, rareApply, rarePicks, type FlowStep } from "@/lib/client/guided";
+import { FLOW_LIMIT, QUESTION_NAME, blankSituation, flowAnswers, flowStep, nextQuestion, rareApply, rarePicks, type FlowStep } from "@/lib/client/guided";
 import { resultsPath, type FindMode } from "@/lib/client/mode";
 import { sidoOptionLabel } from "@/lib/client/regionLabel";
 import { saveSituation } from "@/lib/client/start";
@@ -20,7 +20,9 @@ import type { Program, RegionIndex } from "@/lib/data/types";
 type Where = { sido: string; sigungu: string; label: string };
 type LocStatus = { kind: "idle" } | { kind: "busy" } | { kind: "found"; where: Where } | { kind: "error"; text: string };
 /** 질문 단계 하나 (이전으로 돌아갈 때 그대로 되돌린다) */
-type Snap = { sit: Situation; st: FlowStep; asked: DimId[]; q: DimId | null };
+type Snap = { sit: Situation; st: FlowStep; asked: DimId[]; q: DimId | null; picks: Picked[] };
+/** 고른 답 (끝 화면 요약·고치기 — 2026-10-16 회의) */
+type Picked = { q: DimId | "rare"; label: string };
 type Phase = "who" | "where" | "loading" | "ask" | "rare" | "done";
 /** 지나온 화면 — 어느 화면(질문·드문 사항·끝)이었는지도 함께 (끝·더 답하기에서 '이전'을 누르면 질문 칸이 비던 문제) */
 type Past = { snap: Snap; phase: Phase };
@@ -125,7 +127,7 @@ export function GuidedFlow() {
     setHistory([]);
     setExtra(false);
     setRareOn([]);
-    advance({ sit, st, asked: [], q: null }, false);
+    advance({ sit, st, asked: [], q: null, picks: [] }, false);
   };
 
   /** 다음 질문을 고르고, 다 물었으면 드문 사항 → 끝 */
@@ -145,7 +147,7 @@ export function GuidedFlow() {
   };
 
   /** 답(또는 '잘 모르겠어요')을 반영하고 다시 계산 */
-  const answer = async (sit2: Situation | null) => {
+  const answer = async (sit2: Situation | null, label: string) => {
     if (!cur || !cur.q || busy) return;
     setBusy(true);
     await nextFrame();
@@ -153,7 +155,7 @@ export function GuidedFlow() {
     const sit = sit2 ?? cur.sit;
     const st = sit2 ? flowStep(cur.st.pool, sit, cur.st) : cur.st;
     setHistory((h) => [...h, { snap: cur, phase: "ask" }]);
-    advance({ sit, st, asked, q: null }, extra);
+    advance({ sit, st, asked, q: null, picks: [...cur.picks, { q: cur.q, label }] }, extra);
     setBusy(false);
   };
 
@@ -179,8 +181,10 @@ export function GuidedFlow() {
     await nextFrame();
     const sit = on === null ? cur.sit : rareApply(cur.sit, on);
     const st = on === null ? cur.st : flowStep(cur.st.pool, sit, cur.st);
+    const shown = rarePicks(cur.sit);
+    const label = on === null ? "잘 모르겠어요" : on.length ? shown.filter((r) => on.includes(r.key)).map((r) => r.label).join(", ") : "해당 없음";
     setHistory((h) => [...h, { snap: cur, phase: "rare" }]);
-    setCur({ sit, st, asked: cur.asked, q: null });
+    setCur({ sit, st, asked: cur.asked, q: null, picks: [...cur.picks, { q: "rare", label }] });
     toDone({ sit, st, asked: cur.asked });
     setBusy(false);
   };
@@ -193,6 +197,18 @@ export function GuidedFlow() {
     setHistory((h) => [...h, { snap: cur, phase: "done" }]);
     setCur({ ...cur, q });
     setPhase("ask");
+  };
+
+  /** 끝 화면 '고치기': 그 질문(또는 드문 사항) 화면으로 돌아가 거기서부터 다시 (뒤 질문은 새 답에 맞춰 다시 고른다) */
+  const fix = (q: Picked["q"]) => {
+    const i = history.findIndex((p) => (q === "rare" ? p.phase === "rare" : p.phase === "ask" && p.snap.q === q));
+    if (i < 0) return;
+    const past = history[i];
+    setHistory(history.slice(0, i));
+    setCur(past.snap);
+    setExtra(past.snap.asked.length >= FLOW_LIMIT);
+    setRareOn([]);
+    setPhase(past.phase);
   };
 
   const showResults = () => {
@@ -418,6 +434,28 @@ export function GuidedFlow() {
                   {where?.label} 복지 {total.toLocaleString("ko-KR")}개 가운데 해당하지 않는 {cur.st.counts.no.toLocaleString("ko-KR")}개는 이유와 함께 결과 화면 맨 아래에 모아 둬요.
                   {cur.st.counts.ask > 0 && ` 아직 ${cur.st.counts.ask}개는 답에 따라 갈려요.`}
                 </p>
+                <div className="gq-summary" data-testid="gq-summary">
+                  <h2 className="h3">내가 고른 답</h2>
+                  <ul>
+                    <li>
+                      <span>누구</span>
+                      <b>{parent ? "부모님" : "나"}</b>
+                    </li>
+                    <li>
+                      <span>사는 곳</span>
+                      <b>{where?.label}</b>
+                    </li>
+                    {cur.picks.map((p, i) => (
+                      <li key={`${p.q}-${i}`} data-testid={`gq-pick-${p.q}`}>
+                        <span>{p.q === "rare" ? "해당하는 것" : `${i + 1}. ${QUESTION_NAME[p.q]}`}</span>
+                        <b>{p.label}</b>
+                        <button type="button" className="link-btn" onClick={() => fix(p.q)} data-testid={`gq-fix-${p.q}`} aria-label={`${p.q === "rare" ? "해당하는 것" : QUESTION_NAME[p.q]} 답 고치기`}>
+                          고치기
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
                 <div className="btn-row">
                   <button type="button" className="btn btn-primary" onClick={showResults} data-testid="gq-results">
                     결과 보기 <Icon name="arrowRight" size={18} />
@@ -458,14 +496,16 @@ function Question(props: {
   extra: boolean;
   busy: boolean;
   headRef: React.RefObject<HTMLHeadingElement | null>;
-  onAnswer: (s: Situation | null) => void;
+  onAnswer: (s: Situation | null, label: string) => void;
 }) {
   const { id, sit, mode, n, extra, busy, headRef, onAnswer } = props;
   const d = DIM_BY_ID[id];
   const opts = flowAnswers(d, sit);
   return (
     <section aria-labelledby="gq-h" data-testid="gq-question" data-dim={id}>
-      <p className="gq-step">{extra && n > FLOW_LIMIT ? `더 답하기 · 질문 ${n}` : `질문 ${n} / ${FLOW_LIMIT}`}</p>
+      <p className="gq-step" data-testid="gq-step">
+        {extra && n > FLOW_LIMIT ? `더 답하기 · 질문 ${n}` : `질문 ${n} / ${FLOW_LIMIT}`} · {QUESTION_NAME[id]}
+      </p>
       <h1 className="h2 gq-q" id="gq-h" tabIndex={-1} ref={headRef}>
         {d.q(mode, sit)}
       </h1>
@@ -475,11 +515,11 @@ function Question(props: {
       )}
       <div className="gq-opts" role="group" aria-label="답">
         {opts.map((a) => (
-          <button type="button" className="gq-opt" key={a.key} disabled={busy} onClick={() => onAnswer(a.apply(sit))} data-testid={`gq-a-${a.key}`}>
+          <button type="button" className="gq-opt" key={a.key} disabled={busy} onClick={() => onAnswer(a.apply(sit), a.label)} data-testid={`gq-a-${a.key}`}>
             {a.label}
           </button>
         ))}
-        <button type="button" className="gq-opt gq-unknown" disabled={busy} onClick={() => onAnswer(null)} data-testid="gq-a-unknown">
+        <button type="button" className="gq-opt gq-unknown" disabled={busy} onClick={() => onAnswer(null, "잘 모르겠어요")} data-testid="gq-a-unknown">
           잘 모르겠어요
         </button>
       </div>
