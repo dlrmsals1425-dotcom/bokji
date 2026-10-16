@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { expect, test } from "@playwright/test";
 
-// Opt-in real browser encoder → Next gateway → Whisper integration.
+// Opt-in real browser encoder → Next gateway → OpenAI integration (billable).
 // Supply a synthetic Korean WAV containing 수원 / 일자리 / 월세, never private audio.
 const fixture = process.env.STT_TEST_WAV;
 test.use({
@@ -27,8 +27,8 @@ function wavDuration(path: string) {
   throw new Error("Expected a PCM WAV fixture");
 }
 
-test("실제 MediaRecorder와 자체 모델로 합성 한국어 음성 변환", async ({ page }) => {
-  test.skip(!fixture, "Set STT_TEST_WAV to a synthetic Korean WAV and start the STT worker.");
+test("실제 MediaRecorder와 OpenAI 모델로 합성 한국어 음성 변환", async ({ page }) => {
+  test.skip(!fixture, "Set STT_TEST_WAV and configure OPENAI_API_KEY on the web server.");
   test.setTimeout(150_000);
   const duration = wavDuration(fixture!);
   expect(duration).toBeLessThan(55_000);

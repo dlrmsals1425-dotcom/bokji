@@ -75,7 +75,7 @@ export function createRecordingSession(callbacks: SpeechCallbacks): SpeechSessio
         const messages: Record<number, string> = {
           413: "녹음이 너무 길거나 커요. 60초 안으로 다시 말해 주세요.",
           422: "인식할 음성이 없거나 녹음을 읽지 못했어요. 다시 말하거나 직접 입력해 주세요.",
-          429: "다른 음성을 변환하고 있어요. 잠시 뒤 다시 시도해 주세요.",
+          429: "음성 인식 요청이 많거나 이용 한도에 도달했어요. 잠시 뒤 다시 시도하거나 직접 입력해 주세요.",
           503: "음성 인식 서버에 연결할 수 없어요. 잠시 뒤 다시 시도하거나 직접 입력해 주세요.",
         };
         return fail(messages[response.status] ?? "음성을 글로 바꾸지 못했어요. 다시 시도하거나 직접 입력해 주세요.");

@@ -138,7 +138,7 @@ function SpeechDraft({ value, onApply }: Props) {
       ) : (
         <>
           <p className={styles.help}>사는 곳과 상황을 말하면 글로 바꿔 드려요. 내용을 확인한 뒤 입력칸에 넣을 수 있어요.</p>
-          <p className={styles.notice}>녹음한 음성을 이 서비스의 음성 인식 서버로 보내 글로 바꿔요. 녹음 파일과 인식 문장을 따로 보관하지 않아요.</p>
+          <p className={styles.notice}>녹음한 음성을 OpenAI로 보내 글로 바꿔요. 이 앱은 녹음 파일과 인식 문장을 따로 보관하지 않아요. 외부 음성 처리는 <a href="https://developers.openai.com/api/docs/guides/your-data" target="_blank" rel="noopener noreferrer">OpenAI 데이터 정책</a>을 따라요.</p>
           <label className={styles.consent} htmlFor={consentId}>
             <input id={consentId} type="checkbox" checked={consent} data-testid="voice-consent"
               onChange={(event) => { setConsent(event.target.checked); if (!event.target.checked) cancel(); }} />

@@ -81,7 +81,7 @@ async function finishVoice(page: Page, api: ApiControl, text: string) {
 }
 async function noProposal(page: Page) { await expect(page.getByTestId("voice-confirm")).toHaveCount(0); }
 
-test.describe("jinwoo 녹음 후 자체 STT API", () => {
+test.describe("jinwoo 녹음 후 OpenAI STT API", () => {
   test("쉬었다 말해도 60초까지 녹음하고 완료 때 한 번만 전송 @mobile", async ({ page }) => {
     const api = await openSituation(page);
     await page.clock.install();
@@ -214,7 +214,7 @@ test.describe("jinwoo 녹음 후 자체 STT API", () => {
       api.status = status;
       await startVoice(page);
       await page.getByTestId("voice-stop").click();
-      await expect(page.getByTestId("voice-status")).toContainText(status === 422 ? "인식할 음성이 없" : "다른 음성");
+      await expect(page.getByTestId("voice-status")).toContainText(status === 422 ? "인식할 음성이 없" : "이용 한도");
       await noProposal(page);
       await expect(page.getByTestId("v2-text")).toHaveValue("기존 문장");
     }

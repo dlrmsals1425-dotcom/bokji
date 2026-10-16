@@ -56,7 +56,7 @@ afterEach(() => {
   vi.unstubAllGlobals();
 });
 
-describe("recording and self-hosted STT session", () => {
+describe("recording and server STT session", () => {
   it("detects support without acquiring a microphone and is safe during SSR", () => {
     expect(isRecordingSupported()).toBe(true);
     expect(getUserMedia).not.toHaveBeenCalled();

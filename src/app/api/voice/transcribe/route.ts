@@ -2,35 +2,20 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 const MAX_BYTES = 8 * 1024 * 1024;
-const AUDIO_TYPES = new Set(["audio/webm", "video/webm", "audio/mp4", "audio/ogg", "audio/wav", "audio/x-wav"]);
-// Bound buffered audio per web-server process; the worker allows one inference.
+const EXTENSIONS: Record<string, string> = {
+  "audio/webm": "webm", "video/webm": "webm", "audio/mp4": "mp4",
+  "audio/ogg": "ogg", "audio/wav": "wav", "audio/x-wav": "wav",
+};
+const MODEL = "gpt-transcribe";
+const ENDPOINT = "https://api.openai.com/v1/audio/transcriptions";
+// Bound buffered audio per web-server process. Do not retry billable requests.
 let inFlight = 0;
 const json = (body: object, status = 200) => Response.json(body, { status, headers: { "Cache-Control": "no-store" } });
 
-function config() {
-  const value = process.env.STT_SERVICE_URL;
-  const token = process.env.STT_SERVICE_TOKEN;
-  if (!value || !token || token.length < 32) return null;
-  try {
-    const url = new URL(value);
-    const localHttp = url.protocol === "http:" && ["127.0.0.1", "localhost", "[::1]"].includes(url.hostname);
-    if ((!localHttp && url.protocol !== "https:")
-      || url.username || url.password || url.search || url.hash || url.pathname !== "/") return null;
-    return { url, token };
-  } catch { return null; }
-}
-
 export async function GET() {
-  const service = config();
-  if (!service) return json({ available: false }, 503);
-  try {
-    const response = await fetch(new URL("health", service.url), {
-      headers: { Authorization: `Bearer ${service.token}` },
-      signal: AbortSignal.timeout(3_000), cache: "no-store", redirect: "error",
-    });
-    const ready = response.ok && (await response.json()).ready === true;
-    return json({ available: ready }, ready ? 200 : 503);
-  } catch { return json({ available: false }, 503); }
+  // Configuration check only; no paid request before microphone consent/start.
+  const configured = Boolean(process.env.OPENAI_API_KEY?.trim());
+  return json({ available: configured }, configured ? 200 : 503);
 }
 
 export async function POST(request: Request) {
@@ -40,10 +25,10 @@ export async function POST(request: Request) {
   const url = new URL(request.url);
   const expectedOrigin = `${url.protocol}//${request.headers.get("host") ?? url.host}`;
   if (origin !== expectedOrigin) return json({ error: "invalid_origin" }, 403);
-  const service = config();
-  if (!service) return json({ error: "unavailable" }, 503);
+  const apiKey = process.env.OPENAI_API_KEY?.trim();
+  if (!apiKey) return json({ error: "unavailable" }, 503);
   const type = (request.headers.get("content-type") ?? "").split(";")[0].trim().toLowerCase();
-  if (!AUDIO_TYPES.has(type)) return json({ error: "unsupported_audio" }, 415);
+  if (!Object.hasOwn(EXTENSIONS, type)) return json({ error: "unsupported_audio" }, 415);
   const length = Number(request.headers.get("content-length"));
   if (length > MAX_BYTES) return json({ error: "audio_too_large" }, 413);
   const reader = request.body?.getReader();
@@ -65,21 +50,30 @@ export async function POST(request: Request) {
     if (bodyExpired) return json({ error: "upload_timeout" }, 408);
     clearTimeout(bodyTimer);
     if (!size) return json({ error: "empty_audio" }, 422);
-    const response = await fetch(new URL("transcribe", service.url), {
-      method: "POST", body: Buffer.concat(chunks),
-      headers: { Authorization: `Bearer ${service.token}`, "Content-Type": type },
+    const form = new FormData();
+    form.append("file", new Blob([new Uint8Array(Buffer.concat(chunks))], { type }), `recording.${EXTENSIONS[type]}`);
+    form.append("model", MODEL);
+    form.append("languages[]", "ko");
+    form.append("response_format", "json");
+    const response = await fetch(ENDPOINT, {
+      method: "POST", body: form,
+      // fetch supplies the multipart boundary. Never expose this key to clients.
+      headers: { Authorization: `Bearer ${apiKey}` },
       signal: AbortSignal.any([request.signal, AbortSignal.timeout(115_000)]),
       cache: "no-store", redirect: "error",
     });
     if (!response.ok) {
-      const status = [413, 422, 429, 503].includes(response.status) ? response.status : 502;
+      const status = [401, 403, 404].includes(response.status) ? 503
+        : [400, 415, 422].includes(response.status) ? 422
+          : [413, 429, 503].includes(response.status) ? response.status : 502;
       return json({ error: "transcription_failed" }, status);
     }
     const data: unknown = await response.json();
-    if (!data || typeof data !== "object" || !("text" in data) || typeof data.text !== "string" || !data.text.trim() || data.text.length > 10_000) {
+    if (!data || typeof data !== "object" || !("text" in data) || typeof data.text !== "string" || data.text.length > 10_000) {
       return json({ error: "invalid_response" }, 502);
     }
-    return json({ text: data.text });
+    if (!data.text.trim()) return json({ error: "no_speech" }, 422);
+    return json({ text: data.text.trim() });
   } catch { return json({ error: "unavailable" }, 503); }
   finally { clearTimeout(bodyTimer); reader.releaseLock(); inFlight--; }
 }

@@ -12,6 +12,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("wav", type=Path, help="Synthetic Korean WAV test fixture")
 parser.add_argument("--url", default="http://127.0.0.1:3220")
 parser.add_argument("--direct-worker", action="store_true")
+parser.add_argument("--skip-silence", action="store_true", help="Skip the separate silence request (e.g. billable API smoke test)")
 args = parser.parse_args()
 url = args.url.rstrip("/")
 headers = {"Content-Type": "audio/wav", "Origin": url}
@@ -30,6 +31,9 @@ assert "수원" in text, text
 assert "일자리" in text, text
 assert "월세" in text, text
 print(json.dumps({"synthetic_korean_text": text, "elapsed_seconds": round(time.monotonic() - start, 2)}, ensure_ascii=False))
+
+if args.skip_silence:
+    raise SystemExit(0)
 
 silence = BytesIO()
 with wave.open(silence, "wb") as audio:

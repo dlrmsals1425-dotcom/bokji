@@ -10,8 +10,7 @@ function request(body: BodyInit | null = "audio", headers: Record<string, string
   });
 }
 beforeEach(() => {
-  vi.stubEnv("STT_SERVICE_URL", "http://127.0.0.1:8767");
-  vi.stubEnv("STT_SERVICE_TOKEN", token);
+  vi.stubEnv("OPENAI_API_KEY", token);
   fetchMock.mockReset().mockResolvedValue(Response.json({ text: "수원시에 살아요." }));
   vi.stubGlobal("fetch", fetchMock);
 });
@@ -25,10 +24,17 @@ describe("same-origin STT gateway", () => {
     expect(response.headers.get("cache-control")).toBe("no-store");
     expect(await response.json()).toEqual({ text: "수원시" });
     const [url, init] = fetchMock.mock.calls[0];
-    expect(String(url)).toBe("http://127.0.0.1:8767/transcribe");
-    expect(init.headers).toEqual({ Authorization: `Bearer ${token}`, "Content-Type": "audio/webm" });
+    expect(String(url)).toBe("https://api.openai.com/v1/audio/transcriptions");
+    expect(init.headers).toEqual({ Authorization: `Bearer ${token}` });
     expect(init.redirect).toBe("error");
-    expect(init.body.toString()).toBe("audio");
+    const form = init.body as FormData;
+    expect(form.get("model")).toBe("gpt-transcribe");
+    expect(form.getAll("languages[]")).toEqual(["ko"]);
+    expect(form.get("response_format")).toBe("json");
+    const file = form.get("file") as File;
+    expect(file.name).toBe("recording.webm");
+    expect(file.type).toBe("audio/webm");
+    expect(await file.text()).toBe("audio");
   });
   it.each(["https://attacker.example", "null", ""])("rejects a foreign/missing Origin %s before forwarding", async (origin) => {
     expect((await POST(request("audio", { origin }))).status).toBe(403);
@@ -39,20 +45,28 @@ describe("same-origin STT gateway", () => {
     expect((await POST(request("audio", { host: "127.0.0.1:3220" }))).status).toBe(403);
     expect((await POST(request("audio", { host: "127.0.0.1:3220", "x-forwarded-host": "localhost:3220" }))).status).toBe(403);
   });
-  it.each(["", "http://remote.example", "https://user:password@example.com", "https://example.com/private", "invalid"])("rejects unsafe/missing worker URL %s", async (url) => {
-    vi.stubEnv("STT_SERVICE_URL", url);
+  it.each(["", "   "])("rejects missing/blank OpenAI keys before sending audio", async (key) => {
+    vi.stubEnv("OPENAI_API_KEY", key);
     expect((await POST(request())).status).toBe(503);
     expect(fetchMock).not.toHaveBeenCalled();
   });
-  it("supports a remote HTTPS worker so visitors need no local model", async () => {
-    vi.stubEnv("STT_SERVICE_URL", "https://speech.example.com");
+  it("does not send OpenAI keys to the old worker URL", async () => {
+    vi.stubEnv("STT_SERVICE_URL", "https://untrusted.example.com");
     expect((await POST(request())).status).toBe(200);
-    expect(String(fetchMock.mock.calls[0][0])).toBe("https://speech.example.com/transcribe");
+    expect(String(fetchMock.mock.calls[0][0])).toBe("https://api.openai.com/v1/audio/transcriptions");
   });
-  it("requires a nontrivial worker secret", async () => {
-    vi.stubEnv("STT_SERVICE_TOKEN", "short");
+  it("never silently falls back to local Whisper if the OpenAI key is missing", async () => {
+    vi.stubEnv("OPENAI_API_KEY", "");
+    vi.stubEnv("STT_SERVICE_URL", "http://127.0.0.1:8767");
+    vi.stubEnv("STT_SERVICE_TOKEN", token);
     expect((await POST(request())).status).toBe(503);
     expect(fetchMock).not.toHaveBeenCalled();
+  });
+  it.each([["audio/mp4", "mp4"], ["audio/ogg", "ogg"], ["audio/wav", "wav"], ["audio/x-wav", "wav"], ["video/webm", "webm"]])("names %s uploads with a matching extension", async (type, extension) => {
+    await POST(request("audio", { "content-type": type }));
+    const file = (fetchMock.mock.calls[0][1].body as FormData).get("file") as File;
+    expect(file.name).toBe(`recording.${extension}`);
+    expect(file.type).toBe(type);
   });
   it("rejects a non-audio body, an empty body, and a declared oversized body", async () => {
     expect((await POST(request("text", { "content-type": "text/plain" }))).status).toBe(415);
@@ -87,15 +101,20 @@ describe("same-origin STT gateway", () => {
     expect((await pending).status).toBe(408);
     expect(fetchMock).not.toHaveBeenCalled();
   });
-  it.each([413, 422, 429, 503, 401, 500])("sanitizes upstream error %i", async (status) => {
+  it.each([[413, 413], [422, 422], [429, 429], [503, 503], [401, 503], [403, 503], [404, 503], [400, 422], [415, 422], [500, 502]])("sanitizes upstream %i as %i without retrying", async (status, expected) => {
     fetchMock.mockResolvedValue(new Response("private details " + token, { status }));
     const response = await POST(request());
-    expect(response.status).toBe([413, 422, 429, 503].includes(status) ? status : 502);
+    expect(response.status).toBe(expected);
     expect(await response.text()).not.toContain(token);
+    expect(fetchMock).toHaveBeenCalledTimes(1);
   });
-  it.each([{}, { text: "" }, { text: "x".repeat(10_001) }])("rejects invalid upstream output", async (body) => {
+  it.each([{}, { text: 42 }, { text: "x".repeat(10_001) }])("rejects invalid upstream output", async (body) => {
     fetchMock.mockResolvedValue(Response.json(body));
     expect((await POST(request())).status).toBe(502);
+  });
+  it("handles empty transcription as no speech", async () => {
+    fetchMock.mockResolvedValue(Response.json({ text: "  ", languages: [] }));
+    expect((await POST(request())).status).toBe(422);
   });
   it("does not leak network errors", async () => {
     fetchMock.mockRejectedValue(new Error(token));
@@ -103,13 +122,13 @@ describe("same-origin STT gateway", () => {
     expect(response.status).toBe(503);
     expect(await response.text()).not.toContain(token);
   });
-  it("health requires a ready authenticated worker", async () => {
+  it("availability checks configuration without paid requests or exposing a key", async () => {
     for (const ready of [false, true]) {
-      fetchMock.mockResolvedValue(Response.json({ ready }));
+      vi.stubEnv("OPENAI_API_KEY", ready ? token : "");
       const response = await GET();
       expect(response.status).toBe(ready ? 200 : 503);
       expect(await response.json()).toEqual({ available: ready });
     }
-    expect(fetchMock.mock.calls[0][1].headers.Authorization).toBe(`Bearer ${token}`);
+    expect(fetchMock).not.toHaveBeenCalled();
   });
 });
