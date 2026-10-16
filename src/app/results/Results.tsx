@@ -523,9 +523,6 @@ function ResultsInner({ profile, mode }: { profile: Profile; mode: FindMode }) {
                   </button>
                 </li>
               </ul>
-              <p className="small muted" style={{ marginTop: "0.5rem" }}>
-                정밀 매칭·저장·알림은 로그인 기능과 함께 준비 중입니다.
-              </p>
             </section>
             <section className="side-box">
               <h2>
