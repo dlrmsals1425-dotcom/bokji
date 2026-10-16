@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildVisitSheet, canonicalDoc, formNames, placeGroup, sheetDocs } from "@/lib/client/visit";
+import { buildVisitSheet, canonicalDoc, formNames, placeGroup, sheetDocs, staffInfo } from "@/lib/client/visit";
 import type { Program } from "@/lib/data/types";
 
 // 원문(details 번들) 그대로 옮긴 구비서류 문자열
@@ -98,5 +98,46 @@ describe("buildVisitSheet: 신청하는 곳별로 묶고 서류는 한 번씩", 
     const s = JSON.stringify(sheet);
     expect(s).not.toMatch(/세\b|만원|소득 \d|가구원/);
     expect(Object.keys(sheet[0]).sort()).toEqual(["bring", "cond", "forms", "key", "label", "phones", "programs", "proxy", "trimmed"]);
+  });
+});
+
+/** 담당자 확인용 (2026-10-16 소유자: 초보 담당자도 이 한 장으로 무엇을 신청하러 왔는지 알고 찾아볼 수 있게) */
+describe("staffInfo: 담당자가 찾아볼 수 있는 원문 정보만", () => {
+  const SRC = (source: string, id: string) => [{ source, id, fetchedAt: "2026-10-02" }] as Program["sources"];
+  it("정부24: 서비스 번호·무엇·대상(원문 첫 줄)·근거 법령·소관", () => {
+    const s = staffInfo(
+      P({
+        id: "n.gov24-SSE000000170",
+        name: "기초연금",
+        summary: "만 65세 이상 어르신 중 소득이 적은 분께 매달 연금을 드려요.\n둘째 줄",
+        target: "○ 만 65세 이상 노인으로 소득 인정액이 선정기준액 이하인 자\n○ 대상자 : 만 65세 이상 노인인구의 70% 수준",
+        laws: ["기초연금법(제3조)", "기초연금법 시행령(제4조)", "셋째 법"],
+        owner: "보건복지부",
+        sources: SRC("gov24", "SSE000000170"),
+      }),
+    );
+    expect(s.ref).toBe("정부24 서비스 SSE000000170");
+    expect(s.what).toBe("만 65세 이상 어르신 중 소득이 적은 분께 매달 연금을 드려요.");
+    expect(s.target).toBe("만 65세 이상 노인으로 소득 인정액이 선정기준액 이하인 자");
+    expect(s.basis).toBe("근거 기초연금법(제3조), 기초연금법 시행령(제4조) · 소관 보건복지부");
+  });
+  it("복지로: 복지로 서비스 번호와 담당 부서(원문 소관)", () => {
+    const s = staffInfo(P({ id: "s41000.bokjiro-WLF00005606", name: "한부모가족 아동양육비 지원", summary: "", owner: "경기도 여성가족국 가족정책과", sources: SRC("bokjiro", "WLF00005606") }));
+    expect(s.ref).toBe("복지로 서비스 WLF00005606");
+    expect(s.basis).toBe("소관 경기도 여성가족국 가족정책과");
+  });
+  it("두 원천이 합쳐졌으면 정부24 번호 먼저, 내부 게시판 번호(icare)는 쓰지 않음", () => {
+    expect(staffInfo(P({ id: "x", name: "x", summary: "", sources: [...SRC("bokjiro", "WLF1"), ...SRC("gov24", "SSE2")] })).ref).toBe("정부24 서비스 SSE2");
+    expect(staffInfo(P({ id: "y", name: "y", summary: "", owner: "중앙부처 (전국 공통 사업)", sources: SRC("icare", "0083:1:1:1:1") })).ref).toBeNull();
+    expect(staffInfo(P({ id: "y", name: "y", summary: "", owner: "중앙부처 (전국 공통 사업)", sources: SRC("icare", "0083:1:1:1:1") })).basis).toBe("");
+  });
+  it("원문에 없으면 비워 둔다 (지어내지 않음)", () => {
+    const s = staffInfo(P({ id: "z", name: "z", summary: "", sources: SRC("manual", "m") }));
+    expect(s).toEqual({ ref: null, what: "", target: "", basis: "" });
+  });
+  it("한 장의 혜택마다 담당자 확인용 정보가 붙는다", () => {
+    const sheet = buildVisitSheet([{ program: P({ id: "a", name: "기초연금", summary: "매달 연금", applyMethod: "주민센터 방문", sources: SRC("gov24", "SSE1") }), bucket: "fit" }]);
+    expect(sheet[0].programs[0].staff.ref).toBe("정부24 서비스 SSE1");
+    expect(sheet[0].programs[0].staff.what).toBe("매달 연금");
   });
 });

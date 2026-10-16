@@ -623,11 +623,16 @@ html[data-large="1"] .fgrid fieldset + fieldset { border-left: 0; border-top: 1p
 .vs-head { border-bottom: 2px solid var(--ink); padding-bottom: 0.5rem; margin-bottom: 1rem; }
 .vs-title { font-size: 1.5rem; font-weight: 800; }
 .vs-meta { color: var(--muted); font-size: 0.9375rem; }
-.vs-places { list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem; }
+.vs-places { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.5rem; }
 .vs-place { border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 0.875rem 1rem; break-inside: avoid; }
 .vs-ptitle { font-size: 1.25rem; font-weight: 800; margin: 0 0 0.5rem; padding: 0.25rem 0.625rem; background: var(--primary-5); border-radius: 0.375rem; }
 .vs-k { font-weight: 700; color: var(--primary-70); margin: 0.5rem 0 0.25rem; font-size: 0.9375rem; }
-.vs-progs { margin: 0; padding-left: 1.25rem; display: grid; gap: 0.25rem; }
+.vs-progs { margin: 0; padding-left: 1.25rem; display: grid; gap: 0.5rem; }
+.vs-staff { background: var(--warm-5); border: 1px solid #f3d9b1; border-radius: var(--radius-sm); padding: 0.5rem 0.75rem; font-size: 0.9375rem; color: var(--ink); margin: 0.25rem 0 0.5rem; line-height: 1.5; }
+.vs-staff strong { color: var(--warm-60); margin-right: 0.25rem; }
+.vs-ref { color: var(--muted); font-size: 0.8125rem; font-weight: 600; }
+.vs-line { display: block; font-size: 0.875rem; color: var(--ink-2); line-height: 1.45; }
+.vs-page > .vs-meta { font-size: 0.8125rem; margin: 0 0 0.25rem; }
 .vs-progs strong { font-size: 1.0625rem; }
 .vs-sub { display: block; color: var(--muted); font-size: 0.875rem; }
 .vs-check { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.25rem; }
@@ -648,7 +653,10 @@ html[data-large="1"] .fgrid fieldset + fieldset { border-left: 0; border-top: 1p
   html[data-print="sheet"] .vs-title { font-size: 15pt; }
   html[data-print="sheet"] .vs-meta { font-size: 9pt; }
   html[data-print="sheet"] .vs-places { gap: 6pt; }
-  html[data-print="sheet"] .sheet-print-root[data-cols="2"] .vs-places { grid-template-columns: 1fr 1fr; align-items: start; }
+  html[data-print="sheet"] .sheet-print-root .vs-page { border: 0; padding: 0; break-after: page; }
+  html[data-print="sheet"] .sheet-print-root .vs-page:last-child { break-after: auto; }
+  html[data-print="sheet"] .vs-staff { font-size: 9pt; padding: 3pt 6pt; margin: 2pt 0 4pt; background: #fff6e8 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html[data-print="sheet"] .vs-line, html[data-print="sheet"] .vs-ref { font-size: 8.5pt; }
   html[data-print="sheet"] .vs-place { padding: 5pt 8pt; border-color: #888; break-inside: auto; }
   html[data-print="sheet"] .vs-ptitle { font-size: 12pt; margin-bottom: 3pt; padding: 1pt 5pt; break-after: avoid; background: #eef2fb !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   html[data-print="sheet"] .vs-k { font-size: 9.5pt; margin: 4pt 0 2pt; break-after: avoid; }
