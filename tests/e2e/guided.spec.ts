@@ -72,6 +72,37 @@ test.describe("질문 따라 찾기", () => {
     expectPrivate(requests, baseURL!);
   });
 
+  test("끝 화면·'질문 더 답하기'에서 '이전'을 눌러도 화면이 비지 않는다 @mobile", async ({ page }) => {
+    await page.goto("/ask");
+    await page.getByTestId("gq-parent").click();
+    await expect(page.getByTestId("gq-sido").locator("option")).not.toHaveCount(1, { timeout: 20_000 });
+    await page.getByTestId("gq-sido").selectOption("41000");
+    await page.getByTestId("gq-sigungu").selectOption({ label: "수원시" });
+    await page.getByTestId("gq-region-ok").click();
+    await expect(page.getByTestId("gq-question")).toHaveAttribute("data-dim", "age", { timeout: 30_000 });
+    await answerAll(page);
+    const guided = page.getByTestId("guided");
+    await expect(guided).toHaveAttribute("data-phase", "done");
+    // 끝 → 이전 = 드문 사항 고르기 → 이전 = 마지막 질문
+    await page.getByTestId("gq-back").click();
+    await expect(guided).toHaveAttribute("data-phase", "rare");
+    await expect(page.getByTestId("gq-rare")).toBeVisible();
+    await page.getByTestId("gq-back").click();
+    await expect(guided).toHaveAttribute("data-phase", "ask");
+    await expect(page.getByTestId("gq-question")).toBeVisible();
+    // 다시 끝까지 → 질문 더 답하기 → 이전 = 끝 화면
+    await answerAll(page);
+    await expect(guided).toHaveAttribute("data-phase", "done");
+    await expect(page.getByTestId("gq-more")).toBeVisible();
+    await page.getByTestId("gq-more").click();
+    await expect(page.getByTestId("gq-question")).toBeVisible();
+    await page.getByTestId("gq-back").click();
+    await expect(guided).toHaveAttribute("data-phase", "done");
+    await expect(page.getByTestId("gq-done")).toBeVisible();
+    // 어느 화면이든 내용이 비어 있지 않다
+    await expect(page.locator("#gq-h")).toBeVisible();
+  });
+
   test.describe("현재 위치", () => {
     test.use({ geolocation: { latitude: 37.2636, longitude: 127.0286 }, permissions: ["geolocation"] });
     test("나 → 현재 위치(수원)를 확인 → 10대 보기 → 지금 결과 보기", async ({ page }) => {
