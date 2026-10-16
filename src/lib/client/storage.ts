@@ -21,6 +21,8 @@ const EXTRAS_KEY = "bn.facts.v1";
 const DRAFT_KEY = "bn.drafts.v1";
 /** (QA 8차) 서비스 검색에서 고른 시·도/시·군·구 — 새로고침해도 유지 (주소에는 싣지 않음) */
 const SEARCH_REGION_KEY = "bn.searchRegion.v1";
+/** 이미 받고 있는 혜택 (대상별: 본인 / 부모님, 사업 묶음 이름만) */
+const RECEIVING_KEY = "bn.receiving.v1";
 
 export interface Settings {
   large: boolean;
@@ -166,6 +168,37 @@ export function useSearchRegion(): SearchRegion | null | undefined {
   return useSyncExternalStore(subscribe, readSearchRegion, () => undefined);
 }
 
+/* ---------- 이미 받고 있는 혜택 (2026-10-16) ---------- */
+type Receiving = Record<FindMode, string[]>;
+const EMPTY_RECEIVING: Receiving = { self: [], parent: [] };
+let receivingCache: { raw: string | null; value: Receiving } = { raw: null, value: EMPTY_RECEIVING };
+function readReceiving(): Receiving {
+  const raw = safeGet(profileStore(), RECEIVING_KEY);
+  if (raw !== receivingCache.raw) {
+    let value = EMPTY_RECEIVING;
+    try {
+      const v = JSON.parse(raw ?? "null");
+      const list = (x: unknown) => (Array.isArray(x) ? x.filter((k): k is string => typeof k === "string").slice(0, 200) : []);
+      if (v && typeof v === "object") value = { self: list(v.self), parent: list(v.parent) };
+    } catch {}
+    receivingCache = { raw, value };
+  }
+  return receivingCache.value;
+}
+export function setReceiving(mode: FindMode, key: string, on: boolean) {
+  const cur = readReceiving();
+  const list = cur[mode].filter((k) => k !== key);
+  const next = { ...cur, [mode]: on ? [...list, key] : list };
+  try {
+    profileStore().setItem(RECEIVING_KEY, JSON.stringify(next));
+  } catch {}
+  emit();
+}
+/** undefined = 확인 전(SSR) */
+export function useReceiving(): Receiving | undefined {
+  return useSyncExternalStore(subscribe, readReceiving, () => undefined);
+}
+
 /* ---------- 대상별 답 (본인 / 부모님) ---------- */
 export interface Draft {
   profile: Profile;
@@ -256,6 +289,7 @@ export function clearProfile() {
       store.removeItem(EXTRAS_KEY);
       store.removeItem(DRAFT_KEY);
       store.removeItem(SEARCH_REGION_KEY);
+      store.removeItem(RECEIVING_KEY);
     }
   } catch {}
   extrasCache = { raw: null, value: null };
