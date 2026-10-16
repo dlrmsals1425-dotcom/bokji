@@ -10,6 +10,7 @@ import {
 } from "../engine/profile";
 import type { Cond, EvalOptions, Evaluation, Leaf, Reason } from "../engine/types";
 import type { Program } from "../data/types";
+import { isSpecialEd } from "../data/refine";
 import { closedSince } from "./period";
 import { SAME_PROGRAM_KEYS, autoLike, familyKey, groupVariants, hiddenByDefault, scoreAll, type Filters, type Group, type Scored } from "./results";
 import type { FindMode } from "./mode";
@@ -787,6 +788,8 @@ function requiredLeaves(c: Cond | null): Leaf[] {
 /** 규칙에 장애 조건(잎)이 없고 이름이 장애인 대상일 때만: 장애 없음 → no, 모름 → open, 있음(본인·가족) → 원래 판정 */
 export function disabilityNameGate(p: Program, s: Situation): "no" | "open" | null {
   if (!DISABILITY_PERSON_NAME.test(p.name)) return null;
+  // 특수교육대상자 사업은 장애인 등록과 별개로 교육청이 선정 (refine.ts isSpecialEd — 장애 '아니요'만으로 빼지 않음)
+  if (isSpecialEd(p)) return null;
   // 장애 잎이 '구직자 또는 장애인'처럼 '또는' 안에만 있으면 장애 조건이 없는 것과 같음 (원문 이름은 장애인 대상)
   if (requiredLeaves(p.rule.logic).some((l) => l.field === "disability" && !l.soft)) return null;
   const d = s.profile.disability;
