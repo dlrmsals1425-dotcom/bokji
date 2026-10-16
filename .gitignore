@@ -56,3 +56,6 @@ shots/ref-*.png
 /pipeline/out/scenarios*
 /.next/
 /node_modules/
+/.venv-stt/
+/.models/
+__pycache__/

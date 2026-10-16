@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState, useSyncExternalStore } from "react";
-import { createSpeechSession, isSpeechRecognitionSupported } from "@/lib/voice/browser";
+import { createRecordingSession, isRecordingSupported } from "@/lib/voice/recorder";
 import { appendVoiceTranscript, MAX_VOICE_TEXT_LENGTH } from "@/lib/voice/text";
 import type { SpeechSession } from "@/lib/voice/types";
 import styles from "./VoiceInput.module.css";
@@ -21,7 +21,7 @@ export function VoiceInput(props: Props) {
 }
 
 function SpeechDraft({ value, onApply }: Props) {
-  const supported = useSyncExternalStore(subscribe, isSpeechRecognitionSupported, serverSupport);
+  const supported = useSyncExternalStore(subscribe, isRecordingSupported, serverSupport);
   const consentId = useId();
   const draftId = useId();
   const [consent, setConsent] = useState(false);
@@ -81,11 +81,16 @@ function SpeechDraft({ value, onApply }: Props) {
     setPhase("starting");
     setMessage("마이크를 준비하고 있어요. 권한을 요청하면 허용해 주세요.");
     const current = () => generation.current === token && !consumed.current;
-    const next = createSpeechSession({
+    const next = createRecordingSession({
       onStart: () => {
         if (!current() || terminal.current) return;
         setPhase("listening");
-        setMessage("듣고 있어요. 이어서 말해 주세요. 다 말했으면 ‘말하기 완료’를 눌러 주세요.");
+        setMessage("녹음하고 있어요. 쉬었다가 이어 말해도 돼요. 다 말했으면 ‘말하기 완료’를 눌러 주세요.");
+      },
+      onProcessing: () => {
+        if (!current() || terminal.current) return;
+        setPhase("processing");
+        setMessage("녹음한 음성을 글로 바꾸고 있어요. 잠시 기다려 주세요.");
       },
       onTranscript: (text) => {
         if (!current() || terminal.current) return;
@@ -133,7 +138,7 @@ function SpeechDraft({ value, onApply }: Props) {
       ) : (
         <>
           <p className={styles.help}>사는 곳과 상황을 말하면 글로 바꿔 드려요. 내용을 확인한 뒤 입력칸에 넣을 수 있어요.</p>
-          <p className={styles.notice}>음성은 브라우저 제공업체의 서버로 전송될 수 있어요. 이 앱은 녹음 파일과 인식 문장을 저장하지 않아요.</p>
+          <p className={styles.notice}>녹음한 음성을 이 서비스의 음성 인식 서버로 보내 글로 바꿔요. 녹음 파일과 인식 문장을 따로 보관하지 않아요.</p>
           <label className={styles.consent} htmlFor={consentId}>
             <input id={consentId} type="checkbox" checked={consent} data-testid="voice-consent"
               onChange={(event) => { setConsent(event.target.checked); if (!event.target.checked) cancel(); }} />
@@ -141,11 +146,11 @@ function SpeechDraft({ value, onApply }: Props) {
           </label>
           <div className={styles.actions}>
             {!active && <button type="button" className="btn btn-ghost" onClick={start} disabled={!consent} data-testid="voice-start">{phase === "idle" ? "음성 입력 시작" : "다시 말하기"}</button>}
-            {active && <button type="button" className="btn btn-ghost" disabled={phase === "processing"} data-testid="voice-stop"
-              onClick={() => { setPhase("processing"); setMessage("말한 내용을 확인하고 있어요…"); session.current?.stop(); }}>말하기 완료</button>}
+            {active && <button type="button" className="btn btn-ghost" disabled={phase !== "listening"} data-testid="voice-stop"
+              onClick={() => session.current?.stop()}>말하기 완료</button>}
             {(active || phase === "review" || phase === "error") && <button type="button" className="btn-quiet" onClick={cancel} data-testid="voice-cancel">취소</button>}
           </div>
-          <p className={styles.status} role="status" aria-live="polite" data-testid="voice-status">{message || "시작 버튼을 눌렀을 때만 마이크를 사용해요. 한 번에 최대 20초 동안 들어요."}</p>
+          <p className={styles.status} role="status" aria-live="polite" data-testid="voice-status">{message || "시작 버튼을 눌렀을 때만 마이크를 사용해요. 완료 버튼을 누를 때까지, 한 번에 최대 60초 동안 녹음해요."}</p>
           {phase === "review" && <div className={styles.confirm}>
             <label htmlFor={draftId} className="label">인식한 내용 — 틀린 부분은 고칠 수 있어요</label>
             <textarea id={draftId} className="input" rows={3} ref={draftRef} value={transcript} data-testid="voice-transcript"

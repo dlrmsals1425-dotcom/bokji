@@ -1,351 +1,234 @@
 import { expect, test, type Page } from "@playwright/test";
 
-/**
- * Local UI integration only. Constructors are replaced before application JS runs.
- * No real microphone, speech service, or external STT is used.
- */
-type MockSnapshot = { starts: number; stops: number; aborts: number; lang: string; continuous: boolean };
-type MockSpeech = {
-  snapshots: () => MockSnapshot[];
-  result: (index: number, text: string, final: boolean, late: boolean) => void;
-  error: (index: number, code: string, late: boolean) => void;
-  end: (index: number, late: boolean) => void;
-};
-type VoiceWindow = Window & { __voiceMock: MockSpeech };
+// Fake microphone/MediaRecorder + intercepted HTTP; real model checked separately.
+type Snapshot = { starts: number; stops: number; trackStops: number };
+type VoiceWindow = Window & { __voiceMock: {
+  snapshots: () => Snapshot[]; deny: boolean; late: (index: number) => void;
+} };
+type ApiControl = { text: string; status: number; health: number; uploads: number; hold?: Promise<void> };
 
-async function installSpeech(page: Page, supported = true) {
+async function openSituation(page: Page, supported = true): Promise<ApiControl> {
   await page.addInitScript(({ enabled }) => {
-    type ResultEvent = { resultIndex: number; results: { isFinal: boolean; length: number; 0: { transcript: string; confidence: number } }[] };
-    type Handlers = {
-      onstart: (() => void) | null;
-      onresult: ((event: ResultEvent) => void) | null;
-      onerror: ((event: { error: string; message: string }) => void) | null;
-      onend: (() => void) | null;
-    };
-    class FakeRecognition implements Handlers {
-      lang = "";
-      continuous = false;
-      interimResults = false;
-      maxAlternatives = 1;
-      onstart: Handlers["onstart"] = null;
-      onresult: Handlers["onresult"] = null;
-      onerror: Handlers["onerror"] = null;
-      onend: Handlers["onend"] = null;
-      captured: Handlers | null = null;
-      results: ResultEvent["results"] = [];
-      starts = 0;
-      stops = 0;
-      aborts = 0;
-      constructor() { instances.push(this); }
+    const records: FakeRecorder[] = [];
+    class FakeRecorder {
+      static isTypeSupported() { return true; }
+      state = "inactive";
+      mimeType = "audio/webm;codecs=opus";
+      starts = 0; stops = 0;
+      onstart: (() => void) | null = null;
+      onstop: (() => void) | null = null;
+      onerror: (() => void) | null = null;
+      ondataavailable: ((event: { data: Blob }) => void) | null = null;
+      capturedStop: (() => void) | null = null;
+      capturedError: (() => void) | null = null;
+      constructor(public stream: { trackStops: number }) { records.push(this); }
       start() {
-        this.starts += 1;
-        this.captured = { onstart: this.onstart, onresult: this.onresult, onerror: this.onerror, onend: this.onend };
+        this.starts++; this.state = "recording";
+        this.capturedStop = this.onstop; this.capturedError = this.onerror;
         queueMicrotask(() => this.onstart?.());
       }
-      stop() { this.stops += 1; }
-      abort() { this.aborts += 1; }
+      stop() {
+        this.stops++; this.state = "inactive";
+        queueMicrotask(() => {
+          this.ondataavailable?.({ data: new Blob(["synthetic audio"], { type: this.mimeType }) });
+          this.onstop?.();
+        });
+      }
     }
-    const instances: FakeRecognition[] = [];
     const mock = {
-      snapshots: () => instances.map(({ starts, stops, aborts, lang, continuous }) => ({ starts, stops, aborts, lang, continuous })),
-      result: (index: number, text: string, final: boolean, late: boolean) => {
-        const instance = instances[index];
-        if (!instance) throw new Error("Missing synthetic recognition instance " + index);
-        const handler = late ? instance.captured?.onresult : instance.onresult;
-        const resultIndex = instance.results.length;
-        const next = { isFinal: final, length: 1, 0: { transcript: text, confidence: 0.99 } };
-        const results = [...instance.results, next];
-        if (final) instance.results = results;
-        handler?.({ resultIndex, results });
-      },
-      error: (index: number, code: string, late: boolean) => {
-        const instance = instances[index];
-        const handler = late ? instance.captured?.onerror : instance.onerror;
-        handler?.({ error: code, message: "Synthetic browser recognition error" });
-      },
-      end: (index: number, late: boolean) => {
-        const instance = instances[index];
-        const handler = late ? instance.captured?.onend : instance.onend;
-        handler?.();
-      },
+      snapshots: () => records.map((r) => ({ starts: r.starts, stops: r.stops, trackStops: r.stream.trackStops })),
+      deny: false,
+      late: (index: number) => { records[index]?.capturedStop?.(); records[index]?.capturedError?.(); },
     };
     Object.defineProperty(window, "__voiceMock", { configurable: true, value: mock });
-    Object.defineProperty(window, "SpeechRecognition", { configurable: true, value: enabled ? FakeRecognition : undefined });
-    Object.defineProperty(window, "webkitSpeechRecognition", { configurable: true, value: enabled ? FakeRecognition : undefined });
+    Object.defineProperty(window, "MediaRecorder", { configurable: true, value: enabled ? FakeRecorder : undefined });
+    Object.defineProperty(navigator, "mediaDevices", { configurable: true, value: {
+      getUserMedia: async () => {
+        if (mock.deny) throw new DOMException("synthetic denial", "NotAllowedError");
+        const stream = { trackStops: 0, getTracks: () => [{ stop: () => { stream.trackStops++; } }] };
+        return stream;
+      },
+    } });
   }, { enabled: supported });
-}
-
-const snapshots = (page: Page) => page.evaluate(() => (window as unknown as VoiceWindow).__voiceMock.snapshots());
-const emitResult = (page: Page, index: number, text: string, final = true, late = false) =>
-  page.evaluate(({ index, text, final, late }) => (window as unknown as VoiceWindow).__voiceMock.result(index, text, final, late), { index, text, final, late });
-const emitError = (page: Page, index: number, code: string, late = false) =>
-  page.evaluate(({ index, code, late }) => (window as unknown as VoiceWindow).__voiceMock.error(index, code, late), { index, code, late });
-const emitEnd = (page: Page, index: number, late = false) =>
-  page.evaluate(({ index, late }) => (window as unknown as VoiceWindow).__voiceMock.end(index, late), { index, late });
-
-async function openSituation(page: Page, supported = true) {
-  await installSpeech(page, supported);
+  const api: ApiControl = { text: "수원시에 살고 있어요.", status: 200, health: 200, uploads: 0 };
+  await page.route("**/api/voice/transcribe", async (route) => {
+    if (route.request().method() === "GET") {
+      await route.fulfill({ status: api.health, json: { available: api.health === 200 } }); return;
+    }
+    api.uploads++;
+    await api.hold;
+    await route.fulfill({ status: api.status, json: api.status === 200 ? { text: api.text } : { error: "test_error" } });
+  });
   await page.goto("/situation?for=self&new=1");
   await expect(page.getByTestId("v2-text")).toBeVisible();
   await expect(page.getByTestId("voice-choice")).toBeVisible();
+  return api;
 }
-
+const snapshots = (page: Page) => page.evaluate(() => (window as unknown as VoiceWindow).__voiceMock.snapshots());
+const late = (page: Page, index: number) => page.evaluate((index) => (window as unknown as VoiceWindow).__voiceMock.late(index), index);
 async function startVoice(page: Page) {
   const index = (await snapshots(page)).length;
   await page.getByTestId("voice-consent").check();
   await page.getByTestId("voice-start").click();
-  await expect.poll(async () => (await snapshots(page))[index]?.starts).toBe(1);
-  expect((await snapshots(page))[index].lang).toBe("ko-KR");
+  await expect(page.getByTestId("voice-stop")).toBeEnabled();
+  expect((await snapshots(page))[index].starts).toBe(1);
   return index;
 }
-
-async function expectNoProposal(page: Page) {
-  await expect(page.getByTestId("voice-confirm")).toHaveCount(0);
-}
-
-async function finishVoice(page: Page, index: number, text: string) {
-  await emitResult(page, index, text);
+async function finishVoice(page: Page, api: ApiControl, text: string) {
+  api.text = text;
   await page.getByTestId("voice-stop").click();
-  await emitEnd(page, index);
+  await expect(page.getByTestId("voice-transcript")).toHaveValue(text);
 }
+async function noProposal(page: Page) { await expect(page.getByTestId("voice-confirm")).toHaveCount(0); }
 
-test.describe("jinwoo 말로 찾기 — 가짜 SpeechRecognition", () => {
-  test("첫 문장이 끝나도 계속 듣고 완료 버튼에서 여러 문장을 합침 @mobile", async ({ page }) => {
-    await openSituation(page);
+test.describe("jinwoo 녹음 후 자체 STT API", () => {
+  test("쉬었다 말해도 60초까지 녹음하고 완료 때 한 번만 전송 @mobile", async ({ page }) => {
+    const api = await openSituation(page);
+    await page.clock.install();
     const index = await startVoice(page);
-    expect((await snapshots(page))[index].continuous).toBe(true);
-    await emitResult(page, index, "수원시에 살고 있어요.");
-    await expectNoProposal(page);
+    await page.clock.fastForward(15_000);
+    expect(api.uploads).toBe(0);
+    expect((await snapshots(page))[index].stops).toBe(0);
     await expect(page.getByTestId("voice-stop")).toBeEnabled();
-    expect((await snapshots(page))[index].aborts).toBe(0);
-    await emitResult(page, index, "일자리를 찾고 있어요.");
-    await expectNoProposal(page);
+    await noProposal(page);
+    await finishVoice(page, api, "수원시에 살고 있어요. 일자리를 찾고 있어요.");
+    expect(api.uploads).toBe(1);
+    expect((await snapshots(page))[index].trackStops).toBe(1);
     await expect(page.getByTestId("v2-text")).toHaveValue("");
-    await page.getByTestId("voice-stop").click();
-    await emitEnd(page, index);
-    await expect(page.getByTestId("voice-transcript")).toHaveValue("수원시에 살고 있어요. 일자리를 찾고 있어요.");
-    await page.getByTestId("voice-confirm").click();
-    await expect(page.getByTestId("v2-text")).toHaveValue("수원시에 살고 있어요. 일자리를 찾고 있어요.");
   });
-
-  test("동의와 시작 뒤 final을 확인해야 입력칸에만 넣고 자동 제출하지 않음 @mobile", async ({ page }) => {
-    await openSituation(page);
+  test("60초 제한에서도 녹음한 내용을 변환하고 자동 제출하지 않음", async ({ page }) => {
+    const api = await openSituation(page);
+    await page.clock.install();
+    await startVoice(page);
+    await page.clock.fastForward(60_000);
+    await expect(page.getByTestId("voice-transcript")).toHaveValue(api.text);
+    expect(api.uploads).toBe(1);
+    await expect(page.getByTestId("v2-text")).toHaveValue("");
+  });
+  test("동의·시작·문장 확인 후 입력칸에만 반영 @mobile", async ({ page }) => {
+    const api = await openSituation(page);
     expect(await snapshots(page)).toHaveLength(0);
     await expect(page.getByTestId("voice-start")).toBeDisabled();
     await page.getByTestId("voice-consent").check();
     expect(await snapshots(page)).toHaveLength(0);
-    const index = await startVoice(page);
-    await emitResult(page, index, "수원시에서", false);
-    await expectNoProposal(page);
-    await expect(page.getByTestId("v2-text")).toHaveValue("");
+    await startVoice(page);
     const ageBefore = await page.locator("#age").inputValue();
-    await emitResult(page, index, "수원시에 사는 만 35세입니다.");
-    await emitEnd(page, index);
-    await expect(page.getByTestId("voice-transcript")).toHaveValue("수원시에 사는 만 35세입니다.");
-    await expect(page.getByTestId("voice-confirm")).toHaveText(/입력칸에 넣기/);
+    await finishVoice(page, api, "수원시에 사는 만 35세입니다.");
     await expect(page.getByTestId("v2-text")).toHaveValue("");
     await page.getByTestId("voice-transcript").fill("수원시에 사는 만 36세입니다.");
     await page.getByTestId("voice-confirm").click();
     await expect(page.getByTestId("v2-text")).toHaveValue("수원시에 사는 만 36세입니다.");
-    await expect(page).toHaveURL(/\/situation\?for=self&new=1$/);
     await expect(page.locator("#age")).toHaveValue(ageBefore);
     await expect(page.getByTestId("v2-understood")).toHaveCount(0);
-    await expect(page.getByTestId("v2-fill")).toBeEnabled();
+    await expect(page).toHaveURL(/\/situation\?for=self&new=1$/);
   });
-
-  test("기존 문장 뒤 공백으로 한 번만 이어 붙이고 late final도 중복 삽입하지 않음 @mobile", async ({ page }) => {
-    await openSituation(page);
-    const original = "월세로 살고 있어요.";
-    const transcript = "일자리를 찾고 있어요.";
-    await page.getByTestId("v2-text").fill(original);
+  test("기존 문장 뒤 한 번만 추가하고 늦은 이벤트는 무시 @mobile", async ({ page }) => {
+    const api = await openSituation(page);
+    await page.getByTestId("v2-text").fill("기존 문장");
     const index = await startVoice(page);
-    await finishVoice(page, index, transcript);
-    await expect(page.getByTestId("voice-confirm")).toBeVisible();
-    await expect(page.getByTestId("v2-text")).toHaveValue(original);
+    await finishVoice(page, api, "추가 문장");
     await page.getByTestId("voice-confirm").evaluate((element) => {
-      (element as HTMLButtonElement).click();
-      (element as HTMLButtonElement).click();
+      (element as HTMLButtonElement).click(); (element as HTMLButtonElement).click();
     });
-    await expect(page.getByTestId("v2-text")).toHaveValue(original + " " + transcript);
-    await emitResult(page, index, transcript, true, true);
-    await emitEnd(page, index, true);
-    await expect(page.getByTestId("v2-text")).toHaveValue(original + " " + transcript);
-    await expectNoProposal(page);
-    await expect(page.getByTestId("v2-understood")).toHaveCount(0);
+    await late(page, index);
+    await expect(page.getByTestId("v2-text")).toHaveValue("기존 문장 추가 문장");
+    expect(api.uploads).toBe(1);
+    await noProposal(page);
   });
-
-  test("미지원 브라우저는 기존 입력과 수동 문장 채우기를 유지", async ({ page }) => {
+  test("미지원 환경에서도 직접 입력과 문장 해석 가능", async ({ page }) => {
     await openSituation(page, false);
-    await expect(page.getByTestId("voice-status")).toContainText(/지원|사용할 수 없/);
-    expect(await snapshots(page)).toHaveLength(0);
+    await expect(page.getByTestId("voice-status")).toContainText("지원하지");
     await page.getByTestId("v2-text").fill("수원시에 사는 만 35세입니다.");
     await page.getByTestId("v2-fill").click();
     await expect(page.getByTestId("v2-understood")).toBeVisible();
-    await expect(page).toHaveURL(/\/situation/);
+    expect(await snapshots(page)).toHaveLength(0);
   });
-
-  test("권한 거절은 기존 입력을 바꾸지 않으며 수동 입력을 유지", async ({ page }) => {
+  test("서버가 준비되지 않으면 마이크를 열지 않음", async ({ page }) => {
+    const api = await openSituation(page); api.health = 503;
+    await page.getByTestId("voice-consent").check();
+    await page.getByTestId("voice-start").click();
+    await expect(page.getByTestId("voice-status")).toContainText("서버에 연결할 수 없");
+    expect(await snapshots(page)).toHaveLength(0);
+  });
+  test("마이크 권한 거절 후 기존 입력 보존", async ({ page }) => {
     await openSituation(page);
-    const original = "이 문장은 직접 적었습니다.";
-    await page.getByTestId("v2-text").fill(original);
-    const index = await startVoice(page);
-    await emitError(page, index, "not-allowed");
-    await emitEnd(page, index, true);
-    await expect(page.getByTestId("voice-status")).toContainText(/권한|허용/);
-    await expectNoProposal(page);
-    await expect(page.getByTestId("v2-text")).toHaveValue(original);
-    await expect(page.getByTestId("v2-fill")).toBeEnabled();
+    await page.getByTestId("v2-text").fill("보존할 문장");
+    await page.evaluate(() => { (window as unknown as VoiceWindow).__voiceMock.deny = true; });
+    await page.getByTestId("voice-consent").check();
+    await page.getByTestId("voice-start").click();
+    await expect(page.getByTestId("voice-status")).toContainText("허용되지");
+    await expect(page.getByTestId("v2-text")).toHaveValue("보존할 문장");
   });
-
-  test("취소 전 저장된 final 콜백이 늦게 와도 기존 입력·제안은 그대로", async ({ page }) => {
-    await openSituation(page);
-    const original = "기존 입력";
-    await page.getByTestId("v2-text").fill(original);
-    const index = await startVoice(page);
-    await page.getByTestId("voice-cancel").click();
-    await expect.poll(async () => (await snapshots(page))[index].aborts).toBeGreaterThan(0);
-    await emitResult(page, index, "취소한 발화", true, true);
-    await emitEnd(page, index, true);
-    await expectNoProposal(page);
-    await expect(page.getByTestId("v2-text")).toHaveValue(original);
-  });
-
-  test("동의를 철회하면 진행 중 인식을 취소하고 다시 시작하지 않음", async ({ page }) => {
-    await openSituation(page);
-    const original = "직접 적은 내용";
-    await page.getByTestId("v2-text").fill(original);
-    const index = await startVoice(page);
-    await page.getByTestId("voice-consent").uncheck();
-    await expect.poll(async () => (await snapshots(page))[index].aborts).toBe(1);
-    await emitResult(page, index, "동의 철회 전 음성", true, true);
-    await emitError(page, index, "network", true);
-    await expectNoProposal(page);
-    await expect(page.getByTestId("voice-start")).toBeDisabled();
-    await expect(page.getByTestId("voice-status")).toContainText("취소");
-    await expect(page.getByTestId("v2-text")).toHaveValue(original);
-  });
-
-  test("탭 숨김은 진행 중 인식과 확인 대기 문장을 모두 폐기", async ({ page }) => {
-    for (const review of [false, true]) {
-      await openSituation(page);
-      await page.getByTestId("v2-text").fill("보존할 기존 문장");
+  for (const action of ["cancel", "revoke", "typing", "mode", "fill", "hidden", "navigate"] as const) {
+    test(`${action}: 녹음과 마이크를 종료하고 늦은 이벤트 폐기`, async ({ page }) => {
+      const api = await openSituation(page);
+      await page.getByTestId("v2-text").fill("수원시에 사는 만 35세입니다.");
       const index = await startVoice(page);
-      if (review) {
-        await finishVoice(page, index, "아직 확인하지 않은 문장");
-        await expect(page.getByTestId("voice-transcript")).toBeVisible();
-      }
-      // Headless visibility is simulated; this checks the page lifecycle handler.
-      await page.evaluate(() => {
+      if (action === "cancel") await page.getByTestId("voice-cancel").click();
+      if (action === "revoke") await page.getByTestId("voice-consent").uncheck();
+      if (action === "typing") await page.getByTestId("v2-text").fill("직접 고친 문장");
+      if (action === "mode") await page.getByTestId("mode-parent").click();
+      if (action === "fill") await page.getByTestId("v2-fill").click();
+      if (action === "hidden") await page.evaluate(() => {
         Object.defineProperty(document, "hidden", { configurable: true, value: true });
         document.dispatchEvent(new Event("visibilitychange"));
       });
-      await expect.poll(async () => (await snapshots(page))[index].aborts).toBe(1);
-      await emitResult(page, index, "탭 숨김 전 늦은 결과", true, true);
-      await emitEnd(page, index, true);
-      await expectNoProposal(page);
-      await expect(page.getByTestId("voice-status")).toContainText("취소");
-      await expect(page.getByTestId("v2-text")).toHaveValue("보존할 기존 문장");
-    }
-  });
-
-  test("인식 중 직접 문장을 고치면 이전 발화를 폐기 @mobile", async ({ page }) => {
-    await openSituation(page);
-    await page.getByTestId("v2-text").fill("처음 입력");
-    const index = await startVoice(page);
-    await page.getByTestId("v2-text").fill("사용자가 새로 고친 입력");
-    await emitResult(page, index, "오래된 음성 입력", true, true);
-    await emitEnd(page, index, true);
-    await expectNoProposal(page);
-    await expect(page.getByTestId("v2-text")).toHaveValue("사용자가 새로 고친 입력");
-  });
-
-  test("인식 제안 이후 문장을 수정해도 확인으로 예전 결과를 넣지 못함", async ({ page }) => {
-    await openSituation(page);
-    const index = await startVoice(page);
-    await finishVoice(page, index, "수정 전 음성 문장");
-    await expect(page.getByTestId("voice-confirm")).toBeVisible();
-    await page.getByTestId("v2-text").fill("직접 적은 새 문장");
-    await expectNoProposal(page);
-    await expect(page.getByTestId("v2-text")).toHaveValue("직접 적은 새 문장");
-  });
-
-  test("누구 선택을 바꾸면 다른 대상의 늦은 발화를 폐기", async ({ page }) => {
-    await openSituation(page);
-    await page.getByTestId("v2-text").fill("본인에 관한 입력");
-    const index = await startVoice(page);
-    await page.getByTestId("mode-parent").click();
-    await expect(page.getByTestId("v2-situation")).toHaveAttribute("data-mode", "parent");
-    const afterModeChange = await page.getByTestId("v2-text").inputValue();
-    await emitResult(page, index, "본인의 오래된 음성", true, true);
-    await emitEnd(page, index, true);
-    await expectNoProposal(page);
-    await expect(page.getByTestId("v2-text")).toHaveValue(afterModeChange);
-    await expect(page.getByTestId("v2-situation")).toHaveAttribute("data-mode", "parent");
-  });
-
-  test("현재 문장으로 아래 칸을 채우면 진행 중 음성의 결과는 폐기", async ({ page }) => {
-    await openSituation(page);
-    const original = "수원시에 사는 만 35세입니다.";
-    await page.getByTestId("v2-text").fill(original);
-    const index = await startVoice(page);
-    await page.getByTestId("v2-fill").click();
-    await expect(page.getByTestId("v2-understood")).toBeVisible();
-    await emitResult(page, index, "이전 인식 결과", true, true);
-    await emitEnd(page, index, true);
-    await expectNoProposal(page);
-    await expect(page.getByTestId("v2-text")).toHaveValue(original);
-  });
-
-  test("화면을 벗어난 뒤 늦은 결과는 입력 화면을 열거나 이동시키지 않음", async ({ page }) => {
-    await openSituation(page);
-    const index = await startVoice(page);
-    await page.locator(".crumbs a").first().click();
-    await expect(page).toHaveURL(/\/$/);
-    await emitResult(page, index, "화면 이동 전 인식", true, true);
-    await emitEnd(page, index, true);
-    await expect(page).toHaveURL(/\/$/);
-    await expect(page.getByTestId("voice-confirm")).toHaveCount(0);
-  });
-
-  test("재녹음 이후 이전 세션의 late 콜백이 최신 제안을 덮지 않음", async ({ page }) => {
-    await openSituation(page);
-    const old = await startVoice(page);
-    await page.getByTestId("voice-cancel").click();
-    const current = await startVoice(page);
-    await finishVoice(page, current, "새롭게 말한 상황");
-    await expect(page.getByTestId("voice-transcript")).toHaveValue("새롭게 말한 상황");
-    await emitResult(page, old, "이전 상황", true, true);
-    await emitEnd(page, old, true);
-    await expect(page.getByTestId("voice-transcript")).toHaveValue("새롭게 말한 상황");
-    await page.getByTestId("voice-confirm").click();
-    await expect(page.getByTestId("v2-text")).toHaveValue("새롭게 말한 상황");
-  });
-
-  test("중지 후 무음 종료는 기존 입력을 지우거나 unknown으로 바꾸지 않음", async ({ page }) => {
-    await openSituation(page);
-    const original = "무음 전 기존 입력";
-    await page.getByTestId("v2-text").fill(original);
-    const index = await startVoice(page);
+      if (action === "navigate") await page.locator(".crumbs a").first().click();
+      await expect.poll(async () => (await snapshots(page))[index].trackStops).toBe(1);
+      await late(page, index);
+      await noProposal(page);
+      expect(api.uploads).toBe(0);
+      if (action === "navigate") await expect(page).toHaveURL(/\/$/);
+      else if (action === "typing") await expect(page.getByTestId("v2-text")).toHaveValue("직접 고친 문장");
+      else if (action !== "mode") await expect(page.getByTestId("v2-text")).toHaveValue("수원시에 사는 만 35세입니다.");
+    });
+  }
+  test("변환 중 취소 후 늦은 HTTP 응답은 버림 @mobile", async ({ page }) => {
+    const api = await openSituation(page);
+    let release!: () => void;
+    api.hold = new Promise((resolve) => { release = resolve; });
+    await startVoice(page);
     await page.getByTestId("voice-stop").click();
-    expect((await snapshots(page))[index].stops).toBe(1);
-    await emitEnd(page, index);
-    await expectNoProposal(page);
-    await expect(page.getByTestId("v2-text")).toHaveValue(original);
-    await expect(page.getByTestId("v2-fill")).toBeEnabled();
+    await expect.poll(() => api.uploads).toBe(1);
+    await expect(page.getByTestId("voice-status")).toContainText("글로 바꾸고");
+    await page.getByTestId("voice-cancel").click();
+    release();
+    await noProposal(page);
+    await expect(page.getByTestId("v2-text")).toHaveValue("");
   });
-
-  test("500자 초과 발화·이어 붙인 문장은 조용히 자르지 않고 안내", async ({ page }) => {
-    for (const [original, transcript] of [["", "가".repeat(501)], ["나".repeat(490), "다".repeat(20)]]) {
-      await openSituation(page);
-      await page.getByTestId("v2-text").fill(original);
-      const index = await startVoice(page);
-      await finishVoice(page, index, transcript);
-      const confirm = page.getByTestId("voice-confirm");
-      await expect.poll(async () => /500/.test(await page.getByTestId("voice-choice").innerText()) || await confirm.count() > 0).toBe(true);
-      if (await confirm.count() && await confirm.isEnabled()) await confirm.click();
-      await expect(page.getByTestId("voice-choice")).toContainText(/500/);
-      await expect(page.getByTestId("v2-text")).toHaveValue(original);
-      await expect(page).toHaveURL(/\/situation/);
+  test("확인 전 직접 수정하면 이전 초안을 폐기하고 다시 녹음 가능", async ({ page }) => {
+    const api = await openSituation(page);
+    const old = await startVoice(page);
+    await finishVoice(page, api, "첫 번째 초안");
+    await page.getByTestId("v2-text").fill("직접 고친 문장");
+    await noProposal(page);
+    await startVoice(page);
+    await finishVoice(page, api, "두 번째 초안");
+    await late(page, old);
+    await expect(page.getByTestId("voice-transcript")).toHaveValue("두 번째 초안");
+  });
+  test("무음과 서버 혼잡 오류에서 기존 입력 유지", async ({ page }) => {
+    const api = await openSituation(page);
+    await page.getByTestId("v2-text").fill("기존 문장");
+    for (const status of [422, 429]) {
+      api.status = status;
+      await startVoice(page);
+      await page.getByTestId("voice-stop").click();
+      await expect(page.getByTestId("voice-status")).toContainText(status === 422 ? "인식할 음성이 없" : "다른 음성");
+      await noProposal(page);
+      await expect(page.getByTestId("v2-text")).toHaveValue("기존 문장");
     }
+  });
+  test("500자 넘는 발화나 합산 문장을 자동으로 자르지 않음", async ({ page }) => {
+    const api = await openSituation(page);
+    api.text = "가".repeat(501);
+    await startVoice(page); await page.getByTestId("voice-stop").click();
+    await expect(page.getByTestId("voice-status")).toContainText("500자");
+    await noProposal(page);
+    await page.getByTestId("v2-text").fill("나".repeat(490));
+    await startVoice(page); await finishVoice(page, api, "다".repeat(20));
+    await expect(page.getByTestId("voice-confirm")).toBeDisabled();
+    await expect(page.getByTestId("voice-choice")).toContainText("500");
+    await expect(page.getByTestId("v2-text")).toHaveValue("나".repeat(490));
   });
 });
