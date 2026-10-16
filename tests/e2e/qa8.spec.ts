@@ -57,14 +57,14 @@ test("자녀 없음(고양 청년 예시) → 한부모 질문 없음, 성남 �
   await expect(page.getByTestId("v2-q-daycare")).toBeVisible({ timeout: 20_000 });
 });
 
-test("검색: 저장된 상황이 있으면 맞춤 결과와 같은 판정 말, 전국 공통 사업 표시", async ({ page }) => {
+test("검색: 저장된 상황이 있으면 맞춤 결과와 같은 판정 말, 지역 안내에 실린 중앙부처 사업 표시", async ({ page }) => {
   await page.goto("/results?example=parent-care&for=parent");
   await page.goto("/search?life=senior");
   const card = page.getByTestId("program-card").first();
   await expect(card).toBeVisible({ timeout: 20_000 });
   await expect(page.getByTestId("card-judge").first()).toContainText(/받으실 수 있어요|신청할 때 확인|답하면 정해져요|맞지 않아요/);
   await expect(page.getByText(/가능성 있음|조건 불일치/)).toHaveCount(0);
-  await expect(page.locator(".prow .meta").filter({ hasText: /전국 공통 사업 · 경기 수원시 안내/ }).first()).toBeVisible();
+  await expect(page.locator(".prow .meta").filter({ hasText: /중앙부처 사업 · 경기 수원시 안내/ }).first()).toBeVisible();
 });
 
 test("검색 지역은 새로고침해도 유지 (주소에는 싣지 않음), 결과 순서도 같음", async ({ page }) => {
