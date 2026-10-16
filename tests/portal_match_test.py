@@ -1,0 +1,361 @@
+"""전국 법령 포털 서식 후보 점수. 게시 승인을 만들지 않는지 확인한다."""
+
+from __future__ import annotations
+
+import copy
+import sys
+import unittest
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from pipeline.forms.portal_match import (  # noqa: E402
+    classify_role,
+    evaluate_candidate,
+    law_variants,
+    normalize_law,
+    program_tokens,
+)
+
+GOYANG = {"sido": "41000", "sigungu": "41280", "label": "경기 고양시"}
+SUWON = {"sido": "41000", "sigungu": "41110", "label": "경기 수원시"}
+GYEONGGI = {"sido": "41000", "label": "경기도"}
+SEOUL = {"sido": "11000", "label": "서울특별시"}
+_FORBIDDEN = r"필수|확정|게시|검증|승인|자격"
+
+
+def prog(**overrides):
+    base = {
+        "id": "p",
+        "name": "테스트",
+        "scope": "sigungu",
+        "region": dict(GOYANG),
+        "laws": [],
+        "aliases": [],
+    }
+    base.update(overrides)
+    return base
+
+
+def form(**overrides):
+    base = {
+        "id": "f",
+        "sourceKind": "ordin",
+        "title": "신청서",
+        "declaredKind": "서식",
+        "lawTitle": "",
+        "lawId": "1",
+        "regionCode": "41280",
+        "regionLabel": "경기도 고양시",
+        "dateKind": "effective",
+        "sourceUrl": "https://www.law.go.kr/example",
+    }
+    base.update(overrides)
+    return base
+
+
+class NormalizeLawTest(unittest.TestCase):
+    def test_strips_citations_and_keeps_decree_titles(self):
+        self.assertEqual(normalize_law("「아동복지법」(제3조, 제1항)"), "아동복지법")
+        self.assertEqual(normalize_law("재난 및 안전관리 기본법(제66조, 제5항)"), "재난및안전관리기본법")
+        self.assertEqual(normalize_law("재난 및 안전관리 기본법 시행령(제73조의2)"), "재난및안전관리기본법시행령")
+        self.assertEqual(normalize_law("농어업재해보험법(제19조의0, 제0항)"), "농어업재해보험법")
+        self.assertEqual(normalize_law("아동복지법 제4조의2 제1항"), "아동복지법")
+        self.assertEqual(normalize_law("사회ㆍ복지법"), normalize_law("사회·복지법"))
+        self.assertNotEqual(normalize_law("아동복지법"), normalize_law("아동복지법 시행령"))
+        self.assertNotEqual(normalize_law("아동복지법 시행령"), normalize_law("아동복지법 시행규칙"))
+        self.assertEqual(
+            normalize_law("고양시 교복 지원 조례(제3조) || 다른 법".split("||")[0]),
+            "고양시교복지원조례",
+        )
+
+    def test_empty_and_none(self):
+        self.assertEqual(normalize_law(None), "")
+        self.assertEqual(normalize_law(""), "")
+        self.assertEqual(normalize_law("   "), "")
+
+
+class LawVariantsTest(unittest.TestCase):
+    def test_basic_law_and_ordinance_are_search_strings_only(self):
+        self.assertEqual(law_variants("아동복지법"), ["아동복지법", "아동복지법시행령", "아동복지법시행규칙"])
+        self.assertEqual(
+            law_variants("사회복지사 등의 처우 및 지위 향상을 위한 법률"),
+            [
+                "사회복지사등의처우및지위향상을위한법률",
+                "사회복지사등의처우및지위향상을위한법률시행령",
+                "사회복지사등의처우및지위향상을위한법률시행규칙",
+            ],
+        )
+        self.assertEqual(law_variants("고양시 교복 지원 조례"), ["고양시교복지원조례", "고양시교복지원조례시행규칙"])
+        self.assertNotIn("고양시교복지원조례시행령", law_variants("고양시 교복 지원 조례"))
+
+    def test_enforcement_titles_do_not_grow_again(self):
+        self.assertEqual(law_variants("아동복지법 시행규칙"), ["아동복지법시행규칙"])
+        self.assertEqual(law_variants("아동복지법 시행령"), ["아동복지법시행령"])
+        self.assertEqual(law_variants("고양시 교복 지원 조례 시행규칙"), ["고양시교복지원조례시행규칙"])
+        self.assertEqual(law_variants(None), [])
+        self.assertEqual(law_variants(""), [])
+
+
+class ClassifyRoleTest(unittest.TestCase):
+    def test_deleted_wins(self):
+        self.assertEqual(classify_role("[별지 제1호서식] <삭제 2017.11.14.>", "삭제"), "deleted")
+        self.assertEqual(classify_role("[별지 제1호서식] <삭제 2017.11.14.> 동의서", "서식"), "deleted")
+        self.assertEqual(classify_role("교복구입비 지원신청서", "deleted"), "deleted")
+        self.assertEqual(classify_role("동의서", "폐지"), "deleted")
+
+    def test_explicit_institution_before_consent(self):
+        self.assertEqual(classify_role("[별지 제1호서식] 기관용 동의서", "서식"), "administrative")
+        self.assertEqual(classify_role("기관용 개인정보 수집 이용 동의서", "서식"), "administrative")
+        self.assertEqual(classify_role("학교용 서약서", "서식"), "administrative")
+        self.assertEqual(classify_role("개인정보 수집ㆍ이용 동의서", "서식"), "consent")
+
+    def test_operator_forms_are_not_applications(self):
+        samples = [
+            "노인복지시설 수탁운영 신청서",
+            "장애인 이동용 보장구 수리업체 지정 신청서",
+            "우수농산물 학교급식 지원신청서(학교용)",
+            "학교급식 지원금 교부신청서",
+            "현금출납부",
+            "장수축하금 지급대장",
+            "지급대상자 명부",
+            "자활기금 지원 결정 통지서",
+            "자활기금 정산 보고서",
+        ]
+        for title in samples:
+            self.assertEqual(classify_role(title, "서식"), "administrative", title)
+
+    def test_citizen_report_and_postpartum_care(self):
+        self.assertEqual(classify_role("[별지 서식]사회재난 피해신고서", "서식"), "application")
+        self.assertEqual(classify_role("피해 신고서", "서식"), "application")
+        self.assertEqual(classify_role("산후관리 서비스 신청서", "서식"), "application")
+        self.assertEqual(classify_role("산후관리사 신청서", "서식"), "application")
+        self.assertEqual(classify_role("자활기금 사용 신고서", "서식"), "reference")
+        self.assertNotEqual(classify_role("산후관리 신청서", "서식"), "administrative")
+
+    def test_other_roles_and_annex(self):
+        self.assertEqual(classify_role("[별표 1] 심사기준", "별표"), "reference")
+        self.assertEqual(classify_role("노동취약계층 유급병가지원 신청 위임장", "서식"), "delegation")
+        self.assertEqual(classify_role("서약서", "서식"), "consent")
+        self.assertEqual(classify_role("교복구입비 지원신청서", "서식"), "application")
+        self.assertEqual(classify_role("등록금 지급 확인서", "서식"), "supporting")
+        self.assertEqual(classify_role(None, None), "reference")
+
+
+class ProgramTokensTest(unittest.TestCase):
+    def test_drops_place_and_generic_words_keeps_compounds(self):
+        tokens = program_tokens(prog(
+            name="경기도 고양시 교복구입비 지원 사업",
+            aliases=["교복 지원", "산후관리 서비스", "복지관 운영"],
+        ))
+        self.assertEqual(tokens, ["교복구입비", "산후관리", "복지관"])
+        self.assertNotIn("지원", tokens)
+        self.assertNotIn("운영", tokens)
+        self.assertNotIn("고양", tokens)
+        self.assertNotIn("경기", tokens)
+
+    def test_order_and_contained_alias(self):
+        tokens = program_tokens(prog(name="한시적 양육비 지원", aliases=["양육비 긴급지원"]))
+        self.assertEqual(tokens[0], "한시적")
+        self.assertIn("양육비", tokens)
+        self.assertIn("긴급지원", tokens)
+        self.assertEqual(program_tokens(prog(name="교복구입비 지원", aliases=["교복 지원"])), ["교복구입비"])
+        self.assertEqual(program_tokens(None), [])
+
+
+class EvaluateCandidateTest(unittest.TestCase):
+    def test_jurisdiction_collision(self):
+        meal = form(
+            id="meal",
+            title="아동급식 신청서",
+            lawTitle="고양시 아동급식지원에 관한 조례",
+            regionCode="41280",
+            regionLabel="경기도 고양시",
+        )
+        laws = ["고양시 아동급식지원에 관한 조례(제4조)"]
+        goyang = prog(name="아동급식 지원", laws=laws, region=dict(GOYANG))
+        self.assertEqual(evaluate_candidate(goyang, meal)["formId"], "meal")
+        self.assertIsNone(evaluate_candidate(prog(name="아동급식 지원", laws=laws, region=dict(SUWON)), meal))
+        self.assertIsNone(evaluate_candidate(prog(name="아동급식 지원", laws=laws, scope="national", region=None), meal))
+        self.assertIsNone(evaluate_candidate(prog(name="아동급식 지원", laws=laws, scope="sido", region=dict(GYEONGGI)), meal))
+
+    def test_province_form_only_same_province_record(self):
+        province = form(
+            id="gg",
+            title="한시적 양육비 지원 신청서",
+            lawTitle="경기도 양육비 지원 조례",
+            regionCode="41000",
+            regionLabel="경기도",
+        )
+        laws = ["경기도 양육비 지원 조례"]
+        matched = evaluate_candidate(prog(
+            name="한시적 양육비 지원", scope="sido", region=dict(GYEONGGI), laws=laws,
+        ), province)
+        self.assertEqual(matched["scopeBasis"], "same_sido")
+        self.assertIsNone(evaluate_candidate(prog(
+            name="한시적 양육비 지원", scope="sido", region=dict(SEOUL), laws=laws,
+        ), province))
+        self.assertIsNone(evaluate_candidate(prog(name="한시적 양육비 지원", laws=laws, region=dict(GOYANG)), province))
+        self.assertIsNone(evaluate_candidate(prog(
+            name="한시적 양육비 지원", scope="national", region=None, laws=laws,
+        ), province))
+
+    def test_unresolved_region_rejected(self):
+        item = form(id="x", title="아동급식 신청서", lawTitle="아동급식 조례", regionCode="unresolved", regionLabel="고양시")
+        program = prog(name="아동급식 지원", laws=["아동급식 조례"])
+        self.assertIsNone(evaluate_candidate(program, item))
+        self.assertIsNone(evaluate_candidate(program, form(id="y", regionCode="", lawTitle="아동급식 조례", title="아동급식 신청서")))
+        self.assertIsNone(evaluate_candidate(program, form(id="z", regionCode="4128", lawTitle="아동급식 조례", title="아동급식 신청서")))
+        self.assertIsNone(evaluate_candidate(program, form(
+            id="nat-city", sourceKind="law", regionCode="41280", lawTitle="아동복지법", title="아동급식 신청서",
+        )))
+
+    def test_national_form_on_local_needs_cited_law(self):
+        national_form = form(
+            id="nat",
+            sourceKind="law",
+            title="아동급식 신청서",
+            lawTitle="아동복지법",
+            regionCode="national",
+            regionLabel="전국 공통",
+            dateKind="promulgated",
+        )
+        local = prog(name="아동급식 지원", laws=[], region=dict(GOYANG))
+        self.assertIsNone(evaluate_candidate(local, national_form))
+        cited = prog(name="아동급식 지원", laws=["아동복지법(제4조, 제1항)"], region=dict(GOYANG))
+        found = evaluate_candidate(cited, national_form)
+        self.assertEqual(found["basis"], "law_reference")
+        self.assertEqual(found["scopeBasis"], "national_law_reference")
+        self.assertNotIn("approved", found)
+        self.assertIs(type(found["score"]), int)
+        national_program = prog(name="아동급식 지원", scope="national", region=None, laws=["아동복지법"])
+        direct = evaluate_candidate(national_program, national_form)
+        self.assertEqual(direct["basis"], "law_exact")
+        self.assertEqual(direct["scopeBasis"], "national")
+        words_only = prog(name="아동급식 지원", scope="national", region=None, laws=[])
+        by_title = evaluate_candidate(words_only, national_form)
+        self.assertEqual(by_title["basis"], "title_overlap")
+        self.assertEqual(by_title["scopeBasis"], "national")
+
+    def test_parent_law_rule_stays_candidate(self):
+        program = prog(name="아동급식 지원", scope="national", region=None, laws=["아동복지법(제4조)"])
+        rule = form(
+            id="rule",
+            sourceKind="rule",
+            title="아동급식 신청서",
+            lawTitle="아동복지법 시행규칙",
+            regionCode="national",
+            regionLabel="전국 공통",
+            dateKind="issued",
+        )
+        found = evaluate_candidate(program, rule)
+        self.assertEqual(set(found), {"formId", "score", "reason", "basis", "scopeBasis"})
+        self.assertEqual(found["basis"], "law_family")
+        self.assertNotIn("approved", found)
+        self.assertNotIn("verified", found)
+        self.assertRegex(found["reason"], "검토 후보")
+        self.assertNotRegex(found["reason"], _FORBIDDEN)
+        exact = evaluate_candidate(program, form(
+            id="law", sourceKind="law", title="아동급식 신청서", lawTitle="아동복지법",
+            regionCode="national", regionLabel="전국 공통",
+        ))
+        self.assertGreater(exact["score"], found["score"])
+        local = prog(name="아동급식 지원", laws=["아동복지법"], region=dict(GOYANG))
+        linked = evaluate_candidate(local, rule)
+        self.assertEqual(linked["basis"], "law_reference")
+        self.assertEqual(linked["scopeBasis"], "national_law_reference")
+        self.assertNotRegex(linked["reason"], _FORBIDDEN)
+        sibling = form(
+            id="sibling", sourceKind="law", title="급식비 신청서", lawTitle="아동복지법 시행령",
+            regionCode="national", regionLabel="전국 공통",
+        )
+        only_rule = prog(name="교복구입비 지원", scope="national", region=None, laws=["아동복지법 시행규칙"])
+        self.assertIsNone(evaluate_candidate(only_rule, sibling))
+
+    def test_named_form_outranks_generic_and_unrelated(self):
+        law = "고양시 복지 조례"
+        program = prog(name="교복구입비 지원", laws=[law])
+        named = evaluate_candidate(program, form(id="named", title="교복구입비 지원신청서", lawTitle=law))
+        generic = evaluate_candidate(program, form(id="generic", title="개인정보 수집 이용 동의서", lawTitle=law, declaredKind="서식"))
+        other = evaluate_candidate(program, form(id="other", title="급식비 지원신청서", lawTitle=law))
+        self.assertEqual(classify_role("개인정보 수집 이용 동의서", "서식"), "consent")
+        self.assertIsNotNone(named)
+        self.assertIsNotNone(generic)
+        self.assertIsNotNone(other)
+        self.assertGreater(named["score"], generic["score"])
+        self.assertGreater(generic["score"], other["score"])
+        self.assertEqual(named["basis"], "law_exact")
+        self.assertEqual(other["basis"], "law_exact")
+        self.assertRegex(generic["reason"], "일반적")
+        self.assertRegex(other["reason"], "다른 세부")
+        for item in (named, generic, other):
+            self.assertNotRegex(item["reason"], _FORBIDDEN)
+            self.assertNotIn("approved", item)
+
+    def test_generic_word_alone_is_not_enough(self):
+        self.assertIsNone(evaluate_candidate(
+            prog(name="고양시 지원 서비스 사업", laws=[]),
+            form(id="generic", title="생활복지서비스 신청서", lawTitle=""),
+        ))
+        self.assertIsNone(evaluate_candidate(
+            prog(name="양육비 지원", laws=[]),
+            form(id="short", title="한시적 양육비 지원 신청서", lawTitle=""),
+        ))
+        self.assertIsNotNone(evaluate_candidate(
+            prog(name="한시적 양육비 지원", laws=[]),
+            form(id="care", title="한시적 양육비 지원 신청서", lawTitle=""),
+        ))
+        self.assertIsNotNone(evaluate_candidate(
+            prog(name="장수 축하금 지급", laws=[]),
+            form(id="long", title="장수축하금 지급 신청서", lawTitle=""),
+        ))
+
+    def test_blocked_roles_never_returned(self):
+        law = "고양시 노인복지 조례"
+        program = prog(name="노인복지시설 수탁", laws=[law])
+        blocked = [
+            form(id="gone", title="교복구입비 지원신청서", declaredKind="삭제", lawTitle=law),
+            form(id="annex", title="[별표 1] 심사기준", declaredKind="별표", lawTitle=law),
+            form(id="office", title="기관용 동의서", lawTitle=law),
+            form(id="ledger", title="현금출납부", lawTitle=law),
+            form(id="operator", title="노인복지시설 수탁운영 신청서", lawTitle=law),
+        ]
+        for item in blocked:
+            self.assertIsNone(evaluate_candidate(program, item), item["id"])
+        report = evaluate_candidate(program, form(
+            id="report", title="사회재난 피해신고서", lawTitle=law,
+        ))
+        self.assertEqual(report["formId"], "report")
+        self.assertEqual(classify_role("사회재난 피해신고서", "서식"), "application")
+
+    def test_inputs_not_mutated_and_repeat_is_deterministic(self):
+        program = prog(name="한시적 양육비 지원", laws=["고양시 한시적 양육비 지원 조례(제5조, 제1항) || 다른 법"], aliases=["양육비 지원"])
+        item = form(id="z", title="한시적 양육비 지원 신청서", lawTitle="「고양시 한시적 양육비 지원 조례」")
+        before_program = copy.deepcopy(program)
+        before_form = copy.deepcopy(item)
+        laws_id = id(program["laws"])
+        aliases_id = id(program["aliases"])
+        first = evaluate_candidate(program, item)
+        second = evaluate_candidate(program, item)
+        self.assertEqual(program_tokens(program), program_tokens(before_program))
+        self.assertEqual(program, before_program)
+        self.assertEqual(item, before_form)
+        self.assertEqual(id(program["laws"]), laws_id)
+        self.assertEqual(id(program["aliases"]), aliases_id)
+        self.assertEqual(first, second)
+        self.assertIsNot(first, second)
+        again = evaluate_candidate(program, form(id="z", title="한시적 양육비 지원 신청서", lawTitle="「고양시 한시적 양육비 지원 조례」"))
+        self.assertEqual(first["formId"], again["formId"])
+        self.assertEqual(first["score"], again["score"])
+
+    def test_missing_inputs_do_not_raise(self):
+        self.assertIsNone(evaluate_candidate(None, form()))
+        self.assertIsNone(evaluate_candidate(prog(), None))
+        self.assertIsNone(evaluate_candidate(prog(), form(id="")))
+        self.assertEqual(program_tokens({}), [])
+
+
+if __name__ == "__main__":
+    unittest.main()

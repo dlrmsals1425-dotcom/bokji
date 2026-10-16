@@ -5,7 +5,7 @@ import { reasonSentence } from "@/lib/client/howto";
 import { supportTypes } from "@/lib/client/facets";
 import { normalizeText } from "@/lib/data/text";
 import { BUCKET_LABEL, type Bucket } from "@/lib/client/v2";
-import { ApplyBadge, MANUAL_TITLE, TierBadge, isManual, orgText, orgWhere, sectorText } from "./Badges";
+import { ApplyBadge, MANUAL_TITLE, TierBadge, isManual, orgText, orgWhere, ownerText, sectorText } from "./Badges";
 
 export interface Variant {
   p: Program;
@@ -70,7 +70,7 @@ export function ProgramCard({ p, ev, judge, variants }: { p: Program; ev?: Evalu
               <li key={v.p.id}>
                 <Link href={`/p/${encodeURIComponent(v.p.id)}`}>{v.p.name}</Link>{" "}
                 <span className="muted">
-                  · {v.p.scope === "national" ? "전국" : v.p.region?.label} · {v.p.provider || v.p.owner || ""}
+                  · {v.p.scope === "national" ? "전국" : v.p.region?.label} · {v.p.provider || ownerText(v.p) || ""}
                 </span>
               </li>
             ))}

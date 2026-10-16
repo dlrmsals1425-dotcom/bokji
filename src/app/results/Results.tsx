@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ProgramCard, SupportTags } from "@/components/ProgramCard";
-import { TierBadge, orgText } from "@/components/Badges";
+import { TierBadge, orgText, ownerText } from "@/components/Badges";
 import { Icon } from "@/components/Icon";
 import { CHANNEL_LABEL, TIER_PLAIN, firstLine, howTo, metReasons, toCheck } from "@/lib/client/howto";
 import type { Program } from "@/lib/data/types";
@@ -581,7 +581,7 @@ function Pick({ g, i, detail }: { g: Group; i: number; detail?: Program }) {
         </li>
         <li>
           <span className="k">담당기관</span>
-          <span className="v">{p.provider || p.owner || orgText(p)}</span>
+          <span className="v">{p.provider || ownerText(p) || orgText(p)}</span>
         </li>
         {how.phone && (
           <li>

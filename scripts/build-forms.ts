@@ -1,0 +1,187 @@
+/** Build independent form overlays from committed public data; never rebuild welfare bundles. */
+import { mkdir, readdir, readFile, writeFile, copyFile, unlink } from "node:fs/promises";
+import path from "node:path";
+import { createHash } from "node:crypto";
+import type { Program } from "../src/lib/data/types";
+import type { ApplicationForm, FormLink, FormsRegion, FormsCoverage, ProgramFormEntry, FormStatus } from "../src/lib/data/forms";
+import { classifyFormRole, findFormCandidates } from "../src/lib/data/formMatching";
+import { applicationRoute, formStatus, validateFormLink, externalFormUrl, officialFormUrl } from "../src/lib/data/formPublication";
+import { detailBucket } from "../src/lib/data/bucket";
+
+async function main() {
+  const root = process.cwd();
+  const input = path.join(root, "pipeline/forms");
+  const output = path.join(root, "public/forms");
+  const json = async <T>(file: string): Promise<T> => JSON.parse(await readFile(file, "utf8"));
+  const hash = (bytes: Buffer) => createHash("sha256").update(bytes).digest("hex");
+  const counts = (): Record<FormStatus, number> => ({ available: 0, online: 0, review: 0, missing: 0 });
+  const generatedAt = new Date().toISOString();
+  interface SourceForm extends Omit<ApplicationForm, "role" | "file"> { declaredKind: string; bytes: number; sha256: string }
+  interface Review extends FormLink { programIds: string[] }
+  interface PdfCheck { verified: boolean; originalSha256: string; pdfSha256: string; pages: number }
+  interface PortalEntry { checkedAt: string; candidateCount: number; outcome: "candidate" | "not_found"; candidates: { formId: string; reason: string }[] }
+  const source = await json<{ sourceNote: string; forms: SourceForm[] }>(path.join(input, "source-manifest.json"));
+  const reviews = await json<{ rows: Review[]; programNotes?: Record<string, string> }>(path.join(input, "reviewed-links.json"));
+  const portalForms = await json<{ forms: Record<string, ApplicationForm> }>(path.join(input, "portal-forms.json")).catch(() => null);
+  const portalMatches = await json<{ programs: Record<string, PortalEntry> }>(path.join(input, "portal-matches.json")).catch(() => null);
+  const portalScan = await json<NonNullable<FormsCoverage["portalScan"]>>(path.join(input, "portal-scan.json")).catch(() => null);
+  const portalReviews = await json<{ rows: Review[]; forms: Record<string, ApplicationForm>; programNotes?: Record<string, string> }>(path.join(input, "portal-reviewed-links.json")).catch(() => null);
+  const pdfChecks = await json<Record<string, PdfCheck>>(path.join(input, "pdf-checks.json")).catch((): Record<string, PdfCheck> => ({}));
+  const regionIndex = await json<{ sidos: { code: string; name: string; sigungus: { code: string; name: string }[] }[] }>(path.join(root, "public/bundles/v1/regions.json"));
+  const metadata = await json<{ counts: { uniquePrograms: number } }>(path.join(root, "public/bundles/v1/meta.json"));
+  const programs = new Map<string, Program>();
+  for (const filename of (await readdir(path.join(root, "public/bundles/v1/details"))).filter(name => /^[0-9a-f]{2}\.json$/.test(name)).sort()) {
+    const shard = await json<Record<string, Program>>(path.join(root, "public/bundles/v1/details", filename));
+    for (const [id, program] of Object.entries(shard)) {
+      if (program.id !== id || programs.has(id)) throw new Error("Duplicate/mismatched program id");
+      programs.set(id, program);
+    }
+  }
+  // Summary metadata can lag manual additions. Reconcile actual visible records
+  // with detail shards rather than dropping records to match a stale counter.
+  const activeIds = new Set<string>();
+  const bundleRoot = path.join(root, "public/bundles/v1");
+  const visibleFiles = ["national.json"];
+  for (const scope of ["sido", "sigungu"]) {
+    for (const name of await readdir(path.join(bundleRoot, scope))) if (/^\d{5}\.json$/.test(name)) visibleFiles.push(`${scope}/${name}`);
+  }
+  for (const file of visibleFiles) {
+    const bundle = await json<{ programs: Program[] }>(path.join(bundleRoot, file));
+    for (const program of bundle.programs) activeIds.add(program.id);
+  }
+  if (activeIds.size !== programs.size || [...activeIds].some(id => !programs.has(id))) throw new Error("Visible program index and detail shards differ");
+  if (programs.size !== metadata.counts.uniquePrograms) console.warn(`Source summary: ${metadata.counts.uniquePrograms}; reconciled visible/detail records: ${programs.size}. Using actual records.`);
+  const forms: Record<string, ApplicationForm> = {};
+  const originals = new Map<string, Buffer>();
+  for (const raw of source.forms) {
+    if (!/^ordin-\d+$/.test(raw.id) || forms[raw.id] || !externalFormUrl(raw.sourceUrl)) throw new Error("Invalid source form");
+    const bytes = await readFile(path.join(input, "originals", raw.id + ".hwp"));
+    if (bytes.subarray(0, 8).toString("hex") !== "d0cf11e0a1b11ae1" || hash(bytes) !== raw.sha256 || bytes.length !== raw.bytes) throw new Error("Original HWP hash/type mismatch: " + raw.id);
+    forms[raw.id] = {
+      id: raw.id, title: raw.title, role: classifyFormRole(raw.title, raw.declaredKind),
+      lawTitle: raw.lawTitle, lawId: raw.lawId, annexId: raw.annexId, annexNumber: raw.annexNumber,
+      regionCode: raw.regionCode, regionLabel: raw.regionLabel, effectiveDate: raw.effectiveDate,
+      sourceUrl: raw.sourceUrl, lawUrl: raw.lawUrl, fetchedAt: raw.fetchedAt,
+    };
+    originals.set(raw.id, bytes);
+  }
+  for (const raw of Object.values(portalForms?.forms || {})) {
+    if (!/^(ordin|law|rule)-\d+$/.test(raw.id) || !officialFormUrl(raw.sourceUrl) || !officialFormUrl(raw.lawUrl)) throw new Error("Invalid portal form metadata");
+    if (!forms[raw.id]) forms[raw.id] = raw;
+  }
+  for (const raw of Object.values(portalReviews?.forms || {})) {
+    if (!/^(ordin|law|rule)-\d+$/.test(raw.id) || !officialFormUrl(raw.sourceUrl) || !officialFormUrl(raw.lawUrl)) throw new Error("Invalid reviewed portal form");
+    // Explicit source audits may establish the actual effective date, distinct
+    // from a publication date supplied by the bulk annex catalogue.
+    forms[raw.id] = { ...forms[raw.id], ...raw };
+  }
+  if (portalScan?.status === "complete" && (portalScan.checkedPrograms !== programs.size || programs.size !== Object.keys(portalMatches?.programs || {}).length)) throw new Error("Incomplete program-by-program portal search");
+  const links = new Map<string, FormLink[]>();
+  const published = new Set<string>();
+  for (const review of [...reviews.rows, ...(portalReviews?.rows || [])]) {
+    const { programIds, ...link } = review;
+    for (const id of programIds) {
+      const program = programs.get(id);
+      if (!program) throw new Error("Reviewed program no longer exists: " + id);
+      validateFormLink(program, forms[link.formId], link);
+      if (links.get(id)?.some(other => other.formId === link.formId)) throw new Error("Duplicate reviewed association");
+      links.set(id, [...(links.get(id) || []), link]);
+      published.add(link.formId);
+    }
+  }
+  await mkdir(path.join(output, "files"), { recursive: true });
+  await mkdir(path.join(output, "v1/programs"), { recursive: true });
+  const expectedAssets = new Set<string>();
+  for (const id of published) {
+    const bytes = originals.get(id);
+    if (!bytes) {
+      const sourceUrl = officialFormUrl(forms[id].sourceUrl);
+      if (!sourceUrl || !new URL(sourceUrl).pathname.endsWith("/flDownload.do")) throw new Error("Reviewed external form must link to an official attachment");
+      continue;
+    }
+    const digest = hash(bytes), stem = `${id}-${digest.slice(0, 12)}`;
+    const hwpName = stem + ".hwp";
+    await writeFile(path.join(output, "files", hwpName), bytes);
+    expectedAssets.add(hwpName);
+    forms[id].file = { hwp: `/forms/files/${hwpName}`, bytes: bytes.length, sha256: digest };
+    const check = pdfChecks[id];
+    if (check?.verified) {
+      const pdfPath = path.join(input, "previews", id + ".pdf");
+      const pdf = await readFile(pdfPath);
+      if (check.originalSha256 !== digest || hash(pdf) !== check.pdfSha256 || check.pages < 1 || pdf.subarray(0, 5).toString() !== "%PDF-") throw new Error("PDF preview no longer matches checked original");
+      const pdfName = stem + ".pdf";
+      await copyFile(pdfPath, path.join(output, "files", pdfName));
+      expectedAssets.add(pdfName);
+      forms[id].file!.pdf = `/forms/files/${pdfName}`;
+    }
+  }
+  // Revoke only files owned by this generator; never recursively delete a directory.
+  const assetsDirectory = path.resolve(output, "files");
+  for (const name of await readdir(assetsDirectory)) {
+    if (!/^(ordin|law|rule)-\d+-[a-f0-9]{12}\.(hwp|hwpx|pdf)$/.test(name) || expectedAssets.has(name)) continue;
+    const target = path.resolve(assetsDirectory, name);
+    if (path.dirname(target) !== assetsDirectory) throw new Error("Unexpected asset path");
+    await unlink(target);
+  }
+  const regions = new Map<string, FormsRegion>();
+  const addRegion = (key: string, label: string, scope: FormsRegion["scope"]) => regions.set(key, { key, label, scope, total: 0, counts: counts() });
+  addRegion("national", "전국 공통", "national");
+  for (const sido of regionIndex.sidos) {
+    addRegion("s" + sido.code, sido.name, "sido");
+    for (const city of sido.sigungus) addRegion("g" + city.code, `${sido.name} ${city.name}`, "sigungu");
+  }
+  const entries = new Map<string, ProgramFormEntry[]>();
+  const globalCounts = counts();
+  const reviewQueue: { programId: string; programName: string; formId: string; reason: string }[] = [];
+  for (const program of programs.values()) {
+    const areaKey = program.id.startsWith("n.") ? "national" : /^([sg]\d{5})\./.exec(program.id)?.[1];
+    if (!areaKey || !regions.has(areaKey)) throw new Error("Unknown program area: " + program.id);
+    const approved = links.get(program.id) || [];
+    const portalEntry = portalMatches?.programs[program.id];
+    const candidates = (portalMatches ? portalEntry?.candidates || [] : findFormCandidates(program, Object.values(forms)))
+      .filter(item => forms[item.formId] && !approved.some(link => link.formId === item.formId));
+    const applyUrl = applicationRoute(program);
+    const status = formStatus(approved, candidates.map(item => item.formId), applyUrl);
+    const entry: ProgramFormEntry = { id: program.id, name: program.name, areaKey, status, links: approved,
+      candidateFormIds: candidates.map(item => item.formId), ...(applyUrl ? { applyUrl } : {}),
+      ...(program.applyType ? { applyType: program.applyType } : {}),
+      ...((portalReviews?.programNotes?.[program.id] || reviews.programNotes?.[program.id]) ? { note: portalReviews?.programNotes?.[program.id] || reviews.programNotes?.[program.id] } : {}),
+      ...(portalScan ? { portalSearch: { checkedAt: portalEntry?.checkedAt || portalScan.checkedAt,
+        outcome: portalScan.status !== "complete" || !portalEntry ? "incomplete" as const : approved.length ? "linked" as const : candidates.length ? "candidate" as const : "not_found" as const,
+        candidateCount: candidates.length, method: "full-index" as const } } : {}) };
+    entries.set(areaKey, [...(entries.get(areaKey) || []), entry]);
+    const region = regions.get(areaKey)!;
+    region.total++; region.counts[status]++; globalCounts[status]++;
+    for (const candidate of candidates) reviewQueue.push({ programId: program.id, programName: program.name, ...candidate });
+  }
+  const writeJSON = (file: string, data: unknown) => writeFile(file, JSON.stringify(data) + "\n", "utf8");
+  const regionList = [...regions.values()];
+  for (const region of regionList) {
+    const rows = (entries.get(region.key) || []).sort((a, b) => a.name.localeCompare(b.name, "ko") || a.id.localeCompare(b.id));
+    await writeJSON(path.join(output, "v1/programs", region.key + ".json"), { schema: 1, generatedAt, region, programs: rows, catalogSharded: !!portalScan });
+  }
+  const coverage: FormsCoverage = { schema: 1, generatedAt, totalPrograms: programs.size, counts: globalCounts,
+    totalForms: Object.keys(forms).length, publishedForms: published.size,
+    excludedForms: Object.values(forms).filter(form => ["deleted", "administrative", "reference"].includes(form.role)).length,
+    sourceNote: portalScan ? "국가법령정보센터의 법령·자치법규·행정규칙 별표·서식 목록을 전국 사업과 대조했습니다. 연결 확인 자료와 적용 검토 중인 후보를 구분합니다. 기관의 별도 사업 공고에만 있는 서식은 이 목록에 없을 수 있습니다." : "전국 사업 목록의 연결 상태를 집계합니다. 현재 확보한 파일은 고양시 자치법규 서식이며, 원문을 대조한 일부 사업부터 제공하고 있습니다. 전국 신청서를 모두 확보한 상태는 아닙니다.",
+    regions: regionList, ...(portalScan ? { portalScan } : {}) };
+  await writeJSON(path.join(output, "v1/coverage.json"), coverage);
+  await writeJSON(path.join(output, "v1/catalog.json"), { schema: 1, generatedAt, forms });
+  if (portalScan) {
+    await mkdir(path.join(output, "v1/catalog"), { recursive: true });
+    const shards = new Map<string, Record<string, ApplicationForm>>();
+    for (const form of Object.values(forms)) {
+      const bucket = detailBucket(form.id);
+      if (!shards.has(bucket)) shards.set(bucket, {});
+      shards.get(bucket)![form.id] = form;
+    }
+    for (let n = 0; n < 256; n++) {
+      const bucket = n.toString(16).padStart(2, "0");
+      await writeJSON(path.join(output, "v1/catalog", bucket + ".json"), { schema: 1, generatedAt, forms: shards.get(bucket) || {} });
+    }
+  }
+  await writeJSON(path.join(input, "review-queue.json"), { generatedAt, candidates: reviewQueue });
+  console.log(JSON.stringify({ totalPrograms: programs.size, areas: regions.size, counts: globalCounts, publishedForms: published.size, pdfPreviews: Object.values(forms).filter(form => form.file?.pdf).length, excludedForms: coverage.excludedForms, candidateLinks: reviewQueue.length }, null, 2));
+}
+
+main().catch(error => { console.error(error); process.exitCode = 1; });

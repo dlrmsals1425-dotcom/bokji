@@ -38,6 +38,9 @@ export function SiteFooter() {
           <li>
             <Link href="/search">서비스 검색</Link>
           </li>
+          <li>
+            <Link href="/forms">서식 연결 현황</Link>
+          </li>
         </ul>
         <p>입력하신 정보는 서버로 보내지 않고 이 기기에서만 판정합니다. 주민등록번호는 받지 않습니다.</p>
       </div>
