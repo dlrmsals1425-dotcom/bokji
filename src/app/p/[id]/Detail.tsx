@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { MANUAL_TITLE, isManual, orgText, reviewText, sectorText } from "@/components/Badges";
 import { Icon } from "@/components/Icon";
+import { ApplicationForms } from "@/components/ApplicationForms";
 import { CHANNEL_LABEL, firstLine, howTo } from "@/lib/client/howto";
 import { supportTypes } from "@/lib/client/facets";
 import { loadLocalOps, loadProgram } from "@/lib/client/bundles";
@@ -351,6 +352,7 @@ export function Detail({ id }: { id: string }) {
               )}
             </dl>
             {!p.applyMethod && <p className="muted">{how.fallback}</p>}
+            <ApplicationForms key={p.id} program={p} parentMode={mode === "parent"} />
           </section>
 
           <section className="dsec" id="sec-contact" aria-labelledby="h-src">
