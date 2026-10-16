@@ -89,6 +89,7 @@ export function createSpeechSession(
   let finalTimer: ReturnType<typeof setTimeout> | undefined;
   let startNotified = false;
   let cancelled = false;
+  const finalSegments = new Map<number, string>();
 
   const active = () => state === "active" || state === "stopping";
 
@@ -125,6 +126,13 @@ export function createSpeechSession(
     }
   }
 
+  function finishTranscript(emptyMessage: string) {
+    const transcript = [...finalSegments.entries()]
+      .sort(([left], [right]) => left - right)
+      .map(([, text]) => text).join(" ");
+    finish(transcript ? { transcript } : { error: emptyMessage });
+  }
+
   function stop() {
     if (state !== "active") return;
     state = "stopping";
@@ -132,7 +140,7 @@ export function createSpeechSession(
     listeningTimer = undefined;
     // Arm first so synchronous final/end from stop() can clear the deadline.
     finalTimer = setTimeout(() => {
-      finish({ error: "음성 인식 결과가 도착하지 않았어요. 다시 시도하거나 직접 입력해 주세요." });
+      finishTranscript("음성 인식 결과가 도착하지 않았어요. 다시 시도하거나 직접 입력해 주세요.");
     }, FINAL_WAIT_MS);
     try {
       recognition?.stop();
@@ -156,7 +164,7 @@ export function createSpeechSession(
           recognition = new Constructor();
         }
         recognition.lang = "ko-KR";
-        recognition.continuous = false;
+        recognition.continuous = true;
         recognition.interimResults = false;
         recognition.maxAlternatives = 1;
         recognition.onstart = () => {
@@ -168,20 +176,21 @@ export function createSpeechSession(
           if (!active()) return;
           const first = Number.isInteger(event.resultIndex) && event.resultIndex! >= 0
             ? event.resultIndex! : 0;
-          const parts: string[] = [];
           for (let index = first; index < event.results.length; index++) {
             const result = event.results[index];
             const text = result?.[0]?.transcript;
-            if (result?.isFinal && typeof text === "string" && text.trim()) parts.push(text.trim());
+            if (result?.isFinal && typeof text === "string" && text.trim()) {
+              finalSegments.set(index, text.trim());
+            }
           }
-          // Interim/empty results never become an answer or a synthetic skip.
-          if (parts.length) finish({ transcript: parts.join(" ") });
+          // A final result ends a phrase, not the listening session. Keep listening
+          // until stop/deadline/end; result indexes prevent cumulative duplicates.
         };
         recognition.onerror = (event) => {
           if (active()) finish({ error: errorMessage(event.error) });
         };
         recognition.onend = () => {
-          if (active()) finish({ error: NO_SPEECH });
+          if (active()) finishTranscript(NO_SPEECH);
         };
         // Includes startup/permission delay; a missing onstart cannot hang forever.
         listeningTimer = setTimeout(stop, LISTEN_LIMIT_MS);

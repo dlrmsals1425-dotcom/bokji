@@ -85,7 +85,7 @@ function SpeechDraft({ value, onApply }: Props) {
       onStart: () => {
         if (!current() || terminal.current) return;
         setPhase("listening");
-        setMessage("듣고 있어요. 사는 곳과 상황을 한두 문장으로 말해 주세요.");
+        setMessage("듣고 있어요. 이어서 말해 주세요. 다 말했으면 ‘말하기 완료’를 눌러 주세요.");
       },
       onTranscript: (text) => {
         if (!current() || terminal.current) return;

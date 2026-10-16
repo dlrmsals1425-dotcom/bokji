@@ -4,7 +4,7 @@ import { expect, test, type Page } from "@playwright/test";
  * Local UI integration only. Constructors are replaced before application JS runs.
  * No real microphone, speech service, or external STT is used.
  */
-type MockSnapshot = { starts: number; stops: number; aborts: number; lang: string };
+type MockSnapshot = { starts: number; stops: number; aborts: number; lang: string; continuous: boolean };
 type MockSpeech = {
   snapshots: () => MockSnapshot[];
   result: (index: number, text: string, final: boolean, late: boolean) => void;
@@ -32,6 +32,7 @@ async function installSpeech(page: Page, supported = true) {
       onerror: Handlers["onerror"] = null;
       onend: Handlers["onend"] = null;
       captured: Handlers | null = null;
+      results: ResultEvent["results"] = [];
       starts = 0;
       stops = 0;
       aborts = 0;
@@ -46,12 +47,16 @@ async function installSpeech(page: Page, supported = true) {
     }
     const instances: FakeRecognition[] = [];
     const mock = {
-      snapshots: () => instances.map(({ starts, stops, aborts, lang }) => ({ starts, stops, aborts, lang })),
+      snapshots: () => instances.map(({ starts, stops, aborts, lang, continuous }) => ({ starts, stops, aborts, lang, continuous })),
       result: (index: number, text: string, final: boolean, late: boolean) => {
         const instance = instances[index];
         if (!instance) throw new Error("Missing synthetic recognition instance " + index);
         const handler = late ? instance.captured?.onresult : instance.onresult;
-        handler?.({ resultIndex: 0, results: [{ isFinal: final, length: 1, 0: { transcript: text, confidence: 0.99 } }] });
+        const resultIndex = instance.results.length;
+        const next = { isFinal: final, length: 1, 0: { transcript: text, confidence: 0.99 } };
+        const results = [...instance.results, next];
+        if (final) instance.results = results;
+        handler?.({ resultIndex, results });
       },
       error: (index: number, code: string, late: boolean) => {
         const instance = instances[index];
@@ -98,7 +103,31 @@ async function expectNoProposal(page: Page) {
   await expect(page.getByTestId("voice-confirm")).toHaveCount(0);
 }
 
+async function finishVoice(page: Page, index: number, text: string) {
+  await emitResult(page, index, text);
+  await page.getByTestId("voice-stop").click();
+  await emitEnd(page, index);
+}
+
 test.describe("jinwoo 말로 찾기 — 가짜 SpeechRecognition", () => {
+  test("첫 문장이 끝나도 계속 듣고 완료 버튼에서 여러 문장을 합침 @mobile", async ({ page }) => {
+    await openSituation(page);
+    const index = await startVoice(page);
+    expect((await snapshots(page))[index].continuous).toBe(true);
+    await emitResult(page, index, "수원시에 살고 있어요.");
+    await expectNoProposal(page);
+    await expect(page.getByTestId("voice-stop")).toBeEnabled();
+    expect((await snapshots(page))[index].aborts).toBe(0);
+    await emitResult(page, index, "일자리를 찾고 있어요.");
+    await expectNoProposal(page);
+    await expect(page.getByTestId("v2-text")).toHaveValue("");
+    await page.getByTestId("voice-stop").click();
+    await emitEnd(page, index);
+    await expect(page.getByTestId("voice-transcript")).toHaveValue("수원시에 살고 있어요. 일자리를 찾고 있어요.");
+    await page.getByTestId("voice-confirm").click();
+    await expect(page.getByTestId("v2-text")).toHaveValue("수원시에 살고 있어요. 일자리를 찾고 있어요.");
+  });
+
   test("동의와 시작 뒤 final을 확인해야 입력칸에만 넣고 자동 제출하지 않음 @mobile", async ({ page }) => {
     await openSituation(page);
     expect(await snapshots(page)).toHaveLength(0);
@@ -130,7 +159,7 @@ test.describe("jinwoo 말로 찾기 — 가짜 SpeechRecognition", () => {
     const transcript = "일자리를 찾고 있어요.";
     await page.getByTestId("v2-text").fill(original);
     const index = await startVoice(page);
-    await emitResult(page, index, transcript);
+    await finishVoice(page, index, transcript);
     await expect(page.getByTestId("voice-confirm")).toBeVisible();
     await expect(page.getByTestId("v2-text")).toHaveValue(original);
     await page.getByTestId("voice-confirm").evaluate((element) => {
@@ -202,7 +231,7 @@ test.describe("jinwoo 말로 찾기 — 가짜 SpeechRecognition", () => {
       await page.getByTestId("v2-text").fill("보존할 기존 문장");
       const index = await startVoice(page);
       if (review) {
-        await emitResult(page, index, "아직 확인하지 않은 문장");
+        await finishVoice(page, index, "아직 확인하지 않은 문장");
         await expect(page.getByTestId("voice-transcript")).toBeVisible();
       }
       // Headless visibility is simulated; this checks the page lifecycle handler.
@@ -233,7 +262,7 @@ test.describe("jinwoo 말로 찾기 — 가짜 SpeechRecognition", () => {
   test("인식 제안 이후 문장을 수정해도 확인으로 예전 결과를 넣지 못함", async ({ page }) => {
     await openSituation(page);
     const index = await startVoice(page);
-    await emitResult(page, index, "수정 전 음성 문장");
+    await finishVoice(page, index, "수정 전 음성 문장");
     await expect(page.getByTestId("voice-confirm")).toBeVisible();
     await page.getByTestId("v2-text").fill("직접 적은 새 문장");
     await expectNoProposal(page);
@@ -283,7 +312,7 @@ test.describe("jinwoo 말로 찾기 — 가짜 SpeechRecognition", () => {
     const old = await startVoice(page);
     await page.getByTestId("voice-cancel").click();
     const current = await startVoice(page);
-    await emitResult(page, current, "새롭게 말한 상황");
+    await finishVoice(page, current, "새롭게 말한 상황");
     await expect(page.getByTestId("voice-transcript")).toHaveValue("새롭게 말한 상황");
     await emitResult(page, old, "이전 상황", true, true);
     await emitEnd(page, old, true);
@@ -310,7 +339,7 @@ test.describe("jinwoo 말로 찾기 — 가짜 SpeechRecognition", () => {
       await openSituation(page);
       await page.getByTestId("v2-text").fill(original);
       const index = await startVoice(page);
-      await emitResult(page, index, transcript);
+      await finishVoice(page, index, transcript);
       const confirm = page.getByTestId("voice-confirm");
       await expect.poll(async () => /500/.test(await page.getByTestId("voice-choice").innerText()) || await confirm.count() > 0).toBe(true);
       if (await confirm.count() && await confirm.isEnabled()) await confirm.click();

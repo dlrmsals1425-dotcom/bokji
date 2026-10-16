@@ -10,7 +10,7 @@ import type { SpeechSession } from "@/lib/voice/types";
 
 class FakeRecognition implements SpeechRecognitionLike {
   lang = "";
-  continuous = true;
+  continuous = false;
   interimResults = true;
   maxAlternatives = 9;
   onstart: (() => void) | null = null;
@@ -91,7 +91,7 @@ describe("browser speech support", () => {
 });
 
 describe("single-use recognition session", () => {
-  it("constructs on explicit start, configures Korean single-final recognition, and starts only once", () => {
+  it("constructs on explicit start, configures Korean continuous recognition, and starts only once", () => {
     const { session, factory, recognition, callbacks } = setup();
     session.stop();
     expect(factory).not.toHaveBeenCalled();
@@ -99,7 +99,7 @@ describe("single-use recognition session", () => {
     session.start();
     expect(factory).toHaveBeenCalledTimes(1);
     expect(recognition.start).toHaveBeenCalledTimes(1);
-    expect(recognition).toMatchObject({ lang: "ko-KR", continuous: false, interimResults: false, maxAlternatives: 1 });
+    expect(recognition).toMatchObject({ lang: "ko-KR", continuous: true, interimResults: false, maxAlternatives: 1 });
     expect(callbacks.onStart).not.toHaveBeenCalled();
     recognition.onstart?.();
     recognition.onstart?.();
@@ -119,6 +119,10 @@ describe("single-use recognition session", () => {
     onResult(result("  "));
     expect(callbacks.onTranscript).not.toHaveBeenCalled();
     onResult(result("  두 번째  "));
+    expect(callbacks.onTranscript).not.toHaveBeenCalled();
+    expect(recognition.abort).not.toHaveBeenCalled();
+    session.stop();
+    onEnd();
     onResult(result("첫 번째"));
     onError({ error: "network" });
     onEnd();
@@ -140,7 +144,61 @@ describe("single-use recognition session", () => {
       { isFinal: true, 0: { transcript: "1번 또는" } },
       { isFinal: true, 0: { transcript: "2번" } },
     ] });
+    session.stop();
+    recognition.onend?.();
     expect(callbacks.onTranscript).toHaveBeenCalledExactlyOnceWith("1번 또는 2번");
+  });
+
+  it("keeps listening between final phrases and joins cumulative results without duplication", () => {
+    const { session, recognition, callbacks } = setup();
+    session.start();
+    recognition.onresult?.(result("수원시에 살고 있어요."));
+    vi.advanceTimersByTime(3_000);
+    expect(recognition.stop).not.toHaveBeenCalled();
+    expect(recognition.abort).not.toHaveBeenCalled();
+    expect(callbacks.onTranscript).not.toHaveBeenCalled();
+    const cumulative: RecognitionResultEvent = { resultIndex: 1, results: [
+      { isFinal: true, 0: { transcript: "수원시에 살고 있어요." } },
+      { isFinal: true, 0: { transcript: "일자리를 찾고 있어요." } },
+    ] };
+    recognition.onresult?.(cumulative);
+    recognition.onresult?.({ ...cumulative, resultIndex: 0 });
+    session.stop();
+    recognition.onend?.();
+    expect(callbacks.onTranscript).toHaveBeenCalledExactlyOnceWith("수원시에 살고 있어요. 일자리를 찾고 있어요.");
+  });
+
+  it("returns buffered phrases at the deadline even if the browser never sends end", () => {
+    const { session, recognition, callbacks } = setup();
+    session.start();
+    recognition.onresult?.(result("끝까지 보존할 문장"));
+    vi.advanceTimersByTime(20_000);
+    expect(recognition.stop).toHaveBeenCalledTimes(1);
+    expect(callbacks.onTranscript).not.toHaveBeenCalled();
+    vi.advanceTimersByTime(2_000);
+    expect(callbacks.onTranscript).toHaveBeenCalledExactlyOnceWith("끝까지 보존할 문장");
+    expect(callbacks.onError).not.toHaveBeenCalled();
+  });
+
+  it("cancel discards already recognized phrases instead of publishing them on late end", () => {
+    const { session, recognition, callbacks } = setup();
+    session.start();
+    recognition.onresult?.(result("확인 전 문장"));
+    const end = recognition.onend!;
+    session.cancel();
+    end();
+    vi.advanceTimersByTime(22_000);
+    expect(callbacks.onTranscript).not.toHaveBeenCalled();
+    expect(callbacks.onError).not.toHaveBeenCalled();
+  });
+
+  it("preserves final phrases if the browser ends continuous recognition early", () => {
+    const { session, recognition, callbacks } = setup();
+    session.start();
+    recognition.onresult?.(result("브라우저가 인식한 문장"));
+    recognition.onend?.();
+    expect(callbacks.onTranscript).toHaveBeenCalledExactlyOnceWith("브라우저가 인식한 문장");
+    expect(callbacks.onError).not.toHaveBeenCalled();
   });
 
   it("cancel before start permanently prevents microphone use and callbacks", () => {
@@ -235,7 +293,7 @@ describe("single-use recognition session", () => {
 
   it("clears the final deadline if stop synchronously returns a final result", () => {
     const { session, recognition, callbacks } = setup();
-    recognition.stop.mockImplementation(() => { recognition.onresult?.(result("월세")); });
+    recognition.stop.mockImplementation(() => { recognition.onresult?.(result("월세")); recognition.onend?.(); });
     session.start();
     session.stop();
     expect(callbacks.onTranscript).toHaveBeenCalledExactlyOnceWith("월세");
@@ -308,6 +366,8 @@ describe("single-use recognition session", () => {
     callbacks.onTranscript.mockImplementation(() => { session.cancel(); });
     session.start();
     recognition.onresult?.(result("1번"));
+    session.stop();
+    recognition.onend?.();
     expect(callbacks.onTranscript).toHaveBeenCalledTimes(1);
     expect(callbacks.onEnd).not.toHaveBeenCalled();
     expect(recognition.abort).toHaveBeenCalledTimes(1);
