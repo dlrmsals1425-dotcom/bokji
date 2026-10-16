@@ -21,6 +21,8 @@ const EXTRAS_KEY = "bn.facts.v1";
 const DRAFT_KEY = "bn.drafts.v1";
 /** (QA 8차) 서비스 검색에서 고른 시·도/시·군·구 — 새로고침해도 유지 (주소에는 싣지 않음) */
 const SEARCH_REGION_KEY = "bn.searchRegion.v1";
+/** 홈 예시를 옮겨 보여 줄 시·군·구 (현재 위치나 직접 고른 곳, 코드만) */
+const EXAMPLE_REGION_KEY = "bn.exampleRegion.v1";
 
 export interface Settings {
   large: boolean;
@@ -164,6 +166,18 @@ export function saveSearchRegion(r: SearchRegion) {
 /** undefined = 확인 전(SSR), null = 고른 적 없음 */
 export function useSearchRegion(): SearchRegion | null | undefined {
   return useSyncExternalStore(subscribe, readSearchRegion, () => undefined);
+}
+
+/* ---------- 홈 예시 지역 (2026-10-16: 다음 방문에는 위치를 다시 묻지 않고 이 지역으로) ---------- */
+export function readExampleRegion(): string | null {
+  const raw = safeGet(profileStore(), EXAMPLE_REGION_KEY);
+  return raw && /^\d{5}$/.test(raw) ? raw : null;
+}
+export function saveExampleRegion(sigungu: string | null) {
+  try {
+    if (sigungu) profileStore().setItem(EXAMPLE_REGION_KEY, sigungu);
+    else profileStore().removeItem(EXAMPLE_REGION_KEY);
+  } catch {}
 }
 
 /* ---------- 대상별 답 (본인 / 부모님) ---------- */
