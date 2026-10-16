@@ -26,11 +26,20 @@ const EXAMPLE_REGION_KEY = "bn.exampleRegion.v1";
 /** 이미 받고 있는 혜택 (대상별: 본인 / 부모님, 사업 묶음 이름만) */
 const RECEIVING_KEY = "bn.receiving.v1";
 
+/** 주민센터 등 키오스크(태블릿) 모드 (2026-10-16 회의): 그 기관이 있는 시·군·구로 고정, 손대지 않으면 지우고 처음으로 */
+export interface KioskSettings {
+  sido: string;
+  sigungu: string;
+  label: string;
+  /** 손대지 않은 뒤 안내까지 (초) */
+  idleSec: number;
+}
 export interface Settings {
   large: boolean;
   shared: boolean;
+  kiosk: KioskSettings | null;
 }
-const DEFAULT_SETTINGS: Settings = { large: false, shared: false };
+const DEFAULT_SETTINGS: Settings = { large: false, shared: false, kiosk: null };
 
 const listeners = new Set<() => void>();
 function emit() {
@@ -77,6 +86,8 @@ export function setSettings(patch: Partial<Settings>) {
     localStorage.setItem(SETTINGS_KEY, JSON.stringify(next));
   } catch {}
   document.documentElement.dataset.large = next.large ? "1" : "0";
+  if (next.kiosk) document.documentElement.setAttribute("data-kiosk", "1");
+  else document.documentElement.removeAttribute("data-kiosk");
   // 공용 기기 모드 전환 시 프로필 저장 위치를 옮긴다
   if (prev.shared !== next.shared) {
     const from = prev.shared ? sessionStorage : localStorage;
@@ -94,6 +105,12 @@ export function setSettings(patch: Partial<Settings>) {
 
 export function useSettings(): Settings | undefined {
   return useSyncExternalStore(subscribe, readSettings, () => undefined);
+}
+
+/** 키오스크 켜기: 공용 기기(브라우저를 닫으면 지워짐) + 큰 글씨. 끄면 공용 기기 설정은 그대로 둔다 */
+export function setKiosk(k: KioskSettings | null) {
+  if (k) setSettings({ kiosk: k, shared: true, large: true });
+  else setSettings({ kiosk: null });
 }
 
 /* ---------- profile ---------- */
