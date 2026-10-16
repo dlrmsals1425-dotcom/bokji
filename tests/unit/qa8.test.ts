@@ -10,7 +10,7 @@ import { refineProgram } from "@/lib/data/refine";
 import { isSwapped, fixSwapped } from "../../pipeline/src/normalize/swap";
 import { sheetDocs } from "@/lib/client/visit";
 import { parseDocs } from "@/lib/client/howto";
-import { orgText, orgWhere } from "@/components/Badges";
+import { orgText, orgWhere, ownerText } from "@/components/Badges";
 import { sidoOptionLabel } from "@/lib/client/regionLabel";
 import { EMPTY_PROFILE, type Profile } from "@/lib/engine/profile";
 import type { Program } from "@/lib/data/types";
@@ -171,8 +171,11 @@ describe("QA8-3 준비물: 원문 구비서류를 빠뜨리지 않음", () => {
 
 describe("검색 화면 표시 (QA 8차 검색 리포트)", () => {
   const base = { id: "g41460.x", name: "국가건강검진", summary: "", category: "", tags: [], orgType: "public_inst", scope: "sigungu", region: { sido: "41000", sigungu: "41460", label: "경기 용인시" }, sources: [], trust: "B" } as unknown as Program;
-  it("지역 목록의 전국 공통 사업은 '전국 공통 사업'으로", () => {
-    expect(orgText({ ...base, owner: "중앙부처 (전국 공통 사업)" })).toBe("전국 공통 사업 · 경기 용인시 안내");
+  it("지역 목록(통합돌봄 메뉴판)의 '전국' 사업은 '중앙부처 사업 · ○○ 안내' — 어디서나 된다고 읽히는 '전국 공통'은 쓰지 않음 (2026-10-16)", () => {
+    expect(orgText({ ...base, owner: "중앙부처 (전국 공통 사업)" })).toBe("중앙부처 사업 · 경기 용인시 안내");
+    expect(ownerText({ ...base, owner: "중앙부처 (전국 공통 사업)" })).toBe("중앙부처 (경기 용인시 통합돌봄 안내에 실린 사업)");
+    expect(ownerText({ ...base, owner: "보건복지부" })).toBe("보건복지부");
+    expect(ownerText({ ...base, owner: undefined })).toBeUndefined();
     expect(orgText({ ...base, owner: "경기 용인시", orgType: "local" })).toBe("시군구 · 경기 용인시");
   });
   it("기관 이름에서 이미 적은 지역 이름은 빼고 부서만", () => {

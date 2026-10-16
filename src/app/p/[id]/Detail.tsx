@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { MANUAL_TITLE, isManual, orgText, reviewText, sectorText } from "@/components/Badges";
+import { MANUAL_TITLE, isManual, orgText, ownerText, reviewText, sectorText } from "@/components/Badges";
 import { Icon } from "@/components/Icon";
 import { CHANNEL_LABEL, firstLine, howTo } from "@/lib/client/howto";
 import { supportTypes } from "@/lib/client/facets";
@@ -145,7 +145,7 @@ export function Detail({ id }: { id: string }) {
         <dl className="keyfacts">
           <div>
             <dt>담당기관</dt>
-            <dd>{p.provider || p.owner || ORG_TYPE_LABEL[p.orgType]}</dd>
+            <dd>{p.provider || ownerText(p) || ORG_TYPE_LABEL[p.orgType]}</dd>
           </div>
           <div>
             <dt>지원형태</dt>
@@ -386,7 +386,7 @@ export function Detail({ id }: { id: string }) {
             </h2>
             <dl className="summary stacked">
               <dt>소관기관</dt>
-              <dd>{p.owner ?? NOT_IN_SOURCE}</dd>
+              <dd>{ownerText(p) ?? NOT_IN_SOURCE}</dd>
               {p.provider && (
                 <>
                   <dt>집행·신청처</dt>
