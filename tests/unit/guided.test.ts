@@ -131,3 +131,13 @@ describe("소거해서 계산한 결과 = 처음부터 전부 계산한 결과",
     });
   }
 });
+
+describe("질문 이름 (2026-10-16 회의: 상담·발표에서 '3번 질문'은 사람마다 내용이 달라 질문 이름을 함께)", () => {
+  it("모든 질문에 짧은 이름이 있고 겹치지 않는다", async () => {
+    const { QUESTION_NAME } = await import("@/lib/client/guided");
+    const { DIMS } = await import("@/lib/client/v2");
+    const names = DIMS.map((d) => QUESTION_NAME[d.id]);
+    for (const [i, n] of names.entries()) expect(n, DIMS[i].id).toMatch(/^\S.{0,7}$/);
+    expect(new Set(names).size).toBe(names.length);
+  });
+});

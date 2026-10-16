@@ -15,6 +15,16 @@ import {
 
 /** 질문 수 (위치 확인 다음) */
 export const FLOW_LIMIT = 5;
+/**
+ * 질문 이름 — 질문 순서는 답에 따라 사람마다 달라 '3번 질문'만으로는 같은 질문을 가리키지 못한다
+ * (2026-10-16 회의: 콜센터·발표 질의응답). 화면에 '질문 3 / 5 · 소득'처럼 함께 쓴다.
+ */
+export const QUESTION_NAME: Record<DimId, string> = {
+  age: "나이", alone: "가구원 수", income: "소득", support: "수급", basicPension: "기초연금",
+  disability: "장애", care: "돌봄", ltcGrade: "장기요양", veteran: "보훈", singleParent: "한부모",
+  multicultural: "다문화", housing: "집", activity: "일", illness: "질병", children: "자녀", daycare: "어린이집",
+};
+
 /** 하나씩 묻지 않고 마지막 '해당하는 것 모두 고르기'로만 묻는 드문 사항 */
 export const RARE_DIMS_FLOW: ReadonlySet<DimId> = new Set<DimId>(["veteran", "multicultural"]);
 
