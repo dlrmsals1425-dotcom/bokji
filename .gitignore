@@ -58,4 +58,7 @@ shots/ref-*.png
 /node_modules/
 /.venv-stt/
 /.models/
+
+# Python import/test caches
 __pycache__/
+*.py[cod]

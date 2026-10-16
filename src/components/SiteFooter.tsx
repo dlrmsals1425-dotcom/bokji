@@ -38,6 +38,9 @@ export function SiteFooter() {
           <li>
             <Link href="/search">서비스 검색</Link>
           </li>
+          <li>
+            <Link href="/forms">서식 연결 현황</Link>
+          </li>
         </ul>
         <p>복지 판정은 이 기기에서 합니다. 음성 입력을 사용하면 녹음한 음성을 OpenAI로 보냅니다. 주민등록번호는 받지 않습니다.</p>
       </div>

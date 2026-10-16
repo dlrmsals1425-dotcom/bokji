@@ -14,7 +14,8 @@ import { Summary } from "./Summary";
 import { VisitSheet } from "./VisitSheet";
 import { loadForRegion, loadProgram, loadRegions, type Loaded } from "@/lib/client/bundles";
 import { CHANNEL_LABEL, firstLine, howTo } from "@/lib/client/howto";
-import { clearProfile, useExample, useExtras } from "@/lib/client/storage";
+import { clearProfile, setReceiving, useExample, useExtras, useReceiving } from "@/lib/client/storage";
+import { splitReceiving } from "@/lib/client/receiving";
 import { saveSituation, situationOf } from "@/lib/client/start";
 import { presetById } from "@/lib/client/presets";
 import { checkPath, coupleNote, resultsCopy, type FindMode } from "@/lib/client/mode";
@@ -84,7 +85,11 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
 
   const sit: Situation = useMemo(() => situationOf(profile, extras ?? null, mode), [profile, extras, mode]);
   const scored = useMemo(() => (data ? scoreV2(data.programs, sit) : []), [data, sit]);
-  const view = useMemo(() => buildView(scored, sit, 12), [scored, sit]);
+  const view0 = useMemo(() => buildView(scored, sit, 12), [scored, sit]);
+  // 이미 받고 있다고 표시한 혜택은 먼저 확인할 5가지·목록·준비물 한 장에서 빼고 따로 (2026-10-16, 이 기기에만 저장)
+  const recvAll = useReceiving();
+  const recvKeys = (recvAll?.[mode] ?? []).join("\u0001");
+  const { view, receiving } = useMemo(() => splitReceiving(view0, recvKeys ? recvKeys.split("\u0001") : []), [view0, recvKeys]);
   const picks = useMemo(() => topPicksV2(view, 5, sit), [view, sit]);
   const autos = useMemo(() => (data ? autoV2(data.programs, sit) : []), [data, sit]);
 
@@ -132,7 +137,9 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
 
   const parent = mode === "parent";
   const copy = resultsCopy(mode);
+  const markReceiving = (key: string, on: boolean) => setReceiving(mode, key, on);
   const sheetCtl: SheetCtl = {
+    receive: (key) => markReceiving(key, true),
     has: (id) => sheetIds.split("|").includes(id),
     toggle: (id, on) =>
       setMarks((m) => (pickIds.split("|").includes(id)
@@ -378,6 +385,7 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
                     mode={mode}
                     inSheet={!marks.remove.includes(g[0].s.program.id)}
                     onSheet={(on) => setMarks((m) => ({ ...m, remove: on ? m.remove.filter((x) => x !== g[0].s.program.id) : [...m.remove, g[0].s.program.id] }))}
+                    onReceiving={() => markReceiving(g[0].s.group, true)}
                   />
                 ))}
               </ol>
@@ -506,6 +514,25 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
             collapsed
           />
 
+          {receiving.length > 0 && (
+            <section className="v2-sec receiving" aria-labelledby="recv-h" data-testid="receiving-section">
+              <h2 className="h2" id="recv-h">
+                이미 받고 있다고 표시한 혜택 {receiving.length}개
+              </h2>
+              <p className="body">먼저 확인할 서비스와 준비물 한 장에서 뺐어요. 이 기기에만 기억해요. 잘못 눌렀으면 다시 보이게 할 수 있어요.</p>
+              <ul className="recv-list">
+                {receiving.map((g) => (
+                  <li key={g[0].s.group}>
+                    <Link href={`/p/${encodeURIComponent(g[0].s.program.id)}`}>{g[0].s.program.name}</Link>
+                    <button type="button" className="link-btn no-print" onClick={() => markReceiving(g[0].s.group, false)} data-testid="receiving-undo">
+                      다시 보이기
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+
           {autos.length > 0 && (
             <details className="details auto-panel" data-testid="auto-section" open={autoOpen} onToggle={(e) => setAutoOpen((e.currentTarget as HTMLDetailsElement).open)}>
               <summary data-testid="auto-toggle">
@@ -612,7 +639,16 @@ function Count({ href, cls, label, n, testId }: { href: string; cls: string; lab
 const BUCKET_ICON: Record<Bucket, "check" | "info" | "alert" | "x"> = { fit: "check", office: "info", ask: "alert", no: "x" };
 
 /** 먼저 확인할 카드: 번호 · 지원형태 · 이름 · 판단(쉬운 말) · 신청방법/기관/문의/가져갈 것 */
-type SheetCtl = { has: (id: string) => boolean; toggle: (id: string, on: boolean) => void };
+type SheetCtl = { has: (id: string) => boolean; toggle: (id: string, on: boolean) => void; receive?: (group: string) => void };
+
+/** '이미 받고 있어요' — 누르면 먼저 확인할 5가지·목록·준비물 한 장에서 빠지고 아래 '이미 받고 있는 혜택'으로 */
+function ReceivingButton({ name, onClick }: { name: string; onClick: () => void }) {
+  return (
+    <button type="button" className="link-btn sheet-toggle no-print" aria-label={`${name} — 이미 받고 있어요 (목록과 준비물 한 장에서 빼기)`} onClick={onClick} data-testid="receiving-toggle">
+      <Icon name="check" size={16} /> 이미 받고 있어요
+    </button>
+  );
+}
 
 function SheetToggle({ on, name, onChange }: { on: boolean; name: string; onChange: (on: boolean) => void }) {
   return (
@@ -622,7 +658,7 @@ function SheetToggle({ on, name, onChange }: { on: boolean; name: string; onChan
   );
 }
 
-function Pick({ item, i, detail, loading, sit, mode, inSheet, onSheet }: { item: V2Item; i: number; detail?: Program; loading?: boolean; sit: Situation; mode: FindMode; inSheet: boolean; onSheet: (on: boolean) => void }) {
+function Pick({ item, i, detail, loading, sit, mode, inSheet, onSheet, onReceiving }: { item: V2Item; i: number; detail?: Program; loading?: boolean; sit: Situation; mode: FindMode; inSheet: boolean; onSheet: (on: boolean) => void; onReceiving?: () => void }) {
   const p = item.s.program;
   const how = howTo(detail, p, sit.profile.sido);
   const href = `/p/${encodeURIComponent(p.id)}`;
@@ -684,6 +720,7 @@ function Pick({ item, i, detail, loading, sit, mode, inSheet, onSheet }: { item:
           신청 방법 보기
         </Link>
         <SheetToggle on={inSheet} name={p.name} onChange={onSheet} />
+        {onReceiving && <ReceivingButton name={p.name} onClick={onReceiving} />}
       </div>
     </li>
   );
@@ -782,6 +819,7 @@ function V2Card({ item, more, sit, mode, sheet }: { item: V2Item; more: number; 
         {more > 0 && <span>다른 기관 같은 사업 {more}개</span>}
       </p>
       {sheet && <SheetToggle on={sheet.has(p.id)} name={p.name} onChange={(on) => sheet.toggle(p.id, on)} />}
+      {sheet?.receive && <ReceivingButton name={p.name} onClick={() => sheet.receive!(item.s.group)} />}
     </article>
   );
 }

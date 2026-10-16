@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { MANUAL_TITLE, isManual, orgText, ownerText, reviewText, sectorText } from "@/components/Badges";
 import { Icon } from "@/components/Icon";
+import { ApplicationForms } from "@/components/ApplicationForms";
 import { CHANNEL_LABEL, firstLine, howTo } from "@/lib/client/howto";
 import { supportTypes } from "@/lib/client/facets";
 import { loadLocalOps, loadProgram } from "@/lib/client/bundles";
@@ -351,6 +352,7 @@ export function Detail({ id }: { id: string }) {
               )}
             </dl>
             {!p.applyMethod && <p className="muted">{how.fallback}</p>}
+            <ApplicationForms key={p.id} program={p} parentMode={mode === "parent"} />
           </section>
 
           <section className="dsec" id="sec-contact" aria-labelledby="h-src">
@@ -432,14 +434,6 @@ export function Detail({ id }: { id: string }) {
             <p className="small muted" style={{ marginTop: "0.75rem" }}>
               <Icon name="phone" size={14} className="icon-inline" /> 잘 모르겠으면 보건복지상담센터 129
             </p>
-            <div className="no-print side-actions">
-              <button type="button" className="btn btn-quiet btn-sm" disabled title="로그인 후 사용할 수 있는 기능으로 준비 중입니다">
-                신청 준비 체크리스트 (준비 중)
-              </button>
-              <button type="button" className="btn btn-quiet btn-sm" disabled title="로그인 후 사용할 수 있는 기능으로 준비 중입니다">
-                마감·변경 알림 (준비 중)
-              </button>
-            </div>
           </section>
           <section className="side-box no-print">
             <h2>이 페이지로 할 수 있는 일</h2>
