@@ -1,0 +1,10 @@
+.panel { margin-top: 1rem; padding: 1rem; border: 1px solid #cbd5e1; border-radius: 12px; background: #f8fafc; }
+.title { margin: 0 0 .5rem; font-weight: 700; }
+.help, .notice, .status { font-size: .9rem; line-height: 1.6; margin: .5rem 0; color: #334155; }
+.notice { padding: .75rem; background: #fff; border-radius: 8px; }
+.consent { display: flex; align-items: flex-start; gap: .6rem; padding: .5rem 0; font-size: .9rem; line-height: 1.6; cursor: pointer; }
+.consent input { margin-top: .3rem; width: 1.1rem; height: 1.1rem; flex-shrink: 0; }
+.actions { display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; margin-top: .75rem; }
+.actions button, .confirm button { min-height: 44px; }
+.confirm { border-top: 1px solid #cbd5e1; margin-top: .75rem; padding-top: .75rem; }
+.confirm textarea { width: 100%; resize: vertical; }

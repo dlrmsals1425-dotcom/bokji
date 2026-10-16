@@ -127,7 +127,7 @@ export default function Home() {
               <h2 className="h2" id="how-h">
                 이렇게 찾아 드려요
               </h2>
-              <p>입력한 내용은 서버로 보내지 않고 이 기기 안에서만 판정합니다.</p>
+              <p>복지 판정은 이 기기 안에서 합니다. 음성을 사용하면 브라우저 제공업체의 서버로 음성이 전송될 수 있어요.</p>
             </div>
           </div>
           <ol className="howto">
