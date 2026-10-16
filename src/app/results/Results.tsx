@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ProgramCard, SupportTags } from "@/components/ProgramCard";
-import { TierBadge, orgText } from "@/components/Badges";
+import { TierBadge, orgText, ownerText } from "@/components/Badges";
 import { Icon } from "@/components/Icon";
 import { CHANNEL_LABEL, TIER_PLAIN, firstLine, howTo, metReasons, toCheck } from "@/lib/client/howto";
 import type { Program } from "@/lib/data/types";
@@ -523,9 +523,6 @@ function ResultsInner({ profile, mode }: { profile: Profile; mode: FindMode }) {
                   </button>
                 </li>
               </ul>
-              <p className="small muted" style={{ marginTop: "0.5rem" }}>
-                정밀 매칭·저장·알림은 로그인 기능과 함께 준비 중입니다.
-              </p>
             </section>
             <section className="side-box">
               <h2>
@@ -584,7 +581,7 @@ function Pick({ g, i, detail }: { g: Group; i: number; detail?: Program }) {
         </li>
         <li>
           <span className="k">담당기관</span>
-          <span className="v">{p.provider || p.owner || orgText(p)}</span>
+          <span className="v">{p.provider || ownerText(p) || orgText(p)}</span>
         </li>
         {how.phone && (
           <li>
