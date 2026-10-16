@@ -32,6 +32,8 @@
 
 ## Windows 로컬 실행
 
+[팀원·코딩 에이전트 실행 안내](TEAM_VOICE_SETUP.md): 루트 `AGENTS.md`에 키가 없을 때만 요청하고 설정된 키를 재사용하는 절차를 명시했다. `CLAUDE.md`에서도 이 안내를 참조한다. 실제 키는 팀원에게 별도로 전달하며 각 PC의 `.env.local`에서 읽는다.
+
 bokji-voice / jinwoo에서 실행한다. .env.local에 다음 값을 직접 설정한다. 키는 Git에서 제외되며 채팅·화면 캡처·로그에 넣지 않는다.
 
 ~~~env

@@ -8,6 +8,8 @@
 
 ## 빠르게 실행
 
+음성 기능을 함께 실행할 팀원은 [코딩 에이전트용 실행 안내](docs/TEAM_VOICE_SETUP.md)를 따른다. 에이전트가 `OPENAI_API_KEY` 설정 여부를 확인하고 없을 때만 요청한다. 팀에서 별도로 받은 키를 각 PC의 `.env.local`에 한 번 설정하면 이후 pull·merge에서도 유지된다. 실제 키는 저장소에 포함되지 않는다.
+
 ```bash
 npm install
 npm run build          # 프로덕션 빌드 (번들은 public/bundles/v1 에 커밋되어 있어 바로 빌드 가능)
