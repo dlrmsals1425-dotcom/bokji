@@ -77,7 +77,7 @@ test("coverage filters agree with rows and region switching cannot retain Goyang
 
 test("failed form metadata can retry without erasing the benefit page", async ({ page }) => {
   let fail = true;
-  await page.route("**/forms/v1/catalog.json", route => fail ? route.fulfill({ status: 503, body: "offline" }) : route.continue());
+  await page.route(/\/forms\/v1\/catalog(?:\/[0-9a-f]{2})?\.json$/, route => fail ? route.fulfill({ status: 503, body: "offline" }) : route.continue());
   await page.goto(`/p/${seniorId}`);
   const section = page.getByTestId("application-forms");
   await expect(section).toContainText("불러오지 못했어요");
