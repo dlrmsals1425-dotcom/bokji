@@ -22,6 +22,8 @@ type LocStatus = { kind: "idle" } | { kind: "busy" } | { kind: "found"; where: W
 /** 질문 단계 하나 (이전으로 돌아갈 때 그대로 되돌린다) */
 type Snap = { sit: Situation; st: FlowStep; asked: DimId[]; q: DimId | null };
 type Phase = "who" | "where" | "loading" | "ask" | "rare" | "done";
+/** 지나온 화면 — 어느 화면(질문·드문 사항·끝)이었는지도 함께 (끝·더 답하기에서 '이전'을 누르면 질문 칸이 비던 문제) */
+type Past = { snap: Snap; phase: Phase };
 
 function whereOf(regions: RegionIndex, sigungu: string): Where | null {
   for (const s of regions.sidos) {
@@ -46,7 +48,7 @@ export function GuidedFlow() {
   const [where, setWhere] = useState<Where | null>(null);
   const [total, setTotal] = useState(0);
   const [cur, setCur] = useState<Snap | null>(null);
-  const [history, setHistory] = useState<Snap[]>([]);
+  const [history, setHistory] = useState<Past[]>([]);
   // '질문 더 답하기'를 누르면 5개를 넘겨 정해지는 혜택이 남는 동안 계속 묻는다
   const [extra, setExtra] = useState(false);
   const [rareOn, setRareOn] = useState<DimId[]>([]);
@@ -150,28 +152,25 @@ export function GuidedFlow() {
     const asked = [...cur.asked, cur.q];
     const sit = sit2 ?? cur.sit;
     const st = sit2 ? flowStep(cur.st.pool, sit, cur.st) : cur.st;
-    setHistory((h) => [...h, cur]);
+    setHistory((h) => [...h, { snap: cur, phase: "ask" }]);
     advance({ sit, st, asked, q: null }, extra);
     setBusy(false);
   };
 
   const back = () => {
-    if (phase === "done" || phase === "rare") {
-      // 드문 사항·끝 화면에서는 마지막 질문으로
-      const last = history[history.length - 1];
-      if (!last) return setPhase("where");
-      setHistory((h) => h.slice(0, -1));
-      setCur(last);
-      setPhase("ask");
-      return;
-    }
     const prev = history[history.length - 1];
     if (!prev) {
       setPhase("where");
       return;
     }
     setHistory((h) => h.slice(0, -1));
-    setCur(prev);
+    setCur(prev.snap);
+    // 지나온 화면 그대로 — 질문이 없는 단계를 질문 화면으로 열지 않는다
+    const ph = prev.phase === "ask" && !prev.snap.q ? (rarePicks(prev.snap.sit).length ? "rare" : "done") : prev.phase;
+    if (ph === "done") {
+      setExtra(false);
+      toDone(prev.snap);
+    } else setPhase(ph);
   };
 
   const finishRare = async (on: DimId[] | null) => {
@@ -180,7 +179,7 @@ export function GuidedFlow() {
     await nextFrame();
     const sit = on === null ? cur.sit : rareApply(cur.sit, on);
     const st = on === null ? cur.st : flowStep(cur.st.pool, sit, cur.st);
-    setHistory((h) => [...h, cur]);
+    setHistory((h) => [...h, { snap: cur, phase: "rare" }]);
     setCur({ sit, st, asked: cur.asked, q: null });
     toDone({ sit, st, asked: cur.asked });
     setBusy(false);
@@ -191,7 +190,7 @@ export function GuidedFlow() {
     setExtra(true);
     const q = nextQuestion(cur.st, cur.sit, cur.asked)?.id ?? null;
     if (!q) return;
-    setHistory((h) => [...h, cur]);
+    setHistory((h) => [...h, { snap: cur, phase: "done" }]);
     setCur({ ...cur, q });
     setPhase("ask");
   };
