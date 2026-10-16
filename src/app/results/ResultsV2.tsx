@@ -767,6 +767,8 @@ function V2Card({ item, more, sit, mode, sheet }: { item: V2Item; more: number; 
         </h3>
         <SupportTags p={p} />
       </div>
+      {/* 어떤 복지인지 원문 요약 (먼저 확인할 카드와 같은 첫 문장, 두 줄까지 — 2026-10-16 소유자) */}
+      {p.summary && <p className="sum">{firstLine(p.summary, 90)}</p>}
       <p className={`v2-why w-${item.bucket}`}>
         <Icon name={BUCKET_ICON[item.bucket]} size={16} /> <span>{plainLine(item, sit, mode)}</span>
       </p>
