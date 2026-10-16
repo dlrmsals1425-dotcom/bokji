@@ -57,14 +57,14 @@ test("자녀 없음(고양 청년 예시) → 한부모 질문 없음, 성남 �
   await expect(page.getByTestId("v2-q-daycare")).toBeVisible({ timeout: 20_000 });
 });
 
-test("검색: 저장된 상황이 있으면 맞춤 결과와 같은 판정 말, 전국 공통 사업 표시", async ({ page }) => {
+test("검색: 저장된 상황이 있으면 맞춤 결과와 같은 판정 말, 지역 안내에 실린 중앙부처 사업 표시", async ({ page }) => {
   await page.goto("/results?example=parent-care&for=parent");
   await page.goto("/search?life=senior");
   const card = page.getByTestId("program-card").first();
   await expect(card).toBeVisible({ timeout: 20_000 });
   await expect(page.getByTestId("card-judge").first()).toContainText(/받으실 수 있어요|신청할 때 확인|답하면 정해져요|맞지 않아요/);
   await expect(page.getByText(/가능성 있음|조건 불일치/)).toHaveCount(0);
-  await expect(page.locator(".prow .meta").filter({ hasText: /전국 공통 사업 · 경기 수원시 안내/ }).first()).toBeVisible();
+  await expect(page.locator(".prow .meta").filter({ hasText: /중앙부처 사업 · 경기 수원시 안내/ }).first()).toBeVisible();
 });
 
 test("검색 지역은 새로고침해도 유지 (주소에는 싣지 않음), 결과 순서도 같음", async ({ page }) => {
@@ -113,7 +113,8 @@ test.describe("전국 확대 ③ 현재 위치로 내 지역 예시", () => {
   test("위치 권한이 없으면 지역을 직접 고르기 — 서울 광진구", async ({ page }) => {
     await page.goto("/");
     await page.getByTestId("locate-btn").click();
-    await expect(page.getByTestId("locate-status")).toContainText("위치를 확인하지 못했어요", { timeout: 20_000 });
+    // 예시 칸이 보이면 자동으로 한 번 확인하므로(2026-10-16) 단추를 누른 결과와 자동 확인 결과 중 하나
+    await expect(page.getByTestId("locate-status")).toContainText(/위치를 확인하지 못했어요|위치를 쓸 수 없어/, { timeout: 20_000 });
     await page.locator("#pp-sido").selectOption("11000");
     await page.getByTestId("locate-sigungu").selectOption({ label: "광진구" });
     await expect(page.getByTestId("locate-status")).toContainText("서울 광진구 기준", { timeout: 30_000 });

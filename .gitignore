@@ -56,3 +56,7 @@ shots/ref-*.png
 /pipeline/out/scenarios*
 /.next/
 /node_modules/
+
+# Python import/test caches
+__pycache__/
+*.py[cod]

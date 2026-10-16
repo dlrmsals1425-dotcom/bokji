@@ -8,7 +8,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Icon } from "@/components/Icon";
 import { SupportTags } from "@/components/ProgramCard";
-import { ApplyBadge, orgText } from "@/components/Badges";
+import { ApplyBadge, orgText, ownerText } from "@/components/Badges";
 import { IncomeAsk } from "./IncomeAsk";
 import { Summary } from "./Summary";
 import { VisitSheet } from "./VisitSheet";
@@ -697,7 +697,7 @@ function Pick({ item, i, detail, loading, sit, mode, inSheet, onSheet, onReceivi
         </li>
         <li>
           <span className="k">담당기관</span>
-          <span className="v">{how.agency || p.provider || p.owner || orgText(p)}</span>
+          <span className="v">{how.agency || p.provider || ownerText(p) || orgText(p)}</span>
         </li>
         {how.phone && !loading && (
           <li>
@@ -795,7 +795,7 @@ function BucketList({
 
 function V2Card({ item, more, sit, mode, sheet }: { item: V2Item; more: number; sit: Situation; mode: FindMode; sheet?: SheetCtl }) {
   const p = item.s.program;
-  const where = p.provider || p.owner;
+  const where = p.provider || ownerText(p);
   return (
     <article className={`prow v2-card b-${item.bucket}`} data-testid="v2-card" data-bucket={item.bucket}>
       <div className="top">
