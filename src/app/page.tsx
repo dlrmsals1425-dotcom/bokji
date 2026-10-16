@@ -5,7 +5,7 @@ import { Icon, type IconName } from "@/components/Icon";
 import { ResumeBanner } from "@/components/ResumeBanner";
 import { PresetButtons } from "@/components/PresetButtons";
 import { HomeSearch } from "@/components/HomeSearch";
-import { MODE_ENTRY } from "@/lib/client/mode";
+import { METHOD_ENTRY } from "@/lib/client/mode";
 
 const n = (v: number) => v.toLocaleString("ko-KR");
 
@@ -38,6 +38,32 @@ export default function Home() {
               중앙정부·시도·시군구·공공기관 서비스 {n(c.uniquePrograms)}개 가운데, 직접 신청해야 받을 수 있는 것을 이유와 함께 알려 드립니다.
               30·40대에게는 본인보다 부모님 돌봄·장애 관련 지원을 대신 알아보는 길이 더 유용할 때가 많아요.
             </p>
+            <div className="path-choice" role="group" aria-label="찾는 방법 고르기">
+              {([
+                ["talk", "pencil"],
+                ["guided", "listChecks"],
+              ] as const).map(([k, ic]) => {
+                const m = METHOD_ENTRY[k];
+                return (
+                  <Link key={k} href={m.href} className="path-card" data-testid={m.testId}>
+                    <span className="path-ic" aria-hidden="true">
+                      <Icon name={ic} size={28} strokeWidth={1.7} />
+                    </span>
+                    <span className="path-t">{m.title}</span>
+                    <span className="path-d">{m.desc}</span>
+                    <span className="small muted">{m.example}</span>
+                    <span className="small muted">{m.meta}</span>
+                    <span className="path-go">
+                      시작하기 <Icon name="arrowRight" size={18} strokeWidth={2.2} />
+                    </span>
+                  </Link>
+                );
+              })}
+            </div>
+            <p className="small muted" style={{ marginTop: "0.75rem" }}>
+              두 방법 모두 결과는 같아요 · 사는 곳만 필수, 나머지는 &lsquo;모름&rsquo;이어도 돼요
+            </p>
+            <p className="home-search-label">이미 아는 혜택이 있다면</p>
             <HomeSearch />
             <p className="hero-keys">
               <span>많이 찾는 말</span>
@@ -45,31 +71,6 @@ export default function Home() {
               <Link href="/search?q=노인맞춤돌봄">노인맞춤돌봄</Link>
               <Link href="/search?q=장기요양">장기요양</Link>
               <Link href="/search?q=돌봄">돌봄</Link>
-            </p>
-            <div className="path-choice" role="group" aria-label="찾기 대상 고르기">
-              <Link href={MODE_ENTRY.self.href} className="path-card" data-testid="start-self">
-                <span className="path-ic" aria-hidden="true">
-                  <Icon name="users" size={28} strokeWidth={1.7} />
-                </span>
-                <span className="path-t">{MODE_ENTRY.self.title}</span>
-                <span className="path-d">{MODE_ENTRY.self.desc}</span>
-                <span className="path-go">
-                  시작하기 <Icon name="arrowRight" size={18} strokeWidth={2.2} />
-                </span>
-              </Link>
-              <Link href={MODE_ENTRY.parent.href} className="path-card path-parent" data-testid={MODE_ENTRY.parent.testId}>
-                <span className="path-ic" aria-hidden="true">
-                  <Icon name="heart" size={28} strokeWidth={1.7} />
-                </span>
-                <span className="path-t">{MODE_ENTRY.parent.title}</span>
-                <span className="path-d">{MODE_ENTRY.parent.desc}</span>
-                <span className="path-go">
-                  대신 알아보기 <Icon name="arrowRight" size={18} strokeWidth={2.2} />
-                </span>
-              </Link>
-            </div>
-            <p className="small muted" style={{ marginTop: "0.75rem" }}>
-              한 화면 질문 12개 안팎 · 약 2분 · 사는 곳만 필수, 나머지는 &lsquo;모름&rsquo;이어도 돼요
             </p>
             <ResumeBanner />
           </div>

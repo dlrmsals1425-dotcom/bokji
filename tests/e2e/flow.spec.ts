@@ -30,8 +30,10 @@ test.describe("로그인 없는 전체 흐름 (상황 먼저 · 기본)", () => 
     await expect(page.locator("input[type=password]")).toHaveCount(0);
     await expect(page.getByText("로그인 준비 중")).toHaveCount(0); // QA 2차 L3
 
-    await page.getByTestId("start-self").click();
-    await expect(page).toHaveURL(/\/situation\?for=self/);
+    // 홈은 찾는 방법 두 갈래 (2026-10-16) — 말로 찾기 → 상황 입력 (처음이면 내 복지)
+    await expect(page.getByTestId("start-guided")).toBeVisible();
+    await page.getByTestId("start-talk").click();
+    await expect(page).toHaveURL(/\/situation$/);
     await expect(page.getByTestId("v2-situation")).toHaveAttribute("data-mode", "self");
     await expect(page.getByText("시험판")).toHaveCount(0);
     await regionsReady(page);
@@ -234,11 +236,12 @@ test.describe("로그인 없는 전체 흐름 (상황 먼저 · 기본)", () => 
     await expect(sec.getByTestId("v2-card")).toHaveCount(0);
   });
 
-  test("부모님 복지 찾기: 홈 CTA → 부모님 상황 입력 → 결과(대리 신청 안내) @mobile", async ({ page }) => {
+  test("부모님 복지 찾기: 홈 말로 찾기 → 부모님 복지로 바꾸기 → 부모님 상황 입력 → 결과(대리 신청 안내) @mobile", async ({ page }) => {
     await page.goto("/");
-    await expect(page.getByTestId("start-self")).toBeVisible();
-    await page.getByTestId("start-parent").click();
-    await expect(page).toHaveURL(/\/situation\?for=parent/);
+    await expect(page.getByTestId("start-guided")).toBeVisible();
+    await page.getByTestId("start-talk").click();
+    await expect(page).toHaveURL(/\/situation$/);
+    await page.getByTestId("mode-parent").click();
     await expect(page.getByRole("heading", { level: 1 })).toContainText("부모님 상황");
     await expect(page.getByTestId("mode-parent")).toHaveAttribute("aria-pressed", "true");
     await regionsReady(page);
