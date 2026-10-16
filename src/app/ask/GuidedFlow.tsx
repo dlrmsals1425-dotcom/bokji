@@ -239,7 +239,7 @@ export function GuidedFlow() {
             </li>
           </ol>
           <p className="small muted" style={{ margin: 0 }}>
-            한 화면에 한 질문 · 버튼만 누르면 돼요 · 답과 위치는 이 기기 안에서만 써요
+            답과 위치는 이 기기 안에서만 써요
           </p>
           <div className="gq-bar" aria-hidden="true">
             <i style={{ width: `${progress}%` }} />
