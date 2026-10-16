@@ -127,7 +127,7 @@ export default function Home() {
               <h2 className="h2" id="how-h">
                 이렇게 찾아 드려요
               </h2>
-              <p>입력한 내용은 서버로 보내지 않고 이 기기 안에서만 판정합니다.</p>
+              <p>복지 판정은 이 기기 안에서 합니다. 음성 입력을 사용하면 녹음한 음성을 OpenAI로 보내 글로 바꿔요.</p>
             </div>
           </div>
           <ol className="howto">

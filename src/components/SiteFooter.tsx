@@ -42,7 +42,7 @@ export function SiteFooter() {
             <Link href="/forms">서식 연결 현황</Link>
           </li>
         </ul>
-        <p>입력하신 정보는 서버로 보내지 않고 이 기기에서만 판정합니다. 주민등록번호는 받지 않습니다.</p>
+        <p>복지 판정은 이 기기에서 합니다. 음성 입력을 사용하면 녹음한 음성을 OpenAI로 보냅니다. 주민등록번호는 받지 않습니다.</p>
       </div>
     </footer>
   );
