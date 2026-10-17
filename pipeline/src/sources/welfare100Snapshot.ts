@@ -26,7 +26,13 @@ function readBundles(): Program[] {
   const files = [path.join(dir, "national.json"), ...fs.readdirSync(path.join(dir, "sido")).map((f) => path.join(dir, "sido", f)), ...fs.readdirSync(path.join(dir, "sigungu")).map((f) => path.join(dir, "sigungu", f))];
   const seen = new Set<string>();
   const out: Program[] = [];
-  for (const f of files) for (const p of JSON.parse(fs.readFileSync(f, "utf8")).programs as Program[]) if (!seen.has(p.id)) (seen.add(p.id), out.push(p));
+  for (const f of files) {
+    for (const p of JSON.parse(fs.readFileSync(f, "utf8")).programs as Program[]) {
+      if (seen.has(p.id)) continue;
+      seen.add(p.id);
+      out.push(p);
+    }
+  }
   return out;
 }
 
