@@ -1,12 +1,145 @@
 /** Build independent form overlays from committed public data; never rebuild welfare bundles. */
-import { mkdir, readdir, readFile, writeFile, copyFile, unlink } from "node:fs/promises";
+import { mkdir, readdir, readFile, writeFile, realpath, unlink } from "node:fs/promises";
 import path from "node:path";
 import { createHash } from "node:crypto";
+import { inflateRawSync } from "node:zlib";
 import type { Program } from "../src/lib/data/types";
 import type { ApplicationForm, FormLink, FormsRegion, FormsCoverage, ProgramFormEntry, FormStatus } from "../src/lib/data/forms";
+import { normalizeCensus, censusLinkConflict } from "../src/lib/data/forms";
 import { classifyFormRole, findFormCandidates } from "../src/lib/data/formMatching";
 import { applicationRoute, formStatus, validateFormLink, externalFormUrl, officialFormUrl } from "../src/lib/data/formPublication";
 import { detailBucket } from "../src/lib/data/bucket";
+
+export interface DownloadRecord {
+  format: "hwp" | "hwpx"; path: string; bytes: number; sha256: string; sourceUrl: string; downloadedAt: string;
+  pdf?: { path: string; bytes: number; sha256: string; sourceUrl: string };
+  archive?: { path: string; bytes: number; sha256: string; member: string };
+}
+export interface DownloadManifest { schema: 1; forms: Record<string, DownloadRecord> }
+export interface StoredOriginal { bytes: Buffer; format: "hwp" | "hwpx"; pdf?: Buffer }
+const digestOf = (bytes: Buffer) => createHash("sha256").update(bytes).digest("hex");
+const recordObject = (value: unknown): value is Record<string, unknown> => !!value && typeof value === "object" && !Array.isArray(value);
+
+function archivedMember(archive: Buffer, expectedName: string): Buffer {
+  const end=archive.lastIndexOf(Buffer.from([0x50,0x4b,0x05,0x06]));
+  if (end<0 || end+22>archive.length || end+22+archive.readUInt16LE(end+20)!==archive.length) throw new Error("Invalid source archive directory");
+  let position=archive.readUInt32LE(end+16);
+  const count=archive.readUInt16LE(end+10), limit=position+archive.readUInt32LE(end+12), found: Buffer[]=[];
+  if (!count || limit>end) throw new Error("Invalid source archive directory");
+  for (let index=0;index<count;index++) {
+    if (position+46>limit || archive.readUInt32LE(position)!==0x02014b50) throw new Error("Invalid source archive member");
+    const flags=archive.readUInt16LE(position+8), method=archive.readUInt16LE(position+10), size=archive.readUInt32LE(position+20);
+    const nameLength=archive.readUInt16LE(position+28), next=position+46+nameLength+archive.readUInt16LE(position+30)+archive.readUInt16LE(position+32);
+    if (next>limit) throw new Error("Invalid source archive member");
+    const name=new TextDecoder(flags&0x800?"utf-8":"euc-kr",{fatal:true}).decode(archive.subarray(position+46,position+46+nameLength));
+    if (name===expectedName) {
+      const local=archive.readUInt32LE(position+42), expanded=archive.readUInt32LE(position+24);
+      if (flags&1 || expanded>30*1024*1024 || local+30>position || archive.readUInt32LE(local)!==0x04034b50) throw new Error("Invalid source archive member");
+      const start=local+30+archive.readUInt16LE(local+26)+archive.readUInt16LE(local+28);
+      if (start+size>position) throw new Error("Invalid source archive member");
+      const compressed=archive.subarray(start,start+size);
+      const bytes=method===0?compressed:method===8?inflateRawSync(compressed,{maxOutputLength:30*1024*1024}):null;
+      if (!bytes || bytes.length!==expanded) throw new Error("Unsupported source archive member");
+      found.push(bytes);
+    }
+    position=next;
+  }
+  if (position!==limit || found.length!==1) throw new Error("Missing or ambiguous source archive member");
+  return found[0];
+}
+
+export function validateDownloadManifest(value: unknown): DownloadManifest {
+  if (!recordObject(value) || value.schema !== 1 || !recordObject(value.forms)) throw new Error("Invalid download manifest schema");
+  for (const [id, entry] of Object.entries(value.forms)) {
+    if (!/^(ordin|law|rule)-\d+$/.test(id) || !recordObject(entry) || !["hwp", "hwpx"].includes(String(entry.format))) throw new Error("Invalid downloaded form id/format");
+    if (entry.path !== `originals/${id}.${entry.format}`) throw new Error("Downloaded original path/id mismatch: " + id);
+    for (const file of [entry, ...(entry.pdf === undefined ? [] : [entry.pdf]), ...(entry.archive === undefined ? [] : [entry.archive])]) {
+      if (!recordObject(file) || !Number.isSafeInteger(file.bytes) || Number(file.bytes) <= 0 || typeof file.sha256 !== "string" || !/^[a-f0-9]{64}$/.test(file.sha256)) throw new Error("Invalid download bytes/hash: " + id);
+    }
+    if (entry.pdf !== undefined) {
+      const pdf=entry.pdf as Record<string,unknown>;
+      if (pdf.path !== `previews/${id}.pdf`) throw new Error("Downloaded PDF path/id mismatch: " + id);
+      const url=officialFormUrl(pdf.sourceUrl);
+      if (!url || !/\/flDownload(?:Pdf)?\.do$/.test(new URL(url).pathname) || !/^\d+$/.test(new URL(url).searchParams.get("flSeq")||"")) throw new Error("Invalid official PDF source: "+id);
+    }
+    if (entry.archive !== undefined) {
+      const archive = entry.archive as Record<string, unknown>;
+      if (archive.path !== `source-archives/${id}.zip` || typeof archive.member !== "string" || !/\.hwpx?$/i.test(archive.member)) throw new Error("Invalid source archive/member: " + id);
+    }
+    const sourceUrl = officialFormUrl(entry.sourceUrl);
+    if (!sourceUrl || !new URL(sourceUrl).pathname.endsWith("/flDownload.do") || !/^\d+$/.test(new URL(sourceUrl).searchParams.get("flSeq") || "")) throw new Error("Downloaded source must be an official attachment: " + id);
+    if (typeof entry.downloadedAt !== "string" || !/^\d{4}-\d{2}-\d{2}T/.test(entry.downloadedAt) || !Number.isFinite(Date.parse(entry.downloadedAt))) throw new Error("Invalid download timestamp: " + id);
+  }
+  return value as unknown as DownloadManifest;
+}
+
+/** The downloader checks ZIP CRC/XML fully. Recheck the signed bytes and basic container identity here. */
+export function validateOriginalFile(bytes: Buffer, format: "hwp" | "hwpx"): void {
+  if (format === "hwp") {
+    if (bytes.subarray(0, 8).toString("hex") !== "d0cf11e0a1b11ae1" || !bytes.includes(Buffer.from("HWP Document File"))) throw new Error("Invalid HWP signature");
+    return;
+  }
+  try {
+    if (bytes.length < 22 || bytes.readUInt32LE(0) !== 0x04034b50) throw new Error();
+    const end = bytes.lastIndexOf(Buffer.from([0x50, 0x4b, 0x05, 0x06]));
+    if (end < 0 || end + 22 > bytes.length || end + 22 + bytes.readUInt16LE(end + 20) !== bytes.length) throw new Error();
+    let position = bytes.readUInt32LE(end + 16), mime = false, section = false;
+    const count = bytes.readUInt16LE(end + 10), directoryEnd = position + bytes.readUInt32LE(end + 12);
+    if (!count || directoryEnd > end) throw new Error();
+    for (let index = 0; index < count; index++) {
+      if (position + 46 > directoryEnd || bytes.readUInt32LE(position) !== 0x02014b50) throw new Error();
+      const nameLength = bytes.readUInt16LE(position + 28);
+      const next = position + 46 + nameLength + bytes.readUInt16LE(position + 30) + bytes.readUInt16LE(position + 32);
+      if (next > directoryEnd) throw new Error();
+      const name = bytes.subarray(position + 46, position + 46 + nameLength).toString("utf8");
+      if (/^Contents\/section\d+\.xml$/.test(name) && bytes.readUInt32LE(position + 24) > 0) section = true;
+      if (name === "mimetype") {
+        const local = bytes.readUInt32LE(position + 42), size = bytes.readUInt32LE(position + 20);
+        if (local + 30 > position || bytes.readUInt32LE(local) !== 0x04034b50 || bytes.readUInt16LE(local + 8) !== 0) throw new Error();
+        const start = local + 30 + bytes.readUInt16LE(local + 26) + bytes.readUInt16LE(local + 28);
+        if (start + size > position) throw new Error();
+        mime = bytes.subarray(start, start + size).toString("utf8").trim() === "application/hwp+zip";
+      }
+      position = next;
+    }
+    if (position !== directoryEnd || !mime || !section) throw new Error();
+  } catch { throw new Error("Invalid HWPX ZIP/mimetype/section structure"); }
+}
+
+export async function loadDownloadedOriginals(input: string, value: unknown, forms: Record<string, ApplicationForm>): Promise<Map<string, StoredOriginal>> {
+  const manifest = validateDownloadManifest(value), root = await realpath(input);
+  const originals = new Map<string, StoredOriginal>();
+  const load = async (file: { path: string; bytes: number; sha256: string }) => {
+    const target = await realpath(path.resolve(root, file.path)), relative = path.relative(root, target);
+    if (relative === ".." || relative.startsWith(".." + path.sep) || path.isAbsolute(relative)) throw new Error("Download path escapes forms directory");
+    const bytes = await readFile(target);
+    if (bytes.length !== file.bytes || digestOf(bytes) !== file.sha256) throw new Error("Downloaded file hash/length mismatch: " + file.path);
+    return bytes;
+  };
+  for (const [id, entry] of Object.entries(manifest.forms)) {
+    const metadata = forms[id];
+    if (!metadata || metadata.id !== id || !officialFormUrl(metadata.sourceUrl) || new URL(metadata.sourceUrl).searchParams.get("flSeq") !== new URL(entry.sourceUrl).searchParams.get("flSeq")) throw new Error("Downloaded source does not match form metadata: " + id);
+    const bytes = await load(entry);
+    validateOriginalFile(bytes, entry.format);
+    if (entry.archive) {
+      const archive = await load(entry.archive);
+      if (archive.length < 22 || archive.readUInt32LE(0) !== 0x04034b50) throw new Error("Invalid source archive ZIP header: " + id);
+      if (!archivedMember(archive,entry.archive.member).equals(bytes)) throw new Error("Original differs from reviewed source archive member: " + id);
+    }
+    let pdf: Buffer | undefined;
+    if (entry.pdf) {
+      if (!metadata.officialPdfUrl || !officialFormUrl(metadata.officialPdfUrl) || new URL(metadata.officialPdfUrl).searchParams.get("flSeq")!==new URL(entry.pdf.sourceUrl).searchParams.get("flSeq")) throw new Error("PDF source does not match form metadata: "+id);
+      pdf = await load(entry.pdf);
+      if (pdf.subarray(0, 5).toString() !== "%PDF-") throw new Error("Invalid downloaded PDF header: " + id);
+    }
+    originals.set(id, { bytes, format: entry.format, ...(pdf ? { pdf } : {}) });
+  }
+  return originals;
+}
+
+export function requireApprovedOriginals(published: Set<string>, originals: Map<string, StoredOriginal>, manifestPresent: boolean): void {
+  if (manifestPresent) for (const id of published) if (!originals.has(id)) throw new Error("Approved form has no downloaded original: " + id);
+}
 
 async function main() {
   const root = process.cwd();
@@ -27,6 +160,10 @@ async function main() {
   const portalScan = await json<NonNullable<FormsCoverage["portalScan"]>>(path.join(input, "portal-scan.json")).catch(() => null);
   const portalReviews = await json<{ rows: Review[]; forms: Record<string, ApplicationForm>; programNotes?: Record<string, string> }>(path.join(input, "portal-reviewed-links.json")).catch(() => null);
   const pdfChecks = await json<Record<string, PdfCheck>>(path.join(input, "pdf-checks.json")).catch((): Record<string, PdfCheck> => ({}));
+  const downloads = await json<unknown>(path.join(input, "download-manifest.json"))
+    .catch((error: NodeJS.ErrnoException) => { if (error.code === "ENOENT") return undefined; throw error; });
+  const excludedAssociations = await json<{schema:number;rows:{programId:string;formId:string;reason:string;evidenceUrl:string;checkedAt:string}[]}>(path.join(input,"reviews/rejected-associations.json"))
+    .catch((error:NodeJS.ErrnoException)=>{if(error.code==="ENOENT")return {schema:1,rows:[]};throw error;});
   const regionIndex = await json<{ sidos: { code: string; name: string; sigungus: { code: string; name: string }[] }[] }>(path.join(root, "public/bundles/v1/regions.json"));
   const metadata = await json<{ counts: { uniquePrograms: number } }>(path.join(root, "public/bundles/v1/meta.json"));
   const programs = new Map<string, Program>();
@@ -52,7 +189,7 @@ async function main() {
   if (activeIds.size !== programs.size || [...activeIds].some(id => !programs.has(id))) throw new Error("Visible program index and detail shards differ");
   if (programs.size !== metadata.counts.uniquePrograms) console.warn(`Source summary: ${metadata.counts.uniquePrograms}; reconciled visible/detail records: ${programs.size}. Using actual records.`);
   const forms: Record<string, ApplicationForm> = {};
-  const originals = new Map<string, Buffer>();
+  const originals = new Map<string, StoredOriginal>();
   for (const raw of source.forms) {
     if (!/^ordin-\d+$/.test(raw.id) || forms[raw.id] || !externalFormUrl(raw.sourceUrl)) throw new Error("Invalid source form");
     const bytes = await readFile(path.join(input, "originals", raw.id + ".hwp"));
@@ -63,7 +200,7 @@ async function main() {
       regionCode: raw.regionCode, regionLabel: raw.regionLabel, effectiveDate: raw.effectiveDate,
       sourceUrl: raw.sourceUrl, lawUrl: raw.lawUrl, fetchedAt: raw.fetchedAt,
     };
-    originals.set(raw.id, bytes);
+    originals.set(raw.id, { bytes, format: "hwp" });
   }
   for (const raw of Object.values(portalForms?.forms || {})) {
     if (!/^(ordin|law|rule)-\d+$/.test(raw.id) || !officialFormUrl(raw.sourceUrl) || !officialFormUrl(raw.lawUrl)) throw new Error("Invalid portal form metadata");
@@ -75,42 +212,70 @@ async function main() {
     // from a publication date supplied by the bulk annex catalogue.
     forms[raw.id] = { ...forms[raw.id], ...raw };
   }
+  // Local file metadata is derived only from verified bytes and approved links.
+  for (const form of Object.values(forms)) delete form.file;
+  if (downloads !== undefined) {
+    for (const [id, original] of await loadDownloadedOriginals(input, downloads, forms)) {
+      const preserved = originals.get(id);
+      if (preserved && (preserved.format !== original.format || !preserved.bytes.equals(original.bytes))) throw new Error("Downloaded original conflicts with preserved source: " + id);
+      originals.set(id, original);
+    }
+  }
   if (portalScan?.status === "complete" && (portalScan.checkedPrograms !== programs.size || programs.size !== Object.keys(portalMatches?.programs || {}).length)) throw new Error("Incomplete program-by-program portal search");
+  // 전수 조사 결과는 아직 없을 수 있다. 있으면 모든 사업을 정확히 한 번씩 덮어야 하고,
+  // 모자라거나 남는 입력은 조용히 버리지 않고 빌드를 세운다.
+  const auditPath = path.join(input, "source-audit.json");
+  const census = await readFile(auditPath, "utf8").then(text => normalizeCensus(JSON.parse(text), programs.keys()))
+    .catch((error: NodeJS.ErrnoException) => { if (error.code === "ENOENT") return null; throw error; });
   const links = new Map<string, FormLink[]>();
   const published = new Set<string>();
+  const rejected = new Set<string>();
+  if (excludedAssociations.schema!==1 || !Array.isArray(excludedAssociations.rows)) throw new Error("Invalid rejected association audit");
+  for (const row of excludedAssociations.rows) {
+    if (!programs.has(row.programId) || !forms[row.formId] || typeof row.reason!=="string" || row.reason.trim().length<10 || !officialFormUrl(row.evidenceUrl) || !/^\d{4}-\d{2}-\d{2}$/.test(row.checkedAt)) throw new Error("Invalid rejected association evidence");
+    const key=row.programId+"/"+row.formId;
+    if (rejected.has(key)) throw new Error("Duplicate rejected association");
+    rejected.add(key);
+  }
   for (const review of [...reviews.rows, ...(portalReviews?.rows || [])]) {
     const { programIds, ...link } = review;
     for (const id of programIds) {
       const program = programs.get(id);
       if (!program) throw new Error("Reviewed program no longer exists: " + id);
+      if (rejected.has(id+"/"+link.formId)) throw new Error("Association has conflicting approval and rejection: "+id+"/"+link.formId);
       validateFormLink(program, forms[link.formId], link);
       if (links.get(id)?.some(other => other.formId === link.formId)) throw new Error("Duplicate reviewed association");
       links.set(id, [...(links.get(id) || []), link]);
       published.add(link.formId);
     }
   }
+  requireApprovedOriginals(published, originals, downloads !== undefined);
   await mkdir(path.join(output, "files"), { recursive: true });
   await mkdir(path.join(output, "v1/programs"), { recursive: true });
   const expectedAssets = new Set<string>();
   for (const id of published) {
-    const bytes = originals.get(id);
-    if (!bytes) {
+    const original = originals.get(id);
+    if (!original) {
       const sourceUrl = officialFormUrl(forms[id].sourceUrl);
       if (!sourceUrl || !new URL(sourceUrl).pathname.endsWith("/flDownload.do")) throw new Error("Reviewed external form must link to an official attachment");
       continue;
     }
+    const { bytes, format } = original;
     const digest = hash(bytes), stem = `${id}-${digest.slice(0, 12)}`;
-    const hwpName = stem + ".hwp";
+    const hwpName = stem + "." + format;
     await writeFile(path.join(output, "files", hwpName), bytes);
     expectedAssets.add(hwpName);
-    forms[id].file = { hwp: `/forms/files/${hwpName}`, bytes: bytes.length, sha256: digest };
+    forms[id].file = { hwp: `/forms/files/${hwpName}`, format, bytes: bytes.length, sha256: digest };
     const check = pdfChecks[id];
-    if (check?.verified) {
+    let pdf = original.pdf;
+    if (!pdf && check?.verified) {
       const pdfPath = path.join(input, "previews", id + ".pdf");
-      const pdf = await readFile(pdfPath);
+      pdf = await readFile(pdfPath);
       if (check.originalSha256 !== digest || hash(pdf) !== check.pdfSha256 || check.pages < 1 || pdf.subarray(0, 5).toString() !== "%PDF-") throw new Error("PDF preview no longer matches checked original");
+    }
+    if (pdf) {
       const pdfName = stem + ".pdf";
-      await copyFile(pdfPath, path.join(output, "files", pdfName));
+      await writeFile(path.join(output, "files", pdfName), pdf);
       expectedAssets.add(pdfName);
       forms[id].file!.pdf = `/forms/files/${pdfName}`;
     }
@@ -139,16 +304,20 @@ async function main() {
     const approved = links.get(program.id) || [];
     const portalEntry = portalMatches?.programs[program.id];
     const candidates = (portalMatches ? portalEntry?.candidates || [] : findFormCandidates(program, Object.values(forms)))
-      .filter(item => forms[item.formId] && !approved.some(link => link.formId === item.formId));
+      .filter(item => forms[item.formId] && !rejected.has(program.id+"/"+item.formId) && !approved.some(link => link.formId === item.formId));
     const applyUrl = applicationRoute(program);
     const status = formStatus(approved, candidates.map(item => item.formId), applyUrl);
+    const investigation = census?.programs.get(program.id);
+    const conflict = investigation && censusLinkConflict(program.id, investigation, approved.length > 0);
+    if (conflict) throw new Error("source-audit.json: " + conflict);
     const entry: ProgramFormEntry = { id: program.id, name: program.name, areaKey, status, links: approved,
       candidateFormIds: candidates.map(item => item.formId), ...(applyUrl ? { applyUrl } : {}),
       ...(program.applyType ? { applyType: program.applyType } : {}),
       ...((portalReviews?.programNotes?.[program.id] || reviews.programNotes?.[program.id]) ? { note: portalReviews?.programNotes?.[program.id] || reviews.programNotes?.[program.id] } : {}),
       ...(portalScan ? { portalSearch: { checkedAt: portalEntry?.checkedAt || portalScan.checkedAt,
         outcome: portalScan.status !== "complete" || !portalEntry ? "incomplete" as const : approved.length ? "linked" as const : candidates.length ? "candidate" as const : "not_found" as const,
-        candidateCount: candidates.length, method: "full-index" as const } } : {}) };
+        candidateCount: candidates.length, method: "full-index" as const } } : {}),
+      ...(investigation ? { investigation } : {}) };
     entries.set(areaKey, [...(entries.get(areaKey) || []), entry]);
     const region = regions.get(areaKey)!;
     region.total++; region.counts[status]++; globalCounts[status]++;
@@ -163,8 +332,10 @@ async function main() {
   const coverage: FormsCoverage = { schema: 1, generatedAt, totalPrograms: programs.size, counts: globalCounts,
     totalForms: Object.keys(forms).length, publishedForms: published.size,
     excludedForms: Object.values(forms).filter(form => ["deleted", "administrative", "reference"].includes(form.role)).length,
-    sourceNote: portalScan ? "국가법령정보센터의 법령·자치법규·행정규칙 별표·서식 목록을 전국 사업과 대조했습니다. 연결 확인 자료와 적용 검토 중인 후보를 구분합니다. 기관의 별도 사업 공고에만 있는 서식은 이 목록에 없을 수 있습니다." : "전국 사업 목록의 연결 상태를 집계합니다. 현재 확보한 파일은 고양시 자치법규 서식이며, 원문을 대조한 일부 사업부터 제공하고 있습니다. 전국 신청서를 모두 확보한 상태는 아닙니다.",
-    regions: regionList, ...(portalScan ? { portalScan } : {}) };
+    sourceNote: census ? `수록된 사업 자료 ${programs.size.toLocaleString("ko-KR")}건을 한 건씩 조사한 결과입니다(혜택 가짓수가 아니라 자료 건수입니다). 목록을 맞춰 본 것과 법령 본문·기관 안내 페이지를 실제로 열어 읽은 것은 구분해 적고, 열지 못한 자료도 건수로 남깁니다. 아직 찾지 못했다는 것이 신청서가 없다는 뜻은 아닙니다.`
+      : portalScan ? "국가법령정보센터의 법령·자치법규·행정규칙 별표·서식 목록을 전국 사업과 대조했습니다. 연결 확인 자료와 적용 검토 중인 후보를 구분합니다. 기관의 별도 사업 공고에만 있는 서식은 이 목록에 없을 수 있습니다." : "전국 사업 목록의 연결 상태를 집계합니다. 현재 확보한 파일은 고양시 자치법규 서식이며, 원문을 대조한 일부 사업부터 제공하고 있습니다. 전국 신청서를 모두 확보한 상태는 아닙니다.",
+    regions: regionList, ...(portalScan ? { portalScan } : {}),
+    ...(census ? { investigationSummary: { ...census.summary, checkedAt: census.checkedAt } } : {}) };
   await writeJSON(path.join(output, "v1/coverage.json"), coverage);
   await writeJSON(path.join(output, "v1/catalog.json"), { schema: 1, generatedAt, forms });
   if (portalScan) {
@@ -181,7 +352,10 @@ async function main() {
     }
   }
   await writeJSON(path.join(input, "review-queue.json"), { generatedAt, candidates: reviewQueue });
-  console.log(JSON.stringify({ totalPrograms: programs.size, areas: regions.size, counts: globalCounts, publishedForms: published.size, pdfPreviews: Object.values(forms).filter(form => form.file?.pdf).length, excludedForms: coverage.excludedForms, candidateLinks: reviewQueue.length }, null, 2));
+  console.log(JSON.stringify({ totalPrograms: programs.size, areas: regions.size, counts: globalCounts, publishedForms: published.size, pdfPreviews: Object.values(forms).filter(form => form.file?.pdf).length, excludedForms: coverage.excludedForms, candidateLinks: reviewQueue.length,
+    census: census ? { checkedAt: census.checkedAt, counts: census.summary.counts, lawBodiesRead: census.summary.lawBodiesRead, lawFailures: census.summary.lawFailures, pagesRead: census.summary.pagesRead, pageFailures: census.summary.pageFailures, officialAttachments: census.summary.officialAttachments } : "not supplied" }, null, 2));
 }
 
-main().catch(error => { console.error(error); process.exitCode = 1; });
+if (process.argv[1] && /(?:^|[\\/])build-forms\.(?:ts|js)$/.test(process.argv[1])) {
+  main().catch(error => { console.error(error); process.exitCode = 1; });
+}

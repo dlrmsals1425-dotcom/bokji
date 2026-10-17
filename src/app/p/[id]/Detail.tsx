@@ -15,6 +15,7 @@ import { dateLabel, periodEnded } from "@/lib/client/period";
 import { BUCKET_LABEL, DIM_BY_ID, answersFor, classifyOne, dimAvailable, dimsFor, explainItem, incomeExplain, plainLine, type ExplainLine, type Situation, type V2Item } from "@/lib/client/v2";
 import { SOURCE_LABEL, ORG_TYPE_LABEL, type LocalOperation, type Program } from "@/lib/data/types";
 import { blocksLength, normalizeText, textBlocks, type TextBlock } from "@/lib/data/text";
+import { excludedSourceReason, externalFormUrl } from "@/lib/data/formPublication";
 const SECTIONS = [
   { id: "sec-target", label: "지원대상" },
   { id: "sec-benefit", label: "지원내용" },
@@ -416,13 +417,13 @@ export function Detail({ id }: { id: string }) {
               </div>
             )}
             <div className="side-actions">
-              {p.applyUrl && (
-                <a href={p.applyUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+              {externalFormUrl(p.applyUrl) && (
+                <a href={externalFormUrl(p.applyUrl)!} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
                   온라인 신청·관련 누리집 <Icon name="externalLink" size={18} />
                 </a>
               )}
-              {p.url ? (
-                <a href={p.url} target="_blank" rel="noopener noreferrer" className="btn btn-ghost" data-testid="official-link">
+              {externalFormUrl(p.url) ? (
+                <a href={externalFormUrl(p.url)!} target="_blank" rel="noopener noreferrer" className="btn btn-ghost" data-testid="official-link">
                   공식 원문 보기 <Icon name="externalLink" size={18} />
                 </a>
               ) : (
@@ -431,6 +432,7 @@ export function Detail({ id }: { id: string }) {
                 </a>
               )}
             </div>
+            {excludedSourceReason(p.applyUrl) && <p className="small muted">{excludedSourceReason(p.applyUrl)}</p>}
             <p className="small muted" style={{ marginTop: "0.75rem" }}>
               <Icon name="phone" size={14} className="icon-inline" /> 잘 모르겠으면 보건복지상담센터 129
             </p>

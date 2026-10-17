@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "rows": [
+    {
+      "programId": "g44150.bokjiro-WLF00004280",
+      "urlHash": "5035d1f33db3fefe3c84738ccbfa53568e104c87115d16f58b549bf4d324076b",
+      "reasonCode": "filled_personal_data",
+      "checkedAt": "2026-10-16"
+    },
+    {
+      "programId": "g28720.bokjiro-WLF00005720",
+      "urlHash": "f3fab10ec0afdb9606302cb362060aea3232025f4209d31a8742b93acc215b75",
+      "reasonCode": "program_purpose_mismatch",
+      "checkedAt": "2026-10-16"
+    },
+    {
+      "programId": "g43750.bokjiro-WLF00006648",
+      "urlHash": "e6febf4fe00ac5479fba9355d97965e326d09a59aba64fe5f20c239f29307606",
+      "reasonCode": "filled_personal_data",
+      "checkedAt": "2026-10-16"
+    },
+    {
+      "programId": "g36110.bokjiro-WLF00004413",
+      "urlHash": "e2a21da119d2a411f254c1dc9726c24cd9bc073be780f282e803be28a7a5b9fe",
+      "reasonCode": "program_purpose_mismatch",
+      "checkedAt": "2026-10-16"
+    },
+    {
+      "programId": "g48890.bokjiro-WLF00002039",
+      "urlHash": "ae17afd63ebc189950d8342db3b1fb6c698c5bcdf03c4e59481828de5b7322fc",
+      "reasonCode": "program_purpose_mismatch",
+      "checkedAt": "2026-10-16"
+    }
+  ]
+}

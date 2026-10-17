@@ -1,11 +1,18 @@
 import type { Program } from "./types";
 import type { ApplicationForm, FormLink, FormStatus } from "./forms";
+import sourceExclusions from "./sourceExclusions.json";
+
+export function excludedSourceReason(value: unknown): string | undefined {
+  if (typeof value!=="string") return undefined;
+  try { return sourceExclusions.hosts.find(row=>row.host===new URL(value).hostname.toLowerCase())?.reason; }
+  catch { return undefined; }
+}
 
 export function externalFormUrl(value: unknown): string | null {
   if (typeof value !== "string") return null;
   try {
     const url = new URL(value);
-    return ["http:", "https:"].includes(url.protocol) && !url.username && !url.password ? url.href : null;
+    return ["http:", "https:"].includes(url.protocol) && !url.username && !url.password && !excludedSourceReason(value) ? url.href : null;
   } catch { return null; }
 }
 
@@ -23,9 +30,30 @@ export function officialFormUrl(value: unknown): string | null {
   return safe;
 }
 
-function referencedFormLaw(program: Program, form: ApplicationForm): boolean {
-  const normalize = (text: string) => text.normalize("NFKC").replace(/[「」『』\s·ㆍ]/g, "").replace(/\(제[^)]*\)/g, "").replace(/제\d+조.*$/, "").replace(/시행규칙$|시행령$/, "");
-  return (program.laws || []).some(law => law.split("||").some(part => normalize(part) === normalize(form.lawTitle)));
+const normalizedLaw = (text: string) => text.normalize("NFKC").replace(/[「」『』\s·ㆍᆞ・･‧․]/g, "").replace(/\(제[^)]*\)/g, "").replace(/제\d+조.*$/, "");
+function referencedFormLaw(program: Program, form: Pick<ApplicationForm, "lawTitle"> & Partial<Pick<ApplicationForm,"regionCode"|"regionLabel">>): boolean {
+  const normalize = (text: string) => normalizedLaw(text).replace(/시행규칙$|시행령$/, "");
+  // Split a second explicitly qualified local law before removing article tails.
+  // The word "및" inside a single title (e.g. 노인 및 장애인) stays intact.
+  return (program.laws || []).some(law => law.split(/\|\||\/|\s+및\s+(?=[가-힣]+(?:특별자치도|특별자치시|특별시|광역시|도|시|군|구)\s)/).some(part => normalize(part) === normalize(form.lawTitle)
+    || (!!form.regionLabel && form.regionCode===program.region?.sido && normalize(form.regionLabel+part)===normalize(form.lawTitle))));
+}
+
+function reviewedApplicationReference(program: Program, form: ApplicationForm, link: FormLink): boolean {
+  const ref=link.scopeReference;
+  if (link.scopeBasis!=="official-application-reference" || form.regionCode!=="national" || !ref
+      || normalizedLaw(ref.referencedLawTitle)!==normalizedLaw(form.lawTitle)
+      || ref.annexNumber!==form.annexNumber || ref.basis.trim().length<30) return false;
+  if (ref.kind==="cited-local-law") {
+    const safe=officialFormUrl(link.evidenceUrl);
+    return !!safe && !!ref.sourceLawId && new URL(safe).searchParams.get("ordinSeq")===ref.sourceLawId
+      && /^제\d+조(?:의\d+)?(?:제\d+항)?$/.test(ref.article??"") && !!ref.sourceLawTitle
+      && referencedFormLaw(program,{lawTitle:ref.sourceLawTitle});
+  }
+  if (ref.kind!=="program-documents") return false;
+  const safe=externalFormUrl(link.evidenceUrl);
+  if (!safe || !/^(?:gov\.kr|.+\.(?:go|gov)\.kr)$/.test(new URL(safe).hostname)) return false;
+  return [program.url,...(program.sources??[]).map(source=>source.url)].some(url=>externalFormUrl(url)===safe);
 }
 
 export function sameFormJurisdiction(program: Pick<Program, "scope" | "region">, form: ApplicationForm): boolean {
@@ -41,7 +69,7 @@ export function validateFormLink(program: Program, form: ApplicationForm | undef
   if (!sameFormJurisdiction(program, form)) {
     const sameProvince = link.scopeBasis === "provincial-law-reference" && program.scope === "sigungu" && program.region?.sido === form.regionCode;
     const nationalReference = link.scopeBasis === "national-law-reference" && form.regionCode === "national";
-    if ((!sameProvince && !nationalReference) || !referencedFormLaw(program, form)) throw new Error("Form jurisdiction does not match program");
+    if (!reviewedApplicationReference(program,form,link) && ((!sameProvince && !nationalReference) || !referencedFormLaw(program, form))) throw new Error(`Form jurisdiction does not match program: ${program.id} / ${form.id}`);
   }
   if (!["application", "consent", "delegation", "supporting"].includes(form.role)) throw new Error("Non-applicant form cannot be published as an application");
   if (!externalFormUrl(link.evidenceUrl) || link.evidenceNote.trim().length < 10 || !/^\d{4}-\d{2}-\d{2}$/.test(link.checkedAt)) throw new Error("Reviewed association needs dated source evidence");
