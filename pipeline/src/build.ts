@@ -75,13 +75,18 @@ function main() {
   // 복지로 OpenAPI(중앙·지자체) 캐시로 색인 보강 + 신규 서비스 추가
   const { records: w100, stats: bokjiroApi } = applyBokjiroApi(w100Index, regions, log);
   log(`[bokjiro-api] 목록 중앙 ${bokjiroApi.list.central} · 지자체 ${bokjiroApi.list.local} / 상세 중앙 ${bokjiroApi.detail.central} · 지자체 ${bokjiroApi.detail.local} / 보강 ${bokjiroApi.enriched} · 신규 ${bokjiroApi.added} · 색인에만 있음 ${bokjiroApi.indexOnly}`);
+  // 통합돌봄 메뉴판: 보건복지부 원문에서 직접 읽은 것(npm run ingest:mohw → parse:mohw)을 먼저, 없으면 선행 대시보드 수집본 (2026-10-17)
+  const mohwCsv = path.join(ROOT, "pipeline/raw/mohw/policies.csv");
+  const useMohw = fs.existsSync(mohwCsv);
   const icareFetched = (() => {
     try {
+      if (useMohw) return new Date(JSON.parse(fs.readFileSync(path.join(ROOT, "pipeline/raw/mohw/index.json"), "utf8")).checkedAt).toLocaleDateString("sv-SE", { timeZone: "Asia/Seoul" });
       const j = JSON.parse(fs.readFileSync(path.join(ICDASH, "data/api_summary.json"), "utf8"));
       return new Date(j.fetchedAt).toLocaleDateString("sv-SE", { timeZone: "Asia/Seoul" });
     } catch { return "2026-10-01"; }
   })();
-  const icare = loadIcare(path.join(ICDASH, "policies.csv"), icareFetched, regions, log);
+  log(`[icare] 메뉴판 출처: ${useMohw ? "보건복지부 원문 (pipeline/raw/mohw)" : "선행 대시보드 수집본 (ICDASH_DIR)"}`);
+  const icare = loadIcare(useMohw ? mohwCsv : path.join(ICDASH, "policies.csv"), icareFetched, regions, log);
   const g24list = readCached("serviceList");
   const gov24 = g24list.rows.length
     ? loadGov24(g24list.rows, readCached("supportConditions").rows, readCached("serviceDetail").rows,

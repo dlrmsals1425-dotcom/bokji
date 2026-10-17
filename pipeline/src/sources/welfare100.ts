@@ -1,4 +1,5 @@
 import fs from "node:fs";
+import { loadWelfare100Snapshot } from "./welfare100Snapshot";
 import path from "node:path";
 import type { SourceRecord } from "./record";
 import { financialBadge, isEupmyeondongLevel } from "./record";
@@ -18,6 +19,12 @@ import type { Cond } from "../../../src/lib/engine/types";
  */
 export function loadWelfare100(dataDir: string, regions: RegionIndex, log: (m: string) => void): SourceRecord[] {
   const litePath = path.join(dataDir, "w100_index-lite.json");
+  // (2026-10-17) 원 수집본이 없으면 복지제도100 고정본만 — 복지로 색인은 복지로 OpenAPI(applyBokjiroApi)가 대신 만든다
+  if (!fs.existsSync(litePath)) {
+    const recs = loadWelfare100Snapshot();
+    log(`[w100] 원 수집본 없음 → 복지제도100 고정본 ${recs.length}건 (복지로 사업은 복지로 OpenAPI로)`);
+    return recs;
+  }
   const lite = JSON.parse(fs.readFileSync(litePath, "utf8"));
   const extra = JSON.parse(fs.readFileSync(path.join(dataDir, "w100_index-extra.json"), "utf8"));
   const fetchedAt = fs.statSync(litePath).mtime.toLocaleDateString("sv-SE", { timeZone: "Asia/Seoul" });
