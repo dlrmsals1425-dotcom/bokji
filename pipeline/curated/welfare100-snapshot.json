@@ -1,0 +1,3447 @@
+{
+ "asOf": "2026-09-24",
+ "note": "복지제도100 고정본 — 지금 번들에서 뽑음 (원 수집본 없음)",
+ "records": [
+  {
+   "source": "welfare100",
+   "sourceId": "adoption",
+   "name": "입양 지원",
+   "key": "입양",
+   "summary": "국가가 입양 절차를 책임지고 결연·가정법원 허가를 거쳐 아동에게 영구적인 가정을 찾아 주며 입양가정을 지원하는 제도",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "입양·위탁",
+   "tags": [
+    "입양·위탁",
+    "영유아",
+    "아동"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "bokjiro_tags",
+    "logic": {
+     "any": [
+      {
+       "any": [
+        {
+         "field": "childAge",
+         "min": 0,
+         "max": 5,
+         "label": "영유아 자녀"
+        },
+        {
+         "field": "age",
+         "min": 0,
+         "max": 5,
+         "label": "영유아"
+        }
+       ]
+      },
+      {
+       "any": [
+        {
+         "field": "childAge",
+         "min": 0,
+         "max": 12,
+         "label": "아동 자녀"
+        },
+        {
+         "field": "age",
+         "min": 0,
+         "max": 12,
+         "label": "아동"
+        }
+       ]
+      }
+     ],
+     "label": "복지로 생애주기(영유아·아동)"
+    },
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "adult-dd-day-activity",
+   "name": "성인 발달장애인 주간활동서비스",
+   "key": "성인발달장애인주간활동",
+   "summary": "18세 이상 성인 발달장애인이 낮 시간에 지역사회에서 동료와 활동하도록 월 132~176시간 바우처를 주는 서비스",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "보호·돌봄",
+   "tags": [
+    "보호·돌봄",
+    "청년",
+    "중장년",
+    "장애인"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "assistive-devices",
+   "name": "장애인보조기기 교부",
+   "key": "장애인보조기기교부",
+   "summary": "저소득 장애인 대상으로 장애종류, 정도에 따라 44개 품목의 보조기구 교부",
+   "target": "○ 장애유형 : 장애인복지법 제32조의 규정에 의거 등록한 지체·뇌병변·시각·청각·심장·호흡·언어·자폐성·지적장애인\n○ 소득수준 : 국민기초생활 보장법상 수급자, 차상위계층(기준 중위소득 50% 이하)",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "신체건강",
+   "tags": [
+    "보건·의료",
+    "현물",
+    "신체건강",
+    "생활지원",
+    "저소득",
+    "장애인"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "basic-pension",
+   "name": "기초연금",
+   "key": "기초연금",
+   "summary": "만 65세 이상 전체 노인인구 중 소득하위70%에 현금 지원",
+   "target": "○ 만 65세 이상 노인으로 소득 인정액이 선정기준액(보건복지부 장관이 매년 결정·고시하는 금액) 이하인 자\n○ 대상자 : 만 65세 이상 노인인구의 70% 수준",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "안전·위기",
+   "tags": [
+    "행정·안전",
+    "현금",
+    "생활지원",
+    "서민금융",
+    "노년",
+    "저소득"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "birth-funeral-benefit",
+   "name": "해산급여·장제급여",
+   "key": "해산급여장제급여",
+   "summary": "기초생활수급자가 출산하거나 사망했을 때 해산비 70만 원과 장제비 80만 원을 지급하는 기초생활보장 부가 급여",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "생활지원",
+   "tags": [
+    "생활지원",
+    "임신·출산",
+    "저소득"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "catastrophic-medical-expense",
+   "name": "재난적 의료비 지원 사업",
+   "key": "재난적의료비",
+   "summary": "중위소득 100% 이하 가구를 중심으로 5천만원 내에서 본인부담 의료비 80~50% 지원",
+   "target": "○ 질환 구분 없이 소득 하위 50% 이하 중심 지원\n○ 연간 5천만원 한도 내에서 본인부담 비급여의 80~50%를 지원\n○ 지원기준 미충족 시에도 부담능력 대비 과도한 의료비 발생 시 지원받을 수 있도록 개별심사제도를 통해 탄력적 지원",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "신체건강",
+   "tags": [
+    "보건·의료",
+    "서비스(의료)||의료지원",
+    "신체건강",
+    "생활지원",
+    "청년",
+    "중장년"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "child-abuse-protection",
+   "name": "아동학대 피해아동 보호",
+   "key": "아동학대피해아동보호",
+   "summary": "아동학대 신고가 들어오면 전담공무원이 조사하고 피해아동을 분리·보호하며 상담과 가족 지원으로 재학대를 막는 체계",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "시장·군수·구",
+   "category": "안전·위기",
+   "tags": [
+    "안전·위기",
+    "보호·돌봄",
+    "영유아",
+    "아동",
+    "청소년"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "bokjiro_tags",
+    "logic": {
+     "all": [
+      {
+       "any": [
+        {
+         "any": [
+          {
+           "field": "childAge",
+           "min": 0,
+           "max": 5,
+           "label": "영유아 자녀"
+          },
+          {
+           "field": "age",
+           "min": 0,
+           "max": 5,
+           "label": "영유아"
+          }
+         ]
+        },
+        {
+         "any": [
+          {
+           "field": "childAge",
+           "min": 0,
+           "max": 12,
+           "label": "아동 자녀"
+          },
+          {
+           "field": "age",
+           "min": 0,
+           "max": 12,
+           "label": "아동"
+          }
+         ]
+        },
+        {
+         "any": [
+          {
+           "field": "childAge",
+           "min": 13,
+           "max": 18,
+           "label": "청소년 자녀"
+          },
+          {
+           "field": "age",
+           "min": 9,
+           "max": 24,
+           "label": "청소년 본인"
+          }
+         ]
+        }
+       ],
+       "label": "복지로 생애주기(영유아·아동·청소년)"
+      },
+      {
+       "any": [
+        {
+         "field": "childAge",
+         "min": 0,
+         "max": 12,
+         "label": "아동 (자녀)"
+        },
+        {
+         "field": "age",
+         "min": 0,
+         "max": 18,
+         "label": "아동·청소년 본인"
+        }
+       ]
+      }
+     ]
+    },
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "child-allowance",
+   "name": "아동수당",
+   "key": "아동수당",
+   "summary": "만 8세 미만 모든 아동에게 월 10만 원 현금 지원(최대 96개월)",
+   "target": "○ 만 8세 미만 모든 아동에게 아동수당을 지급\n- 대한민국 국적을 보유한 아동\nㆍ 부모가 외국인이어도 아동이 한국 국적이면 요건 충족\nㆍ 국적법에 따른 복수국적자 포함\nㆍ 난민법에 따른 난민 인정 아동 포함\nㆍ ｢재한외국인처우기본법｣에 따른 특별기여자\n- 주민등록법에 의한 주민등록번호가 정상적으로 부여된 아동\nㆍ 사회복지 전산관리번호(의료급여 전산관리번호) 부여 대상자 포함\nㆍ 주민등록법에 따른 거주 불명자 중 실제 거주지가 확인되는 자 포함",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "보육",
+   "tags": [
+    "보육·교육",
+    "현금",
+    "생활지원",
+    "보육",
+    "영유아",
+    "아동"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "child-meal-support",
+   "name": "아동급식 지원",
+   "key": "아동급식",
+   "summary": "결식 우려가 있는 저소득 가정 18세 미만 아동에게 급식카드·도시락·단체급식으로 끼니를 지원하는 사업",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "생활지원",
+   "tags": [
+    "생활지원",
+    "아동",
+    "청소년",
+    "저소득"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "childcare-fee",
+   "name": "보육료 지원",
+   "key": "보육료",
+   "summary": "어린이집을 이용하는 영유아의 보육료를 국민행복카드 바우처로 지원하는 무상보육 제도",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "교육부",
+   "category": "보육",
+   "tags": [
+    "보육",
+    "영유아"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "community-service-investment",
+   "name": "지역사회서비스 투자사업",
+   "key": "지역사회서비스투자",
+   "summary": "지역의 특성과 수요에 부합하는 사회서비스를 제공하여 지역복지를 확충하고 서비스 제공 일자리를 창출할 수 있도록 지원합니다.",
+   "target": "기준 중위소득 140% 이하 원칙을 적용하되, 지역별, 사업별 기준이 상이할 수 있습니다. 예) 아동/청소년 심리지원사업(중위소득160%), 장애인보조기기렌탈/비만아동건강관리서비스(소득기준없음)",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부 사회서비스사업과",
+   "category": "문화·여가",
+   "tags": [
+    "문화·여가",
+    "보육",
+    "교육",
+    "안전·위기",
+    "임신·출산",
+    "생활지원"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "bokjiro_tags",
+    "logic": {
+     "all": [
+      {
+       "field": "children",
+       "anyOf": [
+        "pregnant",
+        "0-1"
+       ],
+       "label": "임신·출산 가구"
+      },
+      {
+       "field": "benefit",
+       "anyOf": [
+        "livelihood",
+        "medical",
+        "housing",
+        "education",
+        "near_poverty"
+       ],
+       "label": "저소득 가구(수급·차상위 등)",
+       "soft": true
+      }
+     ]
+    },
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "crisis-pregnancy-protected-birth",
+   "name": "위기임신 상담·보호출산",
+   "key": "위기임신상담보호출산",
+   "summary": "위기임산부가 1308 상담을 받고, 불가피하면 가명으로 의료기관에서 출산한 뒤 아동을 지자체가 보호하는 제도",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "임신·출산",
+   "tags": [
+    "임신·출산",
+    "안전·위기",
+    "한부모·조손"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "bokjiro_tags",
+    "logic": {
+     "all": [
+      {
+       "field": "children",
+       "anyOf": [
+        "pregnant",
+        "0-1"
+       ],
+       "label": "임신·출산 가구"
+      },
+      {
+       "field": "trait",
+       "anyOf": [
+        "single_parent"
+       ],
+       "label": "한부모·조손 가구",
+       "soft": true
+      },
+      {
+       "field": "children",
+       "anyOf": [
+        "pregnant",
+        "0-1"
+       ],
+       "label": "임신 중이거나 최근 출산"
+      }
+     ]
+    },
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "culture-nuri-card",
+   "name": "통합문화이용권(문화누리카드)",
+   "key": "통합문화이용권",
+   "summary": "국내 문화예술·관광·체육 관련 가맹점에서 이용 가능한 문화누리카드 발급",
+   "target": "○ 기초생활수급자 및 차상위계층 (6세 이상)",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "문화체육관광부",
+   "category": "문화·여가",
+   "tags": [
+    "문화·환경",
+    "문화/여가지원||이용권",
+    "문화·여가",
+    "아동",
+    "청소년",
+    "청년"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "daily-care",
+   "name": "일상돌봄 서비스",
+   "key": "일상돌봄",
+   "summary": "필요에 맞게 기본서비스(재가돌봄, 가사)와 특화서비스(식사영양 등)를 선택적 조합하여 이용",
+   "target": "<돌봄 필요 청·중장년>\n①일상생활에 돌봄이 필요한 청·중장년(13~64세)\n②질병, 부상 등으로 일상 생활에 어려움이 있는 자(진단서·소견서·장기요양인정서·근로능력판정결과서 등 또는 공공·민간기관의 추천서)\n③돌봄을 수행할 가족 등이 없는 자(주민등록상 1인 가구 또는 2인 가구이나 경제활동·장기 부재 등의 사유로 가구원 돌봄이 불가한 자)\n* 위 세가지 조건을 모두 충족할 것\n<가족돌봄청년>\n①가족을 돌보는 청년(39세 이하)\n②동거하는 가족의 질병, 부상 등으로 돌봄 필요성이 있는 자(진단서·소견서·장기요양인정서·근로능력판정결과서 등 또는 공공·민간기관의 추천서)\n③동거 가족을 직접 돌보거나 가족 부양을 위해 경제활동을 하는 자(돌봄 대상 가족과 주민등록상 동거 또는 공공·민간기관 추천서 또는 경제활동을 증명할 재직증명서 등)\n* 위 세가지 조건을 모두 충족할 것",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "생활지원",
+   "tags": [
+    "생활안정",
+    "이용권",
+    "보호·돌봄",
+    "생활지원",
+    "정신건강",
+    "청소년"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "dd-public-guardianship",
+   "name": "발달장애인 공공후견 지원",
+   "key": "발달장애인공공후견",
+   "summary": "발달장애인에게 공공후견 심판 절차비용(최대50만원), 후견인 활동비용(최대40만원) 지원",
+   "target": "○ 등록 기준\n- 성인(만 19세 이상) 발달장애인(장애인복지법상 지적·자폐성 장애인)\n○ 욕구 기준\n- 의사결정 지원이 필요한 사람",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "주거",
+   "tags": [
+    "주거·자립",
+    "상담/법률지원||현금",
+    "생활지원",
+    "법률",
+    "노년",
+    "청소년"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "defector-settlement",
+   "name": "북향민 정착금 지원",
+   "key": "북향민정착금",
+   "summary": "북향민(북한이탈주민)의 초기 정착을 위해 1인 세대 기준 1,500만 원 기본금과 취약계층 가산금을 지급하는 제도",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "통일부",
+   "category": "생활지원",
+   "tags": [
+    "생활지원",
+    "주거",
+    "다문화·탈북민"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "dementia-public-guardianship",
+   "name": "치매공공후견",
+   "key": "치매공공후견",
+   "summary": "권리를 대변해 줄 가족이 없는 치매 어르신에게 공공후견인을 연결해 의료·복지·재산 관련 의사결정을 돕는 제도",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "법률",
+   "tags": [
+    "법률",
+    "보호·돌봄",
+    "노년"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "bokjiro_tags",
+    "logic": {
+     "all": [
+      {
+       "field": "age",
+       "min": 65,
+       "label": "노년(만 65세 이상)"
+      },
+      {
+       "field": "unasked",
+       "label": "치매 진단 또는 의심",
+       "hint": "치매 여부는 치매안심센터 상담으로 확인해요."
+      }
+     ]
+    },
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "dementia-screening-treatment",
+   "name": "치매검진·치매치료관리비 지원",
+   "key": "치매검진치매치료관리비",
+   "summary": "치매안심센터에서 치매를 조기 검진하고, 진단 후에는 치료비 본인부담을 월 3만 원까지 지원하는 치매 의료지원",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "신체건강",
+   "tags": [
+    "신체건강",
+    "노년"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "developmental-rehab",
+   "name": "발달재활서비스",
+   "key": "발달재활",
+   "summary": "성장기 정신적, 감각적 장애아동의 인지, 의사소통, 적응행동, 감각, 운동 등의 기능향상과 행동발달을 위한 재활서비스를 지원하고, 관련 정보를 제공합니다.",
+   "target": "18세 미만 장애아동을 대상으로 합니다.\n(소득기준) 기준중위소득 180% 이하\n(기타요건) 장애인복지법상 등록장애아동(뇌병변, 지적, 자폐성, 청각, 언어, 시각장애) * 등록이 안된 경우 읍면동에서 등록 가능\n- 단, 9세 미만의 경우 발달재활서비스 의뢰서와 검사자료로 대체 가능\n- 시각 장애아동(중복 장애 제외)의 경우 발달재활서비스가 필요한 대상인지 여부를 별도로 판단",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부 장애인건강과",
+   "category": "교육",
+   "tags": [
+    "교육",
+    "정신건강",
+    "신체건강",
+    "영유아",
+    "아동",
+    "청소년"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "diaper-formula",
+   "name": "저소득층 기저귀·조제분유 지원",
+   "key": "저소득층기저귀조제분유",
+   "summary": "저소득층 대상으로 기저귀, 조제분유 구매비용을 국민행복카드 바우처로 제공",
+   "target": "○ (기저귀)\n- 만 2세 미만의 영아를 둔 아래 기초생활보장, 차상위계층, 한부모가족 수급 가구 대상으로 영아별로 지원\nㆍ 국민기초생활보장법 상 생계⋅의료⋅주거⋅교육급여 수급 가구\nㆍ 차상위 본인부담경감 대상 가구\nㆍ 자활사업에 참여하는 차상위 가구\nㆍ 차상위 장애인 수당⋅연금 수급 가구\nㆍ 차상위계층확인서 발급 대상 가구\nㆍ 한부모가족지원법에 의한 지원 대상 가구(청소년한부모가족 포함)\n- 만 2세 미만의 영아를 둔 기준중위소득 80% 이하의 장애인 가구\nㆍ 부 또는 모 또는 영아가 일반장애인으로 등록된 가구 대상 영아별로 지원\n- 만 2세 미만의 영아를 둔 기준중위소득 80% 이하의 다자녀 (2인 이상) 가구\nㆍ 2인 이상 다자녀 가구 내 2세 미만 영아별로 지원\n○ (조제분유) 기저귀 지원대상 중 아래 사유에 해당 시 지원\n- 아동복지시설·공동생활가정·가정위탁보호·입양대상 아동, 한부모(부자·조손) 및 영아 입양 가정의 아동\n- 산모의 사망·질병으로 모유수유가 불가능한 경우\n- 산모의 방사성 요오드 치료, 의식불명 등으로 모유수유가 불가능하다고 의사가 판단하는 경우",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "보육",
+   "tags": [
+    "보육·교육",
+    "이용권",
+    "입양·위탁",
+    "보육",
+    "임신·출산",
+    "영유아"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "didim-seed-account",
+   "name": "디딤씨앗통장",
+   "key": "디딤씨앗통장",
+   "summary": "보호대상·저소득 아동이 저축하면 국가가 2배를 매칭해 주는 아동발달지원계좌",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "서민금융",
+   "tags": [
+    "서민금융",
+    "아동",
+    "청소년",
+    "저소득"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "disability-activity-support",
+   "name": "장애인 활동지원",
+   "key": "장애인활동",
+   "summary": "혼자서 생활이 어려운 장애인에게 활동보조, 방문간호 등을 이용할 수 있는 이용권 제공",
+   "target": "○ 만6세∼만65세 미만 등록 장애인 중 서비스 지원 종합조사 결과 활동지원등급 판정을 받은 자\n* 활동지원 수급자였다가 65세 이후 혼자서 사회활동이 어려운 경우에는 지원 가능\n○ 소득 기준과 무관하게 신청 가능",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "보호·돌봄",
+   "tags": [
+    "보호·돌봄",
+    "이용권",
+    "생활지원",
+    "청소년",
+    "청년",
+    "아동"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "disability-allowance",
+   "name": "장애수당",
+   "key": "장애수당",
+   "summary": "18세 이상의 경증장애인 대상으로 소득 수준 및 주거 형태에 따라 매월 장애수당 지급",
+   "target": "○ 지원 대상\n- 18세 이상의 등록한 장애인 중 장애인연금법*상 중증장애인에 해당하지 않는 자로 국민기초생활보장수급자 및 차상위계층(종전 3~6급인 자)\n*장애인연금법 제2조 제1호, 같은 법 시행령 제2조, 장애 정도 판정 기준 제5장\n○ 수급자격 : 생계· 의료·주거·교육급여수급자, 차상위계층\n○ 연령 기준\n- 연령 : 신청 월 현재 18세 이상인 자, 다만 18세~20세로서 초·중등교육법 제2조에 따른 학교*에 재학(휴학도 포함됨) 중인 자는 제외\n* 신청일이 속하는 월의 말일까지 18세가 되는 자는 포함\n* 장애인 등에 대한 특수교육법에 따른 학교도 포함\n○ 기타 기준\n- 등록한 장애인\n- 신청일 현재, 장애인복지법 제32조에 따라 등록한 장애인\n- 장애정도 : 장애인연금법* 상 중증장애인에 해당하지 않는 자\n*장애인연금법 제2조 제1호, 같은 법 시행령 제2조, 장애정도판정기준 제5장",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "생활지원",
+   "tags": [
+    "생활안정",
+    "현금",
+    "생활지원",
+    "중장년",
+    "노년",
+    "청년"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "disability-jobs",
+   "name": "장애인일자리지원",
+   "key": "장애인일자리",
+   "summary": "18세 이상 등록장애인에게 일자리를 제공하고 유형에 따라 급여 지원",
+   "target": "○ 18세 이상 미취업 등록장애인",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "일자리",
+   "tags": [
+    "고용·창업",
+    "서비스(일자리)",
+    "일자리",
+    "청년",
+    "중장년",
+    "노년"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "disability-pension",
+   "name": "장애인연금",
+   "key": "장애인연금",
+   "summary": "18세 이상 중증장애인에게 장애인 연금 지원",
+   "target": "○ 18세 이상의 등록한 중증장애인* 중 본인과 배우자의 소득인정액이 선정기준액 이하인 자\n*'중증'이란 등록한 장애인 중 '장애인연금법 상의 중증장애인'을 의미하고 '경증'이란 '장애인연금법상 중증이 아닌 등록장애인'을 의미함\n○ 신청일 현재, 장애인연금법 제2조제1호에 따른 중증장애인 (종전 1급, 2급, 3급 중복에 해당하는 자)",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "생활지원",
+   "tags": [
+    "생활안정",
+    "현금",
+    "생활지원",
+    "중장년",
+    "노년",
+    "청년"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "disability-primary-doctor",
+   "name": "장애인 건강주치의",
+   "key": "장애인건강주치의",
+   "summary": "장애인이 주치의를 정해 만성질환과 장애 관련 건강관리를 받고 필요하면 방문진료를 받는 건강주치의 제도",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "신체건강",
+   "tags": [
+    "신체건강",
+    "장애인"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "disability-registration",
+   "name": "장애인 등록·장애정도 심사",
+   "key": "장애인등록장애정도심사",
+   "summary": "장애가 있는 사람이 진단서를 받아 신청하면 국민연금공단 심사를 거쳐 장애인으로 등록하고 복지카드를 발급하는 제도",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "생활지원",
+   "tags": [
+    "생활지원",
+    "장애인"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "bokjiro_tags",
+    "logic": {
+     "all": [
+      {
+       "field": "disability",
+       "anyOf": [
+        "self",
+        "member"
+       ],
+       "label": "장애가 있는 본인 또는 가구원",
+       "soft": true
+      },
+      {
+       "field": "disability",
+       "anyOf": [
+        "self",
+        "member"
+       ],
+       "label": "장애가 있는 본인 또는 가구원"
+      }
+     ]
+    },
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "disability-self-reliance-loan",
+   "name": "장애인 자립자금 대여",
+   "key": "장애인자립자금대여",
+   "summary": "저소득 장애인 대상으로 자립자금을 최대 2%의 저금리로 대출",
+   "target": "○ 가구의 소득 인정액이 기준 중위소득 50% 초과 100% 이하의 가구의 19세 이상의 성년 등록장애인",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "주거",
+   "tags": [
+    "주거·자립",
+    "현금(융자)",
+    "일자리",
+    "생활지원",
+    "서민금융",
+    "노년"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "disabled-child-allowance",
+   "name": "장애아동수당",
+   "key": "장애아동수당",
+   "summary": "18세 미만의 장애아동에게 매월 수당 지급 (소득 수준 및 주거형태에 따라 차등지급)",
+   "target": "○ 지원 대상\n- 18세 미만의 등록한 장애인으로 국민기초생활 보장수급자 및 차상위계층\n○ 수급자격 : 생계·의료·주거·교육급여수급자, 차상위계층\n○ 연령 기준\n- 신청일 현재 18세 미만인 자, 다만 18세~20세로서 초/중등교육법 제2조에 따른 학교에 재학(휴학도 포함됨) 중인 자는 포함(단, 장애인연금을 받는 경우 제외)\n* 신청일이 속하는 월의 말일까지 18세가 되는 자는 제외\n○ 기타 기준\n- 등록한 장애인\n- 신청일 현재, 장애인복지법 제32조에 따라 등록한 장애인\n- 장애 정도\n=중증장애인 : 장애인연금법*상 중증장애인에 해당하는 자(종전 1급 및 2급ㆍ3급 중복 장애인)\n=경증장애인 : 장애인연금법*상 중증장애인에 해당하지 않는 자(종전 3~6급인 자)\n*장애인연금법 제2조 제1호, 같은 법 시행령 제2조, 장애정도판정기준 제5장",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "보육",
+   "tags": [
+    "보육·교육",
+    "현금",
+    "생활지원",
+    "아동",
+    "청소년",
+    "저소득"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "disabled-family-childcare",
+   "name": "장애아가족 양육 지원",
+   "key": "장애아가족양육",
+   "summary": "상시적인 돌봄이 요구되는 장애아 가정에 돌봄 서비스 지원(가구당 연 1,080시간 지원)",
+   "target": "○ 18세 미만 중증장애 아동\n- 소득기준 : 기준 중위소득 120% 이하(무료), 기준 중위소득 120% 초과(이용료의 40% 본인부담)\n- 장애등급 : 장애정도가 심한 장애 아동",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "보육",
+   "tags": [
+    "보육·교육",
+    "서비스(돌봄)",
+    "생활지원",
+    "보호·돌봄",
+    "영유아",
+    "아동"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "disabled-women-birth",
+   "name": "여성장애인 출산비용지원",
+   "key": "여성장애인출산비용",
+   "summary": "여성장애인에게 출산비용지원(태아 1인 기준 120만 원)",
+   "target": "○ 장애인복지법 제32조(장애인 등록)에 의한 등록 여성장애인 중\n- 출산한 자\n- 임신기간 4개월(16주) 이상의 태아를 유산·사산한 자\n* 인공 임신중절 수술은 지원 불가(모자보건법 제14조제1항의 경우 제외)",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "임신·출산",
+   "tags": [
+    "임신·출산",
+    "의료지원||현금",
+    "장애인",
+    "청년",
+    "중장년"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "dream-start",
+   "name": "드림스타트",
+   "key": "드림스타트",
+   "summary": "12세 이하 취약계층 아동과 가족을 가정방문으로 사정해 건강·학습·정서·양육을 맞춤 지원하는 아동통합서비스",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "보호·돌봄",
+   "tags": [
+    "보호·돌봄",
+    "영유아",
+    "아동",
+    "저소득"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "earned-income-tax-credit",
+   "name": "근로장려금",
+   "key": "근로장려금",
+   "summary": "일은 하지만 소득이 적은 가구에 가구 유형에 따라 연 최대 165만~330만 원을 세금 환급 방식으로 지급하는 근로장려금",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "재정경제부",
+   "category": "서민금융",
+   "tags": [
+    "서민금융",
+    "일자리",
+    "청년",
+    "중장년",
+    "노년",
+    "저소득"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "education-benefit",
+   "name": "교육급여",
+   "key": "교육급여",
+   "summary": "초중고 학생에게 교육활동지원비 지원(초중고 학생별 차등지급)",
+   "target": "○ 국민기초생활 보장법 제12조에 따라 소득 인정액이 기준 중위소득의 100분의 50 이하인 사람으로\n- 다음 각호의 학교 또는 시설에 입학 또는 재학하는 자\n· 초·중등교육법 제2조세1호에 따른 초등학교·공민학교\n· 초·중등교육법 제2조세2호의 규정에 의한 중학교·고등공민학교\n· 초·중등교육법 제2조세3호의 규정에 의한 고등학교·고등기술학교\n· 초·중등교육법 제2조세4호의 규정에 의한 특수학교\n· 초·중등교육법 제2조세5호의 규정에 의한 각종학교로서 제1호 내지 제4호와 유사한 학교\n· 평생교육법 제31조에 따른 학교 형태의 평생교육 시설(고등학교 졸업 이하의 학력이 인정되는 시설에 한함)",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "교육부",
+   "category": "보육",
+   "tags": [
+    "보육·교육",
+    "이용권",
+    "교육",
+    "아동",
+    "청소년",
+    "저소득"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "elderly-customized-care",
+   "name": "노인맞춤돌봄서비스",
+   "key": "노인맞춤돌봄",
+   "summary": "65세 이상 국민기초생활수급자, 차상위계층 또는 기초연금수급자에게 돌봄서비스 제공",
+   "target": "○ 65세 이상 ①국민기초생활수급자, ②차상위계층 또는 ③기초연금수급자로서 유사중복사업 자격에 해당되지 않는 자\n(다만, 시장·군수·구청장이 서비스가 필요하다고 인정하는 경우 예외적으로 제공 가능)\n- 독거·조손·고령부부 가구 노인 등 돌봄이 필요한 노인\n- 신체적 기능 저하, 정신적 어려움(인지저하, 우울감 등) 등으로 돌봄이 필요한 노인\n- 고독사 및 자살 위험이 높은 노인\n① 일반돌봄군 : 사회적인 관계 단절 및 일상생활의 어려움으로 돌봄 필요가 있는 대상\n② 중점돌봄군 : 신체적인 기능제한으로 일상생활지원 필요가 큰 대상\n- 사회관계 단절, 우울증 등으로 집중적인 서비스가 필요한 대상(특화서비스)",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "보호·돌봄",
+   "tags": [
+    "보호·돌봄",
+    "서비스(돌봄)",
+    "생활지원",
+    "안전·위기",
+    "노년",
+    "저소득"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "emergency-care",
+   "name": "긴급돌봄 지원",
+   "key": "긴급돌봄",
+   "summary": "일시적 위기상황에 대응하기 위한 한시적 재가 방문형 돌봄·가사 및 이동지원 서비스 제공",
+   "target": "주 돌봄자 부재, 질병, 부상 등으로 긴급하고 일시적 돌봄 지원이 필요하나 기존 서비스로 돌봄을 받기 어려운 국민",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "생활지원",
+   "tags": [
+    "생활안정",
+    "서비스(돌봄)",
+    "보호·돌봄",
+    "안전·위기",
+    "아동",
+    "영유아"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "emergency-safety-alert",
+   "name": "응급안전안심서비스",
+   "key": "응급안전안심",
+   "summary": "홀로 사는 어르신과 장애인 집에 화재·활동 감지기와 응급호출기를 설치해 위급 시 119로 바로 연결하는 서비스",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "안전·위기",
+   "tags": [
+    "안전·위기",
+    "보호·돌봄",
+    "노년",
+    "장애인"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "emergency-welfare",
+   "name": "긴급복지지원",
+   "key": "긴급복지",
+   "summary": "갑작스러운 위기로 생계가 어려워진 가구에 먼저 지원하고 나중에 조사하는 선지원·후처리 원칙의 단기 긴급지원 제도",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "안전·위기",
+   "tags": [
+    "안전·위기",
+    "생활지원",
+    "저소득"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "bokjiro_tags",
+    "logic": {
+     "field": "benefit",
+     "anyOf": [
+      "livelihood",
+      "medical",
+      "housing",
+      "education",
+      "near_poverty"
+     ],
+     "label": "저소득 가구(수급·차상위 등)",
+     "soft": true
+    },
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "energy-voucher",
+   "name": "에너지바우처",
+   "key": "에너지바우처",
+   "summary": "에너지이용 소외계층에게 냉ㆍ난방에너지를 구입할 수 있는 바우처 지급",
+   "target": "□ (기후민감계층, 에너지바우처) 소득기준 및 세대원 특성 기준을 모두 충족하는 세대에 지원\nㅇ 소득기준 : 대상자 본인이 국민기초생활보장법상 생계, 의료, 주거, 교육 급여 중 어느 하나를 수급하는 자\nㅇ 세대원 특성 기준 : 대상자 본인(기초생활수급자) 또는 주민등록표 등본 상의 세대원이 아래 어느 하나에 해당\n- 노인 (주민등록기준 1961. 12. 31. 이전 출생자)\n- 영유아 (주민등록기준 2019. 1. 1. 이후 출생한 취학 전 아동)\n- 장애인 (「장애인복지법」에 따라 등록된 장애인)\n- 임산부 (임신 중이거나 분만후 6개월 미만인 여성)\n- 중증질환자, 희귀질환자, 중증난치질환자 (「국민건강보험법 시행령」에 따른 「본인일부부담금 산정특례에 관한 기준」 중증질환[별표3], 희귀질환[별표4], 중증난치질환[별표4의2]을 가진 사람)\n- 한부모가족 (「한부모가족지원법」 제5조 및 제5조2에 따른 지원대상자)\n- 소년소녀가정 (보건복지부에서 정한 아동분야 사업 중 소년소녀가정 지원대상에 해당하는 사람(「아동복지법」제3조에 의한 가정위탁보호아동을 포함)\n- 다자녀 세대 (세대원 중 부 또는 모가 있고, 그 부 또는 모의 19세 미만 자녀가 2명 이상 포함된 세대(동일 등본에 등재된 가정위탁보호아동은 자녀로 포함))\n□ (연료소외계층, 연탄전환 에너지바우처) 대상자 본인이 연탄전환 기준을 충족하는 세대에 지원\nㅇ 연탄전환 기준 : 기존 연탄을 사용하는 세대 중 ’26. 1월 이후 연탄외 보일러로 난방시설을 전환하고 다음 어느 하나에 해당\n- 기초생활수급자 (「국민기초생활보장법」상 생계, 의료, 주거, 교육 급여 중 어느 하나를 수급하는 자)\n- 차상위계층 (「국민기초생활보장법」 제2조제10호 및 시행령 제3조에서 규정하는 수급권자에 해당하지 아니하는 계층으로서 소득인정액이 기준 중위소득의 100분의 50 이하인 사람)\n- 노인 (주민등록 기준 1961.12.31.이전 출생자)\n- 장애인 (「장애인복지법」 제32조에 따라 등록된 장애인)\n- 한부모가족 (「한부모가족지원법」 제5조 및 제5조의2에 따른 지원대상자)\n- 소년소녀가정 (보건복지부에서 정한 아동분야 사업 중 소년소녀가정 지원대상에 해당하는 사람(「아동복지법」 제3조에 의한 가정위탁보호 아동을 포함))\n※ (유의) 보일러 교체방식이 한국에너지재단의 저소득층 에너지효율개선사업, 지자체 지원사업이 아닌 본인 부담 등 기타 교체방식인 경우, 신청인 본인은 ’25년도(전년도) 연탄쿠폰 수급자에 해당해야 함\n□ (지원대상 제외사항) 보장시설 수급자(가구)",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "기후에너지환경부",
+   "category": "생활지원",
+   "tags": [
+    "생활안정",
+    "이용권",
+    "생활지원",
+    "주거",
+    "에너지",
+    "노년"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "first-meeting-voucher",
+   "name": "첫만남이용권 지원",
+   "key": "첫만남이용권",
+   "summary": "200만원 이상의 첫만남이용권 지급",
+   "target": "출생아로서 출생신고되어 정상적으로 주민등록번호를 부여받은 아동(주민등록상 생년월일로부터 1년이 초과되지 않는 출생아)\n* 2024년 1월 1일 이후 출생아는 주민등록상 생년월일로부터 2년내에 신청하여 사용 가능",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "임신·출산",
+   "tags": [
+    "임신·출산",
+    "이용권||현금",
+    "보육",
+    "영유아",
+    "생활지원"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "food-bank",
+   "name": "기부식품 등 제공사업(푸드뱅크)",
+   "key": "기부식품등제공",
+   "summary": "기업·개인이 기부한 식품과 생활용품을 푸드뱅크·푸드마켓을 통해 저소득층에게 나눠 주는 기부식품 제공사업",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "생활지원",
+   "tags": [
+    "생활지원",
+    "저소득"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "bokjiro_tags",
+    "logic": {
+     "field": "benefit",
+     "anyOf": [
+      "livelihood",
+      "medical",
+      "housing",
+      "education",
+      "near_poverty"
+     ],
+     "label": "저소득 가구(수급·차상위 등)",
+     "soft": true
+    },
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "foster-care",
+   "name": "가정위탁 보호",
+   "key": "가정위탁보호",
+   "summary": "친부모가 키울 수 없는 아동을 위탁가정이 보호하도록 하고 양육보조금·심리치료비 등을 지원하는 가정 보호 제도",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "입양·위탁",
+   "tags": [
+    "입양·위탁",
+    "보호·돌봄",
+    "아동",
+    "청소년",
+    "한부모·조손"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "bokjiro_tags",
+    "logic": {
+     "all": [
+      {
+       "any": [
+        {
+         "any": [
+          {
+           "field": "childAge",
+           "min": 0,
+           "max": 12,
+           "label": "아동 자녀"
+          },
+          {
+           "field": "age",
+           "min": 0,
+           "max": 12,
+           "label": "아동"
+          }
+         ]
+        },
+        {
+         "any": [
+          {
+           "field": "childAge",
+           "min": 13,
+           "max": 18,
+           "label": "청소년 자녀"
+          },
+          {
+           "field": "age",
+           "min": 9,
+           "max": 24,
+           "label": "청소년 본인"
+          }
+         ]
+        }
+       ],
+       "label": "복지로 생애주기(아동·청소년)"
+      },
+      {
+       "field": "trait",
+       "anyOf": [
+        "single_parent"
+       ],
+       "label": "한부모·조손 가구",
+       "soft": true
+      }
+     ]
+    },
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "high-risk-pregnancy",
+   "name": "고위험 임산부 의료비 지원",
+   "key": "고위험임산부의료비",
+   "summary": "19대 고위험 임산부의 입원치료비의 전액본임부담금 및 비급여 진료비 지원",
+   "target": "○ 19대 고위험 임신질환으로 진단받고 입원치료 받은 임산부(*’24년부터 가구 소득과 관계없이 지원)\n- 임신질환: 조기진통, 분만관련 출혈, 중증 임신중독증, 양막의 조기파열, 태반조기박리, 전치태반, 절박유산, 양수과다증, 양수과소증, 분만전 출혈, 자궁경부무력증, 고혈압, 다태임신, 당뇨병, 대사장애를 동반한 임신과다구토, 신질환, 심부전, 자궁내 성장제한, 자궁 및 자궁의 부속기 질환",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "임신·출산",
+   "tags": [
+    "임신·출산",
+    "의료지원||현금",
+    "신체건강"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "home-childcare-allowance",
+   "name": "가정양육수당 지원",
+   "key": "가정양육수당",
+   "summary": "취학 전 24개월~86개월 미만 가정양육 영유아 대상 월 10~20만원 지원",
+   "target": "○ 어린이집, 유치원(특수학교 포함), 종일제 아이돌봄서비스 등을 이용하지 않는 취학 전 24개월~86개월 미만 가정양육 영유아\n※ 부모급여 도입에 따라 0~23개월은 부모급여 지원, 24개월부터 가정양육수당 지원\n○ 소득 인정액 기준 없음\n○ 중복불가서비스 : 유아학비(누리과정) 지원, 영유아보육료 지원",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "교육부",
+   "category": "보육",
+   "tags": [
+    "보육·교육",
+    "현금",
+    "보육",
+    "아동",
+    "영유아"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "homeless-support",
+   "name": "노숙인 등 복지 지원",
+   "key": "노숙인등복지",
+   "summary": "자립 및 사회 복귀를 증진할 수 있도록 지원",
+   "target": "○ 노숙인 시설 입소자 및 거리 노숙인\n※“노숙인 등”이란 다음의 어느 하나에 해당하는 사람 중 18세 이상인 사람을 말함\n- 상당한 기간 동안 일정한 주거 없이 생활하는 사람\n- 노숙인시설을 이용하거나 상당한 기간 동안 노숙인시설에서 생활하는 사람\n- 상당한 기간 동안 주거로서의 적절성이 현저히 낮은 곳에서 생활하는 사람",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "주거",
+   "tags": [
+    "주거·자립",
+    "기타",
+    "생활지원",
+    "안전·위기",
+    "노년",
+    "중장년"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "bokjiro_tags",
+    "logic": {
+     "any": [
+      {
+       "field": "age",
+       "min": 40,
+       "max": 64,
+       "label": "중장년(만 40~64세)"
+      },
+      {
+       "field": "age",
+       "min": 65,
+       "label": "노년(만 65세 이상)"
+      }
+     ],
+     "label": "복지로 생애주기(노년·중장년)"
+    },
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "hope-savings",
+   "name": "희망저축계좌(Ⅰ·Ⅱ)",
+   "key": "희망저축계좌",
+   "summary": "일하는 수급·차상위 가구가 매월 10만 원을 저축하면 정부가 최대 30만 원을 매칭해 탈수급 자립자금을 만들어 주는 통장",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "서민금융",
+   "tags": [
+    "서민금융",
+    "중장년",
+    "저소득"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "hourly-childcare",
+   "name": "시간제보육 지원",
+   "key": "시간제보육",
+   "summary": "가정양육 부모가 긴급.일시적으로 보육시설 이용이 필요한 경우 시간제보육 서비스 지원",
+   "target": "ㅇ 어린이집, 유치원을 이용하지 않고 부모급여(현금) 또는 양육수당 수급 중인 영아\n- 독립반 : 6~36개월 미만 영아, 통합반 : 6개월~2세반* 영아\n* 2세반 출생일 기준 '23.1.1.~23.12.31.",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "교육부",
+   "category": "보육",
+   "tags": [
+    "보육·교육",
+    "이용권",
+    "보육",
+    "영유아"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "housework-nursing",
+   "name": "가사·간병 방문 지원",
+   "key": "가사간병방문",
+   "summary": "저소득층 대상으로 한 달에 일정시간 가사 또는 간병 서비스를 이용할 수 있는 이용권 지원",
+   "target": "○ 만 65세 미만의 기준중위소득 70% 이하 계층 중 아래에 해당하는 사람으로 가사간병 서비스가 필요한 자\n○ 가사간병 서비스 대상자\n- 장애정도가 심한 장애인\n- 6개월 이상 치료를 필요로 하는 중증질환자(보건복지부 장관이 고시한 중증질환 상병 해당자로, 최근 3개월 이내 발행된 진단서 또는 소견서 첨부)\n- 희귀난치성 질환자(보건복지부 장관이 고시한 희귀난치성 질환 상병 해당자로, 진단서 또는 소견서 첨부)\n- 소년소녀가정, 조손가정, 한부모 가정(법정보호 세대) * 이 경우 서비스 대상자는 자녀, 손자녀가 됨\n- 만 65세미만의 의료급여수급자 중 장기입원 사례관리 퇴원자\n- 기타 시·군·구청장이 예산의 범위 내에서 장애정도가 심하지 않은 장애인, 질환 및 부상으로 인한 장기치료자 등 가사·간병 서비스가 필요하다고 인정하는 자",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "보호·돌봄",
+   "tags": [
+    "보호·돌봄",
+    "의료지원||이용권",
+    "생활지원",
+    "한부모·조손",
+    "장애인",
+    "저소득"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "housing-benefit",
+   "name": "주거급여",
+   "key": "주거급여",
+   "summary": "소득인정액 기준 중위소득 48% 이하 가구에 임차료를 지원하거나 자가 주택의 수선을 지원하는 주거 기초생활보장 급여",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "국토교통부",
+   "category": "주거",
+   "tags": [
+    "주거",
+    "저소득"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "independence-allowance",
+   "name": "자립준비청년 자립수당",
+   "key": "자립준비청년자립수당",
+   "summary": "아동양육시설·위탁가정에서 보호가 끝난 자립준비청년에게 5년간 월 50만 원 자립수당을 지급하는 제도",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "생활지원",
+   "tags": [
+    "생활지원",
+    "청년"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "bokjiro_tags",
+    "logic": {
+     "all": [
+      {
+       "field": "age",
+       "min": 19,
+       "max": 39,
+       "label": "청년(만 19~39세 기준)"
+      },
+      {
+       "field": "age",
+       "min": 19,
+       "max": 39,
+       "label": "청년(만 19~39세, 지역마다 다름)",
+       "capU": true
+      }
+     ]
+    },
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "infertility-treatment",
+   "name": "난임부부 시술비 지원",
+   "key": "난임부부시술비",
+   "summary": "난임부부 대상으로 자궁내 정자주입 및 체외수정(신선배아, 동결배아) 시술비 지원",
+   "target": "○ 지원신청 자격\n- 난임시술을 요하는 의사의 '난임진단서' 제출자\n- 법적 혼인상태에 있거나, 신청일 기준 최근 1년 이상 사실상 혼인관계를 유지하였다고 관할 보건소로부터 확인된 난임부부\n- 부부 중 최소한 한 명은 주민등록이 되어 있는 대한민국 국적 소유자(주민등록 말소자, 재외국민 주민등록자는 대상에서 제외)이면서, 부부 모두 건강보험 가입 및 보험료 고지 여부가 확인되는 자",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "임신·출산",
+   "tags": [
+    "임신·출산",
+    "서비스(의료)||의료지원",
+    "신체건강",
+    "청년"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "integrated-case-management",
+   "name": "통합사례관리(희망복지지원단)",
+   "key": "통합사례관리",
+   "summary": "여러 문제가 겹친 위기가구를 시군구 희망복지지원단이 맡아 공공·민간 서비스를 묶어 제공하는 통합사례관리",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "안전·위기",
+   "tags": [
+    "안전·위기",
+    "보호·돌봄",
+    "저소득"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "bokjiro_tags",
+    "logic": {
+     "field": "benefit",
+     "anyOf": [
+      "livelihood",
+      "medical",
+      "housing",
+      "education",
+      "near_poverty"
+     ],
+     "label": "저소득 가구(수급·차상위 등)",
+     "soft": true
+    },
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "integrated-community-care",
+   "name": "의료·요양 통합돌봄",
+   "key": "의료요양통합돌봄",
+   "summary": "돌봄이 필요한 노인·장애인이 살던 곳에서 의료·요양·돌봄을 함께 받도록 시군구가 개인별 계획을 세워 연결하는 통합돌봄",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "보호·돌봄",
+   "tags": [
+    "보호·돌봄",
+    "신체건강",
+    "노년",
+    "장애인"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "jeju-citizen-safety-insurance",
+   "name": "도민안전보험",
+   "key": "도민안전보험",
+   "summary": "제주에 주민등록을 둔 모든 도민이 재난·사고 피해를 입으면 도가 가입한 단체보험으로 보상받는 제도",
+   "orgType": "metro",
+   "scope": "sido",
+   "sidoCode": "50000",
+   "regionLabel": "제주특별자치도",
+   "owner": "제주특별자치도",
+   "category": "안전·위기",
+   "tags": [
+    "안전·위기"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "jeju-value-care",
+   "name": "제주가치돌봄",
+   "key": "제주가치돌봄",
+   "summary": "생활돌봄, 주거편의 서비스 제공",
+   "target": "○ 돌봄이 필요한 제주도민\n※ 신청일 기준 제주도에 주민등록이 되어 있는 도민, 제주도 내 체류지 신고가 된 외국인(『긴급복지지원법 시행령』에 근거한 ‘외국인 지원 사항’ 준용)\n○ 돌봄 필요도 적격성 판단은 아래 ①~③ 기준 모두 충족, 긴급돌봄은 ①~④ 기준 모두 충족\n① 혼자 거동하기 어렵거나, 독립적인 일상생활 수행이 어려운 경우\n② 볼 수 있는 가족이 없거나, 있어도 돌볼 수 없는 경우\n③ 기존 돌봄서비스를 이용할 수 없는 경우\n④ 갑작스런 사고ㆍ질병, 재난 등 긴급 위기상황이 경우",
+   "orgType": "metro",
+   "scope": "sido",
+   "sidoCode": "50000",
+   "regionLabel": "제주특별자치도",
+   "owner": "제주특별자치도",
+   "category": "보호·돌봄",
+   "tags": [
+    "보호·돌봄",
+    "서비스(돌봄)",
+    "청년",
+    "중장년",
+    "노년",
+    "일상생활지원"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "just-give-food",
+   "name": "그냥드림",
+   "key": "그냥드림",
+   "summary": "먹거리가 급히 필요한 사람이면 자격 확인 없이 기초사업장에서 먹거리와 생필품을 바로 받고, 다시 오면 상담으로 복지를 연결하는 사업",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "생활지원",
+   "tags": [
+    "생활지원",
+    "안전·위기",
+    "저소득"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "bokjiro_tags",
+    "logic": {
+     "field": "benefit",
+     "anyOf": [
+      "livelihood",
+      "medical",
+      "housing",
+      "education",
+      "near_poverty"
+     ],
+     "label": "저소득 가구(수급·차상위 등)",
+     "soft": true
+    },
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "language-development",
+   "name": "언어발달지원",
+   "key": "언어발달",
+   "summary": "감각적 장애부모의 자녀에게 언어발달진단, 언어·청능재활, 수화 지도를 위한 이용권 제공",
+   "target": "○ 장애 부모의 12세 미만 비장애아동으로 기준 중위소득 120% 이하의 가구\n- 장애 부모 : 한쪽 부모가 시각, 청각, 언어, 지적, 자폐성, 뇌병변 등록 장애인",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "보육",
+   "tags": [
+    "보육·교육",
+    "이용권",
+    "교육",
+    "신체건강",
+    "아동",
+    "저소득"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "legal-aid",
+   "name": "법률구조 제도",
+   "key": "법률구조제도",
+   "summary": "경제적으로 어렵거나 법을 몰라 권리를 지키기 어려운 사람에게 대한법률구조공단이 무료 법률상담과 소송대리를 제공하는 제도",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "법무부",
+   "category": "법률",
+   "tags": [
+    "법률",
+    "저소득",
+    "장애인",
+    "한부모·조손",
+    "다문화·탈북민",
+    "보훈대상자"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "bokjiro_tags",
+    "logic": {
+     "any": [
+      {
+       "field": "benefit",
+       "anyOf": [
+        "livelihood",
+        "medical",
+        "housing",
+        "education",
+        "near_poverty"
+       ],
+       "label": "저소득 가구(수급·차상위 등)",
+       "soft": true
+      },
+      {
+       "field": "disability",
+       "anyOf": [
+        "self",
+        "member"
+       ],
+       "label": "장애가 있는 본인 또는 가구원",
+       "soft": true
+      },
+      {
+       "field": "trait",
+       "anyOf": [
+        "single_parent"
+       ],
+       "label": "한부모·조손 가구",
+       "soft": true
+      },
+      {
+       "field": "trait",
+       "anyOf": [
+        "multicultural"
+       ],
+       "label": "다문화·북한이탈주민 가구",
+       "soft": true
+      },
+      {
+       "field": "trait",
+       "anyOf": [
+        "veteran"
+       ],
+       "label": "보훈대상 가구",
+       "soft": true
+      }
+     ]
+    },
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "lifelong-learning-voucher",
+   "name": "평생교육이용권 지원",
+   "key": "평생교육이용권",
+   "summary": "저소득층에게 평생교육시설 강좌를 수강할 수 있는 이용권 제공",
+   "target": "○ 19세 이상 성인 중 기초생활보장 수급자, 차상위계층, 지역특화 대상자 등",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "교육부",
+   "category": "보육",
+   "tags": [
+    "보육·교육",
+    "이용권",
+    "교육",
+    "청년",
+    "노년",
+    "중장년"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "livelihood-benefit",
+   "name": "국민기초생활보장 생계급여",
+   "key": "국민기초생활보장생계급여",
+   "summary": "소득인정액이 기준 중위소득 32% 이하인 가구에 부족한 생계비를 매월 현금으로 채워 최저생활을 보장하는 기초생활보장의 핵심 급여",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "생활지원",
+   "tags": [
+    "생활지원",
+    "청년",
+    "중장년",
+    "노년",
+    "저소득"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "local-children-center",
+   "name": "지역아동센터 지원",
+   "key": "지역아동센터",
+   "summary": "방과후 돌봄이 필요한 지역사회 아동의 건전육성을 위하여 보호·교육, 건전한 놀이와 오락의 제공, 보호자와 지역사회의 연계 등 종합적인 복지서비스를 제공합니다.",
+   "target": "방과후 돌봄이 필요한 아동에게 서비스를 지원하는 지역아동센터, 아동복지교사를 대상으로 지원합니다.",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부 아동보호자립과",
+   "category": "보호·돌봄",
+   "tags": [
+    "보호·돌봄",
+    "생활지원",
+    "교육",
+    "문화·여가",
+    "청소년",
+    "아동"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "lonely-death-prevention",
+   "name": "고독사 예방·관리",
+   "key": "고독사예방관리",
+   "summary": "사회적으로 고립된 1인 가구를 찾아 고독사 위험을 평가하고 안부 확인·관계 회복 서비스를 연결하는 예방 사업",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "안전·위기",
+   "tags": [
+    "안전·위기",
+    "정신건강",
+    "중장년",
+    "노년"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "bokjiro_tags",
+    "logic": {
+     "any": [
+      {
+       "field": "age",
+       "min": 40,
+       "max": 64,
+       "label": "중장년(만 40~64세)"
+      },
+      {
+       "field": "age",
+       "min": 65,
+       "label": "노년(만 65세 이상)"
+      }
+     ],
+     "label": "복지로 생애주기(중장년·노년)"
+    },
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "long-term-care-insurance",
+   "name": "노인장기요양보험",
+   "key": "노인장기요양보험",
+   "summary": "혼자 일상생활이 어려운 어르신에게 등급 판정 후 방문요양·주야간보호·시설 입소 등을 제공하는 사회보험",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부 (국민건강보험공단)",
+   "category": "보호·돌봄",
+   "tags": [
+    "보호·돌봄",
+    "신체건강",
+    "노년"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "lpg-facility-improvement",
+   "name": "LPG용기 사용가구 시설개선 지원",
+   "key": "lpg용기사용가구시설개선",
+   "summary": "LPG호스를 사용하는 가구에게 금속배관으로 교체 및 퓨즈콕등 안전장치 설치",
+   "target": "LPG호스를 사용하고 있고 아직 금속배관으로 교체하지 않은 가구\n※지원형태: 현물, 자부담 비용 5만원 원칙(단, 기초생활수급자는 지자체에서 예산자원시 면제)",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "산업통상부",
+   "category": "안전·위기",
+   "tags": [
+    "행정·안전",
+    "기타||현물",
+    "주거",
+    "에너지",
+    "안전·위기",
+    "저소득"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "bokjiro_tags",
+    "logic": {
+     "field": "benefit",
+     "anyOf": [
+      "livelihood",
+      "medical",
+      "housing",
+      "education",
+      "near_poverty"
+     ],
+     "label": "저소득 가구(수급·차상위 등)",
+     "soft": true
+    },
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "maternal-newborn-care",
+   "name": "산모·신생아 건강관리 지원",
+   "key": "산모신생아건강관리",
+   "summary": "산모·신생아 건강관리사가 출산 가정을 방문해 산후관리를 돕는 이용권 제공",
+   "target": "○ 지원대상\n- 산모 또는 배우자가 생계·의료·주거·교육급여 수급자 또는 차상위계층*에 해당하는 출산가정\n* 차상위본인부담경감, 차상위자활, 차상위장애인, 차상위자격확인\n- 산모 및 배우자 등 해당 가구의 건강보험료 본인 부담금 합산액이 기준중위소득 150% 이하 금액에 해당하는 출산가정\n* 정해진 소득 기준을 초과하는 경우라도 예외적으로 지원이 필요하다고 인정되는 유형에 대해서는 시.도 또는 시.군.구가 별도의 기준은 정해 예외 지원 가능(자세한 사항은 해당 시.군.구(보건소) 문의)",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "임신·출산",
+   "tags": [
+    "임신·출산",
+    "이용권",
+    "신체건강",
+    "영유아",
+    "장애인",
+    "다자녀"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "medical-aid",
+   "name": "의료급여",
+   "key": "의료급여",
+   "summary": "저소득층과 타법 수급자에게 진료비 대부분을 국가가 부담해 의료 이용을 보장하는 공공부조 의료보장 제도",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "신체건강",
+   "tags": [
+    "신체건강",
+    "저소득"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "memorial-cemetery",
+   "name": "충혼묘지 안장",
+   "key": "충혼묘지안장",
+   "summary": "국가유공자 등 안장 대상자를 제주특별자치도 충혼묘지에 안장·봉안하고 묘역을 관리하는 제도",
+   "orgType": "local",
+   "scope": "sigungu",
+   "sidoCode": "50000",
+   "sigunguCodes": [
+    "50130"
+   ],
+   "regionLabel": "제주 서귀포시",
+   "owner": "제주특별자치도",
+   "category": "생활지원",
+   "tags": [
+    "생활지원",
+    "보훈대상자"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "bokjiro_tags",
+    "logic": {
+     "field": "trait",
+     "anyOf": [
+      "veteran"
+     ],
+     "label": "보훈대상 가구",
+     "soft": true
+    },
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "mental-health-center",
+   "name": "정신건강복지센터",
+   "key": "정신건강복지센터",
+   "summary": "지역 주민의 정신건강 상담과 중증 정신질환자 사례관리, 위기 개입을 무료로 제공하는 시군구 정신건강복지센터",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "정신건강",
+   "tags": [
+    "정신건강",
+    "청소년",
+    "청년",
+    "중장년",
+    "노년"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "mind-investment-voucher",
+   "name": "전국민 마음투자 지원",
+   "key": "전국민마음투자",
+   "summary": "대화 기반의 전문 심리 상담 서비스를 제공",
+   "target": "○ 우울·불안 등 정서적 어려움이 있는 국민 중 아래 기준에 해당하는 자로, 나이 및 소득 기준은 없음\n① 정신건강복지센터, 대학교 상담 센터, 청소년상담복지센터, Wee센터/Wee클래스 등에서 심리 상담이 필요하다고 인정하는 주민\n② 정신 의료 기관 등에서 우울·불안 등으로 인하여 심리 상담이 필요하다고 인정하는 주민\n③ 국가 건강 검진 중 정신 건강 검사 결과에서 중간 정도 이상의 우울이 확인된 주민\n④ 자립 준비 청년 및 보호 연장 아동\n⑤ 서비스 신청 일로부터 5년 이내의 재난 피해를 입은 본인 또는 재난 피해로 사망한 자(실종자 포함)의 유가족",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "생활지원",
+   "tags": [
+    "생활안정",
+    "이용권",
+    "정신건강",
+    "청년",
+    "중장년"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "bokjiro_tags",
+    "logic": {
+     "any": [
+      {
+       "field": "age",
+       "min": 19,
+       "max": 39,
+       "label": "청년(만 19~39세 기준)"
+      },
+      {
+       "field": "age",
+       "min": 40,
+       "max": 64,
+       "label": "중장년(만 40~64세)"
+      }
+     ],
+     "label": "복지로 생애주기(청년·중장년)"
+    },
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "multicultural-language",
+   "name": "다문화가족 자녀 언어발달 지원서비스",
+   "key": "다문화가족자녀언어발달",
+   "summary": "만 12세 이하 다문화 가족 자녀의 언어발달상태 평가 및 언어교육 지원",
+   "target": "○ 언어평가 및 언어교육이 필요한 만 12세 이하 다문화 가족 자녀\n- 초등학교 재학 중인 아동의 경우 만 12세를 초과하여도 사업 대상에 포함",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "성평등가족부",
+   "category": "보육",
+   "tags": [
+    "보육·교육",
+    "기타||기타(교육)||기타(상담)",
+    "교육",
+    "청소년",
+    "영유아",
+    "아동"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "national-employment-support",
+   "name": "국민취업지원제도",
+   "key": "국민취업지원제도",
+   "summary": "직업훈련, 일경험, 복지 프로그램 연계 등 취업지원서비스 제공 및 생계안정 지원",
+   "target": "∙ I유형\n-(요건심사형) 15세~69세 구직자 중 중위소득 60% 이하, 재산 4억 이하(15~34세 청년은 재산 5억원 이하)이면서, 최근 2년 이내 100일 또는 800시간 이상의 취업경험이 있는 분\n-(선발형) 15세~69세 구직자 중 요건심사형 중 취업경험 요건을 충족하지 못한 분( 15~34세 청년은 중위소득 120% 이하, 재산 5억원 이하, 취업경험은 선발시 고려)\n∙ II유형: 15세~69세 구직자 중 I유형에 해당하지 않는 가구단위 중위소득 100% 이하(청년은 소득 무관)",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "고용노동부",
+   "category": "일자리",
+   "tags": [
+    "고용·창업",
+    "현금",
+    "생활지원",
+    "일자리",
+    "노년",
+    "중장년"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "near-poverty-certificate",
+   "name": "차상위계층 확인",
+   "key": "차상위계층확인",
+   "summary": "소득인정액 기준 중위소득 50% 이하 저소득 가구를 차상위계층으로 확인해 요금 감면과 각종 지원을 받게 하는 관문 제도",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "생활지원",
+   "tags": [
+    "생활지원",
+    "저소득"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "near-poverty-copay-reduction",
+   "name": "차상위 본인부담경감",
+   "key": "차상위본인부담경감",
+   "summary": "희귀·중증질환자와 만성질환자, 18세 미만 아동이 있는 차상위 가구의 건강보험 본인부담을 크게 낮춰 주는 제도",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "신체건강",
+   "tags": [
+    "신체건강",
+    "저소득"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "nutrition-plus",
+   "name": "영양플러스 사업",
+   "key": "영양플러스",
+   "summary": "영양 취약계층인 임산부 및 영유아의 영양문제를 해소하고, 올바른 식생활을 유도하여 건강증진 및 삶의 질 제고를 도모합니다.",
+   "target": "소득인정액이 기준 중위소득 80%이하 가구 중 영양위험요인(빈혈, 저체중, 성장부진, 영양섭취불량 등)을 가진 임산부, 출산·수유부, 영유아(만5세 까지)를 대상으로 지원합니다.",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부 건강증진과",
+   "category": "보호·돌봄",
+   "tags": [
+    "보호·돌봄",
+    "신체건강",
+    "임신·출산",
+    "영유아",
+    "다자녀",
+    "저소득"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "bokjiro_tags",
+    "logic": {
+     "all": [
+      {
+       "any": [
+        {
+         "field": "children",
+         "anyOf": [
+          "pregnant",
+          "0-1"
+         ],
+         "label": "임신·출산 가구"
+        },
+        {
+         "any": [
+          {
+           "field": "childAge",
+           "min": 0,
+           "max": 5,
+           "label": "영유아 자녀"
+          },
+          {
+           "field": "age",
+           "min": 0,
+           "max": 5,
+           "label": "영유아"
+          }
+         ]
+        }
+       ],
+       "label": "복지로 생애주기(임신·출산·영유아)"
+      },
+      {
+       "any": [
+        {
+         "field": "trait",
+         "anyOf": [
+          "multi_child"
+         ],
+         "label": "다자녀 가구",
+         "soft": true
+        },
+        {
+         "field": "benefit",
+         "anyOf": [
+          "livelihood",
+          "medical",
+          "housing",
+          "education",
+          "near_poverty"
+         ],
+         "label": "저소득 가구(수급·차상위 등)",
+         "soft": true
+        }
+       ]
+      }
+     ]
+    },
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "outreach-welfare",
+   "name": "찾아가는 보건복지서비스",
+   "key": "찾아가는보건복지",
+   "summary": "읍면동 맞춤형복지팀이 위기가구를 직접 찾아가 상담하고 필요한 보건·복지 서비스를 연결하는 방문형 복지 체계",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "시장·군수·구",
+   "category": "안전·위기",
+   "tags": [
+    "안전·위기",
+    "보호·돌봄"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "parent-benefit",
+   "name": "부모급여 지원",
+   "key": "부모급여",
+   "summary": "영아기 집중돌봄을 두텁게 지원하여 출산 및 양육으로 인한 경제적 부담을 줄여드립니다.",
+   "target": "2세 미만의 아동(0~23개월)에게 지원합니다.※ 2세부터는 가정양육수당을 지원합니다.\n2세 생일이 도래하는 달의 전 달까지 최대 24개월간 지급합니다.",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부 아동정책과",
+   "category": "보육",
+   "tags": [
+    "보육",
+    "영유아",
+    "생활지원"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "preconception-health",
+   "name": "임신 사전건강관리 지원사업",
+   "key": "임신사전건강관리",
+   "summary": "임신 및 출산에 장애가 될 수 있는 건강위험요인의 조기 발견 기회를 제공하고, 임신전 건강관리를 위한 의료.보건학적 지원을 통해 건강한 임신 출산 환경을 조성합니다.",
+   "target": "모든 20~49세 남녀 중 검사 희망자(결혼, 자녀 여부 불문)를 대상으로 지원합니다.\n내국인 배우자가 있는 외국인 지원 가능(별도 비자 조건 없음)\n지원 신청시 보건소에서 대상자 여부 확인하여 지원결정 및 검사의뢰서 발급",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부 출산정책과",
+   "category": "서민금융",
+   "tags": [
+    "서민금융",
+    "임신·출산",
+    "중장년",
+    "청년",
+    "신체건강"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "preterm-infant-medical",
+   "name": "미숙아·선천성이상아 의료비 지원",
+   "key": "미숙아선천성이상아의료비",
+   "summary": "신생아중환자실에 입원한 미숙아와 수술이 필요한 선천성이상아의 비급여·전액본인부담 의료비를 체중별로 최대 2천만 원까지 지원하는 제도",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "신체건강",
+   "tags": [
+    "신체건강",
+    "임신·출산",
+    "영유아"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "bokjiro_tags",
+    "logic": {
+     "any": [
+      {
+       "field": "childAge",
+       "min": 0,
+       "max": 5,
+       "label": "영유아 자녀"
+      },
+      {
+       "field": "age",
+       "min": 0,
+       "max": 5,
+       "label": "영유아"
+      }
+     ]
+    },
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "psychiatric-treatment-cost",
+   "name": "정신질환자 치료비 지원 사업",
+   "key": "정신질환자치료비",
+   "summary": "조현병 등 정신질환 발병 초기에 집중적인 치료를 유도하고 응급상황 입원 및 퇴원 후에도 꾸준한 치료를 받을 수 있도록 치료비를 지원합니다.",
+   "target": "정신질환으로 인하여 적시에 적절한 치료가 필요한 자를 대상으로 지원합니다.\n자·타해 위험이 발생하여 즉각적으로 응급·행정입원이 필요한 자\n정신질환의 만성화 예방 및 지속치료 동기부여가 필요한 초발 정신질환자 및 외래치료 지원(법64조)을 받은 자\n정신건강의학과전문의에게 진단(F20-29, F30, F31, F33, F34)을 받은 지 5년 이내인 정신질환자\n권역정신응급의료센터에 내원하여 정신응급환자",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부 정신건강정책과",
+   "category": "정신건강",
+   "tags": [
+    "정신건강",
+    "서민금융",
+    "중장년",
+    "노년",
+    "청소년",
+    "청년"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "bokjiro_tags",
+    "logic": {
+     "all": [
+      {
+       "any": [
+        {
+         "any": [
+          {
+           "field": "childAge",
+           "min": 13,
+           "max": 18,
+           "label": "청소년 자녀"
+          },
+          {
+           "field": "age",
+           "min": 9,
+           "max": 24,
+           "label": "청소년 본인"
+          }
+         ]
+        },
+        {
+         "field": "age",
+         "min": 19,
+         "label": "성인(만 19세 이상)"
+        }
+       ],
+       "label": "복지로 생애주기(중장년·노년·청소년·청년)"
+      },
+      {
+       "field": "disability",
+       "anyOf": [
+        "self",
+        "member"
+       ],
+       "label": "장애가 있는 본인 또는 가구원",
+       "soft": true
+      },
+      {
+       "field": "unasked",
+       "label": "정신건강 관련 상태",
+       "hint": "정신건강복지센터 상담으로 확인해요."
+      }
+     ]
+    },
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "purchased-rental-housing",
+   "name": "매입임대주택",
+   "key": "매입임대주택",
+   "summary": "LH 등이 기존 주택을 사들여 저소득층·청년·신혼부부 등에게 시세보다 싸게 임대하는 공공임대주택",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "국토교통부",
+   "category": "주거",
+   "tags": [
+    "주거",
+    "청년",
+    "중장년",
+    "저소득"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "bokjiro_tags",
+    "logic": {
+     "all": [
+      {
+       "any": [
+        {
+         "field": "age",
+         "min": 19,
+         "max": 39,
+         "label": "청년(만 19~39세 기준)"
+        },
+        {
+         "field": "age",
+         "min": 40,
+         "max": 64,
+         "label": "중장년(만 40~64세)"
+        }
+       ],
+       "label": "복지로 생애주기(청년·중장년)"
+      },
+      {
+       "field": "benefit",
+       "anyOf": [
+        "livelihood",
+        "medical",
+        "housing",
+        "education",
+        "near_poverty"
+       ],
+       "label": "저소득 가구(수급·차상위 등)",
+       "soft": true
+      }
+     ]
+    },
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "recipient-fee-reduction",
+   "name": "기초생활수급자 요금감면",
+   "key": "기초생활수급자요금감면",
+   "summary": "기초생활수급자의 통신·전기·가스·상하수도·TV 수신료 등 생활요금을 깎아 주는 감면 제도 묶음",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "과학기술정보통신부",
+   "category": "에너지",
+   "tags": [
+    "에너지",
+    "생활지원",
+    "저소득"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "self-sufficiency-work",
+   "name": "자활근로",
+   "key": "자활근로",
+   "summary": "근로능력 있는 수급자와 차상위계층에게 지역자활센터 사업단 일자리를 주고 인건비를 지급해 탈빈곤을 돕는 자활사업",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "일자리",
+   "tags": [
+    "일자리",
+    "청년",
+    "중장년",
+    "저소득"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "senior-center",
+   "name": "경로당 운영 지원",
+   "key": "경로당운영",
+   "summary": "어르신 여가·친목 공간인 경로당에 냉난방비와 양곡비를 지원하고 순회 프로그램으로 여가 활동을 돕는 사업",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "문화·여가",
+   "tags": [
+    "문화·여가",
+    "노년"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "senior-eye-surgery",
+   "name": "노인 안검진·개안수술",
+   "key": "노인안검진개안수술",
+   "summary": "60세 이상 어르신의 눈 건강을 검진하고 저소득층 백내장·망막질환 수술 본인부담금을 전액 지원하는 사업",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "신체건강",
+   "tags": [
+    "신체건강",
+    "노년",
+    "저소득"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "senior-jobs",
+   "name": "노인일자리 및 사회활동 지원",
+   "key": "노인일자리및사회활동",
+   "summary": "65세(민간형 60세) 이상 노인에게 민간형, 공익형 등의 노인일자리 제공",
+   "target": "○ 노인공익활동사업 : 65세 이상 기초연금수급자\n○ 노인역량활용사업 : 65세 이상(일부 유형 60세 이상)\n○ 민간형 : 60세 이상",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "일자리",
+   "tags": [
+    "고용·창업",
+    "봉사/기부||서비스(일자리)",
+    "일자리",
+    "노년",
+    "저소득",
+    "문화·여가"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "senior-knee-surgery",
+   "name": "노인 무릎인공관절 수술 지원",
+   "key": "노인무릎인공관절수술",
+   "summary": "무릎관절증으로 고통받는 저소득 어르신에게 검사비, 진료비 및 수술비 지원",
+   "target": "○ (연령) 만 60세 이상\n○ (대상 질환) 건강보험급여 '인공관절 치환술(무릎관절)' 인정기준에 준하는 질환자\n○ (소득 기준) 국민기초생활보장법에 따른 수급자 또는 차상위계층, 한부모가족 지원법에 따른 지원대상자",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "신체건강",
+   "tags": [
+    "보건·의료",
+    "서비스(의료)||의료지원",
+    "신체건강",
+    "중장년",
+    "노년",
+    "한부모·조손"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "seogwipo-warm-store",
+   "name": "서귀포 온정가게",
+   "key": "서귀포온정가게",
+   "summary": "동네 가게를 위기가구 발굴 창구로 삼아 교환권·쿠폰으로 생필품 5만 원이나 식사 4만 5천 원을 바로 지원하는 서귀포시 사업",
+   "orgType": "local",
+   "scope": "sigungu",
+   "sidoCode": "50000",
+   "sigunguCodes": [
+    "50130"
+   ],
+   "regionLabel": "제주 서귀포시",
+   "owner": "서귀포시(주민복지과)",
+   "category": "안전·위기",
+   "tags": [
+    "안전·위기",
+    "생활지원",
+    "저소득"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "bokjiro_tags",
+    "logic": {
+     "field": "benefit",
+     "anyOf": [
+      "livelihood",
+      "medical",
+      "housing",
+      "education",
+      "near_poverty"
+     ],
+     "label": "저소득 가구(수급·차상위 등)",
+     "soft": true
+    },
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "single-parent-child-support",
+   "name": "한부모가족 아동양육비 지원",
+   "key": "한부모가족아동양육비",
+   "summary": "저소득 한부모 가족 및 조손가족 대상으로 현금 지원",
+   "target": "○ 아동 양육비 : 지원 대상자로 결정된 저소득 한부모 가구의 18세 미만의 아동\n* 단, 고등학교 이하 재학(고3 12월까지) 중인 경우 22세 미만 자녀까지 지원\n○ 추가 아동 양육비\n- 조손가족 및 35세 이상 미혼 한부모가족의 5세 이하 자녀\n- 25~34세 이하 청년 한부모의 18세 미만 자녀\n* 단, 고등학교 이하 재학(고3 12월까지) 중인 경우 22세 미만 자녀까지 지원\n○ 학용품비 : 한부모가족(조손가족 포함)의 초등학생, 중학생 및 고등학생 자녀\n○ 생활보조금 : 한부모가족 복지시설에 입소한 저소득 한부모가족(조손가족 포함)",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "성평등가족부",
+   "category": "보육",
+   "tags": [
+    "보육·교육",
+    "현금",
+    "보육",
+    "교육",
+    "생활지원",
+    "한부모·조손"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "sports-voucher",
+   "name": "스포츠 강좌 이용권 지원",
+   "key": "스포츠강좌이용권",
+   "summary": "저소득층 유·청소년 대상으로 스포츠 강좌 수강료 지원 (1인당 매월 10.5만 원 이내)",
+   "target": "○ 만5~ 만18세 기초, 차상위가구 유청소년\n- 「국민기초생활보장법」에 따른 생계, 의료, 주거, 교육급여 수급 가구 및 차상위* 계층\n* 차상위 장애, 자활근로, 본인부담경감, 차상위계층 확인서 발급대상(구 우선돌봄차상위)/ 법정 한부모 보호가구",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "문화체육관광부",
+   "category": "문화·여가",
+   "tags": [
+    "문화·환경",
+    "이용권",
+    "문화·여가",
+    "청소년",
+    "영유아",
+    "아동"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "suicide-prevention",
+   "name": "자살예방(자살시도자 사후관리)",
+   "key": "자살예방",
+   "summary": "자살시도자와 자살 유족을 찾아가 위기 개입과 사례관리를 하고 치료비를 연 100만 원까지 지원하는 자살예방 사업",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "정신건강",
+   "tags": [
+    "정신건강",
+    "안전·위기",
+    "청년",
+    "중장년",
+    "노년"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "bokjiro_tags",
+    "logic": {
+     "field": "age",
+     "min": 19,
+     "label": "성인(만 19세 이상)"
+    },
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "together-care",
+   "name": "다함께 돌봄 사업",
+   "key": "다함께돌봄",
+   "summary": "지역 중심의 맞춤형 돌봄 서비스를 제공하여 돌봄사각지대를 해소하고 맞벌이 가구 등의 육아부담을 경감합니다.",
+   "target": "돌봄이 필요한 6~12세 아동을 대상으로 합니다.\n소득수준과 무관\n이용료 수납한도액 : 아동 1인당 월 10만원 이내(프로그램 활동비, 현장학습비 등)\n* 외부인력에 의해 센터 내외에서 이루어지는 특별활동 프로그램 운영 시 월 10만원 한도 초과하여 프로그램별 이용료 수납 가능 ** 급·간식을 제공할 경우에는 월 10만원 이외 별도 수익자 부담 추가 가능",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부 아동보호자립과",
+   "category": "보호·돌봄",
+   "tags": [
+    "보호·돌봄",
+    "교육",
+    "아동",
+    "보육"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "unclaimed-funeral",
+   "name": "무연고 사망자 장례지원",
+   "key": "무연고사망자장례",
+   "summary": "연고자가 없거나 시신 인수를 거부한 무연고 사망자를 지자체가 장례 치르고 화장·봉안하는 공영장례 지원",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "생활지원",
+   "tags": [
+    "생활지원",
+    "안전·위기",
+    "노년",
+    "저소득"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "bokjiro_tags",
+    "logic": {
+     "all": [
+      {
+       "field": "age",
+       "min": 65,
+       "label": "노년(만 65세 이상)"
+      },
+      {
+       "field": "benefit",
+       "anyOf": [
+        "livelihood",
+        "medical",
+        "housing",
+        "education",
+        "near_poverty"
+       ],
+       "label": "저소득 가구(수급·차상위 등)",
+       "soft": true
+      }
+     ]
+    },
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "unemployment-benefit",
+   "name": "실업급여",
+   "key": "실업급여",
+   "summary": "비자발적으로 직장을 잃은 고용보험 가입자에게 재취업 활동 기간 동안 이전 평균임금의 60%를 120~270일 지급하는 구직급여",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "고용노동부",
+   "category": "일자리",
+   "tags": [
+    "일자리",
+    "생활지원",
+    "청년",
+    "중장년"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "veteran-compensation",
+   "name": "국가유공자 등 보상금",
+   "key": "국가유공자등보상금",
+   "summary": "국가유공자 등 보훈가족의 영예로운 삶이 유지·보장되도록 보훈급여금 등을 지원",
+   "target": "○ 보상금은 [1. 본인 2. 배우자 3. 자녀 4. 손자녀(1945.8.14 이전에 사망한 독립유공자의 손자녀 1명/1945.8.15 이후에 사망한 독립 유공자의 유족으로 최초 등록 당시 자녀까지 모두 사망한 경우 및 생존 자녀가 있었으나 보상금을 지급 받지 못하고 사망한 경우 손자녀 1명) 5. 며느리(1945.8.14 이전에 구호적에 기재된 분)] 까지만 승계 지급\n※ 그 외 유가족은 보상금 비대상임 단, 최초 등록 당시 자녀,손자녀까지 사망한 경우 가장 가까운 직계비속 중 1명을 손자녀로 인정('12.7.1. 자 시행)\n※ 동 순위가 2인 이상인 경우 순위\n1. 동순위 유족간의 협의에 의하여 보상금을 받는 자로 지정된 유족\n2. 독립유공자를 주로 부양한 분(다툼이 있는 경우 보훈심사위원회 심의 후 결정)\n3. 연장자 우선(단, 손자녀의 경우에는 생활수준을 고려하여 지급)",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "국가보훈부",
+   "category": "생활지원",
+   "tags": [
+    "생활안정",
+    "현금",
+    "생활지원",
+    "보훈대상자"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "violence-victim-support",
+   "name": "가정폭력·성폭력 피해자 지원",
+   "key": "가정폭력성폭력피해자",
+   "summary": "가정폭력·성폭력·스토킹 등 피해자에게 1366 긴급상담, 보호시설, 의료·법률 지원을 연결하는 피해자 지원 체계",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "성평등가족부",
+   "category": "안전·위기",
+   "tags": [
+    "안전·위기",
+    "법률",
+    "한부모·조손"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "bokjiro_tags",
+    "logic": {
+     "field": "trait",
+     "anyOf": [
+      "single_parent"
+     ],
+     "label": "한부모·조손 가구",
+     "soft": true
+    },
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "visiting-health-care",
+   "name": "방문건강관리",
+   "key": "방문건강관리",
+   "summary": "보건소 간호사 등이 건강위험이 높은 취약계층 가정을 방문해 건강 평가와 만성질환 관리를 하는 방문건강관리 사업",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "신체건강",
+   "tags": [
+    "신체건강",
+    "보호·돌봄",
+    "노년",
+    "저소득"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "bokjiro_tags",
+    "logic": {
+     "all": [
+      {
+       "field": "age",
+       "min": 65,
+       "label": "노년(만 65세 이상)"
+      },
+      {
+       "field": "benefit",
+       "anyOf": [
+        "livelihood",
+        "medical",
+        "housing",
+        "education",
+        "near_poverty"
+       ],
+       "label": "저소득 가구(수급·차상위 등)",
+       "soft": true
+      }
+     ]
+    },
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "vulnerable-fire-support",
+   "name": "취약계층 화재발생 긴급지원",
+   "key": "취약계층화재발생긴급",
+   "summary": "화재를 입은 취약가구에 긴급복지·시 자체 생계비·임시거처·모금회 지원을 한데 묶어 연결하는 서귀포시 화재 피해 지원",
+   "orgType": "local",
+   "scope": "sigungu",
+   "sidoCode": "50000",
+   "sigunguCodes": [
+    "50130"
+   ],
+   "regionLabel": "제주 서귀포시",
+   "owner": "서귀포시 주민복지과",
+   "category": "주거",
+   "tags": [
+    "주거",
+    "안전·위기",
+    "저소득"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "bokjiro_tags",
+    "logic": {
+     "field": "benefit",
+     "anyOf": [
+      "livelihood",
+      "medical",
+      "housing",
+      "education",
+      "near_poverty"
+     ],
+     "label": "저소득 가구(수급·차상위 등)",
+     "soft": true
+    },
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "youth-dd-after-school",
+   "name": "청소년 발달장애학생 방과후활동서비스",
+   "key": "청소년발달장애학생방과후활동",
+   "summary": "6~18세 청소년 발달장애 학생에게 방과후 돌봄과 활동을 월 66시간 바우처로 제공하는 서비스",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부",
+   "category": "보호·돌봄",
+   "tags": [
+    "보호·돌봄",
+    "교육",
+    "청소년",
+    "장애인"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "youth-rent-support",
+   "name": "청년월세 지원",
+   "key": "청년월세",
+   "summary": "만19세 ～ 34세 독립거주 무주택 청년에게 월 최대 20만원 임차료 지원",
+   "target": "ㅇ (대상) ｢청년기본법｣상 청년(만 19~34세 이하*)으로 부모님과 별도 거주하는 무주택자\n* 월세지원 신청연령은 신청년도의 출생년을 기준(만 19〜34세가 되는 해의 1.1〜12.31일)으로 하고, 선정 이후 기준 연령을 초과하여도 계속지원 가능\n※ 제외대상 : ▲주택 소유자(분양권, 입주권 포함) ▲직계존속·형제·자매 등 2촌 이내 주택 임차 ▲공공주택특별법에 따른 공공임대주택 거주 ▲1실(방)에 다수가 거주하는 방식의 전대차인 경우 등\n- 임대차계약서*와 함께 실제 임차료 지급사실(계좌입금 확인서 등, 최근 3개월 내) 확인을 위한 임차료 계좌입금 증빙내역 제출(전입신고 필수)\n* (임대차계약 등 증빙 서류) 임대차계약서, 전대차계약서(등기부등본 또는 건축물대장 제출), 입실서, 기숙사비 납부 영수증 등(입실서, 기숙사비 납부 영수증인 경우 임대인과 임차인의 성명·생년월일, 서명날인, 임차보증금과 월세금액, 계약일자·기간 등 기재 필요)\nㅇ (소득) 청년 원가구*의 소득이 기준 중위소득 100% 이하이면서 청년 독립가구 소득이 기준 중위소득 60% 이하\n* (원가구) 청년 + 부모 + 부모와 동일 주소지에 거주하는 그 외 「민법」상 가족\n(청년독립가구) 청년 + 배우자 + 직계비속 + 동일 주소지에 거주하는 그 외「민법」상 가족\n** (가족의 범위, 민법§779) ❶배우자, 직계혈족 및 형제자매, ❷직계혈족의 배우자, 배우자의 직계혈족 및 배우자의 형제자매(생계를 같이하는 경우에 한함)\n- 청년독립가구가 중위소득 50% 이상의 경제활동, 기혼, 만 30세 이상 등의 사유로 원가구와 분리되어 기초보장제도상 (별도)보장가구로 인정되는 경우 청년독립가구의 소득(60% 이하)만 확인(원가구 소득 미고려)\n※ 혼인(사실혼 포함) 또는 형제·자매 관계의 청년 2인 이상이 동일한 주택에 함께 거주하는 경우 가구당 1명에게만 지원",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "국토교통부",
+   "category": "생활지원",
+   "tags": [
+    "생활안정",
+    "현금",
+    "주거",
+    "청년",
+    "저소득"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  },
+  {
+   "source": "welfare100",
+   "sourceId": "youth-tomorrow-savings",
+   "name": "청년내일저축계좌",
+   "key": "청년내일저축계좌",
+   "summary": "근로빈곤층 청년의 생계수급자 등으로의 하락을 사전에 예방하고, 일하는 중간계층 청년이 사회에 안착할 수 있도록 자산형성을 지원합니다. (2026년 모집기간: '26.5.4.(월) ~ '26.5.20.(수))",
+   "target": "가입연령 : 신청 당시 만 15세~ 39세 ※ 신청 월의 전월에 만 15세가 된 자 ~ 신청 월에 만 40세가 되는 자\n근로·사업소득 : 근로,사업소득이 월10만원 이상 발생\n가구소득 : 소득인정액 기준 중위소득 50% 이하",
+   "orgType": "central",
+   "scope": "national",
+   "owner": "보건복지부 자활정책과",
+   "category": "서민금융",
+   "tags": [
+    "서민금융",
+    "청년",
+    "저소득",
+    "일자리"
+   ],
+   "updatedAt": "2026-09-24",
+   "fetchedAt": "2026-09-24",
+   "trust": "B",
+   "badges": [],
+   "draft": {
+    "origin": "none",
+    "logic": null,
+    "unstructured": [],
+    "core": false
+   }
+  }
+ ]
+}

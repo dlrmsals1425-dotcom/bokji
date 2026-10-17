@@ -691,13 +691,20 @@ html[data-large="1"] .fgrid fieldset + fieldset { border-left: 0; border-top: 1p
 
 /* 질문 따라 찾기 (2026-10-16): 한 화면에 한 질문 */
 .gq-bar { height: 0.375rem; border-radius: 999px; background: #fff; overflow: hidden; margin-top: 0.875rem; border: 1px solid var(--primary-10); }
-.gq-bar i { display: block; height: 100%; background: var(--primary); transition: width .25s; }
+.gq-bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--primary) 0%, #e8743a 100%); transition: width .25s; }
 .gq-counts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.5rem; margin-bottom: 1.5rem; }
 .gq-counts > div { background: var(--surface); border-radius: var(--radius-sm); padding: 0.5rem 0.75rem; }
 .gq-counts span { display: block; font-size: 0.8125rem; color: var(--ink-2); line-height: 1.3; }
 .gq-counts b { font-size: 1.375rem; font-weight: 800; color: var(--ink); }
 .gq-counts > div:first-child b { color: var(--primary-60); }
 .gq-step { color: var(--primary-60); font-weight: 700; font-size: 0.9375rem; margin: 0 0 0.25rem; }
+.gq-summary { border-top: 1px solid var(--line); margin: 1.25rem 0; padding-top: 1rem; }
+.gq-summary h2 { margin: 0 0 0.5rem; }
+.gq-summary ul { list-style: none; margin: 0; padding: 0; }
+.gq-summary li { display: grid; grid-template-columns: 6.25rem minmax(0, 1fr) auto; gap: 0.5rem; align-items: center; padding: 0.375rem 0; border-bottom: 1px solid var(--line); }
+.gq-summary li .link-btn { min-height: 2.25rem; }
+.gq-summary li span { color: var(--ink-2); font-size: 0.9375rem; }
+.gq-summary li b { font-weight: 700; overflow-wrap: anywhere; }
 .gq-q { margin-bottom: 0.75rem; outline: none; }
 .gq-opts { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0.5rem; margin-top: 1rem; max-width: 30rem; }
 .gq-opt { display: flex; align-items: center; gap: 0.625rem; min-height: 3.25rem; padding: 0.625rem 1rem; border: 1px solid var(--line); border-radius: var(--radius-sm); background: #fff; font: inherit; font-weight: 600; color: var(--ink); text-align: left; cursor: pointer; }
@@ -706,6 +713,9 @@ html[data-large="1"] .fgrid fieldset + fieldset { border-left: 0; border-top: 1p
 .gq-opt.gq-unknown { color: var(--ink-2); font-weight: 500; border-style: dashed; }
 .gq-pick { margin-top: 1rem; }
 .gq-checks { margin-top: 1rem; }
+.gq-count .seg { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.5rem; max-width: 30rem; }
+.gq-count .gq-opt { justify-content: center; }
+.gq-opt.on { border-color: var(--primary); background: var(--primary-5); color: var(--primary-70); box-shadow: inset 0 0 0 1px var(--primary); }
 .gq-foot { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--line-2); }
 @media (max-width: 30rem) { .gq-counts b { font-size: 1.125rem; } }
 
@@ -715,3 +725,28 @@ html[data-large="1"] .fgrid fieldset + fieldset { border-left: 0; border-top: 1p
 /* 이미 받고 있는 혜택 (2026-10-16) */
 .recv-list { list-style: none; margin: 0.5rem 0 0; padding: 0; display: grid; gap: 0.25rem; }
 .recv-list li { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 0.75rem; }
+
+/* ---------- 단계별 색 (2026-10-16 회의): 처음은 파랑 → 질문·입력은 파랑에서 따뜻한 색으로 → 결과는 따뜻한 색 ----------
+ * 결과 화면 안에서만 주 색 토큰을 바꾼다 (흰 글자/주황 바탕 5.2:1, 주황 글자/연한 바탕 5.5:1 이상 — WCAG AA). 큰 글자 설정은 그대로 */
+.form-head { background: linear-gradient(180deg, var(--primary-5) 0%, var(--warm-5) 100%); border-bottom-color: #f6e4cf; }
+.results-root.v2 {
+  --primary: #c2410c; --primary-60: #a63a0b; --primary-70: #833008; --primary-80: #5c2206;
+  --primary-5: #fff4ec; --primary-10: #fde2cf; --primary-20: #f9c6a2;
+}
+.results-root.v2 .res-head { background: linear-gradient(180deg, #ffeedd 0%, #fff7f0 100%); border-bottom-color: var(--primary-10); }
+.results-root.v2 .res-head .h1 { font-size: clamp(1.75rem, 5vw, 2.5rem); font-weight: 800; letter-spacing: -0.04em; }
+.hero h1 { font-weight: 850; }
+
+/* ---------- 키오스크 모드 (2026-10-16 회의: 주민센터 태블릿, 터치만) ---------- */
+html[data-kiosk="1"] .util, html[data-kiosk="1"] .header-nav, html[data-kiosk="1"] .mnav, html[data-kiosk="1"] .site-footer, html[data-kiosk="1"] .header-actions { display: none; }
+html[data-kiosk="1"] .site-header .logo { pointer-events: none; }
+html[data-kiosk="1"] .gq-opt { min-height: 4rem; font-size: 1.125em; }
+html[data-kiosk="1"] .btn { min-height: 3.5rem; }
+html[data-kiosk="1"] main { padding-bottom: 5.5rem; }
+.kiosk-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; display: flex; justify-content: center; padding: 0.75rem; background: rgba(255, 255, 255, 0.96); border-top: 1px solid var(--line-2); }
+.kiosk-idle { position: fixed; inset: 0; z-index: 60; background: rgba(30, 33, 36, 0.55); display: grid; place-items: center; padding: 1rem; }
+.kiosk-idle-box { background: #fff; border-radius: var(--radius); padding: 1.75rem; max-width: 30rem; width: 100%; box-shadow: var(--shadow); }
+html[data-kiosk="1"] .crumbs { display: none; }
+@media (min-width: 48rem) {
+  html[data-kiosk="1"] .gq-opts { max-width: none; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

@@ -302,6 +302,30 @@ function withDaycare(p: Pick<Program, "name">, rule: Rule): Rule {
 }
 
 /**
+ * (2026-10-16 소유자) 특수교육대상자 사업: 「장애인 등에 대한 특수교육법」 제15조 — 교육장·교육감이 진단·평가로 선정하며
+ * 학습장애·건강장애·발달지체 등도 포함되어 장애인 등록과 별개다. 자동 정리 규칙의 '장애인(본인 또는 가구원)' 조건을
+ * '장애인 등록 또는 특수교육대상자 선정'으로 넓혀, 장애 '아니요'만으로 '해당하지 않아요'가 되지 않게 한다 (선정 여부는 묻지 않는 조건).
+ * 이름이 특수교육·장애 학생/유아 사업인 것만 — 특수교육대상자를 여러 대상 중 하나로 적은 사업(보훈 학습보조비·우유급식 등)은 그대로.
+ */
+const SPECIAL_ED_NAME = /특수\s*교육|장애\s*(?:유아|학생)|장애아\s*보육료|건강\s*장애/;
+const SPECIAL_ED_TEXT = /특수\s*교육\s*대상/;
+export const SPECIAL_ED_LABEL = "교육청이 선정한 특수교육대상자 (장애인 등록과 별개)";
+const SPECIAL_ED_HINT = "학습장애·발달지체·건강장애 등도 특수교육대상자로 선정될 수 있어요. 해당하면 학교·교육지원청에 확인하세요.";
+export function isSpecialEd(p: Pick<Program, "name" | "target">): boolean {
+  return SPECIAL_ED_NAME.test(p.name) && SPECIAL_ED_TEXT.test(`${p.name}\n${(p.target ?? "").slice(0, 400)}`);
+}
+function withSpecialEd(rule: Rule): Rule {
+  if (!rule.logic || leaves(rule.logic).some((l) => l.field === "unasked" && l.label === SPECIAL_ED_LABEL)) return rule;
+  let changed = false;
+  const logic = mapLeaves(rule.logic, (l) => {
+    if (l.field !== "disability") return l;
+    changed = true;
+    return { any: [l, { field: "unasked", label: SPECIAL_ED_LABEL, hint: SPECIAL_ED_HINT }] };
+  });
+  return changed ? { ...rule, logic } : rule;
+}
+
+/**
  * (전국 확대 ①, 2026-10-10) 공공서비스 API 지원조건 규칙은 지역과 관계없이 'API 지원조건(structured)' 등급.
  * 시범 기간에는 경기도·전국 사업만 올리고 그 밖의 시·도는 '자동 정리(auto)'로 두어 '받으실 수 있어요'까지 가지 않았다.
  * 규칙 다듬기(소득 코드 반올림·수급자 전용·원문 조건 등)는 이미 모든 지역에 같게 적용돼 있어 등급만 맞춘다
@@ -312,10 +336,12 @@ const promoteStructured = (p: Pick<Program, "rule">) => p.rule?.review === "auto
 export function refineProgram<T extends Program>(p: T): T {
   const dc = p.rule?.logic ? daycareLeaf(p) : null;
   const promote = promoteStructured(p);
-  if (p.rule?.refined === REFINE_VERSION && !OWNER_FIX[p.id] && !RULE_FIX[p.rule.id] && !dc && !promote) return p;
+  const se = !!p.rule?.logic && isSpecialEd(p);
+  if (p.rule?.refined === REFINE_VERSION && !OWNER_FIX[p.id] && !RULE_FIX[p.rule.id] && !dc && !promote && !se) return p;
   const owner = OWNER_FIX[p.id] ?? p.owner;
   let rule = p.rule ? refineRule(p, p.rule) : p.rule;
   if (rule && dc) rule = withDaycare(p, rule);
   if (rule && promote) rule = { ...rule, review: "structured" };
+  if (rule && se) rule = withSpecialEd(rule);
   return { ...p, owner, rule };
 }

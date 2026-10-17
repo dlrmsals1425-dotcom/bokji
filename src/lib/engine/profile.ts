@@ -9,7 +9,12 @@ export const AGE_BANDS = [
   "0-18", "19-24", "25-29", "30-34", "35-39", "40-49",
   "50-59", "60-64", "65-69", "70-74", "75-79", "80+",
 ] as const;
-export type AgeBand = (typeof AGE_BANDS)[number];
+/**
+ * 질문 따라 찾기에서만 쓰는 넓은 구간 (2026-10-16 시뮬레이션: 전국 230곳에서 74/75세 경계로 갈리는 혜택 중앙값 0·최대 3).
+ * 입력 화면·문장 해석은 그대로 세밀한 구간(AGE_BANDS)을 쓴다. 판정은 범위(ageRange)로 읽는다.
+ */
+export const WIDE_AGE_BANDS = ["70-79"] as const;
+export type AgeBand = (typeof AGE_BANDS)[number] | (typeof WIDE_AGE_BANDS)[number];
 
 export const INCOME_BANDS = ["32", "40", "48", "50", "60", "100", "120", "150", "200", "200+"] as const;
 export type IncomeBand = (typeof INCOME_BANDS)[number];
@@ -93,7 +98,7 @@ export const EMPTY_PROFILE: Profile = {
 export const AGE_LABEL: Record<AgeBand, string> = {
   "0-18": "18세 이하", "19-24": "19~24세", "25-29": "25~29세", "30-34": "30~34세",
   "35-39": "35~39세", "40-49": "40~49세", "50-59": "50~59세", "60-64": "60~64세",
-  "65-69": "65~69세", "70-74": "70~74세", "75-79": "75~79세", "80+": "80세 이상",
+  "65-69": "65~69세", "70-74": "70~74세", "75-79": "75~79세", "80+": "80세 이상", "70-79": "70~79세",
 };
 
 export const INCOME_LABEL: Record<IncomeBand, string> = {
