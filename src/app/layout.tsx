@@ -4,6 +4,7 @@ import "./fonts/pretendard-1.3.9/pretendardvariable-dynamic-subset.css";
 import "./globals.css";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
+import { KioskGuard } from "@/components/KioskGuard";
 
 const SITE = process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "https://bokji-compass.vercel.app";
 const DESC =
@@ -33,7 +34,7 @@ export const viewport: Viewport = {
 };
 
 /** 큰 글씨 설정을 첫 페인트 전에 적용 (깜빡임 방지) */
-const settingsBootstrap = `try{var s=JSON.parse(localStorage.getItem('bn.settings.v1')||'{}');if(s.large)document.documentElement.dataset.large='1'}catch(e){}`;
+const settingsBootstrap = `try{var s=JSON.parse(localStorage.getItem('bn.settings.v1')||'{}');if(s.large)document.documentElement.dataset.large='1';if(s.kiosk)document.documentElement.setAttribute('data-kiosk','1')}catch(e){}`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
@@ -48,6 +49,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <SiteHeader />
         <main id="main">{children}</main>
         <SiteFooter />
+        <KioskGuard />
       </body>
     </html>
   );

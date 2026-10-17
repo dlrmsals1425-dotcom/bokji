@@ -561,7 +561,7 @@ function Form({ initial, initialX, initialMode, wantPrefill }: { initial: Profil
                   </label>
                   <select id="age" className="select" value={p.age} onChange={(e) => set("age", e.target.value as Profile["age"])}>
                     <option value="unknown">모름</option>
-                    {AGE_BANDS.map((a) => (
+                    {(p.age !== "unknown" && !(AGE_BANDS as readonly string[]).includes(p.age) ? [...AGE_BANDS, p.age] : AGE_BANDS).map((a) => (
                       <option key={a} value={a}>
                         {AGE_LABEL[a]}
                       </option>

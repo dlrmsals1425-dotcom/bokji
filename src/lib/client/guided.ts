@@ -6,7 +6,7 @@
  * 답은 이 기기 안에서만 쓰고 주소에는 싣지 않는다.
  */
 import type { Program } from "../data/types";
-import { AGE_LABEL, EMPTY_PROFILE, INCOME_BANDS, medianWon } from "../engine/profile";
+import { AGE_LABEL, CHILD_BUCKETS, EMPTY_PROFILE, INCOME_BANDS, medianWon, type ChildBucket } from "../engine/profile";
 import type { FindMode } from "./mode";
 import {
   DIMS, DIM_BY_ID, EMPTY_EXTRAS, answersFor, buildView, classifyBase, dimAvailable, scoreV2,
@@ -15,6 +15,16 @@ import {
 
 /** 질문 수 (위치 확인 다음) */
 export const FLOW_LIMIT = 5;
+/**
+ * 질문 이름 — 질문 순서는 답에 따라 사람마다 달라 '3번 질문'만으로는 같은 질문을 가리키지 못한다
+ * (2026-10-16 회의: 콜센터·발표 질의응답). 화면에 '질문 3 / 5 · 소득'처럼 함께 쓴다.
+ */
+export const QUESTION_NAME: Record<DimId, string> = {
+  age: "나이", alone: "가구원 수", income: "소득", support: "수급", basicPension: "기초연금",
+  disability: "장애", care: "돌봄", ltcGrade: "장기요양", veteran: "보훈", singleParent: "한부모",
+  multicultural: "다문화", housing: "집", activity: "일", illness: "질병", children: "자녀", daycare: "어린이집",
+};
+
 /** 하나씩 묻지 않고 마지막 '해당하는 것 모두 고르기'로만 묻는 드문 사항 */
 export const RARE_DIMS_FLOW: ReadonlySet<DimId> = new Set<DimId>(["veteran", "multicultural"]);
 
@@ -30,8 +40,16 @@ const manwon = (won: number) => Math.floor(won / 10000).toLocaleString("ko-KR");
  * - 나이: 본인 찾기는 '18세 이하'도 (10대 본인이 나이에 답하지 못하던 문제 — 시뮬레이션에서 확인)
  * - 소득: 가구원 수에 맞춘 기준 중위소득 금액 구간 (구간 자체는 결과 화면 소득 질문과 같음)
  */
+/** 70~74세·75~79세는 한 보기로 (넓은 구간 — 엔진 profile.ts WIDE_AGE_BANDS) */
+const SEVENTIES: Answer = { key: "70-79", label: AGE_LABEL["70-79"], apply: (x: Situation) => withAge(x, "70-79") };
+function mergeSeventies(list: Answer[]): Answer[] {
+  const i = list.findIndex((a) => a.key === "70-74");
+  if (i < 0 || !list.some((a) => a.key === "75-79")) return list;
+  return [...list.slice(0, i), SEVENTIES, ...list.slice(i).filter((a) => a.key !== "70-74" && a.key !== "75-79")];
+}
+
 export function flowAnswers(d: Dim, s: Situation): Answer[] {
-  const base = answersFor(d, s);
+  const base = d.id === "age" ? mergeSeventies(answersFor(d, s)) : answersFor(d, s);
   if (d.id === "age" && s.mode !== "parent") {
     return [{ key: "0-18", label: AGE_LABEL["0-18"], apply: (x: Situation) => withAge(x, "0-18") }, ...base];
   }
@@ -119,6 +137,16 @@ export function nextQuestion(st: FlowStep, s: Situation, asked: readonly DimId[]
   // 소득 보기는 가구원 수에 맞춘 금액이라, 가구원 수를 모르면 그것부터
   if (best.id === "income" && s.profile.householdSize === "unknown" && !asked.includes("alone")) return { id: "alone", gain: best.gain };
   return best;
+}
+
+/**
+ * 자녀 질문 (2026-10-16 회의): 한 화면에서 임신 여부 + 자녀 나이 모두 고르기 + 자녀 수.
+ * 결과 화면의 자녀 질문(가장 어린 자녀 하나)으로는 '아이 1명 + 임신 중'을 함께 답할 수 없었다.
+ * count = 태어난 자녀 수(0·1·2·3=3명 이상) — 3명 이상이면 다자녀, 2명은 사업마다 달라 모름 (v2 inferExtras 그대로)
+ */
+export function childrenApply(s: Situation, buckets: readonly ChildBucket[], count: 0 | 1 | 2 | 3 | null): Situation {
+  const children = CHILD_BUCKETS.filter((c) => buckets.includes(c));
+  return { ...s, profile: { ...s.profile, children }, x: { ...s.x, childCount: count } };
 }
 
 export interface RarePick {

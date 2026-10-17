@@ -52,17 +52,17 @@ export const MODE_ENTRY = {
 export const METHOD_ENTRY = {
   talk: {
     title: "말로 찾기",
-    desc: "상황을 한두 문장으로 적으면 알아서 채워요. 나·부모님 모두",
+    desc: "상황을 한두 문장으로 적어 주세요",
     example: "예: 수원에 사시는 75세 어머니, 혼자 사세요",
-    meta: "약 1분 · 더 답하고 싶으면 아래 질문까지",
+    meta: "약 1분 · 나·부모님 모두",
     href: "/situation",
     testId: "start-talk",
   },
   guided: {
     title: "질문 따라 찾기",
-    desc: "한 화면에 한 질문, 버튼만 누르면 돼요. 사는 곳은 현재 위치로 확인해요",
+    desc: "버튼만 누르면 돼요",
     example: "누구의 복지를 찾으세요? 나 / 부모님",
-    meta: "질문 5개 안팎 · 소득 금액 몰라도 구간으로",
+    meta: "질문 5개 안팎 · 나·부모님 모두",
     href: "/ask",
     testId: "start-guided",
   },

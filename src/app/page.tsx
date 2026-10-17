@@ -35,8 +35,7 @@ export default function Home() {
               <em>부모님 대신</em> 복지를 찾아 드려요
             </h1>
             <p className="lead">
-              중앙정부·시도·시군구·공공기관 서비스 {n(c.uniquePrograms)}개 가운데, 직접 신청해야 받을 수 있는 것을 이유와 함께 알려 드립니다.
-              30·40대에게는 본인보다 부모님 돌봄·장애 관련 지원을 대신 알아보는 길이 더 유용할 때가 많아요.
+              전국 복지 {n(c.uniquePrograms)}개 중 받을 수 있는 것만, 이유와 함께 알려 드려요.
             </p>
             <div className="path-choice" role="group" aria-label="찾는 방법 고르기">
               {([
@@ -51,7 +50,6 @@ export default function Home() {
                     </span>
                     <span className="path-t">{m.title}</span>
                     <span className="path-d">{m.desc}</span>
-                    <span className="small muted">{m.example}</span>
                     <span className="small muted">{m.meta}</span>
                     <span className="path-go">
                       시작하기 <Icon name="arrowRight" size={18} strokeWidth={2.2} />
@@ -61,7 +59,7 @@ export default function Home() {
               })}
             </div>
             <p className="small muted" style={{ marginTop: "0.75rem" }}>
-              두 방법 모두 결과는 같아요 · 사는 곳만 필수, 나머지는 &lsquo;모름&rsquo;이어도 돼요
+              두 방법 모두 결과는 같아요
             </p>
             <p className="home-search-label">이미 아는 혜택이 있다면</p>
             <HomeSearch />
@@ -134,17 +132,17 @@ export default function Home() {
             <li>
               <span className="n">1</span>
               <h3>상황 먼저 알려주기</h3>
-              <p>사는 곳과 나이·가구·소득·지원 등 아는 만큼만. 모르는 것은 결과 화면에서 꼭 필요한 것만 다시 물어요.</p>
+              <p>사는 곳과 아는 것만. 모르면 &lsquo;모름&rsquo;이어도 돼요.</p>
             </li>
             <li>
               <span className="n">2</span>
               <h3>맞지 않는 혜택은 빼기</h3>
-              <p>정부24·복지로의 지원 대상 조건과 답을 이 기기에서 비교해, 상황과 다른 혜택은 이유와 함께 접어 둡니다.</p>
+              <p>정부24·복지로 조건과 이 기기에서 비교해, 맞지 않는 것은 이유와 함께 접어요.</p>
             </li>
             <li>
               <span className="n">3</span>
               <h3>먼저 신청할 것 확인</h3>
-              <p>가장 관련 깊은 5가지와 어디서·어떻게 신청하는지, 가족이 대신 낼 수 있는지도 안내합니다.</p>
+              <p>먼저 볼 5가지와 어디서·어떻게 신청하는지 알려 드려요.</p>
             </li>
           </ol>
           <dl className="tiers3">
