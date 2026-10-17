@@ -86,8 +86,8 @@ export function setSettings(patch: Partial<Settings>) {
     localStorage.setItem(SETTINGS_KEY, JSON.stringify(next));
   } catch {}
   document.documentElement.dataset.large = next.large ? "1" : "0";
-  if (next.kiosk) document.documentElement.setAttribute("data-kiosk", "1");
-  else document.documentElement.removeAttribute("data-kiosk");
+  if (next.kiosk) document.documentElement.dataset.kiosk = "1";
+  else delete document.documentElement.dataset.kiosk;
   // 공용 기기 모드 전환 시 프로필 저장 위치를 옮긴다
   if (prev.shared !== next.shared) {
     const from = prev.shared ? sessionStorage : localStorage;
