@@ -264,3 +264,17 @@ v2.ts 1,600 · parse.ts 1,005 · ResultsV2.tsx 783 · visit.ts 502 · VisitSheet
 - `refine.ts` isSpecialEd(이름이 특수교육·장애 유아/학생·장애아보육료·건강장애 + 이름/대상에 '특수교육대상') → 장애 잎을 '장애 또는 특수교육대상자 선정(묻지 않는 조건)'으로 넓힘, `v2.ts` disabilityNameGate 는 이 사업에서 빠짐 → 장애 '아니요'면 '신청할 때 확인' + 이유 '교육청이 선정한 특수교육대상자 (장애인 등록과 별개)'
 - 특수교육대상자를 여러 대상 중 하나로 적은 사업(보훈 학습보조비·연장형 보육료·우유급식·졸업앨범비)은 그대로
 - 테스트: special-education 7(먼저 실패 확인), 페르소나 상위 5개 변화 0
+
+## 원천 다시 확보: 통합돌봄 메뉴판은 보건복지부 원문에서 직접, 복지제도100은 고정본 (2026-10-17 소유자: 처음 크롤링한 곳은 더 서비스를 못함)
+- 예전 입력(`ICDASH_DIR`: 선행 대시보드 수집본 policies.csv·w100_index-*.json)은 더 쓸 수 없음. 그 대시보드도 원문은 보건복지부 '지방정부 서비스 메뉴판'
+- **통합돌봄 메뉴판**: `npm run ingest:mohw` — https://www.mohw.go.kr/menu.es?mid=a60600000000 시·도 게시판 17곳(mid a60601~a60617, 2쪽부터는 board.es?bid=…&nPage=) 목록 → 글마다 PDF(230건) → `pipeline/raw/mohw/`(gitignore, index.json에 sha256, 바뀐 파일만 다시 받음, 요청 간격 0.7초)
+  - `npm run parse:mohw` (pdfplumber, `pip install -r pipeline/mohw/requirements.txt`) → `pipeline/raw/mohw/policies.csv`(icare.ts 형식) + parse-report.json
+  - 표 모양이 지역마다 12가지 이상 → 머리글 이름으로 칸을 찾음(사업명/서비스명, 지원대상/대상자범주/세부대상자, 대분류/영역, 사업구분/국가/지자체…), 위아래로 합친 칸(대분류·중분류·구분)은 윗줄 값을 이어받음, 쪽을 넘는 이어진 줄은 앞 행에 붙임
+  - 사업구분: 전국·국가·중앙·공통 → 전국, 연계 → 연계(예전에도 대부분 지역 사업), 나머지 → 지역특화. 대분류는 7개(일상생활돌봄·건강관리예방·보건의료·주거복지·요양·장애지원·기타)로
+  - 줄바꿈 띄어쓰기: PDF·미리보기 XML 모두 줄 끝 띄어쓰기 정보가 없음 → 지금 번들에 띄어쓰기만 다른 같은 문장이 있으면 그 문장, 없으면 번들 낱말 빈도로 붙일지 띄울지
+  - 행 ID: 게시판:글번호:첨부:쪽:행(예전과 같은 규칙). 같은 글에 같은 이름이 있으면 예전 ID 유지, 번호는 같은데 다른 사업(파일이 새 판으로 바뀜)이면 `…:YYYYMM` 붙인 새 ID — 예전 상세 주소가 다른 사업을 가리키지 않게
+  - 2026-10-17 결과: 230건 → 12,561행(대시보드 12,526), 지역 매핑 실패 0, 지금 번들의 메뉴판 ID 10,294개 중 9,859개를 같은 이름으로 다시 찾음, 새 행 2,239 + 새 판 463, 메뉴판에서 빠진 예전 행 435
+- **복지제도100**(대시보드 운영자 정리본, 원문 없음): `pipeline/curated/welfare100-snapshot.json`(지금 번들에서 뽑은 100건, `npx tsx pipeline/src/sources/welfare100Snapshot.ts`). `loadWelfare100`은 원 수집본이 없으면 고정본만
+- **복지로 색인**(약 5,000건): 원 수집본 없이 복지로 OpenAPI 캐시(`npm run ingest:bokjiro`)가 목록·상세·생애주기·가구상황·관심주제 태그로 만듦(`applyBokjiroApi`의 '색인에 없는 신규' 경로)
+- `build.ts`: `pipeline/raw/mohw/policies.csv`가 있으면 그것, 없으면 예전 수집본
+- **아직 안 한 것**: 번들 재생성 — 정부24·복지로 API 캐시(`pipeline/raw/gov24`·`bokjiro`)가 이 PC에 없고 서비스 키(`DATA_GO_KR_SERVICE_KEY`)가 있어야 다시 받음(복지로는 일일 한도로 며칠). 키를 넣은 뒤 순서: `ingest:gov24` → `ingest:bokjiro`(여러 날) → `ingest:mohw` → `parse:mohw` → `pipeline` → 페르소나·e2e 비교 → PR
