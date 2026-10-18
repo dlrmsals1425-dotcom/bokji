@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "generatedAt": "2026-10-18T14:14:49.952582+00:00",
+ "generatedAt": "2026-10-18T14:34:36.322027+00:00",
  "scope": "Actual downloaded originals; saved files are not automatically approved for a benefit.",
  "summary": {
   "savedOriginals": 4695,
@@ -16,18 +16,18 @@
    "txt": 8
   },
   "readableHangulOriginals": 4666,
-  "publishedOriginals": 1013,
+  "publishedOriginals": 1216,
   "publishedFormats": {
-   "hwp": 913,
-   "hwpx": 94,
+   "hwp": 1108,
+   "hwpx": 102,
    "txt": 4,
    "gif": 1,
    "pdf": 1
   },
-  "publishedPrograms": 1021,
-  "publishedAssociations": 1217,
+  "publishedPrograms": 1175,
+  "publishedAssociations": 1447,
   "unavailableSourceAttachments": 4,
-  "unpublishedOriginals": 3682
+  "unpublishedOriginals": 3479
  },
  "forms": [
   {
@@ -917,7 +917,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-10817603.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g43150.gov24-440000000122",
+     "name": "입양장려금 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-11016267",
@@ -997,7 +1002,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-11019921.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g44210.gov24-453000000197",
+     "name": "안전취약계층 안전환경 지원(전기 안전점검)"
+    }
+   ]
   },
   {
    "formId": "ordin-11035545",
@@ -1061,7 +1071,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-11056543.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g48880.gov24-547000000151",
+     "name": "하수도요금 감면(사회적취약계층)"
+    }
+   ]
   },
   {
    "formId": "ordin-11056547",
@@ -1077,7 +1092,16 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-11056547.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g48880.gov24-547000000151",
+     "name": "하수도요금 감면(사회적취약계층)"
+    },
+    {
+     "id": "g48880.gov24-547000000155",
+     "name": "하수도요금 환급"
+    }
+   ]
   },
   {
    "formId": "ordin-11056549",
@@ -1637,7 +1661,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-11753433.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g48880.bokjiro-WLF00004532",
+     "name": "화장장려 보조"
+    }
+   ]
   },
   {
    "formId": "ordin-11845569",
@@ -1653,7 +1682,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-11845569.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g11650.gov24-321000000107",
+     "name": "아빠육아 휴직 장려금 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-11848027",
@@ -1669,7 +1703,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-11848027.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g11470.gov24-314000000253",
+     "name": "양천구민 무료법률상담 안내"
+    }
+   ]
   },
   {
    "formId": "ordin-11932369",
@@ -1717,7 +1756,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-12070531.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "s27000.gov24-724000000013",
+     "name": "난치병 및 정신건강 의학적 질환 학생 의료비 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-12202655",
@@ -1749,7 +1793,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-12202659.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g11530.gov24-316000000148",
+     "name": "자치회관 수강료 감면 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-12202663",
@@ -1877,7 +1926,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-12431317.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g48820.gov24-542000000102",
+     "name": "고성군 행복택시 운행 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-12445285",
@@ -1962,7 +2016,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-12646907.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g47850.gov24-522000000118",
+     "name": "지역사랑상품권(칠곡사랑상품권)"
+    }
+   ]
   },
   {
    "formId": "ordin-12727323",
@@ -2142,7 +2201,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-12911191.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g48170.gov24-531000000120",
+     "name": "신혼부부 주택 전세자금 대출이자 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-12942925",
@@ -2158,7 +2222,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-12942925.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "s11000.gov24-611000000158",
+     "name": "서울시 민주화운동 관련자 생활지원금 등 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-12942927",
@@ -2174,7 +2243,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-12942927.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "s11000.gov24-611000000158",
+     "name": "서울시 민주화운동 관련자 생활지원금 등 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-13519823",
@@ -2215,7 +2289,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-13525089.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g12710.gov24-485000000115",
+     "name": "저소득 노인 백내장수술 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-13558131",
@@ -2231,7 +2310,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-13558131.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g52790.gov24-478000000113",
+     "name": "지역화폐(고창사랑상품권)"
+    }
+   ]
   },
   {
    "formId": "ordin-13570059",
@@ -2284,7 +2368,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-13620751.hwpx",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g11680.gov24-322000000108",
+     "name": "남성 난임 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-13620757",
@@ -2422,7 +2511,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-13744307.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g48840.gov24-543000000107",
+     "name": "저소득 재가노인 식사배달"
+    }
+   ]
   },
   {
    "formId": "ordin-13751329",
@@ -2747,7 +2841,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-13864123.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g12820.gov24-496000000126",
+     "name": "화장장려금 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-13908791",
@@ -3059,7 +3158,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-14059955.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g41310.bokjiro-WLF00005303",
+     "name": "구리시 공영장례 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-14096433",
@@ -3075,7 +3179,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-14096433.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g26500.gov24-338000000424",
+     "name": "공공체육시설 이용료 감면(수영구스포츠클럽)"
+    }
+   ]
   },
   {
    "formId": "ordin-14096435",
@@ -3685,7 +3794,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-15008865.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g41820.gov24-416000000118",
+     "name": "지역사랑상품권(가평GP페이)"
+    }
+   ]
   },
   {
    "formId": "ordin-15072717",
@@ -4064,7 +4178,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-15127625.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g41220.bokjiro-WLF00001911",
+     "name": "평택시 저소득층 초·중·고교 신입생 입학준비금 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-15196303",
@@ -4614,7 +4733,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-15968033.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g51730.bokjiro-WLF00003082",
+     "name": "어르신 봉양수당지급"
+    }
+   ]
   },
   {
    "formId": "ordin-15968079",
@@ -4630,7 +4754,16 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-15968079.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g51730.bokjiro-WLF00004035",
+     "name": "횡성군 어르신 보청기 및 보행기 지원사업"
+    },
+    {
+     "id": "g51730.gov24-426000000124",
+     "name": "저소득 어르신 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-15968143",
@@ -4646,7 +4779,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-15968143.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g51730.bokjiro-WLF00004752",
+     "name": "효행장려수당지원"
+    }
+   ]
   },
   {
    "formId": "ordin-15968145",
@@ -4762,7 +4900,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-16094347.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g12190.gov24-484000000374",
+     "name": "아빠 육아휴직 장려금 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-16094895",
@@ -4778,7 +4921,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-16094895.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g12190.gov24-484000000124",
+     "name": "지역화폐(광양사랑상품권)"
+    }
+   ]
   },
   {
    "formId": "ordin-16095225",
@@ -4921,7 +5069,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-16154067.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g28720.bokjiro-WLF00005653",
+     "name": "주민소득지원 및 생활안정자금 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-16196583",
@@ -5288,7 +5441,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-16327413.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g11260.gov24-306000000234",
+     "name": "중랑양원미디어센터 미디어 교육 및 영화 상영"
+    }
+   ]
   },
   {
    "formId": "ordin-16345273",
@@ -5304,7 +5462,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-16345273.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g26140.bokjiro-WLF00006171",
+     "name": "서구 암환자 의료비 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-16353615",
@@ -5320,7 +5483,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-16353615.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g48820.gov24-542000000117",
+     "name": "고령 영세농업인 벼 육묘 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-16371425",
@@ -5357,7 +5525,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-16416523.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g28720.gov24-358000000152",
+     "name": "사회복지시설 종사자 주거비 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-16416525",
@@ -5373,7 +5546,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-16416525.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g28720.gov24-358000000152",
+     "name": "사회복지시설 종사자 주거비 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-16418403",
@@ -6012,7 +6190,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-16581123.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "s27000.gov24-O00138400005",
+     "name": "임대시설물 우선 임대 서비스"
+    }
+   ]
   },
   {
    "formId": "ordin-16588707",
@@ -6757,7 +6940,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-17170747.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g41360.gov24-399000000101",
+     "name": "남양주시 장학금"
+    }
+   ]
   },
   {
    "formId": "ordin-17170751",
@@ -6773,7 +6961,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-17170751.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g41360.gov24-399000000101",
+     "name": "남양주시 장학금"
+    }
+   ]
   },
   {
    "formId": "ordin-17170755",
@@ -6789,7 +6982,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-17170755.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g41360.gov24-399000000101",
+     "name": "남양주시 장학금"
+    }
+   ]
   },
   {
    "formId": "ordin-17178595",
@@ -7017,7 +7215,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-17269475.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g41610.gov24-554000000105",
+     "name": "신혼부부 전월세자금 대출이자 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-17269521",
@@ -7659,7 +7862,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-17432807.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g41590.gov24-553000000117",
+     "name": "효도수당"
+    }
+   ]
   },
   {
    "formId": "ordin-17472985",
@@ -8590,7 +8798,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-17791941.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g43110.gov24-O00035000001",
+     "name": "교통약자 이동지원"
+    }
+   ]
   },
   {
    "formId": "ordin-17791949",
@@ -8606,7 +8819,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-17791949.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g43110.gov24-O00035000001",
+     "name": "교통약자 이동지원"
+    }
+   ]
   },
   {
    "formId": "ordin-17796001",
@@ -8643,7 +8861,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-17796595.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g11620.gov24-O00084100001",
+     "name": "대관시설 사용료 감면"
+    }
+   ]
   },
   {
    "formId": "ordin-17808113",
@@ -8659,7 +8882,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-17808113.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g41500.bokjiro-WLF00005188",
+     "name": "신혼부부 주택 전월세자금 대출이자 지원 사업"
+    }
+   ]
   },
   {
    "formId": "ordin-17817723",
@@ -9008,7 +9236,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-17844049.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g41500.bokjiro-WLF00004685",
+     "name": "이천시 화장장려금 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-17846423",
@@ -9458,7 +9691,16 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-18093701.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g12730.bokjiro-WLF00003511",
+     "name": "화장장 사용료 지원"
+    },
+    {
+     "id": "g12730.gov24-487000000107",
+     "name": "화장장려금 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-18093997",
@@ -9697,7 +9939,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-18151309.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "s27000.gov24-627000000108",
+     "name": "출생축하금 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-18158031",
@@ -9803,7 +10050,24 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-18180265.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g43750.bokjiro-WLF00001698",
+     "name": "유치원 입학축하금 지원사업"
+    },
+    {
+     "id": "g43750.bokjiro-WLF00005136",
+     "name": "초·중·고등학교 입학축하금 지원사업"
+    },
+    {
+     "id": "g43750.gov24-445000000250",
+     "name": "진천군 입학축하금 지원(유·초·중·고)"
+    },
+    {
+     "id": "g43750.gov24-445000000253",
+     "name": "진천군 유치원 졸업앨범비 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-18185981",
@@ -9867,7 +10131,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-18232501.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "s27000.gov24-627000000108",
+     "name": "출생축하금 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-18232503",
@@ -10053,7 +10322,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-18270635.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g48250.gov24-535000000168",
+     "name": "장기기증자 장제비 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-18276029",
@@ -10207,7 +10481,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-18291013.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g41650.gov24-560000000111",
+     "name": "장애인가정 출산지원금 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-18291049",
@@ -11260,7 +11539,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-18470213.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g52730.gov24-474100000017",
+     "name": "무주군 결혼장려금 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-18470215",
@@ -11276,7 +11560,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-18470215.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g52730.gov24-474100000018",
+     "name": "무주군 전입세대원 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-18472873",
@@ -11612,7 +11901,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-18547833.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g47920.gov24-524000000134",
+     "name": "지역화폐(봉화사랑상품권)"
+    }
+   ]
   },
   {
    "formId": "ordin-18547835",
@@ -11628,7 +11922,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-18547835.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g47920.gov24-524000000134",
+     "name": "지역화폐(봉화사랑상품권)"
+    }
+   ]
   },
   {
    "formId": "ordin-18547837",
@@ -11660,7 +11959,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-18547839.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g47920.gov24-524000000134",
+     "name": "지역화폐(봉화사랑상품권)"
+    }
+   ]
   },
   {
    "formId": "ordin-18547841",
@@ -11676,7 +11980,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-18547841.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g47920.gov24-524000000134",
+     "name": "지역화폐(봉화사랑상품권)"
+    }
+   ]
   },
   {
    "formId": "ordin-18547843",
@@ -11708,7 +12017,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-18547845.hwpx",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g47920.gov24-524000000134",
+     "name": "지역화폐(봉화사랑상품권)"
+    }
+   ]
   },
   {
    "formId": "ordin-18547847",
@@ -11740,7 +12054,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-18547849.hwpx",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g47920.gov24-524000000134",
+     "name": "지역화폐(봉화사랑상품권)"
+    }
+   ]
   },
   {
    "formId": "ordin-18547851",
@@ -12160,7 +12479,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-18660191.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g47840.gov24-521000000108",
+     "name": "참전유공자사망위로금지원"
+    }
+   ]
   },
   {
    "formId": "ordin-18676447",
@@ -15028,7 +15352,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-19130281.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g26710.bokjiro-WLF00005624",
+     "name": "장애물 없는 생활환경(BF) 수수료 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-19130489",
@@ -15193,7 +15522,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-19133087.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g30110.gov24-364000000105",
+     "name": "대청장학금 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-19144505",
@@ -15358,7 +15692,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-19148775.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g12800.gov24-494000000107",
+     "name": "어르신 행복 바우처카드 사업(어르신 목욕비 및 이미용비 지원사업)"
+    }
+   ]
   },
   {
    "formId": "ordin-19149241",
@@ -15783,7 +16122,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-19216693.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g48310.bokjiro-WLF00005225",
+     "name": "거제시 주택 전세보증금 반환보증료 지원사업"
+    }
+   ]
   },
   {
    "formId": "ordin-19216695",
@@ -15799,7 +16143,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-19216695.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g48310.bokjiro-WLF00005225",
+     "name": "거제시 주택 전세보증금 반환보증료 지원사업"
+    }
+   ]
   },
   {
    "formId": "ordin-19216697",
@@ -16097,7 +16446,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-19236189.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g30140.gov24-365000000103",
+     "name": "참전유공자 사망위로금 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-19236195",
@@ -16379,7 +16733,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-19249797.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g44130.gov24-449000000152",
+     "name": "관내 고등학교 신입생 및 1학년 전·편입생 교복비 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-19261717",
@@ -16427,7 +16786,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-19266199.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "s48000.gov24-648000001050",
+     "name": "토종농산물 직불제"
+    }
+   ]
   },
   {
    "formId": "ordin-19266201",
@@ -16443,7 +16807,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-19266201.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "s48000.gov24-648000001050",
+     "name": "토종농산물 직불제"
+    }
+   ]
   },
   {
    "formId": "ordin-19266203",
@@ -16459,7 +16828,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-19266203.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "s48000.gov24-648000001050",
+     "name": "토종농산물 직불제"
+    }
+   ]
   },
   {
    "formId": "ordin-19266255",
@@ -16622,7 +16996,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-19307581.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g44130.gov24-449000000144",
+     "name": "참전유공자 명예(복지)수당"
+    }
+   ]
   },
   {
    "formId": "ordin-19307583",
@@ -16638,7 +17017,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-19307583.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g44130.gov24-449000000144",
+     "name": "참전유공자 명예(복지)수당"
+    }
+   ]
   },
   {
    "formId": "ordin-19307589",
@@ -16831,7 +17215,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-19312951.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g43770.bokjiro-WLF00002895",
+     "name": "화장장려금 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-19328879",
@@ -17171,7 +17560,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-19365429.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g12840.gov24-498000000126",
+     "name": "지역화폐(장성사랑상품권)"
+    }
+   ]
   },
   {
    "formId": "ordin-19365589",
@@ -17569,7 +17963,16 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-19438125.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g12840.bokjiro-WLF00003143",
+     "name": "참전명예수당"
+    },
+    {
+     "id": "g12840.gov24-498000000109",
+     "name": "국가유공자 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-19438143",
@@ -17622,7 +18025,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-19438599.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g44230.gov24-454000000179",
+     "name": "논산시 청년결혼축하금 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-19438853",
@@ -17696,7 +18104,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-19512869.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g28710.gov24-357000000117",
+     "name": "시간제청년근로자 장려금 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-19513635",
@@ -18667,7 +19080,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-19631019.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g48870.gov24-546000000115",
+     "name": "중소기업 및 소상공인 근로자 자녀 장학금 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-19638603",
@@ -20202,7 +20620,16 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-19790119.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g52190.bokjiro-WLF00004129",
+     "name": "심한장애인 가구 상하수도요금 감면 지원"
+    },
+    {
+     "id": "g52190.bokjiro-WLF00005840",
+     "name": "다자녀 가구 상수도, 하수도 요금 감면"
+    }
+   ]
   },
   {
    "formId": "ordin-19794377",
@@ -20820,7 +21247,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-19859337.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g51170.gov24-421000000638",
+     "name": "지역사랑상품권(동해사랑상품권)"
+    }
+   ]
   },
   {
    "formId": "ordin-19859339",
@@ -20836,7 +21268,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-19859339.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g51170.gov24-421000000638",
+     "name": "지역사랑상품권(동해사랑상품권)"
+    }
+   ]
   },
   {
    "formId": "ordin-19859343",
@@ -20868,7 +21305,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-19859347.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g51170.gov24-421000000638",
+     "name": "지역사랑상품권(동해사랑상품권)"
+    }
+   ]
   },
   {
    "formId": "ordin-19859349",
@@ -21400,7 +21842,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-19877983.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g51720.bokjiro-WLF00006340",
+     "name": "홍천군 노인 성인용 보행기 지원사업"
+    }
+   ]
   },
   {
    "formId": "ordin-19878599",
@@ -21835,7 +22282,16 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-19883843.hwpx",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g44770.gov24-458000000104",
+     "name": "출생지원금 지원"
+    },
+    {
+     "id": "g44770.gov24-458000000132",
+     "name": "전입 정착금 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-19883873",
@@ -22196,7 +22652,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-19951017.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g52800.gov24-479000000102",
+     "name": "화장장려금 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-19951695",
@@ -22269,7 +22730,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-19954079.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g47820.bokjiro-WLF00004702",
+     "name": "청도군 중고등학생 교복구입비 지원 사업"
+    }
+   ]
   },
   {
    "formId": "ordin-19955529",
@@ -23713,7 +24179,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-19996049.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g41280.bokjiro-WLF00004751",
+     "name": "고양시 노동취약계층 유급병가 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-19998845",
@@ -23808,7 +24279,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-19998997.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g28245.bokjiro-WLF00005321",
+     "name": "장수축하금"
+    }
+   ]
   },
   {
    "formId": "ordin-19999077",
@@ -24389,7 +24865,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20013675.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g43740.gov24-444000000123",
+     "name": "저소득청소년 건강증진비 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-20014929",
@@ -24644,7 +25125,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20017141.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g47730.gov24-515000000120",
+     "name": "지역화폐(의성사랑상품권)"
+    }
+   ]
   },
   {
    "formId": "ordin-20017213",
@@ -24739,7 +25225,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20017857.hwpx",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g47750.bokjiro-WLF00003661",
+     "name": "어르신 목욕비 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-20017903",
@@ -26587,7 +27078,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20113179.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g48890.bokjiro-WLF00002866",
+     "name": "장사등에 관한 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-20120201",
@@ -26900,7 +27396,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20125265.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g48860.gov24-545000000115",
+     "name": "산청사랑상품권 발행지원"
+    }
+   ]
   },
   {
    "formId": "ordin-20125267",
@@ -26916,7 +27417,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20125267.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g48860.gov24-545000000115",
+     "name": "산청사랑상품권 발행지원"
+    }
+   ]
   },
   {
    "formId": "ordin-20125271",
@@ -26932,7 +27438,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20125271.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g48860.gov24-545000000115",
+     "name": "산청사랑상품권 발행지원"
+    }
+   ]
   },
   {
    "formId": "ordin-20125273",
@@ -26964,7 +27475,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20125275.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g48860.gov24-545000000115",
+     "name": "산청사랑상품권 발행지원"
+    }
+   ]
   },
   {
    "formId": "ordin-20132925",
@@ -27447,7 +27963,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20162443.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g11710.gov24-323000000113",
+     "name": "입양가정 입양축하금 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-20163297",
@@ -27463,7 +27984,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20163297.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g41170.gov24-383000000192",
+     "name": "녹색건축물 조성 보조금 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-20163711",
@@ -27863,7 +28389,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20178517.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g41150.gov24-382000000144",
+     "name": "독립유공자 수당 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-20179459",
@@ -28593,7 +29124,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20208529.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g51800.bokjiro-WLF00003596",
+     "name": "화장장려금 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-20208631",
@@ -29849,7 +30385,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20286495.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g12820.gov24-496000000108",
+     "name": "인재양성 장학금 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-20288997",
@@ -30046,7 +30587,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20291941.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g48270.gov24-536000000115",
+     "name": "지역화폐(밀양사랑상품권)"
+    }
+   ]
   },
   {
    "formId": "ordin-20291947",
@@ -30062,7 +30608,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20291947.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g48270.gov24-536000000115",
+     "name": "지역화폐(밀양사랑상품권)"
+    }
+   ]
   },
   {
    "formId": "ordin-20291949",
@@ -30094,7 +30645,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20291951.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g48270.gov24-536000000115",
+     "name": "지역화폐(밀양사랑상품권)"
+    }
+   ]
   },
   {
    "formId": "ordin-20291955",
@@ -30110,7 +30666,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20291955.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g48270.gov24-536000000115",
+     "name": "지역화폐(밀양사랑상품권)"
+    }
+   ]
   },
   {
    "formId": "ordin-20291957",
@@ -30243,7 +30804,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20306165.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g12820.bokjiro-WLF00004701",
+     "name": "노인 무릎인공관절수술비 및 개안수술비 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-20308651",
@@ -30657,7 +31223,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20338745.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g12110.gov24-O00096400001",
+     "name": "취약계층 경기 및 행사 이용요금 감면"
+    }
+   ]
   },
   {
    "formId": "ordin-20341335",
@@ -30673,7 +31244,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20341335.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g12750.gov24-489000000127",
+     "name": "화장장려금 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-20359515",
@@ -31569,7 +32145,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20405859.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g41820.gov24-416000000109",
+     "name": "화장장려금 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-20406227",
@@ -31728,7 +32309,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20418933.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g11680.gov24-322000000107",
+     "name": "강남구 산후건강관리비용 지원사업(본인부담금 환급)"
+    }
+   ]
   },
   {
    "formId": "ordin-20419495",
@@ -31790,7 +32376,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20419939.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g26380.bokjiro-WLF00005471",
+     "name": "어르신 목욕비 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-20420233",
@@ -31997,7 +32588,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20436195.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g52110.gov24-464000000134",
+     "name": "전주시 수도요금 감면"
+    }
+   ]
   },
   {
    "formId": "ordin-20467915",
@@ -32231,7 +32827,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20492455.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g11260.gov24-306000000232",
+     "name": "중랑구 환경교육센터 프로그램 신청"
+    }
+   ]
   },
   {
    "formId": "ordin-20494877",
@@ -33203,7 +33804,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20543233.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g41800.gov24-414000000429",
+     "name": "화장장려금 지급"
+    }
+   ]
   },
   {
    "formId": "ordin-20556687",
@@ -33219,7 +33825,16 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20556687.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g52140.bokjiro-WLF00005061",
+     "name": "저소득층 주민의 건강보험료 및 장기요양보험료 지원"
+    },
+    {
+     "id": "g52140.gov24-468000000113",
+     "name": "저소득 국민건강보험료 및 장기요양보험료 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-20558243",
@@ -33660,7 +34275,16 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20577737.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g52710.bokjiro-WLF00003792",
+     "name": "효도수당"
+    },
+    {
+     "id": "g52710.gov24-472000000110",
+     "name": "완주군 4세대 이상 효가정 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-20577795",
@@ -33756,7 +34380,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20578137.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g52720.gov24-473000000126",
+     "name": "진안군 대학생 생활안정비 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-20578139",
@@ -33772,7 +34401,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20578139.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g52720.gov24-473000000126",
+     "name": "진안군 대학생 생활안정비 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-20578359",
@@ -34818,7 +35452,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20606757.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g44800.gov24-460000000137",
+     "name": "재난취약가구 화재보험 가입 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-20606761",
@@ -35406,7 +36045,16 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20659823.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g27710.bokjiro-WLF00000674",
+     "name": "참전유공자 사망위로금 지원"
+    },
+    {
+     "id": "g27710.bokjiro-WLF00002187",
+     "name": "참전유공자 명예수당 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-20659845",
@@ -35443,7 +36091,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20659937.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g41310.bokjiro-WLF00003443",
+     "name": "구리시 화장장려금 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-20660345",
@@ -35887,7 +36540,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20692059.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "s28000.gov24-O00025800010",
+     "name": "인천대공원 인조잔디 구장(축구장,풋살장) 대관 서비스"
+    }
+   ]
   },
   {
    "formId": "ordin-20692185",
@@ -38116,7 +38774,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20810927.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g47840.bokjiro-WLF00005504",
+     "name": "성주군 중고등학교 신입생 교복구입비 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-20812525",
@@ -38547,7 +39210,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20850261.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g31200.bokjiro-WLF00002734",
+     "name": "청소년 유해환경 신고포상금"
+    }
+   ]
   },
   {
    "formId": "ordin-20850359",
@@ -38967,7 +39635,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20862339.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g44790.bokjiro-WLF00004829",
+     "name": "청양군 청소년 꿈키움 바우처지원사업"
+    }
+   ]
   },
   {
    "formId": "ordin-20862421",
@@ -39637,7 +40310,16 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20905177.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g52730.bokjiro-WLF00005067",
+     "name": "무주형 아이돌봄사업 지원"
+    },
+    {
+     "id": "g52730.gov24-474100000033",
+     "name": "무주형 아이돌봄 본인부담금 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-20908081",
@@ -40290,7 +40972,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20942479.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g47210.gov24-509000000104",
+     "name": "귀농인 이사비용 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-20942481",
@@ -40354,7 +41041,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20942487.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g47210.gov24-509000000104",
+     "name": "귀농인 이사비용 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-20948761",
@@ -40975,7 +41667,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20969961.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g52770.bokjiro-WLF00005322",
+     "name": "순창군 노인 이미용 지원 사업"
+    }
+   ]
   },
   {
    "formId": "ordin-20969967",
@@ -40991,7 +41688,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20969967.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g52770.bokjiro-WLF00005322",
+     "name": "순창군 노인 이미용 지원 사업"
+    }
+   ]
   },
   {
    "formId": "ordin-20970023",
@@ -41362,7 +42064,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20986233.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g41430.gov24-403000000112",
+     "name": "효행장려금 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-20986325",
@@ -41479,7 +42186,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20992299.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g41570.gov24-409000000104",
+     "name": "임신축하금 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-20992301",
@@ -41495,7 +42207,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20992301.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g41570.gov24-409000000105",
+     "name": "출산축하금 지원 (둘째자녀부터 적용)"
+    }
+   ]
   },
   {
    "formId": "ordin-20993305",
@@ -41639,7 +42356,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20997501.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g52770.bokjiro-WLF00001533",
+     "name": "치매치료관리비 지원 확대 사업"
+    }
+   ]
   },
   {
    "formId": "ordin-21001519",
@@ -44703,7 +45425,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-21106949.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g41430.gov24-403000000121",
+     "name": "지역화폐(의왕사랑상품권)"
+    }
+   ]
   },
   {
    "formId": "ordin-21106951",
@@ -44719,7 +45446,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-21106951.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g41430.gov24-403000000121",
+     "name": "지역화폐(의왕사랑상품권)"
+    }
+   ]
   },
   {
    "formId": "ordin-21106953",
@@ -44751,7 +45483,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-21106961.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g41430.gov24-403000000121",
+     "name": "지역화폐(의왕사랑상품권)"
+    }
+   ]
   },
   {
    "formId": "ordin-21107265",
@@ -47375,7 +48112,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-21212533.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "s41000.gov24-641000000183",
+     "name": "경기도 민주화운동 관련자 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-21215497",
@@ -50141,7 +50883,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-21359137.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g47150.bokjiro-WLF00002314",
+     "name": "저소득주민 자립지원금 융자"
+    }
+   ]
   },
   {
    "formId": "ordin-21359191",
@@ -50352,7 +51099,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-21361431.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g47760.gov24-517000000109",
+     "name": "지역화폐(영양사랑상품권)"
+    }
+   ]
   },
   {
    "formId": "ordin-21361433",
@@ -50368,7 +51120,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-21361433.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g47760.gov24-517000000109",
+     "name": "지역화폐(영양사랑상품권)"
+    }
+   ]
   },
   {
    "formId": "ordin-21361441",
@@ -50384,7 +51141,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-21361441.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g47760.gov24-517000000109",
+     "name": "지역화폐(영양사랑상품권)"
+    }
+   ]
   },
   {
    "formId": "ordin-21361443",
@@ -50416,7 +51178,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-21361445.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g47760.gov24-517000000109",
+     "name": "지역화폐(영양사랑상품권)"
+    }
+   ]
   },
   {
    "formId": "ordin-21361447",
@@ -50432,7 +51199,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-21361447.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g47760.gov24-517000000109",
+     "name": "지역화폐(영양사랑상품권)"
+    }
+   ]
   },
   {
    "formId": "ordin-21361451",
@@ -50448,7 +51220,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-21361451.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g47760.gov24-517000000109",
+     "name": "지역화폐(영양사랑상품권)"
+    }
+   ]
   },
   {
    "formId": "ordin-21361839",
@@ -50464,7 +51241,16 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-21361839.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g26200.bokjiro-WLF00002843",
+     "name": "참전유공자 사망위로금 지원"
+    },
+    {
+     "id": "g26200.gov24-328000000102",
+     "name": "참전유공자 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-21361841",
@@ -50480,7 +51266,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-21361841.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g26200.gov24-328000000102",
+     "name": "참전유공자 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-21364245",
@@ -52406,7 +53197,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-21470887.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g44230.bokjiro-WLF00005486",
+     "name": "무연고 기초생활수급자 장제비 추가지원"
+    }
+   ]
   },
   {
    "formId": "ordin-21470997",
@@ -52564,7 +53360,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-21473925.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g26350.bokjiro-WLF00000904",
+     "name": "참전유공자(6.25) 명예수당"
+    }
+   ]
   },
   {
    "formId": "ordin-21473927",
@@ -52580,7 +53381,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-21473927.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g26350.gov24-333000000379",
+     "name": "해운대구 참전유공자 사망위로금 지급"
+    }
+   ]
   },
   {
    "formId": "ordin-21475725",
@@ -52770,7 +53576,16 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-21480765.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g11560.bokjiro-WLF00002822",
+     "name": "보훈대상자 보훈예우수당 지원"
+    },
+    {
+     "id": "g11560.gov24-318000000118",
+     "name": "국가보훈대상자 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-21480767",
@@ -52786,7 +53601,16 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-21480767.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g11560.bokjiro-WLF00002823",
+     "name": "보훈대상자 사망위로금 지원"
+    },
+    {
+     "id": "g11560.gov24-318000000118",
+     "name": "국가보훈대상자 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-21481591",
@@ -53098,7 +53922,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-21498741.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g51230.gov24-424000000174",
+     "name": "지역화폐(삼척사랑상품권)"
+    }
+   ]
   },
   {
    "formId": "ordin-21498743",
@@ -53114,7 +53943,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-21498743.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g51230.gov24-424000000174",
+     "name": "지역화폐(삼척사랑상품권)"
+    }
+   ]
   },
   {
    "formId": "ordin-21498745",
@@ -54673,7 +55507,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-21587933.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g52720.bokjiro-WLF00004709",
+     "name": "저소득 난청어르신 보청기 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-21587935",
@@ -54689,7 +55528,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-21587935.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g52720.bokjiro-WLF00004709",
+     "name": "저소득 난청어르신 보청기 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-21588145",
@@ -56298,7 +57142,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-21690631.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g51730.gov24-426000000123",
+     "name": "노인 의치보철 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-21690751",
@@ -56551,7 +57400,16 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-21709863.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g26710.bokjiro-WLF00002692",
+     "name": "참전유공자 명예수당 지원"
+    },
+    {
+     "id": "g26710.gov24-340000000122",
+     "name": "보훈단체 및 회원 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-21709865",
@@ -56567,7 +57425,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-21709865.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g26710.gov24-340000000122",
+     "name": "보훈단체 및 회원 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-21709885",
@@ -59853,7 +60716,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-21806913.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g12750.gov24-489000000131",
+     "name": "전입 장려금 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-21806919",
@@ -59869,7 +60737,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-21806919.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g12750.gov24-489000000140",
+     "name": "신혼부부 전입 이사비용 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-21807669",
@@ -60172,7 +61045,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-21828347.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g26440.bokjiro-WLF00002564",
+     "name": "참전유공자 사망조위금"
+    }
+   ]
   },
   {
    "formId": "ordin-21833055",
@@ -61358,7 +62236,16 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-21889557.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g48240.bokjiro-WLF00002885",
+     "name": "사천시 기초생활보장수급자 장학금 및 장학보조금 지급"
+    },
+    {
+     "id": "g48240.gov24-534000000121",
+     "name": "기초생활보장수급자 장학금 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-21891611",
@@ -63165,7 +64052,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-22068223.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g41290.bokjiro-WLF00000990",
+     "name": "참전유공자 등에 대한 위문금 지급"
+    }
+   ]
   },
   {
    "formId": "ordin-22068225",
@@ -65715,7 +66607,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-22252721.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "s12000.gov24-646000000252",
+     "name": "장애인 자동차 검사비 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-22255241",
@@ -67363,7 +68260,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-22362435.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g44790.bokjiro-WLF00003098",
+     "name": "고등학교생 무상급식(조,석식) 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-22364233",
@@ -68999,7 +69901,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-22425231.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g11215.gov24-304000000109",
+     "name": "입양축하금 지원(구비)"
+    }
+   ]
   },
   {
    "formId": "ordin-22425351",
@@ -71625,7 +72532,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-22517179.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g11440.bokjiro-WLF00001859",
+     "name": "마포 징검다리 주택사업"
+    }
+   ]
   },
   {
    "formId": "ordin-22517181",
@@ -71641,7 +72553,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-22517181.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g11440.bokjiro-WLF00001859",
+     "name": "마포 징검다리 주택사업"
+    }
+   ]
   },
   {
    "formId": "ordin-22517183",
@@ -71657,7 +72574,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-22517183.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g11440.bokjiro-WLF00001859",
+     "name": "마포 징검다리 주택사업"
+    }
+   ]
   },
   {
    "formId": "ordin-22517187",
@@ -71673,7 +72595,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-22517187.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g11440.bokjiro-WLF00001859",
+     "name": "마포 징검다리 주택사업"
+    }
+   ]
   },
   {
    "formId": "ordin-22517191",
@@ -71689,7 +72616,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-22517191.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g11440.bokjiro-WLF00001859",
+     "name": "마포 징검다리 주택사업"
+    }
+   ]
   },
   {
    "formId": "ordin-22517199",
@@ -71705,7 +72637,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-22517199.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g11440.bokjiro-WLF00001859",
+     "name": "마포 징검다리 주택사업"
+    }
+   ]
   },
   {
    "formId": "ordin-22517201",
@@ -71721,7 +72658,16 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-22517201.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g11440.bokjiro-WLF00001859",
+     "name": "마포 징검다리 주택사업"
+    },
+    {
+     "id": "g11440.gov24-313000000114",
+     "name": "주거안정자금 융자(입주보증금 지원)"
+    }
+   ]
   },
   {
    "formId": "ordin-22517205",
@@ -71737,7 +72683,16 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-22517205.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g11440.bokjiro-WLF00001859",
+     "name": "마포 징검다리 주택사업"
+    },
+    {
+     "id": "g11440.gov24-313000000114",
+     "name": "주거안정자금 융자(입주보증금 지원)"
+    }
+   ]
   },
   {
    "formId": "ordin-22517209",
@@ -71753,7 +72708,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-22517209.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g11440.bokjiro-WLF00001859",
+     "name": "마포 징검다리 주택사업"
+    }
+   ]
   },
   {
    "formId": "ordin-22517213",
@@ -71769,7 +72729,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-22517213.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g11440.bokjiro-WLF00001859",
+     "name": "마포 징검다리 주택사업"
+    }
+   ]
   },
   {
    "formId": "ordin-22517497",
@@ -72285,7 +73250,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-22525809.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g51230.bokjiro-WLF00003292",
+     "name": "자활기금 대여"
+    }
+   ]
   },
   {
    "formId": "ordin-22525815",
@@ -72301,7 +73271,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-22525815.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g51230.bokjiro-WLF00003292",
+     "name": "자활기금 대여"
+    }
+   ]
   },
   {
    "formId": "ordin-22525817",
@@ -72317,7 +73292,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-22525817.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g51230.bokjiro-WLF00003292",
+     "name": "자활기금 대여"
+    }
+   ]
   },
   {
    "formId": "ordin-22525823",
@@ -72333,7 +73313,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-22525823.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g51230.bokjiro-WLF00003292",
+     "name": "자활기금 대여"
+    }
+   ]
   },
   {
    "formId": "ordin-22525829",
@@ -72349,7 +73334,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-22525829.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g51230.bokjiro-WLF00003292",
+     "name": "자활기금 대여"
+    }
+   ]
   },
   {
    "formId": "ordin-22525831",
@@ -72365,7 +73355,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-22525831.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g51230.bokjiro-WLF00003292",
+     "name": "자활기금 대여"
+    }
+   ]
   },
   {
    "formId": "ordin-22526117",
@@ -72620,7 +73615,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-22536793.hwpx",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g12830.bokjiro-WLF00002449",
+     "name": "화장장려금 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-22537141",
@@ -74569,7 +75569,20 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-22594153.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "s44000.bokjiro-WLF00000083",
+     "name": "사랑의 인술사업"
+    },
+    {
+     "id": "s44000.bokjiro-WLF00003011",
+     "name": "난치병 환자 치료비 지원"
+    },
+    {
+     "id": "s44000.gov24-644000000184",
+     "name": "난치병 치료 후원"
+    }
+   ]
   },
   {
    "formId": "ordin-22594165",
@@ -74585,7 +75598,20 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-22594165.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "s44000.bokjiro-WLF00000083",
+     "name": "사랑의 인술사업"
+    },
+    {
+     "id": "s44000.bokjiro-WLF00003011",
+     "name": "난치병 환자 치료비 지원"
+    },
+    {
+     "id": "s44000.gov24-644000000184",
+     "name": "난치병 치료 후원"
+    }
+   ]
   },
   {
    "formId": "ordin-22594613",
@@ -74601,7 +75627,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-22594613.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "s44000.gov24-644000000228",
+     "name": "의로운 도민 위로금 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-22594661",
@@ -74617,7 +75648,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-22594661.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "s44000.gov24-644000000228",
+     "name": "의로운 도민 위로금 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-22594715",
@@ -74792,7 +75828,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-22607869.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "s44000.gov24-644000000189",
+     "name": "잠수어업인 진료비 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-22607875",
@@ -74808,7 +75849,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-22607875.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "s44000.gov24-644000000189",
+     "name": "잠수어업인 진료비 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-22611767",
@@ -74925,7 +75971,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-22618015.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "s30000.bokjiro-WLF00002636",
+     "name": "청년내일희망카드 지원사업"
+    }
+   ]
   },
   {
    "formId": "ordin-22618057",
@@ -75519,7 +76570,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-22636873.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "s44000.gov24-644000000230",
+     "name": "민주화운동 관련자 예우 및 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-22636877",
@@ -75535,7 +76591,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-22636877.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "s44000.gov24-644000000230",
+     "name": "민주화운동 관련자 예우 및 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-22636879",
@@ -75551,7 +76612,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-22636879.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "s44000.gov24-644000000230",
+     "name": "민주화운동 관련자 예우 및 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-22636881",
@@ -75567,7 +76633,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-22636881.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "s44000.gov24-644000000230",
+     "name": "민주화운동 관련자 예우 및 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-22648701",
@@ -76221,7 +77292,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-22674001.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g41450.gov24-404000000109",
+     "name": "희망을 드려요(가족지원사업)"
+    }
+   ]
   },
   {
    "formId": "ordin-22674003",
@@ -76237,7 +77313,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-22674003.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g41450.gov24-404000000109",
+     "name": "희망을 드려요(가족지원사업)"
+    }
+   ]
   },
   {
    "formId": "ordin-22674553",
@@ -77619,7 +78700,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-22759545.hwpx",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g44790.gov24-459000000152",
+     "name": "청년취업수당"
+    }
+   ]
   },
   {
    "formId": "ordin-22759547",
@@ -77635,7 +78721,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-22759547.hwpx",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g44790.gov24-459000000152",
+     "name": "청년취업수당"
+    }
+   ]
   },
   {
    "formId": "ordin-22759831",
@@ -78580,7 +79671,20 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-22784583.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g51190.gov24-422000000104",
+     "name": "다문화가족 정착지원금 지원"
+    },
+    {
+     "id": "g51190.gov24-422000000118",
+     "name": "전입고등학생 주소이전지원금 지원"
+    },
+    {
+     "id": "g51190.gov24-422000000119",
+     "name": "관외전입자 전입장려금 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-22784587",
@@ -79127,7 +80231,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-22853739.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g41290.gov24-397000000111",
+     "name": "초등학교 입학축하금 지원"
+    }
+   ]
   },
   {
    "formId": "ordin-22853879",
@@ -79811,7 +80920,16 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-22873927.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g43800.bokjiro-WLF00004167",
+     "name": "노인복지운영"
+    },
+    {
+     "id": "g43800.gov24-448000000686",
+     "name": "장수수당 지급"
+    }
+   ]
   },
   {
    "formId": "ordin-22874433",
@@ -79923,7 +81041,12 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-22876143.hwp",
    "usableHangul": true,
-   "publishedPrograms": []
+   "publishedPrograms": [
+    {
+     "id": "g47730.gov24-515000000131",
+     "name": "결혼이민자농가 농어촌진흥기금"
+    }
+   ]
   },
   {
    "formId": "ordin-22876277",

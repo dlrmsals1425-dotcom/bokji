@@ -84,7 +84,11 @@ describe("generated national forms catalogue", () => {
       expect(link.municipalApplicationReference?.sigungu).toBe("41280");
     }
     const sickLeave = programs.find(program => program.id === "g41280.bokjiro-WLF00004751")!;
-    expect(sickLeave.links.map(link=>link.formId)).toEqual(["ordin-19996047"]);
+    expect(sickLeave.links.filter(link=>link.use==="main").map(link=>link.formId)).toEqual(["ordin-19996047"]);
+    const proxy=sickLeave.links.find(link=>link.formId==="ordin-19996049");
+    expect(proxy?.use).toBe("conditional");
+    expect(proxy?.condition).toContain("위임");
+    expect(catalog.forms["ordin-19996049"].role).toBe("delegation");
     expect(sickLeave.status).toBe("available");
     expect(catalog.forms["ordin-19996047"].lawTitle).toContain("유급병가");
   });

@@ -111,7 +111,7 @@ def resolve_role(record):
     role=matcher.classify_role(record['formTitle'],'서식')
     exception_laws=AUDITED_APPLICATION_EXCEPTIONS if declared=='application' else AUDITED_CONSENT_EXCEPTIONS if declared=='consent' else {}
     explicit=FULL_BODY_ROLE_OVERRIDES.get(form_id)
-    if explicit and declared in ('application','consent','delegation'):
+    if explicit and declared in ('application','consent','delegation','supporting'):
         if explicit.get('role')!=declared or explicit.get('lawId')!=record.get('lawId') or explicit.get('sha256')!=record.get('sha256'):
             raise ValueError('Full-body role override does not match the reviewed original: '+form_id)
         exception_laws={**exception_laws,form_id:explicit['lawId']}
@@ -121,7 +121,10 @@ def resolve_role(record):
         valid_part=lambda p: isinstance(p,dict) and ((declared=='application' and (p.get('use')=='main' or (p.get('use')=='conditional' and record.get('condition'))) and re.search(r'신청|청구|신고|등록',str(p.get('title') or '')))
             or (declared=='consent' and p.get('use') in ('additional','conditional') and '동의' in str(p.get('title') or ''))
             or (declared=='delegation' and p.get('use')=='conditional' and record.get('use')=='conditional'
-                and record.get('condition') and '위임' in str(p.get('title') or '')))
+                and record.get('condition') and '위임' in str(p.get('title') or ''))
+            or (declared=='supporting' and p.get('use') in ('additional','conditional')
+                and record.get('use') in ('additional','conditional')
+                and (record.get('use')!='conditional' or record.get('condition')) and p.get('title')))
         if (record.get('lawId')!=exception_laws[form_id]
             or record.get('sourceKind')!='ordin' or record.get('annexId')!=form_id.split('-')[1]
             or record.get('verificationStatus')!='verified' or record.get('officialAttachmentMatched') is not True
@@ -216,6 +219,10 @@ def build(programs,files):
                     notes[program_id]='시장·군수·구청장이 지정한 대리인이 신청하는 경우에는 기관에서 발급하는 대리인 지정서가 필요할 수 있습니다. 모든 가족 대리인에게 적용되는 서류는 아닙니다.'
                 continue
             role,metadata=resolve_role(record)
+            use=record.get('use')
+            if use not in ('main','additional','conditional'):raise ValueError('Unknown reviewed document use: '+form_id)
+            if (role=='delegation' or use=='conditional') and (use!='conditional' or not str(record.get('condition','')).strip()):
+                raise ValueError('Conditional form needs an explicit condition: '+form_id)
             if metadata:audited_roles[form_id]=metadata
             kind=record['sourceKind'];law_id=record['lawId']
             law_url=('https://www.law.go.kr/ordinInfoP.do?ordinSeq=' if kind=='ordin' else 'https://www.law.go.kr/LSW/lsInfoP.do?lsiSeq=' if kind=='law' else 'https://www.law.go.kr/LSW/admRulInfoP.do?admRulSeq=')+law_id

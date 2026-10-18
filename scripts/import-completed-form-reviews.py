@@ -89,7 +89,7 @@ def prepare_batch(name,archive,scope,evidence,overrides):
         # This is an explicit finalized full-body decision, not title promotion.
         # Existing exact SHA/law/part/author/condition gates still have to pass.
         if metadata is None and (role_error or row.get('displayTitle')):
-            if row.get('role') not in ('application','consent','delegation'):
+            if row.get('role') not in ('application','consent','delegation','supporting'):
                 portal.resolve_role(row)  # Fail with the existing gate's reason.
             entry={'lawId':row['lawId'],'role':row['role'],'sha256':row['sha256'],'reviewFile':output.name}
             previous=overrides.get(fid)

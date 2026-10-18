@@ -6,6 +6,7 @@
 - 현재 상태: `pipeline/forms/reviews/unmatched-originals-progress.json`. `linked`는 실제 공개 파일과 혜택 연결을 모두 확인한 경우이고, `approved_pending_publication`은 검토만 끝난 상태다. `pending`은 아직 판정하지 않은 자료다.
 - 확정 검토: `pipeline/forms/reviews/municipal-reviewed-round*.json` 및 `unmatched-dispositions-round*.json`. 사용할 서식 부분, 작성자, 사업별 조건과 연결하지 않은 이유를 남긴다.
 - 원본 출처: `pipeline/forms/source-original-law-audit.json`. `state: read`는 공식 응답을 수집했다는 의미다. `articleContentState: missing`이면 응답에 조문이 없어 다른 공식 경로로 보완해야 한다. 출처 수집 완료가 의미상 매칭 완료를 뜻하지 않는다.
+- 현행판 대조: `scripts/audit-source-law-currency.py`는 공식 현행 목록(`nw=1`)과 출처 판본을 비교한다. 다른 현행판이 있으면 그 판본의 실제 별표와 원본 flSeq도 대조한다. 검색 실패·시행일 미확정·판본 변경을 자동으로 ‘서식 없음’이나 새 연결 승인으로 바꾸지 않는다.
 - 실제 다운로드: `pipeline/forms/originals/`와 `public/forms/files/`. 원문 바이트와 확장자를 보존하며, 파일명에 SHA256 앞 12자를 넣는다. 공식 원문은 Git에서도 줄바꿈을 바꾸지 않는다.
 
 제목이 ‘별지’이거나 기관용 신청서로 보이더라도 전체 본문을 확인한다. 주민 신청서가 함께 묶여 있으면 해당 부분만 안내한다. 같은 원본에서 혜택마다 다른 부분을 사용하면 `FormLink.displayTitle`과 조건을 각각 보존한다. 위임장은 법규가 정한 대리신청 조건에서만 제공한다. 기관 전용 청구는 작성자와 단계를 명시하고 개인 신청서로 안내하지 않는다.

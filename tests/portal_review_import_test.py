@@ -118,6 +118,17 @@ class BuildTest(unittest.TestCase):
             self.assertEqual(self.build({'p1':program('p1')},[audited])['forms'][audited['formId']]['role'],'delegation')
             for change in [{'sha256':'b'*64},{'condition':''},{'use':'main'},{'reviewedParts':[]}]:
                 with self.subTest(change=change),self.assertRaises(ValueError):self.build({'p1':program('p1')},[{**audited,**change}])
+    def test_a_full_body_pledge_can_remain_supporting_instead_of_personal_data_consent(self):
+        audited=row('ordin-90003',['p1'],sourceKind='ordin',lawId='88',formTitle='주택 입주서약서',
+            role='supporting',use='conditional',condition='입주자로 선정된 뒤 입주조건을 서약할 때 사용한다.',
+            roleBasis='현행 제7조와 원본 전체의 거주비 부담·양도금지·퇴거 이행 서명란을 확인했습니다.',
+            roleEvidenceUrl='https://www.law.go.kr/ordinInfoP.do?ordinSeq=88',roleCheckedAt='2026-10-18',
+            verificationStatus='verified',officialAttachmentMatched=True,sha256='a'*64,
+            reviewedParts=[{'number':'11','title':'주택 입주서약서','use':'conditional','author':'선정된 입주자'}])
+        with patch.dict(module.FULL_BODY_ROLE_OVERRIDES,{'ordin-90003':{'lawId':'88','role':'supporting','sha256':'a'*64}}):
+            self.assertEqual(self.build({'p1':program('p1')},[audited])['forms'][audited['formId']]['role'],'supporting')
+            for change in [{'sha256':'b'*64},{'use':'main'},{'reviewedParts':[]}]:
+                with self.subTest(change=change),self.assertRaises(ValueError):self.build({'p1':program('p1')},[{**audited,**change}])
     def test_duplicate_association_across_rounds_is_rejected(self):
         programs={'p1':program('p1')}
         with self.assertRaises(ValueError):
@@ -137,6 +148,10 @@ class BuildTest(unittest.TestCase):
         self.assertEqual(output['rows'][0]['use'],'conditional')
         self.assertEqual(output['rows'][0]['evidenceNote'],audited['evidenceNote'])
         self.assertEqual(output['rows'][0]['checkedAt'],'2026-10-16')
+    def test_an_identifiable_delegation_still_requires_conditional_use(self):
+        r=row('rule-90',['p1'],formTitle='지원 신청 위임장',use='additional',condition='대리 신청하는 경우')
+        with self.assertRaisesRegex(ValueError,'Conditional form'):self.build({'p1':program('p1')},[r])
+        self.assertEqual(self.build({'p1':program('p1')},[{**r,'use':'conditional'}])['rows'][0]['use'],'conditional')
     def test_audited_supporting_form_keeps_its_reviewed_role(self):
         audited=row('rule-7',['p1'],formTitle='[별지 제3호서식 사실확인 자료]',use='conditional',condition='필요한 경우',
             role='supporting',roleBasis='제5조제2항이 정한 신청인 작성 첨부서류임을 원문에서 확인했다.',

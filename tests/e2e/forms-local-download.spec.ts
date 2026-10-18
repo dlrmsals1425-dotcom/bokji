@@ -16,6 +16,8 @@ for(const sample of [
   {program:'g52790.gov24-478000000120',form:'ordin-22409877',format:'hwp'},
   {program:'g51230.bokjiro-WLF00005579',form:'ordin-19201333',format:'hwp',title:'위임장(전입장려금 신청)'},
   {program:'s41000.gov24-641000000129',form:'ordin-20191135',format:'hwp',municipality:'안양시'},
+  {program:'g41280.bokjiro-WLF00004751',form:'ordin-19996049',format:'hwp'},
+  {program:'s27000.gov24-627000000108',form:'ordin-18151309',format:'hwp',municipality:'남구'},
 ]) test(`real ${sample.form} ${sample.format} downloads with original bytes @mobile`,async({page})=>{
   await page.goto(`/p/${sample.program}`);
   const button=page.getByTestId('application-forms').locator(`a[download][href="${catalog.forms[sample.form].file!.hwp}"]`);
