@@ -516,7 +516,7 @@
       ],
       "reviewCheckedAt": "2026-10-19",
       "verifiedDocumentTitle": "배우자 복지수당 대리 수령 신청서",
-      "reason": "별지6 전체는 채무압류·거동불가 등으로 수급권자 대신 친족 계좌에서 배우자복지수당을 수령하려는 신청이며 위임장과 다르다. 현행 제9조의5는 별지4 신청서·별지5 신청위임장만 지정하고 별지6 대리수령 요건·계좌범위는 확인되지 않았다. 종합사업 및 배우자수당 사이트에도 대리 신청 안내만 있으며, 보훈예우수당 페이지의 대리수령 안내를 별개 배우자수당에 전용할 수 없어 실제 운영근거 확인이 필요하다.",
+      "reason": "정부242026.8.9 최신 배우자수당 안내가 별지4 지급신청 및 대리 신청시 가족관계·위임장을 지정함을 직접 확인했다. 별지6은 대리인의 계좌에서 수령하는 별도 금융 절차로, 대리 신청 허용만으로 수령까지 허용된다고 추정할 수 없다. 현재 배우자수당에서 대리수령6호를 받는 직접 근거가 남아 미해소이다.",
       "lawClausesReviewed": true,
       "relatedArticles": [
         {
@@ -540,7 +540,42 @@
         "currentLawId": "2060833",
         "binding": "bound",
         "officialFlSeq": "168362067"
-      }
+      },
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team1/team1-results.json",
+        "sourceResultSHA256": "1636a6e15bbf67808ab71c4d605f84f84d98ec0f4e389ea11ddb598de11ab1b8",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/304000000233",
+            "httpStatus": 200,
+            "status": "GET_200_full_page_reviewed",
+            "responseSHA256": "855e7117fdd6491e93697d53f0494158cfc0361ccaa89aad58907050ea94ca68",
+            "newEvidence": "현재 정부24 서비스 전체 핵심내용·신청경로·신청서/서류·수정일 직접 확인",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team1/gov24-current-35.json",
+                "sha256": "2c38bce74c9ed3dcdb021802250e43efc0a0a37e8fce8f93449a7ca051a53409",
+                "kind": "official_evidence_metadata"
+              },
+              {
+                "path": "logs/forms-completion/official-followup/team2/case27-gov24.json",
+                "sha256": "962400f5acc4fc953d417ecae1f11f694d0f959329d9ba034b868bda51256e59",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g11215.bokjiro-WLF00002162",
+        "g11215.gov24-304000000122",
+        "g11215.gov24-304000000123",
+        "g11215.gov24-304000000233"
+      ]
     },
     {
       "index": 5,
@@ -2012,7 +2047,7 @@
       ],
       "reviewCheckedAt": "2026-10-19",
       "verifiedDocumentTitle": "입양가정 지원금 신청서(입양축하금·입양아동 양육수당)",
-      "reason": "별지1 전체의 부모·입양아동·입양축하금/양육수당 선택·계좌·서명 및 현행 제5·6·8·9조와 부칙을 읽었다. 원문 수신처는 전라남도지사, 제6조 적용대상은 전라남도 거주이고 공식 캐시 기관명도 '(구)전라남도'다. 그러나 정규화 원본 및 사이트646000000125는 현재 전남광주통합특별시12000으로 묶였다. 사이트200만원 입양축하금 목적은 일치해도 통합 후 구 전남/광주 적용경계·현재 접수처를 확인할 경과근거가 없어 코드 일치만으로 통합지역 전부에 확대하지 않는다. 추가로특별법원법21446부칙7·9·10·14를읽었으며구조례의종전지역한정존속과옛서비스효력유지는확인했다.그러나구명의문서간주60일은이미경과했고시행전행위승계를현재새신청서사용허가로확대할수없어구전남범위·현재접수서식확인보류를유지한다.",
+      "reason": "현재 정부24는 전남광주통합특별시 소관의 국내입양200만원·읍면동 신청을 안내하지만 구 전남 적용경계나 전라남도지사 수신의 기존 원본을 현재 접수하는 지시는 없다. 종전 지역 한정 법규 존속을 새 통합지역 전역에 적용하거나 구명의 문서 간주기간을 확대하는 근거는 확보하지 못했다.",
       "lawClausesReviewed": true,
       "relatedArticles": [
         {
@@ -2066,7 +2101,31 @@
           "제14조"
         ],
         "finding": "구법규는새법규전까지종전적용지역에한정하여존속(10조1항),옛복지서비스계속효력(14조).구명의발급간주는설치후60일(7조3항)이며현재는경과.시행전신청승계(9조)를현재새신청양식자동승계로보지않음.종전지역경계와현재접수서식증거추가확인필요."
-      }
+      },
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team2/team2-results.json",
+        "sourceResultSHA256": "badd63d72d5f96dcc6815ad79e43ba695490e25777144516a69934cdab93a48a",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/646000000125",
+            "httpStatus": 200,
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team2/case21-gov24.json",
+                "sha256": "7c48711cdb52ad571cba591a040f97e22dcf36242be4f9031b173c3e6045b47b",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "s12000.gov24-646000000125"
+      ]
     },
     {
       "index": 21,

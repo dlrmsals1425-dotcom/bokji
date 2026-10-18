@@ -23,8 +23,14 @@ export interface ApplicationForm {
   sourceUrl: string;
   lawUrl: string;
   fetchedAt: string;
-  sourceKind?: "ordin" | "law" | "rule";
-  dateKind?: "effective" | "promulgated" | "issued";
+  sourceKind?: "ordin" | "law" | "rule" | "agency";
+  dateKind?: "effective" | "promulgated" | "issued" | "published" | "checked";
+  /** Exact reviewed agency source; no Law.go.kr annex identity is implied. */
+  agency?: {
+    agencyName: string; sourcePageUrl: string; finalUrl: string; attachmentId: string;
+    sha256: string; bytes: number; format: "hwp" | "hwpx" | "pdf";
+    checkedAt: string; authorityEvidenceUrl: string;
+  };
   officialPdfUrl?: string;
   /** hwp is the legacy original-file property; format identifies the actual bytes. */
   file?: { hwp: string; format?: FormFileFormat; pdf?: string; bytes: number; sha256: string };

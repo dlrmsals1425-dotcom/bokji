@@ -1,6 +1,6 @@
 import type { ApplicationForm, FormsCatalog, FormsCoverage, FormsRegionBundle, ProgramFormEntry } from "../data/forms";
 import { detailBucket } from "../data/bucket";
-import { formAssetUrl, externalFormUrl } from "../data/formPublication";
+import { formAssetUrl, externalFormUrl, validateAgencyForm, agencyProgramLinkMatches } from "../data/formPublication";
 
 const pending = new Map<string, Promise<unknown | null>>();
 const BASE = "/forms/v1";
@@ -46,15 +46,20 @@ export function lawPortalUrl(value: unknown): string | null {
 /** 연결 확인된 서식: 받아 둔 파일이 있거나, 법령포털 원문을 그대로 받을 수 있어야 공개한다. */
 function publishedForm(form: ApplicationForm | undefined): form is ApplicationForm {
   if (!form || !CITIZEN_ROLES.includes(form.role) || !externalFormUrl(form.sourceUrl)) return false;
+  if (form.sourceKind === "agency" || form.id.startsWith("agency-")) {
+    try { validateAgencyForm(form); } catch { return false; }
+    return !!form.file && !!formAssetUrl(form.file.hwp);
+  }
   return form.file ? !!formAssetUrl(form.file.hwp) : !!lawPortalUrl(form.sourceUrl);
 }
 
-interface CatalogRead { forms: Record<string, ApplicationForm>; unread: (formId: string) => boolean }
+interface CatalogRead { forms: Record<string, ApplicationForm>; unread: (formId: string) => boolean; invalidate: () => void }
 /** 전국 서식이 쌓이면 catalog.json 한 장은 너무 커진다. 샤드로 나뉘면 필요한 버킷만 받는다. */
 async function readCatalog(formIds: string[], sharded: boolean): Promise<CatalogRead | null> {
   if (!sharded) {
     const catalog = await get<FormsCatalog>("/catalog.json");
-    return catalog?.forms ? { forms: catalog.forms, unread: () => false } : null;
+    if (!catalog?.forms) { pending.delete("/catalog.json"); return null; }
+    return { forms: catalog.forms, unread: () => false, invalidate: () => { pending.delete("/catalog.json"); } };
   }
   const buckets = [...new Set(formIds.map(detailBucket))];
   const shards = await Promise.all(buckets.map(bucket => get<FormsCatalog>(`/catalog/${bucket}.json`)));
@@ -63,9 +68,10 @@ async function readCatalog(formIds: string[], sharded: boolean): Promise<Catalog
   buckets.forEach((bucket, index) => {
     const shard = shards[index];
     if (shard?.forms) Object.assign(forms, shard.forms);
-    else unread.add(bucket);
+    else { unread.add(bucket); pending.delete(`/catalog/${bucket}.json`); }
   });
-  return { forms, unread: formId => unread.has(detailBucket(formId)) };
+  return { forms, unread: formId => unread.has(detailBucket(formId)),
+    invalidate: () => { for (const bucket of buckets) pending.delete(`/catalog/${bucket}.json`); } };
 }
 
 export interface LoadedProgramForms {
@@ -81,14 +87,21 @@ export async function loadProgramForms(id: string): Promise<LoadedProgramForms |
   if (!key) return null;
   const bundle = await loadFormsRegion(key);
   const entry = bundle?.programs.find(program => program.id === id);
-  if (!entry) return null;
+  if (!entry) { pending.delete(`/programs/${key}.json`); return null; }
   const linkedIds = entry.links.map(link => link.formId);
   const candidateIds = (entry.candidateFormIds ?? []).slice(0, CANDIDATE_LIMIT);
   const catalog = await readCatalog([...linkedIds, ...candidateIds], bundle?.catalogSharded === true);
   if (!catalog) return null;
   const forms = linkedIds.map(formId => catalog.forms[formId]).filter(publishedForm);
+  const invalid = () => {
+    // A partially updated static bundle must be fetched again by the retry button.
+    catalog.invalidate();
+    pending.delete(`/programs/${key}.json`);
+    return null;
+  };
   // Missing/corrupt assets must not produce an apparently complete download panel.
-  if (linkedIds.length !== forms.length) return null;
+  if (linkedIds.length !== forms.length) return invalid();
+  if (forms.some(form => form.sourceKind === "agency" && !entry.links.some(link => agencyProgramLinkMatches(id,form,link)))) return invalid();
   const linked = new Set(linkedIds);
   // 후보는 시민이 직접 작성하는 서식만 — 지급대장 같은 기관 서류는 후보로도 보여 주지 않는다.
   const candidateForms = candidateIds.filter(formId => !linked.has(formId)).map(formId => catalog.forms[formId])

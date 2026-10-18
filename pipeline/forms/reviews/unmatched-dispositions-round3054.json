@@ -1172,7 +1172,7 @@
       "formId": "ordin-21588913",
       "sha256": "b1c3e482d686642327d6a4ac9399579e9c1701d5e8bc659e69aa9d74606fdf42",
       "disposition": "requires_external_confirmation",
-      "reason": "고흥 도서관 일반 회원가입·재발급 원본 전체를 확인했다. 무료 책배달에 회원등록은 관련되지만 공식 책배달 안내는 홈페이지 회원가입 후 전화·홈페이지 신청을 명시하고 일반 회원안내도 온라인 가입을 설명한다. 오프라인 별지로 책배달 회원 활성화를 대신할 수 있는지 확인되지 않아 실제 책배달 신청서로 승인하지 않는다.",
+      "reason": "원본 18,944바이트 앞·뒷면 전체는 군립도서관 신규/재발급 회원가입서이며 현행 시행규칙 제4조·제5조의 법정 가입서인 점은 확인했다. 그러나 고흥군립도서관 현재 책배달 공식 안내는 홈페이지 가입 후 전화·홈페이지 신청을 명시하고 회원가입 안내도 본인인증 후 온라인 정보입력으로 안내한다. 방문 회원증 발급이 가능한 사실만으로 이 종이 가입서가 무료 책배달의 온라인 가입을 대체한다고 확정할 수 없다. 2026 독서산간 신규 안내도 게시판 신청·등본을 요구할 뿐 이 서식을 제출서류로 명시하지 않는다. 기존 보류를 유지하며 원본 파일의 존재/유효성을 부정하지 않는다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -1229,7 +1229,52 @@
           }
         ],
         "externalCondition": "도서관의 종이 회원가입·재발급 서식이 무료 책배달 회원등록에도 접수되는지 확인 필요"
-      }
+      },
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team2/team2-results.json",
+        "sourceResultSHA256": "badd63d72d5f96dcc6815ad79e43ba695490e25777144516a69934cdab93a48a",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.ghlib.go.kr/MemberGuide",
+            "httpStatus": 200,
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/root/goheung-member-guide.json",
+                "sha256": "91f8a0acaefd97d78306919b560543525a9271aaf3a4b0e49071c162e4672a59",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.ghlib.go.kr/BookDelivery",
+            "httpStatus": 200,
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/root/goheung-book-delivery.json",
+                "sha256": "1e1a8219b72713484f480a1124fec2030c4a2c455fb2d9f69e850da9996f4ddc",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.ghlib.go.kr/MountainBook",
+            "httpStatus": 200,
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/root/goheung-mountain-book.json",
+                "sha256": "af2cbdc851d0e29acf4e6e49ebe7db679e37f6026825b5eb3673e5c896c27228",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g12740.bokjiro-WLF00003513"
+      ]
     },
     {
       "formId": "ordin-21588917",

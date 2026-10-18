@@ -3,12 +3,12 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import type { Program } from "@/lib/data/types";
 import { lawPortalUrl, loadProgramForms, type LoadedProgramForms } from "@/lib/client/forms";
-import { externalFormUrl, formAssetUrl } from "@/lib/data/formPublication";
+import { externalFormUrl, formAssetUrl, agencyFormUrl } from "@/lib/data/formPublication";
 import { FORM_STATUS_LABEL, INVESTIGATION_LABEL, INVESTIGATION_NOTE, publicSourceUrl, type ApplicationForm } from "@/lib/data/forms";
 import styles from "./ApplicationForms.module.css";
 
-const SOURCE_LABEL = { ordin: "조례", law: "법령", rule: "행정규칙" } as const;
-const DATE_LABEL = { effective: "시행일", promulgated: "공포일", issued: "발령일" } as const;
+const SOURCE_LABEL = { ordin: "조례", law: "법령", rule: "행정규칙", agency: "기관 공식 배포" } as const;
+const DATE_LABEL = { effective: "시행일", promulgated: "공포일", issued: "발령일", published: "게시일", checked: "공식배포 확인일" } as const;
 const FILE_TYPE = /\.(hwpx?|pdf|docx?|xlsx?|zip)(?:$|[?#])/i;
 const number = (value: number) => value.toLocaleString("ko-KR");
 const formTitle = (form: ApplicationForm) => {
@@ -17,8 +17,9 @@ const formTitle = (form: ApplicationForm) => {
   return shortened && shortened !== "외" ? shortened : form.title;
 };
 /** 근거와 날짜는 자료 그대로 — 공포일·발령일을 시행일로 적지 않는다. */
-function basisText(form: ApplicationForm) {
+export function basisText(form: ApplicationForm) {
   const kind = SOURCE_LABEL[form.sourceKind ?? (form.regionCode === "national" ? "law" : "ordin")];
+  if (form.sourceKind === "agency") return `${kind} · ${DATE_LABEL[form.dateKind ?? "checked"]} ${form.effectiveDate}`;
   return `근거 ${kind} ${DATE_LABEL[form.dateKind ?? "effective"]} ${form.effectiveDate}`;
 }
 
@@ -36,6 +37,8 @@ export function ApplicationForms({ program, parentMode = false }: { program: Pro
   const online = externalFormUrl(data?.entry.applyUrl);
   const portal = data?.entry.portalSearch;
   const portalDay = portal?.checkedAt.slice(0, 10);
+  const agencySourceDay = data?.forms.filter(form => form.sourceKind === "agency")
+    .map(form => form.agency?.checkedAt ?? form.fetchedAt).sort().at(-1);
   const candidates = data?.candidateForms ?? [];
   // 받지 못한 후보가 있어도 '없음'으로 보이지 않게, 자료에 적힌 전체 건수를 함께 쓴다.
   const candidateCount = Math.max(portal?.candidateCount ?? 0, (data?.entry.candidateFormIds ?? []).length, candidates.length);
@@ -55,12 +58,13 @@ export function ApplicationForms({ program, parentMode = false }: { program: Pro
         <div role="status"><p>서식 연결 정보를 불러오지 못했어요. 신청서가 없다는 뜻은 아니에요.</p><button type="button" className="btn btn-quiet" onClick={() => { setResult(null); setAttempt(value => value + 1); }}>다시 확인하기</button></div>
       ) : data.entry.status === "available" ? (
         <>
-          <p>아래는 원문과의 연결을 확인한 빈 서식이에요. 접수기관의 신청 안내도 함께 확인해 주세요.</p>
+          <p>아래는 원문과의 연결을 확인한 작성용 서식이에요. 접수기관의 신청 안내도 함께 확인해 주세요.</p>
           {!data.entry.links.some(link => link.use === "main") && <p className={styles.note}>현재 연결한 것은 함께 준비하거나 해당되는 경우에 내는 서류예요. 주신청서와 전체 구비서류는 공식 신청 안내에서 확인해 주세요.</p>}
           <ul className={styles.files}>
             {data.entry.links.map(link => {
               const form = data.forms.find(item => item.id === link.formId)!;
               const title = link.displayTitle ?? formTitle(form);
+               const agencySource = form.sourceKind === "agency" ? agencyFormUrl(form.id, form.sourceUrl) : null;
               const hwp = formAssetUrl(form.file?.hwp), pdf = formAssetUrl(form.file?.pdf);
               const format = form.file?.format ?? (hwp?.endsWith(".hwpx") ? "hwpx" : "hwp");
               const downloadLabel = format === "hwp" || format === "hwpx" ? "한글 원본 받기" : format === "txt" ? "텍스트 원본 받기" : format === "gif" ? "이미지 원본 받기" : "PDF 원본 받기";
@@ -78,7 +82,7 @@ export function ApplicationForms({ program, parentMode = false }: { program: Pro
                   {original && <a className={`btn ${preview ? "btn-ghost" : "btn-primary"}`} href={original} target="_blank" rel="noopener noreferrer">법령포털 원본 받기{originalType ? ` (${originalType})` : ""}<span className="sr-only"> (새 창)</span></a>}
                 </div>
                 <p className={styles.dates}>{basisText(form)} · 연결 확인일 {link.checkedAt}</p>
-                <p className={styles.source}><a href={original ? lawPortalUrl(form.lawUrl) ?? original : externalFormUrl(form.sourceUrl)!} target="_blank" rel="noopener noreferrer">{original ? "근거 법령 원문" : "공식 서식 원본"}<span className="sr-only"> (새 창)</span></a>{externalFormUrl(link.evidenceUrl) && <> · <a href={externalFormUrl(link.evidenceUrl)!} target="_blank" rel="noopener noreferrer">신청 근거 확인<span className="sr-only"> (새 창)</span></a></>}</p>
+                <p className={styles.source}><a href={agencySource ?? (original ? lawPortalUrl(form.lawUrl) ?? original : externalFormUrl(form.sourceUrl)!)} target="_blank" rel="noopener noreferrer">{original ? "근거 법령 원문" : "공식 서식 원본"}<span className="sr-only"> (새 창)</span></a>{agencySource && lawPortalUrl(form.lawUrl) && <> · <a href={lawPortalUrl(form.lawUrl)!} target="_blank" rel="noopener noreferrer">근거 조례 원문<span className="sr-only"> (새 창)</span></a></>}{externalFormUrl(link.evidenceUrl) && <> · <a href={externalFormUrl(link.evidenceUrl)!} target="_blank" rel="noopener noreferrer">신청 근거 확인<span className="sr-only"> (새 창)</span></a></>}</p>
               </li>;
             })}
           </ul>
@@ -92,7 +96,8 @@ export function ApplicationForms({ program, parentMode = false }: { program: Pro
         </div>
       )}
       {portal && <p className={styles.portal} data-testid="forms-portal-search">{
-        portal.outcome === "not_found" ? `법령포털 서식 목록을 사업명·근거 법규와 대조했지만 연결 후보를 찾지 못했어요. 모든 본문과 파일을 확인했다는 뜻은 아니며, 담당기관 공고에 서식이 따로 있을 수 있어요. (법령포털 확인일 ${portalDay})`
+        agencySourceDay ? `공식 서식 원문과 대조해 연결했어요. (출처 확인일 ${agencySourceDay})`
+          : portal.outcome === "not_found" ? `법령포털 서식 목록을 사업명·근거 법규와 대조했지만 연결 후보를 찾지 못했어요. 모든 본문과 파일을 확인했다는 뜻은 아니며, 담당기관 공고에 서식이 따로 있을 수 있어요. (법령포털 확인일 ${portalDay})`
           : portal.outcome === "incomplete" ? `법령포털 서식을 아직 모두 확인하지 못했어요. 서식이 없다는 뜻은 아니에요. (법령포털 확인일 ${portalDay})`
             : portal.outcome === "candidate" ? `법령포털 서식에서 관련 서식 ${number(candidateCount)}개를 찾았고, 이 사업에 적용되는지 확인 중이에요. (법령포털 확인일 ${portalDay})`
               : `법령포털 서식 원문과 대조해 연결했어요. (법령포털 확인일 ${portalDay})`

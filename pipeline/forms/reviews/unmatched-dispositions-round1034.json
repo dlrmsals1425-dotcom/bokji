@@ -2805,7 +2805,7 @@
         "currentAnnexBinding": "bound"
       },
       "disposition": "requires_external_confirmation",
-      "reason": "광진구 조례 현행 제6조는 첫돌축하금 신청을 신설 별지5로 지정하는 반면 이 별지1 전체는 출생신고 때의 출산축하금과 여러 지역·전국 서비스를 담은 과거 통합 형식이다. 첫돌 신청에 바로 연결하지 않는다. 장애인 출산·양육 구획에 대응하는 지역 사업도 추가 검색하고 별도 조례1841771·1822227 전문을 읽었으나, 출산지원은 별도 조례의 제1호 신청을 지정하고 양육지원도 이 구 통합 원본의 현재 이용을 명시하지 않아 현행 사용 확인이 필요하다. 카시트·작명·돌상 대여는 실제 선택란과 신청 목적이 달라 제외했다.",
+      "reason": "첫돌축하금 정부24 현재 안내는 출생 1년 후의 별도 신청 절차이다. 장애인가정 출산비용·양육지원금의 정확한 정부24 두 페이지도 각각의 조례와 별도 신청서·동의를 안내하나 이 과거 출산서비스 통합 파일 사용을 지정하지 않는다. 구 통합 원본을 첫돌·장애인 출산·양육의 공통 신청서로 사용한다는 직접 근거는 보완되지 않았다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -2888,7 +2888,60 @@
         }
       ],
       "sourceBodyPath": "logs/forms-completion/law-bodies/2001319.json.gz",
-      "sourceBodySHA256": "507510215b3c7c0437913a4088cf5a94cb456b7a9bad0557a6f7e4c9f9528c94"
+      "sourceBodySHA256": "507510215b3c7c0437913a4088cf5a94cb456b7a9bad0557a6f7e4c9f9528c94",
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team2/team2-results.json",
+        "sourceResultSHA256": "badd63d72d5f96dcc6815ad79e43ba695490e25777144516a69934cdab93a48a",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/304000000108",
+            "httpStatus": 200,
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team2/case04-gov24.json",
+                "sha256": "671ab6b2b68222c1bafd54ea866f7b113810bbc10c7278376ee28766d33b36af",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/304000000102",
+            "httpStatus": 200,
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team2/case04-disabled-birth-gov24.json",
+                "sha256": "db83295d9d19a0fb76d5b046121ddc4bfbefa11c6c662a44b943e84afb275eb1",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/304000000105",
+            "httpStatus": 200,
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team2/case04-disabled-childcare-gov24.json",
+                "sha256": "6e995c7c12607aa22258351f8efe35691efd4a93e04410559984e971bdaa2d27",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g11215.bokjiro-WLF00002664",
+        "g11215.bokjiro-WLF00004044",
+        "g11215.gov24-304000000102",
+        "g11215.gov24-304000000105",
+        "g11215.gov24-304000000108",
+        "g11215.gov24-304000000140",
+        "g11215.gov24-304000000141",
+        "g11215.gov24-304000000142"
+      ]
     },
     {
       "formId": "ordin-18989771",
@@ -3440,7 +3493,7 @@
         "currentAnnexBinding": "bound"
       },
       "disposition": "requires_external_confirmation",
-      "reason": "창원시 조례 제4조와 제6조 및 원본 전체의 최초 지원 신청 내용을 확인했다. 시 조례는 임차보증금 2억원 이하로 정하지만 현재 정부24 사업은 주거기본법 근거의 3억원 이하·최대40만원·청년/청년외/신혼 소득구분을 안내한다. 동일 명칭이라도 별도 시 자체 경로의 서식을 현재 통합 사업에서 계속 사용하는지 공고 확인이 필요하다. 창원 전체 보증료 관련 검색에서도 다른 시 자체사업을 확인하지 못했으므로 현재용으로 확정하지 않는다.",
+      "reason": "현재 정부24는 2026-02-02부터의 국토부 사업으로 보증금3억원·최대40만원을 명시한다. 시의회 2026예산 공식 회의록에서도 시 자체사업이 2025년부터 전국 사업으로 확대되었음을 확인했다. 시 조례2억원 경로의 옛 별지1을 현재 국토부 접수 양식으로 받는다는 확인은 없다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -3459,7 +3512,48 @@
       "reviewedBy": "codex-national_form_audit",
       "reviewedAt": "2026-10-19",
       "sourceBodyPath": "logs/forms-completion/law-bodies/2003473.json.gz",
-      "sourceBodySHA256": "0b2b1ef695938b271986424e4dc18e636e3ccf3163c83fa55bdc1ae2ebb6483f"
+      "sourceBodySHA256": "0b2b1ef695938b271986424e4dc18e636e3ccf3163c83fa55bdc1ae2ebb6483f",
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team3-results.json",
+        "sourceResultSHA256": "7e8e63b2e007e7deed1d20ab71367066ef036d087d892df780147ee63e67b764",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=2003473&gubun=ELIS",
+            "httpStatus": 200,
+            "responseSha256": "8fbf41080cd13ed2214491924453467039ec74147b327a230cbd08c6fd5dc30d",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/law-2003473.json",
+                "sha256": "0e7c05ace850dfdf1cccacc6a0ffc786005a596b59eee0263879f107da1aad0d",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/567000000116",
+            "httpStatus": 200,
+            "bodyTextSha256": "2467cfc50ebf460b2509947ce8fcf073252a5ab7a7898400d8548188fbbbbc4f",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/program-g48120.gov24-567000000116.json",
+                "sha256": "28dee13dfe9572a4582aa4f82186a0f53f3c8fd90a620180e85fbcadcd0d2148",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://council.changwon.go.kr/upload/minutes/pdf/p04/0000009435.pdf",
+            "savedEvidence": []
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g48120.gov24-567000000116"
+      ]
     },
     {
       "formId": "ordin-22159379",
@@ -3506,7 +3600,7 @@
         "currentAnnexBinding": "bound"
       },
       "disposition": "requires_external_confirmation",
-      "reason": "창원시 조례 제4조와 제7조 및 원본 전체의 예외적 대리수령 신청 내용을 확인했다. 시 조례는 임차보증금 2억원 이하로 정하지만 현재 정부24 사업은 주거기본법 근거의 3억원 이하·최대40만원·청년/청년외/신혼 소득구분을 안내한다. 동일 명칭이라도 별도 시 자체 경로의 서식을 현재 통합 사업에서 계속 사용하는지 공고 확인이 필요하다. 창원 전체 보증료 관련 검색에서도 다른 시 자체사업을 확인하지 못했으므로 현재용으로 확정하지 않는다.",
+      "reason": "현재 정부24는 주거기본법 근거의 3억원·최대40만원 사업이다. 시 조례2억원 자체 경로에서 허용한 대리수령 신청을 이 국토부 사업에도 동일하게 받는지 확인하지 못했다. 법정 예외 신청을 일반 위임장으로 바꾸지 않는다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -3525,7 +3619,44 @@
       "reviewedBy": "codex-national_form_audit",
       "reviewedAt": "2026-10-19",
       "sourceBodyPath": "logs/forms-completion/law-bodies/2003473.json.gz",
-      "sourceBodySHA256": "0b2b1ef695938b271986424e4dc18e636e3ccf3163c83fa55bdc1ae2ebb6483f"
+      "sourceBodySHA256": "0b2b1ef695938b271986424e4dc18e636e3ccf3163c83fa55bdc1ae2ebb6483f",
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team3-results.json",
+        "sourceResultSHA256": "7e8e63b2e007e7deed1d20ab71367066ef036d087d892df780147ee63e67b764",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=2003473&gubun=ELIS",
+            "httpStatus": 200,
+            "responseSha256": "8fbf41080cd13ed2214491924453467039ec74147b327a230cbd08c6fd5dc30d",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/law-2003473.json",
+                "sha256": "0e7c05ace850dfdf1cccacc6a0ffc786005a596b59eee0263879f107da1aad0d",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/567000000116",
+            "httpStatus": 200,
+            "bodyTextSha256": "2467cfc50ebf460b2509947ce8fcf073252a5ab7a7898400d8548188fbbbbc4f",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/program-g48120.gov24-567000000116.json",
+                "sha256": "28dee13dfe9572a4582aa4f82186a0f53f3c8fd90a620180e85fbcadcd0d2148",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g48120.gov24-567000000116"
+      ]
     },
     {
       "formId": "ordin-19429465",
@@ -3916,8 +4047,8 @@
         "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2005405",
         "currentAnnexBinding": "bound"
       },
-      "disposition": "requires_external_confirmation",
-      "reason": "김포시 시행규칙과 별지6 전체를 읽었다. 원본은 인증부적합 사유에 대한 소명 이의신청이며 제8조제3항을 인용하지만 현행 제8조제3항은 소비자 모니터링 조항이고 이의신청 서식을 지정하지 않는다. 상위 조례2161245 제4조~제9조도 추가 대조했으나 이 서식의 현행 신청절차 근거를 확정하지 못했다. 포장재 보조금 최초 신청서가 아니며 현재 사용 여부를 확인해야 하는 상태로 남긴다.",
+      "disposition": "no_matching_site_program",
+      "reason": "현재 정부24(2026-08-04)는 이미 금빛나루 인증을 받은 경영체의 포장재 보조금으로, 보탬e 지원신청·사업계획·교부신청·전용통장·청렴서약 등 제출 목록을 구체적으로 제시한다. 원본은 인증부적합에 대한 이의신청이고 인쇄 조항도 현재 소비자 모니터링 조항이다. 이 보조금 신청서 연결에서는 목적 불일치로 제외 제안한다. 이 판정은 명시된 현재 수록 혜택의 제출서류 연결에 한정하며, 원본의 다른 목적상 유효성이나 기존 수급자 예외절차의 부재를 단정하지 않는다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -3953,7 +4084,44 @@
         }
       ],
       "sourceBodyPath": "logs/forms-completion/law-bodies/2005405.json.gz",
-      "sourceBodySHA256": "57c04538c9e7e9e6034807ea8dd8995a89e8bbda8d3a6d610bc9b4fc86b5104b"
+      "sourceBodySHA256": "57c04538c9e7e9e6034807ea8dd8995a89e8bbda8d3a6d610bc9b4fc86b5104b",
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team3-results.json",
+        "sourceResultSHA256": "7e8e63b2e007e7deed1d20ab71367066ef036d087d892df780147ee63e67b764",
+        "proposedStatus": "propose_exclusion",
+        "officialEvidence": [
+          {
+            "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=2005405&gubun=ELIS",
+            "httpStatus": 200,
+            "responseSha256": "b05dc10e0193788badbdcd3812e170fb87d353a8aa6a5189f374d8ee4a2f5ee2",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/law-2005405.json",
+                "sha256": "5709a59d2e867b4683c4b6b8daed6c946f5f46b3e4efc06ca8e0a44b58793c5e",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/409000000112",
+            "httpStatus": 200,
+            "bodyTextSha256": "4c62223609c641dc573fc371b1da17e71310b9300d1aa1ae08e0fa2f2963c86c",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/program-g41570.gov24-409000000112.json",
+                "sha256": "58c57a155fbf53661dffa594e576c0364909ad3d7f2ec9356eb98af56aed5d59",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g41570.gov24-409000000112"
+      ]
     },
     {
       "formId": "ordin-19079683",

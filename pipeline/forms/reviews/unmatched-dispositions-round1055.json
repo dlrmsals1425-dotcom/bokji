@@ -1831,7 +1831,7 @@
         "currentAnnexBinding": "bound"
       },
       "disposition": "requires_external_confirmation",
-      "reason": "공식 메타는 별지12-1 재능나눔 완료확인서이지만 실제 HWP 전체 BodyText는 별지12 거제시 장학금 지급 신청서이며 정상21680117의 추출본문과 동일하다. 실제 바이트SHA는 서로 다르므로 동일원본으로 간주하지 않는다. 현행 제6조가 지급신청12와 완료확인12-1을 별도로 요구하므로 이 파일을 완료확인서로 승인하지 않고 공식 첨부 교정 또는 올바른 완료확인서 확인이 필요한 상태로 남긴다.",
+      "reason": "현 공식 flSeq를 다시 다운로드한 SHA가 같아 재능나눔 완료확인서로 붙은 지급신청서 오첨부가 여전히 확인된다. 2026 재능나눔 선발 공고의 첨부는 최초 신청·활동지원·계획 서식이고, 해당 완료확인서의 정정 원본은 확인되지 않았다. 정상 별지12 지급신청서 ordin-21680117은 이미 별도 게시되어 있으나 완료확인서의 대체가 아니다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -1858,7 +1858,67 @@
         "binaryIdentical": false
       },
       "sourceBodyPath": "logs/forms-completion/law-bodies/2116943.json.gz",
-      "sourceBodySHA256": "f169a5e6a68eddc30660fd5958e1be0d1ec015007384783a8f771a48697e94aa"
+      "sourceBodySHA256": "f169a5e6a68eddc30660fd5958e1be0d1ec015007384783a8f771a48697e94aa",
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team3-results.json",
+        "sourceResultSHA256": "7e8e63b2e007e7deed1d20ab71367066ef036d087d892df780147ee63e67b764",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=2116943&gubun=ELIS",
+            "httpStatus": 200,
+            "responseSha256": "de6bd6f991d5e5643a2344e6b6420963272d4c48fa438cb6026900eb19bdd8b9",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/law-2116943.json",
+                "sha256": "ccafbc7e69bb825178ae3012bd381f095679b54c504aeec26d8417b9502fc086",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.geoje.go.kr/board/view.geoje?boardId=BBS_0000008&contentsSid=12979&dataSid=306419947&menuCd=DOM_000008902001001000&paging=ok&startPage=1",
+            "httpStatus": 200,
+            "responseSha256": "9f2f01067a437b5c3c6647d20778c731d5f8a541b4a1407a42cbf921e9fdd506",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/geoje-2026.json",
+                "sha256": "2721741224c9d53ff6324f5a78e5bf3999cc1b7d71256ff998dcf1e88125b6a5",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=162866825&flNm=%EB%B3%84%EC%A7%80+%EC%A0%9C12-1%ED%98%B8%EC%84%9C%EC%8B%9D%28%EC%9E%AC%EB%8A%A5%EB%82%98%EB%88%94+%EC%99%84%EB%A3%8C%ED%99%95%EC%9D%B8%EC%84%9C%29",
+            "httpStatus": 200,
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/rechecked-ordin-21680119.json",
+                "sha256": "9a375f72c45837f06981b2072bff2ecb9b63445d1c3b24ef4f2f0c95f75cf0ca",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/537000000125",
+            "httpStatus": 200,
+            "bodyTextSha256": "b3a7da49ee0ba5816790169baf4fac11103da047afc52df612f7d3b237364689",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/program-g48310.gov24-537000000125.json",
+                "sha256": "301f637b12dfb9d31b9ccf0aeb210da1db90c6d45e7fec0cc7a58e5880494bd2",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g48310.gov24-537000000125"
+      ]
     },
     {
       "formId": "ordin-21680129",

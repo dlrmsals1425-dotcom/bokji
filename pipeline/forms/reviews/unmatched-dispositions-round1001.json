@@ -1966,7 +1966,7 @@
         "exactLawBody": true
       },
       "disposition": "requires_external_confirmation",
-      "reason": "구리시 제2조제1항과 전체 별지2는 기존 전용사용허가의 목적·기간·부대시설·사용료 변경 신청이다. 후보의 감면을 변경·승계할 때 이 서식을 요구하는 직접 근거 또는 감면 항목은 확인되지 않았다. 유효한 변경신청서이지만 해당 감면사업의 후속서류로 연결하는 관계는 추가 확인이 필요하다.",
+      "reason": "현재 구리도시공사 체육관 접수안내를 직접 확인했으나 회원가입·온라인 수강등록·납부 절차만 안내한다. 원본 제2호는 기존 경기장/세미나실 전용허가 변경이며, 감면 변경·승계 때 이 원본을 접수한다는 새 근거를 찾지 못했다. 유효한 법정 변경서식의 존재와 해당 감면사업의 실제 제출관계를 구별하여 미해소로 유지한다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -1984,7 +1984,44 @@
       "reviewedBy": "codex-national_form_audit",
       "reviewedAt": "2026-10-18",
       "sourceBodyPath": "logs/forms-completion/law-bodies/1162698.json.gz",
-      "sourceBodySHA256": "4dcc019150f02f4c10013a17858aab34f96ec65bffe9b595d6a63846ea7a7abe"
+      "sourceBodySHA256": "4dcc019150f02f4c10013a17858aab34f96ec65bffe9b595d6a63846ea7a7abe",
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team1/team1-results.json",
+        "sourceResultSHA256": "1636a6e15bbf67808ab71c4d605f84f84d98ec0f4e389ea11ddb598de11ab1b8",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.guriuc.or.kr/cmsManage/contents.do?cmsSeq=99",
+            "status": "http_200_content_read",
+            "newEvidence": "회원 온라인 수강신청 및 결제 절차를 안내하며 전용사용 변경허가 서식 적용 안내는 없음",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team1/guri-registration.json",
+                "sha256": "62a61d1f7959d53a929ecdbe5aebed012a4fd741255bcd0525dd0b4a2364c3a4",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.guriuc.or.kr/cmsManage/contents.do?cmsSeq=92",
+            "status": "http_200_content_read",
+            "newEvidence": "해당 체육관 공식 시설 및 이용안내 메뉴 확인",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team1/guri-gym.json",
+                "sha256": "1d703bcaf63951487f0730cddaee4b8e972ff29b76aa4c5408692dab7a61ed45",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g41310.gov24-O00005100001"
+      ]
     },
     {
       "formId": "ordin-13732709",

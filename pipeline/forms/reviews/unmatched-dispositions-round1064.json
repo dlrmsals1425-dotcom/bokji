@@ -118,7 +118,7 @@
         "currentAnnexBinding": "bound"
       },
       "disposition": "requires_external_confirmation",
-      "reason": "현행 조례 제3조제1항제2호 및 제5조제2호는 국가·도 예외지원에서 제외된 출산가정의 가정방문 사회서비스 이용권 신청에 제2호를 지정한다. 실제 원본은 산모신생아 건강관리지원 유형·예정일·예외자격의 최초 이용권 신청이며 영수증·본인부담금 환급계좌·환급액란은 없다. 후보 WLF00006505는 제목과 급여내용이 본인부담금90% 최대40만원 환급인데 설명 일부는 예외지원 확대와 혼재한다. 현행 원본의 이용권 신청을 해당 환급사업 신청서로 동일시할 수 없어 현재 운영 및 접수원본 확인을 보류한다.",
+      "reason": "보건소의 현재 공식 안내가 이용권 신청과 환급을 별도 구분하여 기존 원본22392705를 환급 최초신청에 쓸 수 있다는 불확실성을 해소하지 못했다. 대신 같은 환급사업이 대리신청에 명시한 별도 위임장 파일을 실제 확인하여 조건부 부속서류로만 대체 제안한다. 주신청 원본은 미확보다. 현재 별도 기관 원본의 관련 서류는 공개했지만 이 옛 원본의 전체 용도·주신청 또는 다른 후보 사업까지 대체했다고 판정하지 않는다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -137,7 +137,38 @@
       "reviewedBy": "codex-national_form_audit",
       "reviewedAt": "2026-10-19",
       "sourceBodyPath": "logs/forms-completion/law-bodies/2161415.json.gz",
-      "sourceBodySHA256": "86490c4b38028b02560d18373e27926db5b70950440d3ea14d14f219ea2f7aa4"
+      "sourceBodySHA256": "86490c4b38028b02560d18373e27926db5b70950440d3ea14d14f219ea2f7aa4",
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team1/team1-results.json",
+        "sourceResultSHA256": "1636a6e15bbf67808ab71c4d605f84f84d98ec0f4e389ea11ddb598de11ab1b8",
+        "proposedStatus": "propose_replacement",
+        "officialEvidence": [
+          {
+            "url": "https://www.seosan.go.kr/health/contents.do?key=2394",
+            "httpStatus": 200,
+            "status": "GET_200_full_page_reviewed",
+            "responseSHA256": "3285d3728432675b28c5d62e325db6cb60af7ad14a64c7fb45b3d11b44e1e7aa",
+            "newEvidence": "현재 환급요건·지급액·신청시기·대리인 필요서류와 정확 파일 링크 확인",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team1/seosan-refund-current.json",
+                "sha256": "e4bc8e46e18c4af5b99cc8ed972dc2cb1af7977c54b9757cda030b64d96c5cc5",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false,
+        "publishedRelatedFormIds": [
+          "agency-44210-health-cts2394-refund-proxy"
+        ],
+        "fullReplacementConfirmed": false
+      },
+      "relatedProgramIds": [
+        "g44210.bokjiro-WLF00006505"
+      ]
     },
     {
       "formId": "ordin-22392697",

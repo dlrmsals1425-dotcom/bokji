@@ -2859,12 +2859,85 @@
         "제4조(지원신청)① 출산지원금의 지원신청은 신생아의 부 또는 모가 한다. 다만, 제3조제2항 단서의 경우에는 신생아가 속한 세대의 세대원으로서 신생아를 실질적으로 양육하고 있는 사람이 할 수 있다.② 제1항에 따른 신청인은 신생아 출생일로부터 1년 이내에 별지 서식에 따라 신청하여야 한다."
       ],
       "independentBodyReview": true
+    },
+    {
+      "sourceKind": "ordin",
+      "formId": "ordin-22618057",
+      "lawTitle": "대전광역시 장사시설의 설치 및 관리ᆞ운영 조례 시행규칙",
+      "lawId": "1634697",
+      "annexId": "22618057",
+      "annexNumber": "000100",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=169370265&flNm=%EB%B3%84%EC%A7%80",
+      "effectiveDate": "20211022",
+      "dateKind": "effective",
+      "regionCode": "30000",
+      "regionLabel": "대전광역시",
+      "formTitle": "장사시설 사용(기간연장) 신고서 등 묶음",
+      "sourceMetadataTitle": "별지",
+      "verifiedDocumentTitle": "장사시설 사용(기간연장) 신고서",
+      "programIds": [
+        "s30000.gov24-O00019800003"
+      ],
+      "programNames": [
+        "대전추모공원 안치비용 감면혜택"
+      ],
+      "programEvidenceUrl": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00019800003",
+      "role": "application",
+      "use": "conditional",
+      "condition": "대전추모공원 안치비용 감면 대상자가 봉안당 등 해당 시설의 사용을 신고하는 경우에만 묶음 첫 부분인 별지 제1호를 작성합니다. 접수처에서 감면 자격 증빙과 개인정보 동의를 함께 확인합니다. 뒤의 신고증명서·장부·보존묘지 신청·중도 사용료 반환 서식은 이 감면 신청에 사용하지 않습니다.",
+      "checkedAt": "2026-10-19",
+      "reviewedBy": "/root/forms_source_audit",
+      "verificationStatus": "verified",
+      "officialAttachmentMatched": true,
+      "evidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1634697",
+      "evidenceNote": "공단 공식 민원편람공개 페이지의 2026 민원편람을 GET·7개 XML section 전체 추출했다. 그 중 장사시설 사용(기간연장) 접수 장은 시행규칙 별지1을 제출서류로 명시하고, 봉안 업무 흐름에 사용신고서→개인정보동의→안치를 두며 같은 동의에서 수급자·희생공헌자 등 감면대상 확인을 명시한다. 이어 정확한 별지1 사용신고서를 재수록한다. 이미 전체5341자를 읽은 법령포털 원본의 첫 별지1만 실제 추모공원 안치 감면 접수용 conditional로 승인 제안한다. 대형 민원편람 자체·뒤의 장부·사용취소 환급은 게시 제안 대상이 아니다.",
+      "sha256": "194b6950aed4e2d82ce016d5ed876c060ac544def42f208a9dad4536e9ecf933",
+      "bytes": 33280,
+      "originalFormat": "hwp",
+      "textScope": "all_body_sections_or_pages",
+      "originalTextScope": "all_body_sections_or_pages",
+      "sectionsRead": [
+        "BodyText/Section0"
+      ],
+      "fullBodyReviewed": true,
+      "bodyTextSha256": "206c9e81fcbb6e1e78c3564c88922011f432ef89b3c9697aec2f356a7c71f110",
+      "textLength": 5341,
+      "roleBasis": "공단 공식 민원편람공개 페이지의 2026 민원편람을 GET·7개 XML section 전체 추출했다. 그 중 장사시설 사용(기간연장) 접수 장은 시행규칙 별지1을 제출서류로 명시하고, 봉안 업무 흐름에 사용신고서→개인정보동의→안치를 두며 같은 동의에서 수급자·희생공헌자 등 감면대상 확인을 명시한다. 이어 정확한 별지1 사용신고서를 재수록한다. 이미 전체5341자를 읽은 법령포털 원본의 첫 별지1만 실제 추모공원 안치 감면 접수용 conditional로 승인 제안한다. 대형 민원편람 자체·뒤의 장부·사용취소 환급은 게시 제안 대상이 아니다.",
+      "roleEvidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1634697",
+      "roleCheckedAt": "2026-10-19",
+      "bodyEvidenceArticle": "제2조·제9조",
+      "bodyEvidenceText": "제2조(사용 및 기간연장 신고) 「대전광역시 장사시설의 설치 및 관리ㆍ운영 조례」(이하 “조례”라 한다) 제5조 및 제10조에 따른 장사시설 사용(기간연장) 신고는 별지 제1호서식에 따른다. <개정 2018.12.28., 2021.10.22.>\n제9조(위탁운영)①시장은 조례 제16조에 따라 대전광역시시설관리공단에 장사시설의 관리ㆍ운영에 관한 다음 각 호의 권한을 위탁한다. <개정 2015.5.29., 2018.12.28.>1. 「장사 등에 관한 법률」 제13조에 따라 설치된 공설묘지 등의 관리2. 「장사 등에 관한 법률」 제19조 및 조례 제10조에 따른 장사시설 사용기간 연장3. 조례 제5조 및 제6조에 따른 장사시설 사용의 신고 및 신고 증명4. 조례 제7조 및 제8조에 따른 사용료 징수 및 반환5. 조례 제9조에 따른 사용료 감면6. 조례 제11조에 따른 묘지사용면적 승인7. 조례 제14조에 따른 장사시설 사용의 제한8. 조례 제15조에 따른 시설물의 원상복구 및 변상 요구② 대전광역시시설관리공단의 장은 별지 제10호서식의 장사시설 운영현황을 매반기별로 시장에게 제출하여야 한다.",
+      "reviewedParts": [
+        {
+          "number": "별지 제1호",
+          "title": "장사시설 사용(기간연장) 신고서",
+          "use": "conditional",
+          "author": "대전추모공원 사용을 신청하는 유족 등 사용자"
+        }
+      ],
+      "publicationReady": true,
+      "additionalEvidence": {
+        "currentUseProof": {
+          "sourcePageUrl": "https://www.djsiseol.or.kr/portal/sub050701.asp",
+          "sourceUrl": "https://www.djsiseol.or.kr/portal/common/bbs_common/etc/2026%EB%85%84%20%EB%8C%80%EC%A0%84%EA%B4%91%EC%97%AD%EC%8B%9C%EC%8B%9C%EC%84%A4%EA%B4%80%EB%A6%AC%EA%B3%B5%EB%8B%A8%20%EB%AF%BC%EC%9B%90%ED%8E%B8%EB%9E%8C.hwpx",
+          "httpStatus": 200,
+          "sha256": "58213b86d95a4f7919ab40f9000bf63db1790e8c32cbc7769d0f73366c2f75bf",
+          "bytes": 1906103,
+          "extractedRecord": "logs/forms-completion/official-followup/team3/daejeon-2026-manual-extracted.json",
+          "evidenceScope": "2026년 민원편람 중 장사시설 사용신고의 제출서류·봉안업무 흐름·감면정보 동의·별지1 재수록 부분",
+          "entireManualRead": false,
+          "originalFormEntireBodyRead": true,
+          "authorityEvidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1634697",
+          "authorityBasis": "시행규칙 제9조가 대전광역시시설관리공단에 사용신고·사용료 감면 권한을 위탁한다."
+        }
+      },
+      "displayTitle": "장사시설 사용(기간연장) 신고서"
     }
   ],
   "sourceReview": {
     "file": "logs/forms-completion/reviews/team1-batch-010-reviewed.json",
-    "sha256": "f687ffa6b326f2978cf7deb730e53255223a610f4d4b47c8d860fd1a3fa3e75d",
-    "dispositionsSHA256": "739755dcfd0e9ebeb6d2c33bf3962b71fb91c07e511eb44a0195883a76e55dce",
+    "sha256": "eb6d03729bedecd4e291b8c06905e33306abddf554c67862564dabed798d0136",
+    "dispositionsSHA256": "97ebd16db098be4afc703d306825b963476260736ba229151ef7c6660361d374",
     "assignmentSHA256": "0f10e40c36ebd74ff79f4ec71df806032a023392a06539e849a704b517d61cc4"
   }
 }

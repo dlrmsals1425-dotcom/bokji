@@ -2706,7 +2706,7 @@
         "currentAnnexBinding": "bound"
       },
       "disposition": "requires_external_confirmation",
-      "reason": "전체 원본은 국가 통합신청의 구 별지1 표기와 지역별 작성예시(둘째이상·가상은행/전화)가 남은 포항시장 수신 서식이다. 현행 제6조제1항은 행정규칙의 별지2 신청서로 지정이 바뀌었으며 최초 첫째축하금·돌축하금·전입/입양·특별양육 지원과 현재 양식 적용을 이 구첨부만으로 확정할 수 없다. 실제 사업은 존재하나 정확한 현행 통합서식 확인이 필요한 상태로 남긴다.",
+      "reason": "정부242026.8.12 안내는 첫째부터 출산서비스통합처리 신청서 제출을 명시한다. 현행 예규370의 실제 별지2 파일을 다운로드해 전체를 읽었으나 지역 작성란이 둘째이상 예시·가상연락처로 남아 있고 제9조제4항의 포항 확정 지역서식은 확보하지 못했다. 구 포항 별지1과 현행별지2의 번호·지역내용 차이를 제목만으로 해소하지 않는다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -2726,7 +2726,40 @@
       "reviewedBy": "codex-national_form_audit",
       "reviewedAt": "2026-10-19",
       "sourceBodyPath": "logs/forms-completion/law-bodies/2125237.json.gz",
-      "sourceBodySHA256": "ec67ab91d906202438547c04e927b61ccfd750706568bc8b9aa842bc7b99e504"
+      "sourceBodySHA256": "ec67ab91d906202438547c04e927b61ccfd750706568bc8b9aa842bc7b99e504",
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team1/team1-results.json",
+        "sourceResultSHA256": "1636a6e15bbf67808ab71c4d605f84f84d98ec0f4e389ea11ddb598de11ab1b8",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/502000000209",
+            "httpStatus": 200,
+            "status": "GET_200_full_page_reviewed",
+            "responseSHA256": "aa579029bfd5faae611e7a03236ac49bd25f059196fe57db2f6ad0879dcf2c16",
+            "newEvidence": "현재 정부24 서비스 전체 핵심내용·신청경로·신청서/서류·수정일 직접 확인",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team1/gov24-current-29.json",
+                "sha256": "9ff79ce0f5c1e619f2c92bf9752d2afa0947548a1dedb5ef0fb292eee72cca17",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.law.go.kr/LSW/admRulInfoP.do?admRulSeq=2100000281394",
+            "status": "official_MCP_and_download_full_body_reviewed",
+            "newEvidence": "현행 예규 제5조·9조와 실제 별지2 전체내용 대조",
+            "savedEvidence": []
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g47110.gov24-502000000209"
+      ]
     },
     {
       "formId": "ordin-21785753",

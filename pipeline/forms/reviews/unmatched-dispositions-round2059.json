@@ -2252,8 +2252,8 @@
     {
       "formId": "ordin-22873005",
       "sha256": "7dfa2c09a58832bea8529512c4f9d171766f6f6ff4f9b39c4f56d8a944bdfe09",
-      "disposition": "requires_external_confirmation",
-      "reason": "프로그램명·납부 이용료·반환계좌를 기재하는 이용료 반환청구서이다. 사이트의 자기주도학습 컨설팅은 검사·상담 신청만 설명하며 이용료 납부·반환 대상임이 확인되지 않았다. 해당 컨설팅이 유료교육 프로그램이고 이 반환서를 받는지 시설 확인이 필요하다.",
+      "disposition": "no_matching_site_program",
+      "reason": "동대문구의 현재 학습진로상담안내 페이지를 직접 GET하여 자기주도학습·미래적성 검사와 상세 해석을 무료로 제공한다고 확인했다. 실제 원본은 납부 프로그램 이용료의 반환액·계좌 청구서이다. 해당 수록 무료 컨설팅에는 반환할 이용료가 없으므로 이 프로그램 연결에서 제외를 제안한다. 다른 유료 교육 프로그램의 반환서로서 유효성은 부정하지 않는다. 이 판정은 명시된 현재 수록 혜택의 제출서류 연결에 한정하며, 원본의 다른 목적상 유효성이나 기존 수급자 예외절차의 부재를 단정하지 않는다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -2296,7 +2296,41 @@
         }
       },
       "checkedAt": "2026-10-19",
-      "sameJurisdictionSearch": "동대문 학습·교육지원센터 사업 목록 전체에서 해당 유료교육프로그램 반환 사업 없음."
+      "sameJurisdictionSearch": "동대문 학습·교육지원센터 사업 목록 전체에서 해당 유료교육프로그램 반환 사업 없음.",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team2/team2-results.json",
+        "sourceResultSHA256": "badd63d72d5f96dcc6815ad79e43ba695490e25777144516a69934cdab93a48a",
+        "proposedStatus": "propose_exclusion",
+        "officialEvidence": [
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/305000000154",
+            "httpStatus": 200,
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team2/case33-gov24.json",
+                "sha256": "38a02b5014eff5841166ce66753bd8e1398498123160a3c9b8c17c43d0254806",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.ddm.go.kr/www/contents.do?key=623",
+            "httpStatus": 200,
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team2/case33-municipal-current.json",
+                "sha256": "f46019663c44bd218b3b42bcaa6b9a365cd75932e71b6423f56201a8a5c40d12",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g11230.gov24-305000000154"
+      ]
     },
     {
       "formId": "ordin-21864993",
@@ -2509,7 +2543,7 @@
       "formId": "ordin-22159721",
       "sha256": "b61497bcfe8ee9a5e4223a61206b1dfdceccc7f3699e0ea9203ae36083554f23",
       "disposition": "requires_external_confirmation",
-      "reason": "실제 원문은 후견·채권압류·거동불가 사유의 대리수령 신청서(위임장이 아님)이며 2026 개정 첨부로 존재한다. 그러나 현행 본문 제8조 대리수령 조항은 2021-12-31 삭제되고 제7조⑤는 신청인 명의 계좌 지급만 정한다. 별지 존재만으로 현행 예외 지급을 확정하지 않고 시의 현재 접수근거 확인을 남긴다.",
+      "reason": "2026 창원시 공식 모집 게시물의 실제 신청서 묶음(별지1·2)을 내려받아 전체 판독했다. 신청인 본인명의 계좌를 요구하고 대리수령 별지3은 이 배포 묶음에 없다. 삭제된 제8조와 잔존 별지3의 적용을 해소하는 예외 접수 근거는 확인되지 않았다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -2567,7 +2601,56 @@
           "claim": "제8조 삭제 <2021.12.31.>, 제7조⑤ 신청인 명의 통장 지급"
         },
         "followupOfficialNotice": "https://www.changwon.go.kr/cwportal/10430.web?amode=view&gcode=1009&idx=872127"
-      }
+      },
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team3-results.json",
+        "sourceResultSHA256": "7e8e63b2e007e7deed1d20ab71367066ef036d087d892df780147ee63e67b764",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=2129869&gubun=ELIS",
+            "httpStatus": 200,
+            "responseSha256": "2d1c606a993b75c72f61951a61d43787cca524528309f7dcc98332dc8857476e",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/law-2129869.json",
+                "sha256": "68d3dd90dc34c8308b7d13f3cc64cb89bd28a54fea4e39cec3bb398b8b2571fa",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.changwon.go.kr/cwportal/10430.web?amode=view&gcode=1009&idx=872127",
+            "httpStatus": 200,
+            "responseSha256": "a8792c79ad158ab17f7cfce15c1f866e8858932110f8766dc660e8b2b0c1f0c7",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/changwon-2026.json",
+                "sha256": "791f37a9b62a2793db3ab22f821f1c3f246d213bf6c3883ac76527a42e00562e",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003833&wlfareInfoReldBztpCd=02",
+            "httpStatus": 200,
+            "bodyTextSha256": "64951da0641d41123f58dbbe0646e298c32e303dbeeeefb6426347a0c5620fad",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/program-g48120.bokjiro-WLF00003833.json",
+                "sha256": "199d383e522a550da6b3c2b3835be589573fa4f3b50b3b425ba5724c5ce697c4",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g48120.gov24-567000000123",
+        "g48120.bokjiro-WLF00003833"
+      ]
     },
     {
       "formId": "ordin-22159769",

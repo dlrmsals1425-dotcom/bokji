@@ -13,6 +13,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+agency_spec = importlib.util.spec_from_file_location('inventory_agency', ROOT/'scripts/verified_agency_forms.py')
+agency = importlib.util.module_from_spec(agency_spec); agency_spec.loader.exec_module(agency)
 
 
 def read(path):
@@ -64,12 +66,12 @@ def inventory_reviews(root, published):
     spec.loader.exec_module(progress)
     directory = root/'pipeline/forms/reviews'
     scope = read(directory/'unmatched-originals-scope.json')
-    for name in ('prior-edition-originals-scope.json', 'current-replacement-originals-scope.json'):
+    for name in ('prior-edition-originals-scope.json', 'current-replacement-originals-scope.json', 'agency-originals-scope.json'):
         supplemental = directory/name
         if supplemental.exists():
             scope = dict(scope, forms=[*scope['forms'], *read(supplemental)['forms']])
     paths = (set(progress.review_paths(root)) | set(directory.glob('prior-edition-dispositions-*.json'))
-             | set(directory.glob('current-replacement-dispositions-*.json')))
+             | set(directory.glob('current-replacement-dispositions-*.json')) | set(directory.glob('agency-dispositions-round*.json')))
     reports = [(p.relative_to(root).as_posix(), read(p)) for p in sorted(paths) if p.exists()]
     return {row['formId']: row for row in progress.reconcile(scope, reports, published)['forms']}
 
@@ -94,9 +96,13 @@ def main():
     })
     records, issues, unavailable = [], [], []
     for path in sorted((ROOT/'logs/law-downloads').glob('*.json')):
-        if not re.fullmatch(r'(?:ordin|law|rule)-\d+\.json', path.name):
+        if not re.fullmatch(r'(?:ordin|law|rule)-\d+\.json', path.name) and not agency.AGENCY_ID.fullmatch(path.stem):
             continue
         record = read(path)
+        if path.stem.startswith('agency-'):
+            registered = agency.registry_entry(path.stem)
+            if record.get('formId') != registered['id'] or record.get('sourceUrl') != registered['sourceUrl']:
+                raise ValueError('agency_inventory_source_mismatch')
         if record.get('state') == 'unavailable':
             unavailable.append({key: record.get(key) for key in ('formId','lawTitle','title','sourceUrl','reason')})
         if record.get('state') != 'stored':
@@ -110,11 +116,23 @@ def main():
             issues.append({'id': record.get('formId'), 'reason': 'archive_original_changed'})
             continue
         fid = record['formId']
+        if path.stem.startswith('agency-'):
+            entry = agency.registry_entry(path.stem)
+            if (fid != entry['id'] or any(record.get(k) != entry[k] for k in ('sourceUrl','finalUrl','sourcePageUrl','attachmentId','sourceKind','lawId','lawTitle','regionCode','sha256','bytes','format'))
+                    or local.name != fid+'.'+entry['format']):
+                raise ValueError('agency_inventory_identity_mismatch')
+            reader_spec = importlib.util.spec_from_file_location('inventory_agency_reader', ROOT/'scripts/download-law-form-files.py')
+            reader = importlib.util.module_from_spec(reader_spec); reader_spec.loader.exec_module(reader)
+            agency.verify_original(fid, data, reader.inspect_document(data))
+            if published[fid]:
+                agency.validate_form(catalog[fid])
+                if not published[fid].issubset({p['id'] for p in entry['programs']}):raise ValueError('agency_inventory_program_mismatch')
         public_file = catalog.get(fid, {}).get('file', {}).get('hwp')
         if published[fid] and (not public_file or not (ROOT/'public'/public_file.lstrip('/')).is_file()):
             issues.append({'id': fid, 'reason': 'published_original_missing'})
             continue
         row = {key: record.get(key) for key in ('formId', 'lawId', 'lawTitle', 'title', 'regionCode', 'format', 'bytes', 'sha256', 'sourceUrl', 'downloadedAt', 'textScope')}
+        if fid.startswith('agency-'):row.update(sourceKind='agency',sourcePageUrl=entry['sourcePageUrl'],finalUrl=entry['finalUrl'],attachmentId=entry['attachmentId'])
         if catalog.get(fid,{}).get('displayTitle'):row['displayTitle']=catalog[fid]['displayTitle']
         row['relativePath'] = local.relative_to(archive).as_posix()
         if record.get('sourceArchive'):
@@ -149,9 +167,9 @@ def main():
     # region/law/title without having to understand numeric source identifiers.
     payload = json.dumps(records, ensure_ascii=False).replace('<', '\\u003c')
     html = '''<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>국가법령정보센터 서식 원본 목록</title>
+<title>법령·지자체 공식 서식 원본</title>
 <style>body{font:18px/1.6 system-ui,sans-serif;max-width:1100px;margin:40px auto;padding:0 20px;color:#172d3e}input{font:inherit;width:100%;box-sizing:border-box;padding:14px;border:1px solid #7b8994;border-radius:8px}article{padding:22px 0;border-bottom:1px solid #d9e0e4}h2{font-size:20px;margin:0}p{margin:6px 0}a{color:#075e88}small{color:#526470}button{font:inherit;padding:10px 24px;margin:20px 0}label{font-weight:600}</style>
-<h1>조례·법령 서식 원본</h1><p>국가법령정보센터에서 내려받은 원본입니다. “혜택에 연결” 표시는 원본과 신청 목적을 확인해 페이지에 첨부한 파일에만 표시합니다.</p><p id="summary"></p><p>파일마다 검토 상태와 연결·보류 이유를 표시합니다. 아직 판단하지 않은 자료는 ‘개별 검토 대기’로 남겨 둡니다.</p>
+<h1>법령·지자체 공식 서식 원본</h1><p>국가법령정보센터와 개별 검증한 지자체·공공기관 출처에서 내려받은 원본입니다. “혜택에 연결” 표시는 원본과 신청 목적을 확인해 페이지에 첨부한 파일에만 표시합니다.</p><p id="summary"></p><p>파일마다 검토 상태와 연결·보류 이유를 표시합니다. 아직 판단하지 않은 자료는 ‘개별 검토 대기’로 남겨 둡니다.</p>
 <label for="search">지역·조례·신청서·혜택 이름 찾기</label><input id="search" type="search" placeholder="예: 고양시 장수축하금"><p id="count" aria-live="polite"></p><main id="list"></main><button id="more">더 보기</button>
 <script>const rows=DATA;const input=document.getElementById('search'),list=document.getElementById('list'),count=document.getElementById('count'),more=document.getElementById('more');let limit=100;
 document.getElementById('summary').textContent='보관 원본 '+rows.length.toLocaleString('ko-KR')+'개 · 혜택에 연결 '+rows.filter(r=>r.publishedPrograms.length).length.toLocaleString('ko-KR')+'개';

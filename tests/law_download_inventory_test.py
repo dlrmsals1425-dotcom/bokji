@@ -56,17 +56,19 @@ class InventoryReviewTest(unittest.TestCase):
                 ('unmatched-originals-scope.json', 'unmatched-dispositions-round1001.json'),
                 ('prior-edition-originals-scope.json', 'prior-edition-dispositions-team3.json'),
                 ('current-replacement-originals-scope.json', 'current-replacement-dispositions-round2070.json'),
+                ('agency-originals-scope.json', 'agency-dispositions-round7001.json'),
             ], 1):
-                original = {'formId': f'ordin-{index}', 'sha256': str(index)*64,
+                original = {'formId': 'agency-44250-36032' if index == 4 else f'ordin-{index}', 'sha256': str(index)*64,
                             'lawId': str(index), 'title': '공식 별지', 'format': 'hwp'}
                 (reviews/scope_name).write_text(json.dumps({'baselineCommit': 'fixture', 'forms': [original]}), encoding='utf-8')
                 (reviews/report_name).write_text(json.dumps({'items': [{**original,
                     'disposition': 'non_applicant', 'fullBodyReviewed': True,
                     'reason': f'기관 작성 대장으로 개별 검토한 원본{index}입니다.'}]}), encoding='utf-8')
             result = m.inventory_reviews(root, {})
-            self.assertEqual(set(result), {'ordin-1', 'ordin-2', 'ordin-3'})
+            self.assertEqual(set(result), {'ordin-1', 'ordin-2', 'ordin-3', 'agency-44250-36032'})
             self.assertTrue(all(x['state'] == 'reviewed_not_linked' for x in result.values()))
             self.assertIn('원본3', result['ordin-3']['review']['reason'])
+            self.assertIn('원본4', result['agency-44250-36032']['review']['reason'])
 
 
 if __name__ == '__main__':

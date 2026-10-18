@@ -1553,12 +1553,154 @@
         }
       ],
       "condition": "수술 전 임플란트 지원 항목으로 신청할 때 사용."
+    },
+    {
+      "sourceKind": "ordin",
+      "lawTitle": "대구광역시 달성군 비슬산유스호스텔 설치 및 운영 조례",
+      "lawId": "2120977",
+      "annexId": "22569973",
+      "annexNumber": "000300",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=169027525&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EB%B9%84%EC%8A%AC%EC%82%B0%EC%9C%A0%EC%8A%A4%ED%98%B8%EC%8A%A4%ED%85%94+%EC%82%AC%EC%9A%A9%28%EB%B3%80%EA%B2%BD%29+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "dateKind": "effective",
+      "effectiveDate": "2026-04-10",
+      "regionCode": "27710",
+      "regionLabel": "대구광역시 달성군",
+      "programIds": [
+        "g27710.gov24-O00019700004"
+      ],
+      "programNames": [
+        "문화시설 이용요금 감면(자연휴양림,캠핑장)"
+      ],
+      "formId": "ordin-22569973",
+      "use": "conditional",
+      "condition": "이 수록 사업에 함께 연결된 비슬산유스호스텔 감면 혜택 중 수련·연수활동을 위해 조례 제6조의 사용허가를 함께 신청하는 경우에 사용합니다. 별지4 감면신청은 별도입니다. 단순 숙박은 사용료 납부로 허가를 갈음하므로 이 신청서를 모든 숙박자에게 요구하지 않습니다. 자연휴양림·캠핑장 등 다른 시설에는 사용하지 않습니다.",
+      "formTitle": "[별지 제1호서식] 비슬산유스호스텔 사용(변경) 신청서",
+      "sourceMetadataTitle": "[별지 제1호서식] 비슬산유스호스텔 사용(변경) 신청서",
+      "verifiedDocumentTitle": "비슬산유스호스텔 사용(변경) 신청서",
+      "evidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2120977",
+      "evidenceNote": "현행 조례 제6조제1·2항은 수련·연수 사용자의 별지1 사용허가 신청을, 제6조제5항은 단순 숙박의 사용료 납부에 따른 허가 간주를 정한다. 원본 앞·뒷면 전체의 사용자·단체명·사용인원·수련구분·목적·기간·행사계획서·서명 및 준수사항을 확인했다. 기존 보류는 기본 사업명과 숲나들e 안내만 보아 유스호스텔 포함을 확정하지 못한 것이었으나, 현재 catalogue sources/aliases에 정부24 O00019700012 비슬산유스호스텔 감면 안내가 정확히 포함된다. 그 공식 원문을 직접 GET해 단체 수련시설 이용 감면과 등록카드(이용신청서)·명단 확인 절차를 확인했으므로 이 시설의 사용허가 단계에만 조건부로 연결한다. 기관 발급 허가서·대장은 이 파일에 포함되지 않는다. 공식 별표키·flSeq·원문 SHA 및 전체 본문 섹션을 직접 대조했다.",
+      "checkedAt": "2026-10-19",
+      "verificationStatus": "verified",
+      "officialAttachmentMatched": true,
+      "sha256": "5aebe080b40de189a4b2bc3fdb614e0b154092961f5d7435a9fe3e79ee77c19f",
+      "bytes": 35840,
+      "signature": "d0cf11e0a1b11ae1",
+      "originalFormat": "hwp",
+      "originalTextScope": "all_body_sections_or_pages",
+      "textScope": "all_body_sections_or_pages",
+      "sectionsRead": [
+        "BodyText/Section0"
+      ],
+      "fullBodyReviewed": true,
+      "independentBodyReview": true,
+      "reviewedParts": [
+        {
+          "number": "1",
+          "title": "비슬산유스호스텔 사용(변경) 신청서",
+          "use": "conditional",
+          "author": "수련·연수활동의 시설 사용자 또는 단체 대표"
+        }
+      ],
+      "role": "application",
+      "roleBasis": "현행 조례 제6조제1·2항은 수련·연수 사용자의 별지1 사용허가 신청을, 제6조제5항은 단순 숙박의 사용료 납부에 따른 허가 간주를 정한다. 원본 앞·뒷면 전체의 사용자·단체명·사용인원·수련구분·목적·기간·행사계획서·서명 및 준수사항을 확인했다. 기존 보류는 기본 사업명과 숲나들e 안내만 보아 유스호스텔 포함을 확정하지 못한 것이었으나, 현재 catalogue sources/aliases에 정부24 O00019700012 비슬산유스호스텔 감면 안내가 정확히 포함된다. 그 공식 원문을 직접 GET해 단체 수련시설 이용 감면과 등록카드(이용신청서)·명단 확인 절차를 확인했으므로 이 시설의 사용허가 단계에만 조건부로 연결한다. 기관 발급 허가서·대장은 이 파일에 포함되지 않는다.",
+      "roleEvidenceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=169027525&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EB%B9%84%EC%8A%AC%EC%82%B0%EC%9C%A0%EC%8A%A4%ED%98%B8%EC%8A%A4%ED%85%94+%EC%82%AC%EC%9A%A9%28%EB%B3%80%EA%B2%BD%29+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "roleCheckedAt": "2026-10-19",
+      "bodyEvidenceText": "제6조(사용허가)① 다음 각 호의 사유로 유스호스텔을 사용하고자 하는 자는 군수에게 사용허가를 받아야 하며, 허가내용을 변경하고자 할 때에도 같다.1. 청소년이 수련활동을 하고자 할 때2. 9세 미만 어린이를 대상으로 수련활동을 하고자 할 때3. 24세 초과 성년 및 그를 대상으로 한 각 단체에서 연수활동을 하고자 할 때(이 경우 청소년 수련 활동에 지장이 없는 범위 내에서 득하여야 함)② 제1항의 사용허가를 받고자 하는 자는 별지 제1호서식의 신청서를 제출하여야 한다.③ 제2항에 따라 사용허가를 할 때 별지 제2호서식의 허가서를 교부하고, 별지 제3호서식의 유스호스텔 사용허가대장에 등재하여야 한다.④ 유스호스텔 사용허가 신청이 경합될 때에는 다음 각 호의 순서에 따라 허가 할 수 있다.1. 국가 또는 지방자치단체에서 주관하는 청소년 수련활동2. 각 급 학교에서 주관하는 학생 수련활동3. 청소년단체에서 주관하는 청소년 수련활동4. 근로청소년 수련활동 또는 연수5. 여행 청소년 또는 가족단위 수련활동6. 각 단체 및 기업체 연수활동7. 그 밖에 군수가 필요하다고 인정하는 경우⑤ 전항들에도 불구하고 단체 또는 개인의 단순 숙박을 위한 객실 사용의 경우 사용료의 납부로 제1항의 사용허가를 받은 것으로 본다.\n제13조(사용료 감면)① 다음 각 호의 어느 하나에 해당하는 경우에는  제12조에 따라 시행규칙으로 정한 사용료에서 감면할 수 있다. 감면율 등에 대한 사항은 시행규칙으로 정한다.1. 20명 이상 단체 사용자 (개정 2024. 12. 30.)2. 그 밖에 군수가 필요하다고 인정하는 경우② 전항에 따라 사용료를 감면 받고자 하는 단체 또는 개인은 별지 제4호서식의 감면신청서를 제출하여야 한다.",
+      "programEvidenceUrl": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00019700012",
+      "additionalEvidence": [
+        {
+          "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00019700012",
+          "httpStatus": 200,
+          "checkedAt": "2026-10-19",
+          "evidenceFile": "logs/forms-completion/official-followup/team2/case29-30-gov24-exact-youth-hostel.json",
+          "sha256": "4a22c2b86ec5b49667b3c6596bff09811c2ef71fbe9d481797bf032a719b1b36",
+          "programSpecific": true
+        }
+      ],
+      "mergedProgramSourceEvidence": {
+        "catalogueProgramId": "g27710.gov24-O00019700004",
+        "sourceUrl": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00019700012",
+        "sourceIds": [
+          "O00019700012"
+        ]
+      }
+    },
+    {
+      "sourceKind": "ordin",
+      "lawTitle": "대구광역시 달성군 비슬산유스호스텔 설치 및 운영 조례",
+      "lawId": "2120977",
+      "annexId": "22569979",
+      "annexNumber": "000600",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=169027531&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C4%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EB%B9%84%EC%8A%AC%EC%82%B0%EC%9C%A0%EC%8A%A4%ED%98%B8%EC%8A%A4%ED%85%94+%EC%82%AC%EC%9A%A9%EB%A3%8C+%EA%B0%90%EB%A9%B4+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "dateKind": "effective",
+      "effectiveDate": "2026-04-10",
+      "regionCode": "27710",
+      "regionLabel": "대구광역시 달성군",
+      "programIds": [
+        "g27710.gov24-O00019700004"
+      ],
+      "programNames": [
+        "문화시설 이용요금 감면(자연휴양림,캠핑장)"
+      ],
+      "formId": "ordin-22569979",
+      "use": "conditional",
+      "condition": "이 수록 사업에 함께 연결된 비슬산유스호스텔 사용료 감면을 신청하는 개인·단체의 별지4입니다. 자연휴양림·캠핑장·전기차 등 다른 시설 감면에는 사용하지 않습니다. 사용 목적·인원과 감면 사유를 적고 해당 증빙을 준비합니다.",
+      "formTitle": "[별지 제4호서식] 비슬산유스호스텔 사용료 감면 신청서",
+      "sourceMetadataTitle": "[별지 제4호서식] 비슬산유스호스텔 사용료 감면 신청서",
+      "verifiedDocumentTitle": "비슬산유스호스텔 사용료 감면 신청서",
+      "evidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2120977",
+      "evidenceNote": "현행 조례 제13조제2항은 감면을 받으려는 개인·단체가 별지4를 제출하도록 명시한다. 실제 원본 전체는 신청인 성명 또는 단체명, 인원·목적·기간·사용료·감면 신청액·감면 사유·서명 및 달성군수 수신을 갖춘 감면 신청서다. 현재 catalogue의 같은 사업 sources/aliases 안에 정확한 정부24 O00019700012 비슬산유스호스텔 안내가 있으며, 2026-07-29 수정된 공식 원문 GET에서 해당 시설의 개인·단체 감면과 신분증·명단 확인 절차, 이 조례 제13조와 시행규칙 제3조의 인용을 확인했다. 기본 제목의 자연휴양림만으로 넓히지 않고 병합 출처 중 유스호스텔 부분에 한정한다. 공식 별표키·flSeq·원문 SHA 및 전체 본문 섹션을 직접 대조했다.",
+      "checkedAt": "2026-10-19",
+      "verificationStatus": "verified",
+      "officialAttachmentMatched": true,
+      "sha256": "f2527beb0e6dcaac51267f8dacca535620623b911a0933e61992c85efdba6059",
+      "bytes": 55808,
+      "signature": "d0cf11e0a1b11ae1",
+      "originalFormat": "hwp",
+      "originalTextScope": "all_body_sections_or_pages",
+      "textScope": "all_body_sections_or_pages",
+      "sectionsRead": [
+        "BodyText/Section0"
+      ],
+      "fullBodyReviewed": true,
+      "independentBodyReview": true,
+      "reviewedParts": [
+        {
+          "number": "4",
+          "title": "비슬산유스호스텔 사용료 감면 신청서",
+          "use": "conditional",
+          "author": "감면을 신청하는 개인 또는 단체 대표"
+        }
+      ],
+      "role": "application",
+      "roleBasis": "현행 조례 제13조제2항은 감면을 받으려는 개인·단체가 별지4를 제출하도록 명시한다. 실제 원본 전체는 신청인 성명 또는 단체명, 인원·목적·기간·사용료·감면 신청액·감면 사유·서명 및 달성군수 수신을 갖춘 감면 신청서다. 현재 catalogue의 같은 사업 sources/aliases 안에 정확한 정부24 O00019700012 비슬산유스호스텔 안내가 있으며, 2026-07-29 수정된 공식 원문 GET에서 해당 시설의 개인·단체 감면과 신분증·명단 확인 절차, 이 조례 제13조와 시행규칙 제3조의 인용을 확인했다. 기본 제목의 자연휴양림만으로 넓히지 않고 병합 출처 중 유스호스텔 부분에 한정한다.",
+      "roleEvidenceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=169027531&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C4%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EB%B9%84%EC%8A%AC%EC%82%B0%EC%9C%A0%EC%8A%A4%ED%98%B8%EC%8A%A4%ED%85%94+%EC%82%AC%EC%9A%A9%EB%A3%8C+%EA%B0%90%EB%A9%B4+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "roleCheckedAt": "2026-10-19",
+      "bodyEvidenceText": "제13조(사용료 감면)① 다음 각 호의 어느 하나에 해당하는 경우에는  제12조에 따라 시행규칙으로 정한 사용료에서 감면할 수 있다. 감면율 등에 대한 사항은 시행규칙으로 정한다.1. 20명 이상 단체 사용자 (개정 2024. 12. 30.)2. 그 밖에 군수가 필요하다고 인정하는 경우② 전항에 따라 사용료를 감면 받고자 하는 단체 또는 개인은 별지 제4호서식의 감면신청서를 제출하여야 한다.",
+      "programEvidenceUrl": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00019700012",
+      "additionalEvidence": [
+        {
+          "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00019700012",
+          "httpStatus": 200,
+          "checkedAt": "2026-10-19",
+          "evidenceFile": "logs/forms-completion/official-followup/team2/case29-30-gov24-exact-youth-hostel.json",
+          "sha256": "4a22c2b86ec5b49667b3c6596bff09811c2ef71fbe9d481797bf032a719b1b36",
+          "programSpecific": true
+        }
+      ],
+      "mergedProgramSourceEvidence": {
+        "catalogueProgramId": "g27710.gov24-O00019700004",
+        "sourceUrl": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00019700012",
+        "sourceIds": [
+          "O00019700012"
+        ]
+      }
     }
   ],
   "sourceReview": {
     "file": "logs/forms-completion/reviews/team3-batch-057-reviewed.json",
-    "sha256": "be344e91f648704551a5cf977f801ebb503ebd84423844486c22fe9810a113d6",
-    "dispositionsSHA256": "1d8e54668a63b7f8155679d0e0e1f600b279df86b6ec45890c6e4c0ce86d7bf3",
+    "sha256": "8f94bdbff5989aa43727d392b4f5fb6a90a8b7049fa2e49c1b764c3fafbff71e",
+    "dispositionsSHA256": "306dfabd373a3591ba7132adb4ef436e7f492ff240de654b3e4f66badebbeed7",
     "assignmentSHA256": "010231f282225c1b9e584323814edf0510ee9b0dbc2583d2145ab5cae0bf6b28"
   }
 }

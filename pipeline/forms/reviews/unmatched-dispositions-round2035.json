@@ -3089,7 +3089,7 @@
       ],
       "reviewCheckedAt": "2026-10-19",
       "verifiedDocumentTitle": "보조금 교부 신청서·사업계획·청렴서약 및 관리카드",
-      "reason": "음성군 제14조는 지방보조사업자의 제2호 교부 신청을 지정한다. 원문 전체는 보조사업명·재원·계획·책임자·청렴서약·사업자 관리카드를 받는 공통 교부 문서다. 후보 노력절감형 고추 지원이 보조금50% 사업인 점은 맞지만 사이트에는 이 교부 단계나 해당 공고에서 이 별지를 사용한다는 직접 안내가 없다. 일반 지방보조금 조례 인용만으로 농업인의 사업별 신청에 확정하지 않고 사업 공고의 제출양식·교부 단계 확인을 남긴다.",
+      "reason": "정부24 최신2026.8.6 안내는 건조기·세척기50% 지원 및 2026.1.1~2.10 접수만 명시하고 교부 서식은 배포하지 않는다. 공식 예산자료에서 같은 사업의 보조금 편성은 확인했으나 일반 지방보조금 제2호를 2026 선정농가의 교부 단계에 실제 받는다는 직접 근거는 확보하지 못했다. 접수 종료를 주의문만 붙여 신규신청으로 승인하지 않는다.",
       "lawClausesReviewed": true,
       "relatedArticles": [
         {
@@ -3127,7 +3127,40 @@
         "currentLawId": "2014399",
         "binding": "bound",
         "officialFlSeq": "150477331"
-      }
+      },
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team1/team1-results.json",
+        "sourceResultSHA256": "1636a6e15bbf67808ab71c4d605f84f84d98ec0f4e389ea11ddb598de11ab1b8",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/447000000111",
+            "httpStatus": 200,
+            "status": "GET_200_full_page_reviewed",
+            "responseSHA256": "59322cdddb046cc3f5b1fb1de43d5c1eaad8262850c3c0b76f5d2a98df092742",
+            "newEvidence": "현재 정부24 서비스 전체 핵심내용·신청경로·신청서/서류·수정일 직접 확인",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team1/gov24-current-10.json",
+                "sha256": "597feeb9f8501a4ba173dc0713b323dd42ba63dadd394603220744882ac2b57a",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.eumseong.go.kr/DATA/download/www/cts1863_file10.pdf",
+            "status": "official_indexed_text_reviewed",
+            "newEvidence": "공식 예산의 해당 보조사업은 확인되나 2026 실제 제출양식의 직접 증거는 아님",
+            "savedEvidence": []
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g43770.gov24-447000000111"
+      ]
     },
     {
       "index": 34,
@@ -3256,31 +3289,19 @@
         "g44270.gov24-568000000117",
         "g44270.gov24-568000000336"
       ],
-      "disposition": "requires_external_confirmation",
+      "disposition": "approved",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
-          "programId": "g44270.gov24-568000000106",
-          "formId": "ordin-21685387",
-          "decision": "not_matched",
-          "reason": "당진시 제20조의2·3은 일반 전입세대3만원과 기숙사 임직원1인5만원을 별도 구분하고 후자에게 제5호를 요구한다. 원문은 기업체 단체 신청이 아니라 기숙사 전입 직원 본인의 주소·재직·서명이다. 사이트 전입가정 지원은 ‘전입세대에 한하여 상품권·태극기’만 명시하고 기숙사 직원 별도 유형·금액을 밝히지 않는다. 같은 관할 검색에 별도 직원사업이 없어 동일 프로그램이 그 추가 유형까지 포함하는지 공식 안내 확인을 남긴다."
-        },
-        {
           "programId": "g44270.gov24-568000000117",
-          "formId": "ordin-21685387",
-          "decision": "not_matched",
-          "reason": "당진시 제20조의2·3은 일반 전입세대3만원과 기숙사 임직원1인5만원을 별도 구분하고 후자에게 제5호를 요구한다. 원문은 기업체 단체 신청이 아니라 기숙사 전입 직원 본인의 주소·재직·서명이다. 사이트 전입가정 지원은 ‘전입세대에 한하여 상품권·태극기’만 명시하고 기숙사 직원 별도 유형·금액을 밝히지 않는다. 같은 관할 검색에 별도 직원사업이 없어 동일 프로그램이 그 추가 유형까지 포함하는지 공식 안내 확인을 남긴다."
-        },
-        {
-          "programId": "g44270.gov24-568000000336",
-          "formId": "ordin-21685387",
-          "decision": "not_matched",
-          "reason": "당진시 제20조의2·3은 일반 전입세대3만원과 기숙사 임직원1인5만원을 별도 구분하고 후자에게 제5호를 요구한다. 원문은 기업체 단체 신청이 아니라 기숙사 전입 직원 본인의 주소·재직·서명이다. 사이트 전입가정 지원은 ‘전입세대에 한하여 상품권·태극기’만 명시하고 기숙사 직원 별도 유형·금액을 밝히지 않는다. 같은 관할 검색에 별도 직원사업이 없어 동일 프로그램이 그 추가 유형까지 포함하는지 공식 안내 확인을 남긴다."
+          "disposition": "approved",
+          "decision": "approved",
+          "reason": "코디네이터가 실제 HWP 전 section0 586자와 현행2015163 제2조제8호·제20조의2~4, 당진시청 현재 전입주민지원 전체 안내를 대조했다. 기숙사 임직원은 같은 전입세대 지원제도에 속하며 1명5만원 지원과 별지5의 즉시접수 절차가 공식 명시되어 있다. 수록 전입가정 지원의 이 유형에만 조건부 연결하고 일반세대의 서류없음/전입신고 절차에는 공통 필수서류로 확대하지 않는다."
         }
       ],
       "reviewCheckedAt": "2026-10-19",
       "verifiedDocumentTitle": "기업체 기숙사 거주 임직원 지원신청서",
-      "reason": "당진시 제20조의2·3은 일반 전입세대3만원과 기숙사 임직원1인5만원을 별도 구분하고 후자에게 제5호를 요구한다. 원문은 기업체 단체 신청이 아니라 기숙사 전입 직원 본인의 주소·재직·서명이다. 사이트 전입가정 지원은 ‘전입세대에 한하여 상품권·태극기’만 명시하고 기숙사 직원 별도 유형·금액을 밝히지 않는다. 같은 관할 검색에 별도 직원사업이 없어 동일 프로그램이 그 추가 유형까지 포함하는지 공식 안내 확인을 남긴다.",
+      "reason": "코디네이터가 실제 HWP 전 section0 586자와 현행2015163 제2조제8호·제20조의2~4, 당진시청 현재 전입주민지원 전체 안내를 대조했다. 기숙사 임직원은 같은 전입세대 지원제도에 속하며 1명5만원 지원과 별지5의 즉시접수 절차가 공식 명시되어 있다. 수록 전입가정 지원의 이 유형에만 조건부 연결하고 일반세대의 서류없음/전입신고 절차에는 공통 필수서류로 확대하지 않는다.",
       "lawClausesReviewed": true,
       "relatedArticles": [
         {
@@ -3320,6 +3341,35 @@
         "currentLawId": "2015163",
         "binding": "bound",
         "officialFlSeq": "162872965"
+      },
+      "checkedAt": "2026-10-19",
+      "relatedProgramIds": [
+        "g44270.gov24-568000000106",
+        "g44270.gov24-568000000117",
+        "g44270.gov24-568000000336"
+      ],
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team1/team1-results.json",
+        "sourceResultSHA256": "1636a6e15bbf67808ab71c4d605f84f84d98ec0f4e389ea11ddb598de11ab1b8",
+        "proposedStatus": "propose_approval",
+        "officialEvidence": [
+          {
+            "url": "https://www.dangjin.go.kr/kor/sub05_04_01_02.do",
+            "httpStatus": 200,
+            "status": "GET_200_full_page_reviewed",
+            "responseSHA256": "b951f5ff30bcbbef51ea77347ceb5184f1595d2ac75a54a37b4d881008700688",
+            "newEvidence": "기숙사 임직원5만원 지원·지원신청서 접수시 지급의 현재 공식 안내",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team1/dangjin-transfer-current.json",
+                "sha256": "85173f958e4a17711063164c7305f8e1ba920cbc5de70f71ca6c0082c81934ca",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
       }
     },
     {
@@ -3357,31 +3407,19 @@
         "g44270.gov24-568000000117",
         "g44270.gov24-568000000336"
       ],
-      "disposition": "requires_external_confirmation",
+      "disposition": "approved",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
-          "programId": "g44270.gov24-568000000106",
-          "formId": "ordin-21685389",
-          "decision": "not_matched",
-          "reason": "제20조의3제3호라목이 직원 전입지원 제5호 신청의 선택 증빙으로 제6호를 지정한다. 원문은 직원 기숙사 입주일·인적사항을 회사 대표가 확인하는 증빙으로 지원금을 회사가 청구하는 서식이 아니다. 다만 사이트 전입가정 사업에 기숙사 직원 유형이 포함되는지가 확인되지 않아 주신청과 함께 해당 사업쌍을 유보한다."
-        },
-        {
           "programId": "g44270.gov24-568000000117",
-          "formId": "ordin-21685389",
-          "decision": "not_matched",
-          "reason": "제20조의3제3호라목이 직원 전입지원 제5호 신청의 선택 증빙으로 제6호를 지정한다. 원문은 직원 기숙사 입주일·인적사항을 회사 대표가 확인하는 증빙으로 지원금을 회사가 청구하는 서식이 아니다. 다만 사이트 전입가정 사업에 기숙사 직원 유형이 포함되는지가 확인되지 않아 주신청과 함께 해당 사업쌍을 유보한다."
-        },
-        {
-          "programId": "g44270.gov24-568000000336",
-          "formId": "ordin-21685389",
-          "decision": "not_matched",
-          "reason": "제20조의3제3호라목이 직원 전입지원 제5호 신청의 선택 증빙으로 제6호를 지정한다. 원문은 직원 기숙사 입주일·인적사항을 회사 대표가 확인하는 증빙으로 지원금을 회사가 청구하는 서식이 아니다. 다만 사이트 전입가정 사업에 기숙사 직원 유형이 포함되는지가 확인되지 않아 주신청과 함께 해당 사업쌍을 유보한다."
+          "disposition": "approved",
+          "decision": "approved",
+          "reason": "코디네이터가 실제 HWP 전 section0 160자와 현행2015163 제20조의3제3호 및 당진시청 전입지원 현재 안내를 대조했다. 원본은 기업 대표가 근로자의 기숙사 거주를 확인하는 별지6으로, 별지5 신청에 첨부하는 사원증·건강보험증·재직증명서·이 확인서 중 선택 증빙이다. 기숙사 임직원 전입지원에 한정해 추가/조건부 서식으로 제공하며 일반세대용 신청서로 안내하지 않는다."
         }
       ],
       "reviewCheckedAt": "2026-10-19",
       "verifiedDocumentTitle": "기업체 기숙사 거주확인서",
-      "reason": "제20조의3제3호라목이 직원 전입지원 제5호 신청의 선택 증빙으로 제6호를 지정한다. 원문은 직원 기숙사 입주일·인적사항을 회사 대표가 확인하는 증빙으로 지원금을 회사가 청구하는 서식이 아니다. 다만 사이트 전입가정 사업에 기숙사 직원 유형이 포함되는지가 확인되지 않아 주신청과 함께 해당 사업쌍을 유보한다.",
+      "reason": "코디네이터가 실제 HWP 전 section0 160자와 현행2015163 제20조의3제3호 및 당진시청 전입지원 현재 안내를 대조했다. 원본은 기업 대표가 근로자의 기숙사 거주를 확인하는 별지6으로, 별지5 신청에 첨부하는 사원증·건강보험증·재직증명서·이 확인서 중 선택 증빙이다. 기숙사 임직원 전입지원에 한정해 추가/조건부 서식으로 제공하며 일반세대용 신청서로 안내하지 않는다.",
       "lawClausesReviewed": true,
       "relatedArticles": [
         {
@@ -3412,6 +3450,35 @@
         "currentLawId": "2015163",
         "binding": "bound",
         "officialFlSeq": "162872967"
+      },
+      "checkedAt": "2026-10-19",
+      "relatedProgramIds": [
+        "g44270.gov24-568000000106",
+        "g44270.gov24-568000000117",
+        "g44270.gov24-568000000336"
+      ],
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team1/team1-results.json",
+        "sourceResultSHA256": "1636a6e15bbf67808ab71c4d605f84f84d98ec0f4e389ea11ddb598de11ab1b8",
+        "proposedStatus": "propose_approval",
+        "officialEvidence": [
+          {
+            "url": "https://www.dangjin.go.kr/kor/sub05_04_01_02.do",
+            "httpStatus": 200,
+            "status": "GET_200_full_page_reviewed",
+            "responseSHA256": "b951f5ff30bcbbef51ea77347ceb5184f1595d2ac75a54a37b4d881008700688",
+            "newEvidence": "기숙사 임직원5만원 지원·지원신청서 접수시 지급의 현재 공식 안내",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team1/dangjin-transfer-current.json",
+                "sha256": "85173f958e4a17711063164c7305f8e1ba920cbc5de70f71ca6c0082c81934ca",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
       }
     },
     {
@@ -4493,7 +4560,7 @@
       ],
       "reviewCheckedAt": "2026-10-19",
       "verifiedDocumentTitle": "장학생 선발 신청서",
-      "reason": "제천시 제4조제3항은 주소이전·지역출신 대학생의 장학금을 별지 제3호로 신청하도록 정한다. 원문은 두 장학생 유형·대학·계좌·본인 서명을 받으며 후보 ‘전입지원금’과는 별도 급여이다. 지역검색의 인재육성재단 장학금 중 지역대학 유형은 일부 대상이 겹치지만 총장 추천·재단의 별도 장학 사업을 안내하고 이 시 조례 제3호 접수를 지정하지 않는다. 해당 대학협력 장학금과 재단 지역대학 장학금의 동일 집행 및 서식 사용 여부 추가 확인이 필요하다.",
+      "reason": "정확한 정부24 인재육성재단 장학금 안내는 지역대학 장학생 100만원과 대학 총장 추천·개인 신청불필요를 명시하며 시 대학협력 조례 별지3의 접수 지시는 없다. 재단 새 홈페이지 안내 주소 직접 GET은 네트워크 오류로 읽지 못했다. 시 조례의 주소이전·지역출신 장학금과 재단의 추천 장학금이 동일 집행인지 확인되지 않았다.",
       "lawClausesReviewed": true,
       "relatedArticles": [
         {
@@ -4530,7 +4597,43 @@
         "currentLawId": "2019043",
         "binding": "bound",
         "officialFlSeq": "160893889"
-      }
+      },
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team2/team2-results.json",
+        "sourceResultSHA256": "badd63d72d5f96dcc6815ad79e43ba695490e25777144516a69934cdab93a48a",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00116200001",
+            "httpStatus": 200,
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team2/case16-gov24.json",
+                "sha256": "2415879f0d93ae05be93324cd965f9b5de5305818ae272d49a7e21b3a57b27d9",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.jcsad.kr/html/s6/01.php",
+            "httpStatus": null,
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team2/case16-foundation-current.json",
+                "sha256": "0208186d4b3a8fb991f707f75fe29a0be2b333511fde5b7fd51d3599c42bb4e8",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g43150.gov24-440000000195",
+        "g43150.gov24-O00116200001"
+      ]
     },
     {
       "index": 50,
@@ -5428,5 +5531,5 @@
     "pureBuildForms": 1810,
     "sharedFilesWritten": false
   },
-  "finalizedReviewSha256": "e8cb0a84721e690633bd739bab642a393a0ee20208b329fc80e4cb937ea3ea45"
+  "finalizedReviewSha256": "e786f2941d663231d6f63ccde1f5cac86f8f090d56f2f5c97bb45bc829cfc918"
 }

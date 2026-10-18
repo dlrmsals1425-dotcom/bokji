@@ -1558,8 +1558,8 @@
         "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1908719",
         "currentAnnexBinding": "bound"
       },
-      "disposition": "requires_external_confirmation",
-      "reason": "구 동구 제18조제3항과 별지 제4호 원본 전체는 건강생활지원수당 신청에 일치한다. 다만 실제 사업 관할은 제물포구이며 공식 MCP에서 2026-07-01 시행 신설 조례 2151229 전문을 읽어 건강수당이 제15조로 옮겨지고 종전 1년 거주 문구가 없어졌음을 확인했다. 새 별지 제4호 ordin-22129451 전체에는 제물포구청장·제15조가 기재되어 구 원본을 승계된 현행 신청서라고 승인할 수 없다. 새 원본은 team2-batch-062에 배정되어 별도 검토할 대상이다.",
+      "disposition": "covered_by_existing",
+      "reason": "현재 제물포구 조례2151229 제15조와 실제 새 별지4 ordin-22129451을 다시 대조했다. 새 원본은 제물포구청장·제15조로 명확하며 SHA 04b906...e0701의 HWPX가 두 정확한 사업에 이미 게시되어 있다. 동구청장·제18조인 기존 원본을 현행 사업에 추가할 필요가 없어 구 접수용 연결 제외를 제안한다. 총괄이 별도 원본의 정확 SHA와 해당 혜택 연결·실제 공개 바이트를 확인했다. 기존 ID/SHA는 그대로 보존하고 확인된 대체 서식으로 안내한다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -1615,7 +1615,67 @@
         "note": "제물포구청장 및 현행 제15조로 표시된 새 원본. 담당 팀의 원본 재검증·사업 조건 대조 후 연결할 수 있어 이 배치에서 중복 승인하지 않음."
       },
       "sourceBodyPath": "logs/forms-completion/law-bodies/1908719.json.gz",
-      "sourceBodySHA256": "986483ae770d26acc6d2687d252403d62e576a827af991a84ad7ec59a8acfb80"
+      "sourceBodySHA256": "986483ae770d26acc6d2687d252403d62e576a827af991a84ad7ec59a8acfb80",
+      "existingCoverage": [
+        {
+          "formId": "ordin-22129451",
+          "sha256": "04b9067707bab027779b881254cdb9544fe11ab5f2e441aea5d51261eb5e0701",
+          "programIds": [
+            "g28125.gov24-350000000126",
+            "g28125.bokjiro-WLF00002494"
+          ]
+        }
+      ],
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team3-results.json",
+        "sourceResultSHA256": "7e8e63b2e007e7deed1d20ab71367066ef036d087d892df780147ee63e67b764",
+        "proposedStatus": "propose_exclusion",
+        "officialEvidence": [
+          {
+            "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=1908719&gubun=ELIS",
+            "httpStatus": 200,
+            "responseSha256": "60d94eb513510941b00e1549c5345bcba3d450835c3dac9339458b36da6724fb",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/law-1908719.json",
+                "sha256": "80bdd87c6022dd03294e20621579d87100aded88c20c4b48f2118f70b5ac8c19",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=2151229&gubun=ELIS",
+            "httpStatus": 200,
+            "responseSha256": "bedea9fbc261a736ef95bd0d56bde39246bd77bfc07829c35d3c3ddcb028be40",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/jemulpo-law.json",
+                "sha256": "1ab3021c3d183efd487f92dde68247aa4d8178b8a6b3f24e2a187aba4c1155a7",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00002494&wlfareInfoReldBztpCd=02",
+            "httpStatus": 200,
+            "bodyTextSha256": "c72633d1270bb375de9738c6cecb90098dbd755da909a7108aa679d7f6e2fa51",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/program-g28125.bokjiro-WLF00002494.json",
+                "sha256": "d9859c1a48ad0c60777c5776eb4451ef2917a4f69714bf77039fc506ed265ad2",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g28125.bokjiro-WLF00002494",
+        "g28125.gov24-350000000126"
+      ]
     },
     {
       "formId": "ordin-22468353",
@@ -2562,7 +2622,7 @@
         "currentAnnexBinding": "bound"
       },
       "disposition": "requires_external_confirmation",
-      "reason": "옹진군 조례와 부칙 및 묶음 원본 두 BodyText section 전체를 읽었다. 제10조는 별지1 장수노인활동비 신청, 제14조는 별지2 대장, 제27조·제28조는 별지3 선정통지와 별지4 대장을 규정한다. 실제 원본의 시민 신청서는 별지1뿐이며 간병비·효행수당 신청서는 없다. 그러나 후보 복합 사업은 장수노인활동비 신규 신청이 2022년부터 불가하다고 명시하고, 읽은 현행 조문·부칙에는 이를 해소할 경과 규정이 없어 새로운 신청 서류로 확정하지 않는다. 현재 신규 접수 가능 여부 및 기존 수급자의 이 원본 사용 절차 확인이 필요하다.",
+      "reason": "새로 확인한 옹진군의회2025년도 예산심사 기록에도 장수노인활동비 예산이 있으나 신규접수 재개 또는 기존 수급자가 원본 제1호로 재신청한다는 근거는 없다. 기존 복지로 사업의2022년부터 신규신청불가와 원본 최초지급 신청 목적의 불일치가 해소되지 않았다. 계속지급 예산을 새 신청 허용으로 해석하지 않고 미해소로 유지한다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -2609,7 +2669,32 @@
         }
       ],
       "sourceBodyPath": "logs/forms-completion/law-bodies/1911725.json.gz",
-      "sourceBodySHA256": "4ad7c509c8ca4a8ff6e2059d714582e86dff08385815e10ae43fc7a1af4c8cb2"
+      "sourceBodySHA256": "4ad7c509c8ca4a8ff6e2059d714582e86dff08385815e10ae43fc7a1af4c8cb2",
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team1/team1-results.json",
+        "sourceResultSHA256": "1636a6e15bbf67808ab71c4d605f84f84d98ec0f4e389ea11ddb598de11ab1b8",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://council.ongjin.go.kr/viewer/minutes.do?uid=2117",
+            "status": "official_indexed_text_reviewed",
+            "newEvidence": "2025년도 예산에 재가노인지원과 장수노인활동비 편성은 확인되지만 신규접수·서식 사용은 확인되지 않음",
+            "savedEvidence": []
+          },
+          {
+            "url": "https://council.ongjin.go.kr/viewer/minutes.do?uid=898",
+            "status": "official_indexed_text_reviewed",
+            "newEvidence": "2023년도 장수노인활동비 편성; 신규신청 여부를 증명하지 않음",
+            "savedEvidence": []
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g28720.bokjiro-WLF00001475"
+      ]
     },
     {
       "formId": "ordin-22565697",

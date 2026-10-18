@@ -30,6 +30,12 @@
       "urlHash": "ae17afd63ebc189950d8342db3b1fb6c698c5bcdf03c4e59481828de5b7322fc",
       "reasonCode": "program_purpose_mismatch",
       "checkedAt": "2026-10-16"
+    },
+    {
+      "programId": "g44250.bokjiro-WLF00002098",
+      "urlHash": "b8da60e138f9c3b4bee824b1658163ff0ff3af5de2ca77312c04546f14f1ac73",
+      "reasonCode": "outdated_eligibility_condition",
+      "checkedAt": "2026-10-19"
     }
   ]
 }

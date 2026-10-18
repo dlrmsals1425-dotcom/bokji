@@ -1,0 +1,519 @@
+{
+  "schema": 1,
+  "forms": {
+    "agency-44250-36032": {
+      "id": "agency-44250-36032",
+      "sourceKind": "agency",
+      "title": "화장장려금 지원 신청서",
+      "role": "application",
+      "use": "main",
+      "condition": "계룡시 화장장려금 신청에 사용하는 시청 배포 별지 제1호입니다. 앞쪽 민원사무 안내와 뒤쪽 신청서를 함께 확인하고, 신청인의 해당 화장·개장 유형과 구비서류에 맞춰 작성합니다.",
+      "regionCode": "44250",
+      "regionLabel": "충남 계룡시",
+      "agencyName": "계룡시청 가족돌봄과",
+      "authorityKind": "government",
+      "authorityEvidenceUrl": "https://gyeryong.go.kr/kr/html/sub01/0102.html?GotoPage=1&mode=V&no=8b4a546e2b7ff4fdc2deabe7d1ec278d",
+      "authorityEvidenceNote": "계룡시청 민원사무편람의 가족돌봄과 화장장려금 지원신청 게시물에서 다운로드 첨부 file_id=36032를 직접 확인했다.",
+      "sourcePageUrl": "https://gyeryong.go.kr/kr/html/sub01/0102.html?GotoPage=1&mode=V&no=8b4a546e2b7ff4fdc2deabe7d1ec278d",
+      "sourceUrl": "https://gyeryong.go.kr/kr/html/sub01/0102.html?mode=D&no=8b4a546e2b7ff4fdc2deabe7d1ec278d&file_id=36032&category=04",
+      "finalUrl": "https://gyeryong.go.kr/kr/html/sub01/0102.html?mode=D&no=8b4a546e2b7ff4fdc2deabe7d1ec278d&file_id=36032&category=04",
+      "attachmentId": "36032",
+      "attachmentIdentifier": {
+        "queryParam": "file_id",
+        "value": "36032"
+      },
+      "publishedAt": "2026-05-12",
+      "checkedAt": "2026-10-19",
+      "sha256": "9f4f5da862e27f1db4fe81bef9ef0ec4cf46dbedc7f3405b37c362e3f611aee8",
+      "bytes": 53248,
+      "format": "hwp",
+      "lawId": "1933095",
+      "lawTitle": "계룡시 화장장려금 지원 조례",
+      "lawEvidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1933095",
+      "lawEffectiveDate": "2024-05-20",
+      "lawCurrentCheckedAt": "2026-10-19",
+      "programs": [
+        {
+          "id": "g44250.bokjiro-WLF00002098",
+          "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00002098&wlfareInfoReldBztpCd=02"
+        }
+      ],
+      "sectionsRead": [
+        "BodyText/Section0"
+      ],
+      "textScope": "all_body_sections_or_pages",
+      "selectedParts": [
+        {
+          "number": "1",
+          "title": "화장장려금 지원 신청서",
+          "use": "main",
+          "author": "사망자 또는 개장 유골의 연고자"
+        }
+      ],
+      "applicant": "사망자 또는 개장 유골의 연고자",
+      "authorityEvidenceKind": "government"
+    },
+    "agency-31710-61699-1": {
+      "id": "agency-31710-61699-1",
+      "sourceKind": "agency",
+      "title": "2026년 울주군 청소년 성장지원금 신청서 및 위임장",
+      "role": "application",
+      "use": "main",
+      "condition": "2026년 울주군 청소년 성장지원금 신청용입니다. 접수기간은 2026년 2월 9일~11월 30일이며 공고의 대상·자격증빙을 따릅니다. 공고와 현행 조례는 포인트 사용기한을 12월 20일로 안내하지만 신청서 뒷면에는 12월 19일로 인쇄되어 있으므로 사용 마감일은 접수기관 안내를 확인하세요. 원본 문구는 수정하지 않았습니다. 붙임1 앞·뒤 신청서와 동의 내용을 확인하고, 붙임2 위임장은 공고가 허용한 대리신청인인 경우에만 작성합니다.",
+      "regionCode": "31710",
+      "regionLabel": "울산광역시 울주군",
+      "agencyName": "울산광역시 울주군 여성가족과·언양읍",
+      "authorityKind": "government",
+      "authorityEvidenceKind": "government",
+      "authorityEvidenceUrl": "https://www.ulsan.go.kr/u/rep/main.ulsan",
+      "authorityEvidenceNote": "울산광역시 공식 go.kr 대표 누리집이 울주군 누리집으로 https://www.ulju.ulsan.kr 를 직접 연결한다. 해당 울주군 언양읍 공식 게시물은 2026-64호 성장지원금 공고와 붙임 신청서·위임장을 이 첨부파일로 배포한다.",
+      "sourcePageUrl": "https://www.ulju.ulsan.kr/eunyang/bbs/view.do?mId=0401000000&ptIdx=229&bIdx=61699",
+      "sourceUrl": "https://www.ulju.ulsan.kr/cmm/fms/FileDown.do?atchFileId=fe80d58d9401c4c216b48968ad5a2cc75f2f876f28217c7b0bf83f2289fa9964&fileSn=f9a1967c526603d17ab488b9d2747cda",
+      "finalUrl": "https://www.ulju.ulsan.kr/cmm/fms/FileDown.do?atchFileId=fe80d58d9401c4c216b48968ad5a2cc75f2f876f28217c7b0bf83f2289fa9964&fileSn=f9a1967c526603d17ab488b9d2747cda",
+      "attachmentId": "fe80d58d9401c4c216b48968ad5a2cc75f2f876f28217c7b0bf83f2289fa9964",
+      "attachmentIdentifier": {
+        "queryParam": "atchFileId",
+        "value": "fe80d58d9401c4c216b48968ad5a2cc75f2f876f28217c7b0bf83f2289fa9964"
+      },
+      "publishedAt": "2026-01-13",
+      "checkedAt": "2026-10-19",
+      "sha256": "e368026fe4d12296b3875cc72cad03e92495347a0198af61be432fd09cbfa116",
+      "bytes": 170496,
+      "format": "hwp",
+      "lawId": "1966081",
+      "lawTitle": "울산광역시 울주군 청소년 성장지원금 지급 조례",
+      "lawEvidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1966081",
+      "lawEffectiveDate": "2024-09-12",
+      "lawCurrentCheckedAt": "2026-10-19",
+      "programs": [
+        {
+          "id": "g31710.gov24-373000000113",
+          "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/373000000113"
+        }
+      ],
+      "sectionsRead": [
+        "BodyText/Section0"
+      ],
+      "textScope": "all_body_sections_or_pages",
+      "selectedParts": [
+        {
+          "number": "붙임1 앞·뒤",
+          "title": "울주군 청소년 성장지원금 지급 신청서",
+          "use": "main",
+          "author": "지원대상 청소년 본인 또는 공고가 허용하는 대리신청인"
+        },
+        {
+          "number": "붙임2",
+          "title": "위임장",
+          "use": "conditional",
+          "author": "지원대상 청소년과 위임받은 대리신청인",
+          "condition": "공고에서 허용한 직계혈족·배우자·후견인·사회복지시설관계인 등이 대리 신청하는 경우"
+        }
+      ],
+      "applicant": "지원대상 청소년 본인 또는 공고가 허용하는 대리신청인"
+    },
+    "agency-11710-park119-exclusive-application": {
+      "sourceKind": "agency",
+      "role": "application",
+      "use": "conditional",
+      "condition": "송파 거주자우선주차구획을 방문 신청하면서 감면 자격을 함께 확인받는 경우에 쓰는 공단 배포 신청서입니다. 공유사업 참여는 원본의 O/X 선택 및 포털의 동의자 안내에 따릅니다. 원본에 옛 장애등급·조문 번호가 남아 있으므로 실제 감면·우선배정 자격은 현재 포털과 현행 규칙의 장애정도 기준으로 확인됩니다.",
+      "regionCode": "11710",
+      "regionLabel": "서울특별시 송파구",
+      "agencyName": "송파구시설관리공단",
+      "authorityKind": "delegated",
+      "authorityEvidenceKind": "public_institution",
+      "authorityEvidenceUrl": "https://www.songpagongdan.or.kr/main.asp",
+      "authorityEvidenceNote": "현재 송파구청 www/index.do의 시설관리공단 링크→공단 main.asp의 거주자우선주차 링크→songpa.park119.co.kr/userNew/index.aspx를 직접 GET·링크 대조",
+      "sourcePageUrl": "https://songpa.park119.co.kr/userNew/guide/apply_entry_guide.aspx",
+      "sourceUrl": "https://songpa.park119.co.kr/userNew/custom/SP/%EC%A0%84%EC%9A%A9%EC%A3%BC%EC%B0%A8%EA%B5%AC%ED%9A%8D%EC%9D%B4%EC%9A%A9%EC%8B%A0%EC%B2%AD%EC%84%9C.hwp",
+      "finalUrl": "https://songpa.park119.co.kr/userNew/custom/SP/%EC%A0%84%EC%9A%A9%EC%A3%BC%EC%B0%A8%EA%B5%AC%ED%9A%8D%EC%9D%B4%EC%9A%A9%EC%8B%A0%EC%B2%AD%EC%84%9C.hwp",
+      "attachmentId": "%EC%A0%84%EC%9A%A9%EC%A3%BC%EC%B0%A8%EA%B5%AC%ED%9A%8D%EC%9D%B4%EC%9A%A9%EC%8B%A0%EC%B2%AD%EC%84%9C.hwp",
+      "attachmentIdentifier": {
+        "path": "/userNew/custom/SP/%EC%A0%84%EC%9A%A9%EC%A3%BC%EC%B0%A8%EA%B5%AC%ED%9A%8D%EC%9D%B4%EC%9A%A9%EC%8B%A0%EC%B2%AD%EC%84%9C.hwp"
+      },
+      "checkedAt": "2026-10-19",
+      "sha256": "59beb4414ce98ed9210184577051e77220003aead5f5cb2181324bd18b5b76ca",
+      "bytes": 77824,
+      "lawId": "2107613",
+      "lawTitle": "서울특별시 송파구 주차장 설치 및 관리 조례 시행규칙",
+      "lawEvidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2107613",
+      "lawEffectiveDate": "2026-01-15",
+      "lawCurrentCheckedAt": "2026-10-19",
+      "sectionsRead": [
+        "BodyText/Section0"
+      ],
+      "textScope": "all_body_sections_or_pages",
+      "selectedParts": [
+        {
+          "number": "4",
+          "title": "전용주차구획 이용 신청서 및 개인정보 동의",
+          "use": "conditional",
+          "author": "거주자우선주차구획 신청 주민"
+        }
+      ],
+      "applicant": "거주자우선주차구획 신청 주민",
+      "id": "agency-11710-park119-exclusive-application",
+      "title": "전용주차구획 이용 신청서",
+      "format": "hwp",
+      "programs": [
+        {
+          "id": "g11710.gov24-O00023700005",
+          "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00023700005"
+        }
+      ],
+      "sourceIssues": [
+        "직접배포 파일에도 옛 장애1~3/4~6급 및 제6조제10항 인용이 남아 있다. 현행법에 합치되는 최신 개정 법정 원본이라고 주장하지 않는다. 현재 공단 접수 안내가 해당 정확 다운로드를 전용구획 방문신청서로 명시하고, 포털은 심한 장애 및 공유 동의자만의 앱등록 절차를 별도 안내하는 실제 접수 배포 근거로 agency 분리 제안한다."
+      ]
+    },
+    "agency-43000-cbfc-2026-youth-grant": {
+      "sourceKind": "agency",
+      "role": "application",
+      "use": "conditional",
+      "condition": "2026년 충북문화재단 청년예술지원사업에 이미 선정된 개인의 교부·변경 신청용입니다. 신규 공모 지원신청용이 아닙니다. 확정 사업명·일정·선정액을 NCAS와 같게 작성하고 청구서에 인쇄된 500만원 두 칸도 실제 결정액으로 기입해야 합니다. 교부는 실사업 시작 최소 30일 전이 원칙이며 사업종료 후에는 신청할 수 없습니다. 변경은 사전 연락·승인이 필요하고 집행·사업종료 후 변경은 불가합니다. 공모요강은 5~12월이나 이 서식은 11월30일 이전 종료를 인쇄하고 있어, 12월 실사업 등 확정 일정과 다른 경우에는 재단의 현행 서식 확인이 필요합니다. 이 파일은 확정된 실사업 일정이 원본의 인쇄 기간과 일치하는 선정자에게만 제공합니다. 12월 실사업 등 일정이 충돌하는 경우에는 이 파일을 사용하지 말고 재단의 확인·정정 서식을 받아야 합니다.",
+      "regionCode": "43000",
+      "regionLabel": "충청북도",
+      "agencyName": "충북문화재단",
+      "authorityKind": "public_institution",
+      "authorityEvidenceKind": "government",
+      "authorityEvidenceUrl": "https://www.chungbuk.go.kr/cbnews/selectBbsNttView.do?bbsNo=2953&key=5231&nttNo=418504",
+      "authorityEvidenceNote": "충청북도 공식 2026년 도립극단 보도는 도·충북문화재단 주관과 재단 누리집 cbfc.or.kr를 명시하여 기관과 공식 도메인을 확인한다.",
+      "sourcePageUrl": "https://www.cbfc.or.kr/home/sub.php?menukey=6442&mod=view&no=2045467&scode=00000003",
+      "sourceUrl": "https://www.cbfc.or.kr/base/download/bbs.php?fno=%E1s%1CO%16&bid=%E3r%1FO%15%242%03&did=%E3r%1FM%15+5%0E",
+      "finalUrl": "https://www.cbfc.or.kr/base/download/bbs.php?fno=%E1s%1CO%16&bid=%E3r%1FO%15%242%03&did=%E3r%1FM%15+5%0E",
+      "attachmentId": "�s\u001cO\u0016",
+      "attachmentIdentifier": {
+        "queryParam": "fno",
+        "value": "�s\u001cO\u0016"
+      },
+      "publishedAt": "2026-06-01",
+      "checkedAt": "2026-10-19",
+      "sha256": "0f142c733e5e52aecce67c0f41c4b0adc03501dadd25c2408942695c31295c4d",
+      "bytes": 92672,
+      "lawId": "2039101",
+      "lawTitle": "충청북도 지방보조금 관리 조례",
+      "lawEvidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2039101",
+      "lawEffectiveDate": "2025-05-16",
+      "lawCurrentCheckedAt": "2026-10-19",
+      "sectionsRead": [
+        "BodyText/Section0"
+      ],
+      "textScope": "all_body_sections_or_pages",
+      "selectedParts": [
+        {
+          "number": "1",
+          "title": "2026 청년예술지원사업 교부(변경)신청서·사업계획·지원금 신청·서약",
+          "use": "conditional",
+          "author": "2026년 해당 사업에 선정된 신청 예술가 또는 단체 대표"
+        }
+      ],
+      "applicant": "2026년 해당 사업에 선정된 신청 예술가 또는 단체 대표",
+      "id": "agency-43000-cbfc-2026-youth-grant",
+      "title": "2026 청년예술지원사업 교부(변경)신청서",
+      "format": "hwp",
+      "programs": [
+        {
+          "id": "s43000.gov24-O00113600007",
+          "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00113600007"
+        }
+      ],
+      "sourceIssues": [
+        "기존 ordin-19241495의 일반 도지사 수신 묶음과 다른 원본이다. 당해연도 선정자 교부용 서식을 최초 공모 접수용으로 사용하지 않는다. 표시일은 2026-06-01 공식 게시/첨부 추가일이며 법령 시행일이 아니다.",
+        "청구서 500만원 2곳에 예시라는 직접 표시는 없음.",
+        "청년 공모요강 사업기간과 교부서 인쇄 실사업기간 불일치.",
+        "현재 정부24에 남은 일반/연속지원·1년 거주경험 안내와 2026 청년 공모요강의 신규자격·선정이력 제외가 다름. 이미 2026 선정된 자에만 연결하며 자격 엔진을 수정하지 않는다.",
+        "재료비·시각예술창작기획지원·국제교류 등 다른 사업의 공통 안내 문구가 일부 남아 있어 해당 항목을 청년사업에 자동 적용하지 않는다."
+      ],
+      "submissionPeriodEvidence": {
+        "sourceUrl": "https://www.cbfc.or.kr/base/download/bbs.php?fno=%E1r%1DL%16&bid=%E3r%1FO%15%242%03&did=%E3r%1FM%15+5%0E",
+        "sha256": "2a0eb61fd8abce8c2ea378e2f50381d260a26ce1b2bccde77e26680f4b2f28a2",
+        "reviewedScope": "2026 운영 가이드 주요안내 및 본문10~14쪽 교부·변경·집행절차",
+        "applicationDeadline": "실사업 시작 최소30일 전 교부신청 원칙; 사업시작30일미만~진행중 제출은 평가·다음심의 불이익; 사업종료 후는 선정취소·미교부",
+        "changeDeadline": "보조금 교부 후 변경내역 발생시 사업종료·집행 전에 담당자 사전 협의·승인 및 NCAS 변경신청",
+        "projectWindow": "첨부 원본의 실사업 2026-04-01 이후~2026-11-30 이전",
+        "currentAsOf": "2026-10-19"
+      }
+    },
+    "agency-43000-cbfc-2026-art-grant": {
+      "sourceKind": "agency",
+      "role": "application",
+      "use": "conditional",
+      "condition": "2026년 예술창작활동지원사업(A/B)에 이미 선정된 예술인·단체의 교부·변경 신청용입니다. 신규 공모 지원용이 아닙니다. 첫 공모사업 선택에서 예술창작활동지원사업만 표시하고 확정 사업명·일정·선정액을 NCAS와 같게 기입합니다. 청구서의 500만원 두 칸과 예시 일정·참여자·예산은 그대로 제출하지 말고 실제 승인 내용으로 작성합니다. 교부는 실사업 시작 최소 30일 전이 원칙이며 사업종료 후 신청은 불가합니다. 변경은 재단 사전 연락·승인 후 진행하며, 국제교류·시각예술창작기획·공연장상주·창작집중 사업용으로 확대하지 않습니다. B유형 문학·시각예술은 개인 선정자만 해당하며, 이미 승인된 신청 주체를 바꾸지 않습니다.",
+      "regionCode": "43000",
+      "regionLabel": "충청북도",
+      "agencyName": "충북문화재단",
+      "authorityKind": "public_institution",
+      "authorityEvidenceKind": "government",
+      "authorityEvidenceUrl": "https://www.chungbuk.go.kr/cbnews/selectBbsNttView.do?bbsNo=2953&key=5231&nttNo=418504",
+      "authorityEvidenceNote": "충청북도 공식 2026년 도립극단 보도는 도·충북문화재단 주관과 재단 누리집 cbfc.or.kr를 명시하여 기관과 공식 도메인을 확인한다.",
+      "sourcePageUrl": "https://www.cbfc.or.kr/home/sub.php?menukey=6442&mod=view&no=2045467&scode=00000003",
+      "sourceUrl": "https://www.cbfc.or.kr/base/download/bbs.php?fno=%E1r%1DL%11&bid=%E3r%1FO%15%242%03&did=%E3r%1FM%15+5%0E",
+      "finalUrl": "https://www.cbfc.or.kr/base/download/bbs.php?fno=%E1r%1DL%11&bid=%E3r%1FO%15%242%03&did=%E3r%1FM%15+5%0E",
+      "attachmentId": "�r\u001dL\u0011",
+      "attachmentIdentifier": {
+        "queryParam": "fno",
+        "value": "�r\u001dL\u0011"
+      },
+      "publishedAt": "2026-02-19",
+      "checkedAt": "2026-10-19",
+      "sha256": "7c281a386329e470ba76ed81317a985bbddf1aea0e4679b98f3c38559f408c27",
+      "bytes": 187392,
+      "lawId": "2039101",
+      "lawTitle": "충청북도 지방보조금 관리 조례",
+      "lawEvidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2039101",
+      "lawEffectiveDate": "2025-05-16",
+      "lawCurrentCheckedAt": "2026-10-19",
+      "sectionsRead": [
+        "BodyText/Section0"
+      ],
+      "textScope": "all_body_sections_or_pages",
+      "selectedParts": [
+        {
+          "number": "1",
+          "title": "2026 예술창작활동지원사업 등 교부(변경)신청서·사업계획·지원금 신청·서약",
+          "use": "conditional",
+          "author": "2026년 해당 사업에 선정된 신청 예술가 또는 단체 대표"
+        }
+      ],
+      "applicant": "2026년 해당 사업에 선정된 신청 예술가 또는 단체 대표",
+      "id": "agency-43000-cbfc-2026-art-grant",
+      "title": "2026 예술창작활동지원사업 등 교부(변경)신청서",
+      "format": "hwp",
+      "programs": [
+        {
+          "id": "s43000.gov24-O00113600003",
+          "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00113600003"
+        }
+      ],
+      "sourceIssues": [
+        "기존 ordin-19241495의 일반 도지사 수신 묶음과 다른 원본이다. 당해연도 선정자 교부용 서식을 최초 공모 접수용으로 사용하지 않는다. 표시일은 2026-02-19 공식 게시/첨부 추가일이며 법령 시행일이 아니다.",
+        "청구서 500만원 2곳에 직접적인 예시 표시는 없음.",
+        "예술창작·국제교류·시각예술창작기획이 함께 있는 공용 서식이므로 실제 예술창작 선택 및 불해당 항목 제외 필요.",
+        "정부24는 2026.8.13 수정본에도 신청기한을 2024년으로 표시하고 과거 공고를 링크한다. 현재 신규모집 상태를 그 정보로 확정하지 않으며 2026 선정 후 절차라는 한정을 유지한다."
+      ],
+      "submissionPeriodEvidence": {
+        "sourceUrl": "https://www.cbfc.or.kr/base/download/bbs.php?fno=%E1r%1DL%16&bid=%E3r%1FO%15%242%03&did=%E3r%1FM%15+5%0E",
+        "sha256": "2a0eb61fd8abce8c2ea378e2f50381d260a26ce1b2bccde77e26680f4b2f28a2",
+        "reviewedScope": "2026 운영 가이드 주요안내 및 본문10~14쪽 교부·변경·집행절차",
+        "applicationDeadline": "실사업 시작 최소30일 전 교부신청 원칙; 사업시작30일미만~진행중 제출은 평가·다음심의 불이익; 사업종료 후는 선정취소·미교부",
+        "changeDeadline": "보조금 교부 후 변경내역 발생시 사업종료·집행 전에 담당자 사전 협의·승인 및 NCAS 변경신청",
+        "projectWindow": "첨부 원본의 실사업 2026-04-01 이후~2026-11-30 이전",
+        "currentAsOf": "2026-10-19"
+      }
+    },
+    "agency-44210-health-cts2394-refund-proxy": {
+      "sourceKind": "agency",
+      "role": "delegation",
+      "use": "conditional",
+      "condition": "산후조리도우미 본인부담금 환급을 대리인이 신청하는 경우에만 쓰며, 위임인의 사전 동의·서명과 대리인 신분증·가족관계증명서 등을 함께 준비합니다. 주신청서가 아닙니다.",
+      "regionCode": "44210",
+      "regionLabel": "충청남도 서산시",
+      "agencyName": "서산시보건소",
+      "authorityKind": "government",
+      "authorityEvidenceKind": "government",
+      "authorityEvidenceUrl": "https://www.seosan.go.kr/health/contents.do?key=2394",
+      "authorityEvidenceNote": "서산시 공식 보건소 도메인의 현재 해당 급여 안내가 정확 파일을 직접 배포한다.",
+      "sourcePageUrl": "https://www.seosan.go.kr/health/contents.do?key=2394",
+      "sourceUrl": "https://www.seosan.go.kr/DATA/download/health/cts2394_file01.hwp",
+      "finalUrl": "https://www.seosan.go.kr/DATA/download/health/cts2394_file01.hwp",
+      "attachmentId": "cts2394_file01.hwp",
+      "attachmentIdentifier": {
+        "path": "/DATA/download/health/cts2394_file01.hwp"
+      },
+      "checkedAt": "2026-10-19",
+      "sha256": "e384fbc8df3f66ff3332e2e676f4510add0ba438917f71db1f9e9903e11dbfbd",
+      "bytes": 28160,
+      "lawId": "2161415",
+      "lawTitle": "서산시 임산부ㆍ신생아 건강관리 지원 조례",
+      "lawEvidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2161415",
+      "lawEffectiveDate": "2026-08-14",
+      "lawCurrentCheckedAt": "2026-10-19",
+      "sectionsRead": [
+        "BodyText/Section0"
+      ],
+      "textScope": "all_body_sections_or_pages",
+      "selectedParts": [
+        {
+          "number": "서식 제2호",
+          "title": "산후조리도우미 본인부담금 지원 신청 위임장",
+          "use": "conditional",
+          "author": "환급 신청권한을 위임하는 산모와 대리인"
+        }
+      ],
+      "applicant": "환급 신청권한을 위임하는 산모와 대리인",
+      "id": "agency-44210-health-cts2394-refund-proxy",
+      "title": "산후조리도우미 본인부담금 지원 신청 위임장",
+      "format": "hwp",
+      "programs": [
+        {
+          "id": "g44210.bokjiro-WLF00006505",
+          "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00006505&wlfareInfoReldBztpCd=02"
+        }
+      ],
+      "sourceIssues": [
+        "lawId2161415는 해당 사이트 사업의 인용 근거를 보존한다. 그 조례 제5조제2호는 별도의 이용권 최초신청을 정하므로 본 위임장의 직접 접수·역할 근거로 사용하지 않는다. 본 원본의 접수근거는 보건소 현재 환급 안내이다."
+      ]
+    },
+    "agency-26290-health-postpartum-339544": {
+      "sourceKind": "agency",
+      "role": "delegation",
+      "use": "conditional",
+      "condition": "대리인이 신청할 때, 신청인의 서명·위임과 가족관계 및 대리인 신분증을 준비하는 경우에 사용합니다. 주신청서가 아닙니다. 날짜란의 옛 연도 인쇄는 현행 접수 안내와 구분하여 담당 접수처의 작성 안내에 따라 확인해야 합니다.",
+      "regionCode": "26290",
+      "regionLabel": "부산광역시 남구",
+      "agencyName": "부산광역시 남구보건소",
+      "authorityKind": "government",
+      "authorityEvidenceKind": "government",
+      "authorityEvidenceUrl": "https://www.bsnamgu.go.kr/index.namgu?menuCd=DOM_000000904008000000",
+      "authorityEvidenceNote": "남구청 공식 보건소 현재 부산형 산후조리경비 안내의 구비서류 표가 해당 fileSid를 직접 배포한다.",
+      "sourcePageUrl": "https://www.bsnamgu.go.kr/index.namgu?menuCd=DOM_000000904008000000",
+      "sourceUrl": "https://www.bsnamgu.go.kr/board/download.namgu?boardId=BBS_0000125&paging=ok&startPage=1&dataSid=663860&command=update&fileSid=339544",
+      "finalUrl": "https://www.bsnamgu.go.kr/board/download.namgu?boardId=BBS_0000125&paging=ok&startPage=1&dataSid=663860&command=update&fileSid=339544",
+      "attachmentId": "339544",
+      "attachmentIdentifier": {
+        "queryParam": "fileSid",
+        "value": "339544"
+      },
+      "checkedAt": "2026-10-19",
+      "sha256": "ac0cfc3a3e7a7682eadb0add2e56d5c68783fc5fdd82aa91a507a58296e3f11c",
+      "bytes": 11776,
+      "lawId": "1991151",
+      "lawTitle": "부산광역시 산후조리 지원에 관한 조례",
+      "lawEvidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1991151",
+      "lawEffectiveDate": "2024-12-11",
+      "lawCurrentCheckedAt": "2026-10-19",
+      "sectionsRead": [
+        "BodyText/Section0"
+      ],
+      "textScope": "all_body_sections_or_pages",
+      "selectedParts": [
+        {
+          "number": "무번호",
+          "title": "산후조리경비 지원 신청 위임장",
+          "use": "conditional",
+          "author": "출생아 부 또는 모인 신청인(위임인)"
+        }
+      ],
+      "applicant": "출생아 부 또는 모인 신청인(위임인)",
+      "id": "agency-26290-health-postpartum-339544",
+      "title": "산후조리경비 지원 신청 위임장",
+      "format": "hwp",
+      "programs": [
+        {
+          "id": "g26290.bokjiro-WLF00005693",
+          "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00005693&wlfareInfoReldBztpCd=02"
+        }
+      ],
+      "sourceIssues": [
+        "실제 파일의 날짜란은 2025년으로 고정 인쇄되어 있다. 이를2026 개정본이라고 주장하지 않는다. 남구보건소의 현재2025미신청·2026출생아 안내가 정확 파일을 해당 추가서류로 계속 제공하는 현재접수 근거로 분리한다. 사이트의 구 남구조례1868231 인용과 새 부산형지원의 차이를 보존하며 새 원본의 법규정보는 실제 부산시 조례1991151을 사용한다."
+      ]
+    },
+    "agency-26290-health-postpartum-339545": {
+      "sourceKind": "agency",
+      "role": "supporting",
+      "use": "conditional",
+      "condition": "사실혼 가정이 산후조리경비를 신청하여 가구원 관계 확인이 필요한 경우 두 당사자가 작성합니다. 주신청서가 아닙니다. 날짜란의 옛 연도 인쇄는 현행 접수 안내와 구분하여 담당 접수처의 작성 안내에 따라 확인해야 합니다.",
+      "regionCode": "26290",
+      "regionLabel": "부산광역시 남구",
+      "agencyName": "부산광역시 남구보건소",
+      "authorityKind": "government",
+      "authorityEvidenceKind": "government",
+      "authorityEvidenceUrl": "https://www.bsnamgu.go.kr/index.namgu?menuCd=DOM_000000904008000000",
+      "authorityEvidenceNote": "남구청 공식 보건소 현재 부산형 산후조리경비 안내의 구비서류 표가 해당 fileSid를 직접 배포한다.",
+      "sourcePageUrl": "https://www.bsnamgu.go.kr/index.namgu?menuCd=DOM_000000904008000000",
+      "sourceUrl": "https://www.bsnamgu.go.kr/board/download.namgu?boardId=BBS_0000125&paging=ok&startPage=1&dataSid=663860&command=update&fileSid=339545",
+      "finalUrl": "https://www.bsnamgu.go.kr/board/download.namgu?boardId=BBS_0000125&paging=ok&startPage=1&dataSid=663860&command=update&fileSid=339545",
+      "attachmentId": "339545",
+      "attachmentIdentifier": {
+        "queryParam": "fileSid",
+        "value": "339545"
+      },
+      "checkedAt": "2026-10-19",
+      "sha256": "a93cac22f74d4b780f11af02f4a4c58fb56b356e02db31cb5513a82d814cd36a",
+      "bytes": 12800,
+      "lawId": "1991151",
+      "lawTitle": "부산광역시 산후조리 지원에 관한 조례",
+      "lawEvidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1991151",
+      "lawEffectiveDate": "2024-12-11",
+      "lawCurrentCheckedAt": "2026-10-19",
+      "sectionsRead": [
+        "BodyText/Section0"
+      ],
+      "textScope": "all_body_sections_or_pages",
+      "selectedParts": [
+        {
+          "number": "무번호",
+          "title": "사실상 혼인 관계 당사자의 본인 진술서",
+          "use": "conditional",
+          "author": "사실혼 관계 양 당사자"
+        }
+      ],
+      "applicant": "사실혼 관계 양 당사자",
+      "id": "agency-26290-health-postpartum-339545",
+      "title": "사실상 혼인 관계 당사자의 본인 진술서",
+      "format": "hwp",
+      "programs": [
+        {
+          "id": "g26290.bokjiro-WLF00005693",
+          "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00005693&wlfareInfoReldBztpCd=02"
+        }
+      ],
+      "sourceIssues": [
+        "실제 파일의 날짜란은 2025년으로 고정 인쇄되어 있다. 이를2026 개정본이라고 주장하지 않는다. 남구보건소의 현재2025미신청·2026출생아 안내가 정확 파일을 해당 추가서류로 계속 제공하는 현재접수 근거로 분리한다. 사이트의 구 남구조례1868231 인용과 새 부산형지원의 차이를 보존하며 새 원본의 법규정보는 실제 부산시 조례1991151을 사용한다."
+      ]
+    },
+    "agency-26290-health-postpartum-339546": {
+      "sourceKind": "agency",
+      "role": "supporting",
+      "use": "conditional",
+      "condition": "사실혼 관계 입증이 필요한 경우 원본이 허용한 보증인2명이 직접 작성·날인하고 신분증 사본을 첨부합니다. 대리 작성·서명은 불가합니다. 주신청서가 아닙니다. 날짜란의 옛 연도 인쇄는 현행 접수 안내와 구분하여 담당 접수처의 작성 안내에 따라 확인해야 합니다.",
+      "regionCode": "26290",
+      "regionLabel": "부산광역시 남구",
+      "agencyName": "부산광역시 남구보건소",
+      "authorityKind": "government",
+      "authorityEvidenceKind": "government",
+      "authorityEvidenceUrl": "https://www.bsnamgu.go.kr/index.namgu?menuCd=DOM_000000904008000000",
+      "authorityEvidenceNote": "남구청 공식 보건소 현재 부산형 산후조리경비 안내의 구비서류 표가 해당 fileSid를 직접 배포한다.",
+      "sourcePageUrl": "https://www.bsnamgu.go.kr/index.namgu?menuCd=DOM_000000904008000000",
+      "sourceUrl": "https://www.bsnamgu.go.kr/board/download.namgu?boardId=BBS_0000125&paging=ok&startPage=1&dataSid=663860&command=update&fileSid=339546",
+      "finalUrl": "https://www.bsnamgu.go.kr/board/download.namgu?boardId=BBS_0000125&paging=ok&startPage=1&dataSid=663860&command=update&fileSid=339546",
+      "attachmentId": "339546",
+      "attachmentIdentifier": {
+        "queryParam": "fileSid",
+        "value": "339546"
+      },
+      "checkedAt": "2026-10-19",
+      "sha256": "f524c0286c07b2b7110d763b9456650603c3b3ea07edbe38699cb33906befcf9",
+      "bytes": 14336,
+      "lawId": "1991151",
+      "lawTitle": "부산광역시 산후조리 지원에 관한 조례",
+      "lawEvidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1991151",
+      "lawEffectiveDate": "2024-12-11",
+      "lawCurrentCheckedAt": "2026-10-19",
+      "sectionsRead": [
+        "BodyText/Section0"
+      ],
+      "textScope": "all_body_sections_or_pages",
+      "selectedParts": [
+        {
+          "number": "무번호",
+          "title": "사실혼 확인보증서",
+          "use": "conditional",
+          "author": "해당 사실을 보증하는 양가 가족·통리장·주민 등2명"
+        }
+      ],
+      "applicant": "해당 사실을 보증하는 양가 가족·통리장·주민 등2명",
+      "id": "agency-26290-health-postpartum-339546",
+      "title": "사실혼 확인보증서",
+      "format": "hwp",
+      "programs": [
+        {
+          "id": "g26290.bokjiro-WLF00005693",
+          "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00005693&wlfareInfoReldBztpCd=02"
+        }
+      ],
+      "sourceIssues": [
+        "실제 파일의 날짜란은 2024년으로 고정 인쇄되어 있다. 이를2026 개정본이라고 주장하지 않는다. 남구보건소의 현재2025미신청·2026출생아 안내가 정확 파일을 해당 추가서류로 계속 제공하는 현재접수 근거로 분리한다. 사이트의 구 남구조례1868231 인용과 새 부산형지원의 차이를 보존하며 새 원본의 법규정보는 실제 부산시 조례1991151을 사용한다."
+      ]
+    }
+  }
+}

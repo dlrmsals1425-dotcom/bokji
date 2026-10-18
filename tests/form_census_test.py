@@ -1,5 +1,6 @@
 import copy
 import importlib.util
+import json
 import unittest
 from pathlib import Path
 
@@ -122,6 +123,17 @@ class CensusTest(unittest.TestCase):
         self.assertTrue(clean['pages']['a']['requestAttempted'])
         self.assertEqual(clean['pages']['a']['status'],'read')
         self.assertEqual(clean['pages']['a']['checkedAt'],'2026-10-16')
+
+    def test_outdated_gyeryong_copy_is_hidden_while_its_current_law_pdf_remains(self):
+        bad='https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20230519UUWBM1000170035340573&atcflSn=1&wlfareInfoId=WLF00002098'
+        law='https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20250613UUWBM1503090141957978&atcflSn=1&wlfareInfoId=WLF00002098'
+        policy=json.loads((ROOT/'pipeline/forms/attachment-exclusions.json').read_text(encoding='utf-8'))
+        audit={'pages':{'p':{'url':'https://www.bokjiro.go.kr/official-page','status':'read',
+            'attachments':[{'title':'옛 신청서.hwp','url':bad},{'title':'현행 조례.pdf','url':law}]}}}
+        clean,removed=module.exclude_attachments(audit,policy)
+        self.assertEqual(removed,1)
+        self.assertEqual(clean['pages']['p']['attachments'],[{'title':'현행 조례.pdf','url':law}])
+        self.assertEqual(len(audit['pages']['p']['attachments']),2)
 
 
 if __name__ == '__main__': unittest.main()

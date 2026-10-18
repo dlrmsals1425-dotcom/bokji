@@ -1519,12 +1519,83 @@
         "sourceMetadataTitlePreserved": true
       },
       "displayTitle": "사업부지 명세서"
+    },
+    {
+      "sourceKind": "ordin",
+      "lawTitle": "대전광역시 유성구 참전유공자 지원에 관한 조례",
+      "lawId": "2160385",
+      "annexId": "22377331",
+      "annexNumber": "000200",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=168181997&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C2%ED%98%B8%EC%84%9C%EC%8B%9D%5D%EC%B0%B8%EC%A0%84%EC%9C%A0%EA%B3%B5%EC%9E%90+%EC%82%AC%EB%A7%9D%EC%9C%84%EB%A1%9C%EA%B8%88+%EC%A7%80%EA%B8%89%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "dateKind": "effective",
+      "effectiveDate": "2026-08-13",
+      "regionCode": "30200",
+      "regionLabel": "대전광역시 유성구",
+      "programIds": [
+        "g30200.gov24-367000000117"
+      ],
+      "programNames": [
+        "참전유공자 사망위로금 지원"
+      ],
+      "formId": "ordin-22377331",
+      "use": "conditional",
+      "condition": "이 수록 사업에 함께 연결된 복지로 WLF00001252의 유성구 참전유공자 사망위로금을 신청하는 경우에만 사용합니다. 사망일로부터 1년 이내 유가족 또는 관계인이 신청하는 서식이며, 장수축하금이나 매월 참전명예수당 신청용이 아닙니다.",
+      "formTitle": "[별지 제2호서식]참전유공자 사망위로금 지급신청서",
+      "sourceMetadataTitle": "[별지 제2호서식]참전유공자 사망위로금 지급신청서",
+      "verifiedDocumentTitle": "참전유공자 사망위로금 지급신청서",
+      "evidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2160385",
+      "evidenceNote": "현행 조례 제5조제2호의 사망위로금과 제6조제3항의 유가족·관계인 별지2 신청을 확인했다. 원본 전체는 참전유공자 등록번호·사망일·신청인 관계·계좌와 서명, 7일 처리기간을 받는다. 통합된 현재 사업의 sources에 포함된 복지로 WLF00001252를 직접 GET하여 유성구 주소의 참전유공자 사망 시 유족 20만원, 사망 후 1년 이내 신청, 7일 내 지급 및 지급신청서 제출을 확인했다. 기본 정부24 페이지의 100세 장수축하금 내용 오류는 별도로 남아 있으나 동일 사업에 결속된 정확한 복지로 급여 부분을 특정할 수 있어 그 부분에만 조건부 제안한다. 인쇄된 제6조제1항 인용은 현재 신청 조항 제6조제3항과 다르다는 점을 기록하며, 현행 공식 별표키와 실제 제출 목적·주체는 동일하다. 공식 별표키·flSeq·원문 SHA 및 전체 본문 섹션을 직접 대조했다.",
+      "checkedAt": "2026-10-19",
+      "verificationStatus": "verified",
+      "officialAttachmentMatched": true,
+      "sha256": "84affd0b2ec83dc0807fd6dc57aa622ca7057e74f3ef1c97eafc88da64988a66",
+      "bytes": 23040,
+      "signature": "d0cf11e0a1b11ae1",
+      "originalFormat": "hwp",
+      "originalTextScope": "all_body_sections_or_pages",
+      "textScope": "all_body_sections_or_pages",
+      "sectionsRead": [
+        "BodyText/Section0"
+      ],
+      "fullBodyReviewed": true,
+      "independentBodyReview": true,
+      "reviewedParts": [
+        {
+          "number": "2",
+          "title": "참전유공자 사망위로금 지급신청서",
+          "use": "conditional",
+          "author": "사망한 참전유공자의 유가족 또는 관계인"
+        }
+      ],
+      "role": "application",
+      "roleBasis": "현행 조례 제5조제2호의 사망위로금과 제6조제3항의 유가족·관계인 별지2 신청을 확인했다. 원본 전체는 참전유공자 등록번호·사망일·신청인 관계·계좌와 서명, 7일 처리기간을 받는다. 통합된 현재 사업의 sources에 포함된 복지로 WLF00001252를 직접 GET하여 유성구 주소의 참전유공자 사망 시 유족 20만원, 사망 후 1년 이내 신청, 7일 내 지급 및 지급신청서 제출을 확인했다. 기본 정부24 페이지의 100세 장수축하금 내용 오류는 별도로 남아 있으나 동일 사업에 결속된 정확한 복지로 급여 부분을 특정할 수 있어 그 부분에만 조건부 제안한다. 인쇄된 제6조제1항 인용은 현재 신청 조항 제6조제3항과 다르다는 점을 기록하며, 현행 공식 별표키와 실제 제출 목적·주체는 동일하다.",
+      "roleEvidenceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=168181997&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C2%ED%98%B8%EC%84%9C%EC%8B%9D%5D%EC%B0%B8%EC%A0%84%EC%9C%A0%EA%B3%B5%EC%9E%90+%EC%82%AC%EB%A7%9D%EC%9C%84%EB%A1%9C%EA%B8%88+%EC%A7%80%EA%B8%89%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "roleCheckedAt": "2026-10-19",
+      "bodyEvidenceText": "제5조(지원사업) 구청장은 예산의 범위에서 다음 각 호의 지원사업을 실시할 수 있다.1. 지원대상자에게 예산의 범위에서 참전명예수당(이하 “수당”이라 한다) 지급 <개정 2022.11.18.>2. 지원대상자가 사망한 경우 20만원 이내의 사망위로금(이하 “위로금”이라 한다) 지급 <개정 2011.06.10>3. 그 밖에 참전유공자의 호국정신을 계승하기 위한 사업 또는 복리증진을 위하여 구청장이 필요하다고 인정하는 사업의 지원\n제6조(지원방법 및 시기)① 수당을 지급받고자 하거나 입금계좌를 변경하고자 하는 사람은 별지 제1호서식에 따른 신청서를 구청장에게 제출하여야 하며, 수당은 신청한 날이 속하는 달부터 지급중단 사유가 발생한 날이 속하는 달까지 지급한다.② 수당은 매월 말일(토요일이거나 공휴일인 경우에는 그 전날로 한다)에 신청인이 지정한 예금계좌를 통하여 지급한다.③ 위로금은 유가족 또는 관계인이 별지 제2호 서식에 따른 신청서를 사망일로부터 1년 이내에 구청장에게 제출하여야 하고, 구청장은 신청서 접수일로부터 7일 이내에 신청인이 지정한 예금계좌를 통하여 지급한다.④ 수당 또는 위로금을 신청할 경우 필요한 서류 중「「민원 처리에 관한 법률」제10조에 따라 행정정보의 공동이용을 통하여 확인할 수 있는 주민등록등본 또는 가족관계등록부에 대하여는 제출을 생략할 수 있다. <개정 2016.4.8., 2026.8.13.>\n제7조(지원대상자의 확인 등)① 구청장은 수당 및 위로금 신청자에 대하여 지원대상자 여부를 대전지방보훈청장에게 의뢰하여 확인하여야 한다. <개정 20164.8.,2018.2.23.>② 구청장은 제6조제1항에 따른 신청서 접수일로부터 20일 이내에 수당 지원대상자 적격여부를 결정하고, 이를 신청인에게 통보하여야 한다.",
+      "programEvidenceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00001252&wlfareInfoReldBztpCd=02",
+      "additionalEvidence": [
+        {
+          "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00001252&wlfareInfoReldBztpCd=02",
+          "httpStatus": 200,
+          "checkedAt": "2026-10-19",
+          "evidenceFile": "logs/forms-completion/official-followup/team2/case26-bokjiro-exact-merged.json",
+          "sha256": "d840122d5e23c2ca3d56844b9ae60e7bbe732339b45b361cfe6cea330becc94f",
+          "programSpecific": true
+        }
+      ],
+      "mergedProgramSourceEvidence": {
+        "catalogueProgramId": "g30200.gov24-367000000117",
+        "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00001252&wlfareInfoReldBztpCd=02",
+        "sourceIds": [
+          "WLF00001252"
+        ]
+      }
     }
   ],
   "sourceReview": {
     "file": "logs/forms-completion/reviews/team3-batch-063-reviewed.json",
-    "sha256": "79a6409598fc00f46454f53c200b40ea10c434ce979b8279802f19c54534d462",
-    "dispositionsSHA256": "70b9a939cb8610cd516363913893f816b7d16a31ad9fea3fa4b96330be88b90e",
+    "sha256": "cb7d2a42beba06a089b0c47fcf6215a6a8bb42b1679641bf73fdf55e05f5c712",
+    "dispositionsSHA256": "c8f626942915f891132616962c0a7181616ee3bfa9e47bd95c8b13390b293797",
     "assignmentSHA256": "ddfad9e2935449b727b267a20f94f47c5feb7c4799ffc8d9e98006cc8f87e34a"
   }
 }

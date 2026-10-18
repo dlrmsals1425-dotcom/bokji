@@ -2139,7 +2139,7 @@
       "formId": "ordin-19766693",
       "sha256": "5cf44da2ba0d2a129ebdd88fbc93bb5ffaba25aec2f50b2acc78d5108046d0df",
       "disposition": "requires_external_confirmation",
-      "reason": "원본 전체의 인쇄 제목·근거는 독립유공자가 아닌 '증평군 국가보훈대상자 예우 및 지원 조례' 제5·9조의 보훈예우수당이다. 출처 독립유공자 조례1995491은 제4·8조에서 독립유공자 보훈명예수당 신청을 규정하여 서로 다른 급여의 첨부가 붙어 있다. 같은 관할 현행 보훈예우 조례2080995와 정확 원본21025327도 직접 대조했으나 원본19766693의 독립유공자 사용 근거는 해소되지 않아 보류한다.",
+      "reason": "공식 현행목록을 다시 조회한 결과 독립유공자 조례는 동일1995491(2024.12.20 시행)이다. 기존 원본은 보훈예우수당 조례를 인쇄하여 독립유공자 보훈명예수당의 제4·8조와 불일치한다. 공개 현행법에서 교정된 독립유공자 신청서를 새로 확인하지 못해 기존 적용 보류를 유지한다. 다른 급여21025327로 대체하지 않는다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -2200,7 +2200,25 @@
           "sameBytesAsScopeOriginal": false
         },
         "unresolvedExternalCondition": "독립유공자 명예수당에 사용할 정정 원본 또는 해당 원본 겸용 허용의 공식 확인 필요"
-      }
+      },
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team1/team1-results.json",
+        "sourceResultSHA256": "1636a6e15bbf67808ab71c4d605f84f84d98ec0f4e389ea11ddb598de11ab1b8",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1995491",
+            "status": "official_MCP_current_search_reviewed",
+            "newEvidence": "공식 현행목록1건은 동일1995491",
+            "savedEvidence": []
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g43745.bokjiro-WLF00003002"
+      ]
     },
     {
       "formId": "ordin-18917793",

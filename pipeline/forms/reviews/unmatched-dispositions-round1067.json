@@ -2578,8 +2578,8 @@
     {
       "formId": "ordin-22836439",
       "sha256": "e770f1f8d8bfc8c5259b37504254287ab4c78562bf840154f0db993d72c6700f",
-      "disposition": "requires_external_confirmation",
-      "reason": "실제 신청서는 행사·단체·사용인원·부대시설 중심의 시설 사용허가 양식이다. 규칙 제2조는 허가서 또는 회원카드 발급을 정하지만 사이트 수영·강습·자유이용 감면 접수에서 이 원본을 개인 등록서로 받는지까지는 확인되지 않았다. 같은 시설 이름만으로 승인하지 않고 현장 프로그램 신청서 사용 여부 확인을 남긴다.",
+      "disposition": "no_matching_site_program",
+      "reason": "공단의 실제 2026년11월 강좌접수 화면과 다둥이·자원봉사 감면 절차는 수강 접수·결제 후 증빙확인/재결제를 안내하며 대관 신청 메뉴를 별도로 둔다. 원문은 행사·단체·부대시설 사용허가 신청으로 프로그램 강습감면의 접수 양식과 다르다. 해당 프로그램 이용료 감면 사업쌍에서 제외 제안하며 일반 대관에 유효하지 않다는 판단은 하지 않는다. 이 판정은 명시된 현재 수록 혜택의 제출서류 연결에 한정하며, 원본의 다른 목적상 유효성이나 기존 수급자 예외절차의 부재를 단정하지 않는다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -2619,7 +2619,33 @@
           "annexBinding": "bound"
         }
       },
-      "checkedAt": "2026-10-19"
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team1/team1-results.json",
+        "sourceResultSHA256": "1636a6e15bbf67808ab71c4d605f84f84d98ec0f4e389ea11ddb598de11ab1b8",
+        "proposedStatus": "propose_exclusion",
+        "officialEvidence": [
+          {
+            "url": "https://www.efmc.or.kr/fmcs/27",
+            "httpStatus": 200,
+            "status": "GET_200_full_page_reviewed",
+            "responseSHA256": "6d55add1e05ae43229c83937ce0d5a2d9e1e2813a3fe13f335a01bc4784bfdf0",
+            "newEvidence": "현재 수강·감면 절차 및 대관신청 분리 확인",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team1/eunpyeong-program-current.json",
+                "sha256": "1a6b3710958e4ae7e9e1d87cdcf57d68efed21711cb20160f280e3d81c3e7d76",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g11380.gov24-O00024100001"
+      ]
     },
     {
       "formId": "ordin-22836445",
@@ -2929,7 +2955,7 @@
       "formId": "ordin-22848507",
       "sha256": "0c62919e777e33f1fb35c5472831cde616d8329c5e208d7c3bf9aaa072760b2b",
       "disposition": "requires_external_confirmation",
-      "reason": "교부 단계의 청렴서약 앞뒤 전체를 읽었고 단체대표·책임관리자·실무책임자 세 작성란을 확인했다. 규칙 제3조는 보조금 교부서류로 요구하지만 개인 청년농업인이 이 단체 서명구조의 원본을 그대로 제출하는지 확인되지 않았다. 해당사업 교부안내나 개인용 서약서 확인이 필요하다.",
+      "reason": "현재 정부24 청년농업인 영농정착 사업은 2026-01-05~02-05 모집 및 신청서·정보동의·사업계획·교육/경영체 증빙을 안내하지만 교부 때 이 단체대표·책임관리자·실무책임자3인 서약을 개인에게 받는다고 하지 않는다. 곡성군 공식 교부안내의 별도 개인용 서약 또는 정확한 작성 주체 근거는 추가로 찾지 못했다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -2969,7 +2995,30 @@
           "annexBinding": "bound"
         }
       },
-      "checkedAt": "2026-10-19"
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team2/team2-results.json",
+        "sourceResultSHA256": "badd63d72d5f96dcc6815ad79e43ba695490e25777144516a69934cdab93a48a",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/486000000126",
+            "httpStatus": 200,
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team2/case32-gov24.json",
+                "sha256": "8094ec6e6ec466079b99324ae5315db27564cb8052a5ee0737342cc6bf489fbb",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g12720.gov24-486000000126"
+      ]
     },
     {
       "formId": "ordin-22853153",

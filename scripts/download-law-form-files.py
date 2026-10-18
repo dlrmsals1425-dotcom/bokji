@@ -12,6 +12,7 @@ https://cdn.hancom.com/link/docs/한글문서파일형식_5.0_revision1.2.pdf
 import argparse
 import concurrent.futures
 import hashlib
+import importlib.util
 import io
 import json
 import re
@@ -22,7 +23,7 @@ import zipfile
 import zlib
 from datetime import datetime, timezone
 from pathlib import Path
-from urllib.parse import parse_qsl, urlsplit
+from urllib.parse import parse_qsl, urlsplit, urljoin
 import xml.etree.ElementTree as ET
 
 import olefile
@@ -31,6 +32,8 @@ from pypdf import PdfReader
 from PIL import Image
 
 ROOT=Path(__file__).resolve().parents[1]
+agency_spec=importlib.util.spec_from_file_location('download_agency',ROOT/'scripts/verified_agency_forms.py')
+agency=importlib.util.module_from_spec(agency_spec);agency_spec.loader.exec_module(agency)
 LOG=ROOT/'logs/law-downloads'
 MANIFEST=ROOT/'pipeline/forms/download-manifest.json'
 MAX_BYTES=30*1024*1024
@@ -158,6 +161,32 @@ class Download:
                 if attempt==2:raise
         raise ValueError('rate_limited')
 
+    def get_agency(self,form_id):
+        """Only the registered source and its one registered final redirect."""
+        entry=agency.registry_entry(form_id);url=entry['sourceUrl']
+        for hop in range(2):
+            with self.lock:
+                time.sleep(max(0,self.next-time.monotonic()));self.next=time.monotonic()+self.interval
+            with requests.get(url,headers={'User-Agent':'Mozilla/5.0','Referer':entry['sourcePageUrl']},
+                              timeout=self.timeout,stream=True,allow_redirects=False) as response:
+                if response.url!=url:raise ValueError('agency_wire_url_mismatch')
+                if response.status_code in (301,302,303,307,308):
+                    target=urljoin(url,response.headers.get('Location',''))
+                    if hop or target!=entry['finalUrl'] or target==url or not agency.safe_url(target):
+                        raise ValueError('unregistered_agency_redirect')
+                    url=target;continue
+                if response.status_code!=200:raise ValueError('agency_http_'+str(response.status_code))
+                if response.url!=entry['finalUrl']:raise ValueError('agency_final_url_mismatch')
+                chunks=[];size=0
+                for chunk in response.iter_content(65536):
+                    size+=len(chunk)
+                    if size>MAX_BYTES:raise ValueError('file_too_large')
+                    chunks.append(chunk)
+                data=b''.join(chunks)
+                agency.verify_original(form_id,data,inspect_document(data))
+                return data
+        raise ValueError('unregistered_agency_redirect')
+
 def expected_hashes():
     out={}
     for path in (ROOT/'pipeline/forms/reviews').glob('*-reviewed*.json'):
@@ -229,11 +258,16 @@ def approved_catalog():
 
 def cached_original(form,archive):
     fid=form['id'];record_path=LOG/(fid+'.json')
+    registered=agency.validate_form(form) if form.get('sourceKind')=='agency' or fid.startswith('agency-') else None
     if record_path.exists():
         record=read(record_path)
         path=Path(record.get('localPath',''))
         if record.get('state')=='stored' and record.get('sourceUrl')==form['sourceUrl'] and path.is_file():
             data=path.read_bytes()
+            if registered:
+                if not path.resolve().is_relative_to(Path(archive).resolve()) or record.get('finalUrl')!=registered['finalUrl']:
+                    raise ValueError('agency_cached_path_or_identity_mismatch')
+                agency.verify_original(fid,data,inspect_document(data))
             if digest(data)==record.get('sha256'):return data,record
     # A filename alone does not prove which official attachment supplied it.
     # Fresh checkouts can reuse committed originals only through their manifest.
@@ -244,6 +278,10 @@ def cached_original(form,archive):
             path=ROOT/'pipeline/forms'/expected_path
             if entry.get('path')==expected_path and path.is_file():
                 data=path.read_bytes()
+                if registered:
+                    if not path.resolve().is_relative_to((ROOT/'pipeline/forms').resolve()) or entry.get('finalUrl')!=registered['finalUrl']:
+                        raise ValueError('agency_cached_path_or_identity_mismatch')
+                    agency.verify_original(fid,data,inspect_document(data))
                 if len(data)==entry.get('bytes') and digest(data)==entry.get('sha256'):return data,None
     return None,None
 
@@ -282,7 +320,8 @@ def main():
     def worker(form):
         fid=form['id']
         try:
-            if not re.fullmatch(r'(ordin|law|rule)-\d+',fid) or not official_download(form['sourceUrl']):raise ValueError('invalid_form_identity')
+            registered=agency.validate_form(form) if form.get('sourceKind')=='agency' or fid.startswith('agency-') else None
+            if not registered and (not re.fullmatch(r'(ordin|law|rule)-\d+',fid) or not official_download(form['sourceUrl'])):raise ValueError('invalid_form_identity')
             source_archive=None;archive_entry=None
             if fid in members and fid in approved:
                 selection=members[fid];container_path=args.archive_dir/(fid+'.zip')
@@ -299,15 +338,17 @@ def main():
             else:
                 data,previous=cached_original(form,args.archive_dir)
                 reused=data is not None
-                if data is None:data=downloader.get(form['sourceUrl'])
+                if data is None:data=downloader.get_agency(fid) if registered else downloader.get(form['sourceUrl'])
             sha=digest(data)
             if fid in approved and fid in expected and sha!=expected[fid]:raise ValueError('reviewed_original_hash_changed')
             hint=(previous or {}).get('format') or manifest.get('forms',{}).get(fid,{}).get('format') or body_evidence.get(fid,{}).get('originalFormat')
             info=inspect_document(data,hint)
+            if registered:agency.verify_original(fid,data,info)
             target=save_original(args.archive_dir,fid,info['format'],data)
             record={'formId':fid,'state':'stored','sourceUrl':form['sourceUrl'],'lawId':form['lawId'],'lawTitle':form['lawTitle'],
                     'title':form['title'],'regionCode':form['regionCode'],'sha256':sha,'bytes':len(data),'localPath':str(target),
                     'downloadedAt':previous.get('downloadedAt') if previous else now(),'reused':reused,**info}
+            if registered:record.update(sourceKind='agency',finalUrl=registered['finalUrl'],sourcePageUrl=registered['sourcePageUrl'],attachmentId=registered['attachmentId'])
             if source_archive:record['sourceArchive']=source_archive
             write_json(LOG/(fid+'.json'),record)
             entry=None
@@ -325,6 +366,7 @@ def main():
                 if not destination.exists():destination.write_bytes(data)
                 if digest(destination.read_bytes())!=sha:raise ValueError('stored_original_hash_changed')
                 entry={k:record[k] for k in ('format','bytes','sha256','sourceUrl','downloadedAt')};entry['path']=relative
+                if registered:entry['finalUrl']=registered['finalUrl']
                 if archive_entry:entry['archive']=archive_entry
                 pdf_url=form.get('officialPdfUrl')
                 pdf_path=ROOT/'pipeline/forms/previews'/(fid+'.pdf')

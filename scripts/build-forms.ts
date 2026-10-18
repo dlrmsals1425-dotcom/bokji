@@ -7,11 +7,12 @@ import type { Program } from "../src/lib/data/types";
 import type { ApplicationForm, FormFileFormat, FormLink, FormsRegion, FormsCoverage, ProgramFormEntry, FormStatus } from "../src/lib/data/forms";
 import { normalizeCensus, censusLinkConflict } from "../src/lib/data/forms";
 import { classifyFormRole, findFormCandidates } from "../src/lib/data/formMatching";
-import { applicationRoute, formStatus, validateFormLink, externalFormUrl, officialFormUrl } from "../src/lib/data/formPublication";
+import { applicationRoute, formStatus, validateFormLink, externalFormUrl, officialFormUrl, registeredAgencyForm, validateAgencyForm } from "../src/lib/data/formPublication";
 import { detailBucket } from "../src/lib/data/bucket";
 
 export interface DownloadRecord {
   format: FormFileFormat; path: string; bytes: number; sha256: string; sourceUrl: string; downloadedAt: string;
+  finalUrl?: string;
   pdf?: { path: string; bytes: number; sha256: string; sourceUrl: string };
   archive?: { path: string; bytes: number; sha256: string; member: string };
 }
@@ -51,7 +52,10 @@ function archivedMember(archive: Buffer, expectedName: string): Buffer {
 export function validateDownloadManifest(value: unknown): DownloadManifest {
   if (!recordObject(value) || value.schema !== 1 || !recordObject(value.forms)) throw new Error("Invalid download manifest schema");
   for (const [id, entry] of Object.entries(value.forms)) {
-    if (!/^(ordin|law|rule)-\d+$/.test(id) || !recordObject(entry) || !["hwp", "hwpx", "pdf", "txt", "gif"].includes(String(entry.format))) throw new Error("Invalid downloaded form id/format");
+    const agency=registeredAgencyForm(id);
+    if ((!/^(ordin|law|rule)-\d+$/.test(id) && !agency) || !recordObject(entry) || !["hwp", "hwpx", "pdf", "txt", "gif"].includes(String(entry.format))) throw new Error("Invalid downloaded form id/format");
+    if (agency && (entry.sourceUrl!==agency.sourceUrl || entry.finalUrl!==agency.finalUrl || entry.sha256!==agency.sha256
+        || entry.bytes!==agency.bytes || entry.format!==agency.format || entry.pdf!==undefined || entry.archive!==undefined)) throw new Error("Agency download identity mismatch: "+id);
     if (entry.path !== `originals/${id}.${entry.format}`) throw new Error("Downloaded original path/id mismatch: " + id);
     for (const file of [entry, ...(entry.pdf === undefined ? [] : [entry.pdf]), ...(entry.archive === undefined ? [] : [entry.archive])]) {
       if (!recordObject(file) || !Number.isSafeInteger(file.bytes) || Number(file.bytes) <= 0 || typeof file.sha256 !== "string" || !/^[a-f0-9]{64}$/.test(file.sha256)) throw new Error("Invalid download bytes/hash: " + id);
@@ -67,7 +71,7 @@ export function validateDownloadManifest(value: unknown): DownloadManifest {
       if (archive.path !== `source-archives/${id}.zip` || typeof archive.member !== "string" || !/\.hwpx?$/i.test(archive.member)) throw new Error("Invalid source archive/member: " + id);
     }
     const sourceUrl = officialFormUrl(entry.sourceUrl);
-    if (!sourceUrl || !new URL(sourceUrl).pathname.endsWith("/flDownload.do") || !/^\d+$/.test(new URL(sourceUrl).searchParams.get("flSeq") || "")) throw new Error("Downloaded source must be an official attachment: " + id);
+    if (!agency && (!sourceUrl || !new URL(sourceUrl).pathname.endsWith("/flDownload.do") || !/^\d+$/.test(new URL(sourceUrl).searchParams.get("flSeq") || ""))) throw new Error("Downloaded source must be an official attachment: " + id);
     if (typeof entry.downloadedAt !== "string" || !/^\d{4}-\d{2}-\d{2}T/.test(entry.downloadedAt) || !Number.isFinite(Date.parse(entry.downloadedAt))) throw new Error("Invalid download timestamp: " + id);
   }
   return value as unknown as DownloadManifest;
@@ -135,7 +139,10 @@ export async function loadDownloadedOriginals(input: string, value: unknown, for
   };
   for (const [id, entry] of Object.entries(manifest.forms)) {
     const metadata = forms[id];
-    if (!metadata || metadata.id !== id || !officialFormUrl(metadata.sourceUrl) || new URL(metadata.sourceUrl).searchParams.get("flSeq") !== new URL(entry.sourceUrl).searchParams.get("flSeq")) throw new Error("Downloaded source does not match form metadata: " + id);
+    if (id.startsWith("agency-")) {
+      if (!metadata || metadata.id!==id) throw new Error("Missing agency form metadata: "+id);
+      validateAgencyForm(metadata);
+    } else if (!metadata || metadata.id !== id || !officialFormUrl(metadata.sourceUrl) || new URL(metadata.sourceUrl).searchParams.get("flSeq") !== new URL(entry.sourceUrl).searchParams.get("flSeq")) throw new Error("Downloaded source does not match form metadata: " + id);
     const bytes = await load(entry);
     validateOriginalFile(bytes, entry.format);
     if (entry.archive) {
@@ -155,7 +162,7 @@ export async function loadDownloadedOriginals(input: string, value: unknown, for
 }
 
 export function requireApprovedOriginals(published: Set<string>, originals: Map<string, StoredOriginal>, manifestPresent: boolean): void {
-  if (manifestPresent) for (const id of published) if (!originals.has(id)) throw new Error("Approved form has no downloaded original: " + id);
+  for (const id of published) if ((manifestPresent || id.startsWith("agency-")) && !originals.has(id)) throw new Error("Approved form has no downloaded original: " + id);
 }
 
 async function main() {
@@ -224,7 +231,8 @@ async function main() {
     if (!forms[raw.id]) forms[raw.id] = raw;
   }
   for (const raw of Object.values(portalReviews?.forms || {})) {
-    if (!/^(ordin|law|rule)-\d+$/.test(raw.id) || !officialFormUrl(raw.sourceUrl) || !officialFormUrl(raw.lawUrl)) throw new Error("Invalid reviewed portal form");
+    if (raw.sourceKind==="agency" || raw.id.startsWith("agency-")) validateAgencyForm(raw);
+    else if (!/^(ordin|law|rule)-\d+$/.test(raw.id) || !officialFormUrl(raw.sourceUrl) || !officialFormUrl(raw.lawUrl)) throw new Error("Invalid reviewed portal form");
     // Explicit source audits may establish the actual effective date, distinct
     // from a publication date supplied by the bulk annex catalogue.
     forms[raw.id] = { ...forms[raw.id], ...raw };
@@ -301,7 +309,7 @@ async function main() {
   // Revoke only files owned by this generator; never recursively delete a directory.
   const assetsDirectory = path.resolve(output, "files");
   for (const name of await readdir(assetsDirectory)) {
-    if (!/^(ordin|law|rule)-\d+-[a-f0-9]{12}\.(hwp|hwpx|pdf|txt|gif)$/.test(name) || expectedAssets.has(name)) continue;
+    if (!/^(?:(ordin|law|rule)-\d+|agency-\d{5}-[a-zA-Z0-9][a-zA-Z0-9_-]{0,79})-[a-f0-9]{12}\.(hwp|hwpx|pdf|txt|gif)$/.test(name) || expectedAssets.has(name)) continue;
     const target = path.resolve(assetsDirectory, name);
     if (path.dirname(target) !== assetsDirectory) throw new Error("Unexpected asset path");
     await unlink(target);

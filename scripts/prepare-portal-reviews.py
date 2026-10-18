@@ -22,6 +22,8 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 spec=importlib.util.spec_from_file_location('portal_match',ROOT/'pipeline/forms/portal_match.py')
 matcher=importlib.util.module_from_spec(spec);spec.loader.exec_module(matcher)
+agency_spec=importlib.util.spec_from_file_location('reviewed_agency',ROOT/'scripts/verified_agency_forms.py')
+agency=importlib.util.module_from_spec(agency_spec);agency_spec.loader.exec_module(agency)
 REVIEW_FILE=re.compile(r'(national|municipal)-reviewed(?:-round(\d+))?\.json')
 BASE_FILES=('national-reviewed.json','municipal-reviewed.json')
 ALLOWED_ROLES=frozenset({'application','consent','delegation','supporting'})
@@ -161,6 +163,11 @@ def application_part_title(value):
 def resolve_role(record):
     """서식 역할과 검토 메타데이터. 제목 분류를 먼저 쓰고, 가릴 수 없을 때만 메타데이터를 본다."""
     form_id=record['formId'];declared=str(record.get('role') or '').strip()
+    if record.get('sourceKind')=='agency' or str(form_id).startswith('agency-'):
+        body_spec=importlib.util.spec_from_file_location('agency_body_reader',ROOT/'scripts/download-law-form-files.py')
+        body=importlib.util.module_from_spec(body_spec);body_spec.loader.exec_module(body)
+        entry,metadata=agency.prepare_review(record,body.inspect_document)
+        return entry['role'],metadata
     if declared in BLOCKED_ROLES:raise ValueError('Audited row marks a non-applicant form role: '+form_id)
     role=matcher.classify_role(record['formTitle'],'서식')
     exception_laws=AUDITED_APPLICATION_EXCEPTIONS if declared=='application' else AUDITED_CONSENT_EXCEPTIONS if declared=='consent' else {}
@@ -204,6 +211,10 @@ def resolve_role(record):
     raise ValueError('Audited form role still needs review; an unidentified supporting form needs roleBasis, roleEvidenceUrl and roleCheckedAt: '+form_id)
 def scope_basis(record,program,form):
     """다른 관할 서식이 이 사업에 적용된다는 근거. 검토가 적은 값만 확인하고 없으면 만들지 않는다."""
+    if form.get('sourceKind')=='agency':
+        entry=agency.validate_form(form)
+        agency.validate_program(entry,program,record)
+        return None
     region=program.get('region') if isinstance(program.get('region'),dict) else {}
     same_province=program.get('scope')=='sigungu' and form['regionCode']==region.get('sido')
     national_reference=form['regionCode']=='national' and form.get('sourceKind') in {'law','rule'} and program.get('scope') in {'sido','sigungu'}
@@ -291,6 +302,11 @@ def build(programs,files):
                 'regionCode':record.get('regionCode','national'),'regionLabel':record.get('regionLabel','전국 공통'),'effectiveDate':day(record['effectiveDate']),
                 'sourceUrl':record['sourceUrl'],'lawUrl':law_url,'fetchedAt':record['checkedAt'],'sourceKind':kind,'dateKind':record['dateKind'],
                 **({'officialPdfUrl':record['officialPdfUrl']} if record.get('officialPdfUrl') else {})}
+            if kind=='agency':
+                entry=agency.registry_entry(form_id)
+                forms[form_id]['lawUrl']=entry['lawEvidenceUrl']
+                forms[form_id]['agency']=agency.agency_metadata(entry)
+                agency.validate_form(forms[form_id])
             if record.get('displayTitle'):
                 if not metadata:raise ValueError('Display title needs audited full-body role evidence: '+form_id)
                 # A combined original may expose different parts for each benefit.

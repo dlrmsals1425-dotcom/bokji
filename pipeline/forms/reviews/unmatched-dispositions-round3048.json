@@ -354,7 +354,7 @@
       "formId": "ordin-21165707",
       "sha256": "b3e4d799ae6c7e475025c23a74a8775872da7ca28a09262b63789ab274c4c425",
       "disposition": "requires_external_confirmation",
-      "reason": "원본은 개인의 일반 자활기금 사업목적·사업비·자부담·사업계획을 제출하는 지원/대여 신청이다. 현 사이트 자활성공수당은 취·창업 유지기간 확인과 별도 자활성공수당 지원신청서를 요구하며 본 조례 제4조제8호의 포괄 지원근거만으로 이 일반 사업계획 서식이 실제 성공수당 접수에 쓰인다고 확정할 수 없다. 공식 검색에서도 겸용 근거를 찾지 못해 보류한다.",
+      "reason": "현재 정부24 자활성공수당은 자활성공수당 지원신청서와 취·창업 유지기간 증빙을 별도로 요구한다. 일반 자활기금 사업비·자부담·사업계획서 원본을 성공수당 신청에 겸용한다는 용인시의 추가 공식 접수 근거를 찾지 못해 보류를 유지한다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -403,7 +403,30 @@
         "claim": "여러 자활사업 지원 및 그밖의 지원을 규정하나 성공수당의 특정 접수서식 겸용은 확인되지 않음",
         "programDocuments": "자활성공수당 지원신청서, 취·창업 확인 가능 서류(취업기간 확인 가능), 신분증, 통장사본",
         "unresolvedExternalCondition": "용인 자활성공수당의 실제 서식 또는 일반별지1 겸용 공식 확인"
-      }
+      },
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team2/team2-results.json",
+        "sourceResultSHA256": "badd63d72d5f96dcc6815ad79e43ba695490e25777144516a69934cdab93a48a",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/405000000640",
+            "httpStatus": 200,
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team2/case15-gov24.json",
+                "sha256": "9cc0dc059635bf0f15a0e3bfbbbe5a13f5d5b9ccfa2f674c5a542fb806252800",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g41460.gov24-405000000640"
+      ]
     },
     {
       "formId": "ordin-21165709",
@@ -3155,7 +3178,7 @@
       "formId": "ordin-21685783",
       "sha256": "c6713e5df348d8103c5b3a294fa8f61ae9ba0ee0cdecd1390379eb1987f6557c",
       "disposition": "requires_external_confirmation",
-      "reason": "장애아동 건강음료·의료비·보조기구·발달재활 네 신청 및 변경란과 정보동의 전체를 읽었다. 현행 제24조는 별지 신청을 정하지만 사이트의 유일하게 맞는 중증장애아동 건강지원105는 '신청불필요, 담당자가 직접 관리·지원'이라고 명시한다. 건강음료로 남은 원본이 현재 월3만원 자동지원의 변경서류로 실제 쓰이는지 확인되지 않아 신규 제출을 유도하지 않고 보류한다. 자산형성·복지카드·임신출산 후보와는 목적이 다르다.",
+      "reason": "정부24의2026.8.12 최신 공식 상세를 직접 GET하여 신청불필요·담당자 직접관리·신청서 및 구비서류 해당없음을 재확인했다. 현재 월3만원 건강지원에서 옛 건강음료 신청/변경 원본을 예외적으로 받는다는 근거는 확인되지 않았다. 다른 장애아동수당의 전국 서류를 같은 건강지원으로 전용하지 않는다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -3232,13 +3255,58 @@
       "checkedAt": "2026-10-19",
       "additionalEvidence": {
         "unresolvedExternalCondition": "당진 중증장애아동 건강지원의 현행 자동지급 및 변경접수 절차, 건강음료 표기 원본의 실제 사용 여부 확인"
-      }
+      },
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team1/team1-results.json",
+        "sourceResultSHA256": "1636a6e15bbf67808ab71c4d605f84f84d98ec0f4e389ea11ddb598de11ab1b8",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/568000000105",
+            "httpStatus": 200,
+            "status": "GET_200_full_page_reviewed",
+            "responseSHA256": "384485a33e1217f441206b3b2e917f6870cb5187bb784ebfab3f488f1f24fba1",
+            "newEvidence": "최신 정부24 건강지원은 신청불필요·신청서/구비서류해당없음",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team1/dangjin-health-gov24.json",
+                "sha256": "785cb9a09c036fe8e6ddf51983e8d9f55c669775f4ab170613c85e8f45d101be",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.dangjin.go.kr/bokji/sub05_02_03.do",
+            "httpStatus": 200,
+            "status": "GET_200_full_page_reviewed",
+            "responseSHA256": "dec84eec9dd41047e36905e4e233f0184b62078dfe18ee61e2b59b92a120f347",
+            "newEvidence": "별도 전국 장애아동수당은 건강음료 지원과 지급금액·대상이 다른 사업임을 구분",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team1/dangjin-child-allowance.json",
+                "sha256": "20219e616d5082359135056f25c45720ebd096a7fdd6aa80ff48e7b269aae67e",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g44270.bokjiro-WLF00000633",
+        "g44270.gov24-568000000105",
+        "g44270.gov24-568000000112",
+        "g44270.bokjiro-WLF00002196",
+        "g44270.bokjiro-WLF00002175",
+        "g44270.gov24-568000000115"
+      ]
     },
     {
       "formId": "ordin-21685785",
       "sha256": "75f0574b032abacabad0685540a11eafa036724c7359dc54132dcdf5a3b1e553",
       "disposition": "requires_external_confirmation",
-      "reason": "금융·신용·보험정보 및 가구원 동의 앞뒤를 전부 읽었다. 제24조제2항은 장애아동 복지지원 신청의 첨부로 한정하므로 이를 자산형성통장·임신출산 사업에 일반 동의서로 붙일 수 없다. 해당 건강지원은 현재 신청불필요로 안내돼 금융정보 제출 필요성이 확인되지 않았고 원본에 기초노령연금 등 과거 명칭도 남아 있어 현행 접수서류 확인 전 보류한다.",
+      "reason": "정부242026.8.12 건강지원 상세가 신청·제출서류 불필요로 안내하여 이 금융정보 동의서의 현재 제출근거를 해소하지 못했다. 별지1의 옛 장애아동 복지지원에 종속된 원본을 자산형성통장·임신출산 등 별도 사업의 동의서로 확대하지 않는다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -3312,7 +3380,52 @@
       "additionalEvidence": {
         "unresolvedExternalCondition": "자동 건강지원에 금융재산조사 동의가 실제 필요한지 및 현재 서식 사용 여부의 공식 확인 필요",
         "sourceIssue": "기초노령연금법·과거 금융기관 등 이전 명칭을 포함한 원본이며 임의 수정하지 않음"
-      }
+      },
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team1/team1-results.json",
+        "sourceResultSHA256": "1636a6e15bbf67808ab71c4d605f84f84d98ec0f4e389ea11ddb598de11ab1b8",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/568000000105",
+            "httpStatus": 200,
+            "status": "GET_200_full_page_reviewed",
+            "responseSHA256": "384485a33e1217f441206b3b2e917f6870cb5187bb784ebfab3f488f1f24fba1",
+            "newEvidence": "최신 정부24 건강지원은 신청불필요·신청서/구비서류해당없음",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team1/dangjin-health-gov24.json",
+                "sha256": "785cb9a09c036fe8e6ddf51983e8d9f55c669775f4ab170613c85e8f45d101be",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.dangjin.go.kr/bokji/sub05_02_03.do",
+            "httpStatus": 200,
+            "status": "GET_200_full_page_reviewed",
+            "responseSHA256": "dec84eec9dd41047e36905e4e233f0184b62078dfe18ee61e2b59b92a120f347",
+            "newEvidence": "별도 전국 장애아동수당은 건강음료 지원과 지급금액·대상이 다른 사업임을 구분",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team1/dangjin-child-allowance.json",
+                "sha256": "20219e616d5082359135056f25c45720ebd096a7fdd6aa80ff48e7b269aae67e",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g44270.bokjiro-WLF00000633",
+        "g44270.gov24-568000000105",
+        "g44270.gov24-568000000112",
+        "g44270.bokjiro-WLF00002196",
+        "g44270.bokjiro-WLF00002175",
+        "g44270.gov24-568000000115"
+      ]
     },
     {
       "formId": "ordin-21685787",

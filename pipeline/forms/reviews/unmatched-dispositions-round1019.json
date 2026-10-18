@@ -354,8 +354,8 @@
         "sourceArticlesAvailable": true,
         "sourceArticleCount": 8
       },
-      "disposition": "requires_external_confirmation",
-      "reason": "조례 제5조와 원본에는 장수수당 지급신청이 남아 있으나 두 실제 사업 안내는 2017년 이후 신규 신청을 받지 않는 단계적 폐지 사업임을 명시한다. 기존 대상자 계속 지급과 신규 신청 가능성을 구분해야 하므로 이 원본을 현재 신규 신청서로 승인하지 않는다. 기존 수급자의 예외적 재처리 용도로 실제 접수하는지 외부 확인이 필요하다.",
+      "disposition": "no_matching_site_program",
+      "reason": "정부24 현재 장수수당 안내(2026-08-05 수정)가 2017-01-01 이후 신규 신청 불가와 기존 대상자 계속 지급을 다시 명시한다. 실제 원본은 신규 장수수당 지급 신청서이며 이 사업의 현재 신규 신청 양식으로 안내할 수 없다. 현재 신규 신청 연결에서는 제외를 제안한다. 기존 수급자의 예외적 재처리 용도까지 없다고 단정한 것은 아니며 그 용도의 직접 접수 근거는 찾지 못했다. 이 판정은 명시된 현재 수록 혜택의 제출서류 연결에 한정하며, 원본의 다른 목적상 유효성이나 기존 수급자 예외절차의 부재를 단정하지 않는다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -382,7 +382,32 @@
       "reviewedBy": "codex-national_form_audit",
       "reviewedAt": "2026-10-18",
       "sourceBodyPath": "logs/forms-completion/law-bodies/1838121.json.gz",
-      "sourceBodySHA256": "ad29777220772c8191f8dd5d147ea16aef5f2b8d9c87ee318e7b9f4236e97274"
+      "sourceBodySHA256": "ad29777220772c8191f8dd5d147ea16aef5f2b8d9c87ee318e7b9f4236e97274",
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team2/team2-results.json",
+        "sourceResultSHA256": "badd63d72d5f96dcc6815ad79e43ba695490e25777144516a69934cdab93a48a",
+        "proposedStatus": "propose_exclusion",
+        "officialEvidence": [
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/383000000115",
+            "httpStatus": 200,
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team2/case11-gov24.json",
+                "sha256": "04cbf15f74266174eedfa37302a98c55753860a494b50a947ef1165a72407757",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g41170.bokjiro-WLF00004127",
+        "g41170.gov24-383000000115"
+      ]
     },
     {
       "formId": "ordin-20154253",
@@ -1403,7 +1428,7 @@
         "sourceArticleCount": 9
       },
       "disposition": "requires_external_confirmation",
-      "reason": "구 중구 법규1840215 제7조와 원본의 의료급여 지대치 신청 목적은 두 영종구 사업과 같으나 원본 법명·수신자가 중구청장이다. 새 영종구 법규2144121의 공식 본문 전체 제1~7조를 추가 대조했고 제6조는 같은 제목 별지1을 요구하지만 해당 lawService에는 별표 항목이 없어 새 별지 원본 결속을 확인하지 못했다. 구 판본을 현행 영종구 서식으로 자동 승인하지 않고 최신 첨부 확인을 기다린다.",
+      "reason": "신설 영종구 법규2144121의 현재 본문 제6조는 별지1을 요구하지만 공개 본문에는 별지 다운로드가 없다. 현 복지로에 붙은 HWP도 새로 GET하여 전체 판독했으나 중구청장 명의의 2020년 사업 안내문이며 빈 신청서가 아니다. 옛 중구 신청서를 영종구 원본으로 치환할 근거는 미해소.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -1445,7 +1470,57 @@
         "note": "현행 영종구 조문 제6조의 별지1 신청서 지정 확인; 구 중구 첨부와 같은 파일이라는 증거 미확보."
       },
       "sourceBodyPath": "logs/forms-completion/law-bodies/1840215.json.gz",
-      "sourceBodySHA256": "ff4cf90ebd81ca01e74a9a33e3de36a667ae5bbdc9e611db12a49fffe7e4d165"
+      "sourceBodySHA256": "ff4cf90ebd81ca01e74a9a33e3de36a667ae5bbdc9e611db12a49fffe7e4d165",
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team3-results.json",
+        "sourceResultSHA256": "7e8e63b2e007e7deed1d20ab71367066ef036d087d892df780147ee63e67b764",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=1840215&gubun=ELIS",
+            "httpStatus": 200,
+            "responseSha256": "9a6975c2b6e1957fa00fbe38748b55bd2a7489c36e42e20c2f5b2a1c6b8988a9",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/law-1840215.json",
+                "sha256": "3104e1209f1336b0d2450309578eb466ace60052248a9cd3cefca5e0562c9503",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=2144121&gubun=ELIS",
+            "httpStatus": 200,
+            "responseSha256": "bbe63d71065bcdcb1383d19ec5d860c5cffb1359338649dd4ab1c9973d65125f",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/yeongjong-law.json",
+                "sha256": "efd92b8c982a4b955df64b0686cd8b3ffc4299670f51dbb3d36e0ca35c004f1e",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00002277&wlfareInfoReldBztpCd=02",
+            "httpStatus": 200,
+            "bodyTextSha256": "39b12786d0cbd249d53e37815f25c3b6c042b7acef1c47ec4e2900eab58a02a8",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/program-g28155.bokjiro-WLF00002277.json",
+                "sha256": "a803a2bb3a7cee5afdb65cb56af43ec0c53e3936557fb533f6895eb2de75ab18",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g28155.bokjiro-WLF00002277",
+        "g28155.gov24-349000000108"
+      ]
     },
     {
       "formId": "ordin-22416477",
@@ -3713,7 +3788,7 @@
         "sourceArticleCount": 13
       },
       "disposition": "requires_external_confirmation",
-      "reason": "HWPX의 4개 section과 기준보조율·제1~11호 전체를 읽었다. 규칙 제3조의 교부신청·단체계획·관리카드·청렴서약, 기관 교부결정·정산통지·중요재산과 제7·12조의 부정수급 신고포상·이의신청이 섞인 파일이다. 북스타트는 부모의 도서관 서비스 신청이므로 기관 보조금교부 서식과 다르다. 문화재단 3개 사업은 단체·예술인 대상이지만 NCAS 공모 및 재단 절차를 안내하여 도지사 직접 교부 양식을 쓰는지 미확정이다. 같은 도 전체 관련 사업 검색에서도 이 신고포상금에 대응하는 사업을 확인하지 못했다. 실제 보조사업자라는 이유만으로 일괄 승인하지 않고 각 공고·교부 단계의 적용 확인을 남긴다.",
+      "reason": "충북문화재단이 2026 선정자에게 지정한 예술창작·청년예술 전용 교부(변경) 양식 2개를 실제 내려받아 전체본문을 확인했다. 기존 도지사 수신 일반 묶음의 자동 재사용은 승인하지 않고 해당 두 사업의 선정 이후 단계에만 agency 원본을 제안한다. 생애주기 문화예술교육 및 북스타트에는 이 두 서식을 확대 적용하지 않는다. 현재 별도 기관 원본의 관련 서류는 공개했지만 이 옛 원본의 전체 용도·주신청 또는 다른 후보 사업까지 대체했다고 판정하지 않는다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -3789,7 +3864,67 @@
         }
       ],
       "sourceBodyPath": "logs/forms-completion/law-bodies/1850483.json.gz",
-      "sourceBodySHA256": "387da1b3ec405770e85adbc1d45bc5cf7d76d3f9364e25cb47bb42b3db7740fe"
+      "sourceBodySHA256": "387da1b3ec405770e85adbc1d45bc5cf7d76d3f9364e25cb47bb42b3db7740fe",
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team1/team1-results.json",
+        "sourceResultSHA256": "1636a6e15bbf67808ab71c4d605f84f84d98ec0f4e389ea11ddb598de11ab1b8",
+        "proposedStatus": "propose_replacement",
+        "officialEvidence": [
+          {
+            "url": "https://www.cbfc.or.kr/home/sub.php?menukey=6442&mod=view&no=2045467&scode=00000003",
+            "status": "GET_200_full_page_reviewed",
+            "responseSHA256": "d8c1fe4bf987e9207d53c89b4f941afbee4d16e4132f9bd9f9c03be4fdc9e57a",
+            "newEvidence": "2026 선정자 교부·변경·정산 배포 안내와 두 정확 첨부",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team1/cbfc-current-2026-forms.json",
+                "sha256": "7253f0a76e37e6b7e1e409443d3681d0e6a49a7e081d47abdc6a06881decda23",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2039101",
+            "status": "official_MCP_current_clause_reviewed",
+            "newEvidence": "MCP 현행목록·제15조 교부신청 본문 재확인",
+            "savedEvidence": []
+          },
+          {
+            "url": "https://www.chungbuk.go.kr/cbnews/selectBbsNttView.do?bbsNo=2953&key=5231&nttNo=418504",
+            "httpStatus": 200,
+            "status": "GET_200_full_page_reviewed",
+            "responseSHA256": "6fef010f6ade96d0a0aa2982241d35ecef646576de63eb685e1fc4caecccfec6",
+            "newEvidence": "충청북도 공식재단 안내로 기관과 도메인 확인",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team1/cbfc-authority.json",
+                "sha256": "ff6fa8ae0fe9a1f2f138f87bad0e23cce0ab64366c16c65b621f33bfcad0deae",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.cbfc.or.kr/base/download/bbs.php?fno=%E1r%1DL%16&bid=%E3r%1FO%15%242%03&did=%E3r%1FM%15+5%0E",
+            "status": "official_HWP_relevant_sections_reviewed",
+            "newEvidence": "운영가이드 주요안내·10~14쪽의 실제 교부30일전·사업종료후미교부·변경사전승인 확인",
+            "savedEvidence": []
+          }
+        ],
+        "allFormsConnected": false,
+        "publishedRelatedFormIds": [
+          "agency-43000-cbfc-2026-youth-grant",
+          "agency-43000-cbfc-2026-art-grant"
+        ],
+        "fullReplacementConfirmed": false
+      },
+      "relatedProgramIds": [
+        "g43150.gov24-440000000150",
+        "s43000.gov24-O00113600001",
+        "s43000.gov24-O00113600003",
+        "s43000.gov24-O00113600007"
+      ]
     },
     {
       "formId": "ordin-21470997",

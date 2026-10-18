@@ -5162,7 +5162,7 @@
       ],
       "reviewCheckedAt": "2026-10-19",
       "verifiedDocumentTitle": "전라남도 출생기본소득 배우자 등 수령 동의서",
-      "reason": "별지1전체는보호자2인이상일때다른보호자의수령에동의하는문서이고구전남법제4조제3항이정확히지정한다. 일반수령포기종결서가아니라중복지급방지동의임을확인했다. 다만공식source법규2089709기관은'(구)전라남도',원문전라남도제명인데사이트12000통합관할의신청방법·구비서류는이미'전남광주통합특별시출생기본소득'을요구한다. 2025부칙은수당→소득명칭·지급신청경과만있고2026통합적용근거가없어현재통합사업의구원문적합성을확인할때까지보류한다. 추가로특별법원법21446부칙7·9·10·14를읽었으며구조례의종전지역한정존속과옛서비스효력유지는확인했다.그러나구명의문서간주60일은이미경과했고시행전행위승계를현재새신청서사용허가로확대할수없어구전남범위·현재접수서식확인보류를유지한다.",
+      "reason": "통합특별시의 (구)전남 공식 출생기본소득 안내가 현재 구전남 출생신고 아동을 대상으로 하고 타 보호자 지급동의서를 요구하는 점은 추가 확인했다. 따라서 종전지역 대상임은 보완되었으나 정부24는 통합특별시 명칭의 법규를 인용하고, 해당 옛 제명 원본을 현재 받는다는 배포본·신청서 지정은 없다. 통합 전체 지역으로 확대하거나 명칭 간주기간을 새로 부여하지 않는다.",
       "lawClausesReviewed": true,
       "relatedArticles": [
         {
@@ -5200,7 +5200,56 @@
           "제14조"
         ],
         "finding": "구법규는새법규전까지종전적용지역에한정하여존속(10조1항),옛복지서비스계속효력(14조).구명의발급간주는설치후60일(7조3항)이며현재는경과.시행전신청승계(9조)를현재새신청양식자동승계로보지않음.종전지역경계와현재접수서식증거추가확인필요."
-      }
+      },
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team3-results.json",
+        "sourceResultSHA256": "7e8e63b2e007e7deed1d20ab71367066ef036d087d892df780147ee63e67b764",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=2089709&gubun=ELIS",
+            "httpStatus": 200,
+            "responseSha256": "9fc103d8cd432b2c3fbd595396d4666548e3c33ac75a52a33a0331a375ce3f1e",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/law-2089709.json",
+                "sha256": "b2e1e8338da3bc51cdffb9b64c6956fdf8955cb66eeb03085757ef2621e08044",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://info.jeonnam.go.kr/contentsView.do?menuId=jeonnam0504160208",
+            "httpStatus": 200,
+            "responseSha256": "c3e9c44d397114810ebc61013c679187882a1d97fd74c402b43b0281dc8bf767",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/jeonnam.json",
+                "sha256": "5de79fc42941581170012cbd1d166ff9416c7e71d3751da75e7f738913aadb78",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/646000000234",
+            "httpStatus": 200,
+            "bodyTextSha256": "f605ddc0116bf3d2edf290f5997549727739cbdf86f441840cef367cc6b722f3",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/program-s12000.gov24-646000000234.json",
+                "sha256": "6bb883c01922c7d3ed067c8170e692dd0f28ffd2e484278d2fe5a1d47e191038",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "s12000.gov24-646000000234"
+      ]
     },
     {
       "index": 53,
@@ -5247,7 +5296,7 @@
       ],
       "reviewCheckedAt": "2026-10-19",
       "verifiedDocumentTitle": "전라남도 출생기본소득 소급 지급 신청서",
-      "reason": "별지2전체는소명인·통보내용·소명·신청서명으로구전남법제7조제4항의지급중단사유2~5에대한예외소급심의용이다. 전출사유1의소급은제외된다는제한도확인했다. 그러나사이트는현재전남광주통합특별시법규를명시하고원문/법규기관은구전라남도이며통합경과근거를읽지못했으므로코드12000일치만으로현재소급신청용으로승인하지않는다. 추가로특별법원법21446부칙7·9·10·14를읽었으며구조례의종전지역한정존속과옛서비스효력유지는확인했다.그러나구명의문서간주60일은이미경과했고시행전행위승계를현재새신청서사용허가로확대할수없어구전남범위·현재접수서식확인보류를유지한다.",
+      "reason": "현재 통합특별시의 (구)전남 공식 안내는 일반 지급은 신청한 달부터이고 소급지급은 안 된다고 안내한다. 기존 조례7조④의 별도 예외심의가 현 통합사업에서 어떤 원본으로 접수되는지는 여전히 확인되지 않았다. 구전남 소급신청의 제한을 통합 전체로 확대하지 않는다.",
       "lawClausesReviewed": true,
       "relatedArticles": [
         {
@@ -5282,7 +5331,56 @@
           "제14조"
         ],
         "finding": "구법규는새법규전까지종전적용지역에한정하여존속(10조1항),옛복지서비스계속효력(14조).구명의발급간주는설치후60일(7조3항)이며현재는경과.시행전신청승계(9조)를현재새신청양식자동승계로보지않음.종전지역경계와현재접수서식증거추가확인필요."
-      }
+      },
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team3-results.json",
+        "sourceResultSHA256": "7e8e63b2e007e7deed1d20ab71367066ef036d087d892df780147ee63e67b764",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=2089709&gubun=ELIS",
+            "httpStatus": 200,
+            "responseSha256": "9fc103d8cd432b2c3fbd595396d4666548e3c33ac75a52a33a0331a375ce3f1e",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/law-2089709.json",
+                "sha256": "b2e1e8338da3bc51cdffb9b64c6956fdf8955cb66eeb03085757ef2621e08044",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://info.jeonnam.go.kr/contentsView.do?menuId=jeonnam0504160208",
+            "httpStatus": 200,
+            "responseSha256": "c3e9c44d397114810ebc61013c679187882a1d97fd74c402b43b0281dc8bf767",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/jeonnam.json",
+                "sha256": "5de79fc42941581170012cbd1d166ff9416c7e71d3751da75e7f738913aadb78",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/646000000234",
+            "httpStatus": 200,
+            "bodyTextSha256": "f605ddc0116bf3d2edf290f5997549727739cbdf86f441840cef367cc6b722f3",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/program-s12000.gov24-646000000234.json",
+                "sha256": "6bb883c01922c7d3ed067c8170e692dd0f28ffd2e484278d2fe5a1d47e191038",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "s12000.gov24-646000000234"
+      ]
     },
     {
       "index": 54,
@@ -5440,7 +5538,7 @@
       ],
       "reviewCheckedAt": "2026-10-19",
       "verifiedDocumentTitle": "인구 관리시책 지원 신청서",
-      "reason": "별지1전체의전입세대·출산장려금·종량제봉투·주차이용권선택과제9·10조를읽었다. 기존사이트325000000105는2025-09-30이전출생자에게만옛장려금30/60/300만원이며조문제10조통상6개월신청기한은현재2026-10-19기준경과했다. 현행후속WLF06649는2025-10-01이후출생자·새출산양육조례·1~7세축하금으로별도통합신청서를요구한다. 전입봉투WLF06689도모든세대자동지급안내라구법2인이상전입신청과다르다. 현행파일이라는이유로새출산축하금·자동지급에전용하지않고옛출산급여의지연·후속신청에여전히사용되는지확인필요로남긴다.",
+      "reason": "중구의 현재 공식 출산보육시책 페이지는 2025.9.30 이전 장려금과 10.1 이후 축하금을 분리하고 각각 출생후6개월 신청을 명시한다. 옛 급여 원본의 2026.10.19 현재 지연신청 수용 근거나 새1000만원 축하금용 구체 통합신청 원본은 확인되지 않았다. 만료된 옛 신규접수를 경고문만 붙여 승인하지 않으며 자동 전입봉투에도 전용하지 않는다.",
       "lawClausesReviewed": true,
       "relatedArticles": [
         {
@@ -5477,7 +5575,36 @@
         "currentLawId": "2090043",
         "binding": "bound",
         "officialFlSeq": "158845915"
-      }
+      },
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team1/team1-results.json",
+        "sourceResultSHA256": "1636a6e15bbf67808ab71c4d605f84f84d98ec0f4e389ea11ddb598de11ab1b8",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.bsjunggu.go.kr/index.junggu?menuCd=DOM_000001111002003000",
+            "httpStatus": 200,
+            "status": "GET_200_full_page_reviewed",
+            "responseSHA256": "ea40f83c04e085e7465cba55d32f8d7d4c5f23066abfded6bfb91d2a10251c7c",
+            "newEvidence": "새/옛 출산급여 출생일 기준·금액·신청기한의 직접 구분",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team1/busanjung-birth-current.json",
+                "sha256": "6bf236a5ce93381a8f2e5f350026dee942161188a66a2a7e54a273f8c677060b",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g26110.gov24-325000000105",
+        "g26110.bokjiro-WLF00006649",
+        "g26110.bokjiro-WLF00006689"
+      ]
     },
     {
       "index": 56,

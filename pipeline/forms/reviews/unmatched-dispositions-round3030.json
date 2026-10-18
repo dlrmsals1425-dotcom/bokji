@@ -847,7 +847,7 @@
       "formId": "ordin-18580613",
       "sha256": "0ba7d94ad45a76b7d8ee08072a4744027ebd9be14f518335ad2bab17e96cfee2",
       "disposition": "requires_external_confirmation",
-      "reason": "독립유공자·유족의 신청내용은 현행 제5·7조에 맞고 공식 첨부도 남아 있으나, 실제 원본 맨 위에 '[별지 서식] 삭제 <2024. 9. 27.>'가 인쇄되어 있다. 현행 조문이 별지 신청을 요구한다는 사실만으로 이 삭제 표기 원본을 현재 사용 가능하다고 확정할 수 없어 승인하지 않는다. 삭제 표기가 오기인지 및 실제 접수할 정정 원본의 공식 확인이 필요하다.",
+      "reason": "현재 공식MCP 검색 및 법령정보센터 본문은 여전히1971921(2024.10.1 시행)을 반환하고 제5조가 별지 신청을 규정한다. 실제 원본 상단 삭제<2024.9.27> 표기와 현행 조문 간 불일치는 그대로이며, 추가 공식 검색에서 정정된 접수원본을 확보하지 못했다. 조문상 신청 가능하다는 사유만으로 삭제표기 바이트를 승인하지 않는다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -899,7 +899,26 @@
       "additionalEvidence": {
         "sourceIssue": "원본 본문 첫머리 삭제 표기와 현행 별지 인용/첨부 유지 간 충돌",
         "unresolvedExternalCondition": "보은군 공식 접수서식 또는 정정된 법령 첨부 확인"
-      }
+      },
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team1/team1-results.json",
+        "sourceResultSHA256": "1636a6e15bbf67808ab71c4d605f84f84d98ec0f4e389ea11ddb598de11ab1b8",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1971921",
+            "status": "official_mcp_current_search_and_official_indexed_body_reviewed",
+            "newEvidence": "현행ID·제5조 별지신청은 유지되지만 정정 첨부 확인 못함",
+            "savedEvidence": []
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g43720.bokjiro-WLF00003867",
+        "g43720.gov24-442000000126"
+      ]
     },
     {
       "formId": "ordin-18580615",

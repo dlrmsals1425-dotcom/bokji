@@ -862,7 +862,7 @@
         }
       ],
       "verifiedDocumentTitle": "동해사랑상품권 환전 청구서",
-      "reason": "제9조제1항은 가맹점이 지류상품권을 판매대행점에 환전 청구하는 제11호를 지정한다. 실제 원본은 권종별 매수·금액·가맹점 사업자와 계좌를 받는 지류 정산 양식이다. 사이트 가맹점 혜택은 카드 결제 관련으로 안내되고 지류 취급·환전 절차가 확인되지 않아 카드 정산용으로 연결하지 않는다. 실제 지류 발행·취급 여부와 이 원본 사용 창구의 확인이 필요하다.",
+      "reason": "현재 정부24(2026.7.28 수정)는 그리고앱·충전 캐시백과 카드가맹점 수수료를 안내한다. 2025 공식 의회자료의 관광시설 지류발행 언급만으로 이 서비스의 카드 정산에 지류 환전 제11호가 쓰인다고 확정할 수 없다. 원본의 지류 환전 용도는 확인되며 해당 사업쌍 적용만 미확인이다.",
       "lawClausesReviewed": true,
       "relatedArticles": [
         {
@@ -880,7 +880,34 @@
       "excludedParts": [],
       "role": "application",
       "regionSearch": {},
-      "approvedAssociations": []
+      "approvedAssociations": [],
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team1/team1-results.json",
+        "sourceResultSHA256": "1636a6e15bbf67808ab71c4d605f84f84d98ec0f4e389ea11ddb598de11ab1b8",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/421000000638",
+            "httpStatus": 200,
+            "status": "GET_200_full_page_reviewed",
+            "responseSHA256": "2a15abd915c1df617fcb28e6e1165ceedfd0db6f0d73207f43bed3ba938adb43",
+            "newEvidence": "현재 정부24 서비스 전체 핵심내용·신청경로·신청서/서류·수정일 직접 확인",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team1/gov24-current-13.json",
+                "sha256": "6a9cacdad8145182352484fb54cc968dc304599542d7a42b6689c1cd68d72554",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g51170.gov24-421000000638"
+      ]
     },
     {
       "index": 12,

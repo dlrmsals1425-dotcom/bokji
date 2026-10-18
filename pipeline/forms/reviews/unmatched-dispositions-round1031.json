@@ -3196,7 +3196,7 @@
         "currentAnnexBinding": "bound"
       },
       "disposition": "requires_external_confirmation",
-      "reason": "아산시 시행규칙 제10조와 별지6 전체는 주민편익시설의 상시·전용 사용 신청이다. 상위 현행 조례 2171169 제2조·제10조·제11조·제13조를 추가로 읽어 아산건강문화센터의 헬스·목욕·찜질·풋살 등 시설임을 확인했다. 원래 후보 두 사업은 생태곤충원 입장료이고 다른 시설이다. 지역 전체에서 체육시설 이용료 감면 사업도 찾았지만 그 안내는 배미수영장 등 요금체계로 이 건강문화센터에 실제 적용되는지 및 이 종이서식 사용을 확정하지 못해 추가 확인 상태로 남긴다.",
+      "reason": "아산시 현재 건강문화센터 안내는 찜질방·사우나·헬스 등의 이용과 감면을 설명하지만 현재 수록 정부24 체육시설 감면은 배미수영장 등 수강신청 체계를 설명하며 sources/aliases에도 건강문화센터가 없다. 생태곤충원 두 사업과도 시설이 다르다. 센터의 감면이 존재하는 사실만으로 현재 후보 프로그램과 종이 상시·전용 사용신청을 동일하게 볼 수 없다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -3246,7 +3246,44 @@
         }
       ],
       "sourceBodyPath": "logs/forms-completion/law-bodies/1984103.json.gz",
-      "sourceBodySHA256": "df412c9aac2502276abef3eec5212e49b083eb7cf2a38bceb1cce978f9feea03"
+      "sourceBodySHA256": "df412c9aac2502276abef3eec5212e49b083eb7cf2a38bceb1cce978f9feea03",
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team2/team2-results.json",
+        "sourceResultSHA256": "badd63d72d5f96dcc6815ad79e43ba695490e25777144516a69934cdab93a48a",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00032900002",
+            "httpStatus": 200,
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team2/case14-gov24.json",
+                "sha256": "547c316bdbe61dd0848a5a2e17d0214804f0dc5247ce014f8352641f33f95081",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://asan.go.kr/main/cms/?no=441",
+            "httpStatus": 200,
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team2/case14-municipal.json",
+                "sha256": "c8ad4c4f76fac4f23d4a458a3c187742425a5b8ef0649e2ae3c754055bf8c8b2",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g44200.gov24-O00032900001",
+        "g44200.gov24-O00032900002",
+        "g44200.gov24-O00032900004"
+      ]
     },
     {
       "formId": "ordin-21138971",

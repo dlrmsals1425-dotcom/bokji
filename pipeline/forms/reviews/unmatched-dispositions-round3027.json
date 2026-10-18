@@ -671,7 +671,7 @@
       "formId": "ordin-17542133",
       "sha256": "37a46f0fdb1d1d05debb88c833982acc113786df146fc26c6af5774a6b66da10",
       "disposition": "requires_external_confirmation",
-      "reason": "원본은 산모가 서비스 종료 후 본인부담금 영수증·청구액·계좌로 환급을 신청하는 양식이다. 지역 사이트 후보는 출산장려금/임신준비물품으로 다르고, 광역의 본인부담금 지원사업을 추가로 찾았으나 영천보건소 2026 공식 안내는 산모의 서비스 전 사전신청 후 제공기관이 사후 청구하도록 절차를 바꿔 안내한다. 산모의 구 환급서식을 현행 사전신청 또는 업체청구로 그대로 연결하지 않고 현재 접수서식 확인이 필요하다.",
+      "reason": "영천보건소의 현재 2026 안내는 서비스 전 산모 사전신청, 서비스 제공기관의 사후 청구(종료 다음날부터 90일)를 명시한다. 정부24의 경북 사전신청 사업도 같은 구조다. 기존 산모 본인 명의 환급 청구·납부영수증·계좌 양식의 사용을 정당화하지 못한다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -734,19 +734,72 @@
           "BodyText/Section0"
         ]
       },
-      "checkedAt": "2026-10-18",
+      "checkedAt": "2026-10-19",
       "additionalEvidence": {
         "url": "https://www.yc.go.kr/health/contents.do?mId=0807010000",
         "checkedAt": "2026-10-18",
         "claim": "2026 안내: 본인부담금90%, 최대15일(세쌍둥이25일), 산모 사전신청 후 서비스 제공기관이 완료 후 보건소 사후청구(종료 다음날부터90일)",
         "externalCondition": "현재 영천에서 사용하는 경북 본인부담금 사전신청/업체청구 원본 또는 구 산모 환급서식 접수 가능 여부 확인"
-      }
+      },
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team3-results.json",
+        "sourceResultSHA256": "7e8e63b2e007e7deed1d20ab71367066ef036d087d892df780147ee63e67b764",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=1930577&gubun=ELIS",
+            "httpStatus": 200,
+            "responseSha256": "ea1773af04cdc6278b024a62c3fc1f9e10110d19da5b1292b3c3272efa12f906",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/law-1930577.json",
+                "sha256": "bb489208abfff32f68ac36ab8e1c8275bf13a1e84337693682b3c9be00d8e7ae",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.yc.go.kr/health/contents.do?mId=0807010000",
+            "httpStatus": 200,
+            "responseSha256": "d66af2af6c46d2163d3fbaf7c547fbd246ff85679a15aa3afe24ebc151358eac",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/source-1.json",
+                "sha256": "6a17c8ad51dcb7d806662d00d5b3ed19ab6ad4539ff4fda622bb16f837bbdadc",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/647000000193",
+            "httpStatus": 200,
+            "bodyTextSha256": "20cdb815a328e1eb8f611f80c7ff3827d126e0b4301427e6bb1b345c0b011e7a",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/program-s47000.gov24-647000000193.json",
+                "sha256": "30c5f6827401b01e30f29177c50009d6fb2d1dd47df6900b355ba5c05fb15980",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g47230.bokjiro-WLF00004929",
+        "s47000.bokjiro-WLF00003658",
+        "g47230.bokjiro-WLF00001692",
+        "g47230.gov24-510000000108",
+        "s47000.gov24-647000000193",
+        "s47000.gov24-647000000156"
+      ]
     },
     {
       "formId": "ordin-22306291",
       "sha256": "398fc7736b78f10772abb66ae48c17bf22b55b2394d831b92c3898a6a136f209",
       "disposition": "requires_external_confirmation",
-      "reason": "전체 조문까지 읽어 본 분담금 지원의 법정 원본임은 확인했다. 다만 양식은 가구 대표가 신청세대 명단·공급구간·배관길이·공급 예정시기를 회사 확인받는 설치 전 신청 구조이고, 2026 사이트는 지정 분기 내 이미 공급이 완료된 사회적배려 가구의 분담금 지원을 안내한다. 현재 개별 가구의 사후 지원신청에 같은 대표자·계획형 원본을 받는지 확인되지 않아 현행 신청 양식 확인을 보류 조건으로 기록한다.",
+      "reason": "정부242026.10.6 최신 안내에서 이미 도시가스 공급이 완료된 가구(2026.2차는4~9월 공급)의 분담금 사후 지원을 재확인했다. 원본의 가구대표 공급구간·배관길이·공급예정 계획형 신청을 해당 사후 개별 가구 청구에 사용한다는 직접 접수근거는 확보하지 못했다. 현재10월 접수가 있다는 이유만으로 이 옛 단계 원본을 승인하지 않는다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -781,11 +834,37 @@
           "BodyText/Section0"
         ]
       },
-      "checkedAt": "2026-10-18",
+      "checkedAt": "2026-10-19",
       "additionalEvidence": {
         "programId": "s27000.gov24-627000000115",
         "externalCondition": "2026년 공급완료 가구의 수요가시설분담금 지원용 개별 신청서 또는 법정 대표자 신청서 사용 가능 여부 확인"
-      }
+      },
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team1/team1-results.json",
+        "sourceResultSHA256": "1636a6e15bbf67808ab71c4d605f84f84d98ec0f4e389ea11ddb598de11ab1b8",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/627000000115",
+            "httpStatus": 200,
+            "status": "GET_200_full_page_reviewed",
+            "responseSHA256": "d5d50d4135816e7b396834abc9355c030eb4dfa7b96e8499c3c7032280c2eda2",
+            "newEvidence": "현재 정부24 서비스 전체 핵심내용·신청경로·신청서/서류·수정일 직접 확인",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team1/gov24-current-31.json",
+                "sha256": "1185fcf65246e5b1506273a56b71010f8c327bc1b9841f3d0130b709baa7c1e5",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "s27000.gov24-627000000115"
+      ]
     },
     {
       "formId": "ordin-20864925",
@@ -1276,8 +1355,8 @@
     {
       "formId": "ordin-17575933",
       "sha256": "6dddeb38e5b51571dc10bcef6a4604a08957517a1164bbe5118d448f58ffc91e",
-      "disposition": "requires_external_confirmation",
-      "reason": "원본 전체는 화장장려금 신청 목적이 맞으나 담당공무원 확인란에 '주민등록 1년 이상'을 고정 인쇄한다. 출처 법규의 제3조는 사망일 현재 계룡시 주민등록 또는 해당 연고자/분묘 소재 기준을 정하고 있으며 현재 사이트도 1년 거주를 제시하지 않는다. 신청서가 추가 거주기간을 요구하는 것으로 오인될 수 있어 그 확인란을 어떻게 처리하는지 또는 정정 원본이 있는지 확인 전 승인하지 않는다.",
+      "disposition": "covered_by_existing",
+      "reason": "계룡시청 민원사무편람의 2026-05-12 화장장려금 지원신청 게시물에서 공개 첨부 file_id=36032를 새로 확보했다. 실제 HWP 전체 53,248바이트 SHA 9f4f5da862e27f1db4fe81bef9ef0ec4cf46dbedc7f3405b37c362e3f611aee8이며 옛 포털 원본의 주민등록 1년 이상 확인란을 제거했다. 현행 조례 제3·5·6조, 현재 복지로 WLF00002098의 대상·10만원/5만원·연고자 신청과 일치한다. 기존 ordin ID/SHA를 바꾸지 않고 별도 agency-44250-36032 원본으로 대체 연결을 제안한다. 총괄이 별도 원본의 정확 SHA와 해당 혜택 연결·실제 공개 바이트를 확인했다. 기존 ID/SHA는 그대로 보존하고 확인된 대체 서식으로 안내한다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -1312,12 +1391,77 @@
           "BodyText/Section0"
         ]
       },
-      "checkedAt": "2026-10-18",
+      "checkedAt": "2026-10-19",
       "additionalEvidence": {
         "sourcePrintedRequirement": "면동 담당공무원 확인: 주민등록 1년 이상, 연고자, 타 보상금 유무",
         "articleComparison": "제3조제1호: 사망일 현재 계룡시에 주민등록이 되어 있는 사람; 제2호: 관내 연고자의 사산아·영아; 제3호: 관내 분묘개장",
         "externalCondition": "거주 1년 확인란이 남은 원본의 실제 사용 가능 여부 또는 정정된 공식 신청서 확인"
-      }
+      },
+      "existingCoverage": [
+        {
+          "formId": "agency-44250-36032",
+          "sha256": "9f4f5da862e27f1db4fe81bef9ef0ec4cf46dbedc7f3405b37c362e3f611aee8",
+          "programIds": [
+            "g44250.bokjiro-WLF00002098"
+          ]
+        }
+      ],
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team2/team2-results.json",
+        "sourceResultSHA256": "badd63d72d5f96dcc6815ad79e43ba695490e25777144516a69934cdab93a48a",
+        "proposedStatus": "propose_replacement",
+        "officialEvidence": [
+          {
+            "url": "https://gyeryong.go.kr/kr/html/sub01/0102.html?GotoPage=1&mode=V&no=8b4a546e2b7ff4fdc2deabe7d1ec278d",
+            "httpStatus": 200,
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team2/case02-municipal-20260512.json",
+                "sha256": "6642fe62baa863641d53264671d9b799e9280a45523dbe42983ab5c5ddb4532d",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://gyeryong.go.kr/kr/html/sub01/0102.html?mode=D&no=8b4a546e2b7ff4fdc2deabe7d1ec278d&file_id=36032&category=04",
+            "httpStatus": 200,
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team2/case02-official-application.json",
+                "sha256": "9ca0168f5ad66faf1b7956711f58f2affcb219656c432527a22c622228112876",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00002098&wlfareInfoReldBztpCd=02",
+            "httpStatus": 200,
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team2/case02-bokjiro-current.json",
+                "sha256": "6d5bb770b78cfc072bca4884c60bbc0503cda187d34e0d2da4d3b58b0d0a97dd",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://gyeryong.go.kr/kr/html/sub01/0102.html?mode=D&no=8b4a546e2b7ff4fdc2deabe7d1ec278d&file_id=36032&category=04",
+            "httpStatus": 200,
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team2/agency-downloader-probe.json",
+                "sha256": "f7452ccb100089b5cbd0cc82cf7e0ce103505cb0a0d189119c09752e391c18a4",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g44250.bokjiro-WLF00002098"
+      ]
     },
     {
       "formId": "ordin-19087533",
@@ -1607,7 +1751,7 @@
       "formId": "ordin-20214487",
       "sha256": "2a4a805d19cb24737fc2656145672ce83188a4bdbc93cfd3c1afaf5d1b5c1483",
       "disposition": "requires_external_confirmation",
-      "reason": "사업목적·자부담·교부액·별도통장·사업계획을 내는 일반 지방보조금 교부신청서다. 두 후보 농업지원 사업이 조례를 인용하지만 실제 모집/교부 단계에서 이 공통 원본을 제출받는지, 현물지원인지 개별 보조금 교부인지 확인할 사업별 접수 근거가 없다. 법규 이름만으로 두 사업에 자동 연결하지 않고 공고의 서식 지정 확인을 남긴다.",
+      "reason": "2026년 시설원예 시비사업 공고의 소형비닐하우스 지침·별지1 사업신청·개인정보동의를 실제 내려받아 전체 판독했다. 0.8ha 이하·미보유 농가 등 정부24 시설원예 사업 대상과 일치하나 이 문서는 최초 사업신청이며 기존 일반 보조금 교부신청서 사용을 증명하지는 않는다. 1월16일 모집이 마감된 별도 공식 원본으로 제안하며, 정원수 자재지원에 확대하지 않는다. 참고 공고는 모집이 종료된 최초 사업신청 자료이며, 기존 일반 교부신청서의 현행 후속 제출관계는 여전히 확인이 필요하다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -1646,10 +1790,98 @@
           "BodyText/Section0"
         ]
       },
-      "checkedAt": "2026-10-18",
+      "checkedAt": "2026-10-19",
       "additionalEvidence": {
         "externalCondition": "각 농업지원 사업의 공식 모집/교부 안내에서 공통 지방보조금 신청서를 사용하는지 확인"
-      }
+      },
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team3-results.json",
+        "sourceResultSHA256": "7e8e63b2e007e7deed1d20ab71367066ef036d087d892df780147ee63e67b764",
+        "proposedStatus": "propose_replacement",
+        "officialEvidence": [
+          {
+            "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=1934335&gubun=ELIS",
+            "httpStatus": 200,
+            "responseSha256": "9bab96ba6b69acff4f026056a7e960c95d9b6e964b57bd5e7621208e7c0efb6e",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/law-1934335.json",
+                "sha256": "07be94e295f8e98c5292f5e1b3b043c97d4f89ad44b265ea8ac6428a92f1d2e0",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://sc.go.kr/sca/news/0001/?boardId=bbs_0000000000000190&category=&cntId=1906&mode=view&pageIdx=98",
+            "httpStatus": 200,
+            "responseSha256": "1a783c530dd49f73125a5705edd20dc6f50479388ac751fbde4447758c742258",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/suncheon-2026.json",
+                "sha256": "ebc77759d3ecf2468badd3b467ec69fc4cb8c83e8ab5599667b38c20a470e088",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=2062937&gubun=ELIS",
+            "httpStatus": 200,
+            "responseSha256": "10e73dccc8215bdce940d3177eca8542e80ed7218436e6bd9fb4ec0922f82556",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/suncheon-law.json",
+                "sha256": "4f7b87eb91cddb5935ef841f0aa2b6d9dc2f739e97f1a219159cdda7d3a93196",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/482000000133",
+            "httpStatus": 200,
+            "bodyTextSha256": "07689332a463328edf883bb43e464449d1dd9d344d32a240591968844a19617a",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/program-g12150.gov24-482000000133.json",
+                "sha256": "1625d959d865385d9a03e7f2ebe926c278ed35ad08d2d3291f4f1f658730a869",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/482000000141",
+            "httpStatus": 200,
+            "bodyTextSha256": "d2cf23a3569f759152069123f96918aa93d6a40ac98baebdb8ed8f88d895ac46",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/program-g12150.gov24-482000000141.json",
+                "sha256": "c519a1998328ad80a195d31b5cad5876c38be8d3229770500252e0270a48b009",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "httpStatus": 200,
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/suncheon-small-extracted.json",
+                "sha256": "c0110b5c20097767ea24629a5fcea2c52d032a0addd851848c207548e534fef4",
+                "kind": "official_evidence_metadata"
+              },
+              {
+                "path": "logs/forms-completion/official-followup/team3/suncheon-small.hwp",
+                "sha256": "db42f2522e415d43fbd838308b7ff0dbe954ae670c9d9f80a4de904253449093",
+                "kind": "evidence_original_file"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g12150.gov24-482000000141",
+        "g12150.gov24-482000000133"
+      ]
     },
     {
       "formId": "ordin-20214497",
@@ -2247,7 +2479,7 @@
       "formId": "ordin-17655279",
       "sha256": "34fc167e1f3ba2338e991ec1d541be12ce7bdc27adcbf110e6e1947819b05048",
       "disposition": "requires_external_confirmation",
-      "reason": "원본 개인 상품권 구매 신청서에는 할인 10%와 월 30만원이 고정 인쇄되어 있다. 현행 제7조는 월 최대 100만원 및 별도 조정 가능, 사업 안내는 카드 결제 캐시백 방식이다. 현재 창구가 이 월30만원 인쇄 원본을 그대로 받는다는 근거가 없어 신청서 제공을 보류한다. 단순 제목·법규 일치로 승인하지 않는다.",
+      "reason": "강릉시2026.3.3 수정 사용안내는2026 월30만원 사용액 캐시백(1월8%,이후10%)과 앱 카드가입·지정농협 현금충전을 구별한다. 따라서 월30만원 자체는 현재 기준과 같을 수 있으나 원본은 현금 할인구매·할인없는 구매의 개인정보불필요 문구로서 카드결제 캐시백 절차와 다르다. 현재 안내에는 이 현금할인 구매신청서를 농협이 사용한다는 근거가 없어 미해소로 유지한다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -2287,7 +2519,25 @@
           "annexBinding": "bound"
         }
       },
-      "checkedAt": "2026-10-18"
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team1/team1-results.json",
+        "sourceResultSHA256": "1636a6e15bbf67808ab71c4d605f84f84d98ec0f4e389ea11ddb598de11ab1b8",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.gn.go.kr/www/contents.do?key=3253",
+            "status": "official_search_index_content_reviewed; direct_web_access_robots_blocked",
+            "newEvidence": "월별 캐시백 및 앱가입/시청 신규등록/농협 현금충전 경로를 구분하여 안내",
+            "savedEvidence": []
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g51150.gov24-420000000175"
+      ]
     },
     {
       "formId": "ordin-17655281",
@@ -2451,7 +2701,7 @@
       "formId": "ordin-19617443",
       "sha256": "5d4321fe899bff69eb11c50ddee3f4f4c33e5c099d655791ba87e9101cda9b47",
       "disposition": "requires_external_confirmation",
-      "reason": "원본 전체의 신청·동의·안내를 읽었으나 부담률이 시60%·학원30%·본인10%로 고정되어 있다. 현 사업은 시65%·학원25%·학생10%이며, 정읍시 2026년 공식 공고의 별도 신청서는 2026학년·다자녀 및 미달 시 2순위 신청란과 시·학원90% 안내를 사용한다. 원본을 현재 접수 서식으로 그대로 받을 근거가 없어 보류하고 별도 공식 대체원본을 기록한다. 해당 2026 모집은 2025-12-30 마감되어 현재 접수 중이라고 안내하지 않는다.",
+      "reason": "정읍시의 2026년도 별별꿈 지원사업 모집 공고를 다시 직접 확인했다. 공고는 2025-12-17부터 12-30까지 모집, 2026년 2~12월 지원이며 별도 2026 신청서와 안내를 배포한다. 본 원본의 시60%·학원30% 고정 문구는 현재 시65%·학원25%와 다르고, 별도 모집도 이미 마감되어 현재 신규 접수 가능한 대체원본으로 승인하지 않는다. 차기 또는 추가 모집의 정확한 양식·접수기간 확인이 필요하다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -2495,7 +2745,7 @@
           "annexBinding": "bound"
         }
       },
-      "checkedAt": "2026-10-18",
+      "checkedAt": "2026-10-19",
       "additionalEvidence": {
         "replacementAttachments": [
           {
@@ -2522,7 +2772,30 @@
             "replacesOriginalId": false
           }
         ]
-      }
+      },
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team2/team2-results.json",
+        "sourceResultSHA256": "badd63d72d5f96dcc6815ad79e43ba695490e25777144516a69934cdab93a48a",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.jeongeup.go.kr/board/view.jeongeup?boardId=BBS_0000012&dataSid=1395481&orderBy=REGISTER_DATE+DESC&paging=ok&startPage=21",
+            "httpStatus": 200,
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team2/case05-municipal.json",
+                "sha256": "47feb93d8b73ce161885e4194e4c1aa7c2ae3ddaf19a71814da9d803998078e2",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g52180.bokjiro-WLF00001439"
+      ]
     },
     {
       "formId": "ordin-22419037",

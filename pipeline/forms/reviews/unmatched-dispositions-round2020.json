@@ -5247,7 +5247,7 @@
         }
       ],
       "verifiedDocumentTitle": "장수수당 미지급 청구서",
-      "reason": "실제 원본은 사망한 장수노인의 미지급분을 배우자·자녀가 순위에 따라 청구하는 서식이고 현행 공식첨부에 존재한다. 그러나 읽은 조문에는 이 별지2호의 지정이나 미지급금 수령승계 절차가 없으며 제5조제2항이 준용한 기초연금법 시행규칙9조는 지급방법·계좌 규정이다. 공식 국가법령포털에서 미지급청구는별도10조임을 확인하여9조 준용만으로 확대하지 않았다. 담당기관의 현행 미지급분 처리근거·사용절차 확인이 필요하다.",
+      "reason": "현재 포천시 장수수당 안내와 정확한 병합 복지로 WLF00004621은 1943년 이전 출생·2023년 말 주소 기준의 월 2만원 지급과 일반 별지1 신청을 안내한다. 복지로 첨부는 별지1과 조례이고 사망한 수급자의 미지급금 상속·대표수령 절차나 이 별지2의 사용 안내는 없다. 일반 지급계좌 조항을 미지급 승계로 확장할 근거를 찾지 못했다.",
       "lawClausesReviewed": true,
       "relatedArticles": [
         {
@@ -5284,7 +5284,42 @@
         "currentLawId": "1858535",
         "binding": "bound",
         "officialFlSeq": "142999735"
-      }
+      },
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team2/team2-results.json",
+        "sourceResultSHA256": "badd63d72d5f96dcc6815ad79e43ba695490e25777144516a69934cdab93a48a",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.pocheon.go.kr/welfare/contents.do?key=9880",
+            "httpStatus": 200,
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team2/case03-municipal.json",
+                "sha256": "ddf7025d3e287f6fd794bbb4b68786c97580e7b4f2cbbcd389ee2e2a12da8e37",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004621&wlfareInfoReldBztpCd=02",
+            "httpStatus": 200,
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team2/case03-bokjiro-merged.json",
+                "sha256": "37971f69543001b56bf7f35c5d810705e4f81dcd6557c11a2d9b5041ced60643",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g41650.gov24-560000000105"
+      ]
     }
   ],
   "summary": {

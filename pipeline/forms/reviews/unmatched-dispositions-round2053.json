@@ -1286,7 +1286,7 @@
         "g11710.gov24-O00023700001",
         "g11710.gov24-O00023700005"
       ],
-      "disposition": "requires_external_confirmation",
+      "disposition": "covered_by_existing",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -1304,7 +1304,7 @@
       ],
       "reviewCheckedAt": "2026-10-19",
       "verifiedDocumentTitle": "송파구 주차장 고지·거주자 신청·설치지원·관리서식 묶음",
-      "reason": "9520자 전체를 두 구간으로 나누어 모두 읽었다. 현행 제5조는 별지 제4호 거주자우선주차 신청을 지정하므로 해당 주민용 부분을 찾았지만, 실제 제4호에는 옛 장애 1~3/4~6급과 '제6조제10항에 의거 공유사업 참여·앱 등록'의 서명 문구가 남아 있다. 2026-01-15 개정 현행 제6조는 제7항까지만 있고 기존 서식2·5·6·7·14도 삭제되어, 현행 신규 이용자에게 이 공유조건을 그대로 요구하는지 확인이 필요하다. 별지8·9 설치융자,10 담장허물기,11 야간개방 개선비는 관할 사이트의 두 이용료 감면 사업에 없으며1·3·12·13은 고지·영수·표지·관리문서다. 묶음이라는 이유로 일괄 제외하지 않고 실제 제4호의 현행 접수 적합성만 보류한다.",
+      "reason": "기존 조례 묶음의 재사용을 승인하지 않는다. 현재 공단의 실제 방문신청 안내가 직접 배포하는 다른 SHA의 독립 신청서를 확인하여 agency 원본으로 대체 제안한다. 구등급·옛조문 표기는 sourceIssue로 보존하며, 최신 법정서식 개정으로 오인시키지 않는다. 총괄이 별도 원본의 정확 SHA와 해당 혜택 연결·실제 공개 바이트를 확인했다. 기존 ID/SHA는 그대로 보존하고 확인된 대체 서식으로 안내한다.",
       "lawClausesReviewed": true,
       "relatedArticles": [
         {
@@ -1341,7 +1341,64 @@
         "currentLawId": "2107613",
         "binding": "bound",
         "officialFlSeq": "160961981"
-      }
+      },
+      "existingCoverage": [
+        {
+          "formId": "agency-11710-park119-exclusive-application",
+          "sha256": "59beb4414ce98ed9210184577051e77220003aead5f5cb2181324bd18b5b76ca",
+          "programIds": [
+            "g11710.gov24-O00023700005"
+          ]
+        }
+      ],
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team1/team1-results.json",
+        "sourceResultSHA256": "1636a6e15bbf67808ab71c4d605f84f84d98ec0f4e389ea11ddb598de11ab1b8",
+        "proposedStatus": "propose_replacement",
+        "officialEvidence": [
+          {
+            "url": "https://songpa.park119.co.kr/userNew/guide/apply_entry_guide.aspx",
+            "httpStatus": 200,
+            "status": "GET_200_full_page_reviewed",
+            "responseSHA256": "c0be3c22029b5f25d5e507420973e610ae40303280b764ffe02ff9049e5bbdc7",
+            "newEvidence": "현재 방문신청에 정확 다운로드 링크를 명시",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team1/songpa-application-guide.json",
+                "sha256": "649a45dff2c20bb174b5193071f832d492916982a104a206843aca7f68fac676",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.songpagongdan.or.kr/main.asp",
+            "status": "GET_200_full_page_reviewed",
+            "newEvidence": "현재 공단이 위탁주차 포털로 직접 연결",
+            "savedEvidence": []
+          },
+          {
+            "url": "https://www.songpa.go.kr/www/index.do",
+            "httpStatus": 200,
+            "status": "GET_200_full_page_reviewed",
+            "responseSHA256": "94c226a374a665749386e66ffbc44fd3cd893a2ea758ac74e43b8dbadfe0c889",
+            "newEvidence": "현재 구청이 공단 공식홈페이지로 직접 연결",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team1/songpa-authority-current.json",
+                "sha256": "a6711b16567aeb13164ddb2c41a01c205145916c0ddbbaae552c9bc33fc9fcbc",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g11710.gov24-O00023700001",
+        "g11710.gov24-O00023700005"
+      ]
     },
     {
       "index": 15,

@@ -15,7 +15,7 @@
       "formId": "ordin-9381549",
       "sha256": "fa84938f0165140744f800053f98b9392cdb511d069e0db807888f8a888a5b56",
       "disposition": "requires_external_confirmation",
-      "reason": "무주 배냇소 대부의 사육규모·신청두수·사업장·필요성을 기재하는 실제 신청서 전체와 법규절차를 읽었다.다만 사이트는2025사업 미추진을 명시하며2026신규접수 재개는 공식공고로 확인하지 못했다.더욱이 첨부서약의 연대보증을 삭제하는2025상위조례 개정 후 정확한 신규신청 패키지를 확인해야 하므로 현재접수용 승인보류.",
+      "reason": "현재 정부24는 여전히 25년도 사업 미추진을 명시하고 2026 신규 대부의 재개 공고·접수 패키지는 확인되지 않았다. 무주군의회 2025-10-21 공식 회의록도 배냇소 연대보증 의무 폐지 개정안을 의결했음을 확인했다. 새 신청 패키지 및 현재 재개 여부의 직접 근거가 없어 보류한다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -65,13 +65,47 @@
         "claim": "현행2025.11.5개정 제4조2항은 배냇소가액에 맞는 담보설정.연대보증 의무를 삭제한 개정취지는2025.10.17 의회제안설명에서 확인.",
         "minutesUrl": "https://assem.muju.go.kr/minutes/svc/web/cms/mnts/SvcMntsViewer.php?schSn=2669",
         "externalCondition": "2026신규대부 추진·접수공고와 연대보증 폐지 후 제출서류 안내 확인 필요."
-      }
+      },
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team2/team2-results.json",
+        "sourceResultSHA256": "badd63d72d5f96dcc6815ad79e43ba695490e25777144516a69934cdab93a48a",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/474000000129",
+            "httpStatus": 200,
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team2/case34-gov24.json",
+                "sha256": "3a585dfd5b2f402cb94459c6ee5386aaaf293cbe8c96521ce0c226fd79ba47bd",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://assem.muju.go.kr/minutes/svc/web/cms/mnts/SvcMntsViewer.php?schSn=2665",
+            "httpStatus": 200,
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team2/case34-36-municipal-council.json",
+                "sha256": "3716d1d24fe8dfe9357ab20cab84aeda18212df744ad048eadc68f09203e1184",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g52730.gov24-474000000129"
+      ]
     },
     {
       "formId": "ordin-9381553",
       "sha256": "c68aea487510c88a2b7fc728e5caf3d59dd0df4ca483fe53501ba20bb9744e31",
       "disposition": "requires_external_confirmation",
-      "reason": "배냇소 대부농가 및 연대보증인2명이 함께 사육관리·반환책임을 서약하는 원본이다.현행 본조례2025.11.5개정은 연대보증 의무를 삭제했으나2008시행규칙 원본은 보증인서명을 요구한다.현재 요구되지 않는 보증을 부담시키는 방식으로 승인하지 않고 수정된 공식서약 또는 해당란 처리지침 확인을 보류한다.",
+      "reason": "무주군의회 2025-10-21 회의록에서 연대보증 의무를 폐지하는 개정안 의결을 다시 확인했다. 현행 상위 조례의 폐지와 달리 실제 구 서약서는 농가와 보증인2명의 서명을 요구한다. 공식적으로 수정된 서약이나 해당란 처리지침을 찾지 못했으므로 보증 부담을 주의문으로 해결했다고 보지 않는다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -121,13 +155,47 @@
         "claim": "현행2025.11.5개정 제4조2항은 배냇소가액에 맞는 담보설정.연대보증 의무를 삭제한 개정취지는2025.10.17 의회제안설명에서 확인.",
         "minutesUrl": "https://assem.muju.go.kr/minutes/svc/web/cms/mnts/SvcMntsViewer.php?schSn=2669",
         "externalCondition": "연대보증란 없는 현행 서약 또는 해당란 처리에 관한 공식 접수안내 필요."
-      }
+      },
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team2/team2-results.json",
+        "sourceResultSHA256": "badd63d72d5f96dcc6815ad79e43ba695490e25777144516a69934cdab93a48a",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/474000000129",
+            "httpStatus": 200,
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team2/case34-gov24.json",
+                "sha256": "3a585dfd5b2f402cb94459c6ee5386aaaf293cbe8c96521ce0c226fd79ba47bd",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://assem.muju.go.kr/minutes/svc/web/cms/mnts/SvcMntsViewer.php?schSn=2665",
+            "httpStatus": 200,
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team2/case34-36-municipal-council.json",
+                "sha256": "3716d1d24fe8dfe9357ab20cab84aeda18212df744ad048eadc68f09203e1184",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g52730.gov24-474000000129"
+      ]
     },
     {
       "formId": "ordin-9381559",
       "sha256": "17d1a2b71b07afaf301b21a44f148dcf9cc6bdfea172ba6b1ad54b3f0e077e0b",
       "disposition": "requires_external_confirmation",
-      "reason": "기존 배냇소 대부농가의 상환기한 연장사유·상환두수·증빙 신청임을 확인했으며 신규사업 미추진만으로 이 절차가 없어졌다고 보지 않았다.그러나 이 원본도 연대보증인2명의 서명을 요구하고 현행 본조례의 연대보증 폐지와 충돌하므로 개정 후 정확한 연장접수 양식 확인 전 보류한다.",
+      "reason": "기존 배냇소 상환기한 연장은 신규사업 미추진과 별개의 단계이나, 실제 원본의 보증인2명 서명 요구는 현행 연대보증 폐지와 계속 충돌한다. 공식 회의록까지 재확인했으며 개정 후 연장접수 서식·처리지침을 찾지 못했다. 기존 대부자의 연장이 불가능하다고 단정하지 않고 정확한 원본 사용 확인을 남긴다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -177,7 +245,41 @@
         "claim": "현행2025.11.5개정 제4조2항은 배냇소가액에 맞는 담보설정.연대보증 의무를 삭제한 개정취지는2025.10.17 의회제안설명에서 확인.",
         "minutesUrl": "https://assem.muju.go.kr/minutes/svc/web/cms/mnts/SvcMntsViewer.php?schSn=2669",
         "externalCondition": "기존대부 상환연장은 현행 제12조에 존재.연대보증란을 포함한 구서식의 현행 접수방법 확인 필요."
-      }
+      },
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team2/team2-results.json",
+        "sourceResultSHA256": "badd63d72d5f96dcc6815ad79e43ba695490e25777144516a69934cdab93a48a",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/474000000129",
+            "httpStatus": 200,
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team2/case34-gov24.json",
+                "sha256": "3a585dfd5b2f402cb94459c6ee5386aaaf293cbe8c96521ce0c226fd79ba47bd",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://assem.muju.go.kr/minutes/svc/web/cms/mnts/SvcMntsViewer.php?schSn=2665",
+            "httpStatus": 200,
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team2/case34-36-municipal-council.json",
+                "sha256": "3716d1d24fe8dfe9357ab20cab84aeda18212df744ad048eadc68f09203e1184",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g52730.gov24-474000000129"
+      ]
     },
     {
       "formId": "ordin-19953779",

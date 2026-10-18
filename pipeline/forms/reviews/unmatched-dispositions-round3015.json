@@ -1779,7 +1779,7 @@
       "formId": "ordin-22706053",
       "sha256": "c3d58a1b42854448ddd9c4d937758ce684a5ef9286451899fe4c50b651e6baf5",
       "disposition": "requires_external_confirmation",
-      "reason": "현행 시행규칙 제4조가 인용하는 별표2 원본을 공식 GET으로 다시 받아 전체 읽었다. 의사자유족 10만원·1~2급 8만원·3~6급 5만원으로 현재 두 사이트와 일치한다. 그러나 정확한 현행 별지1호 원본의 수당 선택란은 '의사상자 수당(5만원, 3만원, 2만원)'으로 인쇄되어 있다. 금액 기입란과 특별위로금 항목은 공란이나, 현재 월수당 신청서로 이 구금액 선택란을 그대로 제출할 수 있다는 공식 근거는 없다. 원본을 임의 수정하거나 조건문만으로 구금액 선택을 유도하지 않기 위해 두 승인 연결을 철회하고 관할 담당부서의 현행 신청서 또는 구서식 접수 가능 확인이 필요하다고 판정했다. 특별위로금 부분만 별도 사용 가능한지는 공식 접수 확인 후 재검토한다.",
+      "reason": "현재 공식 다운로드를 다시 받아 원본 SHA가 같고 수당5/3/2만원 선택문구가 그대로임을 확인했다. 정부24는 유족10·1~2급8·3~6급5만원 및 별도 특별위로금을 유지한다. 새 수당 원본이나 구금액 선택란을 현재 접수하는 공식 설명을 찾지 못했다. 공란 특별위로금 부분만의 사용도 이번에 직접 확인되지 않아 경고문으로 유효화하지 않는다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -1822,7 +1822,7 @@
           "BodyText/Section0"
         ]
       },
-      "checkedAt": "2026-10-18",
+      "checkedAt": "2026-10-19",
       "additionalEvidence": {
         "checkedAt": "2026-10-18",
         "lawId": "1785065",
@@ -1854,7 +1854,55 @@
           }
         ],
         "externalCondition": "현행 신청서 제공 또는 구금액 인쇄 서식의 접수 가능 여부를 경상북도/주소지 시군에 확인 필요"
-      }
+      },
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team3-results.json",
+        "sourceResultSHA256": "7e8e63b2e007e7deed1d20ab71367066ef036d087d892df780147ee63e67b764",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=1785065&gubun=ELIS",
+            "httpStatus": 200,
+            "responseSha256": "48cced667028e93f4c289ff36d7396dadd09e2943902d355c51af4d4b7878719",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/law-1785065.json",
+                "sha256": "1ba7379c0abf00cf98627326bbe7e90e47b3c2261ff06c1f96077ae84a2bfcb6",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=169630423&flNm=%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8+%EC%84%9C%EC%8B%9D",
+            "httpStatus": 200,
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/rechecked-ordin-22706053.json",
+                "sha256": "748e9c1ea8e15696214f12b37fdae87dd44674051f2d63696ddc96edff5d4dfb",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/647000000122",
+            "httpStatus": 200,
+            "bodyTextSha256": "a3567f2f06211625ad5830a266f4749f79537d899d4047fec80d7df7ce48c69c",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/program-s47000.gov24-647000000122.json",
+                "sha256": "1fda84904d9099c5754483cee681d5d628e2ce13db3ac094dcfc252b4cb56101",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "s47000.gov24-647000000122",
+        "s47000.bokjiro-WLF00004401"
+      ]
     },
     {
       "formId": "ordin-22578071",

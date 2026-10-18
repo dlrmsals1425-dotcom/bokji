@@ -2197,7 +2197,7 @@
         "currentAnnexBinding": "bound"
       },
       "disposition": "requires_external_confirmation",
-      "reason": "제7조제2항제4호의 별지2 전체는 결혼장려금 이행서약서로 사업도 동일 서약을 요구한다. 그러나 원본은 지원대상자가 군외로 전출하면 중단된다고 서약하고, 현행 제5조는 부부 중1명 이상 거주를 허용하며 제8조제2호는 부부 모두 전출한 경우로 한정한다. 신청인이 현행보다 넓은 중단 조건에 서약하게 될 수 있어 정정 원본 또는 접수기관의 현행 작성 기준 확인 전 보류한다.",
+      "reason": "정선군의 2026-03-17 수정 인구정책 안내와 현재 복지로는 부부 중 1명 이상 거주를 명시하고, 복지로는 별지2 이행서약 제출을 요구한다. 그러나 구 문구의 '지원 대상자가 군 외로 전출'과 현행 제8조의 '부부 모두 전출' 사이 명확한 정정 또는 작성 기준은 확인되지 않아 그대로 보류한다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -2217,7 +2217,56 @@
       "reviewedBy": "codex-national_form_audit",
       "reviewedAt": "2026-10-19",
       "sourceBodyPath": "logs/forms-completion/law-bodies/2069271.json.gz",
-      "sourceBodySHA256": "8661868af87e8747b404c26e5cf67af9dee84d8eb9b2001db0bee860ce77c6ef"
+      "sourceBodySHA256": "8661868af87e8747b404c26e5cf67af9dee84d8eb9b2001db0bee860ce77c6ef",
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team3-results.json",
+        "sourceResultSHA256": "7e8e63b2e007e7deed1d20ab71367066ef036d087d892df780147ee63e67b764",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=2069271&gubun=ELIS",
+            "httpStatus": 200,
+            "responseSha256": "bf782f26d0eaf4e58658ed919e4ae0e6f1eb068b56d9912a6d5a7331a8300afc",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/law-2069271.json",
+                "sha256": "05abcb7de28345cb0f00552d5634e41d15f00772bd4f2ae1b97a4beeb8a41740",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.jeongseon.go.kr/portal/partinfo/lifewelfare/populationpolicy/movein",
+            "httpStatus": 200,
+            "responseSha256": "2369caec8ae8067fa603c2a0134bbb67e208b65bd99ab7b6f7c94518e2223f94",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/jeongseon.json",
+                "sha256": "41f06d72d838bc2f3ed6c28b833568563c9dd80b29e7c504d30fa33e57a2d642",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00006371&wlfareInfoReldBztpCd=02",
+            "httpStatus": 200,
+            "bodyTextSha256": "988a2e5ad24e8858caa2319a8cadbadd7e769668c20be22d2dcb3960a1990405",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/program-g51770.bokjiro-WLF00006371.json",
+                "sha256": "31d41d675e30c441adf9808c7be5a9022548f49a4d024a3bd489e093230ebbc1",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g51770.bokjiro-WLF00006371"
+      ]
     },
     {
       "formId": "ordin-21184741",

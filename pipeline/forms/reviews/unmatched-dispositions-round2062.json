@@ -1231,7 +1231,7 @@
       ],
       "reviewCheckedAt": "2026-10-19",
       "verifiedDocumentTitle": "독립유공자 보훈명예수당 및 건강생활지원수당 지급신청서",
-      "reason": "원문 1호 전체는 독립유공자·선순위 유족의 월10만원 보훈명예수당과 반기 건강생활지원수당을 함께 신청하며 제6조제1항이 지정한다. 사이트에는 별도 독립유공자 사업이 검색되지 않고 일반 국가보훈 건강생활지원수당 126·02494만 있다. 현행 제4조는 다른 조례 중복 지원을 배제하며 원문도 두 급여를 분리 선택하지 않는다. 일반 건강수당 사업에서 이 독립유공자 전용 복합 신청을 실제 받는지 확인되지 않아 대상명만으로 연결하지 않는다.",
+      "reason": "제물포구 정부242026.7.26 최신 안내는1년거주65세이상 국가유공자의 반기10만원 건강생활지원과 옛 동구 국가보훈 조례18조를 인용한다. 독립유공자 전용 복합 보훈명예·건강생활 신청서를 그 일반 건강수당에서 받는다는 직접 근거는 없다. 제물포 출범 전 중구 예산의 다른 건강증진수당과도 구분하며 복합 원본을 강제 적용하지 않는다.",
       "lawClausesReviewed": true,
       "relatedArticles": [
         {
@@ -1266,7 +1266,34 @@
         "currentLawId": "2151231",
         "binding": "bound",
         "officialFlSeq": "167101423"
-      }
+      },
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team1/team1-results.json",
+        "sourceResultSHA256": "1636a6e15bbf67808ab71c4d605f84f84d98ec0f4e389ea11ddb598de11ab1b8",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/350000000126",
+            "httpStatus": 200,
+            "status": "GET_200_full_page_reviewed",
+            "responseSHA256": "3aaad39e06e24f5f6d9a4645d02d19588fed65d7f0e869317b5e65a078fec75a",
+            "newEvidence": "현재 정부24 서비스 전체 핵심내용·신청경로·신청서/서류·수정일 직접 확인",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team1/gov24-current-30.json",
+                "sha256": "4ac174f249b55a7e712a3b8792eee7cf211d48a4bdf622c2814091267bf84a6e",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g28125.gov24-350000000126"
+      ]
     },
     {
       "index": 12,

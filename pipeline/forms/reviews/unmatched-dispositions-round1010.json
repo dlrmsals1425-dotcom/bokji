@@ -881,7 +881,7 @@
         "sourceArticleCount": 5
       },
       "disposition": "requires_external_confirmation",
-      "reason": "인제군 제2조제2항과 별지1 전체는 읍면장이 가구수·승강장거리·버스운행·이동수단을 조사해 마을 자체를 운행대상으로 선정 신청하는 문서이다. icare 후보는 이미 선정된 대상마을 주민의 희망택시 이용을 안내하며 신청절차·지역법 근거가 없고 owner도 전국공통으로 표시돼 있다. 신규 대상마을 선정 서식을 그 이용사업의 기관용 신청으로 연결할 관계를 추가 확인해야 한다.",
+      "reason": "공식MCP 재검색에서2026.10.12 시행의 새 상위조례2178167을 확보하고 전체9조를 읽었다. 현행은 지정마을 주민·외국인, 바우처카드 결제 및 운송사업자 비용청구를 규정하고 기존 시행규칙1633745도 검색된다. 그러나 읍면장 신규마을 지정 신청서를 통합돌봄 메뉴판의 선정마을 주민 이용사업 신청자료로 제공한다는 직접 안내는 없으며 새 상위조례 제5조의 별지1은 운송사업자 지원청구로 원본과 다른 문서이다. 입법예고/현행 제명변경은 확인했으나 기존 원본의 해당사업 접수용도는 미해소이다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -900,7 +900,38 @@
       "reviewedBy": "codex-national_form_audit",
       "reviewedAt": "2026-10-18",
       "sourceBodyPath": "logs/forms-completion/law-bodies/1633745.json.gz",
-      "sourceBodySHA256": "f7c337a0aef9e83d7825f834e2a3796bfe90304fecc9607cc69bc95001d0c857"
+      "sourceBodySHA256": "f7c337a0aef9e83d7825f834e2a3796bfe90304fecc9607cc69bc95001d0c857",
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team1/team1-results.json",
+        "sourceResultSHA256": "1636a6e15bbf67808ab71c4d605f84f84d98ec0f4e389ea11ddb598de11ab1b8",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2178167",
+            "status": "official_mcp_full_articles_read",
+            "newEvidence": "2026.10.12 새 상위조례 제2·3·5조의 주민 이용/운송사업자 비용청구 구별",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team1/inje-current-law-mcp.json",
+                "sha256": "5218adf3d17a3d171f0381792da0daea6118ebe9ccbc30e90db366cf51f6490a",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://inje.go.kr/mobile/notice/notify?articleSeq=244621",
+            "status": "official_indexed_notice_reviewed",
+            "newEvidence": "2026 정주형택시 운행사업자 모집은 사업자 참여절차이며 읍면장 신규대상마을 신청과 다름",
+            "savedEvidence": []
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g51810.icare-0083-1489635-1-3-6"
+      ]
     },
     {
       "formId": "ordin-22525809",
@@ -1289,7 +1320,7 @@
         "sourceArticleCount": 9
       },
       "disposition": "requires_external_confirmation",
-      "reason": "계룡시 시행규칙 제3조는 급여 신청에 별지1을 사용하도록 하지만 현재 사업은 법정저소득 자격자에 대한 별도 신청 없는 자동지원을 명시한다. 원본3면 전체는 기초노령연금 등 과거 전국급여를 포함한 공통신청서이며 지역 월동·교육·건강증진 급여 항목을 특정하지 않는다. 현행 자동지원의 별도 신청이 필요한 예외 또는 변경절차에 실제 사용하는지 확인 전에는 승인하지 않는다. 원문이 없다는 판단은 아니다.",
+      "reason": "현재 정부24 원문(2026-09-02 수정)은 개인 신청절차와 신청 시기가 없고 법정 저소득 자격자에게 별도 신청 없이 지원한다고 명시한다. 공통 사회복지 신청서의 지역 급여 선택·변경 접수 용도를 보완하는 예외 절차나 현행 첨부는 찾지 못했다. 자동지원 안내를 근거로 이 종이서식을 현재 주신청서로 승격하지 않는다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -1309,7 +1340,31 @@
       "reviewedBy": "codex-national_form_audit",
       "reviewedAt": "2026-10-18",
       "sourceBodyPath": "logs/forms-completion/law-bodies/1634557.json.gz",
-      "sourceBodySHA256": "4796b3388dd726e483d8f1e1101cf5016cf1f744a5423740a7c28f1b02c0d8ef"
+      "sourceBodySHA256": "4796b3388dd726e483d8f1e1101cf5016cf1f744a5423740a7c28f1b02c0d8ef",
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team2/team2-results.json",
+        "sourceResultSHA256": "badd63d72d5f96dcc6815ad79e43ba695490e25777144516a69934cdab93a48a",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/558000000116",
+            "httpStatus": 200,
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team2/case00-gov24.json",
+                "sha256": "19d60cd0dc2936be4495cd237ae977a2848f7736b01aa7155fb8cd93a24ea2fb",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g44250.gov24-558000000116"
+      ]
     },
     {
       "formId": "ordin-22618057",
@@ -1348,17 +1403,15 @@
         "sourceArticlesAvailable": true,
         "sourceArticleCount": 10
       },
-      "disposition": "requires_external_confirmation",
-      "reason": "전체 통합파일의 별지 제1호는 장사시설 사용·기간연장 신고, 제2호 이하에는 교부증·권리승계·중도사용 해약 환급·장부·보존묘지 신청이 포함된다. 시행규칙 제2조와 상위 조례 제5조상 시설 사용 신고임은 확인했으나, 현 사업은 추모공원 안치비용 감면과 홈페이지 신청을 안내한다. 감면 신청·증빙 제출에 이 별지 제1호를 실제 사용하는지 명시된 절차 근거는 확보하지 못했다. 감면용으로 묶음 전체나 중도해약 환급서를 연결하지 않고 확인 대기한다.",
+      "disposition": "approved",
+      "reason": "코디네이터가 실제 법령포털 원본 전체5341자·현행 시행규칙1634697의 제2조/제9조와 2026공단 민원편람의 장사시설 접수 장을 대조했다. 현재 편람은 별지1 사용신고서를 제출서류로 직접 지정하고, 봉안 업무 흐름의 사용신고→정보동의→봉안당안치 및 같은 동의서의 감면 대상 확인을 명시한다. 추모공원 안치비 감면 대상자가 시설 사용을 신고할 때의 첫 별지1만 조건부 제공하며 다른 장사시설 서류·중도환급·장부를 이 혜택의 신청서로 확장하지 않는다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
           "programId": "s30000.gov24-O00019800003",
-          "disposition": "not_connected",
-          "reason": "전체 통합파일의 별지 제1호는 장사시설 사용·기간연장 신고, 제2호 이하에는 교부증·권리승계·중도사용 해약 환급·장부·보존묘지 신청이 포함된다. 시행규칙 제2조와 상위 조례 제5조상 시설 사용 신고임은 확인했으나, 현 사업은 추모공원 안치비용 감면과 홈페이지 신청을 안내한다. 감면 신청·증빙 제출에 이 별지 제1호를 실제 사용하는지 명시된 절차 근거는 확보하지 못했다. 감면용으로 묶음 전체나 중도해약 환급서를 연결하지 않고 확인 대기한다.",
-          "applyType": "self",
-          "applyMethod": "홈페이지 신청",
-          "target": "1. 관내에 주민등록이 되어 있는 「국민기초생활 보장법」에 따른 수급자, 「대전광역시 장기등 기증 장려 조례」에 따른 장기등 기증자\n2.「국가보훈 기본법」에 따른 희생ㆍ공헌자\n3. 무의탁 사회복지시설 입소자\n4. 연고자가 없는 행려 사망자\n5. 그 밖에 천재ㆍ지변 등의 사유로 사용료를 납부할 능력이 없다고 인정 되는 사람"
+          "disposition": "approved",
+          "decision": "approved",
+          "reason": "코디네이터가 실제 법령포털 원본 전체5341자·현행 시행규칙1634697의 제2조/제9조와 2026공단 민원편람의 장사시설 접수 장을 대조했다. 현재 편람은 별지1 사용신고서를 제출서류로 직접 지정하고, 봉안 업무 흐름의 사용신고→정보동의→봉안당안치 및 같은 동의서의 감면 대상 확인을 명시한다. 추모공원 안치비 감면 대상자가 시설 사용을 신고할 때의 첫 별지1만 조건부 제공하며 다른 장사시설 서류·중도환급·장부를 이 혜택의 신청서로 확장하지 않는다."
         }
       ],
       "relatedArticles": [
@@ -1379,7 +1432,90 @@
         "note": "상위 조례 실제 조문과 시행규칙 및 사업의 감면 안내를 비교함; 개별 감면 신청 절차의 별지 사용은 미확정."
       },
       "sourceBodyPath": "logs/forms-completion/law-bodies/1634697.json.gz",
-      "sourceBodySHA256": "27ce8c2998177b80072efc03903c70d2e5fb6fcee93790306ac28a9d29755e4a"
+      "sourceBodySHA256": "27ce8c2998177b80072efc03903c70d2e5fb6fcee93790306ac28a9d29755e4a",
+      "checkedAt": "2026-10-19",
+      "relatedProgramIds": [
+        "s30000.gov24-O00019800003"
+      ],
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team3-results.json",
+        "sourceResultSHA256": "7e8e63b2e007e7deed1d20ab71367066ef036d087d892df780147ee63e67b764",
+        "proposedStatus": "propose_approval",
+        "officialEvidence": [
+          {
+            "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=1634697&gubun=ELIS",
+            "httpStatus": 200,
+            "responseSha256": "a1ad7b497b0fe66ae004338471b6837d8f2a8a1bb57b76e94bd99fedb4394c99",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/law-1634697.json",
+                "sha256": "4fbfc13a7c882b0ae55fa26b05fc7d29253c101c36745743ff92f0e52b27cba9",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.djsiseol.or.kr/portal/sub050701.asp",
+            "httpStatus": 200,
+            "responseSha256": "e4b01bf3153fc47d3beed17547340eaa18296f3ea6e1d9964a724c90dc9ae2c5",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/daejeon-forms.json",
+                "sha256": "9faa0d1a8030b33ecd8252f7e0f1c9fe86d5de41ee07e00d20521ec37414200c",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.djsiseol.or.kr/portal/sub040203.asp",
+            "httpStatus": 200,
+            "responseSha256": "b46a0f8464127416cec541459b24ac632c7ec7f7137bb42875dbc52e8aa4d7cf",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/daejeon-bongan.json",
+                "sha256": "ddde3496826b14a33f6a3446fcde85bdd6f3bf1d69aee534ab4b2638241c2c1e",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.djsiseol.or.kr/portal/sub040204_02.asp",
+            "httpStatus": 200,
+            "responseSha256": "eff6cda34bad9ac8383b8213fd64f660eecb0712d9293b3e4760c7134a2c49dc",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/daejeon-guide-read.json",
+                "sha256": "9aee107919d05be4e9b10f77a21296b18da103bece14f575daceb8a634444711",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00019800003",
+            "httpStatus": 200,
+            "bodyTextSha256": "96364b235efa4845de2be040e104e039a8d86e8f80896f297b37126963ab806e",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/program-s30000.gov24-O00019800003.json",
+                "sha256": "610e929af19ff219e60b30e71bb4afaf15a4b6c3c86847130e2fa108d4b05b60",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "httpStatus": 200,
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/daejeon-2026-manual.hwpx",
+                "sha256": "58213b86d95a4f7919ab40f9000bf63db1790e8c32cbc7769d0f73366c2f75bf",
+                "kind": "evidence_original_file"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      }
     },
     {
       "formId": "ordin-22618015",
@@ -3397,7 +3533,7 @@
       "additional": 2
     }
   },
-  "reviewedFileSHA256": "f687ffa6b326f2978cf7deb730e53255223a610f4d4b47c8d860fd1a3fa3e75d",
+  "reviewedFileSHA256": "eb6d03729bedecd4e291b8c06905e33306abddf554c67862564dabed798d0136",
   "finalizedAt": "2026-10-18",
   "printedNumberCorrection": {
     "at": "2026-10-19",
@@ -3406,5 +3542,6 @@
     "beforeSHA256": "e663af55acdcceb6f9952e9fc635b32413980c1148d61621c115141ef5ee7b15",
     "afterSHA256": "f687ffa6b326f2978cf7deb730e53255223a610f4d4b47c8d860fd1a3fa3e75d",
     "artifact": "logs/forms-completion/reviews/team1-printed-number-corrections.json"
-  }
+  },
+  "finalizedReviewSha256": "eb6d03729bedecd4e291b8c06905e33306abddf554c67862564dabed798d0136"
 }

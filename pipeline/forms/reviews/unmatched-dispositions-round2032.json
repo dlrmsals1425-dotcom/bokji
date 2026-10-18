@@ -3822,7 +3822,7 @@
       ],
       "reviewCheckedAt": "2026-10-19",
       "verifiedDocumentTitle": "출생아 건강보험 가입지원 신청서",
-      "reason": "원문 자체는 둘째 이상 출생아·부모·거주기간·서명으로 사이트 건강보험료 지원과 목적상 일치한다. 그러나 현행 제5조제2호는 출산서비스 통합처리 규정 제6~9조의 신청 절차를 준용하고 제6조제5항도 통합접수대장으로 관리하도록 하며 구 별지 제1호를 제출하도록 지정하지 않는다. 공식 첨부가 남아 있는 사실만으로 개별 서식의 현재 접수를 확정할 수 없어 현행 통합신청 대체 여부 확인을 남긴다.",
+      "reason": "양구보건소의 현재 모자보건 안내는 둘째 이상 출생아 보험을 출생신고 때 읍면에서 신청서 작성하도록 안내한다. 그러나 어떤 판본인지 지정·첨부하지 않고, 현행 조례 제5조제2호는 출산서비스 통합처리를 준용한다. 종전 개별 별지1의 현행 사용 또는 통합신청서 대체 여부는 여전히 특정할 수 없다.",
       "lawClausesReviewed": true,
       "relatedArticles": [
         {
@@ -3856,7 +3856,56 @@
         "currentLawId": "1986069",
         "binding": "bound",
         "officialFlSeq": "152993205"
-      }
+      },
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team3-results.json",
+        "sourceResultSHA256": "7e8e63b2e007e7deed1d20ab71367066ef036d087d892df780147ee63e67b764",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=1986069&gubun=ELIS",
+            "httpStatus": 200,
+            "responseSha256": "794ee5ddd1f308ab39b5384e842ed1026208eaa5c25db91362dd5573bd9a5788",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/law-1986069.json",
+                "sha256": "3e7a47383b9f13fa6e752598f876c9845b51f9c034e3ffe45835d3c89da10fb5",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://yanggu.go.kr/health/user_sub?gfnc=health&mu_idx=441",
+            "httpStatus": 200,
+            "responseSha256": "53145633322cc962126307a2e9817030879a79339efd446455233eed062e367d",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/yanggu.json",
+                "sha256": "28dda0dbd534e5bbb591854d3f7c93e634d64d67d531b0b10de353b86bd5f526",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/432000000240",
+            "httpStatus": 200,
+            "bodyTextSha256": "cc3d8fba8dc0e607bce6346b4727c3f315884fc409361293aa11145e5b05133d",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/program-g51800.gov24-432000000240.json",
+                "sha256": "5a2a0c64bcb38096a8a984493c0cdf16720b80613b178dd9c520e4ebd9019489",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g51800.gov24-432000000240"
+      ]
     },
     {
       "index": 48,

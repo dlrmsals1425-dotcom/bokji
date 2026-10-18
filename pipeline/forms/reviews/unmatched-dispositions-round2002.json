@@ -928,7 +928,7 @@
         }
       ],
       "verifiedDocumentTitle": "청소년보호법위반신고자포상금신청서",
-      "reason": "공식 법규ID1220731의 시행규칙 제2조는 저소득 긴급지원 제1호를 지정하지만, 첨부 ID20113043의 실제 HWP는 별지 제2호 청소년보호법 위반신고 포상금 신청서이다. 신청인·신고일·피신고인·포상금 서명까지 전체를 확인해 파일/법규의 목적·별지 충돌을 확인했다. 지역 포상금 사업도 발견하지 못했다. 이 첨부를 긴급구호·화재보험·생활안정 등 후보6개에 붙이지 않고 공식 첨부 정정 확인이 필요하다.",
+      "reason": "현재 공식 flSeq=152490437을 직접 다시 GET해 전체 HWP를 읽었으며 SHA 1e45a2022a94a7ee868dc67dc4925074f90c78c22ec7b110963bd1989c5ac50c의 별지2 청소년보호법 위반신고 포상금 신청서가 동일하게 내려온다. 정부24의 합천 긴급지원 안내도 이 포상금 서식을 쓰지 않는다. 저소득 긴급지원 법규의 별지1 지정과 실제 파일이 계속 충돌하여 올바른 공식 대체첨부가 필요하다.",
       "lawClausesReviewed": true,
       "relatedArticles": [
         {
@@ -957,7 +957,47 @@
         ],
         "basis": "Full same-jurisdiction corpus name/summary/benefit search; hits alone are not approvals."
       },
-      "approvedAssociations": []
+      "approvedAssociations": [],
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team2/team2-results.json",
+        "sourceResultSHA256": "badd63d72d5f96dcc6815ad79e43ba695490e25777144516a69934cdab93a48a",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/548000000104",
+            "httpStatus": 200,
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team2/case10-gov24.json",
+                "sha256": "1983f21028c3b6ddf9fadef52390e036811b576494a644b16d0cf00e85337a5c",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152490437&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%B2%AD%EC%86%8C%EB%85%84%EB%B3%B4%ED%98%B8%EB%B2%95+%EC%9C%84%EB%B0%98%EC%8B%A0%EA%B3%A0%EC%9E%90+%ED%8F%AC%EC%83%81%EA%B8%88+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+            "httpStatus": 200,
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team2/case10-current-law-annex.json",
+                "sha256": "44991140de1ad7da089cd8e8cf16bc28c1d8801e0595bdb2d0a622a7e5f27223",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g48890.bokjiro-WLF00000614",
+        "g48890.bokjiro-WLF00002897",
+        "g48890.gov24-548000000102",
+        "g48890.gov24-548000000104",
+        "g48890.gov24-548000000105",
+        "g48890.gov24-548000000107"
+      ]
     },
     {
       "index": 11,
@@ -2652,7 +2692,7 @@
       "candidateProgramIds": [
         "g26710.gov24-O00021200013"
       ],
-      "disposition": "requires_external_confirmation",
+      "disposition": "no_matching_site_program",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -2663,7 +2703,7 @@
         }
       ],
       "verifiedDocumentTitle": "청소년수련시설 사용료 감면·면제 신청서",
-      "reason": "규칙 제3조와 원본 제4호는 청소년수련시설 사용료 감면 신청으로 명확하다. 그러나 후보의 실제 상세는 각 복지관 평생교육 프로그램의 이용료 감면이며 청소년수련시설이 그 사업 범위에 포함되는지 확인되지 않는다. 지역검색도 같은 후보만 있어 시설명·적용 조례의 대응 확인이 필요하며 유사한 감면명만으로 승인하지 않았다.",
+      "reason": "현재 정부24는 접수기관을 각 복지관, 문의기관을 기장군노인복지관으로 명시하고 평생교육 프로그램 이용료 감면을 설명한다. 공단의 공식 시설 페이지에서도 청소년수련관과 노인·종합사회복지관을 별도 시설로 구분한다. 원본은 별도 청소년수련시설 조례의 감면 신청이므로 이 사이트 사업과의 연결 제외를 제안한다. 원본 자체의 법적 폐지를 주장하는 것은 아니다. 이 판정은 명시된 현재 수록 혜택의 제출서류 연결에 한정하며, 원본의 다른 목적상 유효성이나 기존 수급자 예외절차의 부재를 단정하지 않는다.",
       "lawClausesReviewed": true,
       "relatedArticles": [
         {
@@ -2698,7 +2738,56 @@
           "result": "EXTERNAL_API_ERROR: fetch failed"
         }
       ],
-      "approvedAssociations": []
+      "approvedAssociations": [],
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team3-results.json",
+        "sourceResultSHA256": "7e8e63b2e007e7deed1d20ab71367066ef036d087d892df780147ee63e67b764",
+        "proposedStatus": "propose_exclusion",
+        "officialEvidence": [
+          {
+            "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=1269618&gubun=ELIS",
+            "httpStatus": 200,
+            "responseSha256": "c21f267ef5219d13d96a15b008aa4f6efd68c6ff279f2a53f42fe2be2a8260eb",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/law-1269618.json",
+                "sha256": "b12207945cb9d87893ffb1bdc5cc9a028afbcda0a04252038fd9a22c4f6de710",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.gijangcmc.or.kr/cmc/02_facility/fac_info01.asp",
+            "httpStatus": 200,
+            "responseSha256": "4f05d604679f8f91d63243c1be6e2d84fd3d1606b17bd65b60bf892d5ff224d3",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/gijang.json",
+                "sha256": "01d055c7c0d7cf30c34d1064e20bc1d97ffd12252237c4e71ae1c6ccb632bc5b",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00021200013",
+            "httpStatus": 200,
+            "bodyTextSha256": "8c13e5fecb3b26d145c9ca25421c5748d6bb778c4d735045aca57e0d905c3631",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/program-g26710.gov24-O00021200013.json",
+                "sha256": "a699ea71f640b7cf6c7bb63f58e639685662c36b9023a01c635ffbcb7c1c3712",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g26710.gov24-O00021200013"
+      ]
     },
     {
       "index": 31,
@@ -3867,7 +3956,7 @@
         }
       ],
       "verifiedDocumentTitle": "유용미생물 공급 신청서",
-      "reason": "규칙 제2조제2항은 도지사가 경기도 동물위생시험소에서 생산·공급하는 유용미생물을 대상으로 별지 제1호 신청을 요구한다. 원본 역시 경기도지사 수신으로 사육·재배 규모와 미생물 종류별 연간·월별 공급량을 신청한다. 후보 포천시 사업은 포천 농업기술센터 자체 배양실의 방문·키오스크 공급이며 이 도 생산물 신청서를 채택한다는 근거가 없다. 다른 도내 축산환경·미생물 구입비 사업도 구매 보조 절차여서 공급신청과 다르다. 포천 자체 공급에서 이 양식을 실제 사용하는지는 외부 확인이 필요하다.",
+      "reason": "정부24(2026.1.23 수정)에서 포천 자체 배양실 방문수령·신규 신청/기존 키오스크·미생물105L 제한을 재확인했다. 현행 규칙의 도 동물위생시험소 공급량 신청과 생산·접수주체가 다르며 포천이 그 도지사 수신 서식을 채택한다는 새 근거는 확보하지 못했다. 지역에 미생물 신청서가 없다는 결론은 아니다.",
       "lawClausesReviewed": true,
       "relatedArticles": [
         {
@@ -3898,7 +3987,38 @@
         ],
         "basis": "Full same-jurisdiction corpus name/summary/benefit search; hits alone are not approvals."
       },
-      "approvedAssociations": []
+      "approvedAssociations": [],
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team1/team1-results.json",
+        "sourceResultSHA256": "1636a6e15bbf67808ab71c4d605f84f84d98ec0f4e389ea11ddb598de11ab1b8",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/560000000129",
+            "httpStatus": 200,
+            "status": "GET_200_full_page_reviewed",
+            "responseSHA256": "ecf981712fb24a3baa689168d5393e0fdcb54fd1925d8caee98ff6d809ba015d",
+            "newEvidence": "현재 정부24 서비스 전체 핵심내용·신청경로·신청서/서류·수정일 직접 확인",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team1/gov24-current-21.json",
+                "sha256": "ed9b0b5fe305a5ebe963e2aa1764a7359d134928f6c1978d35ed8d92be088002",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g41650.gov24-560000000129",
+        "s41000.gov24-641000000169",
+        "g41250.gov24-392000000101",
+        "g41630.gov24-559000000125",
+        "g41820.gov24-416000000104"
+      ]
     },
     {
       "index": 45,

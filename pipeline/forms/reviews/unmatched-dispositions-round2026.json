@@ -4798,7 +4798,7 @@
       ],
       "reviewCheckedAt": "2026-10-19",
       "verifiedDocumentTitle": "국민건강보험료(노인장기요양보험료) 지원 신청서",
-      "reason": "대구 서구 원문의 대상·보험료·재산·가족·주민 서명은 사이트 건강보험료 지원과 목적상 맞는다. 그러나 현행 조례 전체 제1~10조를 확인한 결과 제5조는 매월 공단 명단 통보 후 심사·조사 방식이고 제6조는2022년 삭제되어, 별지 제1호를 제출하는 현행 신청 조항이 없다. 사이트는 방문 신청을 안내하지만 첨부의 실제 현재 사용 근거가 부족하므로 현행 별표에 남아 있다는 이유만으로 확정하지 않고 사용 여부 외부 확인을 남긴다.",
+      "reason": "정부24는 동 방문 신청을 안내하지만 신청서·구비서류는 해당없음으로 표시한다. 병합된 정확한 복지로 WLF00002803도 같은 보험료 지원과 조례 첨부만 제공하며 현행 삭제된 신청조항을 대신할 별지1 실제 제출 안내는 확인되지 않았다. 현행 매월 공단 명단 심사 방식에서 이 파일을 접수하는 직접 근거가 여전히 부족하다.",
       "lawClausesReviewed": true,
       "relatedArticles": [
         {
@@ -4832,7 +4832,42 @@
         "currentLawId": "1927175",
         "binding": "bound",
         "officialFlSeq": "140391533"
-      }
+      },
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team2/team2-results.json",
+        "sourceResultSHA256": "badd63d72d5f96dcc6815ad79e43ba695490e25777144516a69934cdab93a48a",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/343000000117",
+            "httpStatus": 200,
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team2/case01-gov24.json",
+                "sha256": "1e55da90f77c9c541cfd282cfc3f2fec44b789e77405082c2c5ecdee7e68a54a",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00002803",
+            "httpStatus": 200,
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team2/case01-bokjiro.json",
+                "sha256": "302490cc35105f36f561a840cadd2785928c53eb13245e1cae17cc9638dc8b5c",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g27170.gov24-343000000117"
+      ]
     },
     {
       "index": 54,

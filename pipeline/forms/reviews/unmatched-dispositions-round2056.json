@@ -1131,7 +1131,7 @@
       ],
       "reviewCheckedAt": "2026-10-19",
       "verifiedDocumentTitle": "학습비 면제 신청서",
-      "reason": "원문 1호 전체와 현행 제6조제3항의 1호 면제 신청, 제5조의 유공자·수급자·한부모·장애인 수강 순위 및 제6조제2항의 기당 1과목 면제를 읽었다. 후보는 청년 2030 혼밥 요리교육이며 사이트에 유료 학습비 부과 또는 이 면제 적용 여부가 명시되어 있지 않다. 동일 지역 전체 검색에도 별도 평생학습관 면제 사업은 없다. 해당 강좌의 학습비 및 면제 적용을 확인해야 정확히 연결할 수 있어 보류한다.",
+      "reason": "현재 학습관 수강안내는 정규프로그램4만원과1인1과목 면제·증빙을 명시한다. 다만 대상 사업2030혼밥 강좌가 그 유료 정규과정에 포함되는지 또는 별도 특화과정인지 공개자료에서 확정하지 못해, 제1호 면제서식을 해당 강좌용으로 연결하지 않는다. 면제 제도 자체가 없다는 뜻은 아니다.",
       "lawClausesReviewed": true,
       "relatedArticles": [
         {
@@ -1158,7 +1158,34 @@
         "currentLawId": "2119115",
         "binding": "bound",
         "officialFlSeq": "163070987"
-      }
+      },
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team1/team1-results.json",
+        "sourceResultSHA256": "1636a6e15bbf67808ab71c4d605f84f84d98ec0f4e389ea11ddb598de11ab1b8",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://lll.cheongju.go.kr/papp/P020102",
+            "httpStatus": 200,
+            "status": "GET_200_full_page_reviewed",
+            "responseSHA256": "754804b06b73cc8eace6660f5f63ab15c589d4277246d9d6fd0f1d262f0d1957",
+            "newEvidence": "정규프로그램 학습비·면제 및 제출증빙의 현행 안내 확인",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team1/cheongju-registration-guide.json",
+                "sha256": "da9739b1bf1cd61654dd94af99ebc378554dea0105d7ded0bc4693d0bbace2c9",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g43110.gov24-571000000197"
+      ]
     },
     {
       "index": 15,
@@ -1205,7 +1232,7 @@
       ],
       "reviewCheckedAt": "2026-10-19",
       "verifiedDocumentTitle": "수강신청 취소원 및 학습비 반환 청구서",
-      "reason": "원문 2호 전체는 수강 취소 사유·기납부액·환불계좌와 서명을 받는다. 현행 제7조제3항은 취소 및 학습비 반환을 평생학습관 홈페이지로 신청하도록 변경되어 종이 2호를 직접 지정하지 않는다. 후보 청년 요리강좌가 유료인지와 이 종이 반환 원문을 현재 접수하는지 모두 확인되지 않아, 공식 별지 잔존만으로 현재 반환 신청에 연결하지 않는다.",
+      "reason": "현재 학습관 환불안내는 로그인 후 마이페이지에서 사유·은행·계좌·예금주를 입력하는 인터넷 절차로 명시하며 현행 제7조제3항과 일치한다. 해당 혼밥강좌의 유료 여부 및 종이 제2호 별도 수용은 확인되지 않아 이전 보류를 유지한다.",
       "lawClausesReviewed": true,
       "relatedArticles": [
         {
@@ -1229,7 +1256,48 @@
         "currentLawId": "2119115",
         "binding": "bound",
         "officialFlSeq": "163070989"
-      }
+      },
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team1/team1-results.json",
+        "sourceResultSHA256": "1636a6e15bbf67808ab71c4d605f84f84d98ec0f4e389ea11ddb598de11ab1b8",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://lll.cheongju.go.kr/papp/P020103",
+            "httpStatus": 200,
+            "status": "GET_200_full_page_reviewed",
+            "responseSHA256": "1d988f7a78442727e288ef4cb10ec9d49b76e54854762c60941529e52b58896b",
+            "newEvidence": "실제 인터넷 취소·환불 안내를 읽음",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team1/cheongju-refund-guide.json",
+                "sha256": "f08d9270a5fc4a2a2333b07f06ea8d4cfce6359c1248f4dcc2edd33bb575c3bf",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://lll.cheongju.go.kr/papp/P020102",
+            "httpStatus": 200,
+            "status": "GET_200_full_page_reviewed",
+            "responseSHA256": "754804b06b73cc8eace6660f5f63ab15c589d4277246d9d6fd0f1d262f0d1957",
+            "newEvidence": "정규학습비 안내만으로 특정 혼밥강좌의 비용까지 확정할 수 없음",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team1/cheongju-registration-guide.json",
+                "sha256": "da9739b1bf1cd61654dd94af99ebc378554dea0105d7ded0bc4693d0bbace2c9",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g43110.gov24-571000000197"
+      ]
     },
     {
       "index": 16,

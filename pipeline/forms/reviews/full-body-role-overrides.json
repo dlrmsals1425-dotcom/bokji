@@ -2341,6 +2341,12 @@
       "role": "application",
       "sha256": "45a78d1a783675d38d4f339e170062fb52f3c10c41056f3072b36d699ba4837a",
       "reviewFile": "municipal-reviewed-round6001.json"
+    },
+    "ordin-22618057": {
+      "lawId": "1634697",
+      "role": "application",
+      "sha256": "194b6950aed4e2d82ce016d5ed876c060ac544def42f208a9dad4536e9ecf933",
+      "reviewFile": "municipal-reviewed-round1010.json"
     }
   }
 }

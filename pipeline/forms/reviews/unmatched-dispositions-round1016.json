@@ -2021,8 +2021,8 @@
         "sourceArticlesAvailable": true,
         "sourceArticleCount": 11
       },
-      "disposition": "requires_external_confirmation",
-      "reason": "원본은 자료요구범위·이용목적·보관보안대책을 제출하는 행정정보 제공 신청서로 구 제명 지역정보화 조례 제14조를 인용한다. 수집된 지능정보화 조례 본문은 제11조까지이며 현재 사이트는 정보화 교육 온라인 예약·이름·연락처·동의를 안내한다. 교육 신청서가 아닌 별도 정보제공 요청으로 목적이 다르고 원본 인용 조문의 최신 관계도 미확정이므로 해당 교육사업에 연결하지 않는다.",
+      "disposition": "no_matching_site_program",
+      "reason": "거제시 2026년 공식 교육모집 및 실제 온라인 교육 신청화면은 교육과정·참여자·교육 개인정보 동의를 요구한다. 구 행정정보 제공 원본은 자료요구범위·사용용도·안전관리 신청으로 목적이 다르므로 시민정보화교육 사업쌍에서 제외 제안한다. 다른 행정정보 제공 용도의 법적 유효성은 이 판정 대상이 아니다. 이 판정은 명시된 현재 수록 혜택의 제출서류 연결에 한정하며, 원본의 다른 목적상 유효성이나 기존 수급자 예외절차의 부재를 단정하지 않는다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -2042,7 +2042,48 @@
       "reviewedBy": "codex-national_form_audit",
       "reviewedAt": "2026-10-18",
       "sourceBodyPath": "logs/forms-completion/law-bodies/1808787.json.gz",
-      "sourceBodySHA256": "34e07d445b1ee5cde049c32649c3202107ba0708cf6ad86b08564afddb90f3d8"
+      "sourceBodySHA256": "34e07d445b1ee5cde049c32649c3202107ba0708cf6ad86b08564afddb90f3d8",
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team1/team1-results.json",
+        "sourceResultSHA256": "1636a6e15bbf67808ab71c4d605f84f84d98ec0f4e389ea11ddb598de11ab1b8",
+        "proposedStatus": "propose_exclusion",
+        "officialEvidence": [
+          {
+            "url": "https://geoje.go.kr/board/view.geoje?boardId=BBS_0000008&dataSid=306356998&menuCd=DOM_000008507001000000&paging=ok&startPage=11",
+            "httpStatus": 200,
+            "status": "GET_200_full_page_reviewed",
+            "responseSHA256": "c3a305d405b0c8578071ec8962878c6c1d6546d8b39a58bc3974fb7a370ccceb",
+            "newEvidence": "2026.1.19 공고의 무료 시민교육, 온라인예약·60세이상 전화 접수 경로를 확인.",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team1/geoje-education-current.json",
+                "sha256": "f3eb49808af477473c166cd1bf25df312756350d309d8b7e829a3afe650baa43",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.geoje.go.kr/reser/index.geoje?idx=306326726&menuCd=DOM_000010201001001000",
+            "httpStatus": 200,
+            "status": "GET_200_full_page_reviewed",
+            "responseSHA256": "5404ce24f1f350a2188c98f9395e435df6e892bfb46823f1a511546f91fa5354",
+            "newEvidence": "실제 교육신청 항목·수집목적을 전부 읽어 자료제공 요청과 구분.",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team1/geoje-education-webform.json",
+                "sha256": "2a75a51f873cf439a3e8568469aff71ba5ccbc61be3a26784cb54949e42de64a",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g48310.gov24-537000001437"
+      ]
     },
     {
       "formId": "ordin-20715755",
@@ -2490,7 +2531,7 @@
         "sourceArticleCount": 21
       },
       "disposition": "requires_external_confirmation",
-      "reason": "규칙 제17조와 실제 제11호는 공공하수도 사용료 등의 부과징수에 대한 이의신청이다. 사이트는 취약계층 정화조 청소수수료를 영수증으로 지원하는 사업이며, 공공하수도 사용료 부과와 민간 청소요금 지원 결정에 동일 이의 절차가 적용되는지 확인되지 않았다. 같은 조례라는 이유로 이의신청서를 붙이지 않고 적용 범위 확인을 기다린다.",
+      "reason": "2026-08-11 수정 정부24를 다시 읽었다. 정화조 청소 영수증·대상자증명서·통장사본에 의한 지원이고 서식은 해당없음으로 표시된다. 시가 부과·징수한 공공하수도 요금에 대한 규칙 제17조의 이의절차를 이 지원 결정에도 적용한다는 근거는 새로 확보되지 않았다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -2508,7 +2549,44 @@
       "reviewedBy": "codex-national_form_audit",
       "reviewedAt": "2026-10-18",
       "sourceBodyPath": "logs/forms-completion/law-bodies/1809239.json.gz",
-      "sourceBodySHA256": "4da27adbbb525e574f8d241df6fd840065e3d817aea915a85c900130379dd8f2"
+      "sourceBodySHA256": "4da27adbbb525e574f8d241df6fd840065e3d817aea915a85c900130379dd8f2",
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team3-results.json",
+        "sourceResultSHA256": "7e8e63b2e007e7deed1d20ab71367066ef036d087d892df780147ee63e67b764",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=1809239&gubun=ELIS",
+            "httpStatus": 200,
+            "responseSha256": "eb499d03a17143a878e482b1c4e56c3f6bac6b38cacef1bb47efefbe3eebd768",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/law-1809239.json",
+                "sha256": "b6821e4f409f3d53378c9af645ecfa51d0909b3d1e51c359737d0af02cac148f",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/468100000010",
+            "httpStatus": 200,
+            "bodyTextSha256": "8cb6a9f6ee359c13d917c19cbcd35e985cc7a2e0823b32b88a748354b73b3ea8",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/program-g52140.gov24-468100000010.json",
+                "sha256": "332ba16f74ba07edb94e1070c6e66d37bd09d5192a2768e8dfb463c2f2027649",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g52140.gov24-468100000010"
+      ]
     },
     {
       "formId": "ordin-20476593",
@@ -2548,7 +2626,7 @@
         "sourceArticleCount": 21
       },
       "disposition": "requires_external_confirmation",
-      "reason": "규칙 제19조와 실제 제13호는 시가 징수한 사용료·점용료·수수료·부담금 과오납액 환불 청구 및 영수증이다. 사이트 사업은 정화조 청소 영수증을 통한 취약계층 지원이며 납부자에 대한 시 징수금 환불인지 확인되지 않는다. 비용을 돌려받는다는 유사성만으로 연결하지 않고 정화조 청소 지원의 실제 청구 절차 확인을 남긴다.",
+      "reason": "현재 정부24는 민간 청소 영수증을 통한 수수료 지원 절차를 유지한다. 규칙 제19조의 시 징수금 과오납 환부와 해당 지원금 지급을 동일 절차로 볼 공식 근거는 없으며 별지13의 적용 범위가 해소되지 않았다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -2566,7 +2644,44 @@
       "reviewedBy": "codex-national_form_audit",
       "reviewedAt": "2026-10-18",
       "sourceBodyPath": "logs/forms-completion/law-bodies/1809239.json.gz",
-      "sourceBodySHA256": "4da27adbbb525e574f8d241df6fd840065e3d817aea915a85c900130379dd8f2"
+      "sourceBodySHA256": "4da27adbbb525e574f8d241df6fd840065e3d817aea915a85c900130379dd8f2",
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team3-results.json",
+        "sourceResultSHA256": "7e8e63b2e007e7deed1d20ab71367066ef036d087d892df780147ee63e67b764",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=1809239&gubun=ELIS",
+            "httpStatus": 200,
+            "responseSha256": "eb499d03a17143a878e482b1c4e56c3f6bac6b38cacef1bb47efefbe3eebd768",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/law-1809239.json",
+                "sha256": "b6821e4f409f3d53378c9af645ecfa51d0909b3d1e51c359737d0af02cac148f",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/468100000010",
+            "httpStatus": 200,
+            "bodyTextSha256": "8cb6a9f6ee359c13d917c19cbcd35e985cc7a2e0823b32b88a748354b73b3ea8",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/program-g52140.gov24-468100000010.json",
+                "sha256": "332ba16f74ba07edb94e1070c6e66d37bd09d5192a2768e8dfb463c2f2027649",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g52140.gov24-468100000010"
+      ]
     },
     {
       "formId": "ordin-20476601",
@@ -2606,7 +2721,7 @@
         "sourceArticleCount": 21
       },
       "disposition": "requires_external_confirmation",
-      "reason": "규칙 제16조는 천재지변·불출수·하수배출량 등 추가 감면 대상의 별지 제17호를 규정하고 실제 원본은 하수 사용료·점용료·부담금 감면이다. 상위 조례 law2111939 제23조 전체를 추가로 읽었으며 수급자·장애인·다자녀의 하수도 사용료는 조례 별지 제4호 또는 상수도 별지 제2호를 지정한다. 사이트는 정화조 청소수수료 지원이므로 이 규칙 제17호를 사용한다는 근거는 확보되지 않았다. 실제 접수서식 확인 전 보류한다.",
+      "reason": "현재 정부24의 지원대상·증빙은 취약계층 정화조 청소비이며, 원본은 하수 사용료·점용료·부담금의 감면을 신청한다. 현행 규칙 제16조의 별지17 지정과 조례 제23조의 청소비 지원 사이 실제 접수 연결을 찾지 못했다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -2634,7 +2749,44 @@
         "note": "공식 캐시 fullLawService에서 분뇨수수료·취약계층 지원·감면 및 지정 별지 관계를 실제 읽음. 하수도 사용료와 정화조 청소수수료의 개별 신청서 적용을 구분함."
       },
       "sourceBodyPath": "logs/forms-completion/law-bodies/1809239.json.gz",
-      "sourceBodySHA256": "4da27adbbb525e574f8d241df6fd840065e3d817aea915a85c900130379dd8f2"
+      "sourceBodySHA256": "4da27adbbb525e574f8d241df6fd840065e3d817aea915a85c900130379dd8f2",
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team3-results.json",
+        "sourceResultSHA256": "7e8e63b2e007e7deed1d20ab71367066ef036d087d892df780147ee63e67b764",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=1809239&gubun=ELIS",
+            "httpStatus": 200,
+            "responseSha256": "eb499d03a17143a878e482b1c4e56c3f6bac6b38cacef1bb47efefbe3eebd768",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/law-1809239.json",
+                "sha256": "b6821e4f409f3d53378c9af645ecfa51d0909b3d1e51c359737d0af02cac148f",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/468100000010",
+            "httpStatus": 200,
+            "bodyTextSha256": "8cb6a9f6ee359c13d917c19cbcd35e985cc7a2e0823b32b88a748354b73b3ea8",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/program-g52140.gov24-468100000010.json",
+                "sha256": "332ba16f74ba07edb94e1070c6e66d37bd09d5192a2768e8dfb463c2f2027649",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g52140.gov24-468100000010"
+      ]
     },
     {
       "formId": "ordin-21463593",

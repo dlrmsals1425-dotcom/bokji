@@ -3017,7 +3017,7 @@
         "currentAnnexBinding": "bound"
       },
       "disposition": "requires_external_confirmation",
-      "reason": "HWPX 전체는 출생축하금과 산후조리비 및 전국 공통급여를 함께 처리하는 구 통합서식이다. 현재 제6조제1항은 이 조례 별지가 아니라 임신·출산 관련 서비스 통합처리에 관한 규정의 별지1 제출로 변경되어 있다. 원본에는 옛 총액10·30·100만원과 경기도1년거주·구 전국급여 안내가 남아 있으며 현재 제5조의 총100·200·300만원 분할지급 전체를 안내하지 않는다. 출생축하금 신청목적은 맞지만 현행 제출규정상 이 구 첨부 사용이 계속 인정되는 근거를 확보하지 못해 현재 통합서식 또는 접수처 확인 전 보류한다.",
+      "reason": "파주시 현재 상세 안내와 정부24(2026.8.12 수정)는 첫째100/둘째200/셋째이상300만원 및 출산서비스 통합처리 신청을 명시한다. 기존 파일의 옛 금액·거주조건은 그대로 사용할 근거가 없다. 현행 예규370의 별지2 원본도 실제 다운로드해 전체를 읽었으나 지자체별 작성란은 둘째이상 예시와 가상 기관·연락처로 남아 있고 제9조제4항은 지자체별 확정 서식을 요구한다. 파주 확정본을 확보하지 못해 전국 예시를 억지로 대체하지 않는다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -3044,7 +3044,41 @@
       "reviewedBy": "codex-national_form_audit",
       "reviewedAt": "2026-10-19",
       "sourceBodyPath": "logs/forms-completion/law-bodies/2058863.json.gz",
-      "sourceBodySHA256": "e580eb5f3a31b99ff4b96e867c2cafaeec5912e7bb9c32df797744b610427209"
+      "sourceBodySHA256": "e580eb5f3a31b99ff4b96e867c2cafaeec5912e7bb9c32df797744b610427209",
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team1/team1-results.json",
+        "sourceResultSHA256": "1636a6e15bbf67808ab71c4d605f84f84d98ec0f4e389ea11ddb598de11ab1b8",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/406000000102",
+            "httpStatus": 200,
+            "status": "GET_200_full_page_reviewed",
+            "responseSHA256": "006ce9f8ed5e1fb736f2462d0defe4fa280c90063a8b2ae7468676a390640f23",
+            "newEvidence": "현재 정부24 서비스 전체 핵심내용·신청경로·신청서/서류·수정일 직접 확인",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team1/gov24-current-19.json",
+                "sha256": "1dc2157a1badbe713a5fe41676679f6d8d4c7507ad2af8714c296fbf81efd161",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.law.go.kr/LSW/admRulInfoP.do?admRulSeq=2100000281394",
+            "status": "official_MCP_and_download_full_body_reviewed",
+            "newEvidence": "현행 예규 제5조·9조와 실제 별지2 전체내용 대조",
+            "savedEvidence": []
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g41480.bokjiro-WLF00001658",
+        "g41480.gov24-406000000102"
+      ]
     },
     {
       "formId": "ordin-20749619",
@@ -3741,7 +3775,7 @@
         "currentAnnexBinding": "bound"
       },
       "disposition": "requires_external_confirmation",
-      "reason": "전체 원본은 배우자 복지수당의 대리수령 신청이며 최초 지급신청 또는 신청 위임과 다르다. 한정치산·금치산·압류·치매 등의 수령 사유 및 대리수령 관계 제한이 인쇄되어 있다. 참전 조례2060759 제9조의2와 원본이 인용한 보훈 조례2060833 제9조의5는 지급·신청 위임만 명시하고 이 대리수령 조건·별지6 사용은 직접 규정하지 않는다. 사업 원천도 신청 위임만 안내해 현재 대리수령 적용 근거를 추가 확인하기 전 보류한다.",
+      "reason": "현재 정부24 배우자 복지수당 안내는 별지4 지급신청과 대리신청 시 위임장·관계증빙만 요구한다. 원본 별지6의 제3자 대리수령, 압류·치매 등의 사유 및 관계 제한을 허용하는 현행 지침은 찾지 못했다. 신청 대리를 급여 대리수령으로 확대하지 않는다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -3768,7 +3802,31 @@
         }
       ],
       "sourceBodyPath": "logs/forms-completion/law-bodies/2060759.json.gz",
-      "sourceBodySHA256": "fd56683ada0b793e51e913f0fd94d9dbacfd6de4c8998bcfa1f1be7b5c90eebc"
+      "sourceBodySHA256": "fd56683ada0b793e51e913f0fd94d9dbacfd6de4c8998bcfa1f1be7b5c90eebc",
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team2/team2-results.json",
+        "sourceResultSHA256": "badd63d72d5f96dcc6815ad79e43ba695490e25777144516a69934cdab93a48a",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/304000000233",
+            "httpStatus": 200,
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team2/case27-gov24.json",
+                "sha256": "962400f5acc4fc953d417ecae1f11f694d0f959329d9ba034b868bda51256e59",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g11215.gov24-304000000233"
+      ]
     },
     {
       "formId": "ordin-20672011",
@@ -3946,7 +4004,7 @@
         "currentAnnexBinding": "bound"
       },
       "disposition": "requires_external_confirmation",
-      "reason": "묶음 전체의 제1호 수강료 감면과 제2호 반환을 현행 제19조제3항·제4항과 대조했다. 후보 강남인강은 별도 강남구 강의시설의 가입비 지원으로 동일 징수 주체가 아니고, 진학 프로그램·1인가구 인문학은 유료 수강 여부와 감면·반환 적용을 사업 원천에 명시하지 않는다. 관할 전체 목록의 체육시설 할인도 별도 체육 조례 소관이다. 해당 강좌가 실제로 제19조의 수강료를 징수하는지 확인하기 전 이 원본을 신청서로 연결하지 않는다.",
+      "reason": "정부24의 현재 1인가구 인문학 사업은 2026년7~9월 온라인접수와 제출서류 없음을 유지한다. 공식 교육포털에서 확인한 과거 1인가구 인문학 강좌는 수강료0원이지만 2026 해당 사업의 유료징수·감면 적용을 대신 증명하지 못한다. 강남인강 등 다른 후보와도 징수주체가 달라 현재 별지1·2 연결은 보류한다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -3980,7 +4038,50 @@
       "reviewedBy": "codex-national_form_audit",
       "reviewedAt": "2026-10-19",
       "sourceBodyPath": "logs/forms-completion/law-bodies/2060801.json.gz",
-      "sourceBodySHA256": "e704bac2690661f74e05e83e934935c54d9d44c22d76e7381c5983da3b3c0fc1"
+      "sourceBodySHA256": "e704bac2690661f74e05e83e934935c54d9d44c22d76e7381c5983da3b3c0fc1",
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team3-results.json",
+        "sourceResultSHA256": "7e8e63b2e007e7deed1d20ab71367066ef036d087d892df780147ee63e67b764",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=2060801&gubun=ELIS",
+            "httpStatus": 200,
+            "responseSha256": "45f5cfec240826258b78d8d9c28e850bf06cdc3a202badd25fb58e8b77bbbd55",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/law-2060801.json",
+                "sha256": "d585383f1818efd8040d4c8615bdf8b9950b34ff4ab9976f2da59c46db1ad0cb",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/304000000236",
+            "httpStatus": 200,
+            "bodyTextSha256": "5ac1302a25b2eaf618579b85fa13df4e6e88666783f6905a92e46a51d4bb2ef2",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/program-g11215.gov24-304000000236.json",
+                "sha256": "90731af6a16429f880c209d5f24b10fdcf9ace62ef00b68be1819178f8e16d3f",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.gwangjin.go.kr/edu/pgm/edu/view.do?ctgryCd=0209&ctgryDetailCd=&menuNo=400096&progrmSn=4808",
+            "savedEvidence": []
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g11215.gov24-304000000150",
+        "g11215.gov24-304000000151",
+        "g11215.gov24-304000000236"
+      ]
     }
   ],
   "dispositionCounts": {

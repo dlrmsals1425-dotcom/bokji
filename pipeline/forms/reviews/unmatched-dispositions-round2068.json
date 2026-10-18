@@ -847,7 +847,7 @@
       "formId": "ordin-22876359",
       "sha256": "912ba7b4bcce0ee9a3fe01ab15b223281bf97b60066e135eef4a369d34e020ea",
       "disposition": "requires_external_confirmation",
-      "reason": "수용가 주소·민원내용으로 수질검사를 신청하는 별지40이다. 실제 아리수품질확인제의 방문·전화·온라인 검사예약과 관련 가능성이 있으나 공식2026안내는 이 종이서식을 특정하지 않는다. 별지40을 품질확인제 방문예약에도 사용하는지 접수기관 확인이 필요하다.",
+      "reason": "현재 정부24의 아리수 품질확인제는 5항목 현장검사와 온라인·120·방문을 안내한다. 아리수 공식 페이지에서 연결된 수질검사 온라인 신청도 열었으나 일반 민원접수 화면이며 별지40 다운로드·지정은 확인되지 않는다. 연구원 수질검사 안내와 무료 현장 품질확인제의 실제 서식 사용을 동일하다고 단정하지 않는다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -913,7 +913,82 @@
           "checkedAt": "2026-10-19",
           "claim": "2026.3.6 공식발표는5항목 현장 무료검사,120·수도사업소·누리집 사전예약을 명시. 이 종이별지 사용은명시되지않음."
         }
-      }
+      },
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team3-results.json",
+        "sourceResultSHA256": "7e8e63b2e007e7deed1d20ab71367066ef036d087d892df780147ee63e67b764",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=2178947&gubun=ELIS",
+            "httpStatus": 200,
+            "responseSha256": "4a3d06e66bc061f84522fe735dd3d559434b4731cef3204753d47b765f10bf6f",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/law-2178947.json",
+                "sha256": "d2559aef75a8aff6fdfbfce7f01f6331e11c4dd57b32cc5059d76bf1c891e7d9",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://arisu.seoul.go.kr/home/sub?dsn=1773792396-749-206&menukey=7205&mode=view",
+            "httpStatus": 200,
+            "responseSha256": "85cd29be139382ca2327c7d868e8272fb8c30420a600d96cfb2afca7c4e942f5",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/arisu-current.json",
+                "sha256": "ee8dfb49e9377c52b758d8545aa2330de34fb52b0fd266ceb1b8bf9277200258",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://i121.seoul.go.kr/cs/cyber/front/cvplsvc/NR_onlineCvplPopup.do?pageNm=A07_Form&_m=m2_1",
+            "httpStatus": 200,
+            "responseSha256": "75b4f5bb7703c3124a640510e4cd3d2352af7789d072b2c4cb5f9160157271b9",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/arisu-apply.json",
+                "sha256": "60d536f1b92b4d59493eaf20ab4aebda51ad6271d34ed6591b8754578b168620",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://arisu.seoul.go.kr/home/sub?menukey=7717",
+            "httpStatus": 200,
+            "responseSha256": "ebccd99d247fbd608b5efd714a0521018cdc87f869f6d5b236987c0e3673083f",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/arisu-guide.json",
+                "sha256": "5257914663535aaf366353431b111640d149937d1aac7cfa13c07fb03acf1b5c",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/611000000174",
+            "httpStatus": 200,
+            "bodyTextSha256": "9a3c3929748685d146cf0fe1f607dbcce4500a94f58bc87dabd66c716676d628",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/program-s11000.gov24-611000000174.json",
+                "sha256": "48b795e7a33701f1f1cbfabae5d99f02ae1ea82bb3891752b2538b1e2c107c21",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "s11000.gov24-611000019608",
+        "s11000.bokjiro-WLF00006195",
+        "s11000.gov24-611000000174",
+        "s11000.bokjiro-WLF00006194"
+      ]
     },
     {
       "formId": "ordin-22876367",
@@ -1155,7 +1230,7 @@
       "formId": "ordin-18091959",
       "sha256": "49dbbb7c758a4db22aa3f70513be4f5500c4b4246f35237b1ac3666194596a6c",
       "disposition": "requires_external_confirmation",
-      "reason": "묶음의 농가·단체 사업계획 신청,기관평가표,사업완료·보조금청구·정산 전체를 읽었다. 제3조는 사업별 지침을 우선하고 별도지침이 없을 때 이 일반서식을 준용한다. 실제 사업은 농협 등과 출하약정을 맺은 벼의 가마당 출하장려금으로 해당사업 지침에서 일반 투자·사업비 서식 준용을 허용하는지 확인이 필요하다.",
+      "reason": "현재 정부24(2026.5.4 수정)도 출하약정·출하완료 뒤 읍면 비치 장려금 신청서를 요구한다. 일반 친환경 투자·사업계획 묶음을 이 가마당 출하장려금의 별도 지침이 채택한다는 근거는 확보하지 못했다. 공개 다운로드가 없다는 뜻이며 신청서가 없다는 판정이 아니다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -1200,7 +1275,33 @@
         }
       },
       "checkedAt": "2026-10-19",
-      "sameJurisdictionSearch": "구례 전체친환경·유기·농자재 사업은벼출하장려금만확인."
+      "sameJurisdictionSearch": "구례 전체친환경·유기·농자재 사업은벼출하장려금만확인.",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team1/team1-results.json",
+        "sourceResultSHA256": "1636a6e15bbf67808ab71c4d605f84f84d98ec0f4e389ea11ddb598de11ab1b8",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/487000000103",
+            "httpStatus": 200,
+            "status": "GET_200_full_page_reviewed",
+            "responseSHA256": "efcb1d470ba0c1a7abca875ced21fd23f5240227e890eff934ea127287fbcc7b",
+            "newEvidence": "현재 정부24 서비스 전체 핵심내용·신청경로·신청서/서류·수정일 직접 확인",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team1/gov24-current-7.json",
+                "sha256": "313da5137a6b8746bd68702a8b070022cc108fc6d3f6ac4e6f6676da5cee6b1b",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g12730.gov24-487000000103"
+      ]
     },
     {
       "formId": "ordin-18310617",
@@ -2292,7 +2393,7 @@
       "formId": "ordin-19976627",
       "sha256": "9b711e559913fd9d4b80143320c71681dfe82243c11d180120b67d7da2fa7795",
       "disposition": "requires_external_confirmation",
-      "reason": "별지 제2호 전체는 군립·정부지원 보육시설 입소신청이며 보호자·입소순위만 기재한다. 대상 사업은 저소득·다문화 아동의 원복·체육복 등 입학준비금 10만원으로, 신청시점이 어린이집 입소 때인 것은 일치한다. 그러나 이 입소서가 준비금 지급신청을 겸한다는 조문·지급항목·첨부증빙이 없어 실제 어린이집의 준비금 접수 절차 확인이 필요하다.",
+      "reason": "정확한 정부24 및 병합 복지로 WLF00002613은 어린이집 원복·체육복 등 10만원 준비금과 어린이집 입금 방식을 안내한다. 복지로에는 실질 신청서 대신 첨부파일없음 항목만 있다. 입소신청서가 이 준비금의 신청을 겸한다는 작성란·공식 제출 지시는 찾지 못했으므로 입소 시점이 같다는 이유로 승인하지 않는다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -2332,7 +2433,41 @@
           "annexBinding": "bound"
         }
       },
-      "checkedAt": "2026-10-19"
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team2/team2-results.json",
+        "sourceResultSHA256": "badd63d72d5f96dcc6815ad79e43ba695490e25777144516a69934cdab93a48a",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/417000000101",
+            "httpStatus": 200,
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team2/case07-gov24.json",
+                "sha256": "5e1b373168afabbbb23ccbecbbf8aebbd2d18a846c9733446ffa7a34bd9074a5",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00002613&wlfareInfoReldBztpCd=02",
+            "httpStatus": 200,
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team2/case07-bokjiro-merged.json",
+                "sha256": "f489c836dff052a87d80af124a8510aa68b35f874d170656fc196f675548ae02",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g41830.gov24-417000000101"
+      ]
     },
     {
       "formId": "ordin-20121685",

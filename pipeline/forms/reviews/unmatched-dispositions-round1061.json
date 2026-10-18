@@ -1298,7 +1298,7 @@
         "currentAnnexBinding": "bound"
       },
       "disposition": "requires_external_confirmation",
-      "reason": "별지 제5호의 3쪽 전체에는 전국 사회서비스이용권 공통항목과 지역사회서비스 자유기재란 및 산모신생아 지원란이 있다. 그러나 현행 울주군 조례에서 이 별지를 사용하던 제17조·제18조는 2025.7.3 삭제되어 현재 조문에 제5호 지정이 남아 있지 않다. 373000000143은 동일 명칭의 공통신청서를 구비서류로 명시하고 373000000110은 산모신생아 지원이나, 이 조례에 잔존한 판본을 지금 접수하는 원본으로 사용할 수 있다는 근거는 확인하지 못했다. 서식 부재·폐지로 단정하지 않고 현행 공통원본 또는 사업접수 원본 확인을 보류한다.",
+      "reason": "현재 정부24의 울주형 가사돌봄 사업은 동명 공통 사회서비스 신청서를 요구하지만 2026년1월 모집이고, 산모신생아 사업은 별도 방문·온라인 접수를 안내한다. 조례의 제17·18조 삭제 후 남은 이 3쪽 판본을 실제 현재 접수한다는 직접 원본 근거는 확보되지 않았다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -1427,7 +1427,70 @@
       "reviewedBy": "codex-national_form_audit",
       "reviewedAt": "2026-10-19",
       "sourceBodyPath": "logs/forms-completion/law-bodies/2138177.json.gz",
-      "sourceBodySHA256": "fec5d3b48fdfd3a6f5bf158228e108c33230c7717345e9d3cd1843dcb666ceda"
+      "sourceBodySHA256": "fec5d3b48fdfd3a6f5bf158228e108c33230c7717345e9d3cd1843dcb666ceda",
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team3-results.json",
+        "sourceResultSHA256": "7e8e63b2e007e7deed1d20ab71367066ef036d087d892df780147ee63e67b764",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=2138177&gubun=ELIS",
+            "httpStatus": 200,
+            "responseSha256": "a998d72753cce6e57eab1392c27c869ba10395578af4b7c97c8dc5a1904240d1",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/law-2138177.json",
+                "sha256": "d2fb1bba71b1e189f1d64c146689f32a3e0714c28eeb88279c7dc2c185464953",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/373000000143",
+            "httpStatus": 200,
+            "bodyTextSha256": "ef8bb834fc92662fe4eb86ff2e351e1e3f323ade450491d132a53e2c9937cb4b",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/program-g31710.gov24-373000000143.json",
+                "sha256": "423d194f2bae87ac05e9b4aa3a25e79ab0d673f013ec93ad4fceda86b1827be8",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/373000000110",
+            "httpStatus": 200,
+            "bodyTextSha256": "8b45061df61b86bed56a815fd01e3f45de6660d6cf5816c5f7ba1f9262723ebc",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/program-g31710.gov24-373000000110.json",
+                "sha256": "798d0f3bd0cd47e7acdead596a18635bc61d6c7c5a153f7bd0be4fdc84904c19",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g31710.bokjiro-WLF00004267",
+        "g31710.bokjiro-WLF00006418",
+        "g31710.bokjiro-WLF00006440",
+        "g31710.gov24-373000000112",
+        "g31710.gov24-373000000116",
+        "g31710.gov24-373000000119",
+        "g31710.gov24-373000000123",
+        "g31710.gov24-373000000125",
+        "g31710.gov24-373000000128",
+        "g31710.gov24-373000000131",
+        "g31710.gov24-373000000135",
+        "g31710.gov24-373000000139",
+        "g31710.gov24-373000000141",
+        "g31710.gov24-373000000143",
+        "g31710.gov24-373000000110"
+      ]
     },
     {
       "formId": "ordin-22083105",

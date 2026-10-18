@@ -51,7 +51,7 @@
         "currentAnnexBinding": "bound"
       },
       "disposition": "requires_external_confirmation",
-      "reason": "전체 원본은 군위군 대상포진 예방접종 신청서이며 제2조·제5조제1항의 60세 이상 및 접종 전 신청 절차와 일치한다. 다만 관할 전체 사업 검색에서 확인된 예방접종 서비스는 60~64세 등 일반 예방접종만 기재하고 대상포진을 명시하지 않아 해당 백신 포함 여부를 확인해야 한다. 서식의 부재가 아니라 사업 연결 근거 미확정이다.",
+      "reason": "현재 정부24의 예방접종 서비스도 만60~64세 등 일반 안내와 감염병법 근거이고 대상포진 백신을 특정하지 않는다. 대상포진 지원 조례의 실제 신청서는 유효하게 남아 있으나 이 사이트 사업에 포함되는지 공식 사업별 연결 증거가 여전히 부족하다. 비공식 블로그·기사의 내용을 승인 근거로 쓰지 않는다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -70,7 +70,44 @@
       "reviewedBy": "codex-national_form_audit",
       "reviewedAt": "2026-10-19",
       "sourceBodyPath": "logs/forms-completion/law-bodies/2025559.json.gz",
-      "sourceBodySHA256": "edc5d3e4492f22167e8066b874e6dfc36a8783b4469abd9c999a999599b030cb"
+      "sourceBodySHA256": "edc5d3e4492f22167e8066b874e6dfc36a8783b4469abd9c999a999599b030cb",
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team3-results.json",
+        "sourceResultSHA256": "7e8e63b2e007e7deed1d20ab71367066ef036d087d892df780147ee63e67b764",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=2025559&gubun=ELIS",
+            "httpStatus": 200,
+            "responseSha256": "32001f2a61442b692c5fdd5b3d847c136d1b20e710c317990a9609cf43316357",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/law-2025559.json",
+                "sha256": "9803c4ae3f96c8eb2a16d9cb4b4e905acf445496255af534139e91ff3ea0131d",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          },
+          {
+            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/514000000101",
+            "httpStatus": 200,
+            "bodyTextSha256": "f484adf324682c12e76d24e74e4abbe7ca89dc17a6443c42c09a81d9e9d0c127",
+            "savedEvidence": [
+              {
+                "path": "logs/forms-completion/official-followup/team3/program-g27720.gov24-514000000101.json",
+                "sha256": "bed773a027f753b5a0a372dd0557b23ec177fe2d44cf28ae261826af225c8a69",
+                "kind": "official_evidence_metadata"
+              }
+            ]
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "g27720.gov24-514000000101"
+      ]
     },
     {
       "formId": "ordin-21840443",
@@ -2325,7 +2362,7 @@
         "currentAnnexBinding": "bound"
       },
       "disposition": "requires_external_confirmation",
-      "reason": "구 광주광역시 조례 제41조~제43조와 별지 제3호 전체는 생계지원비·민주명예수당·장제비 신청에 정확히 대응한다. 다만 현 사업은 전남광주통합특별시 주민과 별도의 통합특별시 생활지원금 조례를 인용한다. 공식 MCP의 정확 제명 및 넓은 전남광주통합특별시 5 검색에서 해당 승계 조례를 확보하지 못했다. 구 기관 원본이 현재 관할 전체에 계속 적용되는지 부칙·승계 근거를 확인하기 전 보류한다. 검색 실패를 서식 부재로 판정하지 않는다.",
+      "reason": "공식 MCP의 현행 전남광주통합특별시 5 검색16건과 국가법령센터의 생활지원금 검색을 재확인했으나 정확 통합특별시 승계급여 조례·부칙·현재 배포파일을 확보하지 못했다. 구 광주2032093의 생계·민주명예·장제비 원본을 통합시 전체 사업에 확대하지 않는다. 검색 미확보이며 서식 부재 판정이 아니다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -2348,7 +2385,37 @@
         "공식 MCP 2026-10-19 검색: 전남광주통합특별시 5·18민주유공자 생활지원금 지급 조례 정확 제명 0건; 전남광주통합특별시 5 검색 16건 중 해당 생활지원금 승계 법규 없음. source_current는 구 광주광역시 2032093의 목록 잔존을 확인한 상태이며 관할 승계 적용 확인을 대신하지 않음."
       ],
       "sourceBodyPath": "logs/forms-completion/law-bodies/2032093.json.gz",
-      "sourceBodySHA256": "7157f242edd9fb773461ae3ef1d02f5148c4807d0937c0a32e9eb1244deb908d"
+      "sourceBodySHA256": "7157f242edd9fb773461ae3ef1d02f5148c4807d0937c0a32e9eb1244deb908d",
+      "checkedAt": "2026-10-19",
+      "officialFollowup": {
+        "checkedAt": "2026-10-19",
+        "sourceResult": "logs/forms-completion/official-followup/team1/team1-results.json",
+        "sourceResultSHA256": "1636a6e15bbf67808ab71c4d605f84f84d98ec0f4e389ea11ddb598de11ab1b8",
+        "proposedStatus": "confirmed_unresolved",
+        "officialEvidence": [
+          {
+            "url": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2032093",
+            "status": "prior_full_body_review_reused",
+            "newEvidence": "기존 구 광주법규와 통합시 사업 법규가 다름",
+            "savedEvidence": []
+          },
+          {
+            "status": "official_MCP_current_search_16_results_exact_benefit_not_located",
+            "newEvidence": "정확 승계급여의 법규/부칙을 확보하지 못함",
+            "savedEvidence": []
+          },
+          {
+            "url": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2094225",
+            "status": "official_indexed_text_reviewed",
+            "newEvidence": "검색에 잡힌 전라남도 명예수당 조례는 구 광주원본의 통합시 적용을 증명하지 않음",
+            "savedEvidence": []
+          }
+        ],
+        "allFormsConnected": false
+      },
+      "relatedProgramIds": [
+        "s12000.gov24-629000000179"
+      ]
     },
     {
       "formId": "ordin-19758329",
