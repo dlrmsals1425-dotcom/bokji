@@ -60,6 +60,7 @@ export function ApplicationForms({ program, parentMode = false }: { program: Pro
           <ul className={styles.files}>
             {data.entry.links.map(link => {
               const form = data.forms.find(item => item.id === link.formId)!;
+              const title = link.displayTitle ?? formTitle(form);
               const hwp = formAssetUrl(form.file?.hwp), pdf = formAssetUrl(form.file?.pdf);
               const format = form.file?.format ?? (hwp?.endsWith(".hwpx") ? "hwpx" : "hwp");
               const downloadLabel = format === "hwp" || format === "hwpx" ? "한글 원본 받기" : format === "txt" ? "텍스트 원본 받기" : format === "gif" ? "이미지 원본 받기" : "PDF 원본 받기";
@@ -69,11 +70,11 @@ export function ApplicationForms({ program, parentMode = false }: { program: Pro
               const originalType = original ? FILE_TYPE.exec(original)?.[1].toUpperCase() : undefined;
               return <li key={form.id}>
                 <p className={styles.kind}>{link.use === "main" ? "신청서" : link.use === "conditional" ? "해당하는 경우" : "함께 확인할 서류"}</p>
-                <h4>{formTitle(form)}</h4>
+                <h4>{title}</h4>
                 {link.condition && <p>{link.condition}</p>}
                 <div className={styles.actions}>
                   {preview && <a className="btn btn-primary" href={preview} target="_blank" rel="noopener noreferrer">서식 보기·인쇄 <span className="sr-only">(PDF, 새 창)</span></a>}
-                  {hwp && <a className={`btn ${pdf ? "btn-ghost" : "btn-primary"}`} href={hwp} download={formTitle(form).replace(/\.(hwpx?|pdf|txt|gif)$/i, "") + "." + format}>{downloadLabel} <span>({format.toUpperCase()})</span></a>}
+                  {hwp && <a className={`btn ${pdf ? "btn-ghost" : "btn-primary"}`} href={hwp} download={title.replace(/\.(hwpx?|pdf|txt|gif)$/i, "") + "." + format}>{downloadLabel} <span>({format.toUpperCase()})</span></a>}
                   {original && <a className={`btn ${preview ? "btn-ghost" : "btn-primary"}`} href={original} target="_blank" rel="noopener noreferrer">법령포털 원본 받기{originalType ? ` (${originalType})` : ""}<span className="sr-only"> (새 창)</span></a>}
                 </div>
                 <p className={styles.dates}>{basisText(form)} · 연결 확인일 {link.checkedAt}</p>

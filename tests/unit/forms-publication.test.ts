@@ -7,6 +7,19 @@ const form: ApplicationForm = { id: "ordin-1", title: "지원신청서", role: "
 const link: FormLink = { formId: "ordin-1", use: "main", checkedAt: "2026-10-16", evidenceUrl: form.lawUrl, evidenceNote: "제5조에 따른 개인 신청서로 대조했습니다." };
 
 describe("application document publication", () => {
+  it("recognizes an explicitly cited provincial ordinance and its enforcement rule", () => {
+    const local={...program,id:"g50130.test",region:{sido:"50000",sigungu:"50130",label:"서귀포시"},laws:["제주특별자치도 공영장례 지원 조례, 시행규칙"]};
+    const provincial={...form,regionCode:"50000",regionLabel:"제주특별자치도",lawTitle:"제주특별자치도 공영장례 지원 조례 시행규칙"};
+    const reviewed:FormLink={...link,scopeBasis:"provincial-law-reference"};
+    expect(()=>validateFormLink(local,provincial,reviewed)).not.toThrow();
+    expect(()=>validateFormLink({...local,laws:["제주특별자치도 공영장례 지원 조례 및 시행규칙"]},provincial,reviewed)).not.toThrow();
+    expect(()=>validateFormLink({...local,laws:["제주특별자치도 다른 지원 조례, 시행규칙"]},provincial,reviewed)).toThrow(/jurisdiction/);
+    expect(()=>validateFormLink({...local,region:{...local.region,sido:"49000"}},provincial,reviewed)).toThrow(/jurisdiction/);
+  });
+  it("accepts a reviewed part title and rejects an unusable document label", () => {
+    expect(()=>validateFormLink(program,form,{...link,displayTitle:"별지 제2호 양육지원금 신청서"})).not.toThrow();
+    for (const title of ["", " ", "가".repeat(201)]) expect(()=>validateFormLink(program,form,{...link,displayTitle:title})).toThrow(/document title/);
+  });
   it("accepts a source-reviewed national document only for the exact program or cited local delegation", () => {
     const national={...form,id:"law-9",regionCode:"national",lawTitle:"의료급여법 시행규칙",annexNumber:"001400"};
     const local={...program,laws:["고양시 지원 조례"],url:"https://www.gov.kr/portal/rcvfvrSvc/dtlEx/EXACT"};

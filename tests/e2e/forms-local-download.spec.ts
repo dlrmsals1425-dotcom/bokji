@@ -12,11 +12,15 @@ for(const sample of [
   {program:'g11350.gov24-310000000120',form:'ordin-21271589',format:'pdf'},
   {program:'g48270.gov24-O00012600001',form:'ordin-20291905',format:'gif'},
   {program:'g51720.bokjiro-WLF00002975',form:'ordin-19878599',format:'txt'},
+  {program:'g47210.bokjiro-WLF00002245',form:'ordin-20973493',format:'hwp'},
+  {program:'g52790.gov24-478000000120',form:'ordin-22409877',format:'hwp'},
+  {program:'g51230.bokjiro-WLF00005579',form:'ordin-19201333',format:'hwp',title:'위임장(전입장려금 신청)'},
 ]) test(`real ${sample.form} ${sample.format} downloads with original bytes @mobile`,async({page})=>{
   await page.goto(`/p/${sample.program}`);
   const button=page.getByTestId('application-forms').locator(`a[download][href="${catalog.forms[sample.form].file!.hwp}"]`);
   await expect(button).toContainText(sample.format.toUpperCase());
   await expect(button).toHaveAttribute('href',catalog.forms[sample.form].file!.hwp);
+  if(sample.title) await expect(button).toHaveAttribute('download',sample.title+'.'+sample.format);
   const [download]=await Promise.all([page.waitForEvent('download'),button.click()]);
   expect(download.suggestedFilename()).toMatch(new RegExp(`\\.${sample.format}$`));
   const file=await download.path();expect(file).toBeTruthy();

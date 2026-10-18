@@ -45,6 +45,16 @@ async function serve(page: Page, options: { bundle: FormsRegionBundle; shards?: 
 }
 const panel = (page: Page) => page.getByTestId("application-forms");
 
+test("a combined original shows the part selected for this benefit @mobile",async({page})=>{
+  const original=form("ordin-90002",{title:"별지",displayTitle:"다른 혜택의 신청서",
+    file:{hwp:"/forms/files/ordin-90002-012345abcdef.hwp",format:"hwp",bytes:123,sha256:"a".repeat(64)}});
+  await serve(page,{bundle:bundle([entry({status:"available",links:[link(original.id,{displayTitle:"장수축하금 지급 신청서"})]})]),catalog:catalog([original])});
+  await page.goto(`/p/${PROGRAM}`);
+  await expect(panel(page).getByRole("heading",{name:"장수축하금 지급 신청서",exact:true})).toBeVisible();
+  await expect(panel(page).getByText("다른 혜택의 신청서",{exact:true})).toHaveCount(0);
+  await expect(panel(page).getByRole("link",{name:/한글 원본 받기/})).toHaveAttribute("download","장수축하금 지급 신청서.hwp");
+});
+
 for (const format of ["hwp", "hwpx"] as const) test(`stored ${format} preserves its actual download extension @mobile`, async ({page}) => {
   const original=form("ordin-90001",{title:"[별지 제1호서식] 지원 신청서",file:{hwp:`/forms/files/ordin-90001-012345abcdef.${format}`,format,bytes:123,sha256:"a".repeat(64)}});
   await serve(page,{bundle:bundle([entry({status:"available",links:[link(original.id)]})]),catalog:catalog([original])});

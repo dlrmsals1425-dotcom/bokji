@@ -283,6 +283,16 @@ class CollectTest(unittest.TestCase):
             self.assertEqual(evidence['forms']['ordin-' + ANNEX_ID]['bodySource'], 'law-service')
             self.assertTrue(evidence['forms']['ordin-' + ANNEX_ID]['lawTitleMatchesScope'])
 
+    def test_annex_binding_does_not_claim_missing_articles_were_read(self):
+        payload=service();payload['조문']=''
+        with tempfile.TemporaryDirectory() as folder:
+            evidence,failures=self.collect(folder,StubPortal({LAW_ID:payload}),[scope_form()],[])
+            self.assertEqual(failures,{})
+            self.assertEqual(evidence['forms']['ordin-'+ANNEX_ID]['binding'],'bound')
+            self.assertEqual(evidence['forms']['ordin-'+ANNEX_ID]['articleContentState'],'missing')
+            self.assertEqual(evidence['summary']['laws']['articleContentMissing'],1)
+            self.assertEqual(evidence['summary']['laws']['articleContentAvailable'],0)
+
     def test_max_laws_leaves_the_rest_pending_instead_of_absent(self):
         forms = [scope_form(), scope_form(form_id='ordin-20000001', law_id='2000001',
                                           url=SOURCE_URL.replace(FL_SEQ, '70000001'))]

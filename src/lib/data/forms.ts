@@ -31,6 +31,8 @@ export interface ApplicationForm {
 }
 export interface FormLink {
   formId: string;
+  /** Selected applicant part of a combined original, for this benefit. */
+  displayTitle?: string;
   use: "main" | "additional" | "conditional";
   condition?: string;
   evidenceUrl: string;

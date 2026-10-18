@@ -707,7 +707,8 @@ def assemble(scope, laws, states, bodies, *, downloads_dir, counts, status, chec
         state = states.get(law_id, {'state': 'pending', 'reason': 'SOURCE_BODY_PENDING', 'attempts': 0})
         body = bodies.get(law_id)
         row = {'state': state['state'], 'reason': state['reason'], 'formCount': len(law['formIds']),
-               'scopeTitles': law['scopeTitles'], 'cacheKeys': law['cacheKeys'], 'attempts': state['attempts']}
+               'scopeTitles': law['scopeTitles'], 'cacheKeys': law['cacheKeys'], 'attempts': state['attempts'],
+               'articleContentState': 'available' if body and body.get('articles') else 'missing' if body else 'unread'}
         if body:
             row.update(title=body.get('lawTitle', ''), stableLawId=body.get('stableLawId', ''),
                        orgName=body.get('orgName', ''), effectiveDate=body.get('effectiveDate', ''),
@@ -742,6 +743,7 @@ def assemble(scope, laws, states, bodies, *, downloads_dir, counts, status, chec
                'lawTitleMatchesScope': bool(official_title) and compact(official_title) == compact(form['lawTitle']),
                'effectiveDate': body.get('effectiveDate', '') if body else '',
                'bodySource': body.get('source', '') if body else '',
+               'articleContentState': law_state.get('articleContentState','unread'),
                'original': original_evidence(downloads_dir, form), **binding}
         # 읽지 못한 서식 줄에는 공식 쪽에 대해 할 말이 없다. 빈 칸을 늘리지 않는다.
         form_rows[form_id] = row if row['state'] == 'read' else {
@@ -754,6 +756,8 @@ def assemble(scope, laws, states, bodies, *, downloads_dir, counts, status, chec
                'recordsWithoutFormId': scope.get('recordsWithoutFormId', 0),
                'formStates': state_counts, 'bindings': binding_counts,
                'laws': {'read': sum(1 for row in law_rows.values() if row['state'] == 'read'),
+                        'articleContentAvailable': sum(1 for row in law_rows.values() if row['articleContentState']=='available'),
+                        'articleContentMissing': sum(1 for row in law_rows.values() if row['articleContentState']=='missing'),
                         'failed': sum(1 for row in law_rows.values() if row['state'] == 'failed'),
                         'pending': sum(1 for row in law_rows.values() if row['state'] == 'pending'),
                         **counts},

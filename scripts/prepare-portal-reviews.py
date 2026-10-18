@@ -111,7 +111,7 @@ def resolve_role(record):
     role=matcher.classify_role(record['formTitle'],'서식')
     exception_laws=AUDITED_APPLICATION_EXCEPTIONS if declared=='application' else AUDITED_CONSENT_EXCEPTIONS if declared=='consent' else {}
     explicit=FULL_BODY_ROLE_OVERRIDES.get(form_id)
-    if explicit and declared in ('application','consent'):
+    if explicit and declared in ('application','consent','delegation'):
         if explicit.get('role')!=declared or explicit.get('lawId')!=record.get('lawId') or explicit.get('sha256')!=record.get('sha256'):
             raise ValueError('Full-body role override does not match the reviewed original: '+form_id)
         exception_laws={**exception_laws,form_id:explicit['lawId']}
@@ -119,7 +119,9 @@ def resolve_role(record):
         parts=record.get('reviewedParts')
         evidence=record.get('roleEvidenceUrl')
         valid_part=lambda p: isinstance(p,dict) and ((declared=='application' and (p.get('use')=='main' or (p.get('use')=='conditional' and record.get('condition'))) and re.search(r'신청|청구|신고|등록',str(p.get('title') or '')))
-            or (declared=='consent' and p.get('use') in ('additional','conditional') and '동의' in str(p.get('title') or '')))
+            or (declared=='consent' and p.get('use') in ('additional','conditional') and '동의' in str(p.get('title') or ''))
+            or (declared=='delegation' and p.get('use')=='conditional' and record.get('use')=='conditional'
+                and record.get('condition') and '위임' in str(p.get('title') or '')))
         if (record.get('lawId')!=exception_laws[form_id]
             or record.get('sourceKind')!='ordin' or record.get('annexId')!=form_id.split('-')[1]
             or record.get('verificationStatus')!='verified' or record.get('officialAttachmentMatched') is not True
@@ -200,11 +202,12 @@ def build(programs,files):
                 **({'officialPdfUrl':record['officialPdfUrl']} if record.get('officialPdfUrl') else {})}
             if record.get('displayTitle'):
                 if not metadata:raise ValueError('Display title needs audited full-body role evidence: '+form_id)
-                forms[form_id]['displayTitle']=record['displayTitle']
+                # A combined original may expose different parts for each benefit.
+                # Keep that selected title on its association, not the shared form.
             for program_id in record['programIds']:
                 program=programs.get(program_id)
                 if not program:raise ValueError('Unknown audited program: '+program_id)
-                link={key:record[key] for key in ['formId','use','condition','evidenceUrl','evidenceNote','checkedAt'] if key in record}
+                link={key:record[key] for key in ['formId','use','condition','evidenceUrl','evidenceNote','checkedAt','displayTitle'] if key in record}
                 link['programIds']=[program_id]
                 basis=scope_basis(record,program,forms[form_id])
                 if basis:link['scopeBasis']=basis

@@ -26,6 +26,18 @@ def report_rows(report):
     return []
 
 
+def review_paths(root):
+    directory=root/'pipeline/forms/reviews'
+    return sorted(set([
+        *directory.glob('unmatched-starter*-dispositions.json'),
+        *directory.glob('unmatched-dispositions-round*.json'),
+        *directory.glob('unmatched-nonstandard-dispositions.json'),
+        *(root/'logs/forms-completion').glob('starter*-dispositions.json'),
+        *(root/'logs/forms-completion/reviews').glob('*-dispositions.json'),
+        root/'logs/forms-completion/nonstandard/report.json',
+    ]))
+
+
 def reconcile(scope,reports,published):
     originals={row['formId']:row for row in scope['forms']}
     if len(originals)!=len(scope['forms']):raise ValueError('Duplicate original in fixed scope')
@@ -78,10 +90,7 @@ def main():
     parser.add_argument('--output',type=Path,default=ROOT/'pipeline/forms/reviews/unmatched-originals-progress.json')
     args=parser.parse_args()
     reports=[]
-    paths=[*(ROOT/'logs/forms-completion').glob('starter*-dispositions.json'),
-           *(ROOT/'logs/forms-completion/reviews').glob('*-dispositions.json'),
-           ROOT/'logs/forms-completion/nonstandard/report.json']
-    for path in sorted(set(paths)):
+    for path in review_paths(ROOT):
         if path.exists():reports.append((path.relative_to(ROOT).as_posix(),read(path)))
     programs=defaultdict(set)
     for path in (ROOT/'public/forms/v1/programs').glob('*.json'):

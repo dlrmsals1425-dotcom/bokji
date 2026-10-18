@@ -32,7 +32,9 @@ export function officialFormUrl(value: unknown): string | null {
 
 const normalizedLaw = (text: string) => text.normalize("NFKC").replace(/[「」『』\s·ㆍᆞ・･‧․]/g, "").replace(/\(제[^)]*\)/g, "").replace(/제\d+조.*$/, "");
 function referencedFormLaw(program: Program, form: Pick<ApplicationForm, "lawTitle"> & Partial<Pick<ApplicationForm,"regionCode"|"regionLabel">>): boolean {
-  const normalize = (text: string) => normalizedLaw(text).replace(/시행규칙$|시행령$/, "");
+  // Official benefit records also cite "조례, 시행규칙" or "조례 및 시행규칙".
+  // These are the same named law family, not a different jurisdiction's form.
+  const normalize = (text: string) => normalizedLaw(text).replace(/(?:[,、]|및)?(?:시행규칙|시행령)$/, "");
   // Split a second explicitly qualified local law before removing article tails.
   // The word "및" inside a single title (e.g. 노인 및 장애인) stays intact.
   return (program.laws || []).some(law => law.split(/\|\||\/|\s+및\s+(?=[가-힣]+(?:특별자치도|특별자치시|특별시|광역시|도|시|군|구)\s)/).some(part => normalize(part) === normalize(form.lawTitle)
@@ -74,6 +76,7 @@ export function validateFormLink(program: Program, form: ApplicationForm | undef
   if (!["application", "consent", "delegation", "supporting"].includes(form.role)) throw new Error("Non-applicant form cannot be published as an application");
   if (!externalFormUrl(link.evidenceUrl) || link.evidenceNote.trim().length < 10 || !/^\d{4}-\d{2}-\d{2}$/.test(link.checkedAt)) throw new Error("Reviewed association needs dated source evidence");
   if (!["main", "additional", "conditional"].includes(link.use)) throw new Error("Unknown document use");
+  if (link.displayTitle!==undefined && (typeof link.displayTitle!=="string" || link.displayTitle.trim().length<2 || link.displayTitle.length>200)) throw new Error("Invalid reviewed document title");
   if ((form.role === "delegation" || link.use === "conditional") && (!link.condition?.trim() || link.use !== "conditional")) throw new Error("Conditional form needs an explicit condition");
 }
 

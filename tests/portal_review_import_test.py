@@ -3,6 +3,7 @@ import importlib.util
 import json
 import tempfile
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 spec=importlib.util.spec_from_file_location('portal_review_import',ROOT/'scripts/prepare-portal-reviews.py')
@@ -92,6 +93,30 @@ class BuildTest(unittest.TestCase):
         with self.assertRaises(ValueError) as caught:
             self.build({'p1':program('p1')},[row('rule-1',['p1'])],[row('rule-2',['p-gone'])])
         self.assertIn('p-gone',str(caught.exception))
+    def test_selected_title_stays_with_each_benefit_of_a_combined_original(self):
+        base=row('ordin-20002811',['p1'],sourceKind='ordin',lawId='1408662',formTitle='별지',
+            role='application',roleBasis='현행 조례와 원본 전체에서 신청인 작성 부분과 제출 대상을 각각 확인했습니다.',
+            roleEvidenceUrl='https://www.law.go.kr/ordinInfoP.do?ordinSeq=1408662',roleCheckedAt='2026-10-18',
+            verificationStatus='verified',officialAttachmentMatched=True,sha256='a'*64,
+            reviewedParts=[{'number':'1','title':'출산지원금 신청서','use':'main','author':'신청인'}],
+            displayTitle='출산지원금 신청서')
+        other={**base,'programIds':['p2'],'displayTitle':'양육지원금 신청서',
+            'reviewedParts':[{'number':'2','title':'양육지원금 신청서','use':'main','author':'신청인'}]}
+        output=self.build({'p1':program('p1'),'p2':program('p2')},[base,other])
+        self.assertEqual([r['displayTitle'] for r in output['rows']],['출산지원금 신청서','양육지원금 신청서'])
+        self.assertNotIn('displayTitle',output['forms'][base['formId']])
+    def test_an_unnamed_delegation_requires_exact_original_and_conditional_part_evidence(self):
+        audited=row('ordin-90001',['p1'],sourceKind='ordin',lawId='88',formTitle='별지 2호 서식',
+            role='delegation',use='conditional',condition='해당 지원금 신청을 대리인에게 위임할 경우에만 사용한다.',
+            roleBasis='현행 제2조제3항의 대리신청 지정과 전체 원문의 위임인·대리인·위임범위를 대조했습니다.',
+            roleEvidenceUrl='https://www.law.go.kr/ordinInfoP.do?ordinSeq=88',roleCheckedAt='2026-10-18',
+            verificationStatus='verified',officialAttachmentMatched=True,sha256='a'*64,
+            reviewedParts=[{'number':'2','title':'지원금 신청 위임장','use':'conditional','author':'위임하는 신청인'}])
+        with self.assertRaises(ValueError):self.build({'p1':program('p1')},[audited])
+        with patch.dict(module.FULL_BODY_ROLE_OVERRIDES,{'ordin-90001':{'lawId':'88','role':'delegation','sha256':'a'*64}}):
+            self.assertEqual(self.build({'p1':program('p1')},[audited])['forms'][audited['formId']]['role'],'delegation')
+            for change in [{'sha256':'b'*64},{'condition':''},{'use':'main'},{'reviewedParts':[]}]:
+                with self.subTest(change=change),self.assertRaises(ValueError):self.build({'p1':program('p1')},[{**audited,**change}])
     def test_duplicate_association_across_rounds_is_rejected(self):
         programs={'p1':program('p1')}
         with self.assertRaises(ValueError):

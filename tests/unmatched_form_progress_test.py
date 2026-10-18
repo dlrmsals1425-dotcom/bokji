@@ -1,5 +1,7 @@
 import importlib.util
+import json
 from pathlib import Path
+import tempfile
 import unittest
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -8,6 +10,14 @@ m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
 
 
 class ProgressTest(unittest.TestCase):
+    def test_a_fresh_checkout_retains_finalized_dispositions_without_private_logs(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder);reviews=root/'pipeline/forms/reviews';reviews.mkdir(parents=True)
+            path=reviews/'unmatched-dispositions-round1001.json'
+            path.write_text(json.dumps({'items':[{'formId':'ordin-1','sha256':'1'*64,
+                'disposition':'non_applicant','reason':'원문 전체가 담당자 조사대장으로 신청인 작성 서식이 아닙니다.'}]}),encoding='utf-8')
+            reports=[(str(p),m.read(p)) for p in m.review_paths(root) if p.exists()]
+            self.assertEqual(m.reconcile(self.scope(),reports,{})['counts'],{'reviewed_not_linked':1,'pending':2})
     def scope(self):
         return {'baselineCommit':'base','forms':[{'formId':f'ordin-{i}','sha256':str(i)*64,'lawId':'10','title':'신청서','format':'hwp'} for i in range(1,4)]}
     def test_download_queue_and_pending_reviews_do_not_become_completed(self):

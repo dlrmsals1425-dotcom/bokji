@@ -6354,6 +6354,1462 @@
    "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=170049967&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C4%ED%98%B8+%EC%84%9C%EC%8B%9D%5D+%EC%82%AC%EC%9C%A0%EC%84%9C",
    "downloadedAt": "2026-10-16T16:23:00.508602+00:00",
    "path": "originals/ordin-22767745.hwp"
+  },
+  "ordin-21777831": {
+   "format": "hwp",
+   "bytes": 54784,
+   "sha256": "6cb1e12798b457d77eb56c60d94b962ae6a187c47e06bf73e27b0e2ee11055b8",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=163600831&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D%EC%B2%AD%EC%96%91%EA%B5%B0+%EA%B4%80%EC%99%B8+%EB%8C%80%ED%95%99%EC%83%9D+%EC%83%9D%ED%99%9C%EC%95%88%EC%A0%95%EC%A7%80%EC%9B%90%EB%B9%84+%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T15:58:26.153588+00:00",
+   "path": "originals/ordin-21777831.hwp"
+  },
+  "ordin-9883931": {
+   "format": "hwp",
+   "bytes": 12288,
+   "sha256": "981d196a8967668a5c069c72c64f288d3046a5f865dd4e57a7f4ac344025fd19",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=79482673&flNm=%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8+%EC%84%9C%EC%8B%9D-%EC%A0%84%EC%9E%85+%EB%8C%80%ED%95%99%EC%83%9D+%EC%83%9D%ED%99%9C%EC%95%88%EC%A0%95+%EC%A7%80%EC%9B%90%EA%B8%88+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T15:58:41.170844+00:00",
+   "path": "originals/ordin-9883931.hwp"
+  },
+  "ordin-11113923": {
+   "format": "hwp",
+   "bytes": 17408,
+   "sha256": "3958ad97809848ae22183e5ce0b3a65580de10957ca12248eaa32dc25a1acd67",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=101204205&flNm=%5B%EB%B3%84%EC%A7%80+%EC%84%9C%EC%8B%9D%5D+%EB%86%8D%EC%97%85%EC%9D%B8+%EC%9B%94%EA%B8%89%EC%A0%9C+%EC%A7%80%EC%9B%90%EC%82%AC%EC%97%85+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T15:58:50.798325+00:00",
+   "path": "originals/ordin-11113923.hwp"
+  },
+  "ordin-19438853": {
+   "format": "hwp",
+   "bytes": 14848,
+   "sha256": "ac410e8c7397eea97f267bc9f060a3768b4636575f48bdf0ae2d150464b7deb2",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=148978533&flNm=%5B%EB%B3%84%EC%A7%801%5D%EA%B3%A1%EC%84%B1%EA%B5%B0+%EA%B3%A0%EB%93%B1%ED%95%99%EC%83%9D+%EA%B5%90%EC%9C%A1%EB%B9%84+%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:01:40.976871+00:00",
+   "path": "originals/ordin-19438853.hwp"
+  },
+  "ordin-20017533": {
+   "format": "hwp",
+   "bytes": 14848,
+   "sha256": "25b8bf25161bd26314751d4fb9f80ea646505cb1f977805177e2ff2a200b85b3",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152260027&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%ED%99%94%EC%9E%A5%EC%9E%A5%EB%A0%A4%EA%B8%88+%EC%A7%80%EA%B8%89%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:01:43.616905+00:00",
+   "path": "originals/ordin-20017533.hwp"
+  },
+  "ordin-19438857": {
+   "format": "hwp",
+   "bytes": 15360,
+   "sha256": "faceb622b3c66ee01629f2a0fb17b98ba9345145b8767bbd8cb78415613e3825",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=148978537&flNm=%5B%EB%B3%84%EC%A7%803%5D%EA%B3%A1%EC%84%B1%EA%B5%B0+%EC%A4%91%EA%B3%A0%EB%93%B1%ED%95%99%EC%83%9D+%EA%B5%90%EB%B3%B5%EA%B5%AC%EC%9E%85%EB%B9%84+%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:01:44.472950+00:00",
+   "path": "originals/ordin-19438857.hwp"
+  },
+  "ordin-20245307": {
+   "format": "hwp",
+   "bytes": 20480,
+   "sha256": "c53bb1e992cf75d779b019931be3606dc211936f9ec314d219d5559ac814f16c",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=153035043&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%ED%9A%A8%EB%8F%84%EC%88%98%EB%8B%B9+%EC%A7%80%EA%B8%89%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:03:29.512883+00:00",
+   "path": "originals/ordin-20245307.hwp"
+  },
+  "ordin-17832103": {
+   "format": "hwp",
+   "bytes": 16896,
+   "sha256": "5ae39064d3de9982b7766bdf456b6e43f8cc0bc2650b286717611974a18e80e2",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=141952485&flNm=%EB%B3%84%EC%A7%80+%EC%84%9C%EC%8B%9D+%EA%B5%90%EB%B3%B5%EA%B5%AC%EC%9E%85%EB%B9%84+%EC%A7%80%EC%9B%90%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:03:33.382172+00:00",
+   "path": "originals/ordin-17832103.hwp"
+  },
+  "ordin-22578147": {
+   "format": "hwp",
+   "bytes": 36352,
+   "sha256": "ea9db8f0f4b81e70d5c69d894823d9f281174f15d0a8949e95c2a376b6806a38",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=169157351&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C5%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%9D%98%EB%A1%9C%EC%9A%B4+%EC%8B%9C%EB%AF%BC+%EC%9C%84%EB%A1%9C%EA%B8%88+%EC%A7%80%EA%B8%89+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:05:12.211911+00:00",
+   "path": "originals/ordin-22578147.hwp"
+  },
+  "ordin-22578099": {
+   "format": "hwp",
+   "bytes": 42496,
+   "sha256": "7d1e272d8ecda8d222bbfc3cb418f888f5609fdf740cda742d9dec0a05269fdf",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=169157343&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%9D%98%EB%A1%9C%EC%9A%B4+%EC%8B%9C%EB%AF%BC+%EC%9D%B8%EC%A0%95%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:07:41.885010+00:00",
+   "path": "originals/ordin-22578099.hwp"
+  },
+  "ordin-6525227": {
+   "format": "hwp",
+   "bytes": 15872,
+   "sha256": "2bd3ffd910dba331dbcd88461e06d8108b3d372115028fcd6c3e46a89aa1b53c",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=42171697&flNm=%5B%EB%B3%84%EC%A7%80%5D%EC%9D%8C%EC%8B%9D%EB%AC%BC%EB%A5%98+%ED%8F%90%EA%B8%B0%EB%AC%BC+%EA%B0%90%EB%9F%89%EA%B8%B0%EA%B8%B0+%EC%84%A4%EC%B9%98+%EC%A7%80%EC%9B%90%EA%B8%88+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:07:50.594423+00:00",
+   "path": "originals/ordin-6525227.hwp"
+  },
+  "ordin-21810739": {
+   "format": "hwp",
+   "bytes": 20992,
+   "sha256": "6b5a5fb8b54823acbbb146178a07185ff425e4aa28acb19ccd1851b1e8254e22",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=163886081&flNm=%5B%EB%B3%84%EC%A7%80+%EC%84%9C%EC%8B%9D%5D+%EA%B5%90%EB%B3%B5%EB%B9%84+%EC%A7%80%EC%9B%90%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:08:20.000322+00:00",
+   "path": "originals/ordin-21810739.hwp"
+  },
+  "ordin-11390169": {
+   "format": "hwp",
+   "bytes": 16896,
+   "sha256": "c2c23aa30bef5229a5d463ff1325bac3b8b2b977788f2a54490b8262d3d4455e",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=104621649&flNm=%EB%B3%84%EC%A7%80+%EC%A0%9C2%ED%98%B8%EC%84%9C%EC%8B%9D%29%EC%8B%A0%ED%98%BC%EB%B6%80%EB%B6%80+%EC%A3%BC%EA%B1%B0%EC%9E%90%EA%B8%88+%EB%8C%80%EC%B6%9C%EC%9D%B4%EC%9E%90+%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD+%EC%84%9C%EC%95%BD%EC%84%9C+%EB%B0%8F+%EB%8F%99%EC%9D%98%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:08:55.428601+00:00",
+   "path": "originals/ordin-11390169.hwp"
+  },
+  "ordin-13732703": {
+   "format": "hwp",
+   "bytes": 19968,
+   "sha256": "6bc2ebda25de360f1e007291dc40788082ed748eef2d33ac63ab8c3e5d1fd328",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=120080067&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D%EC%B2%B4%EC%9C%A1%EC%8B%9C%EC%84%A4+%EC%82%AC%EC%9A%A9%ED%97%88%EA%B0%80+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:09:11.041846+00:00",
+   "path": "originals/ordin-13732703.hwp"
+  },
+  "ordin-13962197": {
+   "format": "hwp",
+   "bytes": 108032,
+   "sha256": "21df21fd4453182684182341a9bce3c1787904e84a955927d46af59c4db72a38",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=121373089&flNm=%EB%B3%84%EC%A7%80+1",
+   "downloadedAt": "2026-10-16T16:09:19.646161+00:00",
+   "path": "originals/ordin-13962197.hwp"
+  },
+  "ordin-14732023": {
+   "format": "hwp",
+   "bytes": 40448,
+   "sha256": "cadfb916d67c0f5198caed95d6827a3a16e20e1a5440ca04ee8762d980237ec6",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=123971463&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D+~+%EC%A0%9C12%ED%98%B8+%EC%84%9C%EC%8B%9D%5D",
+   "downloadedAt": "2026-10-16T16:09:25.521785+00:00",
+   "path": "originals/ordin-14732023.hwp"
+  },
+  "ordin-14929871": {
+   "format": "hwp",
+   "bytes": 16384,
+   "sha256": "88651ef80e46bdfa5150d566607de4eedef16cc811b86db69cfbe6fa48e4a315",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=124340883&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C3%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%9E%A5%ED%95%99%EA%B8%88+%EC%A7%80%EA%B8%89%EC%8B%A0%EC%B2%AD%EC%84%9C%28%EC%A0%9C6%EC%A1%B0%EC%A0%9C1%ED%95%AD+%EA%B4%80%EB%A0%A8%29",
+   "downloadedAt": "2026-10-16T16:09:29.069888+00:00",
+   "path": "originals/ordin-14929871.hwp"
+  },
+  "ordin-15669585": {
+   "format": "hwp",
+   "bytes": 38912,
+   "sha256": "84d48c6db47937be0114b57752618637fe0aa890538e37174be8548c5ec9aeea",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=129042247&flNm=%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8+~+%EC%A0%9C14%ED%98%B8+%EC%84%9C%EC%8B%9D",
+   "downloadedAt": "2026-10-16T16:09:41.049139+00:00",
+   "path": "originals/ordin-15669585.hwp"
+  },
+  "ordin-16093327": {
+   "format": "hwp",
+   "bytes": 25088,
+   "sha256": "b8bb0f2e7cd7247f046d36537ec2202e733e97e1a65535399717e61bba7284c1",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=131774541&flNm=%EB%B3%84%EC%A7%80%EC%84%9C%EC%8B%9D",
+   "downloadedAt": "2026-10-16T16:09:46.255875+00:00",
+   "path": "originals/ordin-16093327.hwp"
+  },
+  "ordin-16371425": {
+   "format": "hwp",
+   "bytes": 14336,
+   "sha256": "1af4c4ec3f04c187a7c84fb0fbddca7e76218e32dafdcb3216e157b10858968c",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=133921979&flNm=%EB%B3%84%EC%A7%80+%EC%84%9C%EC%8B%9D",
+   "downloadedAt": "2026-10-16T16:09:54.627154+00:00",
+   "path": "originals/ordin-16371425.hwp"
+  },
+  "ordin-17327977": {
+   "format": "hwp",
+   "bytes": 19456,
+   "sha256": "cac18482fda93c22b5e7ba323ebe1c7efce5054ac1a5c244e8bd59c7978298e1",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=139250063&flNm=%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D",
+   "downloadedAt": "2026-10-16T16:10:18.077747+00:00",
+   "path": "originals/ordin-17327977.hwp"
+  },
+  "ordin-18092525": {
+   "format": "hwp",
+   "bytes": 16384,
+   "sha256": "4bb3e41428730a15ce5cb3d7a4b2a8b906081fd46f44aba8ec0377ee77cb8afa",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=142448645&flNm=%EB%B3%84%EC%A7%80+%EC%84%9C%EC%8B%9D%28%EB%B2%BC%EB%B0%80+%EC%9E%AC%EB%B0%B0%EB%86%8D%EA%B0%80+%EA%B2%BD%EC%98%81%EC%95%88%EC%A0%95%EC%9E%90%EA%B8%88+%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C%29",
+   "downloadedAt": "2026-10-16T16:10:42.956223+00:00",
+   "path": "originals/ordin-18092525.hwp"
+  },
+  "ordin-18179563": {
+   "format": "hwp",
+   "bytes": 28672,
+   "sha256": "476a3f03ef3ece3b406512f880b8ba2618e1d1c9185cfed0f268872232c6993c",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=142649359&flNm=%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D",
+   "downloadedAt": "2026-10-16T16:10:48.090477+00:00",
+   "path": "originals/ordin-18179563.hwp"
+  },
+  "ordin-18313129": {
+   "format": "hwp",
+   "bytes": 20480,
+   "sha256": "8255c21e9d169d96c7b5aea75ba44da66b22255463fbd14469fc8c02edd4e594",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=143086593&flNm=%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D",
+   "downloadedAt": "2026-10-16T16:10:55.434492+00:00",
+   "path": "originals/ordin-18313129.hwp"
+  },
+  "ordin-18355807": {
+   "format": "hwp",
+   "bytes": 17920,
+   "sha256": "66d13e667aad611632dfb98bfaa3598084f367dae377d08589251092f981ad42",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=143278271&flNm=%EB%B3%84%EC%A7%80%EC%84%9C%EC%8B%9D",
+   "downloadedAt": "2026-10-16T16:10:56.376457+00:00",
+   "path": "originals/ordin-18355807.hwp"
+  },
+  "ordin-19211125": {
+   "format": "hwp",
+   "bytes": 19456,
+   "sha256": "31fce308a2e28acff7b7a903052a7560e88de2713d72271b104da0275fb2b1db",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=148243579&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D~%5B%EB%B3%84%EC%A7%80+%EC%A0%9C3%ED%98%B8%EC%84%9C%EC%8B%9D%5D",
+   "downloadedAt": "2026-10-16T16:11:59.793808+00:00",
+   "path": "originals/ordin-19211125.hwp"
+  },
+  "ordin-19245615": {
+   "format": "hwp",
+   "bytes": 13824,
+   "sha256": "e8be82b6811f3826fd23cfe6f43aa865838dd394b77af9af568209a56cf7e1a6",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=148333811&flNm=%EB%B3%84%EC%A7%80+%EC%A0%9C6%ED%98%B8%EC%84%9C%EC%8B%9D",
+   "downloadedAt": "2026-10-16T16:12:11.669266+00:00",
+   "path": "originals/ordin-19245615.hwp"
+  },
+  "ordin-19245621": {
+   "format": "hwp",
+   "bytes": 11776,
+   "sha256": "026fb94dc3edb5ddf37073e59fd55cfe2219a22d28589136ea57c324e623f59c",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=148333817&flNm=%EB%B3%84%EC%A7%80+%EC%A0%9C9%ED%98%B8%EC%84%9C%EC%8B%9D",
+   "downloadedAt": "2026-10-16T16:12:12.323005+00:00",
+   "path": "originals/ordin-19245621.hwp"
+  },
+  "ordin-19364915": {
+   "format": "hwp",
+   "bytes": 50688,
+   "sha256": "e2e627a80682442c4f30f5d89d3066055f460b95b4fdb57df0366bdc3d5a93e7",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=148751605&flNm=%EB%B3%84%EC%A7%80+%EC%84%9C%EC%8B%9D",
+   "downloadedAt": "2026-10-16T16:12:21.344052+00:00",
+   "path": "originals/ordin-19364915.hwp"
+  },
+  "ordin-19330517": {
+   "format": "hwp",
+   "bytes": 43008,
+   "sha256": "edadc2786e375ebefc9e4788b4273e46491becf75103dab53dbc7ba38bb1e8d0",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=148616505&flNm=%EC%9E%A5%EC%95%A0%EC%9D%B8%EA%B0%80%EC%A0%95+%EC%B6%9C%EC%82%B0%EC%A7%80%EC%9B%90%EA%B8%88+%EC%A7%80%EA%B8%89+%EC%8B%A0%EC%B2%AD%EC%84%9C+%EB%93%B1",
+   "downloadedAt": "2026-10-16T16:12:19.687526+00:00",
+   "path": "originals/ordin-19330517.hwp"
+  },
+  "ordin-19629501": {
+   "format": "hwp",
+   "bytes": 16384,
+   "sha256": "d94418bf85b45536284421271e79c520dd9eac58b7c028703ae8a975adb0a407",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=150421351&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8+%EC%84%9C%EC%8B%9D%5D%ED%95%A8%EC%96%91%EC%82%AC%EB%9E%91%EC%83%81%ED%92%88%EA%B6%8C+%EA%B0%9C%EB%B3%84%EA%B0%80%EB%A7%B9%EC%A0%90+%EC%A7%80%EC%A0%95+%EC%8B%A0%EC%B2%AD%EC%84%9C%28%EC%A0%9C4%EC%A1%B0%EC%A0%9C1%ED%95%AD+%EA%B4%80%EB%A0%A8%29",
+   "downloadedAt": "2026-10-16T16:12:36.478528+00:00",
+   "path": "originals/ordin-19629501.hwp"
+  },
+  "ordin-19629503": {
+   "format": "hwp",
+   "bytes": 16896,
+   "sha256": "6ac5da8c04f9873687ffc15e04dfd7dbf536440072617328e8fc075baf4d99f3",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=150421353&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C2%ED%98%B8+%EC%84%9C%EC%8B%9D%5D%ED%95%A8%EC%96%91%EC%82%AC%EB%9E%91%EC%83%81%ED%92%88%EA%B6%8C+%ED%99%98%EC%A0%84%EB%8C%80%ED%96%89%EA%B0%80%EB%A7%B9%EC%A0%90+%EC%A7%80%EC%A0%95+%EC%8B%A0%EC%B2%AD%EC%84%9C%28%EC%A0%9C4%EC%A1%B0%EC%A0%9C1%ED%95%AD+%EA%B4%80%EB%A0%A8%29",
+   "downloadedAt": "2026-10-16T16:12:37.279577+00:00",
+   "path": "originals/ordin-19629503.hwp"
+  },
+  "ordin-19629507": {
+   "format": "hwp",
+   "bytes": 16384,
+   "sha256": "e7ebd614cb6b847e4fa3656adfdd7530179d00cf7169744471b93d80211d0c58",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=150421357&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C4%ED%98%B8+%EC%84%9C%EC%8B%9D%5D%ED%95%A8%EC%96%91%EC%82%AC%EB%9E%91%EC%83%81%ED%92%88%EA%B6%8C+%28%EA%B0%9C%EB%B3%84%C2%B7%ED%99%98%EC%A0%84%EB%8C%80%ED%96%89%29%EA%B0%80%EB%A7%B9%EC%A0%90+%EC%A7%80%EC%A0%95+%EB%B3%80%EA%B2%BD+%EC%8B%A0%EC%B2%AD%EC%84%9C%28%EC%A0%9C4%EC%A1%B0%EC%A0%9C4%ED%95%AD+%EA%B4%80%EB%A0%A8%29",
+   "downloadedAt": "2026-10-16T16:12:37.201175+00:00",
+   "path": "originals/ordin-19629507.hwp"
+  },
+  "ordin-19629515": {
+   "format": "hwp",
+   "bytes": 15872,
+   "sha256": "949f8ac19f205701ebe39e4dcfbeb8121c2f249eae5f4d9c746e63e3fffee6a1",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=150421365&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C8%ED%98%B8+%EC%84%9C%EC%8B%9D%5D%ED%95%A8%EC%96%91%EC%82%AC%EB%9E%91%EC%83%81%ED%92%88%EA%B6%8C+%ED%99%98%EC%A0%84+%EC%B2%AD%EA%B5%AC%EC%84%9C%28%EC%A0%9C6%EC%A1%B0%EC%A0%9C1%ED%95%AD+%EA%B4%80%EB%A0%A8%29",
+   "downloadedAt": "2026-10-16T16:12:38.365016+00:00",
+   "path": "originals/ordin-19629515.hwp"
+  },
+  "ordin-19748711": {
+   "format": "hwp",
+   "bytes": 16384,
+   "sha256": "f584cbd1128ca2db3920342a17163e4c3ef5787dc8af34324f23765e28f8252c",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=151282381&flNm=%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8~%EC%A0%9C10%ED%98%B8+%EC%84%9C%EC%8B%9D",
+   "downloadedAt": "2026-10-16T16:12:47.718404+00:00",
+   "path": "originals/ordin-19748711.hwp"
+  },
+  "ordin-19855321": {
+   "format": "hwp",
+   "bytes": 21504,
+   "sha256": "e230bc03e0f456e9eefbfba673a69d3365a6999c017e8105db9694f3bf4d40b1",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=151981249&flNm=%5B%EB%B3%84%EC%A7%80+%EC%84%9C%EC%8B%9D%5D+%EA%B5%90%EB%B3%B5%EA%B5%AC%EC%9E%85%EB%B9%84+%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:12:59.737228+00:00",
+   "path": "originals/ordin-19855321.hwp"
+  },
+  "ordin-19883393": {
+   "format": "hwp",
+   "bytes": 39936,
+   "sha256": "b24a32949cc311724b74afa99b5b0e49c6bf04dcdb2c37bb3f61c7be093d1998",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152035243&flNm=%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8+~+%EC%A0%9C10%ED%98%B8+%EC%84%9C%EC%8B%9D",
+   "downloadedAt": "2026-10-16T16:13:16.408247+00:00",
+   "path": "originals/ordin-19883393.hwp"
+  },
+  "ordin-19974313": {
+   "format": "hwp",
+   "bytes": 118272,
+   "sha256": "d8711fee9022ee209a39558fb3656e7c97097e022676eecc1ae3038d2f663131",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152184235&flNm=%EB%B3%84%EC%A7%80%EC%84%9C%EC%8B%9D",
+   "downloadedAt": "2026-10-16T16:13:20.291156+00:00",
+   "path": "originals/ordin-19974313.hwp"
+  },
+  "ordin-19980063": {
+   "format": "hwp",
+   "bytes": 48640,
+   "sha256": "e796724b9530ed474ae203326a542f2b0579d9ce0eab35ad593c214b6c51b28c",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152190025&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D%EC%9E%A5%EC%95%A0%EC%A7%84%EB%8B%A8%EB%B9%84+%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:13:25.360904+00:00",
+   "path": "originals/ordin-19980063.hwp"
+  },
+  "ordin-20053669": {
+   "format": "hwp",
+   "bytes": 17920,
+   "sha256": "d9e4b02f1064e779385da9959f12bb37b3b37726e76a134f646ce3345b41c144",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152325591&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D%EC%A0%95%EC%84%A0%EA%B5%B0+%EC%B6%9C%EC%83%9D%EC%95%84+%EC%96%91%EC%9C%A1%EB%B9%84+%EB%93%B1+%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:13:43.739193+00:00",
+   "path": "originals/ordin-20053669.hwp"
+  },
+  "ordin-20105841": {
+   "format": "hwp",
+   "bytes": 16896,
+   "sha256": "a320cfb6301be0dfaf11aeb172ec3607765f118badac581a7435d4d8760aa9b6",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152481639&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D%EC%88%9C%EC%B2%9C%EC%8B%9C+%EA%B8%B0%EC%B4%88%EC%83%9D%ED%99%9C%EB%B3%B4%EC%9E%A5+%EC%83%9D%ED%99%9C%EC%95%88%EC%A0%95%EB%B9%84+%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:13:52.519760+00:00",
+   "path": "originals/ordin-20105841.hwp"
+  },
+  "ordin-20178501": {
+   "format": "hwp",
+   "bytes": 23552,
+   "sha256": "6c9234537b0466abd9625d57f645fdd1b36777c91167584d93b075ebf0333942",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152768101&flNm=%5B%EB%B3%84%EC%A7%80%EC%84%9C%EC%8B%9D%5D+%EC%9C%A0%EB%A3%8C%EB%B0%A9%EC%86%A1+%EC%9D%B4%EC%9A%A9%EC%9A%94%EA%B8%88+%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:14:12.162763+00:00",
+   "path": "originals/ordin-20178501.hwp"
+  },
+  "ordin-20191087": {
+   "format": "hwp",
+   "bytes": 26112,
+   "sha256": "de25e16f618ac2eecf2baf37bffe3c3a2ba01dae5b18b5153caa37434ac0a975",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152832787&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%9E%84%EC%82%B0%EB%B6%80+%EC%9E%90%EB%8F%99%EC%B0%A8%ED%91%9C%EC%A7%80+%EB%B0%9C%EA%B8%89%28%EC%9E%AC%EB%B0%9C%EA%B8%89%29%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:14:17.098629+00:00",
+   "path": "originals/ordin-20191087.hwp"
+  },
+  "ordin-20191143": {
+   "format": "hwp",
+   "bytes": 35840,
+   "sha256": "ab54079db3067c83f465fc5d9023a582b47cabf4bd773aa5b17e81ef6b58698a",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152832771&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%9E%A5%EC%95%A0%EC%9D%B8%EA%B0%80%EC%A0%95+%EC%B6%9C%EC%82%B0%EC%A7%80%EC%9B%90%EA%B8%88+%EC%A7%80%EA%B8%89+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:14:17.494309+00:00",
+   "path": "originals/ordin-20191143.hwp"
+  },
+  "ordin-20204781": {
+   "format": "hwp",
+   "bytes": 32768,
+   "sha256": "05f84fdf5edbf6a17a6c2a49dada45d5416532d7b097f4eaaa1edb8f5e4e2c40",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152876795&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%ED%86%B5%EC%9E%A5%EC%9E%90%EB%85%80%EC%9E%A5%ED%95%99%EA%B8%88+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:14:20.053515+00:00",
+   "path": "originals/ordin-20204781.hwp"
+  },
+  "ordin-20204787": {
+   "format": "hwp",
+   "bytes": 26112,
+   "sha256": "2977ed8680c495ba5859379733ac1d02243c72d9c1d8f9932cbfd2ab7185c6aa",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152876801&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C5%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%ED%86%B5%EC%9E%A5%EC%9E%90%EB%85%80%EC%9E%A5%ED%95%99%EA%B8%88+%EC%A7%80%EA%B8%89+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:14:19.930720+00:00",
+   "path": "originals/ordin-20204787.hwp"
+  },
+  "ordin-20499193": {
+   "format": "hwp",
+   "bytes": 16384,
+   "sha256": "fbaf60c06a65d3211bfde90112d67bea62ed50af8f33ec2c9c59e1aa6484ccfa",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=154299309&flNm=%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D.+%EC%B2%B4%EC%9C%A1%EC%8B%9C%EC%84%A4%EC%82%AC%EC%9A%A9%ED%97%88%EA%B0%80+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:14:57.480257+00:00",
+   "path": "originals/ordin-20499193.hwp"
+  },
+  "ordin-20524953": {
+   "format": "hwp",
+   "bytes": 15872,
+   "sha256": "7f0ebf066aaa24b6e3b29dfabae7b5e82927c3e44e89910d7346a9414844be8f",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=154363025&flNm=%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D+%EC%84%B1%EC%9D%B8%EC%9A%A9+%EB%B3%B4%ED%96%89%EA%B8%B0+%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:15:03.701014+00:00",
+   "path": "originals/ordin-20524953.hwp"
+  },
+  "ordin-20543123": {
+   "format": "hwp",
+   "bytes": 39424,
+   "sha256": "09dbe4fbc5568bb146f1785c6797e40d440c56a8ef3043bfeeac76125025ccf2",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=154405783&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%97%B0%EC%B2%9C%EA%B5%B0%EB%86%8D%EC%97%85%EB%B0%9C%EC%A0%84%EA%B8%B0%EA%B8%88%EC%A7%80%EC%9B%90%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:15:06.861302+00:00",
+   "path": "originals/ordin-20543123.hwp"
+  },
+  "ordin-20660809": {
+   "format": "hwp",
+   "bytes": 44032,
+   "sha256": "0fbfb99e645bdb0023bacd331d0eb68d894b9388161f6cbae2896a02f39a88f5",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=154784869&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%ED%9A%A8%EB%8F%84%EC%88%98%EB%8B%B9+%EC%A7%80%EA%B8%89%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:15:36.915394+00:00",
+   "path": "originals/ordin-20660809.hwp"
+  },
+  "ordin-20973493": {
+   "format": "hwp",
+   "bytes": 26112,
+   "sha256": "61f8129af97bd0f0cbd0ddb2d3b772392c9ab749f6483ee5e4e9688d895d1a7f",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=157459151&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D%EC%9D%98%EB%A1%9C%EC%9A%B4+%EC%8B%9C%EB%AF%BC+%EC%98%88%EC%9A%B0+%EB%B0%8F+%EC%A7%80%EC%9B%90++%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:16:47.848095+00:00",
+   "path": "originals/ordin-20973493.hwp"
+  },
+  "ordin-20973501": {
+   "format": "hwp",
+   "bytes": 26112,
+   "sha256": "c50e9d97027a7cf597f4e3d0a8f91d65f401b75a02962fd1e6fd5ea3ed9e704d",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=157459159&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C5%ED%98%B8%EC%84%9C%EC%8B%9D%5D%EC%9D%98%EB%A1%9C%EC%9A%B4+%EC%8B%9C%EB%AF%BC+%EC%9C%84%EB%A1%9C%EA%B8%88+%EC%A7%80%EA%B8%89+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:16:47.700109+00:00",
+   "path": "originals/ordin-20973501.hwp"
+  },
+  "ordin-21340645": {
+   "format": "hwp",
+   "bytes": 14336,
+   "sha256": "985b32c8daad98c7d41a17a84d6fd0423479bbd578824b1da8da3d1bd58341ce",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=160468383&flNm=%28%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%29%EC%9C%A0%EB%A3%8C%EB%B0%A9%EC%86%A1+%EC%9D%B4%EC%9A%A9%EC%9A%94%EA%B8%88+%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:18:04.434151+00:00",
+   "path": "originals/ordin-21340645.hwp"
+  },
+  "ordin-21436193": {
+   "format": "hwp",
+   "bytes": 17920,
+   "sha256": "7a6994e6017682acd96f0609871048105362ede3f720392990d3629f904b8f3b",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=160934573&flNm=%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%28%EC%9E%84%EB%8C%80%EB%B3%B4%EC%A6%9D%EA%B8%88+%EB%AC%B4%EC%9D%B4%EC%9E%90%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C%29",
+   "downloadedAt": "2026-10-16T16:18:24.039426+00:00",
+   "path": "originals/ordin-21436193.hwp"
+  },
+  "ordin-21436197": {
+   "format": "hwp",
+   "bytes": 11776,
+   "sha256": "dba9b4ec89a43aecb566df672f5a8417d1296255c94f4f6bb5e84e8c47919d8c",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=160934577&flNm=%EB%B3%84%EC%A7%80+%EC%A0%9C3%ED%98%B8%EC%84%9C%EC%8B%9D%28%EC%9E%84%EB%8C%80%EB%B3%B4%EC%A6%9D%EA%B8%88+%EB%AC%B4%EC%9D%B4%EC%9E%90%EC%A7%80%EC%9B%90+%EA%B8%B0%EA%B0%84+%EC%97%B0%EC%9E%A5+%EC%8B%A0%EC%B2%AD%EC%84%9C%29",
+   "downloadedAt": "2026-10-16T16:18:24.421119+00:00",
+   "path": "originals/ordin-21436197.hwp"
+  },
+  "ordin-21777833": {
+   "format": "hwp",
+   "bytes": 55808,
+   "sha256": "2ada8a3880325fe5ac6e489f083a4f518335f630878fb9e2263e6f1f4836a1a3",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=163600833&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C2%ED%98%B8%EC%84%9C%EC%8B%9D%5D%EA%B0%9C%EC%9D%B8%EC%A0%95%EB%B3%B4+%EC%88%98%EC%A7%91%EB%8F%99%EC%9D%98%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:19:48.820531+00:00",
+   "path": "originals/ordin-21777833.hwp"
+  },
+  "ordin-22394187": {
+   "format": "hwp",
+   "bytes": 15872,
+   "sha256": "cb296be9f96e6065b72ccf0f2972ea25302252127314f627fa19a980f9a1a9f2",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=168221103&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C3%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%8B%9C%EC%8B%A0+%EC%9C%A0%EA%B3%A8+%ED%99%94%EC%9E%A5+%EC%8B%A0%EA%B3%A0%EC%84%9C+%EB%B0%8F+%EC%8B%A0%EA%B3%A0%EC%A6%9D%EB%AA%85%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:21:25.121361+00:00",
+   "path": "originals/ordin-22394187.hwp"
+  },
+  "ordin-22394143": {
+   "format": "hwp",
+   "bytes": 12288,
+   "sha256": "3b8500e2ea85ba2696a3df056d5c6c87047c08a23c5e14eb1611c4406038d8cd",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=168221039&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%9E%A5%EC%95%A0%EC%9D%B8+%EC%9D%B4%EB%8F%99%EA%B8%B0%EA%B8%B0+%EC%88%98%EB%A6%AC+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:21:24.151868+00:00",
+   "path": "originals/ordin-22394143.hwp"
+  },
+  "ordin-22466275": {
+   "format": "hwp",
+   "bytes": 16384,
+   "sha256": "ec141c4f6799230699d9add6970295053ef695ba1968dadbb968a0a84bdef0bb",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=168583921&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%95%84%EB%B9%A0+%EC%9C%A1%EC%95%84%ED%9C%B4%EC%A7%81+%EC%9E%A5%EB%A0%A4%EA%B8%88+%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:21:44.489653+00:00",
+   "path": "originals/ordin-22466275.hwp"
+  },
+  "ordin-22465491": {
+   "format": "hwp",
+   "bytes": 17408,
+   "sha256": "cbb0e2ab44cc5fe3f3967019e633e43b91aef2513d20c148b3d9fe68938e1224",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=168582835&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%ED%9A%A8%ED%96%89%EC%88%98%EB%8B%B9+%EC%A7%80%EA%B8%89%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:21:44.134080+00:00",
+   "path": "originals/ordin-22465491.hwp"
+  },
+  "ordin-22470725": {
+   "format": "hwp",
+   "bytes": 12800,
+   "sha256": "1913abbb32d66efacdc5b480ff0ecb14cac5cf47b9e14d91de4b3b8832649a4b",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=168589311&flNm=%5B%EB%B3%84%EC%A7%80+%EC%84%9C%EC%8B%9D%5D%EA%B4%91%EB%AA%85%EC%8B%9C+%EC%A0%80%EC%86%8C%EB%93%9D%EC%B8%B5+%EC%95%84%EB%8F%99+%EC%B9%98%EA%B3%BC%EC%A3%BC%EC%B9%98%EC%9D%98+%EC%9D%98%EB%A3%8C%EB%B9%84%EC%9A%A9+%EC%B2%AD%EA%B5%AC%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:21:51.055990+00:00",
+   "path": "originals/ordin-22470725.hwp"
+  },
+  "ordin-22466289": {
+   "format": "hwp",
+   "bytes": 16384,
+   "sha256": "b78abcbe1f3d6952677f612e30d912a3fd4c5edc351fe6ee39bf6d5c28456ab8",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=168583935&flNm=%5B%EB%B3%84%EC%A7%80+%EC%84%9C%EC%8B%9D%5D+%EC%9E%A5%EC%95%A0%EC%9D%B8%EA%B0%80%EC%A0%95+%EC%B6%9C%EC%82%B0%EC%A7%80%EC%9B%90%EA%B8%88+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:21:44.758695+00:00",
+   "path": "originals/ordin-22466289.hwp"
+  },
+  "ordin-22525439": {
+   "format": "hwp",
+   "bytes": 17920,
+   "sha256": "2226745cba976fedf8a6ec6533f448b7700713a6ce9b663122a3f268a6a84cfd",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=168901829&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%8B%9C%EC%8B%9D%5D+%EC%82%BC%EC%B2%99%EC%8B%9C+%EC%96%91%EC%84%B1%ED%8F%89%EB%93%B1+%EA%B8%B0%EA%B8%88+%EC%A7%80%EC%9B%90%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:22:08.275901+00:00",
+   "path": "originals/ordin-22525439.hwp"
+  },
+  "ordin-22636267": {
+   "format": "hwp",
+   "bytes": 15360,
+   "sha256": "48de9faf301acccae5251e23cbf5bf4b3e27c20efb80c2d3a9eec63a9eaea573",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=169445083&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%ED%95%99%EA%B5%90+%EA%B8%89%EC%8B%9D%EA%B2%BD%EB%B9%84+%EC%A7%80%EC%9B%90%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:22:36.304784+00:00",
+   "path": "originals/ordin-22636267.hwp"
+  },
+  "ordin-5876892": {
+   "format": "hwp",
+   "bytes": 19456,
+   "sha256": "2911f67d59b4ce895d3f3a70eee831ff0941828170bae273dc307082c0db7c50",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=38572343&flNm=%EB%B3%84%EC%A7%802.+%EC%82%B0%EB%AA%A8%EC%8B%A0%EC%83%9D%EC%95%84+%EA%B1%B4%EA%B0%95%EA%B4%80%EB%A6%AC%EC%84%9C%EB%B9%84%EC%8A%A4+%EB%B3%B8%EC%9D%B8%EB%B6%80%EB%8B%B4%EA%B8%88+%EC%B2%AD%EA%B5%AC%EC%84%9C",
+   "downloadedAt": "2026-10-16T15:57:48.381343+00:00",
+   "path": "originals/ordin-5876892.hwp"
+  },
+  "ordin-20219405": {
+   "format": "hwp",
+   "bytes": 40448,
+   "sha256": "ceef834bfa870e4bec762b2e2825a3eb407fb53c8c0789808260d2fc91a6df3c",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152918373&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C2%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%9D%B4%EC%9E%A5%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T15:58:16.710221+00:00",
+   "path": "originals/ordin-20219405.hwp"
+  },
+  "ordin-20219407": {
+   "format": "hwp",
+   "bytes": 37888,
+   "sha256": "126792617030df6b3491e7c7e631d3bfbbdb6906badf90bfc06ff5cf9b89aa59",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152918375&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C3%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EB%B0%B0%EC%9A%B0%EC%9E%90+%ED%95%A9%EC%9E%A5+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T15:58:21.963740+00:00",
+   "path": "originals/ordin-20219407.hwp"
+  },
+  "ordin-20260979": {
+   "format": "hwpx",
+   "bytes": 42693,
+   "sha256": "d49985c0b95f6b5142b825d96e4847c7f25ec8bcd051c099945437282c981fe4",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=153102439&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EA%B3%A0%ED%9D%A5%EA%B5%B0+%EC%A4%91%E3%86%8D%EA%B3%A0%EB%93%B1%ED%95%99%EC%83%9D+%EA%B5%90%EB%B3%B5+%EA%B5%AC%EC%9E%85%EB%B9%84+%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T15:58:52.358637+00:00",
+   "path": "originals/ordin-20260979.hwpx"
+  },
+  "ordin-20278755": {
+   "format": "hwp",
+   "bytes": 17920,
+   "sha256": "72eae890e27020650e04f3c9133bd020b2b9f197d67d7f14cdb102300580979f",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=153287383&flNm=%5B%EB%B3%84%EC%A7%80+%EC%84%9C%EC%8B%9D%5D+%EC%A3%BC%ED%83%9D%EC%9A%A9+%EC%86%8C%EB%B0%A9%EC%8B%9C%EC%84%A4+%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C%28%EC%A0%9C5%EC%A1%B0+%EA%B4%80%EB%A0%A8%29",
+   "downloadedAt": "2026-10-16T15:58:56.659243+00:00",
+   "path": "originals/ordin-20278755.hwp"
+  },
+  "ordin-20231057": {
+   "format": "hwp",
+   "bytes": 31232,
+   "sha256": "54a6ccd1d6a5e81e08c83b70076b12b1cda9f249d4ecd8f8c8b7d46f86517d70",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152991691&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%ED%9A%A8%EB%8F%84%EC%88%98%EB%8B%B9+%EC%A7%80%EA%B8%89+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:03:26.353149+00:00",
+   "path": "originals/ordin-20231057.hwp"
+  },
+  "ordin-22621453": {
+   "format": "hwp",
+   "bytes": 39936,
+   "sha256": "721d36fff3bdc4bbef01304a226d95089c9335f6aedd804de70e262d81ef4779",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=169392947&flNm=%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%28%EB%86%8D%EC%96%B4%EC%97%85%E3%86%8D%EB%86%8D%EC%B4%8C+%EB%B0%8F+%EC%8B%9D%ED%92%88%EC%82%B0%EC%97%85+%EC%82%AC%EC%97%85%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C%29",
+   "downloadedAt": "2026-10-16T16:03:29.830872+00:00",
+   "path": "originals/ordin-22621453.hwp"
+  },
+  "ordin-17770019": {
+   "format": "hwp",
+   "bytes": 15872,
+   "sha256": "758f1fae429f7eaf921beb972da4102301520a1c2a203bcc58e99f710f2ae127",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=141752777&flNm=%EB%B3%B4%ED%9B%88%EC%98%81%EC%98%88%EC%88%98%EB%8B%B9+%EC%A7%80%EA%B8%89%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:10:29.395603+00:00",
+   "path": "originals/ordin-17770019.hwp"
+  },
+  "ordin-17770021": {
+   "format": "hwp",
+   "bytes": 16896,
+   "sha256": "3474b6331f5f793ecf164a07af3821f9b35adf863c0815e05b1ad9397500d1e3",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=141752779&flNm=%EB%B3%B4%ED%9B%88%EC%98%81%EC%98%88%EC%88%98%EB%8B%B9%2C+%EC%9C%A0%EC%A1%B1%EB%B3%B5%EC%A7%80%EC%88%98%EB%8B%B9+%EC%A7%80%EA%B8%89%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:10:29.823426+00:00",
+   "path": "originals/ordin-17770021.hwp"
+  },
+  "ordin-17770025": {
+   "format": "hwp",
+   "bytes": 16384,
+   "sha256": "28c82949da998e0fa100acd6a446c7404cf02b75ebfca7cf66442ae0661b9eba",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=141752783&flNm=%EC%9C%A0%EC%A1%B1%EB%B3%B5%EC%A7%80%EC%88%98%EB%8B%B9+%EC%A7%80%EA%B8%89%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:10:30.518632+00:00",
+   "path": "originals/ordin-17770025.hwp"
+  },
+  "ordin-17770023": {
+   "format": "hwp",
+   "bytes": 16896,
+   "sha256": "8a5706664231a97b9e20b550aa243e3c7687bc33ac1b2ea9a90e0a335e17dba8",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=141752781&flNm=%EC%82%AC%EB%A7%9D%EC%9C%84%EB%A1%9C%EA%B8%88+%EC%A7%80%EA%B8%89%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:10:29.701140+00:00",
+   "path": "originals/ordin-17770023.hwp"
+  },
+  "ordin-19683133": {
+   "format": "hwp",
+   "bytes": 62464,
+   "sha256": "c0ae1a6aa7c8e924aa5716a1c3dd3d516e32e72baef0590adeafaf4952a61139",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=150808203&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C3%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%A3%BC%EA%B1%B0%EC%95%88%EC%A0%95%EC%9E%90%EA%B8%88+%EC%9C%B5%EC%9E%90%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:12:45.249648+00:00",
+   "path": "originals/ordin-19683133.hwp"
+  },
+  "ordin-19683149": {
+   "format": "hwp",
+   "bytes": 62464,
+   "sha256": "80c6d4df1cfe93559594d0a813dd346ba11b7f38d5a8b70b83fc23aad0eba82e",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=150808219&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C11%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%A0%84%EC%84%B8%EC%9E%85%EC%A3%BC%EB%B3%B4%EC%A6%9D%EA%B8%88%28%EC%9C%B5%EC%9E%90%EA%B8%88%29%EC%A7%80%EC%9B%90%EA%B8%B0%EA%B0%84+%EC%97%B0%EC%9E%A5%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:12:46.127496+00:00",
+   "path": "originals/ordin-19683149.hwp"
+  },
+  "ordin-19683155": {
+   "format": "hwp",
+   "bytes": 62464,
+   "sha256": "018f5e9a38fd772917390e5427a983f9fbf8042ffde43d22329e8c576ebb8bc8",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=150808225&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C14%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%A0%80%EC%86%8C%EB%93%9D%EC%A3%BC%EB%AF%BC+%EC%83%9D%ED%99%9C%EC%95%88%EC%A0%95%EC%9E%90%EA%B8%88+%EC%9C%B5%EC%9E%90%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:12:45.957176+00:00",
+   "path": "originals/ordin-19683155.hwp"
+  },
+  "ordin-20062901": {
+   "format": "hwp",
+   "bytes": 49152,
+   "sha256": "2dfba0c153463056c1186c6b18975093f435c4e54f52670b6895c3545d48a341",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152340167&flNm=%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8+%EC%84%9C%EC%8B%9D",
+   "downloadedAt": "2026-10-16T16:13:44.614347+00:00",
+   "path": "originals/ordin-20062901.hwp"
+  },
+  "ordin-20508199": {
+   "format": "hwp",
+   "bytes": 15360,
+   "sha256": "a85074a3490f01d5674d939233d2aa93e945c9e219124c9f896e95818f7a2923",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=154320589&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C2%ED%98%B8%EC%84%9C%EC%8B%9D%5D",
+   "downloadedAt": "2026-10-16T16:15:01.226462+00:00",
+   "path": "originals/ordin-20508199.hwp"
+  },
+  "ordin-20508201": {
+   "format": "hwp",
+   "bytes": 13824,
+   "sha256": "5fcab3c71a10768d50157dc001dedcef13e537d03524e48a5e99fce1fab9b965",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=154320591&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C3%ED%98%B8%EC%84%9C%EC%8B%9D%5D",
+   "downloadedAt": "2026-10-16T16:15:01.569657+00:00",
+   "path": "originals/ordin-20508201.hwp"
+  },
+  "ordin-20543087": {
+   "format": "hwp",
+   "bytes": 56832,
+   "sha256": "c950a3284ecb9cae9b9fd808f14296cc69bc797a6c4ee9f82af12743bd13f45f",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=154405707&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EB%86%8D%EA%B8%B0%EA%B3%84%EC%9E%84%EB%8C%80%EC%82%AC%EC%97%85%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:15:06.230409+00:00",
+   "path": "originals/ordin-20543087.hwp"
+  },
+  "ordin-20543089": {
+   "format": "hwp",
+   "bytes": 47616,
+   "sha256": "33859cbe43b20a85537bba2806701463bbb4a9b06fe035a044f6c64057f16d69",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=154405709&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C2%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EB%86%8D%EA%B8%B0%EA%B3%84%EC%9E%84%EB%8C%80%EC%82%AC%EC%9A%A9%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:15:06.664507+00:00",
+   "path": "originals/ordin-20543089.hwp"
+  },
+  "ordin-20760045": {
+   "format": "hwp",
+   "bytes": 11776,
+   "sha256": "c4e366c95c369a0a2f946bb5e375d4b2246cb2b121288cc9a30850557289b18f",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=155410193&flNm=%EB%B3%84%EC%A7%80+%EC%A0%9C2%ED%98%B8%EC%84%9C%EC%8B%9D",
+   "downloadedAt": "2026-10-16T16:15:56.096860+00:00",
+   "path": "originals/ordin-20760045.hwp"
+  },
+  "ordin-20760043": {
+   "format": "hwp",
+   "bytes": 14848,
+   "sha256": "4952c96f3a0ffa2712cf1fa92db515368573f6bff1c84dac3c09f6f2e9756756",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=155410191&flNm=%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D",
+   "downloadedAt": "2026-10-16T16:15:54.786972+00:00",
+   "path": "originals/ordin-20760043.hwp"
+  },
+  "ordin-21163141": {
+   "format": "hwp",
+   "bytes": 16384,
+   "sha256": "28a1e1dd0c737778180ea55a38591f38b028a67e458a34a5abe7f2f3c02af652",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=158853159&flNm=%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D",
+   "downloadedAt": "2026-10-16T16:17:24.982270+00:00",
+   "path": "originals/ordin-21163141.hwp"
+  },
+  "ordin-21488033": {
+   "format": "hwp",
+   "bytes": 13824,
+   "sha256": "79b91c5b13d0eb682d16dc61b16f410f4a4c8373d9d479c952a9b3f1fa4d09b4",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=161299515&flNm=%5B%EB%B3%84%EC%A7%80+%EC%84%9C%EC%8B%9D%5D",
+   "downloadedAt": "2026-10-16T16:18:39.451226+00:00",
+   "path": "originals/ordin-21488033.hwp"
+  },
+  "ordin-21904125": {
+   "format": "hwp",
+   "bytes": 50688,
+   "sha256": "6710defb76af1633b0c4aabf4ad96be33e5d2342762086044306a7dfa3abc74c",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=164764201&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%8B%9C%EC%84%A4+%EC%82%AC%EC%9A%A9+%ED%97%88%EA%B0%80%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:20:12.966684+00:00",
+   "path": "originals/ordin-21904125.hwp"
+  },
+  "ordin-21904129": {
+   "format": "hwp",
+   "bytes": 38400,
+   "sha256": "065df8af69e585d93c57ede4c48ac625b110689f9785f5a4d4c6496657e48789",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=164764205&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C3%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%8B%9C%EC%84%A4+%EC%82%AC%EC%9A%A9%EB%B3%80%EA%B2%BD+%ED%97%88%EA%B0%80%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:20:13.352909+00:00",
+   "path": "originals/ordin-21904129.hwp"
+  },
+  "ordin-21904139": {
+   "format": "hwp",
+   "bytes": 37376,
+   "sha256": "37a7ccec0c5c819a50470e8547a62645d4e691ac7e27bb575efc1842253c7a51",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=164764215&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C8%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%8B%9C%EC%84%A4+%EC%82%AC%EC%9A%A9%EB%A3%8C+%EA%B0%90%EB%A9%B4+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:20:14.108261+00:00",
+   "path": "originals/ordin-21904139.hwp"
+  },
+  "ordin-21904135": {
+   "format": "hwp",
+   "bytes": 37888,
+   "sha256": "8c339ac54ede7184ae09065c4a1bc4a20ff57932506ddca499d2bb9b39f4bbfe",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=164764211&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C6%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%88%98%EA%B0%95%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:20:13.750132+00:00",
+   "path": "originals/ordin-21904135.hwp"
+  },
+  "ordin-22409877": {
+   "format": "hwp",
+   "bytes": 19968,
+   "sha256": "906e58b1cfae17c781d4c14f1b8c2f775dcbfd686606cecb9cd7a85f902765ee",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=168296227&flNm=%EB%B3%84%EC%A7%80",
+   "downloadedAt": "2026-10-16T16:21:29.445995+00:00",
+   "path": "originals/ordin-22409877.hwp"
+  },
+  "ordin-22648711": {
+   "format": "hwp",
+   "bytes": 15360,
+   "sha256": "7e8e87428dbb8e66f1d304e6e8454085dd5487e8032727e86215662502eaa93a",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=169458585&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C6%ED%98%B8+%EC%84%9C%EC%8B%9D%5D+%EC%9E%A0%EC%88%98%EC%96%B4%EC%97%85%EC%9D%B8%EC%A6%9D+%EB%B0%9C%EA%B8%89+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:22:39.416541+00:00",
+   "path": "originals/ordin-22648711.hwp"
+  },
+  "ordin-22648717": {
+   "format": "hwp",
+   "bytes": 12800,
+   "sha256": "7da394098b2bfc7725bd9c0ab1fe02198f6c31172871b4d36467dde3921dd0c1",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=169458591&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C9%ED%98%B8+%EC%84%9C%EC%8B%9D%5D+%EC%9E%A0%EC%88%98%EC%96%B4%EC%97%85%EC%9D%B8%EC%A6%9D+%EC%9E%AC%EB%B0%9C%EA%B8%89+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:22:39.766072+00:00",
+   "path": "originals/ordin-22648717.hwp"
+  },
+  "ordin-20123423": {
+   "format": "hwp",
+   "bytes": 98816,
+   "sha256": "dffe3469d2bd5b4f6049b60155e0da9e9c21d051151975ffce6e8a55977837c2",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152545187&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D%ED%99%94%EC%9E%A5+%EC%9E%A5%EB%A0%A4%EA%B8%88+%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T15:58:43.767565+00:00",
+   "path": "originals/ordin-20123423.hwp"
+  },
+  "ordin-21422053": {
+   "format": "hwp",
+   "bytes": 17408,
+   "sha256": "3dd24a2ec161a9e767c9d2e5ecc868e1ac69b71f8a75fbb4384dbd71d6a6f22e",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=160891215&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%9E%85%EC%96%91%EC%A7%80%EC%9B%90%EA%B8%88%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T15:59:01.909730+00:00",
+   "path": "originals/ordin-21422053.hwp"
+  },
+  "ordin-17769735": {
+   "format": "hwp",
+   "bytes": 16896,
+   "sha256": "c2d3d87970f86d7f4775a3afd3534c6133f495207dd8444c3b05b5c25ba4d4f5",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=141752493&flNm=%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D+%5B%EB%B6%80%EA%B0%80%EA%B8%89%EC%97%AC+%EC%A7%80%EA%B8%89%EC%8B%A0%EC%B2%AD%EC%84%9C%5D",
+   "downloadedAt": "2026-10-16T16:00:07.800803+00:00",
+   "path": "originals/ordin-17769735.hwp"
+  },
+  "ordin-19312849": {
+   "format": "hwp",
+   "bytes": 19456,
+   "sha256": "b87f1068824eb7d6f7b5861d65acbb5901a913fe1a1d8caad4217f6948ba272f",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=148561169&flNm=1.+~+3.+%EC%9E%85%EC%96%91%EC%9E%A5%EB%A0%A4%EA%B8%88+%EC%A7%80%EA%B8%89+%EC%8B%A0%EC%B2%AD%EC%84%9C+%EB%93%B1",
+   "downloadedAt": "2026-10-16T16:00:28.087474+00:00",
+   "path": "originals/ordin-19312849.hwp"
+  },
+  "ordin-21889245": {
+   "format": "hwp",
+   "bytes": 13824,
+   "sha256": "5a7e2dfddf9d82c9d9cc922dc6f6635259cce3d2364eb8e1e6870999679cc287",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=164523739&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EB%8F%85%EB%A6%BD%EC%9C%A0%EA%B3%B5%EC%9E%90+%EC%88%98%EB%8B%B9+%EC%A7%80%EA%B8%89+%EC%8B%A0%EC%B2%AD%28%EB%B3%80%EA%B2%BD%EC%8B%A0%EA%B3%A0%29%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:00:41.804088+00:00",
+   "path": "originals/ordin-21889245.hwp"
+  },
+  "ordin-19876831": {
+   "format": "hwp",
+   "bytes": 14336,
+   "sha256": "75cb1a2377eb77de1c7bf8a4433aaa5855f3cd44921f2eb8f65a30e137223ec9",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152028411&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8+%EC%84%9C%EC%8B%9D%5D+%ED%99%8D%EC%B2%9C%EA%B5%B0+%EC%A3%BC%EA%B1%B0%EC%B7%A8%EC%95%BD%EA%B3%84%EC%B8%B5+%EC%A3%BC%ED%83%9D%EA%B0%9C%EB%9F%89+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:00:47.383926+00:00",
+   "path": "originals/ordin-19876831.hwp"
+  },
+  "ordin-13519823": {
+   "format": "hwp",
+   "bytes": 15360,
+   "sha256": "d6fc071e804cad10c0b75cf663ad5d3e74568cdc374898807a18068b86951b3b",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=119011727&flNm=%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D+%EC%9E%85%EC%96%91%EC%B6%95%ED%95%98%EA%B8%88+%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:00:56.309348+00:00",
+   "path": "originals/ordin-13519823.hwp"
+  },
+  "ordin-20640839": {
+   "format": "hwp",
+   "bytes": 49664,
+   "sha256": "ca0a1e3351e03798f4182197e8d05f522cc4703442e44a3da4b7d7e392b2dba1",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=154716241&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D%EC%9A%B8%EC%82%B0%ED%95%98%EB%8A%98%EA%B3%B5%EC%9B%90+%28%EC%82%AC%EC%9A%A9.%EA%B8%B0%EA%B0%84%EC%97%B0%EC%9E%A5%29+%ED%97%88%EA%B0%80%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:01:17.489858+00:00",
+   "path": "originals/ordin-20640839.hwp"
+  },
+  "ordin-20166257": {
+   "format": "hwp",
+   "bytes": 12800,
+   "sha256": "a5e53f9b306030b118ec299668d8359fe8f5b8692afb27055b79ac5defa02277",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152720253&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%ED%9A%A8%ED%96%89%EC%9E%A5%EB%A0%A4%EA%B8%88+%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:01:19.621493+00:00",
+   "path": "originals/ordin-20166257.hwp"
+  },
+  "ordin-20166323": {
+   "format": "hwp",
+   "bytes": 15872,
+   "sha256": "d77d71fc3ce698c37c863c260fdd16b21895b992eed80b7a8ce2a5a2e24c57e8",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152720279&flNm=%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D+%EC%9E%85%EC%96%91%EC%9E%A5%EB%A0%A4%EA%B8%88+%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:01:23.837028+00:00",
+   "path": "originals/ordin-20166323.hwp"
+  },
+  "ordin-19330451": {
+   "format": "hwp",
+   "bytes": 11264,
+   "sha256": "43e35a41cfc27c5ae9ce04f924e926e10b9055d506bd1a7ae7d24b03d0a30251",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=148616439&flNm=%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:03:09.942771+00:00",
+   "path": "originals/ordin-19330451.hwp"
+  },
+  "ordin-20063251": {
+   "format": "hwp",
+   "bytes": 23040,
+   "sha256": "08a24f9400936d99ac09a7b591b49d4da56e43d781b0db595305516b92b9163a",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152345413&flNm=%EC%82%AC%ED%9A%8C%EB%B3%B5%EC%A7%80%EA%B8%B0%EA%B8%88%28%EA%B8%B0%EC%B4%88%EC%83%9D%ED%99%9C%EB%B3%B4%EC%9E%A5%EC%82%AC%EC%97%85%29+%EB%8C%80%EC%97%AC%EC%8B%A0%EC%B2%AD%EC%84%9C+%EC%99%B8",
+   "downloadedAt": "2026-10-16T16:04:44.328385+00:00",
+   "path": "originals/ordin-20063251.hwp"
+  },
+  "ordin-20862741": {
+   "format": "hwp",
+   "bytes": 15360,
+   "sha256": "e9c91120777c36588a0187b4143bc412020996c711214510fcb070a4414b0da1",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=156470257&flNm=%EA%B2%B0%ED%98%BC%EC%98%88%EC%8B%9D+%EC%8B%9C%EC%84%A4+%EC%9D%B4%EC%9A%A9+%EC%9E%A5%EB%A0%A4%EA%B8%88+%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:04:57.990186+00:00",
+   "path": "originals/ordin-20862741.hwp"
+  },
+  "ordin-9468211": {
+   "format": "hwp",
+   "bytes": 12800,
+   "sha256": "ecdf59eebf18cb5aff72c20eac2d782772f0221b868a39500f70311a15170f8a",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=69987459&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8+%EC%84%9C%EC%8B%9D%5D+%EB%A7%9E%EC%B6%A4%ED%98%95+%EB%B3%B5%EC%A7%80+%EC%A7%80%EC%9B%90%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:06:41.990099+00:00",
+   "path": "originals/ordin-9468211.hwp"
+  },
+  "ordin-10541897": {
+   "format": "hwp",
+   "bytes": 15872,
+   "sha256": "6ef69fb27e0a0c7a1646759a998c2c49ebebc0d17a3f1c17bd6f0f9fc68e4b4e",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=94224559&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%B2%AD%EC%A3%BC%EC%8B%9C%EB%AC%98%EC%A7%80%EB%93%B1%EC%9D%98%EC%9E%A5%EC%82%AC%EC%8B%9C%EC%84%A4%EC%82%AC%EC%9A%A9%28%EA%B8%B0%EA%B0%84%EC%97%B0%EC%9E%A5%29%ED%97%88%EA%B0%80%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:08:45.627081+00:00",
+   "path": "originals/ordin-10541897.hwp"
+  },
+  "ordin-10541901": {
+   "format": "hwp",
+   "bytes": 15360,
+   "sha256": "4549da835c1b6d0587b0bee34aebaed53d0e790be6aa435b62e7387c89ed5c7e",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=94224563&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C3%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EB%AA%A9%EB%A0%A8%EC%9B%90%EC%82%AC%EC%9A%A9%ED%97%88%EA%B0%80%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:08:45.883068+00:00",
+   "path": "originals/ordin-10541901.hwp"
+  },
+  "ordin-10541913": {
+   "format": "hwp",
+   "bytes": 14336,
+   "sha256": "3ce8a8c9ad7d8b90648012824b8919302bc9f5a4b086751c63c6fff3b49f8737",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=94224575&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C9%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%B2%AD%EC%A3%BC%EC%8B%9C%EC%9E%A5%EC%82%AC%EC%8B%9C%EC%84%A4%EC%82%AC%EC%9A%A9%EB%A3%8C%EA%B0%90%EB%A9%B4%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:08:48.191190+00:00",
+   "path": "originals/ordin-10541913.hwp"
+  },
+  "ordin-11397797": {
+   "format": "hwp",
+   "bytes": 14336,
+   "sha256": "60f0ba6904898b6dab3d8767b9ee67f8814c4f4fb10b170c5956720eda43ba8c",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=104639107&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C2%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EB%B3%B4%ED%9B%88%EC%98%81%EC%98%88%EC%88%98%EB%8B%B9+%EC%A7%80%EA%B8%89%EB%B3%80%EA%B2%BD%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:08:56.123562+00:00",
+   "path": "originals/ordin-11397797.hwp"
+  },
+  "ordin-11427535": {
+   "format": "hwp",
+   "bytes": 29184,
+   "sha256": "f2c75e77764f0f0f1db86ef3af52cda0da5f6c050eb3400605208e413ccaeda2",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=104830519&flNm=%EB%B3%84%EC%A7%80%EC%84%9C%EC%8B%9D",
+   "downloadedAt": "2026-10-16T16:08:58.221700+00:00",
+   "path": "originals/ordin-11427535.hwp"
+  },
+  "ordin-11397795": {
+   "format": "hwp",
+   "bytes": 14848,
+   "sha256": "4dd1444a007269167867377d0c7290d7b89ab085e067c1e9586b7c88f205d2fb",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=104639105&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D%EB%B3%B4%ED%9B%88%EC%98%81%EC%98%88%EC%88%98%EB%8B%B9+%EC%A7%80%EA%B8%89%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:08:55.758102+00:00",
+   "path": "originals/ordin-11397795.hwp"
+  },
+  "ordin-11692327": {
+   "format": "hwp",
+   "bytes": 13824,
+   "sha256": "4372700f7ee0ce88b2ee9f3157d531e68b8b9f2fcd8aee2a06d7e4118c59783e",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=107189949&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C4%ED%98%B8+%EC%84%9C%EC%8B%9D%5D%EB%82%98%EC%A3%BC%EC%82%AC%EB%9E%91%EC%83%81%ED%92%88%EA%B6%8C+%EA%B0%80%EB%A7%B9%EC%A0%90+%EB%93%B1%EB%A1%9D+%EB%B3%80%EA%B2%BD+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:08:59.291147+00:00",
+   "path": "originals/ordin-11692327.hwp"
+  },
+  "ordin-11692329": {
+   "format": "hwp",
+   "bytes": 12800,
+   "sha256": "f8ded6aecb23c665ced894705a979f194c7935f655fa9639e143c7ad1436cf8b",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=107189951&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C5%ED%98%B8+%EC%84%9C%EC%8B%9D%5D%EB%82%98%EC%A3%BC%EC%82%AC%EB%9E%91%EC%83%81%ED%92%88%EA%B6%8C+%EA%B0%80%EB%A7%B9%EC%A0%90+%EB%93%B1%EB%A1%9D+%EC%B2%A0%ED%9A%8C+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:08:59.582608+00:00",
+   "path": "originals/ordin-11692329.hwp"
+  },
+  "ordin-11692331": {
+   "format": "hwp",
+   "bytes": 14848,
+   "sha256": "02c3ed352a3fa4b6bc674b95b4c63220d56130ed8b3490e4205fdebc271d8fe3",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=107189953&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C6%ED%98%B8+%EC%84%9C%EC%8B%9D%5D%EB%82%98%EC%A3%BC%EC%82%AC%EB%9E%91%EC%83%81%ED%92%88%EA%B6%8C+%ED%99%98%EC%A0%84+%EC%B2%AD%EA%B5%AC%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:08:59.902006+00:00",
+   "path": "originals/ordin-11692331.hwp"
+  },
+  "ordin-15475445": {
+   "format": "hwp",
+   "bytes": 15872,
+   "sha256": "6e93e3985e4168aa2928ede711719a2d8266f0965af08dbd9c268afb1e63a233",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=127296651&flNm=%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8+%EC%84%9C%EC%8B%9D",
+   "downloadedAt": "2026-10-16T16:09:39.361767+00:00",
+   "path": "originals/ordin-15475445.hwp"
+  },
+  "ordin-16650479": {
+   "format": "hwp",
+   "bytes": 53248,
+   "sha256": "d5b525f31a7ab244748d5f7249613ff5051465b8b535284ed222142cd48eb3a2",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=135960379&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D+~+%EB%B3%84%EC%A7%80+%EC%A0%9C8%ED%98%B8%EC%84%9C%EC%8B%9D%5D",
+   "downloadedAt": "2026-10-16T16:10:00.956064+00:00",
+   "path": "originals/ordin-16650479.hwp"
+  },
+  "ordin-18820221": {
+   "format": "hwp",
+   "bytes": 37376,
+   "sha256": "baa3c780c71394721a4ae84d2610c0ad10dcd753e8b8e42cf04467b36a1b13bb",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=145885109&flNm=%EB%B3%84%EC%A7%801",
+   "downloadedAt": "2026-10-16T16:11:30.035170+00:00",
+   "path": "originals/ordin-18820221.hwp"
+  },
+  "ordin-19976853": {
+   "format": "hwp",
+   "bytes": 15360,
+   "sha256": "1f842fc21ff3824a5d21496dec031090f13bba785238e01986e4121dc2997bd0",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152186791&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%B2%B4%EC%9C%A1%EC%8B%9C%EC%84%A4+%EC%82%AC%EC%9A%A9%ED%97%88%EA%B0%80%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:13:23.568292+00:00",
+   "path": "originals/ordin-19976853.hwp"
+  },
+  "ordin-19976855": {
+   "format": "hwp",
+   "bytes": 15360,
+   "sha256": "a8b0598c72e2e8a03d4dfc5696e78fb590d9c44022d9fe806b4588b72ea91c0a",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152186793&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C2%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%B2%B4%EC%9C%A1%EC%8B%9C%EC%84%A4+%EC%82%AC%EC%9A%A9%EB%B3%80%EA%B2%BD%ED%97%88%EA%B0%80%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:13:23.409420+00:00",
+   "path": "originals/ordin-19976855.hwp"
+  },
+  "ordin-19990957": {
+   "format": "hwp",
+   "bytes": 56832,
+   "sha256": "7939c6e21ae6a3b9e42698d04b8e407ebe32c5cf0a615de21b1f4f9881446f44",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152200985&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EA%B3%B5%EC%98%81%EC%9E%A5%EB%A1%80+%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:13:31.138485+00:00",
+   "path": "originals/ordin-19990957.hwp"
+  },
+  "ordin-19990959": {
+   "format": "hwp",
+   "bytes": 54272,
+   "sha256": "c5dbaf0a3be904930c143cb2716d5f2754b287ad888aaed474beb66e19ac4ed8",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152200987&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C2%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EA%B3%B5%EC%98%81%EC%9E%A5%EB%A1%80+%EB%B9%84%EC%9A%A9+%EC%B2%AD%EA%B5%AC%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:13:32.025980+00:00",
+   "path": "originals/ordin-19990959.hwp"
+  },
+  "ordin-20123319": {
+   "format": "hwp",
+   "bytes": 51712,
+   "sha256": "a16e9edc20cde78f99600070328f82de29f5e7fc21ddb873786d66fcd173cd4e",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152545089&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C2%ED%98%B8%EC%84%9C%EC%8B%9D%5D%EC%9E%90%ED%99%9C%EA%B8%B0%EA%B8%88+%EC%A7%80%EC%9B%90%EC%8B%A0%EC%B2%AD%EC%84%9C%28%EA%B8%B0%EA%B4%80%E3%86%8D%EB%8B%A8%EC%B2%B4%29%28%EC%A0%9C4%EC%A1%B0+%EA%B4%80%EB%A0%A8%29",
+   "downloadedAt": "2026-10-16T16:14:01.317660+00:00",
+   "path": "originals/ordin-20123319.hwp"
+  },
+  "ordin-20123329": {
+   "format": "hwp",
+   "bytes": 84480,
+   "sha256": "d7c2a5e0413f74296e6aab80f734be86a27185bff6a3cd54db15a6606c012194",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152545139&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C7%ED%98%B8%EC%84%9C%EC%8B%9D%5D%EC%9E%90%ED%99%9C%EA%B8%B0%EA%B8%88+%EC%83%81%ED%99%98%EA%B8%B0%ED%95%9C+%EC%97%B0%EC%9E%A5+%EC%8B%A0%EC%B2%AD%EC%84%9C%28%EC%A0%9C10%EC%A1%B0+%EA%B4%80%EB%A0%A8%29",
+   "downloadedAt": "2026-10-16T16:14:02.179083+00:00",
+   "path": "originals/ordin-20123329.hwp"
+  },
+  "ordin-20123331": {
+   "format": "hwp",
+   "bytes": 78336,
+   "sha256": "6c6103afecbd750bebcad430b038dac87b6e83b62ad9d1dfc9bb5bfe5c4f2625",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152545141&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C8%ED%98%B8%EC%84%9C%EC%8B%9D%5D%EC%9E%90%ED%99%9C%EA%B8%B0%EA%B8%88+%EB%8C%80%EC%97%AC%EA%B8%88+%EA%B0%90%EB%A9%B4+%EC%8B%A0%EC%B2%AD%EC%84%9C%28%EC%A0%9C11%EC%A1%B0+%EA%B4%80%EB%A0%A8%29",
+   "downloadedAt": "2026-10-16T16:14:01.977109+00:00",
+   "path": "originals/ordin-20123331.hwp"
+  },
+  "ordin-20123335": {
+   "format": "hwp",
+   "bytes": 83456,
+   "sha256": "218c2a39faddf867947f2d867277f7a6491ea52612a0c02941b26336bf8a8640",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152545145&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C10%ED%98%B8%EC%84%9C%EC%8B%9D%5D%EC%82%AC%EC%97%85%EA%B3%84%ED%9A%8D%EB%B3%80%EA%B2%BD+%EC%8A%B9%EC%9D%B8%EC%8B%A0%EC%B2%AD%EC%84%9C%28%EC%A0%9C13%EC%A1%B0+%EA%B4%80%EB%A0%A8%29",
+   "downloadedAt": "2026-10-16T16:14:02.368044+00:00",
+   "path": "originals/ordin-20123335.hwp"
+  },
+  "ordin-20212159": {
+   "format": "hwp",
+   "bytes": 11264,
+   "sha256": "890bcd3e4fafa66f7c94725f32a649d3ec9cffb9c318a28cfde2deb46ce251b8",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152884937&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C5%ED%98%B8%EC%84%9C%EC%8B%9D%5D%EA%B3%A8%EB%AA%A9%ED%98%B8%EB%9E%91%EC%9D%B4%EC%96%B4%EB%A5%B4%EC%8B%A0%EB%8B%A8%EC%9B%90%EC%A6%9D+%EC%8B%A0%EA%B7%9C%28%EC%9E%AC%EB%B0%9C%EA%B8%89%29+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:14:20.589530+00:00",
+   "path": "originals/ordin-20212159.hwp"
+  },
+  "ordin-20306067": {
+   "format": "hwp",
+   "bytes": 1501184,
+   "sha256": "b4543be1aa892cd30f41c9a49a838dfbd94f7d1451cd2d85463d28ef121dc5ed",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=153586659&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D%EB%85%B8%EC%9D%B8+%EC%84%B1%EC%9D%B8%EC%9A%A9+%EB%B3%B4%ED%96%89%EA%B8%B0+%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:14:38.513447+00:00",
+   "path": "originals/ordin-20306067.hwp"
+  },
+  "ordin-20499325": {
+   "format": "hwp",
+   "bytes": 12800,
+   "sha256": "a690a3043f3204f4d5d9e0d73f97dffd782fcf4ff15ccbcc0f47cb3367cf94c8",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=154299611&flNm=%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D+%EC%A0%80%EC%86%8C%EB%93%9D%EC%A3%BC%EB%AF%BC+%EC%83%9D%ED%99%9C%EC%95%88%EC%A0%95%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:14:58.246243+00:00",
+   "path": "originals/ordin-20499325.hwp"
+  },
+  "ordin-20608765": {
+   "format": "hwp",
+   "bytes": 32768,
+   "sha256": "243bf0e8856f3cc19d8177e66fdd2b2801b8cdf0f7df393ccc5c5b88e98f281e",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=154623859&flNm=%EB%B3%84%EC%A7%80",
+   "downloadedAt": "2026-10-16T16:15:33.174821+00:00",
+   "path": "originals/ordin-20608765.hwp"
+  },
+  "ordin-20628447": {
+   "format": "hwp",
+   "bytes": 47616,
+   "sha256": "e4732056b953612ad8329d6c272d6123e9c182acb74e80add2946faba9d5a956",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=154692517&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C11%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%82%AC%EC%9A%A9%EB%A3%8C%28%EC%9D%B4%EC%9A%A9%EB%A3%8C%29+%EA%B0%90%EB%A9%B4+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:15:34.564387+00:00",
+   "path": "originals/ordin-20628447.hwp"
+  },
+  "ordin-21445543": {
+   "format": "hwp",
+   "bytes": 18944,
+   "sha256": "32229b0377f36d9410170019f92184fbeb8185560b5ad6b3ea29bb2d26c1221d",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=160996061&flNm=%EB%B3%84%EC%A7%80+%EC%84%9C%EC%8B%9D",
+   "downloadedAt": "2026-10-16T16:18:25.434248+00:00",
+   "path": "originals/ordin-21445543.hwp"
+  },
+  "ordin-21876551": {
+   "format": "hwp",
+   "bytes": 212992,
+   "sha256": "3db49a331062e3a49f70184370a3c1968adf6a7c30cb00a7628d69f9fe70b64c",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=164263135&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%82%B0%EB%AA%A8%E3%86%8D%EC%8B%A0%EC%83%9D%EC%95%84+%EA%B1%B4%EA%B0%95%EA%B4%80%EB%A6%AC+%EC%84%9C%EB%B9%84%EC%8A%A4+%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:20:03.393034+00:00",
+   "path": "originals/ordin-21876551.hwp"
+  },
+  "ordin-22113515": {
+   "format": "hwp",
+   "bytes": 57856,
+   "sha256": "4c2c99fa5bb3916fd4e365ec37a6894eab92c4d7114a5a9efab744c4766b4fb6",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=166993511&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C14%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%88%98%EB%8F%84%EC%9A%94%EA%B8%88+%EA%B0%90%EB%A9%B4+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:20:37.501605+00:00",
+   "path": "originals/ordin-22113515.hwp"
+  },
+  "ordin-22113519": {
+   "format": "hwp",
+   "bytes": 38912,
+   "sha256": "4dd9f55044725e374dcad4d7e2dad30d0e1faac47ad0a88a676ac8bd36195abf",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=166993515&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C16%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%83%81%ED%95%98%EC%88%98%EB%8F%84%EC%82%AC%EC%9A%A9%EB%A3%8C+%EC%9E%90%EB%8F%99%EB%82%A9%EB%B6%80%28%EC%8B%A0%EC%B2%AD%2C%ED%95%B4%EC%A7%80%2C%EB%B3%80%EA%B2%BD%29+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:20:38.234383+00:00",
+   "path": "originals/ordin-22113519.hwp"
+  },
+  "ordin-22113513": {
+   "format": "hwp",
+   "bytes": 33792,
+   "sha256": "b6747c96e2ea02b1efbda1598f794e709e5d055bad929ff135b6eca51c5b5d14",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=166993509&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C13%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%83%81%EC%88%98%EB%8F%84+%EB%88%84%EC%88%98%EA%B0%90%EB%A9%B4+%EC%A0%81%EC%9A%A9%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:20:37.158720+00:00",
+   "path": "originals/ordin-22113513.hwp"
+  },
+  "ordin-22113521": {
+   "format": "hwp",
+   "bytes": 39424,
+   "sha256": "810b39fd2002d3d1fbdd489f343d19afbfe8b4329fcc1b0890a3e7cecfa3e2e7",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=166993517&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C17%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%83%81%ED%95%98%EC%88%98%EB%8F%84%EC%9A%94%EA%B8%88+%ED%9C%B4%EB%8C%80%EC%A0%84%ED%99%94+%EA%B3%A0%EC%A7%80%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:20:38.652336+00:00",
+   "path": "originals/ordin-22113521.hwp"
+  },
+  "ordin-22304077": {
+   "format": "hwp",
+   "bytes": 32256,
+   "sha256": "be9b07c42f9184a3c7ede25967aff967bdbf2ae4547072a1452cd4c5f6fdcfe4",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=167846999&flNm=%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D_%EC%98%81%EA%B5%AC%EC%9E%84%EB%8C%80%EC%95%84%ED%8C%8C%ED%8A%B8+%EC%9E%84%EB%8C%80%EB%B3%B4%EC%A6%9D%EA%B8%88+%EB%AC%B4%EC%9D%B4%EC%9E%90+%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:21:16.049916+00:00",
+   "path": "originals/ordin-22304077.hwp"
+  },
+  "ordin-22682355": {
+   "format": "hwp",
+   "bytes": 20992,
+   "sha256": "35f0622cce75f472f600071e2c678c54566eca9e978fff90b224380d1c92f54a",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=169605361&flNm=%5B%EB%B3%84%EC%A7%80%5D",
+   "downloadedAt": "2026-10-16T16:22:45.107557+00:00",
+   "path": "originals/ordin-22682355.hwp"
+  },
+  "ordin-19985325": {
+   "format": "hwp",
+   "bytes": 62464,
+   "sha256": "03b15e21412dc9f79bce7c2f23247c9bf0c8150c848081d5e3785cd724b2f579",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152195329&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%9E%85%EC%96%91%EC%A7%80%EC%9B%90%EA%B8%88+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T15:57:42.648647+00:00",
+   "path": "originals/ordin-19985325.hwp"
+  },
+  "ordin-20614413": {
+   "format": "hwp",
+   "bytes": 35328,
+   "sha256": "6ebf27d0a56accb4fbe8409bb1241dab67ed7f108e3dad3a0f79b71808c03c64",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=154636057&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%95%84%EB%8F%99%C2%B7%EC%B2%AD%EC%86%8C%EB%85%84+%EB%B2%95%EB%A5%A0%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T15:57:40.985456+00:00",
+   "path": "originals/ordin-20614413.hwp"
+  },
+  "ordin-22767701": {
+   "format": "hwp",
+   "bytes": 12800,
+   "sha256": "49de1a9a16c80a631517661243d1ce5ef8a20179eaf0b286ed99a2425936a597",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=170049923&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EB%AF%BC%EC%9B%90+%EB%B3%B4%EC%83%81+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T15:58:14.181093+00:00",
+   "path": "originals/ordin-22767701.hwp"
+  },
+  "ordin-20010283": {
+   "format": "hwp",
+   "bytes": 15872,
+   "sha256": "8f1807b2e7130b1c0720018f9e1b4d3f601a8df2efe15f3247ad9c7a245ace8e",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152245987&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EB%8F%85%EB%A6%BD%EC%9C%A0%EA%B3%B5%EC%9E%90%28%EA%B1%B4%EA%B0%95%EC%A6%9D%EC%A7%84%29%EC%88%98%EB%8B%B9+%EC%A7%80%EA%B8%89%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T15:59:43.535517+00:00",
+   "path": "originals/ordin-20010283.hwp"
+  },
+  "ordin-20673075": {
+   "format": "hwp",
+   "bytes": 13824,
+   "sha256": "7b92e4087d9df40e6113ba1434b0b3c14f622eb1ef2443c8ad35b51a582e81fd",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=154797595&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C17%ED%98%B8%EC%84%9C%EC%8B%9D%5D%ED%95%98%EC%88%98%EB%8F%84+%EA%B3%BC%EC%98%A4%EB%82%A9%EA%B8%88+%ED%99%98%EB%B6%80%EC%B2%AD%EA%B5%AC%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:00:52.614846+00:00",
+   "path": "originals/ordin-20673075.hwp"
+  },
+  "ordin-20393267": {
+   "format": "hwp",
+   "bytes": 17408,
+   "sha256": "3924efb1b5ceaeae15f9096660cbc0fbb6bc23057dffe1deb49e7d7a38aa42f7",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=154028249&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C2%ED%98%B8%EC%84%9C%EC%8B%9D%5D%EC%88%98%EB%8B%B9++%EC%A7%80%EA%B8%89%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:01:05.071550+00:00",
+   "path": "originals/ordin-20393267.hwp"
+  },
+  "ordin-20393265": {
+   "format": "hwp",
+   "bytes": 17408,
+   "sha256": "1eb3d04bc06f1afef62773b998cfb7222f46faa22118eff4676810423b6c3546",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=154028247&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D%ED%8A%B9%EB%B3%84%EC%9C%84%EB%A1%9C%EA%B8%88++%EC%A7%80%EA%B8%89%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:01:17.123799+00:00",
+   "path": "originals/ordin-20393265.hwp"
+  },
+  "ordin-17771051": {
+   "format": "hwp",
+   "bytes": 19456,
+   "sha256": "bd18c3b980b67e5378fecb50be29fbf3a71882b028d9029a09586855532c0121",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=141753809&flNm=%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D+%EC%9D%B8%EC%A0%9C%EA%B5%B0+%EC%9D%B8%EA%B5%AC%EC%A6%9D%EA%B0%80%EC%8B%9C%EC%B1%85+%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:02:22.291659+00:00",
+   "path": "originals/ordin-17771051.hwp"
+  },
+  "ordin-17750357": {
+   "format": "hwp",
+   "bytes": 42496,
+   "sha256": "1fc92f2537ade067709dc92a83f84a9d4f7c3326417f2ac00a1cebb64434ae2d",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=141731653&flNm=%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%28%EC%82%B0%EB%AA%A8%EC%8B%A0%EC%83%9D%EC%95%84%EA%B1%B4%EA%B0%95%EA%B4%80%EB%A6%AC+%EB%B3%B8%EC%9D%B8%EB%B6%80%EB%8B%B4%EA%B8%88%EC%A7%80%EC%9B%90%EC%8B%A0%EC%B2%AD%EC%84%9C%29.hwp",
+   "downloadedAt": "2026-10-16T16:04:15.251406+00:00",
+   "path": "originals/ordin-17750357.hwp"
+  },
+  "ordin-21710923": {
+   "format": "hwp",
+   "bytes": 18432,
+   "sha256": "b2557a67550d26e99cd94d59fcf4be9181d631ff876fc4f85d3a7e1b5ecf1c51",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=163053765&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D%EC%9D%B8%EA%B5%AC%EB%8A%98%EB%A6%AC%EA%B8%B0+%EC%8B%9C%EC%B1%85+%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:05:18.153997+00:00",
+   "path": "originals/ordin-21710923.hwp"
+  },
+  "ordin-21710927": {
+   "format": "hwp",
+   "bytes": 21504,
+   "sha256": "b05d2e3cd75b2ddfa75fa69196cb783f082e40cde6476d815e6048c3f3e7f8b6",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=163053769&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C2%ED%98%B8+%EC%84%9C%EC%8B%9D%5D+%EC%8B%A0%ED%98%BC%EB%B6%80%EB%B6%80+%EB%B3%B4%EA%B8%88%EC%9E%90%EB%A6%AC+%EB%8C%80%EC%B6%9C%EC%9D%B4%EC%9E%90+%EC%A7%80%EC%9B%90%EC%8B%A0%EC%B2%AD%EC%84%9C+%3C%EC%8B%A0%EC%84%A4+2019.+10+.29%3E",
+   "downloadedAt": "2026-10-16T16:07:14.129848+00:00",
+   "path": "originals/ordin-21710927.hwp"
+  },
+  "ordin-20648743": {
+   "format": "hwp",
+   "bytes": 163328,
+   "sha256": "7d0b04ba9c385bf5fd0dccd832a847410dc55b6f0976350cf32a4f2042c9689c",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=154741811&flNm=%5B%EB%B3%84%EC%A7%80+%EC%84%9C%EC%8B%9D%5D+%EA%B5%AC%EB%A6%AC%EC%8B%9C+%EA%B5%90%EB%B3%B5%EA%B5%AC%EC%9E%85%EB%B9%84+%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:08:18.030880+00:00",
+   "path": "originals/ordin-20648743.hwp"
+  },
+  "ordin-10086237": {
+   "format": "hwp",
+   "bytes": 23040,
+   "sha256": "5f0326efe6ab18f09bf60b380d1c3bd53c9596545591fcc5f2d030c692a36d3e",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=84212121&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C7%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%ED%83%9C%EC%95%88%EC%82%AC%EB%9E%91%EC%83%81%ED%92%88%EA%B6%8C+%EA%B0%80%EB%A7%B9%EC%A0%90+%EB%93%B1%EB%A1%9D%C2%B7%EC%B2%A0%ED%9A%8C+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:08:41.559923+00:00",
+   "path": "originals/ordin-10086237.hwp"
+  },
+  "ordin-10086241": {
+   "format": "hwp",
+   "bytes": 22528,
+   "sha256": "cd069f1fa9fbdb0163b9296a5fcfbd5b004e60618c47ae1e2b8269ebdb3f82cf",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=84212125&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C9%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%ED%83%9C%EC%95%88%EC%82%AC%EB%9E%91%EC%83%81%ED%92%88%EA%B6%8C+%EA%B0%80%EB%A7%B9%EC%A0%90+%EB%93%B1%EB%A1%9D+%EB%B3%80%EA%B2%BD%C2%B7%ED%95%B4%EC%A7%80+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:08:41.393415+00:00",
+   "path": "originals/ordin-10086241.hwp"
+  },
+  "ordin-10086247": {
+   "format": "hwp",
+   "bytes": 23040,
+   "sha256": "39c1a1ccc35c535704590673415667bf0b2a484c6d660fcfb180cda8bae91170",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=84212131&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C12%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%ED%83%9C%EC%95%88%EC%82%AC%EB%9E%91%EC%83%81%ED%92%88%EA%B6%8C+%EB%8C%80%EA%B8%88%28%ED%99%98%EC%A0%84%29+%EC%B2%AD%EA%B5%AC%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:08:42.064631+00:00",
+   "path": "originals/ordin-10086247.hwp"
+  },
+  "ordin-10086245": {
+   "format": "hwp",
+   "bytes": 19968,
+   "sha256": "bd38d56e589c1a6931a2dc78d430f9f053f4d1866bb8542ce53fc88a34089a15",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=84212129&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C11%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%ED%83%9C%EC%95%88%EC%82%AC%EB%9E%91%EC%83%81%ED%92%88%EA%B6%8C+%EA%B5%AC%EB%A7%A4+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:08:41.725762+00:00",
+   "path": "originals/ordin-10086245.hwp"
+  },
+  "ordin-10086251": {
+   "format": "hwp",
+   "bytes": 21504,
+   "sha256": "9258c1683f5e9349ce6139aeb50c5e4dda5f48aeb675d60ddcc1d4045570fd21",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=84212135&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C14%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%ED%83%9C%EC%95%88%EC%82%AC%EB%9E%91%EC%83%81%ED%92%88%EA%B6%8C+%ED%9B%BC%EC%86%90%EB%B6%84+%EA%B5%90%ED%99%98+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:08:42.429308+00:00",
+   "path": "originals/ordin-10086251.hwp"
+  },
+  "ordin-12727323": {
+   "format": "hwp",
+   "bytes": 66048,
+   "sha256": "75627bb1ade652138abb6e6a237efa355e884017dd29be6ffef287477aa0b691",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=114361661&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%B7%A8%EC%95%BD%EA%B3%84%EC%B8%B5+%EC%9D%98%EC%B9%98%EB%B3%B4%EC%B2%A0+%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:09:06.400634+00:00",
+   "path": "originals/ordin-12727323.hwp"
+  },
+  "ordin-12727327": {
+   "format": "hwp",
+   "bytes": 34304,
+   "sha256": "667ae0c9e71ce14ce76d80b7048747d58299408f86fc986b6a4b8fea668eb90d",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=114361665&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C3%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%B7%A8%EC%95%BD%EA%B3%84%EC%B8%B5+%EC%9D%98%EC%B9%98%EB%B3%B4%EC%B2%A0+%EC%8B%9C%EC%88%A0+%EB%B9%84%EC%9A%A9+%EC%B2%AD%EA%B5%AC%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:09:06.244604+00:00",
+   "path": "originals/ordin-12727327.hwp"
+  },
+  "ordin-13967137": {
+   "format": "hwp",
+   "bytes": 12800,
+   "sha256": "9b45f55124526e41e2ea8ed2f945cea789c70c1cad8c52698482c21743f32799",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=121407815&flNm=%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D+%28%ED%8A%B9%EC%88%98%EA%B0%80%EC%95%95%EC%8B%9C%EC%84%A4+%EC%84%A4%EC%B9%98%EC%8B%A0%EC%B2%AD%EC%84%9C%29",
+   "downloadedAt": "2026-10-16T16:09:21.448232+00:00",
+   "path": "originals/ordin-13967137.hwp"
+  },
+  "ordin-13967141": {
+   "format": "hwp",
+   "bytes": 16384,
+   "sha256": "21e8456b2255742fb4bcb288ae426d9159b44eead66afdcbafd85b6042c74432",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=121407819&flNm=%EB%B3%84%EC%A7%80+%EC%A0%9C3%ED%98%B8%EC%84%9C%EC%8B%9D%28%EA%B8%89%EC%88%98%EA%B3%B5%EC%82%AC+%EC%8B%A0%EC%B2%AD%EC%84%9C%29",
+   "downloadedAt": "2026-10-16T16:09:22.508267+00:00",
+   "path": "originals/ordin-13967141.hwp"
+  },
+  "ordin-13967149": {
+   "format": "hwp",
+   "bytes": 27136,
+   "sha256": "ff532659c571b7de5f1fb25e2a1ca8022bbe02927ae8a0e9fa28fa82e2191523",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=121407827&flNm=%EB%B3%84%EC%A7%80+%EC%A0%9C7%ED%98%B8%EC%84%9C%EC%8B%9D%28%EC%A4%80%EA%B3%B5%ED%99%95%EC%9D%B8%EC%84%9C%29",
+   "downloadedAt": "2026-10-16T16:09:21.663849+00:00",
+   "path": "originals/ordin-13967149.hwp"
+  },
+  "ordin-13967161": {
+   "format": "hwp",
+   "bytes": 46080,
+   "sha256": "5c76f6e51365fc0097d503576fd9ba833c4845fce9ccb1e0ce5563c418575728",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=121407839&flNm=%EB%B3%84%EC%A7%80+%EC%A0%9C13%ED%98%B8%EC%84%9C%EC%8B%9D%28%EA%B8%89%EC%88%98%EA%B3%B5%EC%82%AC%EB%B9%84+%EA%B0%90%EB%A9%B4%EC%8B%A0%EC%B2%AD%EC%84%9C%29",
+   "downloadedAt": "2026-10-16T16:09:24.002891+00:00",
+   "path": "originals/ordin-13967161.hwp"
+  },
+  "ordin-13967163": {
+   "format": "hwp",
+   "bytes": 65536,
+   "sha256": "8294b16e05f2971b0080b8c557360c3fb3ce784082349598ebf3487228ca864c",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=121407841&flNm=%EB%B3%84%EC%A7%80+%EC%A0%9C14%ED%98%B8%EC%84%9C%EC%8B%9D%28%EC%88%98%ED%83%81%EA%B8%89%EC%88%98%EA%B3%B5%EC%82%AC+%EC%A0%9C%EA%B3%B5+%EB%8F%99%EC%9D%98%EC%84%9C%29",
+   "downloadedAt": "2026-10-16T16:09:23.494168+00:00",
+   "path": "originals/ordin-13967163.hwp"
+  },
+  "ordin-15091513": {
+   "format": "hwp",
+   "bytes": 12288,
+   "sha256": "5c703561520e65f2230120de121efabe7b4a77af8b429b34c78be40282f9030f",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=124865353&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C16%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EA%B3%BC%EC%98%A4%EB%82%A9%EA%B8%88+%ED%99%98%EB%B6%88%EC%B2%AD%EA%B5%AC%EC%84%9C%28%EC%A0%9C15%EC%A1%B0%EC%A0%9C4%ED%95%AD+%EA%B4%80%EB%A0%A8%29",
+   "downloadedAt": "2026-10-16T16:09:32.156691+00:00",
+   "path": "originals/ordin-15091513.hwp"
+  },
+  "ordin-15091509": {
+   "format": "hwp",
+   "bytes": 11776,
+   "sha256": "c290f90e5085b1cb15807e9c4478f4db62880fa042d86c11a4d85ab91be89ac3",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=124865349&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C14%ED%98%B8%EC%84%9C%EC%8B%9D%5D%ED%95%98%EC%88%98%EB%8F%84+%28%EC%82%AC%EC%9A%A9%EB%A3%8C%C2%B7%EB%B6%84%EB%87%A8%EC%B2%98%EB%A6%AC+%EC%88%98%EC%88%98%EB%A3%8C%29+%EA%B0%90%EB%A9%B4%EC%8B%A0%EC%B2%AD%EC%84%9C%28%EC%A0%9C13%EC%A1%B0%EC%A0%9C2%ED%95%AD+%EA%B4%80%EB%A0%A8%29",
+   "downloadedAt": "2026-10-16T16:09:31.821955+00:00",
+   "path": "originals/ordin-15091509.hwp"
+  },
+  "ordin-15092445": {
+   "format": "hwp",
+   "bytes": 17920,
+   "sha256": "828fc3b4d430902ddf2d761feef6d50792cb7377d9c298b77730c21f554c4f29",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=124866317&flNm=%EF%BC%BB%EB%B3%84%EC%A7%80+%EC%A0%9C22%ED%98%B8%EC%84%9C%EC%8B%9D%EF%BC%BD%EA%B3%BC%EC%98%A4%EB%82%A9+%ED%99%98%EB%B6%88%EC%B2%AD%EA%B5%AC%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:09:35.752071+00:00",
+   "path": "originals/ordin-15092445.hwp"
+  },
+  "ordin-18093505": {
+   "format": "hwp",
+   "bytes": 46080,
+   "sha256": "d47eaf5bf122058f9679f46f679dd9e77d0feb9178bafd9c8182f6567b67aa38",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=142449631&flNm=%EB%B3%84%EC%A7%80",
+   "downloadedAt": "2026-10-16T16:10:43.602268+00:00",
+   "path": "originals/ordin-18093505.hwp"
+  },
+  "ordin-18359069": {
+   "format": "hwp",
+   "bytes": 16384,
+   "sha256": "89c3d841e0b3d2b37972463d580e6e58efad7834d84b589d4bf727aedf3c11bd",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=143281885&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C3%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%9D%98%EB%A0%B9%EC%82%AC%EB%9E%91+%EC%83%81%ED%92%88%EA%B6%8C+%EA%B0%80%EB%A7%B9%EC%A0%90+%EB%93%B1%EB%A1%9D+%EB%B3%80%EA%B2%BD+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:10:57.813945+00:00",
+   "path": "originals/ordin-18359069.hwp"
+  },
+  "ordin-18359065": {
+   "format": "hwp",
+   "bytes": 17408,
+   "sha256": "a5bf2bcacf9276d05e9a49c6b3c611a2418cd435e532a16b081e0ab8bea69ec8",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=143281881&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C2%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%9D%98%EB%A0%B9%EC%82%AC%EB%9E%91+%EC%83%81%ED%92%88%EA%B6%8C+%EA%B0%80%EB%A7%B9%EC%A0%90+%EB%93%B1%EB%A1%9D+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:10:56.783994+00:00",
+   "path": "originals/ordin-18359065.hwp"
+  },
+  "ordin-18463217": {
+   "format": "hwp",
+   "bytes": 18944,
+   "sha256": "6e1f198ec0e9c6331cd503c86db5f73bff5e7534c6ac64f8ab124d08a86dadfa",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=143854653&flNm=%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D",
+   "downloadedAt": "2026-10-16T16:11:09.233999+00:00",
+   "path": "originals/ordin-18463217.hwp"
+  },
+  "ordin-19201331": {
+   "format": "hwp",
+   "bytes": 56320,
+   "sha256": "8d24ddee9048c4f14528d28dbda16763b52cfb5d394bbbc2933bf45ceeb82558",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=148205685&flNm=%EB%B3%84%EC%A7%80+1%ED%98%B8+%EC%84%9C%EC%8B%9D",
+   "downloadedAt": "2026-10-16T16:11:56.711542+00:00",
+   "path": "originals/ordin-19201331.hwp"
+  },
+  "ordin-19201333": {
+   "format": "hwp",
+   "bytes": 12800,
+   "sha256": "9ce7603880cc9b6914ea893237eaa836bd7cbeba08515fa524abbe6a48b4b11b",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=148205687&flNm=%EB%B3%84%EC%A7%80+2%ED%98%B8+%EC%84%9C%EC%8B%9D",
+   "downloadedAt": "2026-10-16T16:11:56.583317+00:00",
+   "path": "originals/ordin-19201333.hwp"
+  },
+  "ordin-19201335": {
+   "format": "hwp",
+   "bytes": 28160,
+   "sha256": "3ef040b03aa39116934cd31473a7dafb747e85712680513201a3b812bbf9efa1",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=148205689&flNm=%EB%B3%84%EC%A7%80+3%ED%98%B8+%EC%84%9C%EC%8B%9D",
+   "downloadedAt": "2026-10-16T16:11:57.329767+00:00",
+   "path": "originals/ordin-19201335.hwp"
+  },
+  "ordin-19308747": {
+   "format": "hwp",
+   "bytes": 101376,
+   "sha256": "fd461238f58244331897c4d72cc00081e25c5d58d333e2e85021bb2d92723541",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=148537711&flNm=%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D~%EC%A0%9C3%ED%98%B8%EC%84%9C%EC%8B%9D",
+   "downloadedAt": "2026-10-16T16:12:15.860941+00:00",
+   "path": "originals/ordin-19308747.hwp"
+  },
+  "ordin-19377351": {
+   "format": "hwp",
+   "bytes": 20480,
+   "sha256": "cc6d64fbca97314ee9283c476682deef2b7f64cec136963bfbb36915432beb45",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=148790645&flNm=%5B%EB%B3%84%EC%A7%80+1%ED%98%B8+%EC%84%9C%EC%8B%9D%5D+%EA%B5%90%EB%B3%B5%EA%B5%AC%EC%9E%85%EB%B9%84%EB%93%B1+%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:12:23.133866+00:00",
+   "path": "originals/ordin-19377351.hwp"
+  },
+  "ordin-19387619": {
+   "format": "hwp",
+   "bytes": 46592,
+   "sha256": "6423cd5ad01d13703cd1d56d56a5cebaa53ac5380ea22019fada2388fa600fe4",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=148821889&flNm=%5B%EB%B3%84%EC%A7%80%5D%EC%A0%9C1%ED%98%B8~%EC%A0%9C2%ED%98%B8",
+   "downloadedAt": "2026-10-16T16:12:23.481412+00:00",
+   "path": "originals/ordin-19387619.hwp"
+  },
+  "ordin-19998845": {
+   "format": "hwp",
+   "bytes": 25600,
+   "sha256": "cc82cccfa32dce16e7d2af8c0b72c0ca29d8bc76da391d0f1711e8826db43b85",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152228523&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%9E%A5%EC%95%A0%EC%9D%B8+%EC%9D%B4%EB%8F%99%EC%9A%A9+%EB%B3%B4%EC%A1%B0%EA%B8%B0%EA%B8%B0+%EC%88%98%EB%A6%AC%EC%97%85%EC%B2%B4+%EC%A7%80%EC%A0%95+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:23:25.892494+00:00",
+   "path": "originals/ordin-19998845.hwp"
+  },
+  "ordin-21473917": {
+   "format": "hwp",
+   "bytes": 24064,
+   "sha256": "75089587cd4f24fe3e5e8a8bed67d7c70a3adf1299b596688458aa18f286c987",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=161181397&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D+~+%EB%B3%84%EC%A7%80+%EC%A0%9C5%ED%98%B8%EC%84%9C%EC%8B%9D%5D",
+   "downloadedAt": "2026-10-16T16:18:34.890896+00:00",
+   "path": "originals/ordin-21473917.hwp"
+  },
+  "ordin-21723501": {
+   "format": "hwp",
+   "bytes": 18432,
+   "sha256": "c18ab803860c82c77643634ad0afd8ca1ca4ffee18d5f2c6f67d34507b609fde",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=163298611&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8+%EC%84%9C%EC%8B%9D%5D%EC%96%B4%EB%A5%B4%EC%8B%A0+%ED%8B%80%EB%8B%88+%EC%A7%80%EC%9B%90%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:19:27.450521+00:00",
+   "path": "originals/ordin-21723501.hwp"
+  },
+  "ordin-21723503": {
+   "format": "hwp",
+   "bytes": 15360,
+   "sha256": "5efd4b7f8c646702a97fe3485c31109a75d471f7a10edc3d0f9a7ddd531e957e",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=163298613&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C2%ED%98%B8+%EC%84%9C%EC%8B%9D%5D%EC%96%B4%EB%A5%B4%EC%8B%A0+%ED%8B%80%EB%8B%88+%EC%A7%80%EC%9B%90%EC%82%AC%EC%97%85+%EC%8B%9C%EC%88%A0%EB%B9%84%EC%9A%A9+%EC%B2%AD%EA%B5%AC%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:19:28.222871+00:00",
+   "path": "originals/ordin-21723503.hwp"
   }
  }
 }
