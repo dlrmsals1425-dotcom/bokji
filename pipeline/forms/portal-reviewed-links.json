@@ -10215,6 +10215,7 @@
       "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1388920",
       "evidenceNote": "동대문구 제6조제1항의 별지1과 원본 전체의 보행기 신청·신청인 관계·장기요양결과 또는 의사소견 첨부를 확인했다. 사업이 같은 관할의 생계·의료수급 노인 및 등급외/거동불편 대상과 동일 증빙을 안내한다. 사업 laws에는 상위 노인복지법만 있지만 실제 목적·대상·신청처·첨부서류가 이 구 조례의 단일 보행기 지원 절차와 대응한다.",
       "checkedAt": "2026-10-18",
+      "programEvidenceUrl": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/305000000101",
       "programIds": [
         "g11230.gov24-305000000101"
       ]
@@ -10380,6 +10381,7 @@
       "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1400590",
       "evidenceNote": "전주시 수리지원 조례 제8조와 별지1 전체에서 등록장애인·수급유형·기기·수리부위·서명을 확인했다. 사업 원천의 민원인신청→동 의뢰서→업체수리→업체청구 절차와 20/10만원 지원기준이 제7~9조와 구체적으로 일치한다. 사업 laws에는 다른 이용안전 조례가 인용되어 있어 이를 같은 법명으로 간주하지 않고 실제 지원내용·대상·처리절차의 직접 대조 근거로 연결한다.",
       "checkedAt": "2026-10-18",
+      "programEvidenceUrl": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/464000000127",
       "programIds": [
         "g52110.gov24-464000000127"
       ]
@@ -10391,6 +10393,7 @@
       "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1403840",
       "evidenceNote": "양양군 제6조제1항과 전체 별지1의 신청인·중증장애인 대상자·관계·서명 및 읍면 확인을 대조했다. 사업 원천의 같은 관할·저소득 중증장애인가구·방송 기본요금과 STB지원·읍면 접수는 조례 제3·5·6조의 구체적 지원과 일치한다. 상위 장애인복지법만 인용한 사업이지만 정확한 지역 서비스 관계를 확인했다.",
       "checkedAt": "2026-10-18",
+      "programEvidenceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00002029&wlfareInfoReldBztpCd=02",
       "programIds": [
         "g51830.bokjiro-WLF00002029"
       ]
@@ -10601,6 +10604,7 @@
       "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1546675",
       "evidenceNote": "나주시 제6조제1항과 별지1 앞뒤 전체의 의료급여/차상위 자격·틀니부위·본인/대리인 서명·진료정보 동의를 확인했다. 두 상세 사업은 같은 나주 저소득 어르신 틀니 본인부담금과 지대치 지원을 안내한다. 정부24의 인용법명은 더 넓은 구강사업 표현이지만 동일 대상·거주기간·시술지원내용을 직접 대조했으며 전국 일반 틀니 급여로 확대하지 않는다.",
       "checkedAt": "2026-10-18",
+      "programEvidenceUrl": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/483000000103",
       "programIds": [
         "g12170.gov24-483000000103"
       ]
@@ -10623,6 +10627,7 @@
       "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1546675",
       "evidenceNote": "나주시 제7조는 지원대상자와 의료기관 모두 시술 완료 후 청구할 수 있다고 명시한다. 별지2 전체의 성명·전화·주소는 치과의원/청구자 공용이고 서명란도 의원장 또는 청구자이므로 기관 전용 문서가 아니다. 두 상세 지역 사업은 완료 후 본인청구·본인계좌 지급까지 안내한다.",
       "checkedAt": "2026-10-18",
+      "programEvidenceUrl": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/483000000103",
       "programIds": [
         "g12170.gov24-483000000103"
       ]
@@ -10967,6 +10972,298 @@
       "checkedAt": "2026-10-18",
       "programIds": [
         "g12790.bokjiro-WLF00000427"
+      ]
+    },
+    {
+      "formId": "ordin-20590179",
+      "use": "conditional",
+      "condition": "증명표장 포장재 사용 전, 아직 사용승인을 받지 않은 생산자의 증명표장 사용승인 신청에만 사용. 포장판매 보조금 자체의 지방보조금 신청서·사업계획서는 별도 제출.",
+      "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1407437",
+      "evidenceNote": "제5조제1항은 생산자의 증명표장 사용승인에 별지 제3호를, 제12조는 승인받은 자의 포장재 신청과 제작비 예산지원을 규정한다. 원본은 생산지·생산계획과 신청인 서명을 받는 사용승인 신청이다. 사이트의 증명표장 활용 포장판매 지원에 앞서 아직 증명표장 사용승인을 받지 않은 생산자의 선행 절차로만 연결한다. 사이트가 요구하는 지방보조금 신청서·사업계획서를 대체하는 서식은 아니다. 공식 법규 ID·별표키·flSeq와 실제 원본의 SHA256·전체 본문 섹션을 재대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "g44180.gov24-451000000118"
+      ]
+    },
+    {
+      "formId": "ordin-20590307",
+      "use": "conditional",
+      "condition": "증명표장 사용승인을 받은 생산자의 포장재 사용신청 단계. 지방보조금 지원 신청서와 사업계획서는 사업 안내에 따라 별도로 제출.",
+      "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1407437",
+      "evidenceNote": "시행규칙 제12조제1항이 증명표장 사용승인을 받은 자의 포장재 사용신청에 별지 제7호를 지정하고 제3항이 제작비 지원을 허용한다. 원본의 승인번호·포장재 규격·수량·납품기한·생산판매계획과 생산자 서명이 사이트의 증명표장 포장판매 지원 품목에 해당한다. 지원금 교부 자체가 아닌 승인 생산자의 포장재 사용신청 단계로 한정한다. 공식 법규 ID·별표키·flSeq와 실제 원본의 SHA256·전체 본문 섹션을 재대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "g44180.gov24-451000000118"
+      ]
+    },
+    {
+      "formId": "ordin-22522837",
+      "use": "conditional",
+      "condition": "안내된 세 급여 중 참전유공자 본인의 참전명예수당 신청용. 배우자수당·사망위로금은 별도 서식 사용.",
+      "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1408278",
+      "evidenceNote": "시행규칙 제2조제1항이 참전유공자 본인의 참전명예수당 신청에 별지 제1호를 지정한다. 원본의 참전등록번호·지급방법·계좌와 본인 서명은 복합 사이트 사업 중 참전명예수당에만 해당한다. 별도 TV수신료 사업은 신청 없이 지급되므로 이 원본과 연결하지 않는다. 공식 법규 ID·별표키·flSeq와 실제 원본의 SHA256·전체 본문 섹션을 재대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "s50000.gov24-650000000327"
+      ]
+    },
+    {
+      "formId": "ordin-22522839",
+      "use": "conditional",
+      "condition": "참전명예수당 기존 수급자의 지급방법 또는 입금계좌 변경 때만 사용. 최초 신청용이 아님.",
+      "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1408278",
+      "evidenceNote": "제2조제2항이 이미 참전명예수당을 받고 있는 사람의 현금지급 전환 또는 계좌 변경에 별지 제2호를 지정한다. 실제 원본에도 변경구분·변경계좌·사유·서명이 있고 최초 수당 신청은 아니다. 공식 법규 ID·별표키·flSeq와 실제 원본의 SHA256·전체 본문 섹션을 재대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "s50000.gov24-650000000327"
+      ]
+    },
+    {
+      "formId": "ordin-22522841",
+      "use": "conditional",
+      "condition": "복합 지원 중 참전유공자 사망위로금 신청용. 신청자 관계와 사망·유족·장제 증빙을 제출.",
+      "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1408278",
+      "evidenceNote": "제3조가 사망위로금 신청에 별지 제3호를 지정한다. 원본은 사망한 참전유공자의 사망일과 신청인과의 관계·계좌·서명, 사망·유족·장제 입증자료를 요구하여 사이트 복합 사업 중 사망위로금과 일치한다. 공식 법규 ID·별표키·flSeq와 실제 원본의 SHA256·전체 본문 섹션을 재대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "s50000.gov24-650000000327"
+      ]
+    },
+    {
+      "formId": "ordin-22522843",
+      "use": "conditional",
+      "condition": "복합 지원 중 사망한 참전유공자의 배우자 복지수당 지급 또는 지급방법 변경 신청용.",
+      "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1408278",
+      "evidenceNote": "제4조가 사망한 참전유공자 배우자의 복지수당 지급과 지급방법 변경에 별지 제4호를 지정한다. 원본의 유공자 보훈번호·배우자 관계·계좌·본인 서명 및 배우자 관계 증빙이 사이트 배우자수당 부분과 일치한다. 공식 법규 ID·별표키·flSeq와 실제 원본의 SHA256·전체 본문 섹션을 재대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "s50000.gov24-650000000327"
+      ]
+    },
+    {
+      "formId": "ordin-17868331",
+      "use": "main",
+      "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1408567",
+      "evidenceNote": "제3조가 주민의 보험료 지원 신청에 별지 제1호를 지정한다. 실제 원본은 65세 이상 노인세대 또는 등록장애인 포함 세대의 가족·소득·보험료·서명을 받으며 사이트 동일 지원 대상 및 주민센터 방문 신청과 일치한다. 공식 법규 ID·별표키·flSeq와 실제 원본의 SHA256·전체 본문 섹션을 재대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "g11500.gov24-315000000109"
+      ]
+    },
+    {
+      "formId": "ordin-20664565",
+      "use": "conditional",
+      "condition": "앞쪽 교복 지원 신청서만 작성하고 실제 지출영수증·현행 구입내역서를 첨부. 뒤쪽의 2019년 고정 예외용 구입내역서는 사용하지 않음.",
+      "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1409795",
+      "evidenceNote": "제4조와 제6조가 양주시 주소의 비인가 대안학교 또는 타 시도 정규학교 신입생 교복비 신청에 별지 서식을 지정한다. 앞쪽 신청서는 학생·보호자·입학일·품목별 금액·동의·서명을 받아 사이트 사업과 일치한다. 다만 뒤쪽 예외용 구입내역서는 입학·작성 연도가 2019년으로 고정되어 있어 제외한다. 현행 실제 영수증·구입내역서를 제출하는 경우에만 본 신청 부분을 사용한다. 공식 법규 ID·별표키·flSeq와 실제 원본의 SHA256·전체 본문 섹션을 재대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "g41630.gov24-559000000102"
+      ]
+    },
+    {
+      "formId": "ordin-20511279",
+      "use": "conditional",
+      "condition": "별지 제1호 앞면 최초 신청 부분만 사용. 뒤면의 '201 .' 고정 개인정보동의서는 담당 읍·면에서 현재 양식을 받아 제출하고, 교육 이수 후에는 별지 제2호로 별도 청구.",
+      "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1413587",
+      "evidenceNote": "제3조제1항은 행복장려금 신청에 별지 제1호를 지정하고 이후 교육 이수를 거쳐 제2호 청구서를 제출하도록 한다. 원본 앞면의 혼인일·배우자 외국인등록일·가족·서명은 사이트 행복장려금 최초 신청과 일치한다. 뒤면 개인정보동의서만 날짜가 '201 .'로 고정되어 있어 그 부분을 현행 작성용으로 승인하지 않는다. 분유 구입비 사업은 별도 목적이므로 제외한다. 공식 법규 ID·별표키·flSeq와 실제 원본의 SHA256·전체 본문 섹션을 재대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "g12790.gov24-493000000124"
+      ]
+    },
+    {
+      "formId": "ordin-20511281",
+      "use": "conditional",
+      "condition": "행복장려금 대상자가 교육을 90% 이상 이수한 뒤 지급 청구할 때 사용. 교육실적증명서와 통장 사본을 첨부하고 지원센터 확인을 받음.",
+      "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1413587",
+      "evidenceNote": "제3조제4항과 제4조가 교육 90% 이상 이수한 대상자의 별지 제2호 청구서 및 교육실적증명 제출을 규정한다. 원본의 청구인·배우자·교육이수율·개인 계좌·청구인 서명은 수혜자 본인의 지급 청구이며 센터장 확인은 증빙 확인이다. 기관 교부신청으로 오인하지 않고 행복장려금 지급 단계로 연결한다. 공식 법규 ID·별표키·flSeq와 실제 원본의 SHA256·전체 본문 섹션을 재대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "g12790.gov24-493000000124"
+      ]
+    },
+    {
+      "formId": "ordin-19169783",
+      "use": "main",
+      "condition": "묶음 중 별지 제1호만 작성하고, 입양축하금 또는 입학준비금에 해당하는 증빙을 제출. 제2·3호 대장은 신청인 작성 대상이 아님.",
+      "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1415114",
+      "evidenceNote": "제7조가 입양신고 후 축하금 및 입학일 후 입학준비금 신청에 동일 별지 제1호를 지정한다. 실제 신청서는 입양부모·아동·입양일·계좌·서명, 입학통지서 첨부 항목을 갖추고 두 사이트 사업이 명시한 신청서와 일치한다. 제10조의 별지 제2·3호 신청·관리대장은 행정용으로 제외한다. 공식 법규 ID·별표키·flSeq와 실제 원본의 SHA256·전체 본문 섹션을 재대조했다.",
+      "checkedAt": "2026-10-18",
+      "displayTitle": "입양축하금 등 지급 신청서",
+      "programIds": [
+        "g41170.gov24-383000000111"
+      ]
+    },
+    {
+      "formId": "ordin-19169783",
+      "use": "main",
+      "condition": "묶음 중 별지 제1호만 작성하고, 입양축하금 또는 입학준비금에 해당하는 증빙을 제출. 제2·3호 대장은 신청인 작성 대상이 아님.",
+      "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1415114",
+      "evidenceNote": "제7조가 입양신고 후 축하금 및 입학일 후 입학준비금 신청에 동일 별지 제1호를 지정한다. 실제 신청서는 입양부모·아동·입양일·계좌·서명, 입학통지서 첨부 항목을 갖추고 두 사이트 사업이 명시한 신청서와 일치한다. 제10조의 별지 제2·3호 신청·관리대장은 행정용으로 제외한다. 공식 법규 ID·별표키·flSeq와 실제 원본의 SHA256·전체 본문 섹션을 재대조했다.",
+      "checkedAt": "2026-10-18",
+      "displayTitle": "입양축하금 등 지급 신청서",
+      "programIds": [
+        "g41170.gov24-383000000139"
+      ]
+    },
+    {
+      "formId": "ordin-20088279",
+      "use": "main",
+      "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1416488",
+      "evidenceNote": "제2·3조가 김해시 거주 셋째아 이상 6세 미만 아동의 양육수당을 규정하고 제5조가 별지 제1호 제출을 요구한다. 원본의 보호자·아동·출생순위·계좌·서명·개인정보 동의가 사이트 월별 양육수당 신청과 일치한다. 일회성 출산축하금까지 연결하지 않는다. 공식 법규 ID·별표키·flSeq와 실제 원본의 SHA256·전체 본문 섹션을 재대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "g48250.gov24-535000000189"
+      ]
+    },
+    {
+      "formId": "ordin-19308337",
+      "use": "main",
+      "condition": "묶음 중 별지 제1호만 신청인이 작성. 제2호 대장은 행정용.",
+      "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1418133",
+      "evidenceNote": "규칙 제2·3조가 저소득 지원대상자의 별지 제1호 신청을 규정한다. 실제 원본에 노인·장애인·한부모·기타 세대, 소득재산·보험료·서명란이 있어 사이트 지원대상과 일치한다. 제5조의 별지 제2호 지원대장은 행정기록으로 제외한다. 공식 법규 ID·별표키·flSeq와 실제 원본의 SHA256·전체 본문 섹션을 재대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "g52210.gov24-471000000106"
+      ]
+    },
+    {
+      "formId": "ordin-20768689",
+      "use": "main",
+      "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1418533",
+      "evidenceNote": "규칙 제4조가 별지 제1호 신청을 명시하고 실제 원본은 장애인 부 또는 모의 장애정도, 출생아·출생일·계좌·신청인 서명과 거주기간 확인란을 갖춘다. 사이트 수원시 장애인가정 출산 지원금과 대상·목적·방문 신청 절차가 일치한다. 공식 법규 ID·별표키·flSeq와 실제 원본의 SHA256·전체 본문 섹션을 재대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "g41110.gov24-374000000130"
+      ]
+    },
+    {
+      "formId": "ordin-19870809",
+      "use": "main",
+      "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1419603",
+      "evidenceNote": "제4조가 저소득층 맞춤형 지원에 별지 제1호를 지정한다. 실제 원본은 위기사유·가구·소득재산·신청인 서명을 받고 뒷면 담당자 확인에 전기·상하수도·난방·의료·임대보증금·교육·기술습득·해산장제·생활지원 항목이 있어 사이트 복합 급여와 일치한다. 현장확인란은 담당자 작성이다. 공식 법규 ID·별표키·flSeq와 실제 원본의 SHA256·전체 본문 섹션을 재대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "g31170.gov24-371000000106"
+      ]
+    },
+    {
+      "formId": "ordin-19312867",
+      "use": "main",
+      "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1421043",
+      "evidenceNote": "제7조의 음성군 1년 이상 거주 4대 이상 가정, 제8조의 월 5만원, 제9조의 별지 제1호 신청을 대조했다. 원본의 4대 가족구성·전입일·계좌·신청인 서명이 사이트 효행수당과 정확히 일치한다. 공식 법규 ID·별표키·flSeq와 실제 원본의 SHA256·전체 본문 섹션을 재대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "g43770.gov24-447000000125"
+      ]
+    },
+    {
+      "formId": "ordin-22362127",
+      "use": "conditional",
+      "condition": "관내 지원 대상 고등학교장이 조·석식 무상급식 경비를 군수에게 신청하는 기관 전용 서식. 학생·보호자 개인 신청서가 아님. 사업시행계획서를 첨부.",
+      "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1422705",
+      "evidenceNote": "제3조는 학교 조식·중식·석식 지원, 제4조제1항은 고등학교 군수 직접 지원, 제5조제1항은 무상급식 대상 학교장이 별지 제2호로 신청하도록 규정한다. 실제 원본은 학교명·시설·급식인원·인건비·운영비·식재료비·학교장 직위를 적는 기관 신청이다. 사이트도 고등학교 두 곳에 운영비·인건비를 현금 지급하고 식품비를 센터 현물로 지원한다고 명시하므로 해당 학교의 예산 신청 단계로만 연결한다. 학생이나 보호자가 작성하는 서식은 아니다. 공식 법규 ID·별표키·flSeq와 실제 원본의 SHA256·전체 본문 섹션을 재대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "g44790.bokjiro-WLF00003098"
+      ]
+    },
+    {
+      "formId": "ordin-20592115",
+      "use": "main",
+      "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1428537",
+      "evidenceNote": "제3조 출산일 현재 장수 거주 산모, 제4조 본인부담금 90% 지원, 제5조 서비스 종료 후 6개월 이내 별지 제1호 신청을 대조했다. 실제 원본의 산모·대리인·이용기간·납부액·10% 제외액·본인계좌·서명이 사이트 서비스 종료 후 환급 신청과 일치한다. 공식 법규 ID·별표키·flSeq와 실제 원본의 SHA256·전체 본문 섹션을 재대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "g52740.gov24-475000000220"
+      ]
+    },
+    {
+      "formId": "ordin-21475725",
+      "use": "conditional",
+      "condition": "해남사랑상품권 가맹점으로 참여하려는 업소 대표자 전용. 일반 소비자의 상품권 할인구매 신청서가 아님. 사업자등록증 또는 노점상 확인서 및 가맹점 이행확약서를 첨부.",
+      "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1433121",
+      "evidenceNote": "규칙 제6조제1항은 가맹 희망업소가 사업자등록증 또는 노점상 확인서와 별지 제5호 및 이행확약서를 제출하도록 한다. 원본은 상호·업종·대표·사업장·거래계좌·대표자 서명으로 된 가맹점 등록 신청이다. 사이트가 소비자 할인뿐 아니라 가맹점의 지류 결제 수수료 절감·매출증대를 별도 혜택으로 명시하므로 가맹점 참여 단계에 한정한다. 소비자의 할인구매 신청서가 아니다. 공식 법규 ID·별표키·flSeq와 실제 원본의 SHA256·전체 본문 섹션을 재대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "g12790.gov24-493000000132"
+      ]
+    },
+    {
+      "formId": "ordin-21475727",
+      "use": "conditional",
+      "condition": "지역축제 등 행사장의 임시 가맹점 참여자 전용. 소비자 할인구매용이 아니며 행사 참여 증빙과 이행확약서를 첨부.",
+      "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1433121",
+      "evidenceNote": "규칙 제5조제2항은 지역축제 행사장의 판매·용역 부스를 임시가맹점 범위로 정하고 제6조제2항은 별지 제5-1호와 참여 증빙을 요구한다. 실제 원본의 행사목적·운영기간·취급품목·대표자·계좌·서명이 그 임시 가맹 절차에 해당한다. 사이트에 명시된 가맹점 혜택의 행사기간 참여 단계로만 제공한다. 공식 법규 ID·별표키·flSeq와 실제 원본의 SHA256·전체 본문 섹션을 재대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "g12790.gov24-493000000132"
+      ]
+    },
+    {
+      "formId": "ordin-21475729",
+      "use": "additional",
+      "condition": "전통시장 지정구역 노점상의 가맹점 등록 신청에만 첨부. 관할 상인회장이 작성·확인하며 소비자 신청서는 아님.",
+      "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1433121",
+      "evidenceNote": "규칙 제5조제1항은 군 관리 전통시장 지정구역 노점상을 한정하고 제6조제1항은 가맹 등록 시 사업자등록증 대신 별지 제6호 확인서를 첨부하도록 한다. 실제 원본은 노점 위치·품목·대표자에 대해 상인회장이 회원임을 확인하는 문서다. 단독 신청서가 아니라 사이트 가맹점 혜택 참여 중 노점상 가맹 등록의 증빙으로만 연결한다. 공식 법규 ID·별표키·flSeq와 실제 원본의 SHA256·전체 본문 섹션을 재대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "g12790.gov24-493000000132"
+      ]
+    },
+    {
+      "formId": "ordin-21475735",
+      "use": "conditional",
+      "condition": "이미 등록된 가맹점의 지정사항 변경 전용. 가맹점 지정서와 변경사항 증빙을 제출하며 소비자 또는 신규가맹 신청용이 아님.",
+      "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1433121",
+      "evidenceNote": "규칙 제6조는 등록된 가맹점의 지정사항 변경에 별지 제9호를 지정한다. 실제 원본의 가맹점번호·대표·사업장·계좌·변경 전후·사유·서명과 변경증빙은 사이트 가맹점 참여를 계속하기 위한 변경 단계이다. 소비자 또는 신규가맹 신청과 구분해 제공한다. 공식 법규 ID·별표키·flSeq와 실제 원본의 SHA256·전체 본문 섹션을 재대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "g12790.gov24-493000000132"
+      ]
+    },
+    {
+      "formId": "ordin-21475781",
+      "use": "conditional",
+      "condition": "등록 가맹점이 결제받은 지류상품권을 대행 금융기관에 환전 청구할 때만 사용. 소비자의 상품권 구매·환불 신청서가 아님.",
+      "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1433121",
+      "evidenceNote": "규칙 제9조는 가맹점이 상품권 환전을 대행기관에 청구할 때 별지 제12호를 지정한다. 원본의 가맹점번호·상호·사업자번호·수령 상품권 권종별 수량·금액·가맹점 계좌·대표 서명은 결제받은 지류상품권의 정산 단계이다. 사이트의 가맹점 혜택에 한정된 지급 청구로 연결하며 소비자 환불 신청서로 표시하지 않는다. 공식 법규 ID·별표키·flSeq와 실제 원본의 SHA256·전체 본문 섹션을 재대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "g12790.gov24-493000000132"
+      ]
+    },
+    {
+      "formId": "ordin-19981527",
+      "use": "main",
+      "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1433491",
+      "evidenceNote": "제3조는 정읍 1년 이상 거주 참여자 자녀·손자녀·증손자녀와 월 10만원, 제4조는 별지 제1호 신청을 규정한다. 원본은 참여자와 유족관계·계좌·신청인 서명·개인정보 동의·유족통지서 및 거주확인이 있어 사이트 대상·금액·구비서류와 일치한다. 공식 법규 ID·별표키·flSeq와 실제 원본의 SHA256·전체 본문 섹션을 재대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "g52180.gov24-469000000117"
+      ]
+    },
+    {
+      "formId": "ordin-20267523",
+      "use": "main",
+      "condition": "교통카드 발급 신청서이며 개인정보 수집·제공 동의서를 함께 제출. 분실·훼손 재발급의 실비 부담은 사업 안내에 따름.",
+      "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1434263",
+      "evidenceNote": "제4조제1항이 70세 이상 어르신 무료 버스 이용 교통카드 신청에 별지 제1호를 지정한다. 원본은 신청인의 사진·생년월일·주소·신규·전입·재발급 구분·서명과 개인정보동의서 첨부를 요구하여 사이트 무료이용 교통카드 방문 발급과 일치한다. 공식 법규 ID·별표키·flSeq와 실제 원본의 SHA256·전체 본문 섹션을 재대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "g43730.bokjiro-WLF00001440"
+      ]
+    },
+    {
+      "formId": "ordin-20146719",
+      "use": "main",
+      "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1438761",
+      "evidenceNote": "제3조제2항은 65세 이상·의료급여 등 지원대상자가 별지 간병서비스 신청서를 지정병원장에게 제출하도록 한다. 실제 원본은 환자·생년월일·주소·신청기간·지원대상구분·신청인과 환자의 관계·서명을 받는 환자 측 신청서이다. 사이트의 병원 제출 후 병원이 보건소로 청구하는 흐름과 일치하며 병원 자체 정산 서식과 구분한다. 공식 법규 ID·별표키·flSeq와 실제 원본의 SHA256·전체 본문 섹션을 재대조했다.",
+      "checkedAt": "2026-10-18",
+      "displayTitle": "간병서비스 신청서",
+      "programIds": [
+        "g48740.bokjiro-WLF00002964"
       ]
     },
     {
@@ -12251,6 +12548,399 @@
       "displayTitle": "위임장(전입장려금 신청)",
       "programIds": [
         "g51230.bokjiro-WLF00005579"
+      ]
+    },
+    {
+      "formId": "ordin-20680359",
+      "use": "main",
+      "evidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1759495",
+      "evidenceNote": "학생 또는 보호자가 학생·학교·계좌·중복수혜와 개인정보 동의를 작성하는 봉화 교복구입비 신청서다. 제6조와 사이트 교복지원 대상·현장신청 목적이 일치한다. 실제 원본 전체 본문, 현행 법규의 지정 별지, 원본 SHA256 및 flSeq를 대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "g47920.bokjiro-WLF00004487"
+      ]
+    },
+    {
+      "formId": "ordin-20494877",
+      "use": "main",
+      "evidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1760759",
+      "evidenceNote": "산모 또는 배우자가 산후조리원·이용비·출생아·계좌 및 지원대상 증빙을 제출하는 산후조리비 신청서다. 제6조와 사이트 퇴소 후 신청절차가 일치한다. 실제 원본 전체 본문, 현행 법규의 지정 별지, 원본 SHA256 및 flSeq를 대조했다.",
+      "checkedAt": "2026-10-18",
+      "displayTitle": "산후조리비 지원 신청서",
+      "programIds": [
+        "g28200.bokjiro-WLF00005222"
+      ]
+    },
+    {
+      "formId": "ordin-20494879",
+      "use": "additional",
+      "evidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1760759",
+      "evidenceNote": "산후조리원이 산모의 이용기간·결제액을 확인하는 서식으로 제6조제2항제3호와 사이트가 주민 신청에 첨부할 확인서로 직접 명시한다. 기관이 작성하되 신청인이 제출받는 증빙이므로 additional supporting이다. 실제 원본 전체 본문, 현행 법규의 지정 별지, 원본 SHA256 및 flSeq를 대조했다.",
+      "checkedAt": "2026-10-18",
+      "displayTitle": "산후조리원 이용 확인서",
+      "programIds": [
+        "g28200.bokjiro-WLF00005222"
+      ]
+    },
+    {
+      "formId": "ordin-14310321",
+      "use": "conditional",
+      "condition": "공공임대주택 관리주체가 단지의 공동전기료 보조금을 청구할 때 사용합니다. 개별 세대의 전기요금 신청용은 아닙니다.",
+      "evidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1761019",
+      "evidenceNote": "공공임대주택 단지 관리사무소장이 공용 전력량·요금·계좌와 고지서를 제출하는 신청서다. 사이트가 관리주체의 주택과 신청을 명시하고 제4조도 관리주체 청구를 정하므로 사업 자체의 실제 신청 주체에 맞는다. 실제 원본 전체 본문, 현행 법규의 지정 별지, 원본 SHA256 및 flSeq를 대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "g41360.bokjiro-WLF00005304"
+      ]
+    },
+    {
+      "formId": "ordin-20419891",
+      "use": "conditional",
+      "condition": "보훈 연계시스템에서 자격 확인이 되지 않아 제출을 안내받거나 주소·계좌·신분 사항을 변경할 때 사용합니다.",
+      "evidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1761783",
+      "evidenceNote": "독립유공자 유족이 보훈번호·관계·계좌를 작성하는 지급신청/변경신고서다. 제5조가 연계시스템 확인 시 신청 생략을 허용하므로 사이트 신청불필요 안내와 함께, 자동 확인이 안 되거나 제8조 주소·계좌 변경이 있을 때만 연결한다. 실제 원본 전체 본문, 현행 법규의 지정 별지, 원본 SHA256 및 flSeq를 대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "g26380.gov24-334000000124"
+      ]
+    },
+    {
+      "formId": "ordin-19365589",
+      "use": "main",
+      "evidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1762251",
+      "evidenceNote": "학생의 학교·입학일과 보호자·주소·연락처를 작성하는 입학축하금 신청서이며 제5·6조와 사이트 부모 등 보호자의 읍면 신청이 일치한다. 실제 원본 전체 본문, 현행 법규의 지정 별지, 원본 SHA256 및 flSeq를 대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "g12840.bokjiro-WLF00005154"
+      ]
+    },
+    {
+      "formId": "ordin-20887143",
+      "use": "conditional",
+      "condition": "의왕사랑상품권 가맹점 등록을 원하는 사업자만 사용합니다. 소비자 카드 발급·구매 신청용이 아닙니다.",
+      "evidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1768661",
+      "evidenceNote": "종이형·카드형 상품권 가맹을 신청하는 대표자의 사업정보·계좌·동의서다. 사이트가 소비자 할인과 별도로 가맹점의 수수료 절감·매출 혜택을 명시하고 현행 조례가 해당 별지를 지정하므로 사업자에만 조건부 연결한다. 실제 원본 전체 본문, 현행 법규의 지정 별지, 원본 SHA256 및 flSeq를 대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "g41430.gov24-403000000121"
+      ]
+    },
+    {
+      "formId": "ordin-20887145",
+      "use": "conditional",
+      "condition": "기존 의왕사랑상품권 가맹점의 등록사항 변경에만 사용합니다.",
+      "evidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1768661",
+      "evidenceNote": "기존 가맹점 대표자·소재지 등 등록사항 변경을 신청하는 서식이다. 사이트가 소비자 할인과 별도로 가맹점의 수수료 절감·매출 혜택을 명시하고 현행 조례가 해당 별지를 지정하므로 사업자에만 조건부 연결한다. 실제 원본 전체 본문, 현행 법규의 지정 별지, 원본 SHA256 및 flSeq를 대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "g41430.gov24-403000000121"
+      ]
+    },
+    {
+      "formId": "ordin-20887147",
+      "use": "conditional",
+      "condition": "기존 의왕사랑상품권 가맹점의 등록 해지에만 사용합니다.",
+      "evidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1768661",
+      "evidenceNote": "기존 가맹점의 등록 해지를 신청하는 서식이다. 사이트가 소비자 할인과 별도로 가맹점의 수수료 절감·매출 혜택을 명시하고 현행 조례가 해당 별지를 지정하므로 사업자에만 조건부 연결한다. 실제 원본 전체 본문, 현행 법규의 지정 별지, 원본 SHA256 및 flSeq를 대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "g41430.gov24-403000000121"
+      ]
+    },
+    {
+      "formId": "ordin-20986187",
+      "use": "main",
+      "condition": "의왕시 거주자로 다른 시도 학교나 대안교육기관에 입학해 구입비를 신청하는 경우 사용합니다. 학교 현물지원 절차는 학교 안내를 따릅니다.",
+      "evidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1768671",
+      "evidenceNote": "입학 학교·주소·교복 구입액·중복수혜·영수증을 제출하는 신청서다. 제6조는 다른 시도 학교 및 대안교육기관 학생을 이 별지에 따라 신청하도록 정하며 사이트도 그 경로를 안내한다. 경기도 내 정규학교 현물지원과 구분한다. 실제 원본 전체 본문, 현행 법규의 지정 별지, 원본 SHA256 및 flSeq를 대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "g41430.gov24-403000000122"
+      ]
+    },
+    {
+      "formId": "ordin-22515097",
+      "use": "conditional",
+      "condition": "참전유공자 사망 시 유가족 또는 관계인이 사망위로금을 신청할 때 사용합니다.",
+      "evidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1768829",
+      "evidenceNote": "사망한 참전유공자와 유가족·관계인의 관계·사망일·계좌를 작성하는 사망위로금 별지 2호다. 제5조제3항과 사이트의 참전유공자 사망위로금 항목이 일치한다. 실제 원본 전체 본문, 현행 법규의 지정 별지, 원본 SHA256 및 flSeq를 대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "g51210.bokjiro-WLF00003878"
+      ]
+    },
+    {
+      "formId": "ordin-22515099",
+      "use": "main",
+      "condition": "사망한 참전유공자의 배우자 수당 신청에만 사용합니다.",
+      "evidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1768829",
+      "evidenceNote": "사망 참전유공자의 배우자가 본인의 계좌와 배우자 증빙을 내는 수당 신청서다. 기존 복지로 후보는 배우자 수당을 명시하지 않아 배제하고, 같은 속초시 정부24 사업이 사망한 참전유공자 배우자를 명시함을 독립 확인했다. 실제 원본 전체 본문, 현행 법규의 지정 별지, 원본 SHA256 및 flSeq를 대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "g51210.gov24-423000000487"
+      ]
+    },
+    {
+      "formId": "ordin-19888787",
+      "use": "conditional",
+      "condition": "8282 콜센터 전화접수 후 또는 방문접수 시 담당자가 서면 신청을 안내하는 경우 사용합니다.",
+      "evidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1770185",
+      "evidenceNote": "신청인·대상자 관계와 자격·주소·생활불편 요청사항 및 동의를 적는 8282 민원 신청서다. 전화/방문 유형을 모두 두고 제8조의 공식 신청서이며 사이트 전기·수도 등 생활불편 지원과 일치한다. 실제 원본 전체 본문, 현행 법규의 지정 별지, 원본 SHA256 및 flSeq를 대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "g47750.bokjiro-WLF00005140"
+      ]
+    },
+    {
+      "formId": "ordin-20191133",
+      "use": "main",
+      "condition": "초등학교 입학지원금을 신청할 때 입학축하금 항목을 선택합니다.",
+      "evidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1773899",
+      "evidenceNote": "교복·체육복·졸업앨범·입학축하금 선택형 학생복지 신청서로 학생·보호자·계좌를 작성한다. 사이트에 존재하는 초등학교 입학지원금에 한정하여 입학축하금 항목을 사용한다. 저소득 중고생 기금지원은 다른 제도라 연결하지 않는다. 실제 원본 전체 본문, 현행 법규의 지정 별지, 원본 SHA256 및 flSeq를 대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "g41170.bokjiro-WLF00006028"
+      ]
+    },
+    {
+      "formId": "ordin-14701579",
+      "use": "main",
+      "evidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1774053",
+      "evidenceNote": "초중고 입학생의 학교·입학일과 보호자 관계·통장·입학확인서를 제출하는 축하금 신청서로 제6조와 사이트 보호자 읍면 신청이 일치한다. 실제 원본 전체 본문, 현행 법규의 지정 별지, 원본 SHA256 및 flSeq를 대조했다.",
+      "checkedAt": "2026-10-18",
+      "displayTitle": "입학 축하금 신청서",
+      "programIds": [
+        "g12810.bokjiro-WLF00005083"
+      ]
+    },
+    {
+      "formId": "ordin-22536775",
+      "use": "additional",
+      "evidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1774251",
+      "evidenceNote": "화재 피해지원금 신청서류 검증을 위한 개인정보·고유식별정보 동의서다. 제9조가 최초 지원신청과 함께 별지2호 제출을 명시하므로 추가 동의서로 연결한다. 실제 원본 전체 본문, 현행 법규의 지정 별지, 원본 SHA256 및 flSeq를 대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "g12830.gov24-497000000134"
+      ]
+    },
+    {
+      "formId": "ordin-20393337",
+      "use": "main",
+      "condition": "인천광역시 보훈예우수당 항목의 신청에 사용합니다. 기념일 위문금 또는 다른 종류의 보훈수당 신청용은 아닙니다.",
+      "evidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1774765",
+      "evidenceNote": "국가보훈대상자가 보훈등록번호와 지급계좌·유공자 확인을 제출하는 시 보훈예우수당 신청서다. 시행규칙 제2조의 월 예우수당과 각 사이트 해당 항목에 한정하며 기념일 위문금·별도 상이군경 수당에는 확대하지 않는다. 실제 원본 전체 본문, 현행 법규의 지정 별지, 원본 SHA256 및 flSeq를 대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "s28000.bokjiro-WLF00001379"
+      ]
+    },
+    {
+      "formId": "ordin-20393337",
+      "use": "main",
+      "condition": "인천광역시 보훈예우수당 항목의 신청에 사용합니다. 기념일 위문금 또는 다른 종류의 보훈수당 신청용은 아닙니다.",
+      "evidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1774765",
+      "evidenceNote": "국가보훈대상자가 보훈등록번호와 지급계좌·유공자 확인을 제출하는 시 보훈예우수당 신청서다. 시행규칙 제2조의 월 예우수당과 각 사이트 해당 항목에 한정하며 기념일 위문금·별도 상이군경 수당에는 확대하지 않는다. 실제 원본 전체 본문, 현행 법규의 지정 별지, 원본 SHA256 및 flSeq를 대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "s28000.gov24-628000000153"
+      ]
+    },
+    {
+      "formId": "ordin-20393337",
+      "use": "main",
+      "condition": "인천광역시 보훈예우수당 항목의 신청에 사용합니다. 기념일 위문금 또는 다른 종류의 보훈수당 신청용은 아닙니다.",
+      "evidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1774765",
+      "evidenceNote": "국가보훈대상자가 보훈등록번호와 지급계좌·유공자 확인을 제출하는 시 보훈예우수당 신청서다. 시행규칙 제2조의 월 예우수당과 각 사이트 해당 항목에 한정하며 기념일 위문금·별도 상이군경 수당에는 확대하지 않는다. 실제 원본 전체 본문, 현행 법규의 지정 별지, 원본 SHA256 및 flSeq를 대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "g28245.gov24-355000000106"
+      ],
+      "scopeBasis": "provincial-law-reference"
+    },
+    {
+      "formId": "ordin-20393379",
+      "use": "main",
+      "condition": "전몰군경 유가족수당 신청에만 사용합니다.",
+      "evidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1774767",
+      "evidenceNote": "전몰군경 유가족이 보훈등록번호·계좌 및 유족확인으로 신청하는 별지이며 시행규칙 제2조와 시·남동구 사업의 전몰군경유가족수당 항목에 일치한다. 다른 수당은 포함하지 않는다. 실제 원본 전체 본문, 현행 법규의 지정 별지, 원본 SHA256 및 flSeq를 대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "s28000.bokjiro-WLF00001192"
+      ]
+    },
+    {
+      "formId": "ordin-20393379",
+      "use": "main",
+      "condition": "전몰군경 유가족수당 신청에만 사용합니다.",
+      "evidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1774767",
+      "evidenceNote": "전몰군경 유가족이 보훈등록번호·계좌 및 유족확인으로 신청하는 별지이며 시행규칙 제2조와 시·남동구 사업의 전몰군경유가족수당 항목에 일치한다. 다른 수당은 포함하지 않는다. 실제 원본 전체 본문, 현행 법규의 지정 별지, 원본 SHA256 및 flSeq를 대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "s28000.gov24-628000000153"
+      ]
+    },
+    {
+      "formId": "ordin-20393379",
+      "use": "main",
+      "condition": "전몰군경 유가족수당 신청에만 사용합니다.",
+      "evidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1774767",
+      "evidenceNote": "전몰군경 유가족이 보훈등록번호·계좌 및 유족확인으로 신청하는 별지이며 시행규칙 제2조와 시·남동구 사업의 전몰군경유가족수당 항목에 일치한다. 다른 수당은 포함하지 않는다. 실제 원본 전체 본문, 현행 법규의 지정 별지, 원본 SHA256 및 flSeq를 대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "g28200.gov24-353000000108"
+      ],
+      "scopeBasis": "provincial-law-reference"
+    },
+    {
+      "formId": "ordin-21811465",
+      "use": "main",
+      "evidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1775841",
+      "evidenceNote": "장애수당 수급자가 보장구분·주소·계좌와 신분/통장사본을 제출하는 군 자체 추가수당 신청서다. 제4조와 사이트 국비 장애수당 외 월 추가지원 신청이 일치한다. 실제 원본 전체 본문, 현행 법규의 지정 별지, 원본 SHA256 및 flSeq를 대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "g52770.gov24-477000000104"
+      ]
+    },
+    {
+      "formId": "ordin-20191135",
+      "use": "conditional",
+      "condition": "안양시 거주자의 안양시 방문 접수에만 사용하는 서식입니다. 다른 시도 중고교·대안교육기관 교복비를 신청할 때 사용하며 다른 시군 주민은 사용하지 않습니다.",
+      "evidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1773899",
+      "evidenceNote": "실제 원본은 경기도·안양시 공동 교복구입비 지원서로 다른 시도 중고교·대안교육기관 학생의 주소·입학·중복수혜·구매영수증과 안양시장 수신을 명시한다. 안양 단위 사이트 교복사업은 없지만 정확한 경기도 사업이 시군 방문신청 및 안양시 담당부서를 명시함을 2026-10-18 공개 GET 200 본문으로 재확인했다. 금액란은 공란이며 도 사업의 40만원 이내 실비와 충돌하지 않는다. 오직 안양 거주자의 안양 접수용 conditional로 연결하고 타 시군 주민에게 확대하지 않는다. 실제 원본 전체 본문, 현행 법규의 지정 별지, 원본 SHA256 및 flSeq를 대조했다.",
+      "checkedAt": "2026-10-18",
+      "programEvidenceUrl": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000129",
+      "municipalApplicationReference": {
+        "sido": "41000",
+        "sigungu": "41170",
+        "municipality": "안양시",
+        "programEvidenceUrl": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000129",
+        "checkedAt": "2026-10-18",
+        "httpStatus": 200,
+        "programSpecific": true,
+        "reference": "2026년 도 사업은 부득이한 경우 시군 문의 후 방문신청을 허용하고 안양시 교육청소년과를 접수 문의처로 열거한다.",
+        "municipalArticle": "안양시 학생복지 지원 조례 제4조·제5조제1호·제7조",
+        "formEvidence": "원본 머리말 '경기도ㆍ안양시 대안교육기관 등 학생 교복 지원 신청서', 학생 주소/부모/중복수혜/구입비·영수증, 수신 안양시장",
+        "scopeRestriction": "안양시 거주 학생의 안양시 서면 접수 전용. 도내 다른 시군 주민에게 확대하지 않음."
+      },
+      "programIds": [
+        "s41000.gov24-641000000129"
+      ],
+      "scopeBasis": "municipal-application-reference"
+    },
+    {
+      "formId": "ordin-20191135",
+      "use": "conditional",
+      "condition": "안양시 거주자의 안양시 방문 접수에만 사용하는 서식입니다. 다른 시도 중고교·대안교육기관 교복비를 신청할 때 사용하며 다른 시군 주민은 사용하지 않습니다.",
+      "evidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1773899",
+      "evidenceNote": "실제 원본은 경기도·안양시 공동 교복구입비 지원서로 다른 시도 중고교·대안교육기관 학생의 주소·입학·중복수혜·구매영수증과 안양시장 수신을 명시한다. 안양 단위 사이트 교복사업은 없지만 정확한 경기도 사업이 시군 방문신청 및 안양시 담당부서를 명시함을 2026-10-18 공개 GET 200 본문으로 재확인했다. 금액란은 공란이며 도 사업의 40만원 이내 실비와 충돌하지 않는다. 오직 안양 거주자의 안양 접수용 conditional로 연결하고 타 시군 주민에게 확대하지 않는다. 실제 원본 전체 본문, 현행 법규의 지정 별지, 원본 SHA256 및 flSeq를 대조했다.",
+      "checkedAt": "2026-10-18",
+      "programEvidenceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00005400&wlfareInfoReldBztpCd=02",
+      "municipalApplicationReference": {
+        "sido": "41000",
+        "sigungu": "41170",
+        "municipality": "안양시",
+        "programEvidenceUrl": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000129",
+        "checkedAt": "2026-10-18",
+        "httpStatus": 200,
+        "programSpecific": true,
+        "reference": "2026년 도 사업은 부득이한 경우 시군 문의 후 방문신청을 허용하고 안양시 교육청소년과를 접수 문의처로 열거한다.",
+        "municipalArticle": "안양시 학생복지 지원 조례 제4조·제5조제1호·제7조",
+        "formEvidence": "원본 머리말 '경기도ㆍ안양시 대안교육기관 등 학생 교복 지원 신청서', 학생 주소/부모/중복수혜/구입비·영수증, 수신 안양시장",
+        "scopeRestriction": "안양시 거주 학생의 안양시 서면 접수 전용. 도내 다른 시군 주민에게 확대하지 않음."
+      },
+      "programIds": [
+        "s41000.bokjiro-WLF00005400"
+      ],
+      "scopeBasis": "municipal-application-reference"
+    },
+    {
+      "formId": "ordin-19630839",
+      "use": "conditional",
+      "condition": "이미용 바우처 카드를 분실하거나 훼손해 재발급받을 때만 사용합니다. 최초 지원은 별도 신청 없이 이루어집니다.",
+      "evidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1779143",
+      "evidenceNote": "이미용 바우처 카드의 분실·훼손 사유를 적는 재발급 신청서이며 제4조제2항제4호가 이 서면 절차를 지정한다. 사이트 최초 지원은 자동이지만 기존 카드 재발급은 구분되는 후속 신청이다. 실제 원본 전체 본문, 현행 법규의 지정 별지, 원본 SHA256 및 flSeq를 대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "g48870.bokjiro-WLF00005184"
+      ]
+    },
+    {
+      "formId": "ordin-22573333",
+      "use": "main",
+      "condition": "수급자 감면의 신규 신청 또는 변경에 사용합니다. 감면 자격이 끝난 경우에는 해지를 선택합니다.",
+      "evidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1779435",
+      "evidenceNote": "수급자 정보·수용가번호·자격 발생일과 동의를 작성해 요금감면 신규·변경·해지를 선택한다. 현행 제30조제3·4항과 사이트 수급자 월 10톤 감면에 정확히 일치한다. 실제 원본 전체 본문, 현행 법규의 지정 별지, 원본 SHA256 및 flSeq를 대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "s50000.gov24-650000000333"
+      ]
+    },
+    {
+      "formId": "ordin-16095225",
+      "use": "main",
+      "condition": "보훈명예수당 또는 보훈의료비수당 항목을 선택합니다. 사망위로금용은 아닙니다.",
+      "evidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1782391",
+      "evidenceNote": "광양 국가보훈대상자가 명예수당 또는 의료비수당을 선택하고 보훈번호·신청인·계좌를 기재한다. 제9조제1항1·2호와 사이트 두 수당에 일치하며 사망위로금은 다른 별지라 배제한다. 실제 원본 전체 본문, 현행 법규의 지정 별지, 원본 SHA256 및 flSeq를 대조했다.",
+      "checkedAt": "2026-10-18",
+      "displayTitle": "국가보훈대상자 보훈명예수당·보훈의료비수당 지급신청서",
+      "programIds": [
+        "g12190.gov24-484000000113"
+      ]
+    },
+    {
+      "formId": "ordin-19993161",
+      "use": "main",
+      "evidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1782515",
+      "evidenceNote": "입학아동·보호자의 주소·학교·지역화폐 소지·중복수혜 여부를 적는 초등입학축하금 신청서다. 제6조와 사이트 파주 초등 최초입학 지역화폐 지원에 일치한다. 실제 원본 전체 본문, 현행 법규의 지정 별지, 원본 SHA256 및 flSeq를 대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "g41480.gov24-406000000532"
+      ]
+    },
+    {
+      "formId": "ordin-20003531",
+      "use": "main",
+      "condition": "신청인란을 작성하며 하단 지원대상 확인란은 담당자가 작성합니다.",
+      "evidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1784001",
+      "evidenceNote": "입양부모가 입양아동·입양기관·입양일·계좌 및 입양사실 확인서를 제출하는 성남 입양축하금 신청서다. 제5조 별지1호와 사이트 자체 축하금 지원에 일치한다. 실제 원본 전체 본문, 현행 법규의 지정 별지, 원본 SHA256 및 flSeq를 대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "g41130.gov24-378000000146"
+      ]
+    },
+    {
+      "formId": "ordin-20213643",
+      "use": "conditional",
+      "condition": "구입비 지원 대상으로 선정된 축산농가가 순천시 미생물센터에서 생균제 등 지원 대상 제품을 공급받을 때 사용합니다. 연초 보조사업 선정 신청서는 별도로 확인해야 합니다.",
+      "evidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1786449",
+      "evidenceNote": "축산농가가 센터 생산 생균제 등 종류·수량·수령방법을 지정하여 공급을 받는 신청서다. 사이트 지원은 센터 미생물 구입비 50% 지원이며 제6조제3항이 공급받는 사람의 신청서 제출을 명시하므로 선정 농가의 실제 물품 구입·공급 단계에 한정한다. 연초 보조사업 대상자 모집 신청서로 확대하지 않는다. 실제 원본 전체 본문, 현행 법규의 지정 별지, 원본 SHA256 및 flSeq를 대조했다.",
+      "checkedAt": "2026-10-18",
+      "programIds": [
+        "g12150.gov24-482000000101"
+      ]
+    },
+    {
+      "formId": "ordin-17263733",
+      "use": "main",
+      "condition": "묶음 중 별지 1호 입양아동 입학지원금 신청서만 작성합니다. 2호 대장은 담당자용입니다.",
+      "evidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1787813",
+      "evidenceNote": "2개 별지를 모두 읽고 1호가 입양아동의 초등입학 지원금 신청, 2호는 신청·지급대장임을 확인했다. 제7조와 사이트 광주시 입양아동 입학지원금에 맞는 1호만 신청 부분으로 연결한다. 실제 원본 전체 본문, 현행 법규의 지정 별지, 원본 SHA256 및 flSeq를 대조했다.",
+      "checkedAt": "2026-10-18",
+      "displayTitle": "입양아동 입학지원금 신청서",
+      "programIds": [
+        "g41610.gov24-554000000189"
+      ]
+    },
+    {
+      "formId": "ordin-19438597",
+      "use": "conditional",
+      "condition": "논산시에 주민등록을 둔 관내 미인가 대안교육기관 고등학교 과정 입학생이 교복구입비를 개별 신청하는 경우 사용합니다. 정규학교 일괄 현물지원은 학교 안내를 따릅니다.",
+      "evidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1789331",
+      "evidenceNote": "학생 또는 보호자의 교복구입비 실비 신청서이며 제6조제2항은 관외학교 및 관내 미인가 대안교육기관의 별지 신청을 규정한다. 사이트는 관내 고등학교 현물지원 외 대안교육기관 지원도 명시하므로 그 대안교육기관 개별신청 경로만 조건부 연결한다. 학교 일괄구매 학생에게 작성 의무를 추가하지 않는다. 실제 원본 전체 본문, 현행 법규의 지정 별지, 원본 SHA256 및 flSeq를 대조했다.",
+      "checkedAt": "2026-10-18",
+      "displayTitle": "교복구입비 지원 신청서",
+      "programIds": [
+        "g44230.bokjiro-WLF00001784"
       ]
     }
   ],
@@ -26761,6 +27451,448 @@
       "sourceKind": "ordin",
       "dateKind": "effective"
     },
+    "ordin-20590179": {
+      "id": "ordin-20590179",
+      "title": "[별지 제3호서식] 보령시 넝쿨강낭콩 지리적 표시 증명표장 사용승인신청서",
+      "role": "application",
+      "lawTitle": "보령시 넝쿨강낭콩 지리적 표시 사용 및 운영에 관한 조례 시행규칙",
+      "lawId": "1407437",
+      "annexId": "20590179",
+      "annexNumber": "000800",
+      "regionCode": "44180",
+      "regionLabel": "충청남도 보령시",
+      "effectiveDate": "2019-08-20",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=154564073&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C3%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EB%B3%B4%EB%A0%B9%EC%8B%9C+%EB%84%9D%EC%BF%A8%EA%B0%95%EB%82%AD%EC%BD%A9+%EC%A7%80%EB%A6%AC%EC%A0%81+%ED%91%9C%EC%8B%9C+%EC%A6%9D%EB%AA%85%ED%91%9C%EC%9E%A5+%EC%82%AC%EC%9A%A9%EC%8A%B9%EC%9D%B8%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1407437",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-20590307": {
+      "id": "ordin-20590307",
+      "title": "[별지 제7호서식] 보령시 지리적 표시 증명표장 포장재사용 신청서",
+      "role": "application",
+      "lawTitle": "보령시 넝쿨강낭콩 지리적 표시 사용 및 운영에 관한 조례 시행규칙",
+      "lawId": "1407437",
+      "annexId": "20590307",
+      "annexNumber": "001200",
+      "regionCode": "44180",
+      "regionLabel": "충청남도 보령시",
+      "effectiveDate": "2019-08-20",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=154564081&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C7%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EB%B3%B4%EB%A0%B9%EC%8B%9C+%EC%A7%80%EB%A6%AC%EC%A0%81+%ED%91%9C%EC%8B%9C+%EC%A6%9D%EB%AA%85%ED%91%9C%EC%9E%A5+%ED%8F%AC%EC%9E%A5%EC%9E%AC%EC%82%AC%EC%9A%A9+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1407437",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-22522837": {
+      "id": "ordin-22522837",
+      "title": "[별지 제1호서식] 참전명예수당 지급신청서",
+      "role": "application",
+      "lawTitle": "제주특별자치도 참전유공자 지원 조례 시행규칙",
+      "lawId": "1408278",
+      "annexId": "22522837",
+      "annexNumber": "000100",
+      "regionCode": "50000",
+      "regionLabel": "제주특별자치도",
+      "effectiveDate": "2020-01-01",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=168861837&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%B0%B8%EC%A0%84%EB%AA%85%EC%98%88%EC%88%98%EB%8B%B9+%EC%A7%80%EA%B8%89%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1408278",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-22522839": {
+      "id": "ordin-22522839",
+      "title": "[별지 제2호서식] 참전명예수당입금계좌 등 변경신청서",
+      "role": "application",
+      "lawTitle": "제주특별자치도 참전유공자 지원 조례 시행규칙",
+      "lawId": "1408278",
+      "annexId": "22522839",
+      "annexNumber": "000200",
+      "regionCode": "50000",
+      "regionLabel": "제주특별자치도",
+      "effectiveDate": "2020-01-01",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=168861839&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C2%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%B0%B8%EC%A0%84%EB%AA%85%EC%98%88%EC%88%98%EB%8B%B9%EC%9E%85%EA%B8%88%EA%B3%84%EC%A2%8C+%EB%93%B1+%EB%B3%80%EA%B2%BD%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1408278",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-22522841": {
+      "id": "ordin-22522841",
+      "title": "[별지 제3호서식] 참전유공자 사망위로금 지급신청서",
+      "role": "application",
+      "lawTitle": "제주특별자치도 참전유공자 지원 조례 시행규칙",
+      "lawId": "1408278",
+      "annexId": "22522841",
+      "annexNumber": "000300",
+      "regionCode": "50000",
+      "regionLabel": "제주특별자치도",
+      "effectiveDate": "2020-01-01",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=168861841&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C3%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%B0%B8%EC%A0%84%EC%9C%A0%EA%B3%B5%EC%9E%90+%EC%82%AC%EB%A7%9D%EC%9C%84%EB%A1%9C%EA%B8%88+%EC%A7%80%EA%B8%89%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1408278",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-22522843": {
+      "id": "ordin-22522843",
+      "title": "[별지 제4호서식] 참전유공자 배우자 복지수당 지급(변경)신청서",
+      "role": "application",
+      "lawTitle": "제주특별자치도 참전유공자 지원 조례 시행규칙",
+      "lawId": "1408278",
+      "annexId": "22522843",
+      "annexNumber": "000400",
+      "regionCode": "50000",
+      "regionLabel": "제주특별자치도",
+      "effectiveDate": "2020-01-01",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=168861843&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C4%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%B0%B8%EC%A0%84%EC%9C%A0%EA%B3%B5%EC%9E%90+%EB%B0%B0%EC%9A%B0%EC%9E%90+%EB%B3%B5%EC%A7%80%EC%88%98%EB%8B%B9+%EC%A7%80%EA%B8%89%28%EB%B3%80%EA%B2%BD%29%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1408278",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-17868331": {
+      "id": "ordin-17868331",
+      "title": "[별지 제1호 서식]저소득주민 국민건강보험료 등 지원 신청서",
+      "role": "application",
+      "lawTitle": "서울특별시 강서구 저소득주민 국민건강보험료 등 지원에 관한 조례 시행규칙",
+      "lawId": "1408567",
+      "annexId": "17868331",
+      "annexNumber": "000100",
+      "regionCode": "11500",
+      "regionLabel": "서울특별시 강서구",
+      "effectiveDate": "2019-09-11",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=142032103&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8+%EC%84%9C%EC%8B%9D%5D%EC%A0%80%EC%86%8C%EB%93%9D%EC%A3%BC%EB%AF%BC+%EA%B5%AD%EB%AF%BC%EA%B1%B4%EA%B0%95%EB%B3%B4%ED%97%98%EB%A3%8C+%EB%93%B1+%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1408567",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-20664565": {
+      "id": "ordin-20664565",
+      "title": "별지 서식. 경기도양주시 비인가 대안교육기관 등 학생 교복 지원 신청서",
+      "role": "application",
+      "lawTitle": "양주시 비인가 대안교육기관 등 학생 교복 지원 조례",
+      "lawId": "1409795",
+      "annexId": "20664565",
+      "annexNumber": "000100",
+      "regionCode": "41630",
+      "regionLabel": "경기도 양주시",
+      "effectiveDate": "2019-09-23",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=154788947&flNm=%EB%B3%84%EC%A7%80+%EC%84%9C%EC%8B%9D.+%EA%B2%BD%EA%B8%B0%EB%8F%84%EC%96%91%EC%A3%BC%EC%8B%9C+%EB%B9%84%EC%9D%B8%EA%B0%80+%EB%8C%80%EC%95%88%EA%B5%90%EC%9C%A1%EA%B8%B0%EA%B4%80+%EB%93%B1+%ED%95%99%EC%83%9D+%EA%B5%90%EB%B3%B5+%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1409795",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-20511279": {
+      "id": "ordin-20511279",
+      "title": "[별지 1호서식] 다문화가족 행복장려금 지원 신청서",
+      "role": "application",
+      "lawTitle": "해남군 다문화가족 지원에 관한 조례 시행규칙",
+      "lawId": "1413587",
+      "annexId": "20511279",
+      "annexNumber": "000100",
+      "regionCode": "12790",
+      "regionLabel": "전남광주통합특별시 해남군",
+      "effectiveDate": "2019-10-15",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=154324697&flNm=%5B%EB%B3%84%EC%A7%80+1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EB%8B%A4%EB%AC%B8%ED%99%94%EA%B0%80%EC%A1%B1+%ED%96%89%EB%B3%B5%EC%9E%A5%EB%A0%A4%EA%B8%88+%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1413587",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-20511281": {
+      "id": "ordin-20511281",
+      "title": "[별지 2호서식] 다문화가족 행복장려금 청구서",
+      "role": "application",
+      "lawTitle": "해남군 다문화가족 지원에 관한 조례 시행규칙",
+      "lawId": "1413587",
+      "annexId": "20511281",
+      "annexNumber": "000200",
+      "regionCode": "12790",
+      "regionLabel": "전남광주통합특별시 해남군",
+      "effectiveDate": "2019-10-15",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=154324699&flNm=%5B%EB%B3%84%EC%A7%80+2%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EB%8B%A4%EB%AC%B8%ED%99%94%EA%B0%80%EC%A1%B1+%ED%96%89%EB%B3%B5%EC%9E%A5%EB%A0%A4%EA%B8%88+%EC%B2%AD%EA%B5%AC%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1413587",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-19169783": {
+      "id": "ordin-19169783",
+      "title": "별지서식",
+      "role": "application",
+      "lawTitle": "안양시 입양가정 지원 조례",
+      "lawId": "1415114",
+      "annexId": "19169783",
+      "annexNumber": "000100",
+      "regionCode": "41170",
+      "regionLabel": "경기도 안양시",
+      "effectiveDate": "2019-10-28",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=148147765&flNm=%EB%B3%84%EC%A7%80%EC%84%9C%EC%8B%9D",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1415114",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-20088279": {
+      "id": "ordin-20088279",
+      "title": "[별지 제1호서식] 김해시 영유아 양육수당 지원 신청서",
+      "role": "application",
+      "lawTitle": "김해시 영유아 양육수당 지원 조례",
+      "lawId": "1416488",
+      "annexId": "20088279",
+      "annexNumber": "000100",
+      "regionCode": "48250",
+      "regionLabel": "경상남도 김해시",
+      "effectiveDate": "2023-07-13",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152423947&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EA%B9%80%ED%95%B4%EC%8B%9C+%EC%98%81%EC%9C%A0%EC%95%84+%EC%96%91%EC%9C%A1%EC%88%98%EB%8B%B9+%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1416488",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-19308337": {
+      "id": "ordin-19308337",
+      "title": "저소득 취약계층 국민건강보험료 지원신청서 등",
+      "role": "application",
+      "lawTitle": "김제시 저소득주민 국민건강보험료 지원에 관한 조례 시행규칙",
+      "lawId": "1418133",
+      "annexId": "19308337",
+      "annexNumber": "000100",
+      "regionCode": "52210",
+      "regionLabel": "전북특별자치도 김제시",
+      "effectiveDate": "2019-11-08",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=148537133&flNm=%EC%A0%80%EC%86%8C%EB%93%9D+%EC%B7%A8%EC%95%BD%EA%B3%84%EC%B8%B5+%EA%B5%AD%EB%AF%BC%EA%B1%B4%EA%B0%95%EB%B3%B4%ED%97%98%EB%A3%8C+%EC%A7%80%EC%9B%90%EC%8B%A0%EC%B2%AD%EC%84%9C+%EB%93%B1",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1418133",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-20768689": {
+      "id": "ordin-20768689",
+      "title": "[별지 제1호서식] 장애인가정 출산지원금 지급 신청서",
+      "role": "application",
+      "lawTitle": "수원시 장애인가정 출산 지원금 지급 조례 시행규칙",
+      "lawId": "1418533",
+      "annexId": "20768689",
+      "annexNumber": "000100",
+      "regionCode": "41110",
+      "regionLabel": "경기도 수원시",
+      "effectiveDate": "2019-11-12",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=155490839&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%9E%A5%EC%95%A0%EC%9D%B8%EA%B0%80%EC%A0%95+%EC%B6%9C%EC%82%B0%EC%A7%80%EC%9B%90%EA%B8%88+%EC%A7%80%EA%B8%89+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1418533",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-19870809": {
+      "id": "ordin-19870809",
+      "title": "[별지 제1호서식] 저소득층 맞춤형 지원 신청서",
+      "role": "application",
+      "lawTitle": "울산광역시 동구 저소득층 맞춤형 지원조례 시행규칙",
+      "lawId": "1419603",
+      "annexId": "19870809",
+      "annexNumber": "000200",
+      "regionCode": "31170",
+      "regionLabel": "울산광역시 동구",
+      "effectiveDate": "2019-10-31",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152022027&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%A0%80%EC%86%8C%EB%93%9D%EC%B8%B5+%EB%A7%9E%EC%B6%A4%ED%98%95+%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1419603",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-19312867": {
+      "id": "ordin-19312867",
+      "title": "효행수당 지급신청서",
+      "role": "application",
+      "lawTitle": "음성군 효행 장려 및 지원에 관한 조례",
+      "lawId": "1421043",
+      "annexId": "19312867",
+      "annexNumber": "000100",
+      "regionCode": "43770",
+      "regionLabel": "충청북도 음성군",
+      "effectiveDate": "2019-11-15",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=148561187&flNm=%ED%9A%A8%ED%96%89%EC%88%98%EB%8B%B9+%EC%A7%80%EA%B8%89%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1421043",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-22362127": {
+      "id": "ordin-22362127",
+      "title": "[별지 제2호서식] 친환경무상급식 경비 지원신청서",
+      "role": "application",
+      "lawTitle": "청양군 지역농산물 공공급식 지원에 관한 조례 시행규칙",
+      "lawId": "1422705",
+      "annexId": "22362127",
+      "annexNumber": "000200",
+      "regionCode": "44790",
+      "regionLabel": "충청남도 청양군",
+      "effectiveDate": "2019-11-21",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=168122023&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C2%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%B9%9C%ED%99%98%EA%B2%BD%EB%AC%B4%EC%83%81%EA%B8%89%EC%8B%9D+%EA%B2%BD%EB%B9%84+%EC%A7%80%EC%9B%90%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1422705",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-20592115": {
+      "id": "ordin-20592115",
+      "title": "[별지 제1호서식] 산모·신생아 건강관리 서비스 본인부담금 지원 신청서",
+      "role": "application",
+      "lawTitle": "장수군 산모ㆍ신생아 건강관리 서비스 지원 조례",
+      "lawId": "1428537",
+      "annexId": "20592115",
+      "annexNumber": "000100",
+      "regionCode": "52740",
+      "regionLabel": "전북특별자치도 장수군",
+      "effectiveDate": "2019-12-02",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=154565875&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%82%B0%EB%AA%A8%C2%B7%EC%8B%A0%EC%83%9D%EC%95%84+%EA%B1%B4%EA%B0%95%EA%B4%80%EB%A6%AC+%EC%84%9C%EB%B9%84%EC%8A%A4+%EB%B3%B8%EC%9D%B8%EB%B6%80%EB%8B%B4%EA%B8%88+%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1428537",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-21475725": {
+      "id": "ordin-21475725",
+      "title": "[별지 제5호서식] 해남사랑상품권 가맹점 등록 신청서",
+      "role": "application",
+      "lawTitle": "해남사랑상품권 발행 및 운영 조례 시행규칙",
+      "lawId": "1433121",
+      "annexId": "21475725",
+      "annexNumber": "000500",
+      "regionCode": "12790",
+      "regionLabel": "전남광주통합특별시 해남군",
+      "effectiveDate": "2019-12-16",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=161194805&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C5%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%ED%95%B4%EB%82%A8%EC%82%AC%EB%9E%91%EC%83%81%ED%92%88%EA%B6%8C+%EA%B0%80%EB%A7%B9%EC%A0%90+%EB%93%B1%EB%A1%9D+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1433121",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-21475727": {
+      "id": "ordin-21475727",
+      "title": "[별지 제5-1호서식] 해남사랑상품권 임시 가맹점 등록 신청서",
+      "role": "application",
+      "lawTitle": "해남사랑상품권 발행 및 운영 조례 시행규칙",
+      "lawId": "1433121",
+      "annexId": "21475727",
+      "annexNumber": "000600",
+      "regionCode": "12790",
+      "regionLabel": "전남광주통합특별시 해남군",
+      "effectiveDate": "2019-12-16",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=161194807&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C5-1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%ED%95%B4%EB%82%A8%EC%82%AC%EB%9E%91%EC%83%81%ED%92%88%EA%B6%8C+%EC%9E%84%EC%8B%9C+%EA%B0%80%EB%A7%B9%EC%A0%90+%EB%93%B1%EB%A1%9D+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1433121",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-21475729": {
+      "id": "ordin-21475729",
+      "title": "[별지 제6호서식] 노점상 확인서",
+      "role": "supporting",
+      "lawTitle": "해남사랑상품권 발행 및 운영 조례 시행규칙",
+      "lawId": "1433121",
+      "annexId": "21475729",
+      "annexNumber": "000700",
+      "regionCode": "12790",
+      "regionLabel": "전남광주통합특별시 해남군",
+      "effectiveDate": "2019-12-16",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=161194809&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C6%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EB%85%B8%EC%A0%90%EC%83%81+%ED%99%95%EC%9D%B8%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1433121",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-21475735": {
+      "id": "ordin-21475735",
+      "title": "[별지 제9호서식] 해남사랑상품권 가맹점 지정 변경 신청서",
+      "role": "application",
+      "lawTitle": "해남사랑상품권 발행 및 운영 조례 시행규칙",
+      "lawId": "1433121",
+      "annexId": "21475735",
+      "annexNumber": "001000",
+      "regionCode": "12790",
+      "regionLabel": "전남광주통합특별시 해남군",
+      "effectiveDate": "2019-12-16",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=161194815&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C9%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%ED%95%B4%EB%82%A8%EC%82%AC%EB%9E%91%EC%83%81%ED%92%88%EA%B6%8C+%EA%B0%80%EB%A7%B9%EC%A0%90+%EC%A7%80%EC%A0%95+%EB%B3%80%EA%B2%BD+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1433121",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-21475781": {
+      "id": "ordin-21475781",
+      "title": "[별지 제12호서식] 해남사랑상품권 환전 청구서",
+      "role": "application",
+      "lawTitle": "해남사랑상품권 발행 및 운영 조례 시행규칙",
+      "lawId": "1433121",
+      "annexId": "21475781",
+      "annexNumber": "001300",
+      "regionCode": "12790",
+      "regionLabel": "전남광주통합특별시 해남군",
+      "effectiveDate": "2019-12-16",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=161194901&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C12%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%ED%95%B4%EB%82%A8%EC%82%AC%EB%9E%91%EC%83%81%ED%92%88%EA%B6%8C+%ED%99%98%EC%A0%84+%EC%B2%AD%EA%B5%AC%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1433121",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-19981527": {
+      "id": "ordin-19981527",
+      "title": "[별지 제1호서식] 유족수당신청서",
+      "role": "application",
+      "lawTitle": "정읍시 동학농민혁명참여자 유족 수당 지원에 관한 조례",
+      "lawId": "1433491",
+      "annexId": "19981527",
+      "annexNumber": "000100",
+      "regionCode": "52180",
+      "regionLabel": "전북특별자치도 정읍시",
+      "effectiveDate": "2019-12-19",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152191491&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%9C%A0%EC%A1%B1%EC%88%98%EB%8B%B9%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1433491",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-20267523": {
+      "id": "ordin-20267523",
+      "title": "[별지 제1호서식] 교통카드신청서",
+      "role": "application",
+      "lawTitle": "옥천군 70세 이상 어르신 농어촌버스 무료 이용 지원 조례",
+      "lawId": "1434263",
+      "annexId": "20267523",
+      "annexNumber": "000100",
+      "regionCode": "43730",
+      "regionLabel": "충청북도 옥천군",
+      "effectiveDate": "2020-01-01",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=153169803&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EA%B5%90%ED%86%B5%EC%B9%B4%EB%93%9C%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1434263",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-20146719": {
+      "id": "ordin-20146719",
+      "title": "별지",
+      "role": "application",
+      "lawTitle": "창녕군 365안심 간병서비스 사업 지원에 관한 조례",
+      "lawId": "1438761",
+      "annexId": "20146719",
+      "annexNumber": "000100",
+      "regionCode": "48740",
+      "regionLabel": "경상남도 창녕군",
+      "effectiveDate": "2019-12-27",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152643357&flNm=%EB%B3%84%EC%A7%80",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1438761",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
     "ordin-22409877": {
       "id": "ordin-22409877",
       "title": "별지",
@@ -28389,6 +29521,482 @@
       "effectiveDate": "2022-02-04",
       "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=148205687&flNm=%EB%B3%84%EC%A7%80+2%ED%98%B8+%EC%84%9C%EC%8B%9D",
       "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1681881",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-20680359": {
+      "id": "ordin-20680359",
+      "title": "[별지] 교복구입비 지원신청서",
+      "role": "application",
+      "lawTitle": "봉화군 교복 지원 조례",
+      "lawId": "1759495",
+      "annexId": "20680359",
+      "annexNumber": "000100",
+      "regionCode": "47920",
+      "regionLabel": "경상북도 봉화군",
+      "effectiveDate": "2022-12-19",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=154826851&flNm=%5B%EB%B3%84%EC%A7%80%5D+%EA%B5%90%EB%B3%B5%EA%B5%AC%EC%9E%85%EB%B9%84+%EC%A7%80%EC%9B%90%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1759495",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-20494877": {
+      "id": "ordin-20494877",
+      "title": "별지 제1호서식",
+      "role": "application",
+      "lawTitle": "남동구 산후조리비 지원에 관한 조례",
+      "lawId": "1760759",
+      "annexId": "20494877",
+      "annexNumber": "000100",
+      "regionCode": "28200",
+      "regionLabel": "인천광역시 남동구",
+      "effectiveDate": "2022-12-22",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=154290629&flNm=%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1760759",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-20494879": {
+      "id": "ordin-20494879",
+      "title": "별지 제2호서식",
+      "role": "supporting",
+      "lawTitle": "남동구 산후조리비 지원에 관한 조례",
+      "lawId": "1760759",
+      "annexId": "20494879",
+      "annexNumber": "000200",
+      "regionCode": "28200",
+      "regionLabel": "인천광역시 남동구",
+      "effectiveDate": "2022-12-22",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=154290631&flNm=%EB%B3%84%EC%A7%80+%EC%A0%9C2%ED%98%B8%EC%84%9C%EC%8B%9D",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1760759",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-14310321": {
+      "id": "ordin-14310321",
+      "title": "공공임대주택 공동전기료 보조금 신청서",
+      "role": "application",
+      "lawTitle": "남양주시 공공임대주택 공동전기료 지원 조례",
+      "lawId": "1761019",
+      "annexId": "14310321",
+      "annexNumber": "000100",
+      "regionCode": "41360",
+      "regionLabel": "경기도 남양주시",
+      "effectiveDate": "2023-01-01",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=122725719&flNm=%EA%B3%B5%EA%B3%B5%EC%9E%84%EB%8C%80%EC%A3%BC%ED%83%9D+%EA%B3%B5%EB%8F%99%EC%A0%84%EA%B8%B0%EB%A3%8C+%EB%B3%B4%EC%A1%B0%EA%B8%88+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1761019",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-20419891": {
+      "id": "ordin-20419891",
+      "title": "[별지 서식] 독립유공자 수당 지급신청(변경신고)서",
+      "role": "application",
+      "lawTitle": "부산광역시 사하구 독립유공자 지원 조례",
+      "lawId": "1761783",
+      "annexId": "20419891",
+      "annexNumber": "000100",
+      "regionCode": "26380",
+      "regionLabel": "부산광역시 사하구",
+      "effectiveDate": "2022-12-23",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=154148903&flNm=%5B%EB%B3%84%EC%A7%80+%EC%84%9C%EC%8B%9D%5D+%EB%8F%85%EB%A6%BD%EC%9C%A0%EA%B3%B5%EC%9E%90+%EC%88%98%EB%8B%B9+%EC%A7%80%EA%B8%89%EC%8B%A0%EC%B2%AD%28%EB%B3%80%EA%B2%BD%EC%8B%A0%EA%B3%A0%29%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1761783",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-19365589": {
+      "id": "ordin-19365589",
+      "title": "입학축하금 신청서",
+      "role": "application",
+      "lawTitle": "장성군 초ㆍ중ㆍ고등학교 입학축하금 지원 조례",
+      "lawId": "1762251",
+      "annexId": "19365589",
+      "annexNumber": "000100",
+      "regionCode": "12840",
+      "regionLabel": "전남광주통합특별시 장성군",
+      "effectiveDate": "2023-01-01",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=148761453&flNm=%EC%9E%85%ED%95%99%EC%B6%95%ED%95%98%EA%B8%88+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1762251",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-20887143": {
+      "id": "ordin-20887143",
+      "title": "[별지 제1호서식] 의왕사랑 상품권 가맹점 등록 신청서",
+      "role": "application",
+      "lawTitle": "의왕사랑 상품권 관리 및 운용 조례",
+      "lawId": "1768661",
+      "annexId": "20887143",
+      "annexNumber": "000100",
+      "regionCode": "41430",
+      "regionLabel": "경기도 의왕시",
+      "effectiveDate": "2022-12-30",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=157029411&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%9D%98%EC%99%95%EC%82%AC%EB%9E%91+%EC%83%81%ED%92%88%EA%B6%8C+%EA%B0%80%EB%A7%B9%EC%A0%90+%EB%93%B1%EB%A1%9D+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1768661",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-20887145": {
+      "id": "ordin-20887145",
+      "title": "[별지 제2호시석] 의왕사랑 상품권 가맹점 등록 변경 신청서",
+      "role": "application",
+      "lawTitle": "의왕사랑 상품권 관리 및 운용 조례",
+      "lawId": "1768661",
+      "annexId": "20887145",
+      "annexNumber": "000200",
+      "regionCode": "41430",
+      "regionLabel": "경기도 의왕시",
+      "effectiveDate": "2022-12-30",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=157029413&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C2%ED%98%B8%EC%8B%9C%EC%84%9D%5D+%EC%9D%98%EC%99%95%EC%82%AC%EB%9E%91+%EC%83%81%ED%92%88%EA%B6%8C+%EA%B0%80%EB%A7%B9%EC%A0%90+%EB%93%B1%EB%A1%9D+%EB%B3%80%EA%B2%BD+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1768661",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-20887147": {
+      "id": "ordin-20887147",
+      "title": "[별지 제3호시석]의왕사랑 상품권 가맹점 등록 해지 신청서",
+      "role": "application",
+      "lawTitle": "의왕사랑 상품권 관리 및 운용 조례",
+      "lawId": "1768661",
+      "annexId": "20887147",
+      "annexNumber": "000300",
+      "regionCode": "41430",
+      "regionLabel": "경기도 의왕시",
+      "effectiveDate": "2022-12-30",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=157029415&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C3%ED%98%B8%EC%8B%9C%EC%84%9D%5D%EC%9D%98%EC%99%95%EC%82%AC%EB%9E%91+%EC%83%81%ED%92%88%EA%B6%8C+%EA%B0%80%EB%A7%B9%EC%A0%90+%EB%93%B1%EB%A1%9D+%ED%95%B4%EC%A7%80+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1768661",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-20986187": {
+      "id": "ordin-20986187",
+      "title": "[별지 서식] 의왕시 교복구입비 지원 신청서",
+      "role": "application",
+      "lawTitle": "의왕시 교복 지원 조례",
+      "lawId": "1768671",
+      "annexId": "20986187",
+      "annexNumber": "000100",
+      "regionCode": "41430",
+      "regionLabel": "경기도 의왕시",
+      "effectiveDate": "2022-12-30",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=157487477&flNm=%5B%EB%B3%84%EC%A7%80+%EC%84%9C%EC%8B%9D%5D+%EC%9D%98%EC%99%95%EC%8B%9C+%EA%B5%90%EB%B3%B5%EA%B5%AC%EC%9E%85%EB%B9%84+%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1768671",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-22515097": {
+      "id": "ordin-22515097",
+      "title": "[별지 제2호서식] 참전유공자 사망위로금 지급신청서",
+      "role": "application",
+      "lawTitle": "속초시 참전유공자 지원 조례",
+      "lawId": "1768829",
+      "annexId": "22515097",
+      "annexNumber": "000200",
+      "regionCode": "51210",
+      "regionLabel": "강원특별자치도 속초시",
+      "effectiveDate": "2023-01-01",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=168796887&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C2%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%B0%B8%EC%A0%84%EC%9C%A0%EA%B3%B5%EC%9E%90+%EC%82%AC%EB%A7%9D%EC%9C%84%EB%A1%9C%EA%B8%88+%EC%A7%80%EA%B8%89%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1768829",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-22515099": {
+      "id": "ordin-22515099",
+      "title": "[별지 제3호서식] 참전유공자 배우자 수당 지급 신청서",
+      "role": "application",
+      "lawTitle": "속초시 참전유공자 지원 조례",
+      "lawId": "1768829",
+      "annexId": "22515099",
+      "annexNumber": "000300",
+      "regionCode": "51210",
+      "regionLabel": "강원특별자치도 속초시",
+      "effectiveDate": "2023-01-01",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=168796889&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C3%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%B0%B8%EC%A0%84%EC%9C%A0%EA%B3%B5%EC%9E%90+%EB%B0%B0%EC%9A%B0%EC%9E%90+%EC%88%98%EB%8B%B9+%EC%A7%80%EA%B8%89+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1768829",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-19888787": {
+      "id": "ordin-19888787",
+      "title": "[별지 제1호서식] 8282민원처리 신청서",
+      "role": "application",
+      "lawTitle": "청송군 8282민원처리에 관한 조례",
+      "lawId": "1770185",
+      "annexId": "19888787",
+      "annexNumber": "000100",
+      "regionCode": "47750",
+      "regionLabel": "경상북도 청송군",
+      "effectiveDate": "2023-01-01",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152049937&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+8282%EB%AF%BC%EC%9B%90%EC%B2%98%EB%A6%AC+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1770185",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-20191133": {
+      "id": "ordin-20191133",
+      "title": "[별지 제1호서식] 안양시 학생복지 지원금 신청서",
+      "role": "application",
+      "lawTitle": "안양시 학생복지 지원 조례",
+      "lawId": "1773899",
+      "annexId": "20191133",
+      "annexNumber": "000100",
+      "regionCode": "41170",
+      "regionLabel": "경기도 안양시",
+      "effectiveDate": "2022-12-30",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152832913&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%95%88%EC%96%91%EC%8B%9C+%ED%95%99%EC%83%9D%EB%B3%B5%EC%A7%80+%EC%A7%80%EC%9B%90%EA%B8%88+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1773899",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-14701579": {
+      "id": "ordin-14701579",
+      "title": "별지",
+      "role": "application",
+      "lawTitle": "무안군 초ㆍ중ㆍ고등학생 입학 축하금 지원 조례",
+      "lawId": "1774053",
+      "annexId": "14701579",
+      "annexNumber": "000100",
+      "regionCode": "12810",
+      "regionLabel": "전남광주통합특별시 무안군",
+      "effectiveDate": "2022-12-30",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=123895665&flNm=%EB%B3%84%EC%A7%80",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1774053",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-22536775": {
+      "id": "ordin-22536775",
+      "title": "[별지 제2호서식] 개인정보 제공 및 고유식별 정보 처리 동의서",
+      "role": "consent",
+      "lawTitle": "영광군 화재피해주민 지원에 관한 조례",
+      "lawId": "1774251",
+      "annexId": "22536775",
+      "annexNumber": "000200",
+      "regionCode": "12830",
+      "regionLabel": "전남광주통합특별시 영광군",
+      "effectiveDate": "2022-12-30",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=168940669&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C2%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EA%B0%9C%EC%9D%B8%EC%A0%95%EB%B3%B4+%EC%A0%9C%EA%B3%B5+%EB%B0%8F+%EA%B3%A0%EC%9C%A0%EC%8B%9D%EB%B3%84+%EC%A0%95%EB%B3%B4+%EC%B2%98%EB%A6%AC+%EB%8F%99%EC%9D%98%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1774251",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-20393337": {
+      "id": "ordin-20393337",
+      "title": "[별지 서식] 보훈예우수당 지급신청서",
+      "role": "application",
+      "lawTitle": "인천광역시 국가보훈대상자 등 예우 및 지원에 관한 조례 시행규칙",
+      "lawId": "1774765",
+      "annexId": "20393337",
+      "annexNumber": "000100",
+      "regionCode": "28000",
+      "regionLabel": "인천광역시",
+      "effectiveDate": "2023-01-01",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=154028395&flNm=%5B%EB%B3%84%EC%A7%80+%EC%84%9C%EC%8B%9D%5D+%EB%B3%B4%ED%9B%88%EC%98%88%EC%9A%B0%EC%88%98%EB%8B%B9+%EC%A7%80%EA%B8%89%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1774765",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-20393379": {
+      "id": "ordin-20393379",
+      "title": "[별지 서식] 전몰군경 유가족수당 지급신청서",
+      "role": "application",
+      "lawTitle": "인천광역시 전몰군경 유가족 지원에 관한 조례 시행규칙",
+      "lawId": "1774767",
+      "annexId": "20393379",
+      "annexNumber": "000100",
+      "regionCode": "28000",
+      "regionLabel": "인천광역시",
+      "effectiveDate": "2023-01-01",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=154028361&flNm=%5B%EB%B3%84%EC%A7%80+%EC%84%9C%EC%8B%9D%5D+%EC%A0%84%EB%AA%B0%EA%B5%B0%EA%B2%BD+%EC%9C%A0%EA%B0%80%EC%A1%B1%EC%88%98%EB%8B%B9+%EC%A7%80%EA%B8%89%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1774767",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-21811465": {
+      "id": "ordin-21811465",
+      "title": "[별지 제1호서식] 순창군 장애인 추가수당 지급 신청서",
+      "role": "application",
+      "lawTitle": "순창군 장애인 추가수당 지원 조례",
+      "lawId": "1775841",
+      "annexId": "21811465",
+      "annexNumber": "000100",
+      "regionCode": "52770",
+      "regionLabel": "전북특별자치도 순창군",
+      "effectiveDate": "2022-12-26",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=163886743&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%88%9C%EC%B0%BD%EA%B5%B0+%EC%9E%A5%EC%95%A0%EC%9D%B8+%EC%B6%94%EA%B0%80%EC%88%98%EB%8B%B9+%EC%A7%80%EA%B8%89+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1775841",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-20191135": {
+      "id": "ordin-20191135",
+      "title": "[별지 제2호서식] 경기도,안양시 대안교육기관 등 학생 교복 지원 신청서",
+      "role": "application",
+      "lawTitle": "안양시 학생복지 지원 조례",
+      "lawId": "1773899",
+      "annexId": "20191135",
+      "annexNumber": "000200",
+      "regionCode": "41170",
+      "regionLabel": "경기도 안양시",
+      "effectiveDate": "2022-12-30",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152832915&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C2%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EA%B2%BD%EA%B8%B0%EB%8F%84%2C%EC%95%88%EC%96%91%EC%8B%9C+%EB%8C%80%EC%95%88%EA%B5%90%EC%9C%A1%EA%B8%B0%EA%B4%80+%EB%93%B1+%ED%95%99%EC%83%9D+%EA%B5%90%EB%B3%B5+%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1773899",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-19630839": {
+      "id": "ordin-19630839",
+      "title": "[별제 제1호 서식]카드 재발급 신청서",
+      "role": "application",
+      "lawTitle": "함양군 저소득노인 이미용 바우처 지원 조례",
+      "lawId": "1779143",
+      "annexId": "19630839",
+      "annexNumber": "000200",
+      "regionCode": "48870",
+      "regionLabel": "경상남도 함양군",
+      "effectiveDate": "2022-12-29",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=150422697&flNm=%5B%EB%B3%84%EC%A0%9C+%EC%A0%9C1%ED%98%B8+%EC%84%9C%EC%8B%9D%5D%EC%B9%B4%EB%93%9C+%EC%9E%AC%EB%B0%9C%EA%B8%89+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1779143",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-22573333": {
+      "id": "ordin-22573333",
+      "title": "[별지 제22호서식] 수급자 수도 사용료 감면신청서",
+      "role": "application",
+      "lawTitle": "제주특별자치도 수도급수 조례 시행규칙",
+      "lawId": "1779435",
+      "annexId": "22573333",
+      "annexNumber": "002500",
+      "regionCode": "50000",
+      "regionLabel": "제주특별자치도",
+      "effectiveDate": "2023-01-17",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=169046095&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C22%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%88%98%EA%B8%89%EC%9E%90+%EC%88%98%EB%8F%84+%EC%82%AC%EC%9A%A9%EB%A3%8C+%EA%B0%90%EB%A9%B4%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1779435",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-16095225": {
+      "id": "ordin-16095225",
+      "title": "별지 제1호",
+      "role": "application",
+      "lawTitle": "광양시 국가보훈대상자 등 예우 및 지원에 관한 조례",
+      "lawId": "1782391",
+      "annexId": "16095225",
+      "annexNumber": "000100",
+      "regionCode": "12190",
+      "regionLabel": "전남광주통합특별시 광양시",
+      "effectiveDate": "2023-02-08",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=131776987&flNm=%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1782391",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-19993161": {
+      "id": "ordin-19993161",
+      "title": "[별지 서식] 초등학교 입학축하금 신청서",
+      "role": "application",
+      "lawTitle": "파주시 초등학교 입학축하금 지원 조례",
+      "lawId": "1782515",
+      "annexId": "19993161",
+      "annexNumber": "000100",
+      "regionCode": "41480",
+      "regionLabel": "경기도 파주시",
+      "effectiveDate": "2023-02-09",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152203201&flNm=%5B%EB%B3%84%EC%A7%80+%EC%84%9C%EC%8B%9D%5D+%EC%B4%88%EB%93%B1%ED%95%99%EA%B5%90+%EC%9E%85%ED%95%99%EC%B6%95%ED%95%98%EA%B8%88+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1782515",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-20003531": {
+      "id": "ordin-20003531",
+      "title": "[별지 제1호서식] 입양축하금 지원 신청서",
+      "role": "application",
+      "lawTitle": "성남시 입양축하금 지원 조례",
+      "lawId": "1784001",
+      "annexId": "20003531",
+      "annexNumber": "000100",
+      "regionCode": "41130",
+      "regionLabel": "경기도 성남시",
+      "effectiveDate": "2023-01-01",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152238519&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%9E%85%EC%96%91%EC%B6%95%ED%95%98%EA%B8%88+%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1784001",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-20213643": {
+      "id": "ordin-20213643",
+      "title": "[별지 제1호 서식] 순천시미생물제제 신청서",
+      "role": "application",
+      "lawTitle": "순천시 미생물센터 관리 운영 조례",
+      "lawId": "1786449",
+      "annexId": "20213643",
+      "annexNumber": "000200",
+      "regionCode": "12150",
+      "regionLabel": "전남광주통합특별시 순천시",
+      "effectiveDate": "2023-02-28",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152886541&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8+%EC%84%9C%EC%8B%9D%5D+%EC%88%9C%EC%B2%9C%EC%8B%9C%EB%AF%B8%EC%83%9D%EB%AC%BC%EC%A0%9C%EC%A0%9C+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1786449",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-17263733": {
+      "id": "ordin-17263733",
+      "title": "별지 1~2",
+      "role": "application",
+      "lawTitle": "광주시 입양가정 지원에 관한 조례",
+      "lawId": "1787813",
+      "annexId": "17263733",
+      "annexNumber": "000100",
+      "regionCode": "41610",
+      "regionLabel": "경기도 광주시",
+      "effectiveDate": "2023-03-02",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=138494009&flNm=%EB%B3%84%EC%A7%80+1~2",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1787813",
+      "fetchedAt": "2026-10-18",
+      "sourceKind": "ordin",
+      "dateKind": "effective"
+    },
+    "ordin-19438597": {
+      "id": "ordin-19438597",
+      "title": "별지 서식",
+      "role": "application",
+      "lawTitle": "논산시 학생 교복 지원 조례",
+      "lawId": "1789331",
+      "annexId": "19438597",
+      "annexNumber": "000100",
+      "regionCode": "44230",
+      "regionLabel": "충청남도 논산시",
+      "effectiveDate": "2023-03-10",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=148978271&flNm=%EB%B3%84%EC%A7%80+%EC%84%9C%EC%8B%9D",
+      "lawUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1789331",
       "fetchedAt": "2026-10-18",
       "sourceKind": "ordin",
       "dateKind": "effective"
@@ -30200,6 +31808,36 @@
         }
       ]
     },
+    "ordin-19169783": {
+      "role": "application",
+      "roleBasis": "제7조가 입양신고 후 축하금 및 입학일 후 입학준비금 신청에 동일 별지 제1호를 지정한다. 실제 신청서는 입양부모·아동·입양일·계좌·서명, 입학통지서 첨부 항목을 갖추고 두 사이트 사업이 명시한 신청서와 일치한다. 제10조의 별지 제2·3호 신청·관리대장은 행정용으로 제외한다.",
+      "roleEvidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1415114",
+      "roleCheckedAt": "2026-10-18",
+      "sha256": "d549e2dab4979b18ec50745e04862800b61df9be3dd15e9ae43afb33a38aa913",
+      "reviewedParts": [
+        {
+          "number": "1",
+          "title": "입양축하금 등 지급 신청서",
+          "use": "main",
+          "author": "입양아동 보호자"
+        }
+      ]
+    },
+    "ordin-20146719": {
+      "role": "application",
+      "roleBasis": "제3조제2항은 65세 이상·의료급여 등 지원대상자가 별지 간병서비스 신청서를 지정병원장에게 제출하도록 한다. 실제 원본은 환자·생년월일·주소·신청기간·지원대상구분·신청인과 환자의 관계·서명을 받는 환자 측 신청서이다. 사이트의 병원 제출 후 병원이 보건소로 청구하는 흐름과 일치하며 병원 자체 정산 서식과 구분한다.",
+      "roleEvidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1438761",
+      "roleCheckedAt": "2026-10-18",
+      "sha256": "b98daff15d4418c708f02c56885a5852043bd685adb602df80321580add534d7",
+      "reviewedParts": [
+        {
+          "number": "별지",
+          "title": "간병서비스 신청서",
+          "use": "main",
+          "author": "환자 또는 환자 측 신청인"
+        }
+      ]
+    },
     "ordin-22409877": {
       "role": "application",
       "roleBasis": "묶음 별지1은 실제 경작자가 피해작물·가해동물·피해면적을 신고하는 서식이며 조례 제5조의 피해보상 절차와 일치한다. 별지2는 기관 조사, 별지3은 예방시설, 별지4는 포획보상으로 이 연결에서는 작성 대상에서 제외한다. 실제 원본 전체 본문, 현행 법규의 지정 별지, 원본 SHA256 및 flSeq를 대조했다.",
@@ -30737,6 +32375,87 @@
           "title": "위임장(전입장려금 신청)",
           "use": "conditional",
           "author": "전입장려금 신청을 위임하는 전입자"
+        }
+      ]
+    },
+    "ordin-20494877": {
+      "role": "application",
+      "roleBasis": "산모 또는 배우자가 산후조리원·이용비·출생아·계좌 및 지원대상 증빙을 제출하는 산후조리비 신청서다. 제6조와 사이트 퇴소 후 신청절차가 일치한다. 실제 원본 전체 본문, 현행 법규의 지정 별지, 원본 SHA256 및 flSeq를 대조했다.",
+      "roleEvidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1760759",
+      "roleCheckedAt": "2026-10-18",
+      "sha256": "26425c9b54c67d1949fd94fbaf69eadf249b6d0bd90d0bf5d08c4fa529aa88ed",
+      "reviewedParts": [
+        {
+          "number": "1",
+          "title": "산후조리비 지원 신청서",
+          "use": "main",
+          "author": "산모 또는 배우자"
+        }
+      ]
+    },
+    "ordin-20494879": {
+      "role": "supporting",
+      "roleBasis": "산후조리원이 산모의 이용기간·결제액을 확인하는 서식으로 제6조제2항제3호와 사이트가 주민 신청에 첨부할 확인서로 직접 명시한다. 기관이 작성하되 신청인이 제출받는 증빙이므로 additional supporting이다. 실제 원본 전체 본문, 현행 법규의 지정 별지, 원본 SHA256 및 flSeq를 대조했다.",
+      "roleEvidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1760759",
+      "roleCheckedAt": "2026-10-18"
+    },
+    "ordin-14701579": {
+      "role": "application",
+      "roleBasis": "초중고 입학생의 학교·입학일과 보호자 관계·통장·입학확인서를 제출하는 축하금 신청서로 제6조와 사이트 보호자 읍면 신청이 일치한다. 실제 원본 전체 본문, 현행 법규의 지정 별지, 원본 SHA256 및 flSeq를 대조했다.",
+      "roleEvidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1774053",
+      "roleCheckedAt": "2026-10-18",
+      "sha256": "9aa58975d7737b0e06e7e2f060218c7f9ce07cbc425e965459b692372dfd384c",
+      "reviewedParts": [
+        {
+          "number": "단일",
+          "title": "입학 축하금 신청서",
+          "use": "main",
+          "author": "입학생의 보호자"
+        }
+      ]
+    },
+    "ordin-16095225": {
+      "role": "application",
+      "roleBasis": "광양 국가보훈대상자가 명예수당 또는 의료비수당을 선택하고 보훈번호·신청인·계좌를 기재한다. 제9조제1항1·2호와 사이트 두 수당에 일치하며 사망위로금은 다른 별지라 배제한다. 실제 원본 전체 본문, 현행 법규의 지정 별지, 원본 SHA256 및 flSeq를 대조했다.",
+      "roleEvidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1782391",
+      "roleCheckedAt": "2026-10-18",
+      "sha256": "f7e93ca89572c4ae8c795528c5f1ae974ce343547612a3a282beb530cb541ccd",
+      "reviewedParts": [
+        {
+          "number": "1",
+          "title": "국가보훈대상자 보훈명예수당·보훈의료비수당 지급신청서",
+          "use": "main",
+          "author": "해당 지원을 신청하는 사람"
+        }
+      ]
+    },
+    "ordin-17263733": {
+      "role": "application",
+      "roleBasis": "2개 별지를 모두 읽고 1호가 입양아동의 초등입학 지원금 신청, 2호는 신청·지급대장임을 확인했다. 제7조와 사이트 광주시 입양아동 입학지원금에 맞는 1호만 신청 부분으로 연결한다. 실제 원본 전체 본문, 현행 법규의 지정 별지, 원본 SHA256 및 flSeq를 대조했다.",
+      "roleEvidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1787813",
+      "roleCheckedAt": "2026-10-18",
+      "sha256": "14a3a9b05a033916d784c6be330873cb1e355941b2fc16a2b6d951c5d355f208",
+      "reviewedParts": [
+        {
+          "number": "1",
+          "title": "입양아동 입학지원금 신청서",
+          "use": "main",
+          "author": "입양아동의 부모 등 신청인"
+        }
+      ]
+    },
+    "ordin-19438597": {
+      "role": "application",
+      "roleBasis": "학생 또는 보호자의 교복구입비 실비 신청서이며 제6조제2항은 관외학교 및 관내 미인가 대안교육기관의 별지 신청을 규정한다. 사이트는 관내 고등학교 현물지원 외 대안교육기관 지원도 명시하므로 그 대안교육기관 개별신청 경로만 조건부 연결한다. 학교 일괄구매 학생에게 작성 의무를 추가하지 않는다. 실제 원본 전체 본문, 현행 법규의 지정 별지, 원본 SHA256 및 flSeq를 대조했다.",
+      "roleEvidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1789331",
+      "roleCheckedAt": "2026-10-18",
+      "sha256": "35a2e54a37ed2e382bb8950ab38277b47bdc751c6fbf3660c85cf7f2dcf9137c",
+      "reviewedParts": [
+        {
+          "number": "단일",
+          "title": "교복구입비 지원 신청서",
+          "use": "main",
+          "author": "학생 또는 보호자"
         }
       ]
     }

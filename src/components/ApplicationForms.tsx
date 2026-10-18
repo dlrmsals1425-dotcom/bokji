@@ -69,7 +69,7 @@ export function ApplicationForms({ program, parentMode = false }: { program: Pro
               const preview = pdf ?? (original ? lawPortalUrl(form.officialPdfUrl) : null);
               const originalType = original ? FILE_TYPE.exec(original)?.[1].toUpperCase() : undefined;
               return <li key={form.id}>
-                <p className={styles.kind}>{link.use === "main" ? "신청서" : link.use === "conditional" ? "해당하는 경우" : "함께 확인할 서류"}</p>
+                <p className={styles.kind}>{link.municipalApplicationReference ? `${link.municipalApplicationReference.municipality} 방문 접수용` : link.use === "main" ? "신청서" : link.use === "conditional" ? "해당하는 경우" : "함께 확인할 서류"}</p>
                 <h4>{title}</h4>
                 {link.condition && <p>{link.condition}</p>}
                 <div className={styles.actions}>

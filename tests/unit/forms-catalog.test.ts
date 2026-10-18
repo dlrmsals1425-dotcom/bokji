@@ -79,11 +79,19 @@ describe("generated national forms catalogue", () => {
     for (const form of Object.values(catalog.forms)) {
       if (["administrative", "deleted", "reference"].includes(form.role)) expect(form.file).toBeUndefined();
     }
-    expect(programs.filter(program => program.areaKey !== "g41280").every(program => program.links.every(link => catalog.forms[link.formId].regionCode !== "41280"))).toBe(true);
+    for(const program of programs.filter(program=>program.areaKey!=="g41280")) for(const link of program.links.filter(link=>catalog.forms[link.formId].regionCode==="41280")) {
+      expect(link.scopeBasis).toBe("municipal-application-reference");
+      expect(link.municipalApplicationReference?.sigungu).toBe("41280");
+    }
     const sickLeave = programs.find(program => program.id === "g41280.bokjiro-WLF00004751")!;
     expect(sickLeave.links.map(link=>link.formId)).toEqual(["ordin-19996047"]);
     expect(sickLeave.status).toBe("available");
     expect(catalog.forms["ordin-19996047"].lawTitle).toContain("유급병가");
+  });
+  it("holds a current annex whose printed allowance rates conflict with current official rates",()=>{
+    const fid="ordin-22706053";
+    for(const pid of ["s47000.gov24-647000000122","s47000.bokjiro-WLF00004401"]) expect(programs.find(program=>program.id===pid)?.links.some(link=>link.formId===fid)).toBe(false);
+    expect(catalog.forms[fid].file).toBeUndefined();
   });
   it("excludes source-reviewed purpose mismatches even when the law and application heading match",()=>{
     for (const [programId,wrongForm] of [

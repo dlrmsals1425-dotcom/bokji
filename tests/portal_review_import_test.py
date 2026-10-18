@@ -1,5 +1,6 @@
 """검토 원문을 공개 전 연결 자료로 옮기는 단계만 본다. 실제 파이프라인은 돌리지 않는다."""
 import importlib.util
+import copy
 import json
 import tempfile
 import unittest
@@ -214,6 +215,29 @@ class BuildTest(unittest.TestCase):
         self.assertEqual(json.dumps(first,ensure_ascii=False),json.dumps(second,ensure_ascii=False))
 
 class ScopeBasisTest(unittest.TestCase):
+    def test_a_municipal_form_for_a_provincial_benefit_requires_its_exact_local_route(self):
+        p=program('s41000.test',scope='sido',region={'sido':'41000'},url='https://www.gov.kr/portal/rcvfvrSvc/dtlEx/EXACT')
+        ref={'sido':'41000','sigungu':'41170','municipality':'안양시','programEvidenceUrl':p['url'],
+            'checkedAt':'2026-10-16','httpStatus':200,'programSpecific':True,
+            'reference':'공식 도 사업 안내는 안양시 담당부서와 거주지 시군 방문 신청 절차를 구체적으로 명시한다.',
+            'municipalArticle':'안양시 학생복지 지원 조례 제7조',
+            'formEvidence':'원본의 안양시 학생 주소와 신청인 서명 및 안양시장 수신 부분을 모두 확인했다.',
+            'scopeRestriction':'안양시 거주자의 안양시 방문 접수 전용'}
+        r=row('ordin-90002',[p['id']],sourceKind='ordin',lawTitle='안양시 학생복지 지원 조례',lawId='88',
+            regionCode='41170',regionLabel='경기도 안양시',use='conditional',condition='안양시 거주자의 안양시 접수에만 사용한다.',
+            verificationStatus='verified',officialAttachmentMatched=True,sha256='a'*64,
+            programEvidenceUrl=p['url'],municipalApplicationReference=ref)
+        out=self.link(r,p)
+        self.assertEqual(out['scopeBasis'],'municipal-application-reference')
+        self.assertEqual(out['municipalApplicationReference']['sigungu'],'41170')
+        for change in [{'use':'main'},{'condition':'모든 도민 사용'},{'programEvidenceUrl':p['url']+'OTHER'},
+                       {'verificationStatus':'candidate'},{'sha256':''}]:
+            with self.subTest(change=change),self.assertRaises(ValueError):self.link({**r,**change},p)
+        for change in [{'sido':'43000'},{'sigungu':'41280'},{'municipalArticle':'다른 시 학생복지 조례 제7조'},
+                       {'scopeRestriction':'도내 모든 주민 사용'},{'programSpecific':False}]:
+            bad=copy.deepcopy(r);bad['municipalApplicationReference'].update(change)
+            with self.subTest(change=change),self.assertRaises(ValueError):self.link(bad,p)
+
     def link(self,record,program_record):
         temp=tempfile.TemporaryDirectory();self.addCleanup(temp.cleanup)
         file=Path(temp.name)/'national-reviewed.json'

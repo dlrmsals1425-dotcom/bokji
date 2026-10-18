@@ -55,7 +55,7 @@ OVERRIDE_FILE=ROOT/'pipeline/forms/reviews/full-body-role-overrides.json'
 # New full-body reviews are data, not an ever-growing list of IDs in code.
 # Each override is bound to the exact original SHA and still passes the gates below.
 FULL_BODY_ROLE_OVERRIDES=json.loads(OVERRIDE_FILE.read_text(encoding='utf-8-sig')).get('forms',{}) if OVERRIDE_FILE.exists() else {}
-SCOPE_BASES=frozenset({'provincial-law-reference','national-law-reference','official-application-reference'})
+SCOPE_BASES=frozenset({'provincial-law-reference','national-law-reference','official-application-reference','municipal-application-reference'})
 def read(file):return json.loads(file.read_text(encoding='utf-8-sig'))
 def day(value):
     value=str(value)
@@ -151,6 +151,29 @@ def scope_basis(record,program,form):
     same_province=program.get('scope')=='sigungu' and form['regionCode']==region.get('sido')
     national_reference=form['regionCode']=='national' and form.get('sourceKind') in {'law','rule'} and program.get('scope') in {'sido','sigungu'}
     declared=str(record.get('scopeBasis') or '').strip()
+    municipal=record.get('municipalApplicationReference')
+    if municipal or declared=='municipal-application-reference':
+        ref=municipal if isinstance(municipal,dict) else {}
+        city=str(ref.get('municipality',''));code=str(ref.get('sigungu',''))
+        sources=[program.get('url')]+[s.get('url') for s in program.get('sources',[]) if isinstance(s,dict)]
+        government=lambda url: bool(url) and urlsplit(url).scheme=='https' and bool(re.fullmatch(r'gov\.kr|.+\.(?:go|gov)\.kr',urlsplit(url).hostname or ''))
+        if (declared not in ('','municipal-application-reference') or program.get('scope')!='sido'
+            or form.get('sourceKind')!='ordin' or ref.get('sido')!=region.get('sido') or code!=form['regionCode']
+            or not re.fullmatch(r'\d{5}',code) or code[:2]+'000'!=ref.get('sido') or code==ref.get('sido')
+            or len(city)<2 or city not in form['regionLabel']
+            or record.get('use')!='conditional' or city not in str(record.get('condition',''))
+            or ref.get('httpStatus')!=200 or ref.get('programSpecific') is not True or ref.get('checkedAt')!=record.get('checkedAt')
+            or len(str(ref.get('reference','')))<30 or city not in str(ref.get('reference',''))
+            or len(str(ref.get('formEvidence','')))<30 or city not in str(ref.get('formEvidence',''))
+            or city not in str(ref.get('scopeRestriction','')) or not re.search(r'전용|한정',str(ref.get('scopeRestriction','')))
+            or matcher.normalize_law(ref.get('municipalArticle'))!=matcher.normalize_law(form['lawTitle'])
+            or not re.search(r'제\d+조',str(ref.get('municipalArticle','')))
+            or record.get('programEvidenceUrl') not in sources or not government(record.get('programEvidenceUrl'))
+            or not government(ref.get('programEvidenceUrl'))
+            or record.get('verificationStatus')!='verified' or record.get('officialAttachmentMatched') is not True
+            or not re.fullmatch(r'[a-f0-9]{64}',str(record.get('sha256','')))):
+            raise ValueError('Municipal application route lacks exact conditional source evidence: '+record['formId'])
+        return 'municipal-application-reference'
     if not declared:
         # 세종·제주처럼 시·구 사업이 인용한 도 조례 서식만 적는다. 전국 서식의 적용 범위는
         # 검토가 밝힌 경우에만 쓰고 여기서 넓히지 않는다.
@@ -207,7 +230,7 @@ def build(programs,files):
             for program_id in record['programIds']:
                 program=programs.get(program_id)
                 if not program:raise ValueError('Unknown audited program: '+program_id)
-                link={key:record[key] for key in ['formId','use','condition','evidenceUrl','evidenceNote','checkedAt','displayTitle'] if key in record}
+                link={key:record[key] for key in ['formId','use','condition','evidenceUrl','evidenceNote','checkedAt','displayTitle','programEvidenceUrl','municipalApplicationReference'] if key in record}
                 link['programIds']=[program_id]
                 basis=scope_basis(record,program,forms[form_id])
                 if basis:link['scopeBasis']=basis

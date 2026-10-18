@@ -38,7 +38,21 @@ export interface FormLink {
   evidenceUrl: string;
   evidenceNote: string;
   checkedAt: string;
-  scopeBasis?: "provincial-law-reference" | "national-law-reference" | "official-application-reference";
+  scopeBasis?: "provincial-law-reference" | "national-law-reference" | "official-application-reference" | "municipal-application-reference";
+  programEvidenceUrl?: string;
+  municipalApplicationReference?: {
+    sido: string;
+    sigungu: string;
+    municipality: string;
+    programEvidenceUrl: string;
+    checkedAt: string;
+    httpStatus: number;
+    programSpecific: boolean;
+    reference: string;
+    municipalArticle: string;
+    formEvidence: string;
+    scopeRestriction: string;
+  };
   scopeReference?: {
     kind: "cited-local-law" | "program-documents";
     referencedLawTitle: string;

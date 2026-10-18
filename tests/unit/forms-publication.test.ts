@@ -7,6 +7,20 @@ const form: ApplicationForm = { id: "ordin-1", title: "지원신청서", role: "
 const link: FormLink = { formId: "ordin-1", use: "main", checkedAt: "2026-10-16", evidenceUrl: form.lawUrl, evidenceNote: "제5조에 따른 개인 신청서로 대조했습니다." };
 
 describe("application document publication", () => {
+  it("restricts a municipal form in a provincial benefit to its reviewed local application route", () => {
+    const provincial={...program,id:"s41000.test",scope:"sido" as const,region:{sido:"41000",label:"경기도"},url:"https://www.gov.kr/portal/rcvfvrSvc/dtlEx/EXACT"};
+    const municipal={...form,sourceKind:"ordin" as const,regionCode:"41170",regionLabel:"경기도 안양시",lawTitle:"안양시 학생복지 지원 조례"};
+    const ref:NonNullable<FormLink["municipalApplicationReference"]>={sido:"41000",sigungu:"41170",municipality:"안양시",programEvidenceUrl:provincial.url,
+      checkedAt:link.checkedAt,httpStatus:200,programSpecific:true,
+      reference:"공식 도 사업 안내에서 안양시 담당부서와 거주지 시군 방문 신청의 정확한 절차를 확인했습니다.",
+      municipalArticle:"안양시 학생복지 지원 조례 제7조",formEvidence:"실제 원본의 안양시 학생 주소와 안양시장 수신 부분 및 신청인 서명을 확인했습니다.",
+      scopeRestriction:"안양시 거주자의 안양 방문 접수 전용"};
+    const reviewed:FormLink={...link,use:"conditional",condition:"안양시 거주자의 안양시 방문 접수에만 사용합니다.",scopeBasis:"municipal-application-reference",programEvidenceUrl:provincial.url,municipalApplicationReference:ref};
+    expect(()=>validateFormLink(provincial,municipal,reviewed)).not.toThrow();
+    for(const change of [{use:"main" as const},{condition:"모든 도민이 사용합니다."},{programEvidenceUrl:provincial.url+"OTHER"}]) expect(()=>validateFormLink(provincial,municipal,{...reviewed,...change})).toThrow(/Municipal/);
+    for(const change of [{sido:"43000"},{sigungu:"41280"},{municipalArticle:"다른 시 지원 조례 제7조"},{scopeRestriction:"도내 전체"},{programSpecific:false}]) expect(()=>validateFormLink(provincial,municipal,{...reviewed,municipalApplicationReference:{...ref,...change}})).toThrow(/Municipal/);
+    expect(()=>validateFormLink(program,form,{...reviewed,municipalApplicationReference:{...ref,municipality:"다른 시"}})).toThrow(/Municipal/);
+  });
   it("recognizes an explicitly cited provincial ordinance and its enforcement rule", () => {
     const local={...program,id:"g50130.test",region:{sido:"50000",sigungu:"50130",label:"서귀포시"},laws:["제주특별자치도 공영장례 지원 조례, 시행규칙"]};
     const provincial={...form,regionCode:"50000",regionLabel:"제주특별자치도",lawTitle:"제주특별자치도 공영장례 지원 조례 시행규칙"};

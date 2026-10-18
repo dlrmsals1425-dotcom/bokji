@@ -12,7 +12,7 @@ module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
 class DecisionTest(unittest.TestCase):
     def setUp(self):
         self.assignment={'forms':[{'formId':'ordin-1'},{'formId':'ordin-2'}]}
-        self.report={'items':[{'formId':'ordin-1','disposition':'approved','sha256':'a'*64,
+        self.report={'status':'complete','items':[{'formId':'ordin-1','disposition':'approved','sha256':'a'*64,
             'reason':'실제 신청서 전체와 해당 사업의 제출 절차를 대조했습니다.',
             'fullBodyReviewed':True,'reviewedProgramPairs':[{'programId':'p1','disposition':'approved'}]},
             {'formId':'ordin-2','disposition':'non_applicant','reason':'기관이 작성하는 내부 조사서이며 신청인 작성란은 없습니다.'}]}
@@ -25,9 +25,14 @@ class DecisionTest(unittest.TestCase):
             module.validate_decisions(self.assignment,self.report,self.review)
 
     def test_pending_or_missing_original_cannot_be_imported(self):
-        for report in [dict(items=self.report['items'][:1]),copy.deepcopy(self.report)]:
+        for report in [dict(status='complete',items=self.report['items'][:1]),copy.deepcopy(self.report)]:
             if len(report['items'])==2:report['items'][1]['disposition']='pending'
             with self.assertRaises(ValueError):module.validate_decisions(self.assignment,report,self.review)
+
+    def test_a_filled_draft_is_not_a_finalized_review(self):
+        self.report['status']='in_progress'
+        with self.assertRaisesRegex(ValueError,'not finalized'):
+            module.validate_decisions(self.assignment,self.report,self.review)
 
     def test_full_body_and_exact_hash_are_required(self):
         for patch in [{'fullBodyReviewed':False},{'sha256':'b'*64}]:

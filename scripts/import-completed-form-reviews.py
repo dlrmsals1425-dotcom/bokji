@@ -27,6 +27,8 @@ def flseq(url):return dict(parse_qsl(urlsplit(url).query)).get('flSeq')
 
 
 def validate_decisions(assignment,report,review):
+    if report.get('status')!='complete' and report.get('complete') is not True:
+        raise ValueError('Batch is not finalized')
     expected={row['formId'] for row in assignment['forms']}
     items=report['items']
     decisions={row['formId']:row for row in items}
@@ -61,8 +63,8 @@ def prepare_batch(name,archive,scope,evidence,overrides):
     assignment=ROOT/'logs/forms-completion/assignments'/f'{name}.json'
     review=read(source);report=read(disposition)
     decisions=validate_decisions(read(assignment),report,review)
-    if report.get('reviewedFileSHA256') and report['reviewedFileSHA256']!=sha(source):
-        raise ValueError('Finalized review changed: '+name)
+    for key in ('reviewedFileSHA256','finalizedReviewSha256'):
+        if report.get(key) and report[key]!=sha(source):raise ValueError('Finalized review changed: '+name)
     round_number=int(match[1])*1000+int(match[2])
     output=REVIEWS/f'municipal-reviewed-round{round_number}.json'
     for fid,decision in decisions.items():

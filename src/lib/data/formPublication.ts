@@ -58,6 +58,25 @@ function reviewedApplicationReference(program: Program, form: ApplicationForm, l
   return [program.url,...(program.sources??[]).map(source=>source.url)].some(url=>externalFormUrl(url)===safe);
 }
 
+function reviewedMunicipalRoute(program: Program, form: ApplicationForm, link: FormLink): boolean {
+  const ref=link.municipalApplicationReference;
+  if (link.scopeBasis!=="municipal-application-reference" || !ref || program.scope!=="sido"
+      || form.sourceKind!=="ordin" || ref.sido!==program.region?.sido || ref.sigungu!==form.regionCode
+      || !/^\d{5}$/.test(ref.sigungu) || ref.sigungu.slice(0,2)+"000"!==ref.sido || ref.sigungu===ref.sido
+      || ref.municipality.trim().length<2 || !form.regionLabel.includes(ref.municipality)
+      || link.use!=="conditional" || !link.condition?.includes(ref.municipality)
+      || ref.httpStatus!==200 || ref.programSpecific!==true || ref.checkedAt!==link.checkedAt
+      || ref.reference.length<30 || !ref.reference.includes(ref.municipality)
+      || ref.formEvidence.length<30 || !ref.formEvidence.includes(ref.municipality)
+      || !ref.scopeRestriction.includes(ref.municipality) || !/전용|한정/.test(ref.scopeRestriction)
+      || normalizedLaw(ref.municipalArticle)!==normalizedLaw(form.lawTitle)
+      || !/제\d+조/.test(ref.municipalArticle)) return false;
+  const exact=externalFormUrl(link.programEvidenceUrl), supporting=externalFormUrl(ref.programEvidenceUrl);
+  const government=(url:string|null)=>!!url && /^(?:gov\.kr|.+\.(?:go|gov)\.kr)$/.test(new URL(url).hostname);
+  return government(exact) && government(supporting)
+    && [program.url,...(program.sources??[]).map(source=>source.url)].some(url=>externalFormUrl(url)===exact);
+}
+
 export function sameFormJurisdiction(program: Pick<Program, "scope" | "region">, form: ApplicationForm): boolean {
   if (form.regionCode === "national") return program.scope === "national";
   if (program.scope === "sigungu") return form.regionCode === program.region?.sigungu;
@@ -68,10 +87,12 @@ export function sameFormJurisdiction(program: Pick<Program, "scope" | "region">,
 /** Fail a publication build instead of silently accepting an invalid reviewed link. */
 export function validateFormLink(program: Program, form: ApplicationForm | undefined, link: FormLink): void {
   if (!form || form.id !== link.formId) throw new Error("Unknown form in reviewed association");
+  const municipalRoute=reviewedMunicipalRoute(program,form,link);
+  if ((link.municipalApplicationReference || link.scopeBasis==="municipal-application-reference") && !municipalRoute) throw new Error("Municipal application route lacks exact conditional source evidence");
   if (!sameFormJurisdiction(program, form)) {
     const sameProvince = link.scopeBasis === "provincial-law-reference" && program.scope === "sigungu" && program.region?.sido === form.regionCode;
     const nationalReference = link.scopeBasis === "national-law-reference" && form.regionCode === "national";
-    if (!reviewedApplicationReference(program,form,link) && ((!sameProvince && !nationalReference) || !referencedFormLaw(program, form))) throw new Error(`Form jurisdiction does not match program: ${program.id} / ${form.id}`);
+    if (!municipalRoute && !reviewedApplicationReference(program,form,link) && ((!sameProvince && !nationalReference) || !referencedFormLaw(program, form))) throw new Error(`Form jurisdiction does not match program: ${program.id} / ${form.id}`);
   }
   if (!["application", "consent", "delegation", "supporting"].includes(form.role)) throw new Error("Non-applicant form cannot be published as an application");
   if (!externalFormUrl(link.evidenceUrl) || link.evidenceNote.trim().length < 10 || !/^\d{4}-\d{2}-\d{2}$/.test(link.checkedAt)) throw new Error("Reviewed association needs dated source evidence");
