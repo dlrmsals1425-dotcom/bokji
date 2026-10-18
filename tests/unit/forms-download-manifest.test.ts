@@ -3,7 +3,7 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { createHash } from "node:crypto";
 import { beforeEach, afterEach, describe, expect, it } from "vitest";
-import type { ApplicationForm } from "@/lib/data/forms";
+import type { ApplicationForm, FormFileFormat } from "@/lib/data/forms";
 import { loadDownloadedOriginals, requireApprovedOriginals, validateDownloadManifest, validateOriginalFile, type DownloadManifest } from "../../scripts/build-forms";
 
 const id = "ordin-123", sourceUrl = "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=456";
@@ -11,7 +11,7 @@ const pdfSourceUrl="https://www.law.go.kr/LSW/flDownloadPdf.do?flSeq=789";
 const hash = (bytes: Buffer) => createHash("sha256").update(bytes).digest("hex");
 const hwp = Buffer.concat([Buffer.from("d0cf11e0a1b11ae1", "hex"), Buffer.alloc(504), Buffer.from("HWP Document File\0"), Buffer.alloc(128)]);
 const forms = { [id]: { id, sourceUrl, officialPdfUrl:pdfSourceUrl } as ApplicationForm };
-function manifest(bytes: Buffer = hwp, format: "hwp" | "hwpx" = "hwp"): DownloadManifest {
+function manifest(bytes: Buffer = hwp, format: FormFileFormat = "hwp"): DownloadManifest {
   return { schema: 1, forms: { [id]: { format, path: `originals/${id}.${format}`, bytes: bytes.length, sha256: hash(bytes), sourceUrl, downloadedAt: "2026-10-17T00:00:00Z" } } };
 }
 // Small stored ZIP fixtures; no corpus files or public assets are generated.
@@ -67,6 +67,22 @@ describe("downloaded original manifest", () => {
     expect(() => validateOriginalFile(zip({ "Contents/section0.xml": "<section/>" }), "hwpx")).toThrow();
     expect(() => validateOriginalFile(zip({ mimetype: "application/zip", "Contents/section0.xml": "<section/>" }), "hwpx")).toThrow();
     expect(() => validateOriginalFile(zip({ mimetype: "application/hwp+zip", "document.xml": "<section/>" }), "hwpx")).toThrow();
+  });
+  it("keeps official PDF, text, image and legacy HWP formats without relabeling them as modern HWP",async()=>{
+    const gif=Buffer.from('R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7','base64');
+    for(const [format,bytes] of [
+      ['pdf',Buffer.from('%PDF-1.7\n%%EOF')],
+      ['txt',Buffer.from('장학금 지급 신청서\n신청인 성명:       서명:')],
+      ['gif',gif],
+      ['hwp',Buffer.concat([Buffer.from('HWP Document File V3.00 '),Buffer.alloc(140)])],
+    ] as const){
+      await writeFile(path.join(temporary,'originals',id+'.'+format),bytes);
+      const loaded=await loadDownloadedOriginals(temporary,manifest(bytes,format),forms);
+      expect(loaded.get(id)?.format).toBe(format);
+      expect(loaded.get(id)?.bytes.equals(bytes)).toBe(true);
+    }
+    for(const format of ['pdf','txt','gif'] as const)expect(()=>validateOriginalFile(Buffer.from('<html>error page</html>'),format)).toThrow();
+    expect(()=>validateOriginalFile(gif,'hwp')).toThrow();
   });
   it("rejects path traversal, wrong IDs, credential URLs and invalid file metadata", () => {
     for (const changes of [{ path: "../outside.hwp" }, { path: "originals/law-999.hwp" }, { path: `originals/${id}.hwpx` }, { bytes: 0 }, { sha256: "bad" }, { downloadedAt: "yesterday" }, { sourceUrl: sourceUrl + "&OC=example" }, { sourceUrl: "https://example.org/file.hwp" }]) {

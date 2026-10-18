@@ -6,6 +6,7 @@ export const FORM_STATUS_LABEL: Record<FormStatus, string> = {
   available: "신청 서류 연결 확인", online: "온라인 신청 안내", review: "연결 검토 중", missing: "신청서 찾는 중",
 };
 export type FormRole = "application" | "consent" | "delegation" | "supporting" | "reference" | "administrative" | "deleted" | "unclassified";
+export type FormFileFormat = "hwp" | "hwpx" | "pdf" | "txt" | "gif";
 export interface ApplicationForm {
   id: string;
   title: string;
@@ -25,7 +26,8 @@ export interface ApplicationForm {
   sourceKind?: "ordin" | "law" | "rule";
   dateKind?: "effective" | "promulgated" | "issued";
   officialPdfUrl?: string;
-  file?: { hwp: string; format?: "hwp" | "hwpx"; pdf?: string; bytes: number; sha256: string };
+  /** hwp is the legacy original-file property; format identifies the actual bytes. */
+  file?: { hwp: string; format?: FormFileFormat; pdf?: string; bytes: number; sha256: string };
 }
 export interface FormLink {
   formId: string;

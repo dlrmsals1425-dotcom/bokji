@@ -28,6 +28,7 @@ import xml.etree.ElementTree as ET
 import olefile
 import requests
 from pypdf import PdfReader
+from PIL import Image
 
 ROOT=Path(__file__).resolve().parents[1]
 LOG=ROOT/'logs/law-downloads'
@@ -72,9 +73,13 @@ def paragraph_text(payload):
             parts.append(payload[start:i].decode('utf-16-le',errors='replace'))
     return ''.join(parts).strip()
 
-def inspect_document(data):
+def inspect_document(data,format_hint=None):
     """Read every body section; never mistake Preview text or an HTML error for a form."""
-    sections=[];texts=[]
+    sections=[];texts=[];scope='all_body_sections_or_pages'
+    if data.startswith(b'HWP Document File V3.00 ') and len(data)>128:
+        # HWP30 rendering/reading is performed separately and bound to the
+        # original SHA in the explicit review. Do not fabricate extracted text.
+        return {'format':'hwp','sectionsRead':['HWP3'],'text':'','textLength':0,'textScope':'legacy_hwp_requires_external_review'}
     if data.startswith(OLE):
         with olefile.OleFileIO(io.BytesIO(data)) as doc:
             header=doc.openstream('FileHeader').read()
@@ -112,10 +117,20 @@ def inspect_document(data):
         if not doc.pages:raise ValueError('empty_pdf')
         for i,page in enumerate(doc.pages):sections.append(f'page-{i+1}');texts.append(page.extract_text() or '')
         fmt='pdf'
+    elif data.startswith((b'GIF87a',b'GIF89a')):
+        with Image.open(io.BytesIO(data)) as doc:
+            if doc.format!='GIF' or doc.width*doc.height>50_000_000 or doc.n_frames>100:raise ValueError('invalid_gif')
+            for i in range(doc.n_frames):doc.seek(i);doc.load();sections.append(f'frame-{i+1}')
+        fmt='gif';scope='image_requires_visual_review'
+    elif format_hint=='txt':
+        try:text=data.decode('utf-8-sig')
+        except UnicodeDecodeError:text=data.decode('cp949')
+        if len(text.strip())<10 or re.search(r'[\x00-\x08\x0e-\x1f]|<!doctype|<html|<script',text,re.I):raise ValueError('not_plain_text_form')
+        sections=['text'];texts=[text];fmt='txt';scope='plain_text'
     else:raise ValueError('not_a_document')
     if not sections:raise ValueError('missing_body_sections')
     text='\n'.join(t for t in texts if t.strip())
-    return {'format':fmt,'sectionsRead':sections,'text':text,'textLength':len(text),'textScope':'all_body_sections_or_pages'}
+    return {'format':fmt,'sectionsRead':sections,'text':text,'textLength':len(text),'textScope':scope}
 
 class Download:
     def __init__(self,interval,timeout):self.interval=interval;self.timeout=timeout;self.lock=threading.Lock();self.next=0
@@ -169,6 +184,26 @@ def reviewed_archive_members():
             selected[row['formId']]=member
     return selected
 
+def reviewed_original_evidence():
+    """Non-HWP originals need explicit source-bound reading evidence."""
+    evidence={}
+    for path in (ROOT/'pipeline/forms/reviews').glob('*-reviewed*.json'):
+        if not re.fullmatch(r'(national|municipal)-reviewed(?:-round\d+)?\.json',path.name):continue
+        content=read(path)
+        for row in content['rows'] if isinstance(content,dict) else content:
+            fmt=row.get('originalFormat')
+            if fmt not in ('hwp3','pdf','txt','gif'):continue
+            sha=row.get('sha256')
+            if row.get('verificationStatus')!='verified' or row.get('officialAttachmentMatched') is not True or not re.fullmatch(r'[a-f0-9]{64}',str(sha)):raise ValueError('unverified_nonstandard_original')
+            if fmt=='hwp3':
+                external=row.get('externalBodyEvidence') or {}
+                if external.get('reader')!='Hancom.HWP30' or external.get('sourceSha256')!=sha or not isinstance(external.get('pageCount'),int) or external['pageCount']<1:raise ValueError('missing_hwp3_body_evidence')
+            if fmt=='gif':
+                visual=row.get('visualReview') or {}
+                if visual.get('sourceSha256')!=sha or not visual.get('framesRead') or not re.fullmatch(r'\d{4}-\d{2}-\d{2}',str(visual.get('checkedAt'))):raise ValueError('missing_gif_visual_evidence')
+            evidence[row['formId']]=row
+    return evidence
+
 def extract_reviewed_member(container,selection):
     """Return unchanged member bytes only for an explicitly inspected ZIP/hash."""
     if digest(container)!=selection['containerSha256']:raise ValueError('reviewed_archive_hash_changed')
@@ -204,7 +239,7 @@ def cached_original(form,archive):
     # Fresh checkouts can reuse committed originals only through their manifest.
     if MANIFEST.exists():
         entry=read(MANIFEST).get('forms',{}).get(fid,{})
-        if entry.get('sourceUrl')==form['sourceUrl'] and entry.get('format') in ('hwp','hwpx'):
+        if entry.get('sourceUrl')==form['sourceUrl'] and entry.get('format') in ('hwp','hwpx','pdf','txt','gif'):
             expected_path=f"originals/{fid}.{entry['format']}"
             path=ROOT/'pipeline/forms'/expected_path
             if entry.get('path')==expected_path and path.is_file():
@@ -230,7 +265,7 @@ def main():
     parser.add_argument('--interval',type=float,default=.35)
     parser.add_argument('--timeout',type=int,default=30)
     args=parser.parse_args();args.archive_dir.mkdir(parents=True,exist_ok=True);LOG.mkdir(parents=True,exist_ok=True)
-    approved=approved_catalog();expected=expected_hashes();members=reviewed_archive_members();forms=approved
+    approved=approved_catalog();expected=expected_hashes();members=reviewed_archive_members();body_evidence=reviewed_original_evidence();forms=approved
     if args.scope=='municipal-candidates':
         portal=read(ROOT/'pipeline/forms/portal-forms.json')['forms']
         ids={c['formId'] for p in read(ROOT/'pipeline/forms/portal-matches.json')['programs'].values() for c in p['candidates']}
@@ -267,7 +302,8 @@ def main():
                 if data is None:data=downloader.get(form['sourceUrl'])
             sha=digest(data)
             if fid in approved and fid in expected and sha!=expected[fid]:raise ValueError('reviewed_original_hash_changed')
-            info=inspect_document(data)
+            hint=(previous or {}).get('format') or manifest.get('forms',{}).get(fid,{}).get('format') or body_evidence.get(fid,{}).get('originalFormat')
+            info=inspect_document(data,hint)
             target=save_original(args.archive_dir,fid,info['format'],data)
             record={'formId':fid,'state':'stored','sourceUrl':form['sourceUrl'],'lawId':form['lawId'],'lawTitle':form['lawTitle'],
                     'title':form['title'],'regionCode':form['regionCode'],'sha256':sha,'bytes':len(data),'localPath':str(target),
@@ -276,7 +312,14 @@ def main():
             write_json(LOG/(fid+'.json'),record)
             entry=None
             if fid in approved:
-                if info['format'] not in ('hwp','hwpx'):raise ValueError('approved_original_not_hangul')
+                if info['format'] not in ('hwp','hwpx','pdf','txt','gif'):raise ValueError('unsupported_approved_original')
+                if info['format'] in ('txt','gif') or info['textScope']=='legacy_hwp_requires_external_review':
+                    evidence=body_evidence.get(fid,{})
+                    expected_format='hwp3' if info['textScope']=='legacy_hwp_requires_external_review' else info['format']
+                    if evidence.get('sha256')!=sha or evidence.get('originalFormat')!=expected_format:raise ValueError('missing_source_bound_body_review')
+                    if evidence.get('externalBodyEvidence'):record['externalBodyEvidence']=evidence['externalBodyEvidence']
+                    if evidence.get('visualReview'):record['visualReview']=evidence['visualReview']
+                    write_json(LOG/(fid+'.json'),record)
                 relative=f"originals/{fid}.{info['format']}";destination=ROOT/'pipeline/forms'/relative
                 destination.parent.mkdir(parents=True,exist_ok=True)
                 if not destination.exists():destination.write_bytes(data)
@@ -285,7 +328,7 @@ def main():
                 if archive_entry:entry['archive']=archive_entry
                 pdf_url=form.get('officialPdfUrl')
                 pdf_path=ROOT/'pipeline/forms/previews'/(fid+'.pdf')
-                if pdf_url:
+                if pdf_url and info['format']!='pdf':
                     try:
                         previous_pdf=manifest.get('forms',{}).get(fid,{}).get('pdf',{})
                         cached_pdf=pdf_path.read_bytes() if pdf_path.exists() else None

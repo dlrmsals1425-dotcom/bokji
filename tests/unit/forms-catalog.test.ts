@@ -68,7 +68,7 @@ describe("generated national forms catalogue", () => {
       if (form.file!.pdf) {
         const pdf = readFileSync(path.join(process.cwd(), "public", form.file!.pdf));
         expect(pdf.subarray(0, 5).toString()).toBe("%PDF-");
-        expect(createHash("sha256").update(pdf).digest("hex")).toBe(entry?.pdf?.sha256 || pdfChecks[form.id]?.pdfSha256);
+        expect(createHash("sha256").update(pdf).digest("hex")).toBe(format==="pdf" ? form.file!.sha256 : entry?.pdf?.sha256 || pdfChecks[form.id]?.pdfSha256);
         expect(form.file!.pdf).toBe(`/forms/files/${form.id}-${form.file!.sha256.slice(0, 12)}.pdf`);
         expectedAssets.add(path.basename(form.file!.pdf));
       }

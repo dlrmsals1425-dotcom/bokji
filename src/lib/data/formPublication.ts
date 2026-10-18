@@ -17,7 +17,7 @@ export function externalFormUrl(value: unknown): string | null {
 }
 
 export function formAssetUrl(value: unknown): string | null {
-  return typeof value === "string" && /^\/forms\/files\/(ordin|law|rule)-\d+-[a-f0-9]{12}\.(hwp|hwpx|pdf)$/.test(value) ? value : null;
+  return typeof value === "string" && /^\/forms\/files\/(ordin|law|rule)-\d+-[a-f0-9]{12}\.(hwp|hwpx|pdf|txt|gif)$/.test(value) ? value : null;
 }
 
 /** Official external annex links must never carry an API credential. */

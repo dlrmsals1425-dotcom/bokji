@@ -4,19 +4,19 @@ import path from "node:path";
 import { createHash } from "node:crypto";
 import { inflateRawSync } from "node:zlib";
 import type { Program } from "../src/lib/data/types";
-import type { ApplicationForm, FormLink, FormsRegion, FormsCoverage, ProgramFormEntry, FormStatus } from "../src/lib/data/forms";
+import type { ApplicationForm, FormFileFormat, FormLink, FormsRegion, FormsCoverage, ProgramFormEntry, FormStatus } from "../src/lib/data/forms";
 import { normalizeCensus, censusLinkConflict } from "../src/lib/data/forms";
 import { classifyFormRole, findFormCandidates } from "../src/lib/data/formMatching";
 import { applicationRoute, formStatus, validateFormLink, externalFormUrl, officialFormUrl } from "../src/lib/data/formPublication";
 import { detailBucket } from "../src/lib/data/bucket";
 
 export interface DownloadRecord {
-  format: "hwp" | "hwpx"; path: string; bytes: number; sha256: string; sourceUrl: string; downloadedAt: string;
+  format: FormFileFormat; path: string; bytes: number; sha256: string; sourceUrl: string; downloadedAt: string;
   pdf?: { path: string; bytes: number; sha256: string; sourceUrl: string };
   archive?: { path: string; bytes: number; sha256: string; member: string };
 }
 export interface DownloadManifest { schema: 1; forms: Record<string, DownloadRecord> }
-export interface StoredOriginal { bytes: Buffer; format: "hwp" | "hwpx"; pdf?: Buffer }
+export interface StoredOriginal { bytes: Buffer; format: FormFileFormat; pdf?: Buffer }
 const digestOf = (bytes: Buffer) => createHash("sha256").update(bytes).digest("hex");
 const recordObject = (value: unknown): value is Record<string, unknown> => !!value && typeof value === "object" && !Array.isArray(value);
 
@@ -51,7 +51,7 @@ function archivedMember(archive: Buffer, expectedName: string): Buffer {
 export function validateDownloadManifest(value: unknown): DownloadManifest {
   if (!recordObject(value) || value.schema !== 1 || !recordObject(value.forms)) throw new Error("Invalid download manifest schema");
   for (const [id, entry] of Object.entries(value.forms)) {
-    if (!/^(ordin|law|rule)-\d+$/.test(id) || !recordObject(entry) || !["hwp", "hwpx"].includes(String(entry.format))) throw new Error("Invalid downloaded form id/format");
+    if (!/^(ordin|law|rule)-\d+$/.test(id) || !recordObject(entry) || !["hwp", "hwpx", "pdf", "txt", "gif"].includes(String(entry.format))) throw new Error("Invalid downloaded form id/format");
     if (entry.path !== `originals/${id}.${entry.format}`) throw new Error("Downloaded original path/id mismatch: " + id);
     for (const file of [entry, ...(entry.pdf === undefined ? [] : [entry.pdf]), ...(entry.archive === undefined ? [] : [entry.archive])]) {
       if (!recordObject(file) || !Number.isSafeInteger(file.bytes) || Number(file.bytes) <= 0 || typeof file.sha256 !== "string" || !/^[a-f0-9]{64}$/.test(file.sha256)) throw new Error("Invalid download bytes/hash: " + id);
@@ -74,9 +74,26 @@ export function validateDownloadManifest(value: unknown): DownloadManifest {
 }
 
 /** The downloader checks ZIP CRC/XML fully. Recheck the signed bytes and basic container identity here. */
-export function validateOriginalFile(bytes: Buffer, format: "hwp" | "hwpx"): void {
+export function validateOriginalFile(bytes: Buffer, format: FormFileFormat): void {
   if (format === "hwp") {
+    const legacy=Buffer.from("HWP Document File V3.00 ");
+    if (bytes.subarray(0,legacy.length).equals(legacy) && bytes.length>128) return;
     if (bytes.subarray(0, 8).toString("hex") !== "d0cf11e0a1b11ae1" || !bytes.includes(Buffer.from("HWP Document File"))) throw new Error("Invalid HWP signature");
+    return;
+  }
+  if (format === "pdf") {
+    if (bytes.subarray(0,5).toString()!=="%PDF-" || !bytes.includes(Buffer.from("%%EOF"))) throw new Error("Invalid PDF original");
+    return;
+  }
+  if (format === "gif") {
+    if (bytes.length<14 || !["GIF87a","GIF89a"].includes(bytes.subarray(0,6).toString()) || !bytes.readUInt16LE(6) || !bytes.readUInt16LE(8) || bytes[bytes.length-1]!==0x3b) throw new Error("Invalid GIF original");
+    return;
+  }
+  if (format === "txt") {
+    let text: string;
+    try { text=new TextDecoder("utf-8",{fatal:true}).decode(bytes); }
+    catch { text=new TextDecoder("euc-kr",{fatal:true}).decode(bytes); }
+    if (text.trim().length<10 || /[\u0000-\u0008\u000e-\u001f]/.test(text) || /<!doctype|<html|<script/i.test(text)) throw new Error("Invalid TXT original");
     return;
   }
   try {
@@ -266,9 +283,10 @@ async function main() {
     await writeFile(path.join(output, "files", hwpName), bytes);
     expectedAssets.add(hwpName);
     forms[id].file = { hwp: `/forms/files/${hwpName}`, format, bytes: bytes.length, sha256: digest };
+    if (format === "pdf") forms[id].file!.pdf = forms[id].file!.hwp;
     const check = pdfChecks[id];
-    let pdf = original.pdf;
-    if (!pdf && check?.verified) {
+    let pdf = format === "pdf" ? undefined : original.pdf;
+    if (format !== "pdf" && !pdf && check?.verified) {
       const pdfPath = path.join(input, "previews", id + ".pdf");
       pdf = await readFile(pdfPath);
       if (check.originalSha256 !== digest || hash(pdf) !== check.pdfSha256 || check.pages < 1 || pdf.subarray(0, 5).toString() !== "%PDF-") throw new Error("PDF preview no longer matches checked original");
@@ -283,7 +301,7 @@ async function main() {
   // Revoke only files owned by this generator; never recursively delete a directory.
   const assetsDirectory = path.resolve(output, "files");
   for (const name of await readdir(assetsDirectory)) {
-    if (!/^(ordin|law|rule)-\d+-[a-f0-9]{12}\.(hwp|hwpx|pdf)$/.test(name) || expectedAssets.has(name)) continue;
+    if (!/^(ordin|law|rule)-\d+-[a-f0-9]{12}\.(hwp|hwpx|pdf|txt|gif)$/.test(name) || expectedAssets.has(name)) continue;
     const target = path.resolve(assetsDirectory, name);
     if (path.dirname(target) !== assetsDirectory) throw new Error("Unexpected asset path");
     await unlink(target);

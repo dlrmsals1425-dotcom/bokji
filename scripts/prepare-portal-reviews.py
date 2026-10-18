@@ -51,6 +51,10 @@ AUDITED_APPLICATION_EXCEPTIONS={'ordin-20002811':'1408662','ordin-20761903':'206
                                 'ordin-21069107':'2086293','ordin-22289049':'2157159','ordin-7130000':'1835761',
                                 'ordin-21438973':'2089655'}
 AUDITED_CONSENT_EXCEPTIONS={'ordin-19307191':'1872429','ordin-19876833':'1246766','ordin-21403833':'2107187'}
+OVERRIDE_FILE=ROOT/'pipeline/forms/reviews/full-body-role-overrides.json'
+# New full-body reviews are data, not an ever-growing list of IDs in code.
+# Each override is bound to the exact original SHA and still passes the gates below.
+FULL_BODY_ROLE_OVERRIDES=json.loads(OVERRIDE_FILE.read_text(encoding='utf-8-sig')).get('forms',{}) if OVERRIDE_FILE.exists() else {}
 SCOPE_BASES=frozenset({'provincial-law-reference','national-law-reference','official-application-reference'})
 def read(file):return json.loads(file.read_text(encoding='utf-8-sig'))
 def day(value):
@@ -106,6 +110,11 @@ def resolve_role(record):
     if declared in BLOCKED_ROLES:raise ValueError('Audited row marks a non-applicant form role: '+form_id)
     role=matcher.classify_role(record['formTitle'],'서식')
     exception_laws=AUDITED_APPLICATION_EXCEPTIONS if declared=='application' else AUDITED_CONSENT_EXCEPTIONS if declared=='consent' else {}
+    explicit=FULL_BODY_ROLE_OVERRIDES.get(form_id)
+    if explicit and declared in ('application','consent'):
+        if explicit.get('role')!=declared or explicit.get('lawId')!=record.get('lawId') or explicit.get('sha256')!=record.get('sha256'):
+            raise ValueError('Full-body role override does not match the reviewed original: '+form_id)
+        exception_laws={**exception_laws,form_id:explicit['lawId']}
     if form_id in exception_laws:
         parts=record.get('reviewedParts')
         evidence=record.get('roleEvidenceUrl')

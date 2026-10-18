@@ -1,5 +1,6 @@
 import importlib.util
 import io
+import base64
 import json
 from pathlib import Path
 import struct
@@ -66,5 +67,20 @@ class LawFormFilesTest(unittest.TestCase):
         self.assertEqual(m.extract_reviewed_member(container,selection),original)
         for change in ({'name':'missing.hwp'},{'sha256':'0'*64},{'containerSha256':'0'*64},{'name':'관리대장.hwp'}):
             with self.subTest(change=change),self.assertRaises(ValueError):m.extract_reviewed_member(container,{**selection,**change})
+    def test_non_hangul_sources_keep_actual_formats_and_reading_limits(self):
+        text='장학금 지급 신청서\n신청인 성명:          서명:\n주민등록번호:'.encode('cp949')
+        found=m.inspect_document(text,'txt')
+        self.assertEqual(found['format'],'txt');self.assertIn('장학금',found['text'])
+        self.assertEqual(found['textScope'],'plain_text')
+        with self.assertRaises(ValueError):m.inspect_document(b'<html>portal error</html>','txt')
+        with self.assertRaises(ValueError):m.inspect_document(text)
+        gif=base64.b64decode('R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7')
+        found=m.inspect_document(gif)
+        self.assertEqual(found['format'],'gif');self.assertEqual(found['sectionsRead'],['frame-1'])
+        self.assertEqual(found['textScope'],'image_requires_visual_review')
+        legacy=m.inspect_document(b'HWP Document File V3.00 '+bytes(140))
+        self.assertEqual(legacy['format'],'hwp')
+        self.assertEqual(legacy['textScope'],'legacy_hwp_requires_external_review')
+        self.assertEqual(legacy['text'],'')
 
 if __name__=='__main__':unittest.main()
