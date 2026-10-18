@@ -19,6 +19,7 @@ for(const sample of [
   {program:'g41280.bokjiro-WLF00004751',form:'ordin-19996049',format:'hwp'},
   {program:'s27000.gov24-627000000108',form:'ordin-18151309',format:'hwp',municipality:'남구'},
   {program:'g51110.gov24-418000000243',form:'ordin-18422495',format:'hwp'},
+  {program:'g41590.gov24-O00058400003',form:'ordin-21451325',format:'hwp',title:'입사원서 · 개인정보 수집·이용 동의서',instructions:'별지 제1호 입사원서와 제4호 개인정보 동의서만 작성합니다.'},
 ]) test(`real ${sample.form} ${sample.format} downloads with original bytes @mobile`,async({page})=>{
   await page.goto(`/p/${sample.program}`);
   const button=page.getByTestId('application-forms').locator(`a[download][href="${catalog.forms[sample.form].file!.hwp}"]`);
@@ -26,6 +27,7 @@ for(const sample of [
   await expect(button).toHaveAttribute('href',catalog.forms[sample.form].file!.hwp);
   if(sample.title) await expect(button).toHaveAttribute('download',sample.title+'.'+sample.format);
   if(sample.municipality) await expect(page.getByTestId('application-forms').getByText(sample.municipality+' 방문 접수용',{exact:true})).toBeVisible();
+  if(sample.instructions) await expect(page.getByTestId('application-forms')).toContainText(sample.instructions);
   const [download]=await Promise.all([page.waitForEvent('download'),button.click()]);
   expect(download.suggestedFilename()).toMatch(new RegExp(`\\.${sample.format}$`));
   const file=await download.path();expect(file).toBeTruthy();

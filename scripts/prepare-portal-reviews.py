@@ -125,7 +125,7 @@ def resolve_role(record):
     if form_id in exception_laws:
         parts=record.get('reviewedParts')
         evidence=record.get('roleEvidenceUrl')
-        valid_part=lambda p: isinstance(p,dict) and ((declared=='application' and (p.get('use')=='main' or (p.get('use')=='conditional' and record.get('condition'))) and re.search(r'신청|청구|신고|등록',str(p.get('title') or '')))
+        valid_part=lambda p: isinstance(p,dict) and ((declared=='application' and (p.get('use')=='main' or (p.get('use')=='conditional' and record.get('condition'))) and re.search(r'신청|청구|신고|등록|입사\s*원서',str(p.get('title') or '')))
             or (declared=='consent' and p.get('use') in ('additional','conditional') and '동의' in str(p.get('title') or ''))
             or (declared=='delegation' and p.get('use')=='conditional' and record.get('use')=='conditional'
                 and record.get('condition') and '위임' in str(p.get('title') or ''))

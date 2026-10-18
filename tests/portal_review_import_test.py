@@ -199,6 +199,18 @@ class BuildTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.build({'p1':program('p1')},[row('rule-1',['p1'],role='supporting',roleBasis='신청서가 아니라고 보았다.',
                 roleEvidenceUrl=EVIDENCE,roleCheckedAt='2026-10-16')])
+    def test_dormitory_entry_form_needs_the_same_full_body_hash_and_selected_parts_as_an_application(self):
+        audited=row('ordin-90004',['p1'],sourceKind='ordin',lawId='88',formTitle='[별지 제1호서식] ~ [별지 제4호서식]',
+            role='application',roleBasis='장학관 시행규칙 제7조와 원본 전체의 입사 지원자 및 보호자 서명을 대조했습니다.',
+            roleEvidenceUrl='https://www.law.go.kr/ordinInfoP.do?ordinSeq=88',roleCheckedAt='2026-10-19',
+            verificationStatus='verified',officialAttachmentMatched=True,sha256='a'*64,
+            reviewedParts=[{'number':'1','title':'입사원서','use':'main','author':'입사를 지원하는 학생과 보호자'}])
+        with self.assertRaises(ValueError):module.resolve_role(audited)
+        with patch.dict(module.FULL_BODY_ROLE_OVERRIDES,{'ordin-90004':{'lawId':'88','role':'application','sha256':'a'*64}}):
+            self.assertEqual(module.resolve_role(audited)[0],'application')
+            for change in [{'sha256':'b'*64},{'lawId':'89'},{'officialAttachmentMatched':False},
+                           {'reviewedParts':[{'number':'2','title':'입사생 관리대장','use':'main','author':'장학관 직원'}]}]:
+                with self.subTest(change=change),self.assertRaises(ValueError):module.resolve_role({**audited,**change})
     def test_individually_read_reference_annex_can_be_a_consent_without_becoming_main_application(self):
         audited=row('ordin-19307191',['p1'],sourceKind='ordin',lawId='1872429',
             formTitle='[별표 1] 행정정보 공동이용 사전 동의서(제5조 관련)',role='consent',use='conditional',

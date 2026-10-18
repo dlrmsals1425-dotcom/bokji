@@ -3275,25 +3275,71 @@
         "sourceArticlesAvailable": true,
         "sourceArticleCount": 11
       },
-      "disposition": "requires_external_confirmation",
-      "reason": "규칙 제6조는 별지 제1호 난치병학생 지원신청서를 지정한다. 이 원본과 같은 법규에 병존하는 ordin-18646181을 모두 읽었고 두 파일 모두 내부 제1호·동일 지원항목이나 후자는 2024.10.10. 개정 표기와 기관명 수정이 있다. 공식 목록에는 두 키가 남아 있으므로 이 앞선 문안의 계속 사용 여부를 확정하지 않고 개정 표시 원본을 우선 검토 대상으로 삼는다. 삭제나 부재라고 단정하지 않는다.",
+      "disposition": "covered_by_existing",
+      "reason": "현행 규칙 제6조가 지정하는 내부 별지 제1호의 학생·보호자 신청, 학습권(화상강의·예체능)과 건강권(비급여·급여전액본인부담90%·체재비), 동의 및 8개 첨부항목을 두 원본 전체에서 재대조했다. 2024.10.10. 개정 표시가 있는 ordin-18646181이 두 사이트 사업에 이미 승인·연결되어 동일 신청 목적을 충족한다. 구 원본16196583과 바이트 SHA는 서로 다르며 변경사항은 개정표기·법규명 머리말 및 타기관명 단순화이다. 구 문안의 현재 재사용을 새 승인하거나 동일 바이너리로 판정한 것이 아니라 이미 공개된 개정 원본의 목적상 대체로 처리한다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
           "programId": "s50000.bokjiro-WLF00003911",
-          "disposition": "not_connected",
-          "reason": "규칙 제6조는 별지 제1호 난치병학생 지원신청서를 지정한다. 이 원본과 같은 법규에 병존하는 ordin-18646181을 모두 읽었고 두 파일 모두 내부 제1호·동일 지원항목이나 후자는 2024.10.10. 개정 표기와 기관명 수정이 있다. 공식 목록에는 두 키가 남아 있으므로 이 앞선 문안의 계속 사용 여부를 확정하지 않고 개정 표시 원본을 우선 검토 대상으로 삼는다. 삭제나 부재라고 단정하지 않는다.",
+          "disposition": "covered_by_existing",
+          "reason": "현행 규칙 제6조가 지정하는 내부 별지 제1호의 학생·보호자 신청, 학습권(화상강의·예체능)과 건강권(비급여·급여전액본인부담90%·체재비), 동의 및 8개 첨부항목을 두 원본 전체에서 재대조했다. 2024.10.10. 개정 표시가 있는 ordin-18646181이 두 사이트 사업에 이미 승인·연결되어 동일 신청 목적을 충족한다. 구 원본16196583과 바이트 SHA는 서로 다르며 변경사항은 개정표기·법규명 머리말 및 타기관명 단순화이다. 구 문안의 현재 재사용을 새 승인하거나 동일 바이너리로 판정한 것이 아니라 이미 공개된 개정 원본의 목적상 대체로 처리한다.",
           "applyType": "self",
           "applyMethod": "다음 방법 중 택 1- 방문신청 (제주특별자치도교육청 정서회복과)- 전용이메일, 우편",
-          "target": "도내 유,초,중,고,특수학교에 재원 또는 재적 중인 난치병 유아 및 학생"
+          "target": "도내 유,초,중,고,특수학교에 재원 또는 재적 중인 난치병 유아 및 학생",
+          "existingCoverage": [
+            {
+              "formId": "ordin-18646181",
+              "programId": "s50000.bokjiro-WLF00003911",
+              "lawId": "1848753",
+              "annexId": "18646181",
+              "annexNumber": "000200",
+              "verifiedAnnexNumber": "제1호",
+              "amendmentMark": "2024.10.10.",
+              "flSeq": "164107535",
+              "sha256": "a553772dae8368b0f50b663a86324f606c7c41ace3e01f36d04c76ba4a20fe70",
+              "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?flSeq=164107535",
+              "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1848753",
+              "coverageBasis": "same-purpose-amended-official-form",
+              "binaryIdentical": false,
+              "originalReuseApproved": false,
+              "fullBodyReviewed": true,
+              "sectionsRead": [
+                "BodyText/Section0"
+              ],
+              "note": "현행 규칙 제6조가 지정하는 내부 별지 제1호의 학생·보호자 신청, 학습권(화상강의·예체능)과 건강권(비급여·급여전액본인부담90%·체재비), 동의 및 8개 첨부항목을 두 원본 전체에서 재대조했다. 2024.10.10. 개정 표시가 있는 ordin-18646181이 두 사이트 사업에 이미 승인·연결되어 동일 신청 목적을 충족한다. 구 원본16196583과 바이트 SHA는 서로 다르며 변경사항은 개정표기·법규명 머리말 및 타기관명 단순화이다. 구 문안의 현재 재사용을 새 승인하거나 동일 바이너리로 판정한 것이 아니라 이미 공개된 개정 원본의 목적상 대체로 처리한다."
+            }
+          ]
         },
         {
           "programId": "s50000.gov24-929000000216",
-          "disposition": "not_connected",
-          "reason": "규칙 제6조는 별지 제1호 난치병학생 지원신청서를 지정한다. 이 원본과 같은 법규에 병존하는 ordin-18646181을 모두 읽었고 두 파일 모두 내부 제1호·동일 지원항목이나 후자는 2024.10.10. 개정 표기와 기관명 수정이 있다. 공식 목록에는 두 키가 남아 있으므로 이 앞선 문안의 계속 사용 여부를 확정하지 않고 개정 표시 원본을 우선 검토 대상으로 삼는다. 삭제나 부재라고 단정하지 않는다.",
+          "disposition": "covered_by_existing",
+          "reason": "현행 규칙 제6조가 지정하는 내부 별지 제1호의 학생·보호자 신청, 학습권(화상강의·예체능)과 건강권(비급여·급여전액본인부담90%·체재비), 동의 및 8개 첨부항목을 두 원본 전체에서 재대조했다. 2024.10.10. 개정 표시가 있는 ordin-18646181이 두 사이트 사업에 이미 승인·연결되어 동일 신청 목적을 충족한다. 구 원본16196583과 바이트 SHA는 서로 다르며 변경사항은 개정표기·법규명 머리말 및 타기관명 단순화이다. 구 문안의 현재 재사용을 새 승인하거나 동일 바이너리로 판정한 것이 아니라 이미 공개된 개정 원본의 목적상 대체로 처리한다.",
           "applyType": "self",
           "applyMethod": "○ 방문 신청\n- 제주특별자치도교육청 직접방문\n○ 기타\n- 메일(carejejuedu@korea.kr), 우편",
-          "target": "○ 도내 유치원에 재원 중인 난치병 유아\n○ 도내 초·중·고·특수학교에 재적 중인 난치병 학생(질병 치료 등의 사유로 유예·휴학 중인 학생 포함)\n※ 난치병의 범위\n- 암 또는 중증의 심·뇌혈관계 질환, 소아당뇨 질환으로 1년 이상의 치료 및 요양을 요하는 질환\n- 보건복지부가 고시한 의료비 지원 희귀질환\n- 질환코드가 없을 시 희귀질환으로 판단된다는 의사의 소견이 있는 질환"
+          "target": "○ 도내 유치원에 재원 중인 난치병 유아\n○ 도내 초·중·고·특수학교에 재적 중인 난치병 학생(질병 치료 등의 사유로 유예·휴학 중인 학생 포함)\n※ 난치병의 범위\n- 암 또는 중증의 심·뇌혈관계 질환, 소아당뇨 질환으로 1년 이상의 치료 및 요양을 요하는 질환\n- 보건복지부가 고시한 의료비 지원 희귀질환\n- 질환코드가 없을 시 희귀질환으로 판단된다는 의사의 소견이 있는 질환",
+          "existingCoverage": [
+            {
+              "formId": "ordin-18646181",
+              "programId": "s50000.gov24-929000000216",
+              "lawId": "1848753",
+              "annexId": "18646181",
+              "annexNumber": "000200",
+              "verifiedAnnexNumber": "제1호",
+              "amendmentMark": "2024.10.10.",
+              "flSeq": "164107535",
+              "sha256": "a553772dae8368b0f50b663a86324f606c7c41ace3e01f36d04c76ba4a20fe70",
+              "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?flSeq=164107535",
+              "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1848753",
+              "coverageBasis": "same-purpose-amended-official-form",
+              "binaryIdentical": false,
+              "originalReuseApproved": false,
+              "fullBodyReviewed": true,
+              "sectionsRead": [
+                "BodyText/Section0"
+              ],
+              "note": "현행 규칙 제6조가 지정하는 내부 별지 제1호의 학생·보호자 신청, 학습권(화상강의·예체능)과 건강권(비급여·급여전액본인부담90%·체재비), 동의 및 8개 첨부항목을 두 원본 전체에서 재대조했다. 2024.10.10. 개정 표시가 있는 ordin-18646181이 두 사이트 사업에 이미 승인·연결되어 동일 신청 목적을 충족한다. 구 원본16196583과 바이트 SHA는 서로 다르며 변경사항은 개정표기·법규명 머리말 및 타기관명 단순화이다. 구 문안의 현재 재사용을 새 승인하거나 동일 바이너리로 판정한 것이 아니라 이미 공개된 개정 원본의 목적상 대체로 처리한다."
+            }
+          ]
         }
       ],
       "relatedArticles": [
@@ -3301,7 +3347,7 @@
         "제6조(지원신청) ① 지원을 받고자 하는 제3조의 대상자 또는 그 보호자는 별지 제1호서식에 따라 제4조의 지원사업 가운데 직접 부담한 증빙자료를 첨부하여 도교육감에게 신청하여야 한다.② 법령이나 다른 조례 그 밖의 방법으로 지원받은 경우에는 지원 사업에서 제외한다."
       ],
       "reviewedBy": "codex-national_form_audit",
-      "reviewedAt": "2026-10-18",
+      "reviewedAt": "2026-10-19",
       "alternativeReviewedOriginal": {
         "formId": "ordin-18646181",
         "lawId": "1848753",
@@ -3309,7 +3355,74 @@
         "reason": "같은 공식 법규에 병존하며 내부 제1호에 2024.10.10. 개정 표시가 있는 원본. 구문안과 동일 해시는 아님."
       },
       "sourceBodyPath": "logs/forms-completion/law-bodies/1848753.json.gz",
-      "sourceBodySHA256": "2f4cd7fbdc5d5bc0cf10f3d928e06d89e4c059c1e75232277d08cd6cd21320d1"
+      "sourceBodySHA256": "2f4cd7fbdc5d5bc0cf10f3d928e06d89e4c059c1e75232277d08cd6cd21320d1",
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1848753",
+        "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1848753",
+        "currentAnnexBinding": "bound"
+      },
+      "existingCoverage": [
+        {
+          "formId": "ordin-18646181",
+          "programId": "s50000.bokjiro-WLF00003911",
+          "lawId": "1848753",
+          "annexId": "18646181",
+          "annexNumber": "000200",
+          "verifiedAnnexNumber": "제1호",
+          "amendmentMark": "2024.10.10.",
+          "flSeq": "164107535",
+          "sha256": "a553772dae8368b0f50b663a86324f606c7c41ace3e01f36d04c76ba4a20fe70",
+          "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?flSeq=164107535",
+          "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1848753",
+          "coverageBasis": "same-purpose-amended-official-form",
+          "binaryIdentical": false,
+          "originalReuseApproved": false,
+          "fullBodyReviewed": true,
+          "sectionsRead": [
+            "BodyText/Section0"
+          ],
+          "note": "현행 규칙 제6조가 지정하는 내부 별지 제1호의 학생·보호자 신청, 학습권(화상강의·예체능)과 건강권(비급여·급여전액본인부담90%·체재비), 동의 및 8개 첨부항목을 두 원본 전체에서 재대조했다. 2024.10.10. 개정 표시가 있는 ordin-18646181이 두 사이트 사업에 이미 승인·연결되어 동일 신청 목적을 충족한다. 구 원본16196583과 바이트 SHA는 서로 다르며 변경사항은 개정표기·법규명 머리말 및 타기관명 단순화이다. 구 문안의 현재 재사용을 새 승인하거나 동일 바이너리로 판정한 것이 아니라 이미 공개된 개정 원본의 목적상 대체로 처리한다."
+        },
+        {
+          "formId": "ordin-18646181",
+          "programId": "s50000.gov24-929000000216",
+          "lawId": "1848753",
+          "annexId": "18646181",
+          "annexNumber": "000200",
+          "verifiedAnnexNumber": "제1호",
+          "amendmentMark": "2024.10.10.",
+          "flSeq": "164107535",
+          "sha256": "a553772dae8368b0f50b663a86324f606c7c41ace3e01f36d04c76ba4a20fe70",
+          "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?flSeq=164107535",
+          "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1848753",
+          "coverageBasis": "same-purpose-amended-official-form",
+          "binaryIdentical": false,
+          "originalReuseApproved": false,
+          "fullBodyReviewed": true,
+          "sectionsRead": [
+            "BodyText/Section0"
+          ],
+          "note": "현행 규칙 제6조가 지정하는 내부 별지 제1호의 학생·보호자 신청, 학습권(화상강의·예체능)과 건강권(비급여·급여전액본인부담90%·체재비), 동의 및 8개 첨부항목을 두 원본 전체에서 재대조했다. 2024.10.10. 개정 표시가 있는 ordin-18646181이 두 사이트 사업에 이미 승인·연결되어 동일 신청 목적을 충족한다. 구 원본16196583과 바이트 SHA는 서로 다르며 변경사항은 개정표기·법규명 머리말 및 타기관명 단순화이다. 구 문안의 현재 재사용을 새 승인하거나 동일 바이너리로 판정한 것이 아니라 이미 공개된 개정 원본의 목적상 대체로 처리한다."
+        }
+      ],
+      "coverageComparison": {
+        "scopeOriginalSHA256": "73b545a7da04b33e54883c12613b2b4cc7a8f77bfb141ea68da4e0399cd44bea",
+        "replacementSHA256": "a553772dae8368b0f50b663a86324f606c7c41ace3e01f36d04c76ba4a20fe70",
+        "sameByteIdentity": false,
+        "sameLawId": true,
+        "sameInternalAnnexNumber": true,
+        "sameApplicantAndPurpose": true,
+        "sameApplicationSectionsAndAttachments": true,
+        "differences": [
+          "2024.10.10. 개정표기 및 법규명 머리말 추가",
+          "타기관명 중 제주시청/서귀포시청을 지자체로, 교육청 학교교육과를 교육청으로 단순화"
+        ],
+        "currentArticle": "제6조제1항",
+        "currentArticleUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1848753",
+        "checkedAt": "2026-10-19"
+      }
     },
     {
       "formId": "ordin-18646181",
@@ -3741,8 +3854,9 @@
   "dispositionCounts": {
     "approved": 22,
     "non_applicant": 18,
-    "requires_external_confirmation": 4,
-    "no_matching_site_program": 16
+    "requires_external_confirmation": 3,
+    "no_matching_site_program": 16,
+    "covered_by_existing": 1
   },
   "reviewedOriginals": 60,
   "approvedAssociations": 30,
@@ -3843,8 +3957,9 @@
     "dispositions": {
       "approved": 22,
       "non_applicant": 18,
-      "requires_external_confirmation": 4,
-      "no_matching_site_program": 16
+      "requires_external_confirmation": 3,
+      "no_matching_site_program": 16,
+      "covered_by_existing": 1
     },
     "approvedRows": 30,
     "approvedOriginals": 22,
@@ -3856,5 +3971,16 @@
     }
   },
   "reviewedFileSHA256": "2c1af7ccb00bd3d55944f447dffb06e62762252881f820494367a9d2941b4fe7",
-  "finalizedAt": "2026-10-18"
+  "finalizedAt": "2026-10-18",
+  "followupRevisions": [
+    {
+      "reviewedAt": "2026-10-19",
+      "formId": "ordin-16196583",
+      "oldDisposition": "requires_external_confirmation",
+      "newDisposition": "covered_by_existing",
+      "replacementFormId": "ordin-18646181",
+      "reason": "현행 규칙 제6조가 지정하는 내부 별지 제1호의 학생·보호자 신청, 학습권(화상강의·예체능)과 건강권(비급여·급여전액본인부담90%·체재비), 동의 및 8개 첨부항목을 두 원본 전체에서 재대조했다. 2024.10.10. 개정 표시가 있는 ordin-18646181이 두 사이트 사업에 이미 승인·연결되어 동일 신청 목적을 충족한다. 구 원본16196583과 바이트 SHA는 서로 다르며 변경사항은 개정표기·법규명 머리말 및 타기관명 단순화이다. 구 문안의 현재 재사용을 새 승인하거나 동일 바이너리로 판정한 것이 아니라 이미 공개된 개정 원본의 목적상 대체로 처리한다.",
+      "reviewedBy": "codex-national_form_audit"
+    }
+  ]
 }
