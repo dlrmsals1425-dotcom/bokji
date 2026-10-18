@@ -240,7 +240,7 @@
       "roleCheckedAt": "2026-10-18",
       "reviewedParts": [
         {
-          "number": "1",
+          "number": "별지 서식",
           "title": "[별지 서식] 입학준비금 지원신청서",
           "use": "main",
           "author": "학생의 부모·보호자 또는 원본에 따른 학생 본인"
@@ -252,7 +252,9 @@
       ],
       "independentBodyReview": true,
       "programEvidenceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00005137&wlfareInfoReldBztpCd=02",
-      "matchingBasis": "exact-local-service-purpose-target-and-procedure"
+      "matchingBasis": "exact-local-service-purpose-target-and-procedure",
+      "verifiedAnnexNumber": "번호 없음",
+      "annexNumberNote": "공식 annexNumber는 보존하되 원본 머리말은 번호 없는 별지 서식이므로 reviewedParts에 임의의 제1호 번호를 부여하지 않는다."
     },
     {
       "sourceKind": "ordin",
@@ -788,7 +790,7 @@
       "roleCheckedAt": "2026-10-18",
       "reviewedParts": [
         {
-          "number": "14",
+          "number": "15",
           "title": "[별지 제15호서식] 사업계획변경 승인신청서",
           "use": "conditional",
           "author": "기금을 지원받은 자활사업단·자활기업 신청인"
@@ -798,7 +800,9 @@
         "제3조(사업계획 변경 등) 기금을 지원받은 자는 기금의 지원으로 추진하는 사업 내용을 변경하거나 지원받은 예산을 변경 사용하고자 하는 경우에는 미리 시장의 승인을 받아야 한다."
       ],
       "independentBodyReview": true,
-      "condition": "자활계정 기금 지원을 받은 사업단·기업이 사업계획 또는 예산 용도를 변경하려는 경우에만 사용합니다."
+      "condition": "자활계정 기금 지원을 받은 사업단·기업이 사업계획 또는 예산 용도를 변경하려는 경우에만 사용합니다.",
+      "verifiedAnnexNumber": "15",
+      "annexNumberNote": "annexNumber는 공식 포털 별표 포함 순번을 보존하고 reviewedParts.number 및 verifiedAnnexNumber는 원본 머리말의 실제 인쇄 별지 번호를 기록한다."
     },
     {
       "sourceKind": "ordin",
@@ -1329,7 +1333,7 @@
       "roleCheckedAt": "2026-10-18",
       "reviewedParts": [
         {
-          "number": "1",
+          "number": "별지 서식",
           "title": "[별지서식] 장애인 이동기기 수리 신청서",
           "use": "main",
           "author": "사업의 지원대상 신청인 또는 허용된 대리인"
@@ -1341,7 +1345,9 @@
       ],
       "independentBodyReview": true,
       "programEvidenceUrl": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/310000000117",
-      "matchingBasis": "exact-local-service-purpose-target-and-procedure"
+      "matchingBasis": "exact-local-service-purpose-target-and-procedure",
+      "verifiedAnnexNumber": "번호 없음",
+      "annexNumberNote": "공식 annexNumber는 보존하되 원본 머리말은 번호 없는 별지 서식이므로 reviewedParts에 임의의 제1호 번호를 부여하지 않는다."
     },
     {
       "sourceKind": "ordin",
@@ -2144,8 +2150,8 @@
   ],
   "sourceReview": {
     "file": "logs/forms-completion/reviews/team1-batch-016-reviewed.json",
-    "sha256": "fda8079803507c5c6dad5b3468ed66ad57e2808f7dd1a2acdffc14d404733776",
-    "dispositionsSHA256": "f36d9297fbd228309674566fc073e4b7cea994c537a5ea769bd3256e5c568c86",
+    "sha256": "db5f55dc3375c51775e7ca8064e9f6eff77cdd48312dd4fe44aa6de2a92bbc9d",
+    "dispositionsSHA256": "ae3e12dac0930a7b56ba3632ef4c109607ed0da436b78f848cadc60bbe2a36d8",
     "assignmentSHA256": "1264aad00f1e23ecaeb5b414608e41cdeac0352aba108d80222f01637093f1c9"
   }
 }

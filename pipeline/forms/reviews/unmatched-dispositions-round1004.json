@@ -2676,6 +2676,14 @@
       "additional": 1
     }
   },
-  "reviewedFileSHA256": "375f297e6688bbd2f8cb5df808fba983e750bd2008eecea1419d930c456df535",
-  "finalizedAt": "2026-10-18"
+  "reviewedFileSHA256": "ad028a2e3748bd96438617fdd17b02ede68ee8c05f63ddce3d7a02d9a30cfd73",
+  "finalizedAt": "2026-10-18",
+  "printedNumberCorrection": {
+    "at": "2026-10-19",
+    "originals": 9,
+    "rows": 11,
+    "beforeSHA256": "375f297e6688bbd2f8cb5df808fba983e750bd2008eecea1419d930c456df535",
+    "afterSHA256": "ad028a2e3748bd96438617fdd17b02ede68ee8c05f63ddce3d7a02d9a30cfd73",
+    "artifact": "logs/forms-completion/reviews/team1-printed-number-corrections.json"
+  }
 }

@@ -4326,6 +4326,14 @@
       "additional": 2
     }
   },
-  "reviewedFileSHA256": "c03d614e3481626e0031af97e1428c5ecdd41d8bc73abceb9024fe95389ef4e0",
-  "finalizedAt": "2026-10-19"
+  "reviewedFileSHA256": "d2ab2aaeb1cdcee423fe1b00112c726d752241e89f8b6313e8e3f0be5189375d",
+  "finalizedAt": "2026-10-19",
+  "printedNumberCorrection": {
+    "at": "2026-10-19",
+    "originals": 12,
+    "rows": 14,
+    "beforeSHA256": "c03d614e3481626e0031af97e1428c5ecdd41d8bc73abceb9024fe95389ef4e0",
+    "afterSHA256": "d2ab2aaeb1cdcee423fe1b00112c726d752241e89f8b6313e8e3f0be5189375d",
+    "artifact": "logs/forms-completion/reviews/team1-printed-number-corrections.json"
+  }
 }

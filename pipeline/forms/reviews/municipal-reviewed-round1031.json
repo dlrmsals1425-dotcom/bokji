@@ -180,7 +180,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "1",
+          "number": "별지 서식",
           "title": "장애정도 재판정 진단서 발급비 및 검사비 신청서",
           "use": "main",
           "author": "사업의 지원대상 신청인 또는 허용된 대리인"
@@ -196,7 +196,9 @@
         "currentLawId": "1979511",
         "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1979511",
         "currentAnnexBinding": "bound"
-      }
+      },
+      "verifiedAnnexNumber": "번호 없음",
+      "annexNumberNote": "공식 annexNumber는 보존하되 원본 머리말은 번호 없는 별지 서식이므로 reviewedParts에 임의의 제1호 번호를 부여하지 않는다."
     },
     {
       "sourceKind": "ordin",
@@ -678,7 +680,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "1",
+          "number": "별지 서식",
           "title": "산후건강관리비 지원 신청서",
           "use": "main",
           "author": "사업의 지원대상 신청인 또는 허용된 대리인"
@@ -697,7 +699,9 @@
         "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1980397",
         "currentAnnexBinding": "bound"
       },
-      "condition": "산모·신생아 건강관리 서비스를 이용한 뒤 본인부담금 지원을 신청할 때 사용합니다. 서비스 이용권 최초 신청서는 아닙니다."
+      "condition": "산모·신생아 건강관리 서비스를 이용한 뒤 본인부담금 지원을 신청할 때 사용합니다. 서비스 이용권 최초 신청서는 아닙니다.",
+      "verifiedAnnexNumber": "번호 없음",
+      "annexNumberNote": "공식 annexNumber는 보존하되 원본 머리말은 번호 없는 별지 서식이므로 reviewedParts에 임의의 제1호 번호를 부여하지 않는다."
     },
     {
       "sourceKind": "ordin",
@@ -745,7 +749,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "1",
+          "number": "별지 서식",
           "title": "산후건강관리비 지원 신청서",
           "use": "main",
           "author": "사업의 지원대상 신청인 또는 허용된 대리인"
@@ -764,7 +768,9 @@
         "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1980397",
         "currentAnnexBinding": "bound"
       },
-      "condition": "산모·신생아 건강관리 서비스를 이용한 뒤 본인부담금 지원을 신청할 때 사용합니다. 서비스 이용권 최초 신청서는 아닙니다."
+      "condition": "산모·신생아 건강관리 서비스를 이용한 뒤 본인부담금 지원을 신청할 때 사용합니다. 서비스 이용권 최초 신청서는 아닙니다.",
+      "verifiedAnnexNumber": "번호 없음",
+      "annexNumberNote": "공식 annexNumber는 보존하되 원본 머리말은 번호 없는 별지 서식이므로 reviewedParts에 임의의 제1호 번호를 부여하지 않는다."
     },
     {
       "sourceKind": "ordin",
@@ -1015,7 +1021,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "1",
+          "number": "별지 서식",
           "title": "안전 환경 지원 신청서",
           "use": "conditional",
           "author": "사업의 지원대상 신청인 또는 허용된 대리인"
@@ -1036,7 +1042,9 @@
       },
       "condition": "안전취약가구의 가스자동차단기·화재감지기·소화기 설치 지원을 신청할 때 해당 시설을 선택합니다. 시민안전보험 보상 청구서가 아닙니다.",
       "programEvidenceUrl": "https://www.mohw.go.kr/board.es?mid=a60611000000&bid=0085&act=view&list_no=1489611&tag=&nPage=1",
-      "matchingBasis": "exact-local-service-purpose-target-and-procedure"
+      "matchingBasis": "exact-local-service-purpose-target-and-procedure",
+      "verifiedAnnexNumber": "번호 없음",
+      "annexNumberNote": "공식 annexNumber는 보존하되 원본 머리말은 번호 없는 별지 서식이므로 reviewedParts에 임의의 제1호 번호를 부여하지 않는다."
     },
     {
       "sourceKind": "ordin",
@@ -1219,7 +1227,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "4",
+          "number": "1",
           "title": "전입지원 신청서·공공시설이용 우대증 발급 신청서",
           "use": "conditional",
           "author": "사업의 지원대상 신청인 또는 허용된 대리인"
@@ -1240,7 +1248,9 @@
       },
       "condition": "전입세대 지원 항목과 전입세대원 정보를 작성합니다. 전입대학생·군인 지원 및 공공시설 우대증은 이 사업의 승인 범위에 포함하지 않습니다.",
       "programEvidenceUrl": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/444000000594",
-      "matchingBasis": "exact-local-service-purpose-target-and-procedure"
+      "matchingBasis": "exact-local-service-purpose-target-and-procedure",
+      "verifiedAnnexNumber": "1",
+      "annexNumberNote": "annexNumber는 공식 포털 별표 포함 순번을 보존하고 reviewedParts.number 및 verifiedAnnexNumber는 원본 머리말의 실제 인쇄 별지 번호를 기록한다."
     },
     {
       "sourceKind": "ordin",
@@ -1288,7 +1298,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "6",
+          "number": "3",
           "title": "입학축하금 지원 신청서",
           "use": "main",
           "author": "사업의 지원대상 신청인 또는 허용된 대리인"
@@ -1305,7 +1315,9 @@
         "currentLawId": "1981839",
         "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1981839",
         "currentAnnexBinding": "bound"
-      }
+      },
+      "verifiedAnnexNumber": "3",
+      "annexNumberNote": "annexNumber는 공식 포털 별표 포함 순번을 보존하고 reviewedParts.number 및 verifiedAnnexNumber는 원본 머리말의 실제 인쇄 별지 번호를 기록한다."
     },
     {
       "sourceKind": "ordin",
@@ -2721,8 +2733,8 @@
   ],
   "sourceReview": {
     "file": "logs/forms-completion/reviews/team1-batch-031-reviewed.json",
-    "sha256": "8e2b079a26dd06080a381ee19a6c58e40bd13a0ae9a5563c0301db356dc1cd13",
-    "dispositionsSHA256": "b89547df1737feb3c8cf17bc80b944bd4aa0d69287b709c3924263ffe5d0aa64",
+    "sha256": "6f9e3d70c82a9200918861d1251e24da84efac1d52ff6c31bbfeb71e5971249a",
+    "dispositionsSHA256": "e302bc99955383c86cbcb1280e39a32ec6ae60c9ae3045c8fdeea223e32e92bf",
     "assignmentSHA256": "e5c92defb6d8ac0427ff0a23adb8421e352338bbde8eaf0ef7f413d1ff7cd730"
   }
 }

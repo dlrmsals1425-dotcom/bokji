@@ -1962,7 +1962,16 @@
           "annexBinding": "bound"
         }
       },
-      "checkedAt": "2026-10-19"
+      "checkedAt": "2026-10-19",
+      "additionalEvidence": {
+        "printedNumberReview": {
+          "checkedAt": "2026-10-19",
+          "sourceSha256": "9397e08cc2c1c0444aa55c6ef9f9d5070c513bfb46588fec08a0b3ac4d37d941",
+          "printedHeader": null,
+          "legalAnnexNumber": "1",
+          "note": "HWPX Contents/section0.xml 전체 텍스트와 추출 원문에 번호 머리말이 인쇄되어 있지 않다. 현재 number=1은 조례 제37조제4항 및 공식 첨부 제목의 법정 번호이며 인쇄 번호로 주장하지 않는다."
+        }
+      }
     },
     {
       "formId": "ordin-22873809",

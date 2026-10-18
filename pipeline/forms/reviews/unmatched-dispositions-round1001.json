@@ -2714,6 +2714,14 @@
       "conditional": 10
     }
   },
-  "reviewedFileSHA256": "76a8d945f7a65aced484c0538a41dbcf8886864c3ca5f689e1ab1a171659481a",
-  "finalizedAt": "2026-10-18"
+  "reviewedFileSHA256": "09b5659b9a69eb4a1be7ec586e38fc9773e0d0c29a1d47f9eccd9d4bc62e2108",
+  "finalizedAt": "2026-10-18",
+  "printedNumberCorrection": {
+    "at": "2026-10-19",
+    "originals": 3,
+    "rows": 4,
+    "beforeSHA256": "76a8d945f7a65aced484c0538a41dbcf8886864c3ca5f689e1ab1a171659481a",
+    "afterSHA256": "09b5659b9a69eb4a1be7ec586e38fc9773e0d0c29a1d47f9eccd9d4bc62e2108",
+    "artifact": "logs/forms-completion/reviews/team1-printed-number-corrections.json"
+  }
 }

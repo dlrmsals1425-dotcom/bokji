@@ -4538,7 +4538,7 @@
       "additional": 3
     }
   },
-  "reviewedFileSHA256": "48f8723d6a579a060cfa5830415436389162e22ca7a029c943231639ff1b4c63",
+  "reviewedFileSHA256": "66bd76a1d71341f8d27388a87f03837059f8b7142d1c255ced0e6024db338862",
   "finalizedAt": "2026-10-19",
   "followupRevisions": [
     {
@@ -4548,5 +4548,13 @@
       "disposition": "covered_by_existing",
       "basis": "구 원본의 법규1913695·제7조의3 인용은 현재 신청 근거와 맞지 않아 재사용을 승인하지 않는다. 새 참전유공자 조례2001627 제6조·별지1의 실제 원본18991053이 동일 복합 사업 g27140.bokjiro-WLF00002671의 참전유공자 사망위로금에 이미 공개 연결됨을 확인했다. 양쪽 원본 전체 및 실제 바이트 SHA를 재대조해 신청·유족관계·사망 증빙·계좌·서명은 같은 목적이고 법규명과 근거조문이 교체됨을 확인했다. 사업 안내의 6개월과 현행 제6조의 사망 후 1년 기한 차이는 새 공개 조건에 명시되어 있다. 따라서 구 바이트 승인 없이 이미 제공된 현행 대체 서식으로 처리한다."
     }
-  ]
+  ],
+  "printedNumberCorrection": {
+    "at": "2026-10-19",
+    "originals": 12,
+    "rows": 12,
+    "beforeSHA256": "48f8723d6a579a060cfa5830415436389162e22ca7a029c943231639ff1b4c63",
+    "afterSHA256": "66bd76a1d71341f8d27388a87f03837059f8b7142d1c255ced0e6024db338862",
+    "artifact": "logs/forms-completion/reviews/team1-printed-number-corrections.json"
+  }
 }

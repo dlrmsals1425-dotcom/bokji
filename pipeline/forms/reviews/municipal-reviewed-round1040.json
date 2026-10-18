@@ -313,7 +313,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "2",
+          "number": "1",
           "title": "공동주택 보조금 지원신청서",
           "use": "main",
           "author": "공동주택 관리주체(입주자대표 확인 포함)"
@@ -331,7 +331,9 @@
         "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2054869",
         "currentAnnexBinding": "bound"
       },
-      "condition": "공동주택 관리주체가 입주자대표회의 의결 등과 함께 단지 공용시설 관리지원 보조금을 신청하는 서식입니다. 개별 세대의 주택수리 신청용이 아닙니다."
+      "condition": "공동주택 관리주체가 입주자대표회의 의결 등과 함께 단지 공용시설 관리지원 보조금을 신청하는 서식입니다. 개별 세대의 주택수리 신청용이 아닙니다.",
+      "verifiedAnnexNumber": "1",
+      "annexNumberNote": "annexNumber는 공식 포털 별표 포함 순번을 보존하고 reviewedParts.number 및 verifiedAnnexNumber는 원본 머리말의 실제 인쇄 별지 번호를 기록한다."
     },
     {
       "sourceKind": "ordin",
@@ -1117,7 +1119,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "16",
+          "number": "18",
           "title": "수도요금 감면신청서(신규·변경·해지)",
           "use": "main",
           "author": "사업의 지원대상 신청인 또는 허용된 대리인"
@@ -1134,7 +1136,9 @@
         "currentLawId": "2058657",
         "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2058657",
         "currentAnnexBinding": "bound"
-      }
+      },
+      "verifiedAnnexNumber": "18",
+      "annexNumberNote": "annexNumber는 공식 포털 별표 포함 순번을 보존하고 reviewedParts.number 및 verifiedAnnexNumber는 원본 머리말의 실제 인쇄 별지 번호를 기록한다."
     },
     {
       "sourceKind": "ordin",
@@ -1577,7 +1581,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "1",
+          "number": "별지 서식",
           "title": "한센사업대상자 의료비 본인부담금 청구서",
           "use": "main",
           "author": "사업의 지원대상 신청인 또는 허용된 대리인"
@@ -1595,7 +1599,9 @@
         "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2059263",
         "currentAnnexBinding": "bound"
       },
-      "condition": "한센인 의료비 본인부담금 청구용입니다. 원본 입원기간에 2019년 표기가 남아 있으므로 실제 진료연도의 기재와 증빙은 관할 보건소 안내를 확인합니다."
+      "condition": "한센인 의료비 본인부담금 청구용입니다. 원본 입원기간에 2019년 표기가 남아 있으므로 실제 진료연도의 기재와 증빙은 관할 보건소 안내를 확인합니다.",
+      "verifiedAnnexNumber": "번호 없음",
+      "annexNumberNote": "공식 annexNumber는 보존하되 원본 머리말은 번호 없는 별지 서식이므로 reviewedParts에 임의의 제1호 번호를 부여하지 않는다."
     },
     {
       "sourceKind": "ordin",
@@ -1731,7 +1737,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "1",
+          "number": "별지 서식",
           "title": "안성사랑카드 가맹점 등록 신청서 및 개인정보 동의서",
           "use": "conditional",
           "author": "가맹점 등록을 신청하는 업소 대표 및 공동대표"
@@ -1749,7 +1755,9 @@
         "currentAnnexBinding": "bound"
       },
       "condition": "이 사업의 가맹점 참여 부분에 해당하는 업소 대표의 등록 신청서입니다. 소비자의 카드 신청·충전용이 아니며, 가맹 접수처와 등록 대상은 시의 현재 가맹 안내를 확인합니다.",
-      "displayTitle": "안성사랑카드 가맹점 등록 신청서 및 개인정보 동의서"
+      "displayTitle": "안성사랑카드 가맹점 등록 신청서 및 개인정보 동의서",
+      "verifiedAnnexNumber": "번호 없음",
+      "annexNumberNote": "공식 annexNumber는 보존하되 원본 머리말은 번호 없는 별지 서식이므로 reviewedParts에 임의의 제1호 번호를 부여하지 않는다."
     },
     {
       "sourceKind": "ordin",
@@ -1797,7 +1805,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "2",
+          "number": "4",
           "title": "배우자 복지수당 지급신청서",
           "use": "main",
           "author": "사망 참전유공자의 배우자"
@@ -1824,7 +1832,9 @@
         }
       ],
       "programEvidenceUrl": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/304000000233",
-      "matchingBasis": "exact-local-service-purpose-target-and-procedure"
+      "matchingBasis": "exact-local-service-purpose-target-and-procedure",
+      "verifiedAnnexNumber": "4",
+      "annexNumberNote": "annexNumber는 공식 포털 별표 포함 순번을 보존하고 reviewedParts.number 및 verifiedAnnexNumber는 원본 머리말의 실제 인쇄 별지 번호를 기록한다."
     },
     {
       "sourceKind": "ordin",
@@ -1872,7 +1882,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "3",
+          "number": "5",
           "title": "배우자 복지수당 신청 위임장",
           "use": "conditional",
           "author": "수급 배우자 위임자 및 대리 신청인"
@@ -1900,7 +1910,9 @@
         }
       ],
       "programEvidenceUrl": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/304000000233",
-      "matchingBasis": "exact-local-service-purpose-target-and-procedure"
+      "matchingBasis": "exact-local-service-purpose-target-and-procedure",
+      "verifiedAnnexNumber": "5",
+      "annexNumberNote": "annexNumber는 공식 포털 별표 포함 순번을 보존하고 reviewedParts.number 및 verifiedAnnexNumber는 원본 머리말의 실제 인쇄 별지 번호를 기록한다."
     },
     {
       "sourceKind": "ordin",
@@ -2015,7 +2027,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "3",
+          "number": "4",
           "title": "홍천군 무궁화장학금 서약서",
           "use": "additional",
           "author": "장학금 신청 학생 및 부모·보호자"
@@ -2032,13 +2044,15 @@
         "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2060779",
         "currentAnnexBinding": "bound"
       },
+      "verifiedAnnexNumber": "4",
+      "annexNumberNote": "annexNumber는 공식 포털 별표 포함 순번을 보존하고 reviewedParts.number 및 verifiedAnnexNumber는 원본 머리말의 실제 인쇄 별지 번호를 기록한다.",
       "displayTitle": "홍천군 무궁화장학금 서약서"
     }
   ],
   "sourceReview": {
     "file": "logs/forms-completion/reviews/team1-batch-040-reviewed.json",
-    "sha256": "c039f4f2c94e7b0446cef0ab789aab9f6f947ab0571af443577406b59a35bc3e",
-    "dispositionsSHA256": "24234fc53fe812708aff03cdd214c466cafc182c03d17741d72fab34183d4cf5",
+    "sha256": "ea321a8148de8f304368b542ecdce0956f3b293f1ef660c3155fed7c3d93d8c4",
+    "dispositionsSHA256": "d9abff0c46ec58d1cf096896aadaace2b5d9e5d151212de2a887e31db763b62b",
     "assignmentSHA256": "e423f8058400c73844e6c2f16d797dc1078538800860b58b4601e287d152d71b"
   }
 }

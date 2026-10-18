@@ -835,7 +835,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "2",
+          "number": "1",
           "title": "어르신 이미용비 및 목욕비 지원사업 가맹점 가입 신청서",
           "use": "conditional",
           "author": "관내 이미용·목욕 업소의 대표 사업자"
@@ -853,7 +853,9 @@
         "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1950295",
         "currentAnnexBinding": "bound"
       },
-      "condition": "이미용·목욕 업소 사업자가 사업 가맹점으로 가입할 때 사용합니다. 어르신이 지원카드를 신청·수령할 때 쓰는 서식은 아닙니다."
+      "condition": "이미용·목욕 업소 사업자가 사업 가맹점으로 가입할 때 사용합니다. 어르신이 지원카드를 신청·수령할 때 쓰는 서식은 아닙니다.",
+      "verifiedAnnexNumber": "1",
+      "annexNumberNote": "annexNumber는 공식 포털 별표 포함 순번을 보존하고 reviewedParts.number 및 verifiedAnnexNumber는 원본 머리말의 실제 인쇄 별지 번호를 기록한다."
     },
     {
       "sourceKind": "ordin",
@@ -967,7 +969,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "1",
+          "number": "별지 서식",
           "title": "선택예방접종 지원 신청서",
           "use": "conditional",
           "author": "사업의 지원대상 신청인 또는 허용된 대리인"
@@ -985,7 +987,9 @@
         "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1951447",
         "currentAnnexBinding": "bound"
       },
-      "condition": "대상포진 사백신 접종 후 보건소에 접종비 지원을 신청하는 경우에 사용합니다. 위탁의료기관의 생백신 현물지원 절차에는 이 사후 비용신청서를 적용하지 않습니다."
+      "condition": "대상포진 사백신 접종 후 보건소에 접종비 지원을 신청하는 경우에 사용합니다. 위탁의료기관의 생백신 현물지원 절차에는 이 사후 비용신청서를 적용하지 않습니다.",
+      "verifiedAnnexNumber": "번호 없음",
+      "annexNumberNote": "공식 annexNumber는 보존하되 원본 머리말은 번호 없는 별지 서식이므로 reviewedParts에 임의의 제1호 번호를 부여하지 않는다."
     },
     {
       "sourceKind": "ordin",
@@ -1674,7 +1678,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "3",
+          "number": "2",
           "title": "전입아 출산장려금 지원 신청서",
           "use": "conditional",
           "author": "사업의 지원대상 신청인 또는 허용된 대리인"
@@ -1694,7 +1698,9 @@
         "currentAnnexBinding": "bound"
       },
       "condition": "36개월 미만 전입아에 대한 청도군 출산장려금(월 장려금)을 방문 신청할 때 사용합니다. 출산축하금 일시금·보험료·축하박스 신청서는 아닙니다.",
-      "displayTitle": "전입아 출산장려금 지원 신청서"
+      "displayTitle": "전입아 출산장려금 지원 신청서",
+      "verifiedAnnexNumber": "2",
+      "annexNumberNote": "annexNumber는 공식 포털 별표 포함 순번을 보존하고 reviewedParts.number 및 verifiedAnnexNumber는 원본 머리말의 실제 인쇄 별지 번호를 기록한다."
     },
     {
       "sourceKind": "ordin",
@@ -1742,7 +1748,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "3",
+          "number": "2",
           "title": "전입아 출산장려금 지원 신청서",
           "use": "conditional",
           "author": "사업의 지원대상 신청인 또는 허용된 대리인"
@@ -1762,7 +1768,9 @@
         "currentAnnexBinding": "bound"
       },
       "condition": "36개월 미만 전입아에 대한 청도군 출산장려금(월 장려금)을 방문 신청할 때 사용합니다. 출산축하금 일시금·보험료·축하박스 신청서는 아닙니다.",
-      "displayTitle": "전입아 출산장려금 지원 신청서"
+      "displayTitle": "전입아 출산장려금 지원 신청서",
+      "verifiedAnnexNumber": "2",
+      "annexNumberNote": "annexNumber는 공식 포털 별표 포함 순번을 보존하고 reviewedParts.number 및 verifiedAnnexNumber는 원본 머리말의 실제 인쇄 별지 번호를 기록한다."
     },
     {
       "sourceKind": "ordin",
@@ -2006,7 +2014,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "1",
+          "number": "별지 서식",
           "title": "입학 축하금 신청서",
           "use": "conditional",
           "author": "사업의 지원대상 신청인 또는 허용된 대리인"
@@ -2025,7 +2033,9 @@
         "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1955379",
         "currentAnnexBinding": "bound"
       },
-      "condition": "초·중·고등학교 등에 입학한 학생의 보호자가 방문 신청할 때 사용합니다. 학교 밖 청소년의 신청·확인 절차는 접수처 안내를 확인해야 합니다."
+      "condition": "초·중·고등학교 등에 입학한 학생의 보호자가 방문 신청할 때 사용합니다. 학교 밖 청소년의 신청·확인 절차는 접수처 안내를 확인해야 합니다.",
+      "verifiedAnnexNumber": "번호 없음",
+      "annexNumberNote": "공식 annexNumber는 보존하되 원본 머리말은 번호 없는 별지 서식이므로 reviewedParts에 임의의 제1호 번호를 부여하지 않는다."
     },
     {
       "sourceKind": "ordin",
@@ -2377,7 +2387,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "3",
+          "number": "2",
           "title": "광양시 전입시책 지원신청서(전입세대·학생·배우자)",
           "use": "conditional",
           "author": "사업의 지원대상 신청인 또는 허용된 대리인"
@@ -2394,7 +2404,9 @@
         "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1957621",
         "currentAnnexBinding": "bound"
       },
-      "condition": "전입세대·전입학생·전입배우자가 신청할 때 해당 항목을 작성합니다. 전입 우수 기관·기업은 별지 제3호를 사용합니다."
+      "condition": "전입세대·전입학생·전입배우자가 신청할 때 해당 항목을 작성합니다. 전입 우수 기관·기업은 별지 제3호를 사용합니다.",
+      "verifiedAnnexNumber": "2",
+      "annexNumberNote": "annexNumber는 공식 포털 별표 포함 순번을 보존하고 reviewedParts.number 및 verifiedAnnexNumber는 원본 머리말의 실제 인쇄 별지 번호를 기록한다."
     },
     {
       "sourceKind": "ordin",
@@ -2442,7 +2454,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "4",
+          "number": "3",
           "title": "광양시 전입시책 지원신청서(전입 우수 기관·기업)",
           "use": "conditional",
           "author": "지원 신청 기관·기업의 대표자"
@@ -2459,7 +2471,9 @@
         "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1957621",
         "currentAnnexBinding": "bound"
       },
-      "condition": "소속 직원의 전입 실적으로 지원받으려는 광양시 기관·기업이 사용하는 신청서입니다. 개인 전입세대·학생·배우자는 별지 제2호를 사용합니다."
+      "condition": "소속 직원의 전입 실적으로 지원받으려는 광양시 기관·기업이 사용하는 신청서입니다. 개인 전입세대·학생·배우자는 별지 제2호를 사용합니다.",
+      "verifiedAnnexNumber": "3",
+      "annexNumberNote": "annexNumber는 공식 포털 별표 포함 순번을 보존하고 reviewedParts.number 및 verifiedAnnexNumber는 원본 머리말의 실제 인쇄 별지 번호를 기록한다."
     },
     {
       "sourceKind": "ordin",
@@ -2507,7 +2521,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "5",
+          "number": "4",
           "title": "위임장",
           "use": "conditional",
           "author": "권한을 위임하는 전입지원 신청인"
@@ -2524,7 +2538,9 @@
         "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1957621",
         "currentAnnexBinding": "bound"
       },
-      "condition": "전입세대·전입학생·전입배우자의 별지 제2호 지원 신청을 대리인이 신청·수령할 때 사용합니다."
+      "condition": "전입세대·전입학생·전입배우자의 별지 제2호 지원 신청을 대리인이 신청·수령할 때 사용합니다.",
+      "verifiedAnnexNumber": "4",
+      "annexNumberNote": "annexNumber는 공식 포털 별표 포함 순번을 보존하고 reviewedParts.number 및 verifiedAnnexNumber는 원본 머리말의 실제 인쇄 별지 번호를 기록한다."
     },
     {
       "sourceKind": "ordin",
@@ -2975,8 +2991,8 @@
   ],
   "sourceReview": {
     "file": "logs/forms-completion/reviews/team1-batch-028-reviewed.json",
-    "sha256": "2d9999f3290f963209cd31319cfacbe41302f93c4beccb0b9eae59ac57c02f11",
-    "dispositionsSHA256": "22189c6241a54122d2c6a35ef2f8cc574cb06fa9955c7dbd4f3bdcec495d9d16",
+    "sha256": "030aaa41c0f1a4d914baf416ceef6ee1162d148500111312d5e809a191ef5cb9",
+    "dispositionsSHA256": "9a772da8c5e36a9698f3752218433ff5ed92e98861f8d6eaac6cea0df5c7f9a1",
     "assignmentSHA256": "cc684654351dbb401d6b994f76f59c6ceefd4c4780d77fedacaf3e4a198b1e45"
   }
 }

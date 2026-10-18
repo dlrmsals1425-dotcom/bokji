@@ -117,7 +117,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "6",
+          "number": "4",
           "title": "진안고원 행복상품권 가맹점 등록 신청서",
           "use": "conditional",
           "author": "진안고원 행복상품권 가맹 등록을 신청하는 사업자"
@@ -134,7 +134,9 @@
         "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1903071",
         "currentAnnexBinding": "bound"
       },
-      "condition": "상품권 소비자가 아니라 가맹점으로 등록하려는 사업자가 작성합니다."
+      "condition": "상품권 소비자가 아니라 가맹점으로 등록하려는 사업자가 작성합니다.",
+      "verifiedAnnexNumber": "4",
+      "annexNumberNote": "annexNumber는 공식 포털 별표 포함 순번을 보존하고 reviewedParts.number 및 verifiedAnnexNumber는 원본 머리말의 실제 인쇄 별지 번호를 기록한다."
     },
     {
       "sourceKind": "ordin",
@@ -182,7 +184,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "9",
+          "number": "7",
           "title": "진안고원 행복상품권 가맹점 등록사항 변경 신청서",
           "use": "conditional",
           "author": "등록사항을 변경하는 기존 가맹점 대표자"
@@ -199,7 +201,9 @@
         "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1903071",
         "currentAnnexBinding": "bound"
       },
-      "condition": "이미 등록한 가맹점의 등록사항을 변경하는 경우에 사용합니다."
+      "condition": "이미 등록한 가맹점의 등록사항을 변경하는 경우에 사용합니다.",
+      "verifiedAnnexNumber": "7",
+      "annexNumberNote": "annexNumber는 공식 포털 별표 포함 순번을 보존하고 reviewedParts.number 및 verifiedAnnexNumber는 원본 머리말의 실제 인쇄 별지 번호를 기록한다."
     },
     {
       "sourceKind": "ordin",
@@ -247,7 +251,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "11",
+          "number": "9",
           "title": "진안고원 행복상품권 환전 청구서",
           "use": "conditional",
           "author": "상품권을 받은 등록 가맹점 대표자"
@@ -264,7 +268,9 @@
         "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1903071",
         "currentAnnexBinding": "bound"
       },
-      "condition": "상품권을 받은 가맹점이 환전을 청구하는 경우에 사용합니다."
+      "condition": "상품권을 받은 가맹점이 환전을 청구하는 경우에 사용합니다.",
+      "verifiedAnnexNumber": "9",
+      "annexNumberNote": "annexNumber는 공식 포털 별표 포함 순번을 보존하고 reviewedParts.number 및 verifiedAnnexNumber는 원본 머리말의 실제 인쇄 별지 번호를 기록한다."
     },
     {
       "sourceKind": "ordin",
@@ -843,7 +849,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "3",
+          "number": "2",
           "title": "무릎 인공관절 수술의료비 청구서",
           "use": "additional",
           "author": "수술의료비 지원을 청구하는 환자 또는 허용된 신청인"
@@ -863,7 +869,9 @@
       },
       "condition": "지원 신청에 함께 제출하는 본인부담 수술의료비 청구서입니다. 사업 안내와 현행 조례의 신청 순서 차이는 담당 부서에 확인해야 합니다.",
       "programEvidenceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00005120&wlfareInfoReldBztpCd=02",
-      "matchingBasis": "exact-local-service-purpose-target-and-procedure"
+      "matchingBasis": "exact-local-service-purpose-target-and-procedure",
+      "verifiedAnnexNumber": "2",
+      "annexNumberNote": "annexNumber는 공식 포털 별표 포함 순번을 보존하고 reviewedParts.number 및 verifiedAnnexNumber는 원본 머리말의 실제 인쇄 별지 번호를 기록한다."
     },
     {
       "sourceKind": "ordin",
@@ -1849,7 +1857,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "3",
+          "number": "2",
           "title": "카드(목욕, 이·미용) 재발급 신청서",
           "use": "conditional",
           "author": "사업의 지원대상 신청인 또는 허용된 대리인"
@@ -1867,7 +1875,9 @@
         "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1912267",
         "currentAnnexBinding": "bound"
       },
-      "condition": "이미 발급받은 목욕·이미용 지원카드를 분실하거나 훼손하여 재발급받는 경우에 사용합니다. 최초 지원대상 선정은 별도 신청 없이 진행됩니다."
+      "condition": "이미 발급받은 목욕·이미용 지원카드를 분실하거나 훼손하여 재발급받는 경우에 사용합니다. 최초 지원대상 선정은 별도 신청 없이 진행됩니다.",
+      "verifiedAnnexNumber": "2",
+      "annexNumberNote": "annexNumber는 공식 포털 별표 포함 순번을 보존하고 reviewedParts.number 및 verifiedAnnexNumber는 원본 머리말의 실제 인쇄 별지 번호를 기록한다."
     },
     {
       "sourceKind": "ordin",
@@ -1915,7 +1925,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "1",
+          "number": "별지 서식",
           "title": "국가보훈대상자 사망위로금 지급신청서",
           "use": "main",
           "author": "사망한 국가보훈대상자의 해당 유족"
@@ -1932,7 +1942,9 @@
         "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1912305",
         "currentAnnexBinding": "bound"
       },
-      "displayTitle": "국가보훈대상자 사망위로금 지급신청서"
+      "displayTitle": "국가보훈대상자 사망위로금 지급신청서",
+      "verifiedAnnexNumber": "번호 없음",
+      "annexNumberNote": "공식 annexNumber는 보존하되 원본 머리말은 번호 없는 별지 서식이므로 reviewedParts에 임의의 제1호 번호를 부여하지 않는다."
     },
     {
       "sourceKind": "ordin",
@@ -2046,7 +2058,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "1",
+          "number": "별지 서식",
           "title": "장애인가정 출산지원금 신청서",
           "use": "main",
           "author": "사업의 지원대상 신청인 또는 허용된 대리인"
@@ -2065,7 +2077,9 @@
         "currentLawId": "1913025",
         "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1913025",
         "currentAnnexBinding": "bound"
-      }
+      },
+      "verifiedAnnexNumber": "번호 없음",
+      "annexNumberNote": "공식 annexNumber는 보존하되 원본 머리말은 번호 없는 별지 서식이므로 reviewedParts에 임의의 제1호 번호를 부여하지 않는다."
     },
     {
       "sourceKind": "ordin",
@@ -2113,7 +2127,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "4",
+          "number": "2",
           "title": "전입 지원신청서",
           "use": "conditional",
           "author": "사업의 지원대상 신청인 또는 허용된 대리인"
@@ -2131,7 +2145,9 @@
         "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1914207",
         "currentAnnexBinding": "bound"
       },
-      "condition": "전입자가 우대인증카드 발급을 신청할 때 해당 항목을 선택합니다. 전입축하금·출산축하용품 신청서는 아닙니다."
+      "condition": "전입자가 우대인증카드 발급을 신청할 때 해당 항목을 선택합니다. 전입축하금·출산축하용품 신청서는 아닙니다.",
+      "verifiedAnnexNumber": "2",
+      "annexNumberNote": "annexNumber는 공식 포털 별표 포함 순번을 보존하고 reviewedParts.number 및 verifiedAnnexNumber는 원본 머리말의 실제 인쇄 별지 번호를 기록한다."
     },
     {
       "sourceKind": "ordin",
@@ -2179,7 +2195,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "5",
+          "number": "3",
           "title": "우대인증 발급(재발급)신청서",
           "use": "conditional",
           "author": "사업의 지원대상 신청인 또는 허용된 대리인"
@@ -2198,7 +2214,9 @@
         "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1914207",
         "currentAnnexBinding": "bound"
       },
-      "condition": "우대인증을 신규 발급받거나 분실·훼손으로 재발급받을 때 사용합니다. 출산축하용품 신청에는 사용하지 않습니다."
+      "condition": "우대인증을 신규 발급받거나 분실·훼손으로 재발급받을 때 사용합니다. 출산축하용품 신청에는 사용하지 않습니다.",
+      "verifiedAnnexNumber": "3",
+      "annexNumberNote": "annexNumber는 공식 포털 별표 포함 순번을 보존하고 reviewedParts.number 및 verifiedAnnexNumber는 원본 머리말의 실제 인쇄 별지 번호를 기록한다."
     },
     {
       "sourceKind": "ordin",
@@ -2324,7 +2342,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "2",
+          "number": "1",
           "title": "의료비 지원 신청서",
           "use": "main",
           "author": "사업의 지원대상 신청인 또는 허용된 대리인"
@@ -2343,7 +2361,9 @@
         "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1914785",
         "currentAnnexBinding": "bound"
       },
-      "condition": "영동군 자체 백내장·무릎인공관절 수술비 지원 신청에 사용합니다. 사업 안내에 함께 적힌 재단의 국가지원사업은 별도 서식을 확인해야 합니다."
+      "condition": "영동군 자체 백내장·무릎인공관절 수술비 지원 신청에 사용합니다. 사업 안내에 함께 적힌 재단의 국가지원사업은 별도 서식을 확인해야 합니다.",
+      "verifiedAnnexNumber": "1",
+      "annexNumberNote": "annexNumber는 공식 포털 별표 포함 순번을 보존하고 reviewedParts.number 및 verifiedAnnexNumber는 원본 머리말의 실제 인쇄 별지 번호를 기록한다."
     },
     {
       "sourceKind": "ordin",
@@ -2391,7 +2411,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "3",
+          "number": "2",
           "title": "의료비 지급 청구서",
           "use": "conditional",
           "author": "수술비 지원대상자 또는 허용된 청구인"
@@ -2408,7 +2428,9 @@
         "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1914785",
         "currentAnnexBinding": "bound"
       },
-      "condition": "영동군 지원대상자가 수술을 마친 뒤 의료비 지급을 청구할 때 사용합니다. 최초 지원 신청서는 별지 제1호입니다."
+      "condition": "영동군 지원대상자가 수술을 마친 뒤 의료비 지급을 청구할 때 사용합니다. 최초 지원 신청서는 별지 제1호입니다.",
+      "verifiedAnnexNumber": "2",
+      "annexNumberNote": "annexNumber는 공식 포털 별표 포함 순번을 보존하고 reviewedParts.number 및 verifiedAnnexNumber는 원본 머리말의 실제 인쇄 별지 번호를 기록한다."
     },
     {
       "sourceKind": "ordin",
@@ -2589,7 +2611,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "2",
+          "number": "1",
           "title": "저소득주민 생활안정지원금 지급신청서",
           "use": "conditional",
           "author": "사업의 지원대상 신청인 또는 허용된 대리인"
@@ -2608,7 +2630,9 @@
         "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1915271",
         "currentAnnexBinding": "bound"
       },
-      "condition": "생활안정지원금 중 유족위로금 또는 장애위로금 신청에 사용합니다. 기타위로금은 담당 읍면동의 조사·신청 절차를 확인해야 합니다."
+      "condition": "생활안정지원금 중 유족위로금 또는 장애위로금 신청에 사용합니다. 기타위로금은 담당 읍면동의 조사·신청 절차를 확인해야 합니다.",
+      "verifiedAnnexNumber": "1",
+      "annexNumberNote": "annexNumber는 공식 포털 별표 포함 순번을 보존하고 reviewedParts.number 및 verifiedAnnexNumber는 원본 머리말의 실제 인쇄 별지 번호를 기록한다."
     },
     {
       "sourceKind": "ordin",
@@ -3033,8 +3057,8 @@
   ],
   "sourceReview": {
     "file": "logs/forms-completion/reviews/team1-batch-025-reviewed.json",
-    "sha256": "48f8723d6a579a060cfa5830415436389162e22ca7a029c943231639ff1b4c63",
-    "dispositionsSHA256": "212653be179d93c8aed2d7b6dbee2d2b60d487deb833ad080d9154292bf5fe93",
+    "sha256": "66bd76a1d71341f8d27388a87f03837059f8b7142d1c255ced0e6024db338862",
+    "dispositionsSHA256": "287fa81477540846b863ee3e970b448d771ba368bfa8d5553fd7b7455eb81163",
     "assignmentSHA256": "a31a55b39f3ce7458dae98cf02574f24a596ec60fc653740993a6022f7620083"
   }
 }

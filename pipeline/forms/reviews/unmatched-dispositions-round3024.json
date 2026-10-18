@@ -1968,8 +1968,8 @@
         {
           "programId": "s44000.gov24-644000000228",
           "programName": "의로운 도민 위로금 지원",
-          "disposition": "not_applicable",
-          "reason": "원본 신청 주체·목적과 이 사업의 지원 범위를 대조했으며 이 연결은 승인하지 않음."
+          "disposition": "covered_by_existing",
+          "reason": "같은 위로금 지급단계의 승인공개 파일22594661·22594715와 해당사업 연결·실제파일 SHA를 재검증함. 원본은 추가 연결하지 않음."
         }
       ],
       "sourceEvidence": {
@@ -2003,8 +2003,28 @@
         ],
         "existingSha256": "6fc5a9828d5199bdff01316d4d609c95edc2139eb3667c7cbe96cebe5598fa68",
         "originalSha256": "413a69ee9f2b09b94f80e5de07db92dbe01fd9971036dbf1e53ae99567149d98",
-        "comparison": "전체 본문 공백/표테두리 정규화 비교: ordin-22594661과 일치. 바이너리 동일이라고 주장하지 않음"
-      }
+        "comparison": "전체 본문 공백/표테두리 정규화 비교: ordin-22594661과 일치. 바이너리 동일이라고 주장하지 않음",
+        "publicationVerifiedAt": "2026-10-19",
+        "publicationEvidence": "public/forms/v1/catalog.json 및 programs/s44000.json의 해당 사업 links와 실제 public 파일 SHA256 재대조"
+      },
+      "existingCoverage": [
+        {
+          "formId": "ordin-22594661",
+          "sha256": "6fc5a9828d5199bdff01316d4d609c95edc2139eb3667c7cbe96cebe5598fa68",
+          "programId": "s44000.gov24-644000000228",
+          "publicPath": "/forms/files/ordin-22594661-6fc5a9828d51.hwp",
+          "publicationState": "published_in_current_catalog",
+          "checkedAt": "2026-10-19"
+        },
+        {
+          "formId": "ordin-22594715",
+          "sha256": "771c26db0168a29ab52ccaa8e39b66931b9b7aaa7ebf93132d93326a8bf977e0",
+          "programId": "s44000.gov24-644000000228",
+          "publicPath": "/forms/files/ordin-22594715-771c26db0168.hwp",
+          "publicationState": "published_in_current_catalog",
+          "checkedAt": "2026-10-19"
+        }
+      ]
     },
     {
       "formId": "ordin-19983833",

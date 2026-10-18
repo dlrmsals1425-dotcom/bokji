@@ -7,6 +7,7 @@ from collections import Counter, defaultdict
 from datetime import datetime, timezone
 import hashlib
 import json
+import re
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -38,6 +39,30 @@ def review_paths(root):
     ]))
 
 
+def coverage_references(row):
+    refs=row.get('existingCoverage')
+    if not isinstance(refs,list) or not refs:return []
+    result=[]
+    for ref in refs:
+        if not isinstance(ref,dict):return []
+        fid=ref.get('formId') or ref.get('coveredByFormId')
+        if ref.get('coveredByFormId') is not None and ref['coveredByFormId']!=fid:return []
+        programs=ref.get('programIds',[])
+        if not isinstance(programs,list) or any(not isinstance(pid,str) or not pid for pid in programs):return []
+        if ref.get('programId') is not None:
+            if not isinstance(ref['programId'],str) or not ref['programId'].strip():return []
+            programs=[*programs,ref['programId']]
+        digest=ref.get('sha256')
+        if not isinstance(fid,str) or not programs or not isinstance(digest,str) or not re.fullmatch(r'[a-f0-9]{64}',digest):return []
+        result.append({'formId':fid,'sha256':digest,'programIds':sorted(set(programs))})
+    return result
+
+def published_coverage(review,published):
+    refs=review.get('coverageReferences',[])
+    return bool(review.get('fullBodyReviewed') and refs and all(
+        ref['formId'] in published and published[ref['formId']]['sha256']==ref['sha256']
+        and set(ref['programIds'])<=set(published[ref['formId']]['programIds']) for ref in refs))
+
 def reconcile(scope,reports,published):
     originals={row['formId']:row for row in scope['forms']}
     if len(originals)!=len(scope['forms']):raise ValueError('Duplicate original in fixed scope')
@@ -56,8 +81,11 @@ def reconcile(scope,reports,published):
             if not isinstance(reason,str) or len(reason.strip())<10:raise ValueError('Review lacks individual reason: '+fid)
             if fid in reviewed and reviewed[fid]['disposition']!=disposition:raise ValueError('Conflicting original dispositions: '+fid)
             reviewed[fid]={'disposition':disposition,'reason':reason,'report':source,
-                'fullBodyReviewed':bool(row.get('fullBodyReviewed',row.get('completeBodyRead',False))),
+                'fullBodyReviewed':row.get('fullBodyReviewed',row.get('completeBodyRead',False)) is True,
                 'evidenceUrl':row.get('evidenceUrl'),'relatedProgramIds':row.get('relatedProgramIds',[])}
+            if disposition=='covered_by_existing':
+                reviewed[fid]['coverageReferences']=coverage_references(row)
+                reviewed[fid]['coveragePublicationConfirmed']=published_coverage(reviewed[fid],published)
     rows=[]
     for fid,original in originals.items():
         row={key:original[key] for key in ('formId','sha256','lawId','title','format')}
@@ -71,7 +99,8 @@ def reconcile(scope,reports,published):
             state=('approved_pending_publication' if value=='approved' else
                    'requires_external_confirmation' if value in ('needs_official_readable_original','requires_external_confirmation') else
                    'replacement_available' if value=='official_replacement_found' else
-                   'covered_by_existing' if value=='covered_by_existing' else 'reviewed_not_linked')
+                   ('covered_by_existing' if review['coveragePublicationConfirmed'] else 'replacement_available')
+                       if value=='covered_by_existing' else 'reviewed_not_linked')
         else:state='pending'
         row['state']=state
         if review:row['review']=review
@@ -79,7 +108,7 @@ def reconcile(scope,reports,published):
     counts=Counter(row['state'] for row in rows)
     return {'schema':1,'generatedAt':datetime.now(timezone.utc).isoformat(),
         'baselineCommit':scope['baselineCommit'],'scopeForms':len(rows),
-        'note':'Every fixed-scope original remains visible. Linked counts require a real published file; source retrieval and queue creation do not resolve a review.',
+        'note':'Every fixed-scope original remains visible. Linked counts require a real published file; covered counts require the exact replacement SHA and program links to be published. Source retrieval and queue creation do not resolve a review.',
         'fullScopeMatchingComplete':counts['pending']==0 and counts['approved_pending_publication']==0 and counts['requires_external_confirmation']==0 and counts['replacement_available']==0,
         'counts':dict(counts),'sourceReviews':len(reviewed),'additionalReviewedIds':extras,'forms':rows}
 

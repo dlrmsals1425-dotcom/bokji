@@ -3181,6 +3181,14 @@
       "additional": 2
     }
   },
-  "reviewedFileSHA256": "b7f3643666e7f735261bca3867d9db343e6ed129bdb41f3799b9f45da94e0df1",
-  "finalizedAt": "2026-10-18"
+  "reviewedFileSHA256": "9bbb822969e822336dc982a1943413bb504c32dcd419c024683df61678a55121",
+  "finalizedAt": "2026-10-18",
+  "printedNumberCorrection": {
+    "at": "2026-10-19",
+    "originals": 11,
+    "rows": 11,
+    "beforeSHA256": "b7f3643666e7f735261bca3867d9db343e6ed129bdb41f3799b9f45da94e0df1",
+    "afterSHA256": "9bbb822969e822336dc982a1943413bb504c32dcd419c024683df61678a55121",
+    "artifact": "logs/forms-completion/reviews/team1-printed-number-corrections.json"
+  }
 }

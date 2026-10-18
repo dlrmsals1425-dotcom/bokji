@@ -1158,7 +1158,14 @@
       },
       "checkedAt": "2026-10-19",
       "additionalEvidence": {
-        "programMetadataIssue": "사업 설명 사망위로금 15만원, 현행 제3조는 30만원. 빈칸 신청 목적은 같으며 자격·금액 엔진은 변경하지 않음."
+        "programMetadataIssue": "사업 설명 사망위로금 15만원, 현행 제3조는 30만원. 빈칸 신청 목적은 같으며 자격·금액 엔진은 변경하지 않음.",
+        "printedNumberReview": {
+          "checkedAt": "2026-10-19",
+          "sourceSha256": "fc3b5c2b412126532719bb148d1e2032c13259d1c53df563fa270ffae01252ff",
+          "printedHeader": "[별지 제2호서식]",
+          "legalAnnexNumber": "2",
+          "note": "실제 인쇄 머리말 별지 제2호를 확인하여 단일 표기를 보완함. 공식 annexNumber 000300과 구분한다."
+        }
       }
     },
     {

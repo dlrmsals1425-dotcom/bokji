@@ -3970,7 +3970,7 @@
       "additional": 1
     }
   },
-  "reviewedFileSHA256": "2c1af7ccb00bd3d55944f447dffb06e62762252881f820494367a9d2941b4fe7",
+  "reviewedFileSHA256": "0fdedb8bd52fa2a182dc31cc2d4fcfe128c617fd00a95fc103476c2cea92ef90",
   "finalizedAt": "2026-10-18",
   "followupRevisions": [
     {
@@ -3982,5 +3982,13 @@
       "reason": "현행 규칙 제6조가 지정하는 내부 별지 제1호의 학생·보호자 신청, 학습권(화상강의·예체능)과 건강권(비급여·급여전액본인부담90%·체재비), 동의 및 8개 첨부항목을 두 원본 전체에서 재대조했다. 2024.10.10. 개정 표시가 있는 ordin-18646181이 두 사이트 사업에 이미 승인·연결되어 동일 신청 목적을 충족한다. 구 원본16196583과 바이트 SHA는 서로 다르며 변경사항은 개정표기·법규명 머리말 및 타기관명 단순화이다. 구 문안의 현재 재사용을 새 승인하거나 동일 바이너리로 판정한 것이 아니라 이미 공개된 개정 원본의 목적상 대체로 처리한다.",
       "reviewedBy": "codex-national_form_audit"
     }
-  ]
+  ],
+  "printedNumberCorrection": {
+    "at": "2026-10-19",
+    "originals": 1,
+    "rows": 2,
+    "beforeSHA256": "2c1af7ccb00bd3d55944f447dffb06e62762252881f820494367a9d2941b4fe7",
+    "afterSHA256": "0fdedb8bd52fa2a182dc31cc2d4fcfe128c617fd00a95fc103476c2cea92ef90",
+    "artifact": "logs/forms-completion/reviews/team1-printed-number-corrections.json"
+  }
 }

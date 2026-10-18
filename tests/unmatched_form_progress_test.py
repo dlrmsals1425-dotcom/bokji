@@ -29,6 +29,23 @@ class ProgressTest(unittest.TestCase):
         result=m.reconcile(self.scope(),[('supplement',report)],{})
         self.assertEqual([x['formId'] for x in result['additionalReviewedIds']],['ordin-91'])
         self.assertEqual(result['counts'],{'pending':3})
+    def test_coverage_requires_every_exact_replacement_and_program_to_be_published(self):
+        row={'formId':'ordin-1','sha256':'1'*64,'disposition':'covered_by_existing',
+             'reason':'같은 신청 목적을 확인한 개별 원본 두 개로 통합 원본의 주민용 부분을 대체합니다.','fullBodyReviewed':True,
+             'existingCoverage':[{'formId':'ordin-90','sha256':'a'*64,'programId':'p1'},
+                                 {'formId':'ordin-91','sha256':'b'*64,'programIds':['p2']}]}
+        complete={'ordin-90':{'sha256':'a'*64,'programIds':['p1']},'ordin-91':{'sha256':'b'*64,'programIds':['p2']}}
+        for published in [{},{'ordin-90':complete['ordin-90']},
+                          {**complete,'ordin-91':{'sha256':'c'*64,'programIds':['p2']}},
+                          {**complete,'ordin-91':{'sha256':'b'*64,'programIds':['different-benefit']}}]:
+            result=m.reconcile(self.scope(),[('review',{'items':[row]})],published)
+            self.assertEqual(result['forms'][0]['state'],'replacement_available')
+            self.assertFalse(result['forms'][0]['review']['coveragePublicationConfirmed'])
+        result=m.reconcile(self.scope(),[('review',{'items':[row]})],complete)
+        self.assertEqual(result['forms'][0]['state'],'covered_by_existing')
+        self.assertTrue(result['forms'][0]['review']['coveragePublicationConfirmed'])
+        for changes in [{'existingCoverage':[]},{'fullBodyReviewed':False},{'fullBodyReviewed':'false'}]:
+            self.assertEqual(m.reconcile(self.scope(),[('review',{'items':[{**row,**changes}]})],complete)['forms'][0]['state'],'replacement_available')
     def test_approved_requires_a_published_file_and_source_reasons_remain_visible(self):
         rows=[{'formId':'ordin-1','sha256':'1'*64,'disposition':'approved','reason':'해당 조문과 주민 신청서 전체를 읽고 일치함을 확인했다.','fullBodyReviewed':True},
               {'formId':'ordin-2','sha256':'2'*64,'disposition':'non_applicant','reason':'공무원이 보관하는 지급대장으로 대상 주민 신청서가 아니다.'}]

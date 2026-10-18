@@ -1653,7 +1653,14 @@
           "use": "main",
           "author": "해당 가구 수용가 또는 감면 신청인"
         }
-      ]
+      ],
+      "printedNumberReview": {
+        "checkedAt": "2026-10-19",
+        "sourceSha256": "9397e08cc2c1c0444aa55c6ef9f9d5070c513bfb46588fec08a0b3ac4d37d941",
+        "printedHeader": null,
+        "legalAnnexNumber": "1",
+        "note": "HWPX Contents/section0.xml 전체 텍스트와 추출 원문에 번호 머리말이 인쇄되어 있지 않다. 현재 number=1은 조례 제37조제4항 및 공식 첨부 제목의 법정 번호이며 인쇄 번호로 주장하지 않는다."
+      }
     },
     {
       "sourceKind": "ordin",
@@ -2761,8 +2768,8 @@
   ],
   "sourceReview": {
     "file": "logs/forms-completion/reviews/team3-batch-051-reviewed.json",
-    "sha256": "47c57e3a90764ddcdd3dc95d013a8778eb3a65d1bec0000dbfe67fa6a0d6a94f",
-    "dispositionsSHA256": "e303fe5f7d7c61b365d89fcb0892c85742fc4fb398a0b318b25c6cb674156dff",
+    "sha256": "70613f8aa9d9729b0c66a2db16102e2076773f87a97466f9ef0d441f46536688",
+    "dispositionsSHA256": "85d507cb11568a8ca7d1ec3219f0bf03d80def4f4a58e6057e73f89d393a694e",
     "assignmentSHA256": "a6ee9658be4fa2a82f433f693d292e2a4990fbc09c383c6aaff58f4523349c86"
   }
 }

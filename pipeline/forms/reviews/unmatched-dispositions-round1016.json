@@ -3793,6 +3793,14 @@
       "conditional": 14
     }
   },
-  "reviewedFileSHA256": "fda8079803507c5c6dad5b3468ed66ad57e2808f7dd1a2acdffc14d404733776",
-  "finalizedAt": "2026-10-18"
+  "reviewedFileSHA256": "db5f55dc3375c51775e7ca8064e9f6eff77cdd48312dd4fe44aa6de2a92bbc9d",
+  "finalizedAt": "2026-10-18",
+  "printedNumberCorrection": {
+    "at": "2026-10-19",
+    "originals": 3,
+    "rows": 3,
+    "beforeSHA256": "fda8079803507c5c6dad5b3468ed66ad57e2808f7dd1a2acdffc14d404733776",
+    "afterSHA256": "db5f55dc3375c51775e7ca8064e9f6eff77cdd48312dd4fe44aa6de2a92bbc9d",
+    "artifact": "logs/forms-completion/reviews/team1-printed-number-corrections.json"
+  }
 }

@@ -441,7 +441,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "5",
+          "number": "3",
           "title": "체육시설 이용신청서 및 재등록 신청서",
           "use": "conditional",
           "author": "사업의 지원대상 신청인 또는 허용된 대리인"
@@ -459,7 +459,9 @@
         "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2067157",
         "currentAnnexBinding": "bound"
       },
-      "condition": "수영·헬스 등 프로그램 이용등록 또는 재등록과 함께 감면 내용을 기재할 때 사용합니다. 감면 승인에 별지 제1호 및 자격 증빙이 추가로 필요할 수 있습니다."
+      "condition": "수영·헬스 등 프로그램 이용등록 또는 재등록과 함께 감면 내용을 기재할 때 사용합니다. 감면 승인에 별지 제1호 및 자격 증빙이 추가로 필요할 수 있습니다.",
+      "verifiedAnnexNumber": "3",
+      "annexNumberNote": "annexNumber는 공식 포털 별표 포함 순번을 보존하고 reviewedParts.number 및 verifiedAnnexNumber는 원본 머리말의 실제 인쇄 별지 번호를 기록한다."
     },
     {
       "sourceKind": "ordin",
@@ -766,7 +768,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "3",
+          "number": "2",
           "title": "국가유공자 사망위로금 지급신청서",
           "use": "conditional",
           "author": "사망 국가유공자의 유가족 또는 관계인"
@@ -783,7 +785,9 @@
         "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2067399",
         "currentAnnexBinding": "bound"
       },
-      "condition": "국가유공자위문 사업 중 사망위로금 신청에 사용합니다."
+      "condition": "국가유공자위문 사업 중 사망위로금 신청에 사용합니다.",
+      "verifiedAnnexNumber": "2",
+      "annexNumberNote": "annexNumber는 공식 포털 별표 포함 순번을 보존하고 reviewedParts.number 및 verifiedAnnexNumber는 원본 머리말의 실제 인쇄 별지 번호를 기록한다."
     },
     {
       "sourceKind": "ordin",
@@ -831,7 +835,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "3",
+          "number": "2",
           "title": "국가유공자 사망위로금 지급신청서",
           "use": "main",
           "author": "사망 국가유공자의 유가족 또는 관계인"
@@ -847,7 +851,9 @@
         "currentLawId": "2067399",
         "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2067399",
         "currentAnnexBinding": "bound"
-      }
+      },
+      "verifiedAnnexNumber": "2",
+      "annexNumberNote": "annexNumber는 공식 포털 별표 포함 순번을 보존하고 reviewedParts.number 및 verifiedAnnexNumber는 원본 머리말의 실제 인쇄 별지 번호를 기록한다."
     },
     {
       "sourceKind": "ordin",
@@ -963,7 +969,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "1",
+          "number": "13",
           "title": "울릉사랑상품권 현금할인구매 신청서(개인)",
           "use": "main",
           "author": "사업의 지원대상 신청인 또는 허용된 대리인"
@@ -996,7 +1002,9 @@
       ],
       "officialRevisionReason": {
         "제개정이유내용": "울릉군 울릉사랑상품권 이용 활성화에 관한 조례 제13조제3항의 개인 구매한도 상향에 맞추어 울릉군 울릉사랑상품권 이용 활성화에 관한 조례 시행규칙 별지 제13호 서식의 개인 할인구매 한도를 수정하고자 함"
-      }
+      },
+      "verifiedAnnexNumber": "13",
+      "annexNumberNote": "annexNumber는 공식 포털 별표 포함 순번을 보존하고 reviewedParts.number 및 verifiedAnnexNumber는 원본 머리말의 실제 인쇄 별지 번호를 기록한다."
     },
     {
       "sourceKind": "ordin",
@@ -1109,7 +1117,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "6",
+          "number": "1",
           "title": "수도 사용료 감면 신청서",
           "use": "main",
           "author": "사업의 지원대상 신청인 또는 허용된 대리인"
@@ -1126,7 +1134,9 @@
         "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2069283",
         "currentAnnexBinding": "bound"
       },
-      "condition": "사업에서 안내하는 감면 사유와 입증서류를 기재·첨부합니다. 실제 감면량·금액과 서류 생략 가능 여부는 현행 조례 및 접수 안내를 확인합니다."
+      "condition": "사업에서 안내하는 감면 사유와 입증서류를 기재·첨부합니다. 실제 감면량·금액과 서류 생략 가능 여부는 현행 조례 및 접수 안내를 확인합니다.",
+      "verifiedAnnexNumber": "1",
+      "annexNumberNote": "annexNumber는 공식 포털 별표 포함 순번을 보존하고 reviewedParts.number 및 verifiedAnnexNumber는 원본 머리말의 실제 인쇄 별지 번호를 기록한다."
     },
     {
       "sourceKind": "ordin",
@@ -1174,7 +1184,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "6",
+          "number": "1",
           "title": "수도 사용료 감면 신청서",
           "use": "main",
           "author": "사업의 지원대상 신청인 또는 허용된 대리인"
@@ -1191,7 +1201,9 @@
         "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2069283",
         "currentAnnexBinding": "bound"
       },
-      "condition": "사업에서 안내하는 감면 사유와 입증서류를 기재·첨부합니다. 실제 감면량·금액과 서류 생략 가능 여부는 현행 조례 및 접수 안내를 확인합니다."
+      "condition": "사업에서 안내하는 감면 사유와 입증서류를 기재·첨부합니다. 실제 감면량·금액과 서류 생략 가능 여부는 현행 조례 및 접수 안내를 확인합니다.",
+      "verifiedAnnexNumber": "1",
+      "annexNumberNote": "annexNumber는 공식 포털 별표 포함 순번을 보존하고 reviewedParts.number 및 verifiedAnnexNumber는 원본 머리말의 실제 인쇄 별지 번호를 기록한다."
     },
     {
       "sourceKind": "ordin",
@@ -1972,7 +1984,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "2",
+          "number": "45",
           "title": "서울특별시 성북구 선정 대리인 지정 신청서",
           "use": "main",
           "author": "사업의 지원대상 신청인 또는 허용된 대리인"
@@ -1989,7 +2001,9 @@
         "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2071347",
         "currentAnnexBinding": "bound"
       },
-      "condition": "지방세 불복청구의 무료 선정대리인 지정을 신청하는 서식입니다. 법인 매출 기준이 사업 안내에는2억원,원본에는3억원으로 달라 법인의 실제 자격·증빙 기준은 현행 접수 안내를 확인해야 합니다."
+      "condition": "지방세 불복청구의 무료 선정대리인 지정을 신청하는 서식입니다. 법인 매출 기준이 사업 안내에는2억원,원본에는3억원으로 달라 법인의 실제 자격·증빙 기준은 현행 접수 안내를 확인해야 합니다.",
+      "verifiedAnnexNumber": "45",
+      "annexNumberNote": "annexNumber는 공식 포털 별표 포함 순번을 보존하고 reviewedParts.number 및 verifiedAnnexNumber는 원본 머리말의 실제 인쇄 별지 번호를 기록한다."
     },
     {
       "sourceKind": "ordin",
@@ -2105,7 +2119,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "4",
+          "number": "3",
           "title": "무릎 인공관절 수술 의료비 청구서",
           "use": "conditional",
           "author": "사업의 지원대상 신청인 또는 허용된 대리인"
@@ -2123,7 +2137,9 @@
         "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2071595",
         "currentAnnexBinding": "bound"
       },
-      "condition": "수술 전에 지원대상자로 결정된 사람이 수술 후 의료비를 청구할 때 사용합니다. 최초 지원신청은 별지 제1호입니다."
+      "condition": "수술 전에 지원대상자로 결정된 사람이 수술 후 의료비를 청구할 때 사용합니다. 최초 지원신청은 별지 제1호입니다.",
+      "verifiedAnnexNumber": "3",
+      "annexNumberNote": "annexNumber는 공식 포털 별표 포함 순번을 보존하고 reviewedParts.number 및 verifiedAnnexNumber는 원본 머리말의 실제 인쇄 별지 번호를 기록한다."
     },
     {
       "sourceKind": "ordin",
@@ -2301,7 +2317,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "4",
+          "number": "3",
           "title": "보성사랑상품권 가맹점 등록 신청서",
           "use": "conditional",
           "author": "가맹점 등록을 신청하는 업소 대표"
@@ -2318,7 +2334,9 @@
         "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2072005",
         "currentAnnexBinding": "bound"
       },
-      "condition": "사업장 대표가 보성사랑상품권 가맹점 등록을 신청하는 경우 사용합니다. 소비자 구매용은 별지 제10호입니다."
+      "condition": "사업장 대표가 보성사랑상품권 가맹점 등록을 신청하는 경우 사용합니다. 소비자 구매용은 별지 제10호입니다.",
+      "verifiedAnnexNumber": "3",
+      "annexNumberNote": "annexNumber는 공식 포털 별표 포함 순번을 보존하고 reviewedParts.number 및 verifiedAnnexNumber는 원본 머리말의 실제 인쇄 별지 번호를 기록한다."
     },
     {
       "sourceKind": "ordin",
@@ -2366,7 +2384,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "5",
+          "number": "4",
           "title": "보성사랑상품권 임시 가맹점 등록 신청서",
           "use": "conditional",
           "author": "임시가맹점 운영 개인 또는 단체 대표"
@@ -2383,7 +2401,9 @@
         "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2072005",
         "currentAnnexBinding": "bound"
       },
-      "condition": "축제·행사·임시장터의 참여 개인·단체가 임시가맹점을 신청할 때 사용합니다."
+      "condition": "축제·행사·임시장터의 참여 개인·단체가 임시가맹점을 신청할 때 사용합니다.",
+      "verifiedAnnexNumber": "4",
+      "annexNumberNote": "annexNumber는 공식 포털 별표 포함 순번을 보존하고 reviewedParts.number 및 verifiedAnnexNumber는 원본 머리말의 실제 인쇄 별지 번호를 기록한다."
     },
     {
       "sourceKind": "ordin",
@@ -2431,7 +2451,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "9",
+          "number": "8",
           "title": "보성사랑상품권 가맹점 등록 변경 신청서",
           "use": "conditional",
           "author": "등록된 가맹점의 업소 대표"
@@ -2448,7 +2468,9 @@
         "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2072005",
         "currentAnnexBinding": "bound"
       },
-      "condition": "이미 등록한 가맹점이 등록사항 변경를 신청할 때 사용합니다."
+      "condition": "이미 등록한 가맹점이 등록사항 변경를 신청할 때 사용합니다.",
+      "verifiedAnnexNumber": "8",
+      "annexNumberNote": "annexNumber는 공식 포털 별표 포함 순번을 보존하고 reviewedParts.number 및 verifiedAnnexNumber는 원본 머리말의 실제 인쇄 별지 번호를 기록한다."
     },
     {
       "sourceKind": "ordin",
@@ -2496,7 +2518,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "10",
+          "number": "9",
           "title": "보성사랑상품권 가맹점 등록 해지 신청서",
           "use": "conditional",
           "author": "등록된 가맹점의 업소 대표"
@@ -2513,7 +2535,9 @@
         "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2072005",
         "currentAnnexBinding": "bound"
       },
-      "condition": "이미 등록한 가맹점이 가맹등록 해지를 신청할 때 사용합니다."
+      "condition": "이미 등록한 가맹점이 가맹등록 해지를 신청할 때 사용합니다.",
+      "verifiedAnnexNumber": "9",
+      "annexNumberNote": "annexNumber는 공식 포털 별표 포함 순번을 보존하고 reviewedParts.number 및 verifiedAnnexNumber는 원본 머리말의 실제 인쇄 별지 번호를 기록한다."
     },
     {
       "sourceKind": "ordin",
@@ -2626,7 +2650,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "12",
+          "number": "11",
           "title": "보성사랑상품권 환전 청구서",
           "use": "conditional",
           "author": "등록 가맹점의 대표"
@@ -2643,7 +2667,9 @@
         "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2072005",
         "currentAnnexBinding": "bound"
       },
-      "condition": "등록 가맹점이 거래로 받은 상품권을 판매대행점에 환전 청구할 때만 사용합니다. 일반 소비자의 환불·환전 신청용은 아니며 하단 접수증은 기관 작성용입니다."
+      "condition": "등록 가맹점이 거래로 받은 상품권을 판매대행점에 환전 청구할 때만 사용합니다. 일반 소비자의 환불·환전 신청용은 아니며 하단 접수증은 기관 작성용입니다.",
+      "verifiedAnnexNumber": "11",
+      "annexNumberNote": "annexNumber는 공식 포털 별표 포함 순번을 보존하고 reviewedParts.number 및 verifiedAnnexNumber는 원본 머리말의 실제 인쇄 별지 번호를 기록한다."
     },
     {
       "sourceKind": "ordin",
@@ -2691,7 +2717,7 @@
       "roleCheckedAt": "2026-10-19",
       "reviewedParts": [
         {
-          "number": "16",
+          "number": "15",
           "title": "노점상 확인서",
           "use": "conditional",
           "author": "해당 상인회장"
@@ -2708,7 +2734,9 @@
         "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2072005",
         "currentAnnexBinding": "bound"
       },
-      "condition": "상인회가 인정한 노점상이 가맹점 등록을 신청할 때 상인회장에게 확인·발급받아 첨부합니다. 신청인이 임의로 기관 확인란을 작성하는 서류는 아닙니다."
+      "condition": "상인회가 인정한 노점상이 가맹점 등록을 신청할 때 상인회장에게 확인·발급받아 첨부합니다. 신청인이 임의로 기관 확인란을 작성하는 서류는 아닙니다.",
+      "verifiedAnnexNumber": "15",
+      "annexNumberNote": "annexNumber는 공식 포털 별표 포함 순번을 보존하고 reviewedParts.number 및 verifiedAnnexNumber는 원본 머리말의 실제 인쇄 별지 번호를 기록한다."
     },
     {
       "sourceKind": "ordin",
@@ -2974,8 +3002,8 @@
   ],
   "sourceReview": {
     "file": "logs/forms-completion/reviews/team1-batch-043-reviewed.json",
-    "sha256": "c03d614e3481626e0031af97e1428c5ecdd41d8bc73abceb9024fe95389ef4e0",
-    "dispositionsSHA256": "007e9280a812cc851854b6a6054f8acf71446dabff43a2d62cfcfef2ffb087a5",
+    "sha256": "d2ab2aaeb1cdcee423fe1b00112c726d752241e89f8b6313e8e3f0be5189375d",
+    "dispositionsSHA256": "a2d145a05408f776ce19db921fc50c4218206f50ed63bbd3a9b6d630f4547e81",
     "assignmentSHA256": "e789262caa32e93f9acd26fb4b2e4791df0f295e77b91a70f2756fca191c37cd"
   }
 }
