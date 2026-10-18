@@ -64,10 +64,12 @@ def inventory_reviews(root, published):
     spec.loader.exec_module(progress)
     directory = root/'pipeline/forms/reviews'
     scope = read(directory/'unmatched-originals-scope.json')
-    supplemental = directory/'prior-edition-originals-scope.json'
-    if supplemental.exists():
-        scope = dict(scope, forms=[*scope['forms'], *read(supplemental)['forms']])
-    paths = set(progress.review_paths(root)) | set(directory.glob('prior-edition-dispositions-*.json'))
+    for name in ('prior-edition-originals-scope.json', 'current-replacement-originals-scope.json'):
+        supplemental = directory/name
+        if supplemental.exists():
+            scope = dict(scope, forms=[*scope['forms'], *read(supplemental)['forms']])
+    paths = (set(progress.review_paths(root)) | set(directory.glob('prior-edition-dispositions-*.json'))
+             | set(directory.glob('current-replacement-dispositions-*.json')))
     reports = [(p.relative_to(root).as_posix(), read(p)) for p in sorted(paths) if p.exists()]
     return {row['formId']: row for row in progress.reconcile(scope, reports, published)['forms']}
 

@@ -3564,7 +3564,29 @@
         ],
         "result": "28125 전체 프로그램에서 스케일링 사업은 제물포구 조례 근거 1건이며 동구 조례 근거 사업은 없다."
       },
-      "additionalEvidence": "승계 원본 대조: ordin-22497677(법규ID 2146009, 제물포구 조례 '[별지 제3호서식] 노인 스케일링 본인부담금 지원사업 참여 신청서(제7조제1항 관련)', hwpx, 39035바이트, sha256 87c0bf9d…)의 실제 본문을 읽어 참여 기관명·대표자·사업자등록번호·의료인 현황·참여 다짐 문구가 이 원본과 동일함을 확인했다. 이 승계본은 아직 게시되지 않았고 team4 배정 밖이므로 조정자에게 별도 추가 첨부 보고 대상으로 남긴다.",
+      "additionalEvidence": {
+        "originalClaudeNote": "승계 원본 대조: ordin-22497677(법규ID 2146009, 제물포구 조례 '[별지 제3호서식] 노인 스케일링 본인부담금 지원사업 참여 신청서(제7조제1항 관련)', hwpx, 39035바이트, sha256 87c0bf9d…)의 실제 본문을 읽어 참여 기관명·대표자·사업자등록번호·의료인 현황·참여 다짐 문구가 이 원본과 동일함을 확인했다. 이 승계본은 아직 게시되지 않았고 team4 배정 밖이므로 조정자에게 별도 추가 첨부 보고 대상으로 남긴다.",
+        "coordinatorCoverageVerification": {
+          "reviewedBy": "Codex",
+          "checkedAt": "2026-10-19",
+          "oldFullBodyRead": true,
+          "currentFullBodyRead": true,
+          "currentOriginalShaVerified": true,
+          "currentIndependentReview": "team1-batch-061",
+          "publicationRequired": true
+        }
+      },
+      "existingCoverage": [
+        {
+          "formId": "ordin-22497677",
+          "sha256": "87c0bf9d8cb8c666b7d98095ce7ed260419ceadc971de6ec74d4b410f42aaec3",
+          "programIds": [
+            "g28125.bokjiro-WLF00005339"
+          ],
+          "lawId": "2146009",
+          "comparison": "Different HWP/HWPX bytes. Complete old/new clinic form bodies independently compared; current law articles7/8 and exact WLF clinic participation/payment route verified. Publication confirmation remains required."
+        }
+      ],
       "reviewedBy": "Claude Code"
     },
     {
@@ -3637,7 +3659,29 @@
         ],
         "result": "28125 전체 프로그램에서 스케일링 본인부담금 사업은 제물포구 조례 근거 1건이며 동구 조례 근거 사업은 없다."
       },
-      "additionalEvidence": "승계 원본 대조: ordin-22497679(법규ID 2146009, 제물포구 조례 '[별지 제4호서식] 노인 스케일링 본인부담금 지원사업 시술비용 청구서(제8조제1항 관련)', hwpx, 45154바이트, sha256 e207cc03…)의 실제 본문을 읽어 청구 문구·병의원 정보·시술대상자 명단·지급계좌·청구방법·첨부서류가 이 원본과 동일함을 확인했다. 이 승계본은 아직 게시되지 않았고 team4 배정 밖이므로 조정자에게 별도 추가 첨부 보고 대상으로 남긴다.",
+      "additionalEvidence": {
+        "originalClaudeNote": "승계 원본 대조: ordin-22497679(법규ID 2146009, 제물포구 조례 '[별지 제4호서식] 노인 스케일링 본인부담금 지원사업 시술비용 청구서(제8조제1항 관련)', hwpx, 45154바이트, sha256 e207cc03…)의 실제 본문을 읽어 청구 문구·병의원 정보·시술대상자 명단·지급계좌·청구방법·첨부서류가 이 원본과 동일함을 확인했다. 이 승계본은 아직 게시되지 않았고 team4 배정 밖이므로 조정자에게 별도 추가 첨부 보고 대상으로 남긴다.",
+        "coordinatorCoverageVerification": {
+          "reviewedBy": "Codex",
+          "checkedAt": "2026-10-19",
+          "oldFullBodyRead": true,
+          "currentFullBodyRead": true,
+          "currentOriginalShaVerified": true,
+          "currentIndependentReview": "team1-batch-061",
+          "publicationRequired": true
+        }
+      },
+      "existingCoverage": [
+        {
+          "formId": "ordin-22497679",
+          "sha256": "e207cc03abcabdee6aa8429ac359502580ccdfc353a8c39dff76513b5856d8f0",
+          "programIds": [
+            "g28125.bokjiro-WLF00005339"
+          ],
+          "lawId": "2146009",
+          "comparison": "Different HWP/HWPX bytes. Complete old/new clinic form bodies independently compared; current law articles7/8 and exact WLF clinic participation/payment route verified. Publication confirmation remains required."
+        }
+      ],
       "reviewedBy": "Claude Code"
     },
     {
@@ -3857,6 +3901,6 @@
       "reviewedBy": "Claude Code"
     }
   ],
-  "writerNormalizedTextSha256": "0e1ad5885488c9ac2e9236f3878955fd65d762be7149b9ddbce5712692091b4f",
-  "finalizedReviewSha256": "5c5b941dce2eb728e9cd38613dbca167dce609582e035093987bff20f212023b"
+  "writerNormalizedTextSha256": "307dd505e042b7773ac50877c96b0633fa5a4906853e266ce046171948ed2547",
+  "finalizedReviewSha256": "a7c046f39868a0d21cfcb26684348e2fc08fe911e38fc48144dc0b62b998412a"
 }

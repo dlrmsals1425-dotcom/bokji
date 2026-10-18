@@ -42,6 +42,7 @@ describe("generated national forms catalogue", () => {
       for (const [status, count] of Object.entries(region.region.counts)) expect(region.programs.filter(program => program.status === status)).toHaveLength(count);
     }
   });
+  // These checks walk every published association and original, not a small fixture.
   it("publishes only dated, evidence-backed, same-jurisdiction applicant associations", () => {
     for (const row of programs.filter(program => program.links.length)) {
       expect(row.status).toBe("available");
@@ -49,7 +50,7 @@ describe("generated national forms catalogue", () => {
       for (const link of row.links) expect(() => validateFormLink(original, catalog.forms[link.formId], link)).not.toThrow();
     }
     expect(programs.filter(program => program.status === "available")).toHaveLength(coverage.counts.available);
-  });
+  }, 30_000);
   it("approved downloads retain exact original bytes and available checked PDFs", () => {
     const published = Object.values(catalog.forms).filter(form => form.file);
     const linkedIds = new Set(programs.flatMap(program => program.links.map(link => link.formId)));
@@ -89,7 +90,7 @@ describe("generated national forms catalogue", () => {
       }
     }
     expect(new Set(readdirSync("public/forms/files"))).toEqual(expectedAssets);
-  });
+  }, 30_000);
   it("deleted/administrative records do not publish files and unrelated Goyang forms do not leak to other areas", () => {
     for (const form of Object.values(catalog.forms)) {
       if (["administrative", "deleted", "reference"].includes(form.role)) expect(form.file).toBeUndefined();

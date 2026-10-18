@@ -1,5 +1,7 @@
 import importlib.util
+import json
 from pathlib import Path
+import tempfile
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -42,6 +44,29 @@ class InventoryReviewTest(unittest.TestCase):
     def test_stale_linked_state_without_actual_links_requires_confirmation(self):
         result = m.decorate_original(self.row(), self.review(state='linked'))
         self.assertEqual(result['reviewState'], 'needs_confirmation')
+
+    def test_all_frozen_scopes_retain_reasons_without_private_logs(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            (root/'scripts').mkdir()
+            (root/'scripts/update-unmatched-form-progress.py').write_bytes((ROOT/'scripts/update-unmatched-form-progress.py').read_bytes())
+            reviews = root/'pipeline/forms/reviews'
+            reviews.mkdir(parents=True)
+            for index, (scope_name, report_name) in enumerate([
+                ('unmatched-originals-scope.json', 'unmatched-dispositions-round1001.json'),
+                ('prior-edition-originals-scope.json', 'prior-edition-dispositions-team3.json'),
+                ('current-replacement-originals-scope.json', 'current-replacement-dispositions-round2070.json'),
+            ], 1):
+                original = {'formId': f'ordin-{index}', 'sha256': str(index)*64,
+                            'lawId': str(index), 'title': '공식 별지', 'format': 'hwp'}
+                (reviews/scope_name).write_text(json.dumps({'baselineCommit': 'fixture', 'forms': [original]}), encoding='utf-8')
+                (reviews/report_name).write_text(json.dumps({'items': [{**original,
+                    'disposition': 'non_applicant', 'fullBodyReviewed': True,
+                    'reason': f'기관 작성 대장으로 개별 검토한 원본{index}입니다.'}]}), encoding='utf-8')
+            result = m.inventory_reviews(root, {})
+            self.assertEqual(set(result), {'ordin-1', 'ordin-2', 'ordin-3'})
+            self.assertTrue(all(x['state'] == 'reviewed_not_linked' for x in result.values()))
+            self.assertIn('원본3', result['ordin-3']['review']['reason'])
 
 
 if __name__ == '__main__':

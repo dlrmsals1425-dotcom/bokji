@@ -1339,11 +1339,12 @@
       "reviewedParts": [
         {
           "number": "별지 제3호",
-          "title": "[별지 제3호서식] 경로우대 목욕이용권 신청서",
+          "title": "경로우대 목욕 및 이·미용권 신청서",
           "use": "main",
           "author": "목욕이용권 대상노인 또는 본인 신청 곤란 시 배우자·부양의무자 등"
         }
-      ]
+      ],
+      "displayTitle": "경로우대 목욕 및 이·미용권 신청서"
     },
     {
       "sourceKind": "ordin",
@@ -1522,8 +1523,8 @@
   ],
   "sourceReview": {
     "file": "logs/forms-completion/reviews/team3-batch-063-reviewed.json",
-    "sha256": "68b50c07dd5aa5e75560620982628d1a8101fcb9efe7c56185ad91f37511459e",
-    "dispositionsSHA256": "37f024a9def96c92e2ebbb2e46eae1d5f3d9341920508c4eba668f46adf97a9b",
+    "sha256": "79a6409598fc00f46454f53c200b40ea10c434ce979b8279802f19c54534d462",
+    "dispositionsSHA256": "70b9a939cb8610cd516363913893f816b7d16a31ad9fea3fa4b96330be88b90e",
     "assignmentSHA256": "ddfad9e2935449b727b267a20f94f47c5feb7c4799ffc8d9e98006cc8f87e34a"
   }
 }

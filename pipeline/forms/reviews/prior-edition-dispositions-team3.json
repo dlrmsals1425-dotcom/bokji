@@ -1398,6 +1398,7 @@
     "dispositionsSHA256": "fd4921b536f849824963ad3c3f1c588b2e8ff46db75bcd4cb4512d366c33fa7f",
     "assignmentSHA256": "b98f02e9b009acbbdca49a32f80e7a404a55b9040d9ca718e24dd8d2bb6a3898",
     "frozenScopeSHA256": "42de1a60a520be003078812655a62d08d4efac1728d95841ebe09e703dd13c20",
+    "assignmentOwnershipSHA256": "8a32341d2348aec73199ddc81496bcc750ff1430a6415ccce9671c9634fb8ad8",
     "output": "municipal-reviewed-round6003.json"
   }
 }

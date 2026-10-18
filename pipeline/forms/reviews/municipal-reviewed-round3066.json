@@ -1009,6 +1009,7 @@
           "author": "화장한 사망자·영아·개장유골의 연고자"
         }
       ],
+      "condition": "파일의 별지 제1호 화장장려금 지급신청서와 동의 부분만 작성합니다. 뒤의 별지 제2호 지급대장은 담당기관 작성용입니다.",
       "displayTitle": "화장장려금 지급신청서"
     },
     {
@@ -2090,8 +2091,8 @@
   ],
   "sourceReview": {
     "file": "logs/forms-completion/reviews/team3-batch-066-reviewed.json",
-    "sha256": "018fa0694358535087aa2f5914be6f74b163d90515f2fdc8a4f231a952048826",
-    "dispositionsSHA256": "abde7cef49c6a3a9783e514c9c979bbc32252cf3f45edd2129110385c475b43a",
+    "sha256": "fe5efcfad2848bd332b6a5ef4e6c0c4005506eed59286ab61762b148ac3f704a",
+    "dispositionsSHA256": "335251d7566953206c41c96292d75c95ffe6d66afd19d40dc60e71994d815df6",
     "assignmentSHA256": "24193310f0aab8b2597be1b2009a73485f5425bc9057ecd09fb20c70adaf0a88"
   }
 }

@@ -46,13 +46,13 @@
       "bodyEvidenceText": "제4조(지원 대상)① 시장은 입학일 기준으로 시흥시에 주민등록을 두고 초ㆍ중ㆍ고등학교에 최초 입학하는 학생에게 입학준비금을 지원할 수 있다. 단, 외국인의 경우 시흥시를 체류지로 외국인등록을 하고 초ㆍ중ㆍ고등학교에 최초 입학하는 학생을 대상으로 한다.② 시장은 제2조제1호에 따른 초ㆍ중ㆍ고등학교 이외의 교육기관에 입학하는 학생에게도 입학준비금을 지원할 수 있다.",
       "reviewedParts": [
         {
-          "number": "1",
+          "number": "별지 서식",
           "title": "시흥시 입학준비금 신청서",
           "use": "main",
           "author": "초·중·고 신입생의 보호자"
         },
         {
-          "number": "1-부속",
+          "number": "별지 서식 부속 동의란",
           "title": "개인정보 수집·이용 및 제3자 제공 동의서",
           "use": "additional",
           "author": "신청인"
@@ -827,7 +827,7 @@
       "bodyEvidenceText": "제7조(가맹점의 등록) 원본이 인용하는 제7조제1항은 제주 지역화폐 가맹점이 되려는 자가 별지 서식의 가맹점 등록 신청서를 도지사에게 제출하도록 정한 조항이다.",
       "reviewedParts": [
         {
-          "number": "1",
+          "number": "별지 서식",
           "title": "제주 지역화폐 가맹점 등록 신청서",
           "use": "conditional",
           "author": "가맹점이 되려는 사업자의 대표자 또는 위임받은 대리인"
@@ -1035,13 +1035,13 @@
       "bodyEvidenceText": "제6조(지원 신청)① 결혼장려금을 지원받고자 하는 청년 부부는 별지 서식의 결혼장려금 지원 신청서를 주소지 관할 읍ㆍ면ㆍ동장에게 제출하여야 한다.② 결혼장려금 지급에 관한 세부 방법 및 절차는 시장이 따로 정한다.",
       "reviewedParts": [
         {
-          "number": "1",
+          "number": "별지 서식(앞면)",
           "title": "보령시 결혼장려금 신청서(앞면)",
           "use": "main",
           "author": "청년 부부 중 신청자 본인"
         },
         {
-          "number": "1-뒷면",
+          "number": "별지 서식(뒷면)",
           "title": "개인정보 수집·이용·제공 및 고유식별정보 처리에 관한 동의서",
           "use": "additional",
           "author": "신청자"
@@ -1053,8 +1053,8 @@
   ],
   "sourceReview": {
     "file": "logs/forms-completion/reviews/team4-batch-042-reviewed.json",
-    "sha256": "5b1d58d9bb158a4ff21b7cba5595780ee9df90c9e54f7f1b701ad5fa6c579787",
-    "dispositionsSHA256": "21a94ce83030865c406b0a2e775911ef198a448378ef5281742c449515931a06",
+    "sha256": "a7cbfc3ef3b08003ef3fb771dbe1aec475b24975128bf609155f11544da84ca8",
+    "dispositionsSHA256": "99b7ae360f4651df73e64d4a83fcf5925a968dc44e02c6c17822c033acdcfb1b",
     "assignmentSHA256": "fca1ac5ba20c68b513f3680fcaa7207157f047d493c492863f10d0fc38dc9272"
   }
 }
