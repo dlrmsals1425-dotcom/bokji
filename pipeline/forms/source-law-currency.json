@@ -1,4 +1,12 @@
 {
+ "annexStatusParser": {
+  "correctedAt": "2026-10-19",
+  "correctedSourceFormIds": [
+   "ordin-18276055",
+   "ordin-20846975"
+  ],
+  "version": 2
+ },
  "checkedAt": "2026-10-19",
  "checkedLaws": 1854,
  "counts": {
@@ -19668,7 +19676,7 @@
     "ordin-18276055": {
      "binding": "bound",
      "bindingReason": "OFFICIAL_ANNEX_BOUND_WITH_SAME_FILE",
-     "officialAnnexDeleted": true,
+     "officialAnnexDeleted": false,
      "officialAnnexId": "18276055",
      "officialAnnexNumber": "4",
      "officialAnnexTitle": "[별지 제3호] 공동주택관리 지원 사업 변경 중단 폐지 신청서",
@@ -58268,7 +58276,7 @@
     "ordin-20846975": {
      "binding": "bound",
      "bindingReason": "OFFICIAL_ANNEX_BOUND_WITH_SAME_FILE",
-     "officialAnnexDeleted": true,
+     "officialAnnexDeleted": false,
      "officialAnnexId": "20846975",
      "officialAnnexNumber": "8",
      "officialAnnexTitle": "[별지 제8호서식] 사업변경(중단 폐지) 신청서",

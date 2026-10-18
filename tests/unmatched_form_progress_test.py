@@ -23,6 +23,12 @@ class ProgressTest(unittest.TestCase):
     def test_download_queue_and_pending_reviews_do_not_become_completed(self):
         result=m.reconcile(self.scope(),[('queue',{'items':[{'formId':'ordin-1','disposition':'pending'}]})],{})
         self.assertEqual(result['counts'],{'pending':3});self.assertFalse(result['fullScopeMatchingComplete'])
+    def test_supplemental_pending_originals_are_not_reported_as_reviewed(self):
+        report={'items':[{'formId':'ordin-90','disposition':'pending'},
+                         {'formId':'ordin-91','disposition':'non_applicant','reason':'별도 담당이 실제 본문을 읽은 기관용 관리대장입니다.'}]}
+        result=m.reconcile(self.scope(),[('supplement',report)],{})
+        self.assertEqual([x['formId'] for x in result['additionalReviewedIds']],['ordin-91'])
+        self.assertEqual(result['counts'],{'pending':3})
     def test_approved_requires_a_published_file_and_source_reasons_remain_visible(self):
         rows=[{'formId':'ordin-1','sha256':'1'*64,'disposition':'approved','reason':'해당 조문과 주민 신청서 전체를 읽고 일치함을 확인했다.','fullBodyReviewed':True},
               {'formId':'ordin-2','sha256':'2'*64,'disposition':'non_applicant','reason':'공무원이 보관하는 지급대장으로 대상 주민 신청서가 아니다.'}]

@@ -110,6 +110,18 @@ class StubPortal:
 
 
 class IdentityTest(unittest.TestCase):
+    def test_application_to_end_a_project_is_not_a_deleted_official_annex(self):
+        for title in ['[별지 제8호서식] 사업변경(중단 폐지) 신청서',
+                      '[별지 제3호] 공동주택관리 지원 사업 변경 중단 폐지 신청서',
+                      '개인정보 삭제 신청서','사업 폐지 신고서']:
+            with self.subTest(title=title):
+                self.assertFalse(m.annex_rows(service(annexes=[annex(title=title)]))[0]['deleted'])
+        for title in ['[별지 제7호서식] 생활용품비 지원 신청서 삭제<2023.6.30.>',
+                      '[별지 제3호 서식] 삭제 _2017.12.29_',
+                      '[별지 제2호서식] 삭제','[별지 제2호서식] 삭 제 <2025. 9. 15.>',
+                      '[별지 제3호서식] 폐지 (2024. 1. 1.)']:
+            with self.subTest(title=title):
+                self.assertTrue(m.annex_rows(service(annexes=[annex(title=title)]))[0]['deleted'])
     def test_body_is_kept_only_for_the_exact_source_law_id(self):
         record, error = m.body_record(service(), LAW_ID, source='law-service')
         self.assertIsNone(error)

@@ -2311,8 +2311,12 @@
         {
           "formId": "ordin-20097253",
           "programId": "g52190.bokjiro-WLF00003477",
-          "decision": "requires_external_confirmation",
-          "reason": "수급자 국민임대 보증금 및 도지사·시장의 LH 직접 지급·연장 절차는 일치하나 인용된 구 제명과 현행 제명 사이 공식 연혁 연결을 추가 확인해야 함. 현재 원본에도 구 제명 문구가 남아 있어 유력한 후보이며 무관한 사업으로 제외하지 않음."
+          "decision": "approved",
+          "reason": "동일 stableLawId 2143324의 공식 1043959(2011-06-03 구 제명), 1903575(2024-01-18 현 제명), 2013333(2025-01-31 현행) 본문·부칙과 남원 사업의 수급자 국민임대 보증금, 신청인→시군→도/LH 지급 및 연장 경로를 재대조하여 해결. 총괄이 정확 사업ID·관할·MST·구 인용명·공식 URL 검증 후 별도 5002에 승인 연결함.",
+          "resolvedAt": "2026-10-19",
+          "resolution": "Imported separately in versioned review 5002; no duplicate association added to batch-035 approved rows.",
+          "resolutionEvidence": "logs/forms-completion/reviews/team2-renamed-law-associations.json",
+          "resolvedReviewRound": 5002
         },
         {
           "formId": "ordin-20097253",
@@ -2418,7 +2422,16 @@
         "currentLawId": "2013333",
         "binding": "bound",
         "officialFlSeq": "152458631"
-      }
+      },
+      "resolvedAdditionalAssociations": [
+        {
+          "programId": "g52190.bokjiro-WLF00003477",
+          "formId": "ordin-20097253",
+          "reviewRound": 5002,
+          "source": "logs/forms-completion/reviews/team2-renamed-law-associations.json",
+          "note": "Association published in separate round; batch-035 approved rows unchanged."
+        }
+      ]
     },
     {
       "index": 27,
@@ -2483,8 +2496,12 @@
         {
           "formId": "ordin-20097257",
           "programId": "g52190.bokjiro-WLF00003477",
-          "decision": "requires_external_confirmation",
-          "reason": "같은 목적의 지역 지원 후보이나 도 조례 제명 연혁 또는 현재 시군별 도 별지 적용 경로를 확인해야 하므로 이번 승인 범위에서 유보."
+          "decision": "approved",
+          "reason": "동일 stableLawId 2143324의 공식 1043959(2011-06-03 구 제명), 1903575(2024-01-18 현 제명), 2013333(2025-01-31 현행) 본문·부칙과 남원 사업의 수급자 국민임대 보증금, 신청인→시군→도/LH 지급 및 연장 경로를 재대조하여 해결. 총괄이 정확 사업ID·관할·MST·구 인용명·공식 URL 검증 후 별도 5002에 승인 연결함.",
+          "resolvedAt": "2026-10-19",
+          "resolution": "Imported separately in versioned review 5002; no duplicate association added to batch-035 approved rows.",
+          "resolutionEvidence": "logs/forms-completion/reviews/team2-renamed-law-associations.json",
+          "resolvedReviewRound": 5002
         },
         {
           "formId": "ordin-20097257",
@@ -2568,7 +2585,16 @@
         "currentLawId": "2013333",
         "binding": "bound",
         "officialFlSeq": "152458635"
-      }
+      },
+      "resolvedAdditionalAssociations": [
+        {
+          "programId": "g52190.bokjiro-WLF00003477",
+          "formId": "ordin-20097257",
+          "reviewRound": 5002,
+          "source": "logs/forms-completion/reviews/team2-renamed-law-associations.json",
+          "note": "Association published in separate round; batch-035 approved rows unchanged."
+        }
+      ]
     },
     {
       "index": 28,

@@ -77,7 +77,9 @@ EVIDENCE_NOTE = ('출처 증거 수집 전용. 어떤 사업·서식 연결도 �
                  '읽지 못한 원문은 서식이 없다는 뜻이 아니다.')
 
 _ARTICLE_HEAD = re.compile(r'제\s*(\d+)\s*조(?:\s*의\s*(\d+))?')
-_DELETED = re.compile(r'(?:^|[\s\[\]()<>【】〈〉])(?:삭제|삭 제|폐지)(?:$|[\s\[\]()<>【】〈〉.,])')
+# A dated/terminal deletion status is different from an application's purpose,
+# such as 사업변경(중단 폐지) 신청서 or 개인정보 삭제 신청서.
+_DELETED = re.compile(r'(?:^|[\s\[\]()<>【】〈〉])(?:삭제|삭 제|폐지)(?=$|[\s\[\]()<>【】〈〉_]*\d{4}|[\s\]>)】〉.,]*$)')
 _FL_URL = re.compile(r'(?:https?://[^\s"\'<>]*?)?(?:/(?:LSW/)?)?flDownload\.do\?[^\s"\'<>]+')
 _SECRET_IN_URL = re.compile(r'(?i)[?&](oc|key|token|servicekey|apikey|auth|secret|password|signature)=')
 _CONTENT_KEY = re.compile(r'내용$')

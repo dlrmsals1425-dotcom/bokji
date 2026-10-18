@@ -45,11 +45,11 @@ def reconcile(scope,reports,published):
     for source,report in reports:
         for row in report_rows(report):
             fid=row.get('formId') or row.get('scopeId')
+            disposition=row.get('disposition','pending')
+            if disposition=='pending':continue
             if fid not in originals:
                 if fid:extras.append({'formId':fid,'report':source})
                 continue
-            disposition=row.get('disposition','pending')
-            if disposition=='pending':continue
             if disposition not in DISPOSITIONS:raise ValueError('Unknown review disposition: '+fid+'/'+str(disposition))
             if row.get('sha256')!=originals[fid]['sha256']:raise ValueError('Review original SHA mismatch: '+fid)
             reason=row.get('reason') or row.get('evidenceNote')
