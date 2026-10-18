@@ -2131,6 +2131,24 @@
       "role": "application",
       "sha256": "9dbbc8e0a66e114dc21c8aff5acddab56e65284f991eb8e57f0186d707efe230",
       "reviewFile": "municipal-reviewed-round2065.json"
+    },
+    "ordin-21458441": {
+      "lawId": "2107941",
+      "role": "application",
+      "sha256": "fbc7734d25cd6daf9a9ce32db1cc1358ea6bf081e224f78d6a098ca70bf25d28",
+      "reviewFile": "municipal-reviewed-round2053.json"
+    },
+    "ordin-21488103": {
+      "lawId": "2108507",
+      "role": "application",
+      "sha256": "3d09c0a87a6e8ec2423fa7f5baf70c894f0bc40b4632ce9ada4d9c01917b0173",
+      "reviewFile": "municipal-reviewed-round2053.json"
+    },
+    "ordin-21488105": {
+      "lawId": "2108507",
+      "role": "application",
+      "sha256": "6cf178d800c923adf02626af48377b612780277d419e6f2a3213af82530ef338",
+      "reviewFile": "municipal-reviewed-round2053.json"
     }
   }
 }
