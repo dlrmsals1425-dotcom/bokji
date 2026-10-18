@@ -7,6 +7,14 @@ const form: ApplicationForm = { id: "ordin-1", title: "지원신청서", role: "
 const link: FormLink = { formId: "ordin-1", use: "main", checkedAt: "2026-10-16", evidenceUrl: form.lawUrl, evidenceNote: "제5조에 따른 개인 신청서로 대조했습니다." };
 
 describe("application document publication", () => {
+  it("accepts an old provincial citation only within the verified same province",()=>{
+    const city={...program,id:"g51110.p",region:{sido:"51000",sigungu:"51110",label:"춘천시"},laws:["강원도 출산·양육 지원 조례(제13조, 제1항)"]};
+    const source={...form,regionCode:"51000",regionLabel:"강원특별자치도",lawTitle:"강원특별자치도 출산·양육 지원 조례 시행규칙"};
+    const reviewed:FormLink={...link,scopeBasis:"provincial-law-reference"};
+    expect(()=>validateFormLink(city,source,reviewed)).not.toThrow();
+    expect(()=>validateFormLink({...city,region:{sido:"52000",sigungu:"52110",label:"전주시"}},source,reviewed)).toThrow(/jurisdiction/);
+    expect(()=>validateFormLink({...city,laws:["강원도 다른 지원 조례"]},source,reviewed)).toThrow(/jurisdiction/);
+  });
   it("restricts a municipal form in a provincial benefit to its reviewed local application route", () => {
     const provincial={...program,id:"s41000.test",scope:"sido" as const,region:{sido:"41000",label:"경기도"},url:"https://www.gov.kr/portal/rcvfvrSvc/dtlEx/EXACT"};
     const municipal={...form,sourceKind:"ordin" as const,regionCode:"41170",regionLabel:"경기도 안양시",lawTitle:"안양시 학생복지 지원 조례"};

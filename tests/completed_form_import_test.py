@@ -53,5 +53,17 @@ class DecisionTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'Conflicting'):
             module.validate_decisions(self.assignment,self.report,self.review)
 
+    def test_saved_historical_or_future_bodies_do_not_establish_current_forms(self):
+        row={'formId':'ordin-1','lawId':'100','sourceUrl':'https://www.law.go.kr/LSW/flDownload.do?flSeq=10'}
+        current={'pendingLaws':0,'laws':{'100':{'state':'source_current','currentLawId':'100',
+            'forms':{'ordin-1':{'binding':'bound','officialFlSeq':'10','officialAnnexDeleted':False}}}}}
+        module.validate_currency(row,current)
+        for state in ['future_or_undated_current_result','newer_current_version','failed']:
+            bad=copy.deepcopy(current);bad['laws']['100']['state']=state
+            with self.subTest(state=state),self.assertRaises(ValueError):module.validate_currency(row,bad)
+        for patch in [{'binding':'annex_absent'},{'officialAnnexDeleted':True},{'officialFlSeq':'11'}]:
+            bad=copy.deepcopy(current);bad['laws']['100']['forms']['ordin-1'].update(patch)
+            with self.subTest(patch=patch),self.assertRaises(ValueError):module.validate_currency(row,bad)
+
 
 if __name__=='__main__':unittest.main()

@@ -18,6 +18,7 @@ for(const sample of [
   {program:'s41000.gov24-641000000129',form:'ordin-20191135',format:'hwp',municipality:'안양시'},
   {program:'g41280.bokjiro-WLF00004751',form:'ordin-19996049',format:'hwp'},
   {program:'s27000.gov24-627000000108',form:'ordin-18151309',format:'hwp',municipality:'남구'},
+  {program:'g51110.gov24-418000000243',form:'ordin-18422495',format:'hwp'},
 ]) test(`real ${sample.form} ${sample.format} downloads with original bytes @mobile`,async({page})=>{
   await page.goto(`/p/${sample.program}`);
   const button=page.getByTestId('application-forms').locator(`a[download][href="${catalog.forms[sample.form].file!.hwp}"]`);

@@ -230,6 +230,15 @@ class BuildTest(unittest.TestCase):
         self.assertEqual(json.dumps(first,ensure_ascii=False),json.dumps(second,ensure_ascii=False))
 
 class ScopeBasisTest(unittest.TestCase):
+    def test_old_province_name_is_compared_only_within_the_same_province_code(self):
+        r=row('ordin-90100',['g51110.p'],sourceKind='ordin',lawTitle='강원특별자치도 출산·양육 지원 조례 시행규칙',
+            regionCode='51000',regionLabel='강원특별자치도',scopeBasis='provincial-law-reference')
+        p=program('g51110.p',scope='sigungu',region={'sido':'51000','sigungu':'51110'},laws=['강원도 출산·양육 지원 조례(제13조, 제1항)'])
+        self.assertEqual(self.link(r,p)['scopeBasis'],'provincial-law-reference')
+        with self.assertRaises(ValueError):self.link(r,{**p,'region':{'sido':'52000','sigungu':'52110'}})
+        with self.assertRaises(ValueError):self.link(r,{**p,'laws':['강원도 다른 지원 조례']})
+        direct={**p,'scope':'sido','region':{'sido':'51000'}}
+        self.assertNotIn('scopeBasis',self.link(r,direct))
     def test_a_municipal_form_for_a_provincial_benefit_requires_its_exact_local_route(self):
         p=program('s41000.test',scope='sido',region={'sido':'41000'},url='https://www.gov.kr/portal/rcvfvrSvc/dtlEx/EXACT')
         ref={'sido':'41000','sigungu':'41170','municipality':'안양시','programEvidenceUrl':p['url'],

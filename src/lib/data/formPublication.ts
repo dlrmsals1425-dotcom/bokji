@@ -34,7 +34,13 @@ const normalizedLaw = (text: string) => text.normalize("NFKC").replace(/[「」�
 function referencedFormLaw(program: Program, form: Pick<ApplicationForm, "lawTitle"> & Partial<Pick<ApplicationForm,"regionCode"|"regionLabel">>): boolean {
   // Official benefit records also cite "조례, 시행규칙" or "조례 및 시행규칙".
   // These are the same named law family, not a different jurisdiction's form.
-  const normalize = (text: string) => normalizedLaw(text).replace(/(?:[,、]|및)?(?:시행규칙|시행령)$/, "");
+  const normalize = (text: string) => {
+    let title=normalizedLaw(text).replace(/(?:[,、]|및)?(?:시행규칙|시행령)$/, "");
+    const aliases:Record<string,[string,string]>={"51000":["강원도","강원특별자치도"],"52000":["전라북도","전북특별자치도"],"50000":["제주도","제주특별자치도"]};
+    const pair=form.regionCode===program.region?.sido ? aliases[form.regionCode??""] : undefined;
+    if(pair && title.startsWith(pair[0])) title=pair[1]+title.slice(pair[0].length);
+    return title;
+  };
   // Split a second explicitly qualified local law before removing article tails.
   // The word "및" inside a single title (e.g. 노인 및 장애인) stays intact.
   return (program.laws || []).some(law => law.split(/\|\||\/|\s+및\s+(?=[가-힣]+(?:특별자치도|특별자치시|특별시|광역시|도|시|군|구)\s)/).some(part => normalize(part) === normalize(form.lawTitle)

@@ -11,7 +11,7 @@ from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
 DISPOSITIONS={'approved','non_applicant','obsolete','no_matching_site_program','covered_by_existing',
-              'excluded','official_replacement_found','needs_official_readable_original','requires_external_confirmation'}
+              'excluded','official_replacement_found','needs_official_readable_original','requires_external_confirmation','not_yet_effective'}
 
 
 def read(path):

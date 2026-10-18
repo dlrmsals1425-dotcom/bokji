@@ -79,9 +79,16 @@ def official_url(value):
             and not url.username and not url.password
             and not any(re.search(r'^oc$|key|token|secret|password|auth|login|email|phone|resident',name,re.I) for name,_ in parse_qsl(url.query)))
     except ValueError:return False
+def provincial_law_title(title,code):
+    title=matcher.normalize_law(title)
+    aliases={'51000':('강원도','강원특별자치도'),'52000':('전라북도','전북특별자치도'),'50000':('제주도','제주특별자치도')}
+    old,new=aliases.get(code,('',''))
+    return new+title[len(old):] if old and title.startswith(old) else title
 def cites_form_law(program,form):
     """사업이 이 서식의 법령을 실제로 인용하는지. 공개 단계의 검사와 같은 기준이다."""
-    target=matcher.normalize_law(form.get('lawTitle'))
+    region=program.get('region') or {}
+    province=form.get('regionCode') if form.get('regionCode')==region.get('sido') else None
+    target=provincial_law_title(form.get('lawTitle'),province)
     if not target:return False
     family=set(matcher.law_variants(target))
     laws=program.get('laws') or []
@@ -89,7 +96,7 @@ def cites_form_law(program,form):
     if not isinstance(laws,list):return False
     for entry in laws:
         for part in matcher.split_law_citations(entry):
-            cited=matcher.normalize_law(part)
+            cited=provincial_law_title(part,province)
             if cited and (cited==target or target in matcher.law_variants(cited) or cited in family):return True
             region=program.get('region') or {}
             if form.get('regionCode')==region.get('sido') and form.get('regionLabel'):
@@ -182,6 +189,9 @@ def scope_basis(record,program,form):
         # 검토가 밝힌 경우에만 쓰고 여기서 넓히지 않는다.
         return 'provincial-law-reference' if same_province and cites_form_law(program,form) else None
     if declared not in SCOPE_BASES:raise ValueError('Unknown audited scope basis: '+declared+' ('+record['formId']+')')
+    if (declared=='provincial-law-reference' and program.get('scope')=='sido' and form['regionCode']==region.get('sido')
+        and cites_form_law(program,form)):
+        return None  # This particular benefit already has the form's own jurisdiction.
     if declared=='official-application-reference':
         ref=record.get('scopeReference') or {}
         if (not national_reference or record.get('verificationStatus')!='verified'

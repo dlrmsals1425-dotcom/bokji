@@ -36,7 +36,7 @@ def classify(source,rows,as_of):
             'currentLawId':current['lawId'],'currentLaw':current,'candidates':list(matches.values())}
 
 
-def current_search(portal,title):
+def search_query(portal,title):
     rows=[];raw=[];page=1
     while True:
         text,url=portal.fetch('lawSearch.do',{'type':'JSON','target':'ordin','nw':'1','query':title,
@@ -54,17 +54,28 @@ def current_search(portal,title):
     return rows,raw
 
 
+def current_search(portal,title):
+    rows,raw=search_query(portal,title)
+    # NFKC turns the Korean middle dot ㆍ into the Jamo ᆞ. The official
+    # search index does not consistently accept that equivalent character.
+    # Change only the search spelling; identity matching remains strict.
+    if not rows and 'ᆞ' in title:
+        rows,extra=search_query(portal,title.replace('ᆞ','ㆍ'));raw.extend(extra)
+    return rows,raw
+
+
 def inspect(law_id,forms,portal,redactor,body_dir,out,as_of,refresh):
     path=out/'cache'/f'{law_id}.json.gz'
     if not refresh and path.exists():
         import gzip
         with gzip.open(path,'rt',encoding='utf-8') as f:cached=json.load(f)
-        if cached.get('checkedAt')==as_of and cached.get('state')!='failed':return cached
+        if (cached.get('checkedAt')==as_of and cached.get('state')!='failed'
+            and (cached.get('state')!='requires_current_law_lookup' or cached.get('queryVariantsChecked'))):return cached
     source=c.read_body(body_dir/f'{law_id}.json.gz',law_id)
     if not source:return {'lawId':law_id,'state':'failed','reason':'SAVED_SOURCE_BODY_UNAVAILABLE','checkedAt':as_of}
     record={'lawId':law_id,'sourceTitle':source['lawTitle'],'checkedAt':as_of}
     try:
-        rows,raw=current_search(portal,source['lawTitle']);record.update(classify(source,rows,as_of),rawSearch=raw)
+        rows,raw=current_search(portal,source['lawTitle']);record.update(classify(source,rows,as_of),rawSearch=raw,queryVariantsChecked=True)
         if record.get('currentLawId'):
             lid=record['currentLawId'];latest=c.read_body(body_dir/f'{lid}.json.gz',lid)
             if not latest:latest=c.read_body(out/'latest-law-bodies'/f'{lid}.json.gz',lid)

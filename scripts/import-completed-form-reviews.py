@@ -17,7 +17,7 @@ REVIEWS=ROOT/'pipeline/forms/reviews'
 spec=importlib.util.spec_from_file_location('portal_reviews',ROOT/'scripts/prepare-portal-reviews.py')
 portal=importlib.util.module_from_spec(spec);spec.loader.exec_module(portal)
 TERMINAL={'approved','non_applicant','obsolete','no_matching_site_program',
-          'covered_by_existing','requires_external_confirmation'}
+          'covered_by_existing','requires_external_confirmation','not_yet_effective'}
 
 
 def read(path):return json.loads(Path(path).read_text(encoding='utf-8-sig'))
@@ -55,7 +55,16 @@ def validate_decisions(assignment,report,review):
     return decisions
 
 
-def prepare_batch(name,archive,scope,evidence,overrides):
+def validate_currency(row,currency):
+    law=currency.get('laws',{}).get(row['lawId'],{})
+    binding=law.get('forms',{}).get(row['formId'],{})
+    if (currency.get('pendingLaws')!=0 or law.get('state')!='source_current'
+        or law.get('currentLawId')!=row['lawId'] or binding.get('binding')!='bound'
+        or binding.get('officialAnnexDeleted') or binding.get('officialFlSeq')!=flseq(row['sourceUrl'])):
+        raise ValueError('Current-law edition or annex needs individual review: '+row['formId'])
+
+
+def prepare_batch(name,archive,scope,evidence,currency,overrides):
     match=re.fullmatch(r'team([123])-batch-(\d{3})',name)
     if not match:raise ValueError('Expected teamN-batch-NNN')
     source=ROOT/'logs/forms-completion/reviews'/f'{name}-reviewed.json'
@@ -78,6 +87,7 @@ def prepare_batch(name,archive,scope,evidence,overrides):
             or row.get('sourceUrl')!=original['sourceUrl']
             or flseq(row['sourceUrl'])!=binding.get('officialFlSeq')):
             raise ValueError('Original is not bound to the official source: '+fid)
+        validate_currency(row,currency)
         path=(archive/original['relativePath']).resolve()
         if not path.is_relative_to(archive.resolve()) or sha(path)!=original['sha256']:
             raise ValueError('Archived original bytes changed: '+fid)
@@ -115,8 +125,9 @@ def main():
     args=parser.parse_args()
     scope={row['formId']:row for row in read(REVIEWS/'unmatched-originals-scope.json')['forms']}
     evidence=read(ROOT/'logs/forms-completion/source-evidence.json')
+    currency=read(ROOT/'pipeline/forms/source-law-currency.json')
     override_doc=read(portal.OVERRIDE_FILE);overrides=dict(override_doc['forms'])
-    prepared=[prepare_batch(name,args.archive,scope,evidence,overrides) for name in args.batches]
+    prepared=[prepare_batch(name,args.archive,scope,evidence,currency,overrides) for name in args.batches]
     old={path:path.read_bytes() if path.exists() else None for path,_,_ in prepared}
     try:
         for path,review,_ in prepared:save(path,review)

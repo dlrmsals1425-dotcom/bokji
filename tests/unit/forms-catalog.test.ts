@@ -16,6 +16,19 @@ const downloads: DownloadManifest | null = existsSync("pipeline/forms/download-m
 const pdfChecks = read<Record<string, { verified: boolean; pdfSha256: string }>>("pipeline/forms/pdf-checks.json");
 
 describe("generated national forms catalogue", () => {
+  it("keeps each newly attached fixed-scope original bound to the current listed edition",()=>{
+    const scope=read<{forms:{formId:string;lawId:string}[]}>("pipeline/forms/reviews/unmatched-originals-scope.json");
+    const currency=read<{pendingLaws:number;laws:Record<string,{state:string;currentLawId?:string;forms?:Record<string,{binding:string;officialFlSeq:string;officialAnnexDeleted:boolean}>}>}>("pipeline/forms/source-law-currency.json");
+    expect(currency.pendingLaws).toBe(0);
+    for(const original of scope.forms.filter(row=>catalog.forms[row.formId]?.file)) {
+      const law=currency.laws[original.lawId],binding=law?.forms?.[original.formId];
+      expect(law?.state,original.formId).toBe("source_current");
+      expect(law.currentLawId).toBe(original.lawId);
+      expect(binding?.binding).toBe("bound");
+      expect(binding?.officialAnnexDeleted).toBe(false);
+      expect(binding?.officialFlSeq).toBe(new URL(catalog.forms[original.formId].sourceUrl).searchParams.get("flSeq"));
+    }
+  });
   it("accounts for every unique existing welfare program exactly once", () => {
     const originals = ["national.json", ...["sido", "sigungu"].flatMap(scope => readdirSync(`public/bundles/v1/${scope}`).filter(name => name.endsWith(".json")).map(name => `${scope}/${name}`))];
     const sourceIds = new Set(originals.flatMap(file => read<{ programs: Program[] }>(`public/bundles/v1/${file}`).programs.map(program => program.id)));

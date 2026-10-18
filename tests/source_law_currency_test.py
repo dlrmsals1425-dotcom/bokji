@@ -1,4 +1,5 @@
 import importlib.util
+import json
 from pathlib import Path
 import unittest
 
@@ -23,6 +24,17 @@ class CurrencyTest(unittest.TestCase):
     def test_future_edition_and_ambiguous_matches_do_not_become_current(self):
         self.assertEqual(m.classify(self.source,[self.row(시행일자='20270101')],'2026-10-18')['state'],'future_or_undated_current_result')
         self.assertEqual(m.classify(self.source,[self.row(),self.row(자치법규일련번호='200')],'2026-10-18')['state'],'ambiguous_current_result')
+    def test_a_middle_dot_search_variant_does_not_look_like_a_missing_law(self):
+        owner=self
+        class Portal:
+            def __init__(self):self.queries=[]
+            def fetch(self,path,params):
+                self.queries.append(params['query'])
+                rows=[] if 'ᆞ' in params['query'] else [owner.row()]
+                return json.dumps({'OrdinSearch':{'resultCode':'00','totalCnt':str(len(rows)),'law':rows}}),'https://www.law.go.kr/DRF/lawSearch.do?nw=1'
+        portal=Portal();rows,raw=m.current_search(portal,'조례 수집 ᆞ 운반')
+        self.assertEqual(len(raw),2);self.assertEqual(len(rows),1)
+        self.assertEqual(portal.queries[-1],'조례 수집 ㆍ 운반')
 
 
 if __name__=='__main__':unittest.main()
