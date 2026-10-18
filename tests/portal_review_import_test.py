@@ -245,6 +245,35 @@ class BuildTest(unittest.TestCase):
         self.assertEqual(json.dumps(first,ensure_ascii=False),json.dumps(second,ensure_ascii=False))
 
 class ScopeBasisTest(unittest.TestCase):
+    def test_renamed_rule_reference_is_bound_to_one_program_and_official_history(self):
+        prior='전라북도 저소득계층 임대보증금 지원조례 시행규칙'
+        current='전북특별자치도 저소득계층과 청년 및 신혼부부 주거 지원 조례 시행규칙'
+        p=program('g52190.p',scope='sigungu',region={'sido':'52000','sigungu':'52190'},laws=['전라북도 저소득계층 임대보증금 지원 조례'])
+        ref={'kind':'exact-stable-ordinance-history','programId':p['id'],'formLawId':'2013333','stableLawId':'2143324',
+             'priorLawId':'1043959','transitionLawId':'1903575','citedLawTitle':p['laws'][0],
+             'priorRuleTitle':prior,'currentRuleTitle':current,'provinceCode':'52000','municipalityCode':'52190',
+             'historyEvidenceUrl':'https://www.law.go.kr/ordinInfoP.do?ordinSeq=1043959',
+             'transitionEvidenceUrl':'https://www.law.go.kr/ordinInfoP.do?ordinSeq=1903575',
+             'currentEvidenceUrl':'https://www.law.go.kr/ordinInfoP.do?ordinSeq=2013333','checkedAt':'2026-10-19',
+             'purposeArticleLink':'구 규칙 제1조의 상위 조례와 현행 규칙의 주민 신청 및 시장 접수 경로를 각각 전체 대조했습니다.',
+             'transitionBasis':'공식 연혁에서 동일 자치법규ID를 가진 옛 판본, 명칭 변경 시점 판본, 현행 판본을 대조했습니다.',
+             'scopeRestriction':'확인한 남원시 공공임대 보증금 무이자 지원 신청 및 연장 절차에만 이 법규 연혁을 적용합니다.'}
+        r=row('ordin-90102',[p['id']],sourceKind='ordin',lawId='2013333',lawTitle=current,regionCode='52000',regionLabel='전북특별자치도',
+              scopeBasis='provincial-law-reference',evidenceUrl=ref['currentEvidenceUrl'],checkedAt=ref['checkedAt'],
+              verificationStatus='verified',officialAttachmentMatched=True,sha256='a'*64,renamedLawReference=ref)
+        self.assertEqual(self.link(r,p)['renamedLawReference'],ref)
+        for changes in [{'programId':'g52130.other'},{'formLawId':'99'},{'priorRuleTitle':'전라북도 다른 지원 조례'},
+                        {'municipalityCode':'52130'},{'provinceCode':'41000'},{'stableLawId':''},{'stableLawId':'9999999'},{'checkedAt':'2026-10-18'},
+                        {'historyEvidenceUrl':ref['historyEvidenceUrl']+'&OC=secret'},
+                        {'historyEvidenceUrl':'https://www.law.go.kr/ordinInfoP.do?ordinSeq=999&ordinSeq=1043959'},
+                        {'historyEvidenceUrl':ref['historyEvidenceUrl']+'&ordinSeq=999'},{'transitionBasis':''}]:
+            with self.subTest(changes=changes),self.assertRaises(ValueError):self.link({**r,'renamedLawReference':{**ref,**changes}},p)
+        for changes in [{'laws':[]},{'id':'g52190.other'},{'region':{'sido':'41000','sigungu':'41280'}}]:
+            with self.subTest(changes=changes),self.assertRaises(ValueError):self.link(r,{**p,**changes})
+        with self.assertRaises(ValueError):self.link({**r,'renamedLawReference':None},p)
+        with self.assertRaises(ValueError):self.link({**r,'verificationStatus':'candidate'},p)
+        # Invalid history metadata must not be ignored even for a normal direct citation.
+        with self.assertRaises(ValueError):self.link({**r,'renamedLawReference':{**ref,'programId':'different'}},{**p,'laws':[current]})
     def test_old_province_name_is_compared_only_within_the_same_province_code(self):
         r=row('ordin-90100',['g51110.p'],sourceKind='ordin',lawTitle='강원특별자치도 출산·양육 지원 조례 시행규칙',
             regionCode='51000',regionLabel='강원특별자치도',scopeBasis='provincial-law-reference')

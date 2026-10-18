@@ -20,6 +20,7 @@ for(const sample of [
   {program:'s27000.gov24-627000000108',form:'ordin-18151309',format:'hwp',municipality:'남구'},
   {program:'g51110.gov24-418000000243',form:'ordin-18422495',format:'hwp'},
   {program:'g41590.gov24-O00058400003',form:'ordin-21451325',format:'hwp',title:'입사원서 · 개인정보 수집·이용 동의서',instructions:'별지 제1호 입사원서와 제4호 개인정보 동의서만 작성합니다.'},
+  {program:'g52190.bokjiro-WLF00003477',form:'ordin-20097253',format:'hwp',title:'임대보증금 무이자지원 신청서',instructions:'국민임대주택 입주 대상자가 남원시장에게 신규 지원을 신청할 때 사용합니다.'},
 ]) test(`real ${sample.form} ${sample.format} downloads with original bytes @mobile`,async({page})=>{
   await page.goto(`/p/${sample.program}`);
   const button=page.getByTestId('application-forms').locator(`a[download][href="${catalog.forms[sample.form].file!.hwp}"]`);

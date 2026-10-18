@@ -1,6 +1,7 @@
 import type { Program } from "./types";
 import type { ApplicationForm, FormLink, FormStatus } from "./forms";
 import sourceExclusions from "./sourceExclusions.json";
+import verifiedLawHistories from "./verifiedLawHistories.json";
 
 export function excludedSourceReason(value: unknown): string | undefined {
   if (typeof value!=="string") return undefined;
@@ -45,6 +46,36 @@ function referencedFormLaw(program: Program, form: Pick<ApplicationForm, "lawTit
   // The word "및" inside a single title (e.g. 노인 및 장애인) stays intact.
   return (program.laws || []).some(law => law.split(/\|\||\/|\s+및\s+(?=[가-힣]+(?:특별자치도|특별자치시|특별시|광역시|도|시|군|구)\s)/).some(part => normalize(part) === normalize(form.lawTitle)
     || (!!form.regionLabel && form.regionCode===program.region?.sido && normalize(form.regionLabel+part)===normalize(form.lawTitle))));
+}
+
+function reviewedRenamedLaw(program: Program, form: ApplicationForm, link: FormLink): boolean {
+  const ref=link.renamedLawReference;
+  const history=verifiedLawHistories.histories[form.lawId as keyof typeof verifiedLawHistories.histories];
+  if (!ref || !history || link.municipalApplicationReference
+      || (["stableLawId","priorLawId","transitionLawId","priorRuleTitle","currentRuleTitle","provinceCode"] as const).some(key=>ref[key]!==history[key])
+      || link.scopeBasis!=="provincial-law-reference" || program.scope!=="sigungu"
+      || form.sourceKind!=="ordin" || ref.kind!=="exact-stable-ordinance-history"
+      || ref.programId!==program.id || ref.formLawId!==form.lawId
+      || ref.provinceCode!==program.region?.sido || ref.provinceCode!==form.regionCode
+      || ref.municipalityCode!==program.region?.sigungu || !/^\d{5}$/.test(ref.municipalityCode)
+      || ref.municipalityCode.slice(0,2)+"000"!==ref.provinceCode
+      || !/^\d+$/.test(ref.stableLawId) || ref.checkedAt!==link.checkedAt
+      || !/^\d{4}-\d{2}-\d{2}$/.test(ref.checkedAt)
+      || normalizedLaw(ref.currentRuleTitle)!==normalizedLaw(form.lawTitle)
+      || [ref.purposeArticleLink,ref.transitionBasis,ref.scopeRestriction].some(value=>typeof value!=="string" || value.trim().length<30)) return false;
+  const ids=[ref.priorLawId,ref.transitionLawId,ref.formLawId];
+  const validUrl=(value:unknown,id:string)=>{
+    const safe=officialFormUrl(value);
+    if(!safe) return false;
+    const url=new URL(safe);
+    return ["/ordinInfoP.do","/LSW/ordinInfoP.do"].includes(url.pathname)
+      && url.searchParams.getAll("ordinSeq").length===1 && url.searchParams.get("ordinSeq")===id;
+  };
+  return ids.every(id=>/^\d+$/.test(id)) && new Set(ids).size===3
+    && [ref.historyEvidenceUrl,ref.transitionEvidenceUrl,ref.currentEvidenceUrl].every((url,i)=>validUrl(url,ids[i]))
+    && validUrl(link.evidenceUrl,form.lawId)
+    && referencedFormLaw(program,{...form,lawTitle:ref.citedLawTitle})
+    && referencedFormLaw({...program,laws:[ref.citedLawTitle]},{...form,lawTitle:ref.priorRuleTitle});
 }
 
 function reviewedApplicationReference(program: Program, form: ApplicationForm, link: FormLink): boolean {
@@ -94,11 +125,13 @@ export function sameFormJurisdiction(program: Pick<Program, "scope" | "region">,
 export function validateFormLink(program: Program, form: ApplicationForm | undefined, link: FormLink): void {
   if (!form || form.id !== link.formId) throw new Error("Unknown form in reviewed association");
   const municipalRoute=reviewedMunicipalRoute(program,form,link);
+  const renamedLaw=reviewedRenamedLaw(program,form,link);
+  if (link.renamedLawReference && !renamedLaw) throw new Error("Renamed law reference lacks exact program and official history evidence");
   if ((link.municipalApplicationReference || link.scopeBasis==="municipal-application-reference") && !municipalRoute) throw new Error("Municipal application route lacks exact conditional source evidence");
   if (!sameFormJurisdiction(program, form)) {
     const sameProvince = link.scopeBasis === "provincial-law-reference" && program.scope === "sigungu" && program.region?.sido === form.regionCode;
     const nationalReference = link.scopeBasis === "national-law-reference" && form.regionCode === "national";
-    if (!municipalRoute && !reviewedApplicationReference(program,form,link) && ((!sameProvince && !nationalReference) || !referencedFormLaw(program, form))) throw new Error(`Form jurisdiction does not match program: ${program.id} / ${form.id}`);
+    if (!municipalRoute && !renamedLaw && !reviewedApplicationReference(program,form,link) && ((!sameProvince && !nationalReference) || !referencedFormLaw(program, form))) throw new Error(`Form jurisdiction does not match program: ${program.id} / ${form.id}`);
   }
   if (!["application", "consent", "delegation", "supporting"].includes(form.role)) throw new Error("Non-applicant form cannot be published as an application");
   if (!externalFormUrl(link.evidenceUrl) || link.evidenceNote.trim().length < 10 || !/^\d{4}-\d{2}-\d{2}$/.test(link.checkedAt)) throw new Error("Reviewed association needs dated source evidence");

@@ -55,6 +55,7 @@ OVERRIDE_FILE=ROOT/'pipeline/forms/reviews/full-body-role-overrides.json'
 # New full-body reviews are data, not an ever-growing list of IDs in code.
 # Each override is bound to the exact original SHA and still passes the gates below.
 FULL_BODY_ROLE_OVERRIDES=json.loads(OVERRIDE_FILE.read_text(encoding='utf-8-sig')).get('forms',{}) if OVERRIDE_FILE.exists() else {}
+VERIFIED_LAW_HISTORIES=json.loads((ROOT/'src/lib/data/verifiedLawHistories.json').read_text(encoding='utf-8-sig'))['histories']
 SCOPE_BASES=frozenset({'provincial-law-reference','national-law-reference','official-application-reference','municipal-application-reference'})
 def read(file):return json.loads(file.read_text(encoding='utf-8-sig'))
 def day(value):
@@ -103,6 +104,46 @@ def cites_form_law(program,form):
                 qualified=matcher.normalize_law(form['regionLabel']+part)
                 if qualified and (qualified==target or target in matcher.law_variants(qualified)):return True
     return False
+HISTORY_FIELDS=('kind','programId','formLawId','stableLawId','priorLawId','transitionLawId',
+    'citedLawTitle','priorRuleTitle','currentRuleTitle','provinceCode','municipalityCode',
+    'historyEvidenceUrl','transitionEvidenceUrl','currentEvidenceUrl','checkedAt',
+    'purposeArticleLink','transitionBasis','scopeRestriction')
+
+def renamed_law_reference(record,program,form):
+    """An individually reviewed law history is bound to one benefit and province."""
+    ref=record.get('renamedLawReference')
+    if not isinstance(ref,dict):return False
+    history=VERIFIED_LAW_HISTORIES.get(form.get('lawId'))
+    if (not history or any(ref.get(key)!=history.get(key) for key in
+        ('stableLawId','priorLawId','transitionLawId','priorRuleTitle','currentRuleTitle','provinceCode'))):return False
+    region=program.get('region') or {}
+    same_province=(program.get('scope')=='sigungu' and form.get('regionCode')==region.get('sido'))
+    ids=[ref.get(k) for k in ('priorLawId','transitionLawId','formLawId')]
+    def valid_url(value,lid):
+        if not official_url(value):return False
+        url=urlsplit(value)
+        ids=[v for k,v in parse_qsl(url.query) if k=='ordinSeq']
+        return url.path in ('/ordinInfoP.do','/LSW/ordinInfoP.do') and ids==[lid]
+    if (not same_province or record.get('scopeBasis')!='provincial-law-reference' or record.get('municipalApplicationReference') is not None
+        or form.get('sourceKind')!='ordin' or ref.get('kind')!='exact-stable-ordinance-history'
+        or ref.get('programId')!=program.get('id') or ref.get('formLawId')!=form.get('lawId')
+        or ref.get('provinceCode')!=region.get('sido') or ref.get('municipalityCode')!=region.get('sigungu')
+        or not re.fullmatch(r'\d{5}',str(ref.get('municipalityCode','')))
+        or ref['municipalityCode'][:2]+'000'!=ref.get('provinceCode')
+        or not all(isinstance(v,str) and v.isdigit() for v in ids) or len(set(ids))!=3
+        or not re.fullmatch(r'\d+',str(ref.get('stableLawId','')))
+        or ref.get('checkedAt')!=record.get('checkedAt') or not re.fullmatch(r'\d{4}-\d{2}-\d{2}',str(ref.get('checkedAt','')))
+        or record.get('verificationStatus')!='verified' or record.get('officialAttachmentMatched') is not True
+        or not re.fullmatch(r'[a-f0-9]{64}',str(record.get('sha256','')))
+        or matcher.normalize_law(ref.get('currentRuleTitle'))!=matcher.normalize_law(form['lawTitle'])
+        or not all(len(str(ref.get(k,'')).strip())>=30 for k in ('purposeArticleLink','transitionBasis','scopeRestriction'))
+        or not all(valid_url(ref.get(k),lid) for k,lid in zip(('historyEvidenceUrl','transitionEvidenceUrl','currentEvidenceUrl'),ids))
+        or not valid_url(record.get('evidenceUrl'),form['lawId'])
+        or not cites_form_law(program,{**form,'lawTitle':ref.get('citedLawTitle')})
+        or not cites_form_law({'laws':[ref.get('citedLawTitle')],'region':region},{**form,'lawTitle':ref.get('priorRuleTitle')})):
+        return False
+    return True
+
 def role_metadata(record):
     """원문으로 역할을 확인했다는 메타데이터. 근거·출처·확인일이 모두 있어야 인정한다."""
     role=str(record.get('role') or '').strip()
@@ -167,6 +208,10 @@ def scope_basis(record,program,form):
     same_province=program.get('scope')=='sigungu' and form['regionCode']==region.get('sido')
     national_reference=form['regionCode']=='national' and form.get('sourceKind') in {'law','rule'} and program.get('scope') in {'sido','sigungu'}
     declared=str(record.get('scopeBasis') or '').strip()
+    if record.get('renamedLawReference') is not None:
+        if not renamed_law_reference(record,program,form):
+            raise ValueError('Renamed law reference lacks exact program and official history evidence: '+record['formId'])
+        return 'provincial-law-reference'
     municipal=record.get('municipalApplicationReference')
     if municipal or declared=='municipal-application-reference':
         ref=municipal if isinstance(municipal,dict) else {}
@@ -258,6 +303,8 @@ def build(programs,files):
                 basis=scope_basis(record,program,forms[form_id])
                 if basis:link['scopeBasis']=basis
                 if basis=='official-application-reference':link['scopeReference']=record['scopeReference']
+                if record.get('renamedLawReference') is not None:
+                    link['renamedLawReference']={key:record['renamedLawReference'][key] for key in HISTORY_FIELDS}
                 if form_id=='law-17831955':link['condition']=record['condition']+' 의료인이 작성하는 서식으로, 본인이 임의 작성하지 않습니다.'
                 rows.append(link)
     keys=[(row['programIds'][0],row['formId']) for row in rows]

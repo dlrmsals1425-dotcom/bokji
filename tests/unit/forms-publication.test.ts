@@ -7,6 +7,31 @@ const form: ApplicationForm = { id: "ordin-1", title: "지원신청서", role: "
 const link: FormLink = { formId: "ordin-1", use: "main", checkedAt: "2026-10-16", evidenceUrl: form.lawUrl, evidenceNote: "제5조에 따른 개인 신청서로 대조했습니다." };
 
 describe("application document publication", () => {
+  it("binds an official renamed-rule history to its exact benefit instead of creating a title alias",()=>{
+    const prior="전라북도 저소득계층 임대보증금 지원조례 시행규칙";
+    const current="전북특별자치도 저소득계층과 청년 및 신혼부부 주거 지원 조례 시행규칙";
+    const city={...program,id:"g52190.p",region:{sido:"52000",sigungu:"52190",label:"남원시"},laws:["전라북도 저소득계층 임대보증금 지원 조례"]};
+    const source={...form,sourceKind:"ordin" as const,lawId:"2013333",lawTitle:current,regionCode:"52000",regionLabel:"전북특별자치도"};
+    const ref:NonNullable<FormLink["renamedLawReference"]>={kind:"exact-stable-ordinance-history",programId:city.id,formLawId:source.lawId,stableLawId:"2143324",
+      priorLawId:"1043959",transitionLawId:"1903575",citedLawTitle:city.laws[0],priorRuleTitle:prior,currentRuleTitle:current,provinceCode:"52000",municipalityCode:"52190",
+      historyEvidenceUrl:"https://www.law.go.kr/ordinInfoP.do?ordinSeq=1043959",transitionEvidenceUrl:"https://www.law.go.kr/ordinInfoP.do?ordinSeq=1903575",
+      currentEvidenceUrl:"https://www.law.go.kr/ordinInfoP.do?ordinSeq=2013333",checkedAt:link.checkedAt,
+      purposeArticleLink:"구 규칙 제1조와 현행 규칙의 주민 신청 및 시장 접수 경로를 실제 전체 조문과 대조했습니다.",
+      transitionBasis:"공식 연혁의 동일 법규ID를 가진 옛 판본과 명칭 변경 시점 판본 및 현행 판본을 대조했습니다.",
+      scopeRestriction:"남원시 공공임대 보증금 무이자 지원의 확인된 주민 신청과 기간 연장 절차에만 적용합니다."};
+    const reviewed:FormLink={...link,evidenceUrl:ref.currentEvidenceUrl,scopeBasis:"provincial-law-reference",renamedLawReference:ref};
+    expect(()=>validateFormLink(city,source,reviewed)).not.toThrow();
+    expect(()=>validateFormLink(city,source,{...reviewed,renamedLawReference:undefined})).toThrow();
+    for(const changes of [{programId:"g52130.other"},{formLawId:"99"},{priorRuleTitle:"전라북도 다른 지원 조례"},{municipalityCode:"52130"},
+      {provinceCode:"41000"},{stableLawId:""},{stableLawId:"9999999"},{checkedAt:"2026-10-18"},{historyEvidenceUrl:ref.historyEvidenceUrl+"&OC=secret"},
+      {historyEvidenceUrl:ref.historyEvidenceUrl+"&ordinSeq=999"},{historyEvidenceUrl:"https://www.law.go.kr/ordinInfoP.do?ordinSeq=999&ordinSeq=1043959"},{transitionBasis:""}]) {
+      expect(()=>validateFormLink(city,source,{...reviewed,renamedLawReference:{...ref,...changes}})).toThrow(/Renamed/);
+    }
+    expect(()=>validateFormLink({...city,id:"g52190.other"},source,reviewed)).toThrow(/Renamed/);
+    expect(()=>validateFormLink({...city,laws:[]},source,reviewed)).toThrow(/Renamed/);
+    expect(()=>validateFormLink({...city,region:{sido:"41000",sigungu:"41280",label:"고양시"}},source,reviewed)).toThrow(/Renamed/);
+    expect(()=>validateFormLink({...city,laws:[current]},source,{...reviewed,renamedLawReference:{...ref,programId:"different"}})).toThrow(/Renamed/);
+  });
   it("accepts an old provincial citation only within the verified same province",()=>{
     const city={...program,id:"g51110.p",region:{sido:"51000",sigungu:"51110",label:"춘천시"},laws:["강원도 출산·양육 지원 조례(제13조, 제1항)"]};
     const source={...form,regionCode:"51000",regionLabel:"강원특별자치도",lawTitle:"강원특별자치도 출산·양육 지원 조례 시행규칙"};

@@ -40,6 +40,27 @@ export interface FormLink {
   checkedAt: string;
   scopeBasis?: "provincial-law-reference" | "national-law-reference" | "official-application-reference" | "municipal-application-reference";
   programEvidenceUrl?: string;
+  /** Exact official law history reviewed for this benefit; never a global title alias. */
+  renamedLawReference?: {
+    kind: "exact-stable-ordinance-history";
+    programId: string;
+    formLawId: string;
+    stableLawId: string;
+    priorLawId: string;
+    transitionLawId: string;
+    citedLawTitle: string;
+    priorRuleTitle: string;
+    currentRuleTitle: string;
+    provinceCode: string;
+    municipalityCode: string;
+    historyEvidenceUrl: string;
+    transitionEvidenceUrl: string;
+    currentEvidenceUrl: string;
+    checkedAt: string;
+    purposeArticleLink: string;
+    transitionBasis: string;
+    scopeRestriction: string;
+  };
   municipalApplicationReference?: {
     sido: string;
     sigungu: string;
