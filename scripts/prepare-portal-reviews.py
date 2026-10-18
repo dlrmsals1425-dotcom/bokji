@@ -111,6 +111,12 @@ def role_metadata(record):
     checked=day(str(record.get('roleCheckedAt') or '').strip())
     if len(basis)<10 or not official_url(url) or not re.fullmatch(r'\d{4}-\d{2}-\d{2}',checked):return None
     return {'role':role,'roleBasis':basis,'roleEvidenceUrl':url,'roleCheckedAt':checked}
+def application_part_title(value):
+    title=str(value or '').strip()
+    # The actual dormitory form is titled 입사원서. Registers and pledges
+    # containing those characters must not gain an application role from it.
+    return bool(re.search(r'신청|청구|신고|등록',title) or re.fullmatch(r'입사\s*원서',title))
+
 def resolve_role(record):
     """서식 역할과 검토 메타데이터. 제목 분류를 먼저 쓰고, 가릴 수 없을 때만 메타데이터를 본다."""
     form_id=record['formId'];declared=str(record.get('role') or '').strip()
@@ -125,7 +131,7 @@ def resolve_role(record):
     if form_id in exception_laws:
         parts=record.get('reviewedParts')
         evidence=record.get('roleEvidenceUrl')
-        valid_part=lambda p: isinstance(p,dict) and ((declared=='application' and (p.get('use')=='main' or (p.get('use')=='conditional' and record.get('condition'))) and re.search(r'신청|청구|신고|등록|입사\s*원서',str(p.get('title') or '')))
+        valid_part=lambda p: isinstance(p,dict) and ((declared=='application' and (p.get('use')=='main' or (p.get('use')=='conditional' and record.get('condition'))) and application_part_title(p.get('title')))
             or (declared=='consent' and p.get('use') in ('additional','conditional') and '동의' in str(p.get('title') or ''))
             or (declared=='delegation' and p.get('use')=='conditional' and record.get('use')=='conditional'
                 and record.get('condition') and '위임' in str(p.get('title') or ''))

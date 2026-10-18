@@ -1393,6 +1393,54 @@
       "role": "supporting",
       "sha256": "32dbe4b8409c3cd7536dee16453a65ec4cb6e415adaafd588b535b7844cfa4b1",
       "reviewFile": "municipal-reviewed-round2032.json"
+    },
+    "ordin-21447567": {
+      "lawId": "1996093",
+      "role": "application",
+      "sha256": "ae4e9d2b4f4ad31c67b42fcd0ea723756845db0551883366f261bb2f95b3dc48",
+      "reviewFile": "municipal-reviewed-round1034.json"
+    },
+    "ordin-18953503": {
+      "lawId": "1998467",
+      "role": "application",
+      "sha256": "5393a47af2938cfc1599a2a7b3e757403654bffeb6ecbe2f41e33d5de9c0ff6c",
+      "reviewFile": "municipal-reviewed-round1034.json"
+    },
+    "ordin-18973735": {
+      "lawId": "1998645",
+      "role": "application",
+      "sha256": "1371845f817894072b769ca692bf8d9e8fcd72cdcc3f1a536ff43149a075a094",
+      "reviewFile": "municipal-reviewed-round1034.json"
+    },
+    "ordin-21276107": {
+      "lawId": "2100827",
+      "role": "supporting",
+      "sha256": "4c815c8f9f2351595fe1e9cc071430ebefa4be57c9e21d827b00697103a4210c",
+      "reviewFile": "municipal-reviewed-round3051.json"
+    },
+    "ordin-21293331": {
+      "lawId": "2102289",
+      "role": "application",
+      "sha256": "92f93c1d1289e993356074ef009e33f5a8c59a82002fde926c625dc1334e39f4",
+      "reviewFile": "municipal-reviewed-round3051.json"
+    },
+    "ordin-21294045": {
+      "lawId": "2102521",
+      "role": "application",
+      "sha256": "8ebd03d1d727decddfb5692c4961848d1f2a1aab3cd0e25197e17ffeb7a9a96b",
+      "reviewFile": "municipal-reviewed-round3051.json"
+    },
+    "ordin-22864169": {
+      "lawId": "2103109",
+      "role": "application",
+      "sha256": "07c9f4c39ba834eb8702a90b11a121c3435715a42a485bb6e81e39bfeab5f572",
+      "reviewFile": "municipal-reviewed-round3051.json"
+    },
+    "ordin-22864171": {
+      "lawId": "2103109",
+      "role": "application",
+      "sha256": "75cbba5e22b02ac54f34de8bee681d934a4e0f556712216677bf325de50e8915",
+      "reviewFile": "municipal-reviewed-round3051.json"
     }
   }
 }

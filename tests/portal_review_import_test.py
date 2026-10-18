@@ -211,6 +211,9 @@ class BuildTest(unittest.TestCase):
             for change in [{'sha256':'b'*64},{'lawId':'89'},{'officialAttachmentMatched':False},
                            {'reviewedParts':[{'number':'2','title':'입사생 관리대장','use':'main','author':'장학관 직원'}]}]:
                 with self.subTest(change=change),self.assertRaises(ValueError):module.resolve_role({**audited,**change})
+            for title in ['입사원서 접수대장','입사원서접수대장','신입사원서약서']:
+                with self.subTest(title=title),self.assertRaises(ValueError):
+                    module.resolve_role({**audited,'reviewedParts':[{'number':'2','title':title,'use':'main','author':'기관 직원'}]})
     def test_individually_read_reference_annex_can_be_a_consent_without_becoming_main_application(self):
         audited=row('ordin-19307191',['p1'],sourceKind='ordin',lawId='1872429',
             formTitle='[별표 1] 행정정보 공동이용 사전 동의서(제5조 관련)',role='consent',use='conditional',
