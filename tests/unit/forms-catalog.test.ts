@@ -66,6 +66,8 @@ describe("generated national forms catalogue", () => {
     }
     const expectedAssets = new Set<string>();
     for (const form of published) {
+      expect(typeof form.regionLabel,form.id).toBe("string");
+      expect(form.regionLabel?.trim().length,form.id).toBeGreaterThan(0);
       expect(linkedIds.has(form.id), "unapproved candidates cannot publish local files").toBe(true);
       const bytes = readFileSync(path.join(process.cwd(), "public", form.file!.hwp));
       const entry = downloads?.forms[form.id], format = form.file!.format || "hwp";

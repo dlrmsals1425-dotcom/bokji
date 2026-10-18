@@ -1376,7 +1376,9 @@
         "textScope": "all_body_sections_or_pages",
         "sectionsRead": [
           "BodyText/Section0"
-        ]
+        ],
+        "regionLabel": "인천광역시 계양구",
+        "regionLabelSource": "공식 원문 법규의 orgName"
       },
       "checkedAt": "2026-10-18"
     },

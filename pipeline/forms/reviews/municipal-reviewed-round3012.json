@@ -829,7 +829,7 @@
       "dateKind": null,
       "effectiveDate": null,
       "regionCode": "28245",
-      "regionLabel": null,
+      "regionLabel": "인천광역시 계양구",
       "formId": "ordin-19998845",
       "formTitle": "[별지 제1호서식] 장애인 이동용 보조기기 수리업체 지정 신청서",
       "sourceMetadataTitle": "[별지 제1호서식] 장애인 이동용 보조기기 수리업체 지정 신청서",
@@ -1505,8 +1505,8 @@
   ],
   "sourceReview": {
     "file": "logs/forms-completion/reviews/team3-batch-012-reviewed.json",
-    "sha256": "aa1b48caa1a4049b24f73a89e71e3b58ca6844257d593301b4b568f53298d935",
-    "dispositionsSHA256": "713b267ad5ab90f1ad92711a98488f5d7055b0bb506ae4904dd04421de21325b",
+    "sha256": "d7f7a51514babe3b9d2fc4e9ed21c55cfbbbb6da4ed053569edd296ecfd1131f",
+    "dispositionsSHA256": "a9fa7f3abbbd3fa4a26f287800d3b6b4f51cab00b050ae2fbe92b16945047e73",
     "assignmentSHA256": "012137dfd07654cd89baeb01d253ec88d813a5d9a6128c48f83d0ade559ec82c"
   }
 }

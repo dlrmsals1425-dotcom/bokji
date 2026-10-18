@@ -65,7 +65,7 @@ def validate_currency(row,currency):
 
 
 def prepare_batch(name,archive,scope,evidence,currency,overrides):
-    match=re.fullmatch(r'team([123])-batch-(\d{3})',name)
+    match=re.fullmatch(r'team([1234])-batch-(\d{3})',name)
     if not match:raise ValueError('Expected teamN-batch-NNN')
     source=ROOT/'logs/forms-completion/reviews'/f'{name}-reviewed.json'
     disposition=source.with_name(f'{name}-dispositions.json')
@@ -81,6 +81,8 @@ def prepare_batch(name,archive,scope,evidence,currency,overrides):
             raise ValueError('Disposition not bound to fixed-scope original: '+fid)
     for row in review['rows']:
         fid=row['formId'];original=scope[fid];binding=evidence['forms'][fid]
+        if not isinstance(row.get('regionLabel'),str) or not row['regionLabel'].strip():
+            raise ValueError('Reviewed original needs its official jurisdiction label: '+fid)
         if (row.get('verificationStatus')!='verified' or row.get('officialAttachmentMatched') is not True
             or binding.get('binding')!='bound' or binding.get('officialAnnexDeleted')
             or row.get('lawId')!=original['lawId'] or row.get('annexId')!=fid.split('-')[1]
