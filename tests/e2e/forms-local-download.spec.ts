@@ -21,6 +21,8 @@ for(const sample of [
   {program:'g51110.gov24-418000000243',form:'ordin-18422495',format:'hwp'},
   {program:'g41590.gov24-O00058400003',form:'ordin-21451325',format:'hwp',title:'입사원서 · 개인정보 수집·이용 동의서',instructions:'별지 제1호 입사원서와 제4호 개인정보 동의서만 작성합니다.'},
   {program:'g52190.bokjiro-WLF00003477',form:'ordin-20097253',format:'hwp',title:'임대보증금 무이자지원 신청서',instructions:'국민임대주택 입주 대상자가 남원시장에게 신규 지원을 신청할 때 사용합니다.'},
+  {program:'g44800.gov24-460000000141',form:'ordin-21772917',format:'hwp',title:'(참전, 보훈)수당지급대상자 등록신청서',instructions:'홍성 참전명예·보훈명예 또는 해당 배우자수당 등록신청 항목에 사용. 사망위로금은 별도 별지4.'},
+  {program:'g11740.gov24-324000000106',form:'ordin-20804835',format:'hwpx',title:'입학축하금 신청서',instructions:'파일 중 별지4 입학축하금 신청서만 사용합니다.'},
 ]) test(`real ${sample.form} ${sample.format} downloads with original bytes @mobile`,async({page})=>{
   await page.goto(`/p/${sample.program}`);
   const button=page.getByTestId('application-forms').locator(`a[download][href="${catalog.forms[sample.form].file!.hwp}"]`);

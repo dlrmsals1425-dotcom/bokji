@@ -3472,7 +3472,28 @@
         ],
         "result": "28125 전체 프로그램에서 스케일링 본인부담금 사업은 제물포구 조례를 근거로 한 bokjiro-WLF00005339 1건이며, 동구 조례를 근거로 한 별도 사업은 없다."
       },
-      "additionalEvidence": "승계 원본 대조: ordin-22497673(법규ID 2146009, 제물포구 조례 별지 제1호서식, hwpx, 76572바이트, sha256 e1fd14d2…)의 실제 본문을 읽어 기재항목·자격구분(의료급여 1·2종, 차상위 본인부담경감, 기준 중위소득 130% 이하)·동의문이 이 원본과 동일하고 접수 관청만 '인천광역시 제물포구 보건소장·OO동장'으로 다름을 확인했다. 이 원본은 hwp 78336바이트 sha256 677a62aa…로 바이너리가 다르다.",
+      "additionalEvidence": {
+        "originalClaudeNote": "승계 원본 대조: ordin-22497673(법규ID 2146009, 제물포구 조례 별지 제1호서식, hwpx, 76572바이트, sha256 e1fd14d2…)의 실제 본문을 읽어 기재항목·자격구분(의료급여 1·2종, 차상위 본인부담경감, 기준 중위소득 130% 이하)·동의문이 이 원본과 동일하고 접수 관청만 '인천광역시 제물포구 보건소장·OO동장'으로 다름을 확인했다. 이 원본은 hwp 78336바이트 sha256 677a62aa…로 바이너리가 다르다.",
+        "coordinatorCoverageVerification": {
+          "reviewedBy": "Codex",
+          "checkedAt": "2026-10-19",
+          "currentFullBodyRead": true,
+          "oldFullBodyRead": true,
+          "currentLawArticlesRead": 10,
+          "publicOriginalShaVerified": true
+        }
+      },
+      "existingCoverage": [
+        {
+          "formId": "ordin-22497673",
+          "sha256": "e1fd14d25b959f12ba845e4d49c3ed3229b9f14cc6529e38a713f6fdd0070bc5",
+          "programIds": [
+            "g28125.bokjiro-WLF00005339"
+          ],
+          "lawId": "2146009",
+          "comparison": "Different bytes/format and current receiving authority; both complete applicant bodies compared. Current Je-mulpo form1 is published for the exact scaling support benefit. Not byte identity."
+        }
+      ],
       "reviewedBy": "Claude Code"
     },
     {

@@ -1,20 +1,20 @@
 {
  "schema": 1,
- "generatedAt": "2026-10-18T17:24:47.076109+00:00",
+ "generatedAt": "2026-10-18T17:34:08.121541+00:00",
  "baselineCommit": "dff0a8195d740254bc3dfbe792fd0b8c0c4d7d31",
  "scopeForms": 4006,
  "note": "Every fixed-scope original remains visible. Linked counts require a real published file; covered counts require the exact replacement SHA and program links to be published. Source retrieval and queue creation do not resolve a review.",
  "fullScopeMatchingComplete": false,
  "counts": {
-  "reviewed_not_linked": 1673,
-  "linked": 1573,
-  "pending": 606,
-  "requires_external_confirmation": 95,
-  "covered_by_existing": 6,
-  "replacement_available": 4,
-  "approved_pending_publication": 49
+  "reviewed_not_linked": 1722,
+  "linked": 1668,
+  "pending": 491,
+  "requires_external_confirmation": 98,
+  "covered_by_existing": 7,
+  "replacement_available": 3,
+  "approved_pending_publication": 17
  },
- "sourceReviews": 3399,
+ "sourceReviews": 3514,
  "additionalReviewedIds": [
   {
    "formId": "ordin-21772917",
@@ -3369,10 +3369,13 @@
    "lawId": "1821325",
    "title": "별지 제1호서식_희망택시 교통카드 신규발급(재발급) 신청서",
    "format": "hwp",
-   "state": "requires_external_confirmation",
+   "programIds": [
+    "g51230.icare-0083-1489626-1-3-7"
+   ],
+   "state": "linked",
    "review": {
-    "disposition": "requires_external_confirmation",
-    "reason": "제9조제1항과 실제 원본은 삼척 희망택시 이용대상자의 교통카드 신규·재발급 및 개인정보동의·본인서명을 요구한다. 사이트 icare 기록은 희망택시라는 이름과 '대중교통 취약지역 대상마을 주민' 요약, 노인·장애인 대상만 있고 구체적 급여·카드·신청·법규 정보가 없다. 이름·지역·요약만으로 정확한 해당 카드 운영사업이라고 승인하지 않고 공식 사이트 상세 또는 신청절차 연결 확인을 남긴다.",
+    "disposition": "approved",
+    "reason": "실제 별지 제1호 전체를 다시 읽고 원본 바이트·SHA·전체 섹션을 재검증했다. 본인 성명·주소·호출전화·개인정보동의·서명으로 신규 또는 분실·훼손 재발급을 신청한다. 추가 확보된 정확한 프로그램 출처인 보건복지부 삼척 서비스 메뉴 PDF의 3쪽 전체 표를 이미지와 텍스트로 확인했다. '희망택시' 행은 대중교통 취약지역의 대상마을 한정 주민, 제공기관 삼척시 교통과를 명시하고 장애인 특별교통수단 및 병원동행은 별도 행으로 구분된다. 현행 조례 14개 조문을 다시 읽어 제2조제2호의 시장 선정 마을, 제4조의 그 마을 주민, 제9조제1항의 주민센터 별지 제1호 교통카드 신청을 대조해 동일 사업 관계를 확인했다. 이미 운행대상으로 선정된 마을의 이용대상 주민 카드 신규·재발급에 한정하며 새로운 마을 지정이나 모든 노인·장애인의 택시 신청으로 확대하지 않는다.",
     "report": "pipeline/forms/reviews/unmatched-dispositions-round2017.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1821325",
@@ -40804,11 +40807,15 @@
    "lawId": "2096575",
    "title": "[별지 제2호서식] 보훈예우수당 임금계좌 등 변경신청서",
    "format": "hwp",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "s50000.bokjiro-WLF00002174",
+    "s50000.gov24-650000000282"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "별지2 전후면전체는현재보훈예우수당수급자가계좌변경·현금지급전환·계좌입금전환을신청하고서명한다. 제5조제2항이정확서식,제6조가본인계좌원칙및금융이용어려운경우현금을정한다. 사이트두보훈사업의월보훈예우수당부분에한정하고현충·호국·사망별도급여와분리한다. 메타의'임금계좌'오타와달리실제제목은입금계좌다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2096575",
     "relatedProgramIds": []
@@ -40820,11 +40827,14 @@
    "lawId": "2096575",
    "title": "[별지 제4호서식] 현충수당 지급(변경)신청서",
    "format": "hwp",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "s50000.gov24-650000000282"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "별지4전체는국가유공자선순위유족의관계·계좌·신청서명과증빙을받는현충수당신청이다. 제3조제4항4월30일현재제주거주선순위유족및제5조제5항별지4지정이gov24종합사업의현충수당항목과일치한다. Bokjiro02174는월예우수당·사망위로금만있어현충급여에확대하지않는다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2096575",
     "relatedProgramIds": []
@@ -40836,11 +40846,14 @@
    "lawId": "2096575",
    "title": "[별지 제5호서식] 호국수당 지급(변경)신청서",
    "format": "hwp",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "s50000.gov24-650000000282"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "별지5전체의전사자·유족관계·의례증명·신청서명·행정정보및개인정보동의를읽었다. 제3조제5항은배우자/직계비속없는17세이하전사학도병의4촌이내유족1명,제5조제5항은별지5를지정하며gov종합사업이같은대상을명시한다. 일반참전유공자사망위로금과월예우수당에전용하지않는다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2096575",
     "relatedProgramIds": []
@@ -40856,7 +40869,7 @@
    "review": {
     "disposition": "no_matching_site_program",
     "reason": "별지6전체는강북구평생교육진흥규칙제12조제1항의평생학습관수강료감면을신청한다. 기존두후보는강북문화예술회관스포츠·강북문화대학이며실제인용도문화예술회관조례/규칙제17조의2로달라시설·프로그램체계가별개다. 강북전체평생/평생학습관검색에해당사업이없어감면신청서라는이름만으로연결하지않는다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2096945",
     "relatedProgramIds": []
@@ -40868,11 +40881,14 @@
    "lawId": "2097443",
    "title": "[별지 제1호서식] 중증장애아동 돌봄지원급여 신청서",
    "format": "hwpx",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g31710.bokjiro-WLF00006431"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "별지1 앞뒤1751자전체의장애아동·보호자관계·급여계좌·납부고지·서명·법정대리인동의를확인했다. 제2조5세이하심한장애·제4조군거주·제5조본인부담90%·제6조별지1신청이사이트WLF06431과일치한다. 부칙2026-06-01시행도읽었으며현재2026-10-19에는유효하다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2097443",
     "relatedProgramIds": []
@@ -40884,11 +40900,14 @@
    "lawId": "2097561",
    "title": "[별지서식]이천시 1인 자영업자 등 출산급여 지원 신청서",
    "format": "hwp",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g41500.gov24-407000000522"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "전체3096자를읽어앞의유사산임신주수지원금별표와뒤의무번호별지신청·동의를구분했다. 제3조단태90/다태170만원및실제별표주수별18·30·60·90/66·110·140·170만원이사이트와같고,제4조고용보험미적용출산급여선수령·이천거주·자녀출생신고및제5조출산일부터1년이내별지신청이맞다. 부칙2026-01-01이후출산적용도일치한다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2097561",
     "relatedProgramIds": []
@@ -40900,11 +40919,14 @@
    "lawId": "2097675",
    "title": "[별지 제1호서식]",
    "format": "hwp",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g51760.bokjiro-WLF00003494"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "별지1전체는보훈영예수당의등록번호·본인계좌·서명과정보동의이며제8조제1항월30만원·제9조제1항별지1제출에해당한다. 관할전체검색에서인용제명순서가바뀌어기존후보에서누락된WLF03494를찾아대상·월30만원·읍면신청·조례첨부를실제대조했다. 기존위문금114는별도개인신청없이명단으로지급하므로위문금신청서로연결하지않는다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2097675",
     "relatedProgramIds": []
@@ -40916,11 +40938,14 @@
    "lawId": "2097675",
    "title": "[별지 제2호서식]",
    "format": "hwp",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g51760.bokjiro-WLF00003415"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "별지2전체는사망유공자·유족관계·계좌·신청서명과별도동의를받으며제9조제2항이사망일부터1년이내신청을정한다. 관할검색의WLF03415는영예수당수급자사망30만원및유가족읍면신청·관계증빙을명시해제8조제2항과정확히같다. 명절위문금과달라기존후보는제외한다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2097675",
     "relatedProgramIds": []
@@ -40936,7 +40961,7 @@
    "review": {
     "disposition": "no_matching_site_program",
     "reason": "별지3전체는사망참전유공자배우자의별도월20만원수당신청으로제8조제4항·제9조제3항이지정한다. 평창전체검색의월30만원보훈영예수당·사망30만원위로금·무신청명절위문금에는배우자월20만원급여가없다. 같은보훈제명만으로동일시책에묶지않는다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2097675",
     "relatedProgramIds": []
@@ -40948,11 +40973,14 @@
    "lawId": "2098939",
    "title": "[별지 제1호서식] 참전유공자명예수당 지급신청서",
    "format": "hwp",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g28237.gov24-354000000120"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "실제별지1전체는참전명예/배우자수당선택식이나사이트120은65세이상참전유공자본인수당만명시한다. 제3조·제5조제1항본인명예수당신청과서명·참전증·통장요구가맞아본인선택만연결하고배우자수당은범위에서제외한다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2098939",
     "relatedProgramIds": []
@@ -40968,7 +40996,7 @@
    "review": {
     "disposition": "no_matching_site_program",
     "reason": "별지2전체는참전유공자사망일·유족·참전증·계좌를제출하는제5조제2항참전사망위로금이다. 관할검색의WLF00771은국가보훈대상자등조례2098937제12조의별도20만원사망위로금이며그조문이참전조례사망위로금과중복지원금지를명시하고국가보훈전용별지2를요구한다. 사이트본인참전월수당120에도사망급여는미포함이라별도참전위로금사업연결을확정하지않는다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2098939",
     "relatedProgramIds": []
@@ -40984,7 +41012,7 @@
    "review": {
     "disposition": "non_applicant",
     "reason": "별지8전후면전체는점포소유/사용권·보증·업소위치·예상세대수로판매업자가판매소지정을신청하는제6조양식이다. 사이트의수급자월60리터구입비/봉투무신청지원은제13조에따라명단조사로지급하며판매점신청과다르다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2098983",
     "relatedProgramIds": []
@@ -40996,11 +41024,14 @@
    "lawId": "2099123",
    "title": "[별지 제1호서식]",
    "format": "hwpx",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g51780.gov24-430100000002"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "별지1전후면전체는전입자별10만원·세대당쌀4kg·봉투20매와1년관외거주확인·서명·정보동의를받는다. 제3조가전입세대별지1을지정하고관할검색으로찾은gov430100000002의대상·금액·물품·방문신청이정확히맞는다. 다른신혼/군인시책과분리한다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2099123",
     "relatedProgramIds": []
@@ -41012,11 +41043,14 @@
    "lawId": "2099123",
    "title": "[별지 제2호서식]",
    "format": "hwpx",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g51780.bokjiro-WLF00006372"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "별지2전후면전체의혼인·부부거주·50세이하한명·100/50/50만원3년차선택·동의를읽었다. 제4조별지2신혼정착과사이트WLF06372의기간·금액·거주요건이같다. 최초및후속연차를본인선택하도록연결하고다른인구시책과분리한다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2099123",
     "relatedProgramIds": []
@@ -41032,7 +41066,7 @@
    "review": {
     "disposition": "no_matching_site_program",
     "reason": "별지3전체는기업대표가관외거주자고용·전입명부·보험증빙으로1명당50만원최대500만원기업지원금을신청하는제5조서식이다. 기관이라는단어만으로배제하지않고관할전입·인구시책을검색했으나전입개인·신혼·군인사업만있어해당기업지원사업을찾지못했다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2099123",
     "relatedProgramIds": []
@@ -41048,7 +41082,7 @@
    "review": {
     "disposition": "no_matching_site_program",
     "reason": "별지4전체는개인5명/단체10명이상전입유치실적에따른50/100만원성과금신청이다. 제5조의유공자지원이며자신이전입해받는정착금과다르다. 관할인구·전입검색의사이트에는해당유치실적성과금사업이없었다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2099123",
     "relatedProgramIds": []
@@ -41060,11 +41094,14 @@
    "lawId": "2099123",
    "title": "[별지 제5호서식]",
    "format": "hwpx",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g51780.gov24-430100000002"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "별지5전체는전입자가신청권한을대리인에게위임하고서명하는전입세대전용양식이다. 제3조제2항이별지5를직접정하고사이트전입세대지원430100000002의대리접수에한정한다. 신혼·군인시책공통위임장으로확대하지않는다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2099123",
     "relatedProgramIds": []
@@ -41080,7 +41117,7 @@
    "review": {
     "disposition": "no_matching_site_program",
     "reason": "별지6전후면전체는청소년·보호자의철원거주·18세연말유지·본인저축액매칭과환수서약을받는미래키움통장신청이다. 제6조제1항이정확히지정하지만관할전체미래키움·인구지원검색에는이적금지원사업이없고신혼정착·군인체육지원과다르다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2099123",
     "relatedProgramIds": []
@@ -41096,7 +41133,7 @@
    "review": {
     "disposition": "no_matching_site_program",
     "reason": "별지7전체는미래키움통장을18세연말이전에해지해지원금을회수하고본인납입금만받겠다는확인·동의·서명이다. 제6조제3항의해지절차이나사이트에이통장사업자체가없어다른인구지원에연결하지않는다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2099123",
     "relatedProgramIds": []
@@ -41108,11 +41145,14 @@
    "lawId": "2099123",
    "title": "[별지 제8호서식]",
    "format": "hwpx",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g51780.bokjiro-WLF00006368"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "별지8전후면전체는거주군인의소속·군번·임관/임용일·전입·상품권카드·서명과5년경과지급중지안내다. 제7조가이별지를지정하고사이트임관5년이하초급간부·월3만원체육이용지원과주체·목적이일치한다. 가맹점가입별지9와구분한다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2099123",
     "relatedProgramIds": []
@@ -41128,7 +41168,7 @@
    "review": {
     "disposition": "non_applicant",
     "reason": "별지9전후면전체는체육업소대표가사업자등록·철원상품권가맹등록과사업자정보동의를제출하는제8조가맹점등록이다. 사이트지원대상은거주군인개인으로가입업체가아니어서군인신청서로제공하지않는다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2099123",
     "relatedProgramIds": []
@@ -41144,7 +41184,7 @@
    "review": {
     "disposition": "non_applicant",
     "reason": "실제 별지10 전체를 읽어 대상자·지급일·금액·실적 또는 재고를 담당기관이 기록·관리하는 장부임을 확인했다. 제10조가 군수·읍면장의 대장작성 의무로 정하고 신청인 제출서식이 아니다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2099123",
     "relatedProgramIds": []
@@ -41160,7 +41200,7 @@
    "review": {
     "disposition": "non_applicant",
     "reason": "실제 별지11 전체를 읽어 대상자·지급일·금액·실적 또는 재고를 담당기관이 기록·관리하는 장부임을 확인했다. 제10조가 군수·읍면장의 대장작성 의무로 정하고 신청인 제출서식이 아니다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2099123",
     "relatedProgramIds": []
@@ -41176,7 +41216,7 @@
    "review": {
     "disposition": "non_applicant",
     "reason": "실제 별지12 전체를 읽어 대상자·지급일·금액·실적 또는 재고를 담당기관이 기록·관리하는 장부임을 확인했다. 제10조가 군수·읍면장의 대장작성 의무로 정하고 신청인 제출서식이 아니다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2099123",
     "relatedProgramIds": []
@@ -41192,7 +41232,7 @@
    "review": {
     "disposition": "non_applicant",
     "reason": "실제 별지13 전체를 읽어 대상자·지급일·금액·실적 또는 재고를 담당기관이 기록·관리하는 장부임을 확인했다. 제10조가 군수·읍면장의 대장작성 의무로 정하고 신청인 제출서식이 아니다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2099123",
     "relatedProgramIds": []
@@ -41208,7 +41248,7 @@
    "review": {
     "disposition": "non_applicant",
     "reason": "실제 별지14 전체를 읽어 대상자·지급일·금액·실적 또는 재고를 담당기관이 기록·관리하는 장부임을 확인했다. 제10조가 군수·읍면장의 대장작성 의무로 정하고 신청인 제출서식이 아니다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2099123",
     "relatedProgramIds": []
@@ -41224,7 +41264,7 @@
    "review": {
     "disposition": "non_applicant",
     "reason": "실제 별지15 전체를 읽어 대상자·지급일·금액·실적 또는 재고를 담당기관이 기록·관리하는 장부임을 확인했다. 제10조가 군수·읍면장의 대장작성 의무로 정하고 신청인 제출서식이 아니다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2099123",
     "relatedProgramIds": []
@@ -41240,7 +41280,7 @@
    "review": {
     "disposition": "non_applicant",
     "reason": "실제 별지 제16호 전체는 군인의 신청일·군번·임관일·전입일·지급중지 예정일을 기관이 기록하는 관리대장이다. 제10조가 군수·읍면장의 작성 의무로 정하며 군인 본인의 지원 신청서는 제8호이므로 제외한다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2099123",
     "relatedProgramIds": []
@@ -41256,7 +41296,7 @@
    "review": {
     "disposition": "no_matching_site_program",
     "reason": "별지 제1호 전체는 장애인복지센터의 시설·참가인원·사용목적·기간을 적는 대관 허가 신청이다. 제7조는 일상 프로그램 운영에 지장을 주지 않는 별도 시설사용을 규정한다. 사이트는 장애인·주민의 문화여가 서비스 직접 지원으로 별도 신청이 없다고 안내하고, 관할 센터·시설대관 검색에도 해당 대관 사업은 없어 일반 프로그램 참여 신청서로 연결하지 않는다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2099161",
     "relatedProgramIds": []
@@ -41272,7 +41312,7 @@
    "review": {
     "disposition": "no_matching_site_program",
     "reason": "별지 제3호 전체는 자활기업 대표자가 사업 목적·재원·대여액·상환계획을 작성하는 기업 사업자금 융자 신청이다. 규칙 제3조제1항이 지정하지만 인제 전체 자활·융자·기금 검색에서 이 사업은 없고 저소득 자녀 장학금은 상환 없는 학업 지원이어서 연결하지 않는다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2099177",
     "relatedProgramIds": []
@@ -41288,7 +41328,7 @@
    "review": {
     "disposition": "no_matching_site_program",
     "reason": "별지 제4호 전체는 자활기업의 금융기관 대출명세·거치기간·이자액과 이차보전 요청을 작성한다. 제3조제2항의 기업 대출이자 보조이며 사이트의 저소득 학생 장학금과 대상·지출 목적이 다르다. 관할 전체 검색에도 해당 기업 이차보전 사업이 없다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2099177",
     "relatedProgramIds": []
@@ -41304,7 +41344,7 @@
    "review": {
     "disposition": "no_matching_site_program",
     "reason": "별지 제5호 전체는 수급·차상위·한부모·장애 등 저소득 주민의 전세계약서와 대여금·상환조건을 받는 주거자금 융자다. 제3조제3항은 이 양식을 직접 지정한다. 인제 전체 전세·융자·기금 검색에는 이 전세대여 사업이 없으며 장학금이나 재활장비 대여와 혼동하지 않았다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2099177",
     "relatedProgramIds": []
@@ -41320,7 +41360,7 @@
    "review": {
     "disposition": "no_matching_site_program",
     "reason": "별지 제7호 전체는 기존 기금 차입자의 대여일·미상환액·상환연장 기간과 사유를 제출하는 서식이다. 규칙 제5조가 대여금의 연장·감면 신청으로 정한다. 사이트에는 해당 기금대여 사업이 없고 후보 장학금은 상환 연장 대상이 아니다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2099177",
     "relatedProgramIds": []
@@ -41332,11 +41372,14 @@
    "lawId": "2099177",
    "title": "별지 제10호서식 장학금신청서",
    "format": "hwpx",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g51810.gov24-433000000131"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "전체 원문을 읽어 실제 별지 제10호 학생·보호자의 신청서와 이어지는 제11호 읍면장 추천서를 구분했다. 현행 제10조제1호가 정확히 제10호를 지정하고 사이트 저소득 주민자녀 장학금이 같은 신청서·재학·성적증명·통장 서류를 안내한다. 뒤의 추천서는 기관 작성용이며 '개정안' 표시도 있어 신청인 사용 범위에서 제외한다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2099177",
     "relatedProgramIds": []
@@ -41348,11 +41391,14 @@
    "lawId": "2099177",
    "title": "별지 제13호서식 개인정보 제공 및 활용 동의서",
    "format": "hwp",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g51810.gov24-433000000131"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "별지 제13호 전체는 자금대여와 장학금 중 해당 서비스에 표시하고 정보 수집·제공에 동의하는 서류다. 실제 장학금 목적은 중복 수혜 확인과 관리로 명확하며 제11조제2호가 장학금 신청·지급의 개인정보 처리를 규정하고 사이트도 개인정보 활용동의서를 구비서류로 명시한다. 조문이 제13호 번호를 직접 부르지 않는 사실을 유지하며 공식 부속 원문과 사이트의 직접 요구를 함께 근거로 삼는다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2099177",
     "relatedProgramIds": []
@@ -41364,11 +41410,14 @@
    "lawId": "2099437",
    "title": "[별지 제1호서식] 초등학교 입학 축하금 지원 신청서",
    "format": "hwp",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g12770.bokjiro-WLF00005224"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "실제 원문 머리말은 번호 없는 '별지 서식'이며 보호자·입학생·학교·입학일·서명과 개인정보 동의를 받는다. 제3조 20만원 상품권, 제4조 장흥 거주 보호자·학생의 관내 첫 입학, 제5조 신청 주체, 제6조 입학연도 6월30일까지 별지 제출이 사이트와 일치한다. 메타의 제1호 번호를 실제 인쇄번호로 복사하지 않았다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2099437",
     "relatedProgramIds": []
@@ -41380,11 +41429,14 @@
    "lawId": "2100087",
    "title": "[별지 제3호서식] 보훈예우수당 지급 신청서",
    "format": "hwp",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g11350.gov24-310000000120"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "별지 제3호 전체는 보훈대상유형·등록번호·계좌·신청서명과 개인정보 동의를 받는 월수당 신청이다. 제10조제2항이 정확히 지정하고 사이트 종합지원 중 보훈예우수당에 해당한다. 사망위로금은 제1호, 참전배우자 복지수당은 제4호로 구분되어 이 양식에 확대하지 않는다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2100087",
     "relatedProgramIds": []
@@ -41417,11 +41469,14 @@
    "lawId": "2100395",
    "title": "[별지 제1호서식] 농기계 임대 신청서",
    "format": "hwp",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g27710.gov24-348000000370"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "별지 제1호 전체는 농업인이 기계명·수량·임대기간·작업면적·임대료와 서명을 적고 임대조건을 확인하는 신청서다. 제7조제1항이 임대 신청에 직접 지정하고 사이트 달성군 맞춤형 농기계 임대·수리 서비스 중 임대 단계와 일치한다. 본인 소유 농기계의 수리비 보조 청구서로 사용하지 않는다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2100395",
     "relatedProgramIds": []
@@ -41433,11 +41488,14 @@
    "lawId": "2100597",
    "title": "[별지 제1호서식] 희귀질환자 교통비 지원 신청서",
    "format": "hwp",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g44180.bokjiro-WLF00006757"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "별지 제1호 전체는 환자의 상병코드·진료병원·방문일·교통수단·청구금액·계좌와 신청서명을 받는다. 제4조 진료일부터 신청일까지 보령 거주하는 희귀질환 산정특례 등록자, 제6조제1항의 별지 제1호와 진료영수증 등의 첨부가 사이트 희귀질환자 교통비 지원과 정확히 맞는다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2100597",
     "relatedProgramIds": []
@@ -41449,11 +41507,14 @@
    "lawId": "2100597",
    "title": "[별지 제2호서식] 개인정보 수집이용제공 동의서",
    "format": "hwp",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g44180.bokjiro-WLF00006757"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "별지 제2호 전체의 환자 정보·상병코드·산정특례기간 및 민감정보 동의를 읽었다. 제6조제1항이 교통비 신청서와 함께 제2호를 제출하도록 직접 지정하므로 같은 희귀질환 교통비 사업의 보조 동의서로 연결한다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2100597",
     "relatedProgramIds": []
@@ -41465,11 +41526,14 @@
    "lawId": "2100631",
    "title": "[별지 제1호서식] 군산시 아이돌봄서비스 본인부담금 지원 신청서",
    "format": "hwp",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g52130.bokjiro-WLF00006539"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "별지 제1호 전체는 보호자·아동·가~마 유형·양육공백과 본인명의 휴대전화·모바일 지역화폐를 확인하고 서명·동의를 받는다. 제2조 군산 거주 보호자·아동, 제4조제1항 정확한 별지 지정이 사이트의 본인부담금 선납 후 모바일 지역화폐 환급과 일치한다. 다섯 소득유형을 실제 원문에서 확인했으며 신청인 작성 서식이다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2100631",
     "relatedProgramIds": []
@@ -41481,11 +41545,14 @@
    "lawId": "2099377",
    "title": "[별지 제2호서식] 사망위로금 지급신청서",
    "format": "hwp",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g12750.gov24-489000000123"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "별지 제2호 전체는 국가보훈대상자의 사망일·신청유족 관계·계좌·서명 및 정보동의를 받는다. 제12조제2항의 30만원 위로금과 제14조제4항의 사망일부터 1년 이내 별지 제2호 신청이 사이트 국가보훈 명예수당 사업의 사망급여에 해당한다. 참전명예수당 수급자는 제12조제1항에서 제외되어 참전 전용 사업과 분리한다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2099377",
     "relatedProgramIds": []
@@ -41497,11 +41564,14 @@
    "lawId": "2099379",
    "title": "[별지 제1호서식] 수당 지급신청서",
    "format": "hwp",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g12750.gov24-489000000124"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "별지 제1호 전체의 본인·배우자 월수당 선택, 등록번호·계좌·서명·확인서류를 읽었다. 제3조의 참전유공자·배우자 대상과 제4조제1항제1·2호 월수당, 제5조제1항 별지 지정이 사이트 참전 예우 사업의 두 월수당과 일치한다. 사망위로금은 제2호로 구분한다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2099379",
     "relatedProgramIds": []
@@ -41513,11 +41583,14 @@
    "lawId": "2099379",
    "title": "[별지 제2호서식] 사망위로금 지급신청서",
    "format": "hwp",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g12750.gov24-489000000124"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "별지 제2호 전체는 참전유공자 본인 사망과 배우자 수급자 사망의 선택란을 함께 둔다. 현행 제4조제1항제3호도 두 사람이 사망한 경우 각각 30만원을 지급한다고 명시하여 원문 선택 범위가 확인된다. 제5조제2항의 유가족·관계인 신청과 1년 기한에 따라 사이트 참전 예우 사업의 사망급여로 제한 연결한다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2099379",
     "relatedProgramIds": []
@@ -41529,11 +41602,15 @@
    "lawId": "2100767",
    "title": "별지",
    "format": "hwp",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g47280.bokjiro-WLF00002360",
+    "g47280.gov24-512000000115"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "6757자 원문 전체를 읽었다. 앞부분은 2018년까지의 구 조례 전문으로 월9만원·사망20만원 및 옛 대상범위를 담아 현행 안내로 사용할 수 없다. 그러나 뒤의 실제 별지 제1호 월수당 신청서와 제2호 사망위로금 신청서는 금액·옛 대상목록을 고정하지 않고 각각 제10조를 직접 인용하며 주민·유족의 등록번호·관계·계좌·서명 및 증빙을 받는다. 현행 법규 제8·9조 대상과 제10조의 제1·2호 지정, 두 사이트의 월수당·사망급여 목적을 대조해 그 신청 부분만 승인한다. 앞의 구 조례 전문과 뒤의 제3·4호 행정대장은 명확히 제외한다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2100767",
     "relatedProgramIds": []
@@ -43747,7 +43824,15 @@
    "lawId": "2107361",
    "title": "[별지 제1호서식]봉화군 공영장례 지원신청서",
    "format": "hwp",
-   "state": "pending"
+   "state": "approved_pending_publication",
+   "review": {
+    "disposition": "approved",
+    "reason": "별지 제1호 전체는 사망자·장례처리 신청인·수행자·신청사유와 동의를 받는다. 현행 제4조의 무연고자 및 장례처리 능력이 없는 저소득 가정, 제8조제1항의 연고자·유가족·법정대리인 등 신청과 정확히 맞는다. 사이트 복합사업 중 무연고·저소득 사망자의 공영장례 비용 지원 부분에 한정하고 생존 행려자의 숙식·귀향·치료 지원과 구분한다.",
+    "report": "logs/forms-completion/reviews/team2-batch-053-dispositions.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2107361",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21417289",
@@ -43755,7 +43840,15 @@
    "lawId": "2107361",
    "title": "[별지 제4호서식] 봉화군 공영장례 지원 비용 청구서",
    "format": "hwp",
-   "state": "pending"
+   "state": "approved_pending_publication",
+   "review": {
+    "disposition": "approved",
+    "reason": "별지 제4호 전체는 지원을 받은 신청인 또는 대행기관이 실제 장례일·안치장소·집행액·비용영수증·사진·계좌와 서명을 제출하는 비용 청구서다. 제8조제3항의 지원 결정 후 제4항이 장례 처리 뒤 같은 비용을 청구하도록 직접 지정한다. 원문에 대행기관·사업자등록증 항목이 있어도 조문상 최초 지원을 결정받은 장례처리 신청인의 후속 청구라는 관계를 확인했으며, 사이트에 명시된 장례용품·절차·화장비 지원 부분만 연결한다.",
+    "report": "logs/forms-completion/reviews/team2-batch-053-dispositions.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2107361",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21422053",
@@ -43873,7 +43966,15 @@
    "lawId": "2107489",
    "title": "배수설비 준공검사 신청서",
    "format": "hwp",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "no_matching_site_program",
+    "reason": "실제 제3호 전체는 설치자·시공자의 배수관 규격·오수량·접속방법 및 준공 사진을 제출하는 제7조 공사검사 신청이다. 서울의 수급자·장애인·다자녀 하수도 감면과 목적이 다르며 관할 하수도·배수설비 검색에도 해당 준공검사 혜택사업은 없다.",
+    "report": "logs/forms-completion/reviews/team2-batch-053-dispositions.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2107489",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21432971",
@@ -43881,7 +43982,15 @@
    "lawId": "2107489",
    "title": "공공하수도 점용허가 신청서",
    "format": "hwp",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "no_matching_site_program",
+    "reason": "실제 제13호 전체는 공공하수도 점용장소·기간·면적·공사계획·설계서를 제출하는 제9조제1항 사용허가다. 주민가구의 요금 감면 사업과 다르고 관할 검색에도 점용허가 지원사업이 없어 연결하지 않는다.",
+    "report": "logs/forms-completion/reviews/team2-batch-053-dispositions.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2107489",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21432973",
@@ -43889,7 +43998,15 @@
    "lawId": "2107489",
    "title": "공공하수도 점용공작물 설치준공검사 신청서",
    "format": "hwp",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "no_matching_site_program",
+    "reason": "실제 제14호 전체는 하수도 점용 공작물의 설치목적·구조·준공일·설계도서를 내는 제9조제2항 검사 신청이다. 수급자·장애인·다자녀의 하수도 사용요금 감면 신청으로 쓸 수 없다.",
+    "report": "logs/forms-completion/reviews/team2-batch-053-dispositions.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2107489",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21433013",
@@ -43897,7 +44014,15 @@
    "lawId": "2107489",
    "title": "하수도(사용료, 점용료, 부담금) 감면신청서",
    "format": "hwp",
-   "state": "pending"
+   "state": "approved_pending_publication",
+   "review": {
+    "disposition": "approved",
+    "reason": "실제 제34호 전체는 하수사용자와 감면사유·기간·입증서류를 작성하고 서명하는 일반 감면 신청이다. 규칙 제25조가 이 별지를 직접 지정한다. 상위 현행 조례2116731 제34조 전체를 추가로 읽어 수급자10톤·심한장애10톤·18세이하 두자녀30%와 제2항의 규칙 신청서 제출을 확인했다. 세 사이트의 하수도 급여에 맞으며 상수도·물이용부담금까지 이 서식으로 신청하는 것으로 표시하지 않는다.",
+    "report": "logs/forms-completion/reviews/team2-batch-053-dispositions.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2107489",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21433027",
@@ -43905,7 +44030,15 @@
    "lawId": "2107489",
    "title": "과오납금반환청구서",
    "format": "hwp",
-   "state": "pending"
+   "state": "approved_pending_publication",
+   "review": {
+    "disposition": "approved",
+    "reason": "실제 제41호 전체는 납기·기납부액·정당요금·과오납액·사유와 청구인 서명을 받으며 기관 확인란은 별도로 둔다. 규칙 제28조제1항은 감면 등으로 과오납금이 생겼지만 과오납 처리부에 기록되지 않았거나 처리되지 않은 경우 영수증을 첨부한 제41호를 받도록 정한다. 세 사이트의 하수도 감면 후 실제 과오납 반환 단계에만 연결한다.",
+    "report": "logs/forms-completion/reviews/team2-batch-053-dispositions.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2107489",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21433229",
@@ -44328,7 +44461,15 @@
    "lawId": "2107465",
    "title": "임대보증금 대출 신청서",
    "format": "hwp",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "no_matching_site_program",
+    "reason": "별지 제1호 전체는 공공임대·국민임대 등 입주자의 보증금 대출액·상환 대상 자금을 신청하는 서식으로 제11조제1항·제13조제1항에 해당한다. 사이트 서울형 주택바우처는 공공임대가 아닌 민간 월세를 보조하는 제11조제2항·제13조제2항 사업이다. 관할 전체 검색에서도 동일 공공임대 보증금 대출사업은 없었고 SH 바로도움주택은 보증금·임대료 면제형 무상주택으로 다르다.",
+    "report": "logs/forms-completion/reviews/team2-batch-053-dispositions.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2107465",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21451379",
@@ -44336,7 +44477,15 @@
    "lawId": "2107465",
    "title": "임대료 보조 신청서",
    "format": "hwp",
-   "state": "pending"
+   "state": "approved_pending_publication",
+   "review": {
+    "disposition": "approved",
+    "reason": "별지 제2호 전체는 민간 임차가구의 월세·가구원·신규/전입/특정바우처·계좌·서명과 임대료 상계 동의를 받는다. 현행 제11조제2·4항은 중위60% 이하 민간 월세 거주 및 수급자 제외, 제13조제2항은 정확한 제2호 제출, 제17조는 임대인 계좌 지급과 부득이한 임차인 지급을 정한다. 서울시 직접 사업 WLF02255의 대상·월세보조·자치구 조사 지급 경로와 일치한다. 같은 이름의 구별 icare 자료는 인용법·접수양식 근거가 없어 별도 확인 후보로 남겼다.",
+    "report": "logs/forms-completion/reviews/team2-batch-053-dispositions.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2107465",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21457447",
@@ -47036,11 +47185,14 @@
    "lawId": "2115287",
    "title": "별지 제1~4호 서식",
    "format": "hwp",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g28720.gov24-358000000114"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "묶음 내부1호 보호자의 장학금 신청,2호 학교장 추천,3호 면장 추천,4호 장학증서를 전체 판독했다. 현행 제13·14조는 저소득 중고생 학업상위50% 및 신청서·학교장추천서를 제출하도록 하고 실제 사업의 대상·구비서류가 일치한다. 내부3호는 접수 후 면장이 처리하고4호는 군수 발급이라 신청인 준비범위에서 제외한다.",
-    "report": "logs/forms-completion/reviews/team1-batch-055-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2115287",
     "relatedProgramIds": []
@@ -47056,7 +47208,7 @@
    "review": {
     "disposition": "non_applicant",
     "reason": "전체 원본은 주차장이용안내·노외주차장표지·방향안내 또는 장애인전용주차장 표지의 규격·색상·설치위치를 정하는 도식/규격서이다. 현행 제5조의 설치자/관리자 표지 의무와 대조했으며 실제 사업은 운전자가 증빙을 제시해 받는 주차요금 감면이다. 해당 표지를 주민 신청서로 연결하지 않는다.",
-    "report": "logs/forms-completion/reviews/team1-batch-055-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2115243",
     "relatedProgramIds": []
@@ -47072,7 +47224,7 @@
    "review": {
     "disposition": "non_applicant",
     "reason": "전체 원본은 주차장이용안내·노외주차장표지·방향안내 또는 장애인전용주차장 표지의 규격·색상·설치위치를 정하는 도식/규격서이다. 현행 제5조의 설치자/관리자 표지 의무와 대조했으며 실제 사업은 운전자가 증빙을 제시해 받는 주차요금 감면이다. 해당 표지를 주민 신청서로 연결하지 않는다.",
-    "report": "logs/forms-completion/reviews/team1-batch-055-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2115243",
     "relatedProgramIds": []
@@ -47088,7 +47240,7 @@
    "review": {
     "disposition": "non_applicant",
     "reason": "전체 원본은 주차장이용안내·노외주차장표지·방향안내 또는 장애인전용주차장 표지의 규격·색상·설치위치를 정하는 도식/규격서이다. 현행 제5조의 설치자/관리자 표지 의무와 대조했으며 실제 사업은 운전자가 증빙을 제시해 받는 주차요금 감면이다. 해당 표지를 주민 신청서로 연결하지 않는다.",
-    "report": "logs/forms-completion/reviews/team1-batch-055-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2115243",
     "relatedProgramIds": []
@@ -47104,7 +47256,7 @@
    "review": {
     "disposition": "non_applicant",
     "reason": "전체 원본은 주차장이용안내·노외주차장표지·방향안내 또는 장애인전용주차장 표지의 규격·색상·설치위치를 정하는 도식/규격서이다. 현행 제18조의 설치자/관리자 표지 의무와 대조했으며 실제 사업은 운전자가 증빙을 제시해 받는 주차요금 감면이다. 해당 표지를 주민 신청서로 연결하지 않는다.",
-    "report": "logs/forms-completion/reviews/team1-batch-055-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2115243",
     "relatedProgramIds": []
@@ -47120,7 +47272,7 @@
    "review": {
     "disposition": "non_applicant",
     "reason": "전체 원본은 부설주차장 설치비용을 납부한 시설물 소유자에게 시장이 발급하는 공영주차장 무상사용증이다. 현행 제15조의2제1항의 발급주체·대상과 일치하며 주민 취약계층 주차요금감면 신청서는 아니다. 앞면 사용자·기간은 사용증의 발급 기재사항이고 신청서명/신청내용과 구분한다.",
-    "report": "logs/forms-completion/reviews/team1-batch-055-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2115243",
     "relatedProgramIds": []
@@ -47136,7 +47288,7 @@
    "review": {
     "disposition": "non_applicant",
     "reason": "전체 원본은 법인·단체가 보은군가족센터 운영을 수탁받기 위한 운영계획·인력요건 제출이다. 후보 두 사업 및 관내 관련 사업의 실제 신청인은 친정나들이 항공료를 신청하는 다문화가정으로 기관 수탁과 다르다. 또한 원본의 제14조제2항은 현행에서2026.3.13 삭제되어 기관 수탁의 현행 사용근거도 이 원본만으로 확정할 수 없다.",
-    "report": "logs/forms-completion/reviews/team1-batch-055-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2115447",
     "relatedProgramIds": []
@@ -47168,11 +47320,14 @@
    "lawId": "2115611",
    "title": "[별지 제2호서식] 이·통장자녀 장학금 신청서",
    "format": "hwp",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g44150.gov24-450000000130"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "현행 시행규칙 제2조제4항제2호가 이통장 자녀 장학금에 별지2 신청을 지정한다. 전체 원본의 이통장 재직기간·학생·가족·성적증빙·신청서명과 실제 이통장자녀 장학생 사업이 일치한다. 같은 재단의 장애인·다문화·저소득·성적우수 등 다른8사업은 대상이 달라 이 전용서식을 연결하지 않는다.",
-    "report": "logs/forms-completion/reviews/team1-batch-055-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2115611",
     "relatedProgramIds": []
@@ -47282,11 +47437,19 @@
    "lawId": "2116511",
    "title": "별지제1호서식(인구증가지원사업신청서).hwp",
    "format": "hwp",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g48880.bokjiro-WLF00004087",
+    "g48880.bokjiro-WLF00004516",
+    "g48880.gov24-547000000101",
+    "g48880.gov24-547000000117",
+    "g48880.gov24-547000000127",
+    "g48880.gov24-547000000132"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "현행 제3조 별표21677027을 공식 원본으로 내려받아 전체 읽었으며 제4조는 해당 인구사업에 별지1을 지정한다. 전체 신청서에 출산축하/양육·전입정착/기념품·전입고등학생 기숙사비가 실제 선택란으로 있고 별표의 지원기준과 관내6사업의 급여·주체·읍면 신청을 각각 대조했다. 현행 별표의 양육 지급시작은 출생1년 후이며 일부 사업 안내의 출생월부터 문구와 차이가 있어 현재 기준 확인 조건을 붙인다. 원본의 모든 기타 사업을 자동으로 연결하지 않는다.",
-    "report": "logs/forms-completion/reviews/team1-batch-055-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2116511",
     "relatedProgramIds": []
@@ -47298,11 +47461,14 @@
    "lawId": "2116511",
    "title": "별지제3호서식(기형아검사비용지원신청서).hwp",
    "format": "hwp",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g48880.bokjiro-WLF00005641"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "현행 제3조가 위임한 별표21677027의 기형아검사 항목을 실제 내려받아 읽었고, 검사시작일부터 거창주소·분만후1개월 신청·1종류10만원 이내 지원을 확인했다. 전체 별지3의 검사종류·기간·검사비·산모계좌·진료영수증/내역서와 실제 해당 검사비 사업의 대상·금액·신청기한·서류가 일치한다. 인구사업 일반 별지1의 다른 급부와 구분한다.",
-    "report": "logs/forms-completion/reviews/team1-batch-055-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2116511",
     "relatedProgramIds": []
@@ -47314,11 +47480,14 @@
    "lawId": "2116513",
    "title": "별지제1호서식(청년결혼장려금지원신청서).hwp",
    "format": "hwp",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g48880.bokjiro-WLF00004891"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "현행 제2조의 별표21677033을 공식 원본으로 읽고 제3조의 별지1 결혼장려금 신청과 전체 원본 부부·전입/혼인일·상품권 수령·중복지원 확인을 대조했다. 실제 결혼축하금 사업과 관할·부부지원·읍면 신청은 같으나 사업 자료는600만원3회, 현행 별표는200만원5회 및 생애중복제한으로 변경되어 현재 적용기준 확인을 명시한다. 전세이자·청년수당은 다른 급여다.",
-    "report": "logs/forms-completion/reviews/team1-batch-055-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2116513",
     "relatedProgramIds": []
@@ -47334,7 +47503,7 @@
    "review": {
     "disposition": "no_matching_site_program",
     "reason": "전체 별지2는 노동유형·가구소득·월적립 마련계획과2년 자산형성을 위한 디딤돌 통장 가입신청이다. 현행 제2조 별표21677033 전체를 읽으면 디딤돌통장35~45세·최대480만원과 별도 미혼청년수당200만원을 분리한다. 후보 및 같은 관할 전체 청년사업에는 결혼·청년수당·전세이자만 있고 디딤돌통장 자체사업은 확인되지 않아 유사 청년지원 제목만으로 연결하지 않는다.",
-    "report": "logs/forms-completion/reviews/team1-batch-055-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2116513",
     "relatedProgramIds": []
@@ -47346,11 +47515,14 @@
    "lawId": "2116799",
    "title": "[별지 제1호서식] 파주시 지역화폐 가명점 등록 신청서",
    "format": "hwp",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g41480.gov24-406000000112"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "실제 파주페이 사업은 소비자 인센티브 외에 가맹점 수수료 절감·홍보·매출증대 혜택을 명시한다. 현행 제4조의 사업자 등록 절차 및 전체 원본의 대표자·사업장·등록정보·증빙·서명을 대조하여 가맹점 대표자가 해당 지위를 신청/관리하는 경우에만 연결한다. 소비자 카드발급·충전 신청으로 사용하지 않는다.",
-    "report": "logs/forms-completion/reviews/team1-batch-055-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2116799",
     "relatedProgramIds": []
@@ -47362,11 +47534,14 @@
    "lawId": "2116799",
    "title": "[별지 제4호서식] 파주시 지역화폐 가맹점 등록 변경 신청서",
    "format": "hwp",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g41480.gov24-406000000112"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "실제 파주페이 사업은 소비자 인센티브 외에 가맹점 수수료 절감·홍보·매출증대 혜택을 명시한다. 현행 제6조의 사업자 등록사항 변경 절차 및 전체 원본의 대표자·사업장·등록정보·증빙·서명을 대조하여 가맹점 대표자가 해당 지위를 신청/관리하는 경우에만 연결한다. 소비자 카드발급·충전 신청으로 사용하지 않는다.",
-    "report": "logs/forms-completion/reviews/team1-batch-055-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2116799",
     "relatedProgramIds": []
@@ -47378,11 +47553,14 @@
    "lawId": "2116799",
    "title": "[별지 제5호서식] 파주시 지역화폐 가맹점 등록 해지 신청서",
    "format": "hwp",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g41480.gov24-406000000112"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "실제 파주페이 사업은 소비자 인센티브 외에 가맹점 수수료 절감·홍보·매출증대 혜택을 명시한다. 현행 제6조의 사업자 등록 해지 절차 및 전체 원본의 대표자·사업장·등록정보·증빙·서명을 대조하여 가맹점 대표자가 해당 지위를 신청/관리하는 경우에만 연결한다. 소비자 카드발급·충전 신청으로 사용하지 않는다.",
-    "report": "logs/forms-completion/reviews/team1-batch-055-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2116799",
     "relatedProgramIds": []
@@ -47410,11 +47588,16 @@
    "lawId": "2116179",
    "title": "[별지 제1호서식] 출산 서비스 통합처리 신청서",
    "format": "hwp",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g47250.gov24-511000000112",
+    "g47250.gov24-511000000119",
+    "g47250.gov24-511000000122"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "전체 통합신청서의 상주시 자체급부에 출생아 건강보험·출산육아지원금·출산용품이 각각 명시되어 있다. 원법규 제3~7조는 보험 대상·보호자 신청·별지1 지정을 명시하고 실제 보험사업과 일치한다. 추가로 현행 출산장려조례2116107 제3~5조의 육아지원금·출산용품·통합신청과 별도 실제 사업을 대조했다. 육아지원금은 첫째~다섯째 선택이 있고, 용품은 원본에 세자녀/다문화/수급가정 선택만 있어 그 범위만 조건부 연결한다. 전국공통급여·유축기까지 확대하지 않는다.",
-    "report": "logs/forms-completion/reviews/team1-batch-055-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2116179",
     "relatedProgramIds": []
@@ -47426,11 +47609,14 @@
    "lawId": "2116885",
    "title": "[별지 제1호서식] 특별교통수단등 이용대상자 등록 신청서",
    "format": "hwp",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g48270.bokjiro-WLF00003112"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "현행 제12·13조는 특별교통수단 이용 전 등록과 별지1 제출을 규정하고 제16조는 등록 이후 배차신청을 구분한다. 전체 앞뒤면의 장애/고령자/기타 유형·이동상태·대리인·증빙안내가 실제 교통약자콜택시 사업 대상과 일치한다. 원본과 현행은65세이상 장기요양1~5등급으로 확대되어 사업 자료의1~3등급 구표기와 구분한다.",
-    "report": "logs/forms-completion/reviews/team1-batch-055-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2116885",
     "relatedProgramIds": []
@@ -47442,11 +47628,14 @@
    "lawId": "2116847",
    "title": "[별지 제1호서식] 밀양시 선택예방접종 신청서",
    "format": "hwp",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g48270.bokjiro-WLF00005971"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "현행 제2조제1호가 밀양시55세이상 수급·차상위 대상포진 지원을 규정하고 제4조가 별지1을 지정한다. 전체 원본은 대상포진/인플루엔자/기타 선택 및 자격증빙·신청인 서명으로, 실제 대상포진 사업의 수급·차상위 지원과 보건소 방문신청이 일치한다. 다른 백신 항목으로 확대하지 않는다.",
-    "report": "logs/forms-completion/reviews/team1-batch-055-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2116847",
     "relatedProgramIds": []
@@ -47458,11 +47647,14 @@
    "lawId": "2116943",
    "title": "별지 제12호서식(거제시 장학금 지급 신청서)",
    "format": "hwp",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g48310.gov24-537000000125"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "현행 제6조는 장학생 선발 확정 후 통지를 받은 학생이 별지12로 장학금 지급을 청구하도록 한다. 전체 원본의4종류 장학금·본인/보호자·계좌·등록금 또는 재능나눔 완료 증빙이 실제 사업의4유형 장학생과 일치한다. 선발 전 최초 장학생 신청서로 분류하지 않는다.",
-    "report": "logs/forms-completion/reviews/team1-batch-055-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2116943",
     "relatedProgramIds": []
@@ -47478,7 +47670,7 @@
    "review": {
     "disposition": "requires_external_confirmation",
     "reason": "공식 메타는 별지12-1 재능나눔 완료확인서이지만 실제 HWP 전체 BodyText는 별지12 거제시 장학금 지급 신청서이며 정상21680117의 추출본문과 동일하다. 실제 바이트SHA는 서로 다르므로 동일원본으로 간주하지 않는다. 현행 제6조가 지급신청12와 완료확인12-1을 별도로 요구하므로 이 파일을 완료확인서로 승인하지 않고 공식 첨부 교정 또는 올바른 완료확인서 확인이 필요한 상태로 남긴다.",
-    "report": "logs/forms-completion/reviews/team1-batch-055-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2116943",
     "relatedProgramIds": []
@@ -47490,11 +47682,14 @@
    "lawId": "2116943",
    "title": "별지 제17호서식(거제시 장학생 신청서-대학(교) 재능나눔 장학생)",
    "format": "hwp",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g48310.gov24-537000000125"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "현행 제3조제3항제4호가 대학 재능나눔 장학생 선발신청에 별지17을 지정한다. 전체 원본의 재능나눔 분야·학교/학점·본인신청·활동지원서/계획서/재학·성적증빙이 실제 우수학생 장학사업 중 재능나눔 유형과 일치한다. 일반 성적우수·대학입학·고교유형은 다른 추천/신청서로 구분한다.",
-    "report": "logs/forms-completion/reviews/team1-batch-055-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2116943",
     "relatedProgramIds": []
@@ -47690,7 +47885,19 @@
    "lawId": "2117177",
    "title": "[별지 제1호서식] 학업안정지원금신청서",
    "format": "hwpx",
-   "state": "pending"
+   "programIds": [
+    "g51790.bokjiro-WLF00000409",
+    "g51790.gov24-431000000115"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "현행 제4·5·10조의 수급자/차상위본인부담경감 보장가구 대학생 및 입학준비금·도서교재 구입 지원신청을 전체 별지1의 동일 두 급부 선택·학적·증빙·서명과 대조했다. 실제 두 사업의 대상·읍면접수·재학/입학/성적증빙과 일치한다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2117177",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21690805",
@@ -47698,7 +47905,18 @@
    "lawId": "2117229",
    "title": "[별지 제1호서식] 주택 화재피해 지원신청서",
    "format": "hwp",
-   "state": "pending"
+   "programIds": [
+    "g51790.bokjiro-WLF00006059"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "현행 제5~9조가 화재피해 주민의 주택복구·임시거처·심리회복 지원과 별지 신청을 규정한다. 전체 앞뒤면의 세 신청항목·소유/거주 구분·화재피해 및 증빙·개인정보동의를 실제 주택화재 피해주민 사업과 대조했다. 원본에 조례안이라는 제정 전 표현이 남아 있으나 현행 원문 제9조 지정과 공식첨부 결속을 확인했고 서식 머리말은 번호 없는 별지이다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2117229",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21691231",
@@ -47706,7 +47924,19 @@
    "lawId": "2117257",
    "title": "별지 제1호서식~ 별지 제2호서식",
    "format": "hwp",
-   "state": "pending"
+   "programIds": [
+    "g47760.bokjiro-WLF00003765",
+    "g47760.gov24-517000000101"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "묶음 내부1호 명예/배우자 월수당과2호 사망위로금을 전체 읽었다. 현행 제4조제2호·제5조제3·4항의 사망30만원·1년 내 신청과 내부2호의 유족·증빙·계좌를 실제 복지로 사업 및 관내 추가 정부24 사업의 참전유공자 사망 항목과 대조했다. 내부1호 월수당 사업은 현재 관내 자료에서 확인되지 않아 연결범위에서 제외한다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2117257",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21700987",
@@ -47714,7 +47944,18 @@
    "lawId": "2117895",
    "title": "[별지 제1호서식] 참전명예수당 지급신청서",
    "format": "hwp",
-   "state": "pending"
+   "programIds": [
+    "g41110.gov24-374000000142"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "현행 제10조는 통합 보훈명예수당에 별지1을 지정하나 실제 원본의 제목·신청내용·증빙은 참전명예수당과 참전유공자증으로 한정되어 있다. 실제 수원 복합 보훈사업의 참전대상 월수당 부분에는 관할·주체·목적이 일치하므로 그 부분만 조건부 연결한다. 일반 비참전 보훈대상자 및 사망위로금은 이 원본으로 확대하지 않고 현행 제8조 지급액과 사업 구금액 차이도 기록한다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2117895",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21704213",
@@ -47722,7 +47963,15 @@
    "lawId": "2118181",
    "title": "[별지 서식] 건축자재 해상운송비 지원신청서",
    "format": "hwpx",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "no_matching_site_program",
+    "reason": "전체 원본은 섬 주민 건축주가 건축자재 운송량·업체·운임·건축사용승인 증빙을 내는 신청서이며 현행 제3조제3항·제4조제5항의 건축자재 해상운송비 지원과 일치한다. 후보는70세이상 군민 여객선 승선운임으로 제3조제1항/제4조제1~4항의 별개 사업이다. 같은 관할 전체에서 건축자재 운송비 지원사업은 확인되지 않아 노인 여객선 서식으로 연결하지 않는다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2118181",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21705149",
@@ -47730,7 +47979,15 @@
    "lawId": "2118241",
    "title": "[별지서식] 배수설비 준공검사 신청서",
    "format": "hwp",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "no_matching_site_program",
+    "reason": "전체 원본은 배수설비 설치자가 공사 전중후 사진·준공도로 검사받는 신청이며 현행 제9조제1항이 지정한다. 두 후보 및 관내 전체 수도 관련 사업은 수급자·보훈·장애·한부모 등의 사용료 감면으로 제23조의 별개 절차이다. 배수설비 준공을 주민 감면 신청서로 연결하지 않는다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2118241",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21705499",
@@ -47738,7 +47995,15 @@
    "lawId": "2118253",
    "title": "[별제 제1호서식] 포상금 지급신청서(제14조제1항 관련)",
    "format": "hwpx",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "no_matching_site_program",
+    "reason": "전체 원본은 지방보조금 부정수급 신고·고발의 포상금 신청이고 현행 제14조가 신고인/고발인의 지급신청을 규정한다. 후보3개는 축산농가 보조금 사업의 교부신청으로 신청주체·급여 목적이 다르며 관내 전체에서 이 신고포상금 지급사업을 확인하지 못했다. 보조금 관리조례를 공통 인용한다는 이유로 축산지원 신청에 연결하지 않는다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2118253",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21705543",
@@ -47746,7 +48011,15 @@
    "lawId": "2118253",
    "title": "[별제 제3호서식] 포상금 지급결정 이의신청서(제17조제1항 관련)",
    "format": "hwpx",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "no_matching_site_program",
+    "reason": "전체 원본은 신고포상금 지급결정을 받은 뒤 불복하는 이의신청이며 현행 제17조가20일내 별지3 제출을 규정한다. 농가 보조금 교부신청이나 최초 신고·포상금 신청서가 아니다. 후보3개 및 관내 전체에서 이 포상금 불복 절차를 제공하는 사업은 확인되지 않았다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2118253",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21709863",
@@ -47832,7 +48105,18 @@
    "lawId": "2118523",
    "title": "[별지 제1호서식] 저소득주민장학금 신청서",
    "format": "hwp",
-   "state": "pending"
+   "programIds": [
+    "g30200.gov24-367000000121"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "현행 규칙 제2조의 별지1 신청과 상위2169223 제7조제1항제1호의 학업우수 고등학생 장학금을 전체 원본 학생·보장유형·기관장 자격/성적 확인·신청서명과 대조했다. 실제 사업은 수급·차상위 성적우수 고등학생이며 신청서·동의·성적/학생기록부 요구가 일치한다. 원본에 다른 학적유형을 적을 수 있어도 예체능·학교밖·대학입학 등 별도사업으로 확대하지 않는다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2118523",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21710157",
@@ -47840,7 +48124,15 @@
    "lawId": "2118523",
    "title": "[별지 제1호의3서식]대학 입학축하금 지원 신청서",
    "format": "hwpx",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "no_matching_site_program",
+    "reason": "전체 원본은 대학 신입생 입학 사실과 재학증명으로 최초 입학축하금을 신청하는 별지1호의3이며 현행 규칙 제2조·제3조제2항과 상위 제7조제1항제4호에 해당한다. 실제 후보는 성적우수 고등학생 장학금이고 같은 관할 전체 장학·입학 관련 사업에서 대학 입학축하금 자체사업은 확인되지 않았다. 동일 기금이라는 이유로 고교 장학금에 연결하지 않는다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2118523",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21710159",
@@ -47848,7 +48140,18 @@
    "lawId": "2118523",
    "title": "[별지 제1호의2서식] 개인정보 수집·이용 및 제3자 제공 동의서",
    "format": "hwp",
-   "state": "pending"
+   "programIds": [
+    "g30200.gov24-367000000121"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "현행 제2조제1항이 장학금 신청서와 함께 별지1호의2 개인정보 수집·이용·제3자 제공동의서를 제출하도록 명시한다. 전체 원본의 보장자격·학적·성적·이중수혜 확인 및 동의서명이 실제 저소득주민자녀 장학금 사업 documents의 개인정보동의서와 일치한다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2118523",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21710163",
@@ -47856,7 +48159,18 @@
    "lawId": "2118523",
    "title": "[별지 제3호서식] 장학금 지급 청구서",
    "format": "hwp",
-   "state": "pending"
+   "programIds": [
+    "g30200.gov24-367000000121"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "현행 제3조제3·4항은 장학생 최종 선발 통지 후 별지3으로 지급을 청구하도록 명시한다. 전체 원본도 장학생으로 이미 선발되었음을 전제로 수령계좌와 서명을 적게 하여 실제 장학금 사업의 선발 후 지급 절차에 해당한다. 최초 선발 신청서와 구분한다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2118523",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21710165",
@@ -47864,7 +48178,15 @@
    "lawId": "2118523",
    "title": "[별지 제4호서식] 자활자금 신청서",
    "format": "hwp",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "no_matching_site_program",
+    "reason": "전체 원본은 기관·단체의 자활기업 사업자금·이차보전·신용보증 신청이고 현행 제5조 및 상위2169223 제5조제2항·제7조제2항의 자활계정과 일치한다. 실제 후보는 장학계정의 고등학생 장학금이며 같은 관할 전체 사업에서 해당 자활기관 자금지원 사업은 확인되지 않았다. 기관이 신청주체라는 이유로 모두 제외한 것이 아니라 목적·별도 계정·실제 사이트 대상사업을 대조한 결과이다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2118523",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21710173",
@@ -47872,7 +48194,15 @@
    "lawId": "2118523",
    "title": "[별지 제8호서식] 사업(자금용도)변경 신청서",
    "format": "hwp",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "no_matching_site_program",
+    "reason": "전체 원본은 이미 지원받은 자활기관·기업의 사업/자금용도 변경 승인이고 현행 제8조 및 상위2169223 제5조제2항·제7조제2항의 자활계정과 일치한다. 실제 후보는 장학계정의 고등학생 장학금이며 같은 관할 전체 사업에서 해당 자활기관 자금지원 사업은 확인되지 않았다. 기관이 신청주체라는 이유로 모두 제외한 것이 아니라 목적·별도 계정·실제 사이트 대상사업을 대조한 결과이다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2118523",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21710923",
@@ -49212,7 +49542,15 @@
    "lawId": "2123279",
    "title": "[별지 제2호서식]위임장",
    "format": "hwp",
-   "state": "pending"
+   "state": "approved_pending_publication",
+   "review": {
+    "disposition": "approved",
+    "reason": "현행 제6조 단서는 부득이하게 신생아 모·부가 직접 신청하지 못하면 별지2로 권한을 위임하도록 한다. 전체 원본의 산모 위임자·대리인·신청사항 위임·신분/관계 증빙이 실제 문경 산후조리비 사업과 일치한다. 지급대리수령이나 주비용신청서로 분류하지 않는다.",
+    "report": "logs/forms-completion/reviews/team1-batch-058-dispositions.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2123279",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21766313",
@@ -49220,7 +49558,15 @@
    "lawId": "2123241",
    "title": "별지",
    "format": "hwp",
-   "state": "pending"
+   "state": "approved_pending_publication",
+   "review": {
+    "disposition": "approved",
+    "reason": "전체 두 섹션에서 내부1호가 사망한 참전유공자 배우자의 월복지수당 신청/변경,2호가 참전유공자 사망위로금임을 확인했다. 현행 제5조제2·3항과 실제 복합사업의 배우자10만원·사망30만원 및 읍면동 접수와 일치한다. 본인 월참전수당 신규신청 부분은 이 묶음에 없고,2호의 제5조제2항 표기는 이동 전 번호로 현재제3항임을 기록한다.",
+    "report": "logs/forms-completion/reviews/team1-batch-058-dispositions.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2123241",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21766473",
@@ -49228,7 +49574,15 @@
    "lawId": "2123289",
    "title": "(별지 제2호 서식)사망위로금 지급신청서",
    "format": "hwp",
-   "state": "pending"
+   "state": "approved_pending_publication",
+   "review": {
+    "disposition": "approved",
+    "reason": "현행 제9조의5제3항이 보훈예우수당 수급권자 사망위로금30만원에 별지2·1년내 유족 신청을 지정한다. 전체 원본의 수급권자·사망일·유족관계·증빙과 복지로 독립 사망위로금 및 정부24 복합사망 사업의 보훈예우수당 수급권자 부분이 일치한다. 월보훈수당 및 참전유공자 별도 조례 사망유형에는 확대하지 않는다.",
+    "report": "logs/forms-completion/reviews/team1-batch-058-dispositions.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2123289",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21766649",
@@ -49277,7 +49631,15 @@
    "lawId": "2123375",
    "title": "별지 제1호서식 노인 보행기 지원 신청서",
    "format": "hwp",
-   "state": "pending"
+   "state": "approved_pending_publication",
+   "review": {
+    "disposition": "approved",
+    "reason": "현행 제3·6조의 거동불편65세이상 노인과 별지 보행기 신청을 전체 원본 인적사항·성인용보행기·건강/경제/기지원 확인 및 등급외 통보 첨부와 대조했다. 실제 당진 어르신 보행기 사업의 목적·읍면동 접수와 일치한다. 제3조제2·3항의 기타 보행불편자는 진단서/소견서 절차가 있으므로 등급외 결과지가 없는 모든 사람을 제외한다고 보지 않는다.",
+    "report": "logs/forms-completion/reviews/team1-batch-058-dispositions.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2123375",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21768413",
@@ -49285,7 +49647,15 @@
    "lawId": "2123597",
    "title": "[별지 제1호서식]체육센터의 관리운영위탁신청서",
    "format": "hwp",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "non_applicant",
+    "reason": "전체 원본은 비영리법인·단체가 체육센터를 운영수탁하거나 재계약 기간을 연장하는 신청서이며 현행 제12조와 일치한다. 실제 사업의 지원대상과 절차는 월계구민체육센터 이용주민의 요금감면·안내데스크 증빙제시로 기관 운영자 신청과 다르다. 해당 운영수탁 자체 대상사업은 확인되지 않아 주민 서식으로 연결하지 않는다.",
+    "report": "logs/forms-completion/reviews/team1-batch-058-dispositions.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2123597",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21768415",
@@ -49293,7 +49663,15 @@
    "lawId": "2123597",
    "title": "[별지 제2호서식] 체육센터의 관리.운영기간 연장(재계약) 신청서",
    "format": "hwp",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "non_applicant",
+    "reason": "전체 원본은 비영리법인·단체가 체육센터를 운영수탁하거나 재계약 기간을 연장하는 신청서이며 현행 제12조와 일치한다. 실제 사업의 지원대상과 절차는 월계구민체육센터 이용주민의 요금감면·안내데스크 증빙제시로 기관 운영자 신청과 다르다. 해당 운영수탁 자체 대상사업은 확인되지 않아 주민 서식으로 연결하지 않는다.",
+    "report": "logs/forms-completion/reviews/team1-batch-058-dispositions.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2123597",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21769429",
@@ -49301,7 +49679,15 @@
    "lawId": "2123671",
    "title": "[별지 제4호서식] 장학생신청서",
    "format": "hwp",
-   "state": "pending"
+   "state": "approved_pending_publication",
+   "review": {
+    "disposition": "approved",
+    "reason": "현행 제3·4조가 각 향토장학생 유형의 최초 선발신청에 별지4를 지정한다. 전체 원본 보호자·학생·장학생유형·성적/수상/가족 증빙 및 신청인서명이 실제 중고대학생 향토장학금 사업과 일치한다. 붙임7의 개인정보동의 별지9 표기는 현재9호 장학증서와 맞지 않아 별도 실제10·11호 동의서를 구분한다.",
+    "report": "logs/forms-completion/reviews/team1-batch-058-dispositions.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2123671",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21769435",
@@ -49309,7 +49695,15 @@
    "lawId": "2123671",
    "title": "[별지 제7호서식] 장학금지급신청서",
    "format": "hwp",
-   "state": "pending"
+   "state": "approved_pending_publication",
+   "review": {
+    "disposition": "approved",
+    "reason": "현행 제5조는 장학생으로 이미 선발된 학생이 별지7 지급신청서에 별지8 서약서를 갖추어 제출하도록 한다. 전체 원본도 선발되었음을 전제로 지급계좌·학생/보호자 서명과 첨부서약·동의를 요청하여 실제 장학금 사업의 선발 후 지급단계에만 연결한다.",
+    "report": "logs/forms-completion/reviews/team1-batch-058-dispositions.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2123671",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21769437",
@@ -49317,7 +49711,15 @@
    "lawId": "2123671",
    "title": "[별지 제8호서식] 서약서",
    "format": "hwp",
-   "state": "pending"
+   "state": "approved_pending_publication",
+   "review": {
+    "disposition": "approved",
+    "reason": "현행 제5조제1항이 선발후 장학금 지급신청에 별지8 서약서를 명시한다. 전체 원본은 선발된 학생과 보호자의 학업준수 서약이며 일반 기관대장이 아니다. 원본의 타시군 전출 시 지급중지 요약문은 현행 제7조제3호의 학생본인 및 부모 모두 전출 조건과 함께 읽어야 하므로 문구의 적용범위를 담당기관에 확인하도록 조건을 명시한다.",
+    "report": "logs/forms-completion/reviews/team1-batch-058-dispositions.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2123671",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21769441",
@@ -49325,7 +49727,15 @@
    "lawId": "2123671",
    "title": "[별지 제10호서식] 개인정보 수집·이용 동의서",
    "format": "hwp",
-   "state": "pending"
+   "state": "approved_pending_publication",
+   "review": {
+    "disposition": "approved",
+    "reason": "전체 별지10은 향토장학생 선발 접수에 필요한 학생·보호자 정보의 수집이용을 명시한다. 현행 제4조의 선발신청 및 기타 필요자료 제출, 실제 원본 별지4의 동의서 첨부 요구를 대조하여 선발단계용으로 연결한다. 지급 및 한국장학재단 이중지원 조회를 위한 별지11과 구분한다.",
+    "report": "logs/forms-completion/reviews/team1-batch-058-dispositions.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2123671",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21769443",
@@ -49333,7 +49743,15 @@
    "lawId": "2123671",
    "title": "[별지 제11호서식] 개인정보 수집·이용 및 제공 동의서",
    "format": "hwp",
-   "state": "pending"
+   "state": "approved_pending_publication",
+   "review": {
+    "disposition": "approved",
+    "reason": "전체 별지11의 목적은 장학금 지급 및 한국장학재단 이중지원 관리이고 계좌·학번 등 지급정보와 별도의 제3자 동의를 포함한다. 현행 제5조의 선발 후 지급절차 및 실제 별지7 지급신청서의 개인정보제공 동의서 첨부 문구와 대조하여 지급단계에 한정한다.",
+    "report": "logs/forms-completion/reviews/team1-batch-058-dispositions.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2123671",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21770433",
@@ -49601,11 +50019,14 @@
    "lawId": "2096477",
    "title": "[별지 제2호서식] 인구증가 시책 지원 신청서",
    "format": "hwp",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g48310.gov24-537000000128"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "별지2전체의전입대학생·유공기업체두분기와신청인·학교·기숙사전입·계좌·동의를읽었다. 제6조제1항제5호는대학교기숙사전입3개월경과학생,제7조제2항은별지2신청을지정하고사이트128도같은서식·재학증명·통장제출을명시한다. 관할검색에서유공기업체사업은없어학생부분만연결하며임신교통비·할인업체·주택이자등은이별지에없다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2096477",
     "relatedProgramIds": []
@@ -49621,7 +50042,7 @@
    "review": {
     "disposition": "no_matching_site_program",
     "reason": "별지3전체는거제시주관동일회차만남행사참여후3년이내혼인한부부의100만원지역상품권축하금신청이다. 제6조제1항제12호·제7조제2항이정확히지정한다. 같은관할만남행사·결혼성사·인구시책검색에그사업이없고기존신혼전세대출이자는대상·지급목적이다르므로연결하지않는다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2096477",
     "relatedProgramIds": []
@@ -49738,11 +50159,14 @@
    "lawId": "2097893",
    "title": "[별지 제1호서식] 보훈수당지원 신청서",
    "format": "hwp",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g52770.bokjiro-WLF00004200"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "별지1전체는보훈등록·본인계좌·신청서명과국가/참전/유족증을받는월수당신청으로제4조제1항이정한다. 제3조월13만원과추가도수당지원및사이트종합국가보훈관리의월급여에맞으며사망위로금은별지2로분리했다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2097893",
     "relatedProgramIds": []
@@ -49754,11 +50178,14 @@
    "lawId": "2097893",
    "title": "[별지 제2호서식] 국가보훈대상자 사망위로금 지원 신청서",
    "format": "hwp",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g52770.bokjiro-WLF00004200"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "별지2전체는사망자·사망일·유족관계·계좌와서명을받으며제4조제4항이유가족또는유족없는경우장례실시자의신청을정한다. 제3조제3항은사별배우자나유족본인의사망에는지급하지않는다고명시하므로이제한을두어사이트사망위로금20만원분기에연결한다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2097893",
     "relatedProgramIds": []
@@ -50006,7 +50433,15 @@
    "lawId": "2123091",
    "title": "[별지 제2호서식] 순창사랑 상품권 가맹점 등록 신청서",
    "format": "hwp",
-   "state": "pending"
+   "state": "approved_pending_publication",
+   "review": {
+    "disposition": "approved",
+    "reason": "실제 순창사랑상품권 사업은 소비자 캐시백 외 가맹점의 매출증대·홍보 혜택을 명시한다. 전체 원본의 사업자대표·등록정보·서명/동의 또는 환전계좌와 현행 제5조의 가맹점 등록 절차를 대조하여 해당 사업자 사용에 한정했다. 일반 구매자의 할인신청서가 아니며 환전은 실제 거래로 받은 상품권의 정산이다.",
+    "report": "logs/forms-completion/reviews/team1-batch-058-dispositions.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2123091",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21822093",
@@ -50014,7 +50449,15 @@
    "lawId": "2123091",
    "title": "[별지 제5호서식] 순창사랑 상품권 가맹점 등록 변경해지 신청서",
    "format": "hwp",
-   "state": "pending"
+   "state": "approved_pending_publication",
+   "review": {
+    "disposition": "approved",
+    "reason": "실제 순창사랑상품권 사업은 소비자 캐시백 외 가맹점의 매출증대·홍보 혜택을 명시한다. 전체 원본의 사업자대표·등록정보·서명/동의 또는 환전계좌와 현행 제6조의 가맹점 등록 변경·해지 절차를 대조하여 해당 사업자 사용에 한정했다. 일반 구매자의 할인신청서가 아니며 환전은 실제 거래로 받은 상품권의 정산이다.",
+    "report": "logs/forms-completion/reviews/team1-batch-058-dispositions.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2123091",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21822097",
@@ -50022,7 +50465,15 @@
    "lawId": "2123091",
    "title": "[별지 제7호서식] 순창사랑 상품권 환전 청구서",
    "format": "hwp",
-   "state": "pending"
+   "state": "approved_pending_publication",
+   "review": {
+    "disposition": "approved",
+    "reason": "실제 순창사랑상품권 사업은 소비자 캐시백 외 가맹점의 매출증대·홍보 혜택을 명시한다. 전체 원본의 사업자대표·등록정보·서명/동의 또는 환전계좌와 현행 제12조의 판매대금 상품권 환전 절차를 대조하여 해당 사업자 사용에 한정했다. 일반 구매자의 할인신청서가 아니며 환전은 실제 거래로 받은 상품권의 정산이다.",
+    "report": "logs/forms-completion/reviews/team1-batch-058-dispositions.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2123091",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21822239",
@@ -50637,7 +51088,15 @@
    "lawId": "2117737",
    "title": "별지1",
    "format": "hwp",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "no_matching_site_program",
+    "reason": "전체 원본은 급수공사 시행을 위한 신청이며 현행 제2조의 해당 별지와 일치한다. 후보4개 및 같은 관할 전체 수도 관련 사업은 수급자·장애인·다자녀·한부모의 사용요금 감면으로 제20조 별지11 절차이다. 이 일반 시설·수용가 관리 절차를 자격별 감면 신청이나 필수 준비서류로 요구하는 근거는 확인되지 않았다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2117737",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21863427",
@@ -50645,7 +51104,15 @@
    "lawId": "2117737",
    "title": "별지2",
    "format": "hwp",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "non_applicant",
+    "reason": "전체 원본은 현장감독·준공검사 공무원이 공사 준공을 보고하고 서명하는 조서이며 현행 제5조가 관계공무원 작성·시장보고를 명시한다. 실제 주민4개 요금감면 사업의 신청인이 작성하는 서류가 아니다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2117737",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21863429",
@@ -50653,7 +51120,15 @@
    "lawId": "2117737",
    "title": "별지3",
    "format": "hwp",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "non_applicant",
+    "reason": "전체 원본은 상수도 특별회계 관리자가 발급하고 수납은행·맑은물사업소·납부자가 각 보관하는 급수공사비 납부고지·영수필통지·영수증이다. 현행 제7조 공사비 납부용 문서로 자격별 주민요금 감면 신청서가 아니다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2117737",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21863431",
@@ -50661,7 +51136,15 @@
    "lawId": "2117737",
    "title": "별지4",
    "format": "hwp",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "no_matching_site_program",
+    "reason": "전체 원본은 가압시설·흡수정 설치을 위한 신청이며 현행 제8조의 해당 별지와 일치한다. 후보4개 및 같은 관할 전체 수도 관련 사업은 수급자·장애인·다자녀·한부모의 사용요금 감면으로 제20조 별지11 절차이다. 이 일반 시설·수용가 관리 절차를 자격별 감면 신청이나 필수 준비서류로 요구하는 근거는 확인되지 않았다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2117737",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21863433",
@@ -50669,7 +51152,15 @@
    "lawId": "2117737",
    "title": "별지5",
    "format": "hwp",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "no_matching_site_program",
+    "reason": "전체 원본은 계량기의 개전·중지·폐전을 위한 신청이며 현행 제12조의 해당 별지와 일치한다. 후보4개 및 같은 관할 전체 수도 관련 사업은 수급자·장애인·다자녀·한부모의 사용요금 감면으로 제20조 별지11 절차이다. 이 일반 시설·수용가 관리 절차를 자격별 감면 신청이나 필수 준비서류로 요구하는 근거는 확인되지 않았다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2117737",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21863435",
@@ -50677,7 +51168,15 @@
    "lawId": "2117737",
    "title": "별지6",
    "format": "hwp",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "no_matching_site_program",
+    "reason": "전체 원본은 계량기 시험을 위한 신청이며 현행 제16조의 해당 별지와 일치한다. 후보4개 및 같은 관할 전체 수도 관련 사업은 수급자·장애인·다자녀·한부모의 사용요금 감면으로 제20조 별지11 절차이다. 이 일반 시설·수용가 관리 절차를 자격별 감면 신청이나 필수 준비서류로 요구하는 근거는 확인되지 않았다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2117737",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21863437",
@@ -50685,7 +51184,15 @@
    "lawId": "2117737",
    "title": "별지7",
    "format": "hwp",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "no_matching_site_program",
+    "reason": "전체 원본은 고장 계량기의 교체을 위한 신청이며 현행 제16조의 해당 별지와 일치한다. 후보4개 및 같은 관할 전체 수도 관련 사업은 수급자·장애인·다자녀·한부모의 사용요금 감면으로 제20조 별지11 절차이다. 이 일반 시설·수용가 관리 절차를 자격별 감면 신청이나 필수 준비서류로 요구하는 근거는 확인되지 않았다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2117737",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21863439",
@@ -50693,7 +51200,15 @@
    "lawId": "2117737",
    "title": "별지8",
    "format": "hwp",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "no_matching_site_program",
+    "reason": "전체 원본은 수도사용자 명의 변경을 위한 신청이며 현행 제17조의 해당 별지와 일치한다. 후보4개 및 같은 관할 전체 수도 관련 사업은 수급자·장애인·다자녀·한부모의 사용요금 감면으로 제20조 별지11 절차이다. 이 일반 시설·수용가 관리 절차를 자격별 감면 신청이나 필수 준비서류로 요구하는 근거는 확인되지 않았다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2117737",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21863441",
@@ -50701,7 +51216,15 @@
    "lawId": "2117737",
    "title": "별지9",
    "format": "hwp",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "no_matching_site_program",
+    "reason": "전체 원본은 사용 업종 변경을 위한 신청이며 현행 제17조의 해당 별지와 일치한다. 후보4개 및 같은 관할 전체 수도 관련 사업은 수급자·장애인·다자녀·한부모의 사용요금 감면으로 제20조 별지11 절차이다. 이 일반 시설·수용가 관리 절차를 자격별 감면 신청이나 필수 준비서류로 요구하는 근거는 확인되지 않았다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2117737",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21863443",
@@ -50709,7 +51232,15 @@
    "lawId": "2117737",
    "title": "[별지 제10호서식] 수도요금 누수감면 신청서",
    "format": "hwp",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "no_matching_site_program",
+    "reason": "전체 별지10은 누수복구 영수증·전중후 사진을 첨부하여 누수 요금을 감면받는 문서이며 현행 제20조제1호에 해당한다. 같은 관할 실제4개 사업은 자격별10톤 감면이고 누수감면 사업은 확인되지 않았다. 별지11의 수급자·장애·다자녀·한부모 신청서와 혼용하지 않는다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2117737",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21863445",
@@ -50717,7 +51248,21 @@
    "lawId": "2117737",
    "title": "[별지 제11호서식] 수도요금 감면(해지) 신청서",
    "format": "hwp",
-   "state": "pending"
+   "programIds": [
+    "g41610.gov24-554000000113",
+    "g41610.gov24-554000000115",
+    "g41610.gov24-554000000117",
+    "g41610.gov24-554000000120"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "전체 앞뒤면의 생계/의료급여·중증장애·3자녀 이상·한부모/조손가족 선택과 각 증빙·정보동의를 읽었다. 현행 규칙 제20조제2호가 별지11을 지정하고 상위2094015 제36조제1항제4·7·8호의10톤 감면이 실제4사업 대상·혜택과 일치한다. 다른 기관·재난 감면 선택까지 이4사업에 일괄 연결하지 않는다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2117737",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21863447",
@@ -50725,7 +51270,15 @@
    "lawId": "2117737",
    "title": "[별지 제12호서식] 가구분할 수도요금 조정 신청서",
    "format": "hwp",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "no_matching_site_program",
+    "reason": "전체 별지12는 하나의 수도 수용가에 거주하는 독립 가구를 분할하여 요율을 조정하는 문서이며 현행 제20조제3호와 일치한다. 자녀3명인 한 가구에10톤을 감면하는 실제 다자녀 사업과 여러 가구의 분할산정은 다른 절차이다. 같은 관할4개 지원사업의 주신청으로 연결하지 않으며 가구분할 자체사업은 현재 사이트에서 확인되지 않았다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2117737",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21864993",
@@ -51587,7 +52140,15 @@
    "lawId": "2117813",
    "title": "[별지 제3호서식] 배우자복지수당 지급신청서",
    "format": "hwpx",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "no_matching_site_program",
+    "reason": "전체 별지3은2026.3.31 신설된 제5조의3의 사망한 참전유공자 배우자 복지수당 신청이다. 후보4개 및 관내 전체 보훈 관련 사업은 일반 보훈예우수당·명절위문·사망위로금이며 별도 배우자 복지수당 제공은 확인되지 않았다. 제5조의3제2항은 보훈예우수당과 중복금지되는 별도 급여로 정하므로 일반 선순위 유족 문구만으로 확대하지 않는다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2117813",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-21922731",
@@ -52238,11 +52799,14 @@
    "lawId": "2116219",
    "title": "[별지 제1호서식] 대상포진 예방접종 지원 신청서",
    "format": "hwp",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g47250.gov24-511000000128"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "현행 제2·4조는 상주시65세이상 대상포진 지원에 별지1을 접종기관에서 작성하도록 한다. 전체 원본의 신청인·상주주소·기접종여부·동의·보건소/위탁기관 수신과 실제 취약계층 예방접종 복합사업의 대상포진 항목·시보건소/위탁기관 방문이 일치한다. 인플루엔자·백일해는 다른 예방접종이며 별도 도 선택접종 조례만 인용한 수급자 전용 사업의 이 원본 사용 여부는 확인 필요로 남긴다.",
-    "report": "logs/forms-completion/reviews/team1-batch-055-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2116219",
     "relatedProgramIds": []
@@ -52258,7 +52822,7 @@
    "review": {
     "disposition": "non_applicant",
     "reason": "전체 별지2는 접종기관이 접종인원·품목·청구금액·기관계좌로 비용을 정산하는 문서이고 현행 제4조제3·4항이 기관 청구를 규정한다. 실제 두 예방접종 사업의 신청대상은 시민이며 시민은 별지1·예진표를 작성한다. 접종기관이 자체 지원대상인 사업은 확인되지 않아 주민 신청서에 이 비용청구서를 연결하지 않는다.",
-    "report": "logs/forms-completion/reviews/team1-batch-055-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2116219",
     "relatedProgramIds": []
@@ -54142,7 +54706,7 @@
    "review": {
     "disposition": "no_matching_site_program",
     "reason": "전체 원본은 공공하수도 점용자가 장소·기간·면적·공사도면을 제출하는 별지6이고 현행 제3조와 일치한다. 실제 후보 및 같은 관할 관련 사업은 취약계층·다자녀의 하수도요금감면으로 별지15 절차이며 점용허가와 다르다. 이 설치/점용 절차에 대응하는 사이트 사업은 확인되지 않았다.",
-    "report": "logs/forms-completion/reviews/team1-batch-055-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2115827",
     "relatedProgramIds": []
@@ -54154,11 +54718,14 @@
    "lawId": "2115827",
    "title": "[별지 제15호서식] 하수도 감면 신청서",
    "format": "hwp",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g41450.gov24-O00011400001"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "현행 규칙 제11조제2항은 요금감면에 별지15를 지정하고 제1항은 취약계층5톤·다자녀10/15톤을 정한다. 상위 현행1911749 제22조제1항의 수급자·한부모·중증장애·다자녀와 전체 원본 감면기간·감면량·사유·증빙을 실제 사업 대상·감면량·방문신청과 대조했다. 점용료나 부담금 등 원본의 다른 사용처까지 이 주민요금 사업에 확대하지 않는다.",
-    "report": "logs/forms-completion/reviews/team1-batch-055-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2115827",
     "relatedProgramIds": []
@@ -56540,7 +57107,15 @@
    "lawId": "2164327",
    "title": "별지  제1호서식(급수공사신청서)",
    "format": "hwp",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "no_matching_site_program",
+    "reason": "급수관 신설·이설·증설 및 기부채납·타인 설비 사용승낙 서식으로 취약가구 수도사용료 감면이 아니다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22428979",
@@ -56548,7 +57123,15 @@
    "lawId": "2164327",
    "title": "별지 제2호서식(공용급수설비설치신청서)",
    "format": "hwp",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "no_matching_site_program",
+    "reason": "주민 대표가 수익자 부담의 공용급수설비 설치와 공사비 부담을 신청하는 서식이다. 수급자가 포함되어도 가정용 사용료 감면 사업과 다른 시설설치 목적이다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22428981",
@@ -56556,7 +57139,15 @@
    "lawId": "2164327",
    "title": "별지 제3호서식(서약서)",
    "format": "hwp",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "non_applicant",
+    "reason": "지정된 공용급수설비 관리인이 요금 징수·납부·설비보호를 서약하는 기관 관리서류이다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22428991",
@@ -56564,7 +57155,15 @@
    "lawId": "2164327",
    "title": "별지 제7호서식( 급수설비(중지 개전 폐전)신청서)",
    "format": "hwp",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "no_matching_site_program",
+    "reason": "수도시설의 중지·개전·폐전 신고서로 사용료 감면 신청이 아니다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22428993",
@@ -56572,7 +57171,15 @@
    "lawId": "2164327",
    "title": "별지 제8호서식( 수도요금가구분할신청서)",
    "format": "hwp",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "no_matching_site_program",
+    "reason": "한 계량기를 여러 가구·업종이 사용하는 경우 누진요금을 가구수로 분할 적용하는 신청이다. 수급·장애·다자녀 자격별 감면과 다른 계산 절차다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22428995",
@@ -56580,7 +57187,15 @@
    "lawId": "2164327",
    "title": "별지 제9호서식 (수도계량기 시험 청구서)",
    "format": "hwp",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "no_matching_site_program",
+    "reason": "계량기 성능·이상 여부 시험청구로 취약가구 감면과 다른 목적이다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22428997",
@@ -56588,7 +57203,15 @@
    "lawId": "2164327",
    "title": "별지 제10호서식(물의재이용시설요금감면신청서)",
    "format": "hwp",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "no_matching_site_program",
+    "reason": "물 재이용시설의 처리용량·수질·사용계획을 제출하는 시설 사용량 감면신청으로 취약가구 자격 감면이 아니다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22428999",
@@ -56596,7 +57219,15 @@
    "lawId": "2164327",
    "title": "별지 제11호서식(지하누수요금감면신청서)",
    "format": "hwp",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "no_matching_site_program",
+    "reason": "지하 누수 수선일·시공업체·공사사진을 제출하는 누수분 요금 감면이다. 사이트의 가구 자격별 5/10㎥ 감면에 포함되지 않는다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22429001",
@@ -56604,7 +57235,15 @@
    "lawId": "2164327",
    "title": "별지 제12호서식( 수도요금감면신청서(신규 변경 해지))",
    "format": "hwp",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "no_matching_site_program",
+    "reason": "제목은 일반 수도요금 감면이나 실제 본문 선택란은 초·중·고등학교 전용이며 학교 사업자등록증을 제출한다. 제23조⑨·⑩의 학교30% 감면 별지12로 취약가구용 별지14와 구분해야 한다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22429003",
@@ -56612,7 +57251,15 @@
    "lawId": "2164327",
    "title": "별지 제13호서식 (옥내급수관 개량공사비 지원신청서)",
    "format": "hwp",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "no_matching_site_program",
+    "reason": "건물 소유자의 옥내급수관 세척·갱생·교체 공사비 지원신청이다. 취약가구 사용료 감면과 다르고 해당 관할에 이 공사비 사업이 등재되어 있지 않다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22429203",
@@ -56749,7 +57396,18 @@
    "lawId": "2164361",
    "title": "[별지 제1호서식]출산장려금 지원 신청서",
    "format": "hwpx",
-   "state": "pending"
+   "programIds": [
+    "g44250.gov24-558000000112"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "계룡 출생아 순위·출생신고일·양육자·지급계좌를 작성하는 별지1로 조례 제5조③ 및 출산장려금 사업과 일치한다. 잘못된 의료비 법규의 동형 첨부는 별도 승인하지 않는다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22429445",
@@ -56757,7 +57415,18 @@
    "lawId": "2164363",
    "title": "[별지 제1호서식] 계룡시 예방접종 신청서",
    "format": "hwpx",
-   "state": "pending"
+   "programIds": [
+    "g44250.bokjiro-WLF00006175"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "피접종자·보호자의 신청 및 대상포진 선택란, 자격확인 동의를 갖춘 실제 접종신청서이며 제6조가 지정한다. 실제 머리말은 번호 없는 별지서식이고 법규·포털의 별지1과 구분하여 기록한다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22429465",
@@ -56765,7 +57434,15 @@
    "lawId": "2164367",
    "title": "[별지 제1호서식] 수술비 등 의료비 지원 신청서",
    "format": "hwpx",
-   "state": "pending"
+   "state": "requires_external_confirmation",
+   "review": {
+    "disposition": "requires_external_confirmation",
+    "reason": "원본 전체는 수술비 신청이 아니라 출산장려금 신청서이며 출산 조례 ordin-22429439와 바이트 SHA까지 같다. 공식 flSeq168367933를 직접 다시 GET해도 동일 오첨부여서 백내장 수술비 사업에 승인할 수 없다. 실제 수술비 신청서로 된 공식 대체원본이 필요하다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22429813",
@@ -56837,7 +57514,18 @@
    "lawId": "2164389",
    "title": "별지 1~3호 서식",
    "format": "hwp",
-   "state": "pending"
+   "programIds": [
+    "g12810.bokjiro-WLF00003608"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "묶음 별지1~3 전체를 읽었다. 별지1은 산모의 실제 건강관리 이용료·본인부담금·환급계좌를 기재하는 사후 청구이고 제5조가 지정한다. 별지2·3은 관리대장이라 제외한다. 신청서의 구 소득구간(100/120%) 때문에 모든 현행 대상에게 일반 사용하도록 하지 않고 원문에 실제 표시 가능한 대상·서비스에 한정한다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22430213",
@@ -56845,7 +57533,18 @@
    "lawId": "2164453",
    "title": "[별지 제1호서식]국립묘지 안장 장례(이장)비 지급신청서",
    "format": "hwp",
-   "state": "pending"
+   "programIds": [
+    "g12870.gov24-501000000117"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "국가유공자의 국립묘지 안장·이장일과 신청 유족·관계·계좌 및 안장확인서를 제출하는 별지1이다. 후보 밖 신안 통합 참전유공자 지원의 국립묘지 안장 장례비 항목과 제출서류까지 일치한다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22430215",
@@ -56853,7 +57552,19 @@
    "lawId": "2164453",
    "title": "[별지 제2호서식]국가보훈대상자 보훈수당 지급신청서",
    "format": "hwp",
-   "state": "pending"
+   "programIds": [
+    "g12870.bokjiro-WLF00002286",
+    "g12870.gov24-501000000117"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "보훈등록번호·계좌 및 등록증과 개인정보동의를 제출하는 별지2로 제14조①의 보훈수당 최초 신청이다. Bokjiro 보훈수당 및 통합 gov24 사업의 보훈수당 항목과 일치하며 신청 없는 위문품에는 연결하지 않는다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22433121",
@@ -56877,7 +57588,18 @@
    "lawId": "2164739",
    "title": "[별지 제1호서식]출산 서비스 통합처리 신청서(제6조 관련)",
    "format": "hwp",
-   "state": "pending"
+   "programIds": [
+    "g12870.gov24-501000000106"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "전체 출산통합서식의 신안군 출산장려금 순위·출생아·계좌 항목이 제6조 지정 신청서와 일치한다. 별도 전국공통 급여·용품은 연결하지 않는다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22445715",
@@ -56885,7 +57607,15 @@
    "lawId": "2164877",
    "title": "(별지 제1호서식) 자활기금 지원 신청서 및 사업계획서",
    "format": "hwp",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "no_matching_site_program",
+    "reason": "기관·단체 등이 복지증진 사업의 보조기금과 사업계획을 신청하는 별지1이다. 사이트는 개인생활안정자금·자활기업 사업자금의 융자조건을 제시하고 대여를 접수하므로 이 비융자 사업지원서를 연결하지 않는다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22445717",
@@ -56893,7 +57623,18 @@
    "lawId": "2164877",
    "title": "(별지 제2호서식) 자활기금 융자 신청서",
    "format": "hwp",
-   "state": "pending"
+   "programIds": [
+    "g12760.bokjiro-WLF00003904"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "개인이 융자액·전세자금 등 사용계획·5년 상환을 기재하는 별지2로 제2조②의 읍면장 추천에 따른 개인생활안정 융자와 일치한다. 원본에는 폐지된 연대보증인 작성란이 없다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22445719",
@@ -56901,7 +57642,18 @@
    "lawId": "2164877",
    "title": "(별지 제3호서식) 자활기금 융자 신청서(기업)",
    "format": "hwp",
-   "state": "pending"
+   "programIds": [
+    "g12760.bokjiro-WLF00003904"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "자활기업 대표자가 사업자금·상환기간·이율·사업계획을 제출하는 별지3이다. 사이트 사업 자체가 자활기업 사업자금 대여를 포함하므로 기관이라는 이유로 제외하지 않고 기업 신청에 한정해 연결한다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22445907",
@@ -57276,7 +58028,7 @@
    "lawId": "2051771",
    "title": "[별지 제1호서식] 노인 스케일링 본인부담금 지원 신청서",
    "format": "hwp",
-   "state": "replacement_available",
+   "state": "covered_by_existing",
    "review": {
     "disposition": "covered_by_existing",
     "reason": "원본 전체 본문(1499자)을 읽었다. 표제가 '노인 스케일링 본인부담금 지원 신청서(제6조1항 관련)'이고 지원 대상자(성명·연령·성별), 신청자 자격(□의료급여 1종 □의료급여 2종 □차상위본인부담경감대상자 □기준중위소득 130%이하), 주소·전화번호, 신청내용(□건강보험 적용 연 1회 스케일링 또는 후속 처치가 있는 치주 스케일링), 신청자 서명과 지원 대상자와의 관계(대리 신청 시 기재)를 적고 '동구보건소장·OO동장 귀하'로 제출하며, 개인정보·민감정보·고유식별정보 처리 동의와 의료급여·건강보험 자격 확인 조회 동의, 부정수혜 시 환수 동의가 뒤따른다. 즉 접수 관청이 '동구보건소장·OO동장'으로 인쇄된 인천 동구 조례(법규ID 2051771, 조례명 '인천광역시 동구 노인 스케일링 본인부담금 지원에 관한 조례')의 서식이다. 그러나 이 지역(28125)의 실제 사이트 사업은 '인천광역시 제물포구 노인 스케일링 본인부담금 지원사업'(bokjiro-WLF00005339)이며 소관이 제물포구 보건소 건강증진과이고 근거법령이 '인천광역시 제물포구 노인 스케일링 본인부담금 지원에 관한 조례'다. 그 승계 조례(법규ID 2146009)의 별지 제1호서식 원본이 ordin-22497673으로 고정 범위에 실제 제공되어 있고 본문 접수 관청이 '인천광역시 제물포구 보건소장·OO동장'으로 되어 있으며 이미 같은 사업에 연결·게시되어 있다. 두 원본의 기재항목·자격구분·동의문은 같지만 접수 관청 표기와 파일 형식(이 원본 hwp 78336바이트 / 승계본 hwpx 76572바이트)이 다르고 SHA256도 서로 다르므로 바이트 동일성을 주장하지 않는다. 구 명칭만 현행 API 목록에 남아 있는 전신 자치구 서식이므로 승계 자치구 원본으로 이미 충족된 것으로 처리하고, 전신 자치구 표기 서식을 현행 사업에 중복 연결하지 않는다.",
@@ -57284,8 +58036,16 @@
     "fullBodyReviewed": true,
     "evidenceUrl": null,
     "relatedProgramIds": [],
-    "coverageReferences": [],
-    "coveragePublicationConfirmed": false
+    "coverageReferences": [
+     {
+      "formId": "ordin-22497673",
+      "sha256": "e1fd14d25b959f12ba845e4d49c3ed3229b9f14cc6529e38a713f6fdd0070bc5",
+      "programIds": [
+       "g28125.bokjiro-WLF00005339"
+      ]
+     }
+    ],
+    "coveragePublicationConfirmed": true
    }
   },
   {
@@ -57489,7 +58249,15 @@
    "lawId": "2165189",
    "title": "[별제 제1호서식] 산전검사 지원 신청서",
    "format": "hwp",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "no_matching_site_program",
+    "reason": "산모·예비임산부의 산전·초음파·기형선별검사를 의뢰받는 신청서다. 후보의 산모신생아 건강관리 본인부담금·산후조리비와 의료서비스 목적이 다르다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22472923",
@@ -57497,7 +58265,18 @@
    "lawId": "2165189",
    "title": "[별지 제3호서식] 산모신생아 건강관리사 지원 신청서",
    "format": "hwp",
-   "state": "pending"
+   "programIds": [
+    "g44760.bokjiro-WLF00003429"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "서비스 이용 전 산모의 보험료·가구·출산예정·이용기간을 기재하는 별지3이다. 제10조가 지정하며 사업 신청절차도 먼저 건강관리사 신청 후 서비스 이용·환급을 하도록 명시한다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22472925",
@@ -57505,7 +58284,18 @@
    "lawId": "2165189",
    "title": "[별지 제4호서식] 산모신생아 건강관리사(본인부담금) 지원 비용 청구서",
    "format": "hwp",
-   "state": "pending"
+   "programIds": [
+    "g44760.bokjiro-WLF00003429"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "이용자가 본인부담금·이용기간에 대한 제공기관 확인과 본인 계좌를 제출하는 별지4이다. 제13조의 이용자 사후 비용청구와 부여 본인부담금 지원 사업에 일치한다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22472927",
@@ -57513,7 +58303,15 @@
    "lawId": "2165189",
    "title": "[별지 제5호서식] 산모신생아 출산축하 물품지원 신청서",
    "format": "hwp",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "no_matching_site_program",
+    "reason": "출산축하 물품의 현물 배송을 신청하는 별지5이다. 사이트 부여 사업의 출산육아 현금·다태아 축하금·산후조리비와 다른 급부이며 동일 물품사업이 등재되어 있지 않다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22472929",
@@ -57521,7 +58319,18 @@
    "lawId": "2165189",
    "title": "[별지 제6호서식] 산후조리(원) 지원 신청서",
    "format": "hwp",
-   "state": "pending"
+   "programIds": [
+    "g44760.bokjiro-WLF00005868"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "출산부·자녀의 거주와 산후조리 비용·계좌·영수증을 제출하는 별지6이다. 제22조가 지정하며 사이트 산후조리(원)비 실비지원에 일치한다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22473091",
@@ -57561,7 +58370,18 @@
    "lawId": "2165235",
    "title": "[별지 제1호서식] 대상포진 예방접종 신청서",
    "format": "hwp",
-   "state": "pending"
+   "programIds": [
+    "g12780.bokjiro-WLF00004863"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "피접종자·보호자의 대상포진 선택과 정보동의를 갖춘 신청서로 제6조가 보건소·보건지소 접수양식으로 지정한다. 실제 머리말은 번호 없는 별지서식이다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22475799",
@@ -57569,7 +58389,18 @@
    "lawId": "2165203",
    "title": "별지",
    "format": "hwp",
-   "state": "pending"
+   "programIds": [
+    "g11410.gov24-O00023400011"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "별지1~6 전체를 읽고 도서이용·회원증·회원가입·수탁·연장·시설대관을 구분했다. 후보 북스타트는 보호자 온라인 신청이며 이 서식으로 대체하는 근거가 없다. 별도로 확인한 공식 책이요 안내는 정회원증을 필수로 요구하고 회원가입 안내는 본인인증 곤란시 방문 신청서 작성을 허용하므로 묶음 별지3만 책배달 최초 회원자격 준비에 한정한다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22475999",
@@ -57635,7 +58466,18 @@
    "lawId": "2165315",
    "title": "서식2 서울특별시 동대문구 청풍유스호스텔 이용(변경) 신청서",
    "format": "hwp",
-   "state": "pending"
+   "programIds": [
+    "g11230.gov24-O00023100003"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "실제 이용신청서에 감면사항 칸과 감면수혜자 증빙을 명시한다. 규칙 제3조①·제5조와 사업 안내 모두 이용허가 신청시 감면 증빙을 함께 제출하도록 정하므로 청풍유스호스텔 감면 접수에 직접 일치한다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22482145",
@@ -57643,7 +58485,15 @@
    "lawId": "2165319",
    "title": "[별지 제1호서식] 주차장설치비용 융자(보조) 신청서",
    "format": "hwp",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "no_matching_site_program",
+    "reason": "토지·건물 소유자가 담장철거 등 주차장 신설비의 융자·보조를 신청하는 서식이다. 후보는 운전자의 구립주차 요금감면으로 목적이 다르다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22482151",
@@ -57651,7 +58501,15 @@
    "lawId": "2165319",
    "title": "[별지 제4호서식] 주차장설치비용 융자금 상환기간 연장신청서",
    "format": "hwp",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "no_matching_site_program",
+    "reason": "주차장 설치비 융자 채무자가 불가피한 사유로 상환기간을 연장하는 서식이다. 시설 이용료 감면 신청에 해당하지 않는다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22484133",
@@ -57659,7 +58517,18 @@
    "lawId": "2165355",
    "title": "[별지 제1호서식] 화장 장려금 지원 신청서",
    "format": "hwpx",
-   "state": "pending"
+   "programIds": [
+    "g51820.bokjiro-WLF00001789"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "사망·화장내역과 화장장 사용료50% 청구액·계좌를 작성하고 증빙을 첨부하는 별지1이며 강원 고성의 사업·제5·6조와 일치한다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22484227",
@@ -57667,7 +58536,18 @@
    "lawId": "2165403",
    "title": "[별지 제1호서식] 난청 어르신 보청기 구입비 지원 신청서",
    "format": "hwp",
-   "state": "pending"
+   "programIds": [
+    "g51820.bokjiro-WLF00006160"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "보청기 구입 전 난청진단·주소·수급자 자격 확인 및 동의 앞뒤가 있는 별지1이다. 제5조의 신청·지원결정 순서와 고성 노인 보청기 사업에 일치한다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22484229",
@@ -57675,7 +58555,15 @@
    "lawId": "2165403",
    "title": "[별지 제2호서식] 난청 어르신 보청기 지원 대상 확인서",
    "format": "hwp",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "non_applicant",
+    "reason": "군수가 지원대상 선정 결과를 직인으로 통보하는 확인서이다. 신청인이 직접 작성·발급하는 서식이 아니다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22484231",
@@ -57683,7 +58571,18 @@
    "lawId": "2165403",
    "title": "[별지 제3호서식] 난청 어르신 보청기 구입비 지급청구서",
    "format": "hwp",
-   "state": "pending"
+   "programIds": [
+    "g51820.bokjiro-WLF00006160"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "지원결정 후 실제 보청기 제품·구입가격·부담액과 수령계좌를 작성하는 별지3이며 제6조①의 사후 구입비 청구이다. 수급권자 또는 그가 지정한 판매자 수령 선택은 원문에서 명시되어 있다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22484233",
@@ -57691,7 +58590,18 @@
    "lawId": "2165403",
    "title": "[별지 제4호서식] 난처 어르신 보청기 물품확인서",
    "format": "hwp",
-   "state": "pending"
+   "programIds": [
+    "g51820.bokjiro-WLF00006160"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "실제 물품확인서에 지원대상자의 서명과 담당자·확인자의 보청기·착용사진 확인란이 있다. 구입비 청구 시 실제 지급물품을 확인하는 보조서류로 한정하고 담당자 확인란은 신청인이 대신 작성하지 않도록 구분한다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22484267",
@@ -57699,7 +58609,18 @@
    "lawId": "2165409",
    "title": "[별지 제1호서식] 희망택시 이용 신청서(제6조 관련)",
    "format": "hwpx",
-   "state": "pending"
+   "programIds": [
+    "g51820.icare-0083-1489636-1-2-10"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "희망택시 이용자·주소·일반마을 또는 특별대상 구분과 동의가 있는 별지1이며 제6조①·②에 따라 마을대표 또는 특별지원 이용자가 신청한다. 실제 보건복지부 고성 목록2쪽의 농어촌버스 미운행지역 전용 바우처카드 사업과 일치한다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22484269",
@@ -57707,7 +58628,15 @@
    "lawId": "2165409",
    "title": "[별지 제2호서식] 희망택시 운행비용 지원신청서(제7조 관련)",
    "format": "hwpx",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "non_applicant",
+    "reason": "운송사업자·조합이 운행구간·요금·보조금과 기관계좌를 청구하는 별지2이다. 실제 사이트 사업은 주민의 바우처카드 이용이며 운송업체 정산신청을 주민신청서에 붙이지 않는다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22484273",
@@ -57715,7 +58644,18 @@
    "lawId": "2165413",
    "title": "[별지 제1호서식] 참전명예수당 지급신청서",
    "format": "hwpx",
-   "state": "pending"
+   "programIds": [
+    "g51820.bokjiro-WLF00004138"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "참전유공자 본인의 대상구분·계좌와 정보동의를 기재하는 별지1이며 제5조① 및 고성 통합 보훈사업의 참전명예수당 부분과 일치한다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22484275",
@@ -57723,7 +58663,18 @@
    "lawId": "2165413",
    "title": "[별지 제2호서식] 참전유공자 사망위로금 지급신청서",
    "format": "hwpx",
-   "state": "pending"
+   "programIds": [
+    "g51820.bokjiro-WLF00004138"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "참전유공자 사망정보·유족관계·계좌를 기재하는 별지2이며 정확 출처인 참전 조례 제6조가 지정한다. 일반 국가보훈 조례에 잘못 붙은 별도22583083 원본과 구분하여 이 정확 출처를 승인한다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22484277",
@@ -57731,7 +58682,18 @@
    "lawId": "2165413",
    "title": "[별지 제5호서식] 참전유공자 배우자복지수당 지급신청서",
    "format": "hwpx",
-   "state": "pending"
+   "programIds": [
+    "g51820.bokjiro-WLF00004138"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "사망 참전유공자 이름·참전번호 및 배우자 계좌를 작성하는 별지5로 제5조⑤의 배우자 복지수당 신청과 일치한다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22484511",
@@ -57739,7 +58701,18 @@
    "lawId": "2165425",
    "title": "[별지 제2호서식] 사망위로금 지급신청서",
    "format": "hwp",
-   "state": "pending"
+   "programIds": [
+    "g47250.gov24-511000000143"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "사망 국가보훈대상자의 유형·사망확인 및 유족 관계·계좌를 작성하는 별지2이다. 후보 밖 상주 통합 사망위로금 사업의 국가보훈대상자 부분과 현행 제7조의4가 일치한다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22484513",
@@ -57747,7 +58720,18 @@
    "lawId": "2165427",
    "title": "[별지 제1호서식] 참전유공자 명예수당신청서(변경신고서)",
    "format": "hwp",
-   "state": "pending"
+   "programIds": [
+    "g47250.gov24-511000000145"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "별지1은 참전본인 수당과 사망참전 배우자 복지수당의 구분·신청/변경을 함께 포함한다. 사이트에서 실제 찾은 배우자 복지수당 사업에는 배우자 항목만 연결한다. 별도 참전본인 월수당 사업은 관할 전체목록에 없다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22484515",
@@ -57755,7 +58739,18 @@
    "lawId": "2165427",
    "title": "[별지 제2호서식] 참전유공자 사망위로금 지급신청서",
    "format": "hwp",
-   "state": "pending"
+   "programIds": [
+    "g47250.gov24-511000000143"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "참전유공자의 사망·참전증·유족관계 및 계좌를 제출하는 별지2로 상주 통합사망위로금의 참전 대상 부분과 일치한다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22496765",
@@ -57819,7 +58814,18 @@
    "lawId": "2165511",
    "title": "[별지 제3호서식] 원주사랑상품권 가맹점 지정 신청서",
    "format": "hwp",
-   "state": "pending"
+   "programIds": [
+    "g51130.gov24-419000000129"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "가맹점 대표자가 등록·변경·해지·임시가맹을 신청하고 사업자증명·결제계좌 및 개인정보동의를 제출하는 별지3이다. 사이트 사업 혜택에 가맹점의 모바일 결제 수수료절감이 명시되어 있어 실제 가맹점 신청 범위로 한정한다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22498207",
@@ -57827,7 +58833,15 @@
    "lawId": "2165511",
    "title": "[별지 제10호서식] 원주사랑상품권 환전 청구서",
    "format": "hwp",
-   "state": "pending"
+   "state": "requires_external_confirmation",
+   "review": {
+    "disposition": "requires_external_confirmation",
+    "reason": "가맹점이 종이상품권 권종별 매수·금액을 판매대행점에 환전하는 별지10이다. 현재 사업·원주시 구매안내는 모바일/카드 및 앱충전만 설명하여 지류 정산이 현재도 접수되는지 확인이 필요하다. 법규상 첨부 존재만으로 현재 모바일정산에 이 종이환전서를 연결하지 않는다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22498211",
@@ -57835,7 +58849,15 @@
    "lawId": "2165511",
    "title": "[별지 제12호서식] 원주사랑상품권 현금할인구매 신청서",
    "format": "hwp",
-   "state": "pending"
+   "state": "requires_external_confirmation",
+   "review": {
+    "disposition": "requires_external_confirmation",
+    "reason": "2천·3천·5천·1만·5만원 종이권 매수를 기재하는 현금할인구매서이다. 현재 공식안내는 오프라인에서도 앱가입 후 모바일 충전을 정하며 지류 할인판매 지속 여부가 확인되지 않았다. 제10조④도 카드충전에는 작성하지 않을 수 있다고 구분하므로 현행 지류판매 확인 후에만 연결 가능하다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22499411",
@@ -58280,7 +59302,18 @@
    "lawId": "2166375",
    "title": "[별지 제2호서식] 의사상자 특별위로금등 지급 신청서",
    "format": "hwp",
-   "state": "pending"
+   "programIds": [
+    "s41000.gov24-641000000177"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "의사자유족·의상자의 특별위로금·수당·명절위문·등급변경 선택, 금액·신원·계좌 및 개인정보동의 앞뒤를 갖춘 별지2이다. 제6조와 경기도 의사상자 지원사업에 일치하며 인쇄 월10·8·6·4만원도 현재 공식 별표2를 직접 내려받아 전체 대조하였다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22522499",
@@ -58288,7 +59321,18 @@
    "lawId": "2166375",
    "title": "[별지 제3호서식] 의사상자 특별위로금등 대리수령 신청서",
    "format": "hwp",
-   "state": "pending"
+   "programIds": [
+    "s41000.gov24-641000000177"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "후견·금전채권압류·치매나 거동불가로 본인계좌 개설이 어려울 때 대리수령인 계좌지급을 신청하는 별지3이다. 현행 제7조①·②가 배우자·직계혈족·3촌내방계혈족과 사유증빙을 명시하므로 일반위임장과 구분한 application이다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22522837",
@@ -58703,7 +59747,18 @@
    "lawId": "2117073",
    "title": "[별지 제3호서식]차상위계층 산후조리경비 지원 신청서",
    "format": "hwp",
-   "state": "pending"
+   "programIds": [
+    "g51230.bokjiro-WLF00006711"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "현행 제3조제5호가 산후조리경비70만원을 정하고 전체 별지3은 차상위 산모·출생자·지출영수증·계좌·본인/대리신청을 명시한다. 실제 산후조리경비 사업의 차상위가구·최대70만원 실비·읍면동 접수·서식일체 안내와 일치한다. 일반 행복돌봄과 이사비 사업에는 산후 항목을 확인하지 못해 확대하지 않는다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2117073",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22527057",
@@ -58711,7 +59766,15 @@
    "lawId": "2117073",
    "title": "[별지 제4호서식]행복 돌봄 간병비 비용 청구서",
    "format": "hwp",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "non_applicant",
+    "reason": "전체 원본의 청구인·지급계좌·사업자등록증은 간병업체 또는 의료·주거·연료 제공기관의 대표자 비용정산이다. 현행 제3조의 급부 및 제4·5조의 주민 신청·지급 절차와 대조했다. 실제 세 사업 모두 저소득 주민·산모·수급자 가구가 대상이고 업체 자체 보조사업은 확인되지 않는다. 주민은 별지1 등의 지원신청을 하므로 이 공급자 청구서를 시민 신청서로 연결하지 않는다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2117073",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22527059",
@@ -58719,7 +59782,15 @@
    "lawId": "2117073",
    "title": "[별지 제5호서식] 행복 돌봄(의료, 주거, 월동대책비) 비용 청구서",
    "format": "hwp",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "non_applicant",
+    "reason": "전체 원본의 청구인·지급계좌·사업자등록증은 간병업체 또는 의료·주거·연료 제공기관의 대표자 비용정산이다. 현행 제3조의 급부 및 제4·5조의 주민 신청·지급 절차와 대조했다. 실제 세 사업 모두 저소득 주민·산모·수급자 가구가 대상이고 업체 자체 보조사업은 확인되지 않는다. 주민은 별지1 등의 지원신청을 하므로 이 공급자 청구서를 시민 신청서로 연결하지 않는다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2117073",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22531191",
@@ -58916,7 +59987,7 @@
    "review": {
     "disposition": "no_matching_site_program",
     "reason": "별지1전체를읽었으나실제사용시설선택란은강당·야외무대이고행사계획서를첨부한다. 제8조는일반시설사용허가,제11조제2항은감면별지3을따로정한다. 사이트650000001143은객실숙박사용료50/30/10%감면만안내하며이행사장대관양식은객실신청란도없다. 같은관할에코촌·유스호스텔검색에도강당/야외무대대관혜택사업이없어같은시설명만으로연결하지않는다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2096581",
     "relatedProgramIds": []
@@ -59092,7 +60163,15 @@
    "lawId": "2166829",
    "title": "[별지 제2호서식] 지방보조금이 지원된 부동산 증명서",
    "format": "hwp",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "non_applicant",
+    "reason": "군수가 보조금 지원 부동산임을 직인으로 증명하여 등기소에 제출하는 문서다. 신청인이 자체 작성하는 보조금 신청서도 아니고 농산물 택배비 지원과 관련된 부동산이 아니다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22566615",
@@ -59100,7 +60179,15 @@
    "lawId": "2166829",
    "title": "[별지 제3호서식] 부기등기 말소 대상 부동산 증명서",
    "format": "hwp",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "non_applicant",
+    "reason": "군수가 부기등기 말소대상임을 증명하는 발급문서로 주민의 지원신청서가 아니다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22566617",
@@ -59108,7 +60195,15 @@
    "lawId": "2166829",
    "title": "[별지 제4호서식] 포상금 지급신청서",
    "format": "hwp",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "no_matching_site_program",
+    "reason": "보조금 부정수급을 신고·고발한 사람이 신고포상금을 청구하는 서식이다. 농산물 택배비 수혜신청과 구분되며 해당 관할에 이 포상금 사업이 등재되지 않았다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22566625",
@@ -59116,7 +60211,15 @@
    "lawId": "2166829",
    "title": "[별지 제8호서식] 포상금 결정 이의신청서",
    "format": "hwp",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "no_matching_site_program",
+    "reason": "신고포상금 지급결정에 대한 이의신청서로 농산물 택배비 보조사업 신청·이의와 다르다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22566651",
@@ -59124,7 +60227,18 @@
    "lawId": "2166847",
    "title": "[별지 제2호 서식] 참전유공자 사망위로금 지급 신청서",
    "format": "hwp",
-   "state": "pending"
+   "programIds": [
+    "g47920.bokjiro-WLF00000269"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "참전유공자의 사망일·유족 관계·계좌 및 확인서류를 기재하는 별지2로 제9조③과 봉화 사업의 사망위로금30만원 부분에 일치한다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22566665",
@@ -59772,7 +60886,18 @@
    "lawId": "2165359",
    "title": "[별지 제1호서식] 보훈명예수당 지급신청서",
    "format": "hwpx",
-   "state": "pending"
+   "programIds": [
+    "g51820.bokjiro-WLF00004138"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "보훈 지급대상유형·인적정보·계좌를 작성하는 별지1이며 제9조①과 통합 보훈수당 사업의 국가보훈수당에 일치한다. 참전수당과 자동 명절위문품은 별도다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22583083",
@@ -59780,7 +60905,15 @@
    "lawId": "2165359",
    "title": "[별지 제2호서식] 국가보훈대상자 사망위로금 지급신청서",
    "format": "hwpx",
-   "state": "pending"
+   "state": "requires_external_confirmation",
+   "review": {
+    "disposition": "requires_external_confirmation",
+    "reason": "공식 메타데이터는 국가보훈대상자 사망위로금이나 실제 전체 원본은 참전유공자 조례·참전 대상자·참전유공자와의 관계를 인쇄한다. 본 법규의 일반 국가보훈대상자 유족에게 그대로 사용하면 범위가 좁아져 잘못 안내할 수 있다. 정확한 일반 보훈 사망위로금 원본 확인이 필요하다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22588059",
@@ -60657,11 +61790,15 @@
    "lawId": "2097811",
    "title": "별지 제1호서식(출산서비스 통합처리 신청서)",
    "format": "hwp",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g43760.gov24-446000000120",
+    "g43760.gov24-446000000130"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "3쪽6175자전체의괴산전용출산장려금·산후조리비·출산육아수당과전국서비스,계좌·서명·정보동의를읽었다. 현행제5조제2항제1·4호는출산장려금과산후조리비에별지1을직접지정하고사이트두사업도통합신청서를요구한다. 각지역급여항목에한정하며산모신생아서비스환급·기저귀확대는같은조문이별도서식을정하므로전용하지않는다. 부칙의2026이전출생종전규정유지도기록했다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2097811",
     "relatedProgramIds": []
@@ -60677,7 +61814,7 @@
    "review": {
     "disposition": "no_matching_site_program",
     "reason": "현행본문과직전1803565(2023-04-21,stable2228854)전문10조·부칙을추가완독했다. 직전제5조제2항제1호는개별2호를지정하고현행2025-12-26부칙은2026이전출생아에종전규정을유지한다. 직전원본22621817/flSeq169393275도공식다운로드·전체판독하여현재22622219와바이트SHA4163cd16febe97f1b888a8007e461268c00ab9900ac0adf8facaa5727c96d13d가동일함을확인했다. 따라서폐지양식으로단정하지않는다. 다만사이트446000000120은2026-01-01이후출생아800/1700/3700만원제도만명시하고현행1호를요구한다. 이전별표의1200/1200/5000만원체계·이전출생아사업은사이트에없어연결하지않는다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2097811",
     "relatedProgramIds": []
@@ -60689,11 +61826,14 @@
    "lawId": "2097811",
    "title": "별지 제3호서식(  출산장려금 지원 확인서)",
    "format": "hwp",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g43760.gov24-446000000120"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "별지3전체는부모·신생아·주소·출생순위·계좌와신청인서명을받고담당자가거주·지원자격을확인하는후속서류다. 현행제5조제2항제1호가이확인서를지정하고사이트120은2회차이상에지원확인서·통장사본을제출한다고명시한다. 단순기관발급증서로오인하지않고신청인작성및기관확인란을구분해계속지급단계에연결한다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2097811",
     "relatedProgramIds": []
@@ -60705,11 +61845,15 @@
    "lawId": "2097811",
    "title": "별지 제5호서식(  산모ㆍ신생아 건강관리사 지원 본인부담금 청구서)",
    "format": "hwp",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g43760.bokjiro-WLF00004468",
+    "g43760.gov24-446000000117"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "별지5전체는산모·서비스기관·이용기간·본인부담발생액에서10%를공제한90%청구금액·본인계좌와서명을받는다. 제5조제2항제3호는종료후3개월내별지5및통장,산모본인계좌를직접정한다. 두사이트의건강관리사본인부담90%환급·납입영수증·통장서류와정확히맞으며단순산후조리비일시금과다르다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2097811",
     "relatedProgramIds": []
@@ -60721,11 +61865,14 @@
    "lawId": "2097811",
    "title": "별지 제7호서식(산후조리비 지원 신청서)",
    "format": "hwp",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g43760.gov24-446000000130"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "현행전체본문·부칙과직전1803565(2023-04-21,동일stable2228854)전문10조·부칙을완독했다. 직전제5조제2항제4호는산후조리비에별지7을지정하며제1항신청기한1년,제4조제4항부또는모12개월거주를정하고실제별표100만원도공식원본을다운로드해확인했다. 현행부칙은2026이전출생아에종전규정을유지하므로2025년말출생아등아직종전기한이남은경우에한정해사용가능하다. 직전원본22621867/flSeq169393285의전체HWP가현재22622269와SHA3a695e805b4429bcddec95bab5a2292fd207db7a8d87eb2b413296c6c480571c까지동일하다. 사이트130은출생연도제한없이같은거주요건·산모100만원을명시하므로이경과대상분기만조건부연결한다. 2026이후출생은현행통합1호를사용한다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2097811",
     "relatedProgramIds": []
@@ -60794,7 +61941,18 @@
    "lawId": "2166267",
    "title": "[별지 제2호서식] 보은군 청소년 꿈키움바우처 (재)발급 위임장",
    "format": "hwp",
-   "state": "pending"
+   "programIds": [
+    "g43720.bokjiro-WLF00006449"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "청소년·보호자 또는 시설대표자·수임자의 신원과 위임을 작성하는 실제 위임장으로 제5조①5가 대리신청 시 별지2를 요구한다. 청소년 바우처 사업의 발급·재발급 대리에만 사용한다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22625509",
@@ -60802,7 +61960,15 @@
    "lawId": "2166267",
    "title": "[별지 제3호서식] 보은군 청소년 꿈키움 바우처 가맹점 [지정, 변경, 해지) 신청서",
    "format": "hwp",
-   "state": "pending"
+   "state": "reviewed_not_linked",
+   "review": {
+    "disposition": "non_applicant",
+    "reason": "사업자가 바우처 가맹점·매출입금계좌·카드단말기를 등록·변경·해지하는 서식이다. 사이트 지원대상은 청소년 전용카드 수급자이므로 업체서식을 붙이지 않는다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22625599",
@@ -60909,11 +62075,15 @@
    "lawId": "2097787",
    "title": "별지 제1호서식(참전유공자 명예수당, 보훈생활보조수당 지급 신청서)",
    "format": "hwp",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g43760.bokjiro-WLF00000152",
+    "g43760.gov24-446000000115"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "별지1전체는참전본인이명예수당또는생활보조수당중선택하고등록증·계좌·서명을제출한다. 제2조제1호참전본인과제5조제1항별지1이사이트참전명예수당부분에맞는다. 추가관할검색의gov115도참전본인을명시한다. 두사업에는기초·차상위특례생활보조수당이별도명시되지않아그선택은제외한다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2097787",
     "relatedProgramIds": []
@@ -60925,11 +62095,15 @@
    "lawId": "2097787",
    "title": "별지 제2호서식(유족명예수당. 보훈생활보조수당 지급 신청서)",
    "format": "hwp",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g43760.bokjiro-WLF00000152",
+    "g43760.gov24-446000000115"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "별지2전체는유족관계·계좌·등록증·가족관계와서명을받으며제2조제2호는전몰군경수권유족및사망참전배우자,제5조제1항은별지2로정한다. Bokjiro사업은배우자월28만원부분만,gov115는전몰군경선순위및배우자모두를명시해그범위로구분한다. 생활보조수당특례는두사이트별도명시가없어제외한다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2097787",
     "relatedProgramIds": []
@@ -60941,11 +62115,15 @@
    "lawId": "2097787",
    "title": "별지 제3호서식(참전유공자 사망위로금 지급신청서)",
    "format": "hwp",
-   "state": "approved_pending_publication",
+   "programIds": [
+    "g43760.bokjiro-WLF00000152",
+    "g43760.gov24-446000000115"
+   ],
+   "state": "linked",
    "review": {
     "disposition": "approved",
     "reason": "별지3전체는사망참전유공자와청구유족의관계·사망일·가족관계·계좌·서명을받고제5조제4항의사망일부터1년이내신청에맞는다. 두사이트가참전사망위로금및대상을명시하며제3조제3호30만원급여와동일하다.",
-    "report": "logs/forms-completion/reviews/team2-batch-050-dispositions.json",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2050.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2097787",
     "relatedProgramIds": []
@@ -63335,7 +64513,20 @@
    "lawId": "2165325",
    "title": "[별지 제1호서식] 출산서비스 통합처리 신청서",
    "format": "hwpx",
-   "state": "pending"
+   "programIds": [
+    "g11320.bokjiro-WLF00005587",
+    "g11320.gov24-309000000132",
+    "g11320.gov24-309000000282"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "전체3면을 읽었으며 도봉 자체서비스 출생축하용품 수령지와 장애인가정 출산지원금 선택·대상자·장애유형란이 해당 사업과 일치한다. 규칙 제3·4조는 출산통합서식을 지정하고, 장애인가정 급여의 별도 조례 제5·6조도 출생신고 시 지원대상 안내·신청을 정한다. 전국급여·서울시 온라인 전용·사이트에 없는 보험/양육 급여는 제외한다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": null,
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22791751",
@@ -63963,7 +65154,18 @@
    "lawId": "2118347",
    "title": "[별지 제3호서식] 청양사랑상품권 가맹점 등록 신청서",
    "format": "hwp",
-   "state": "pending"
+   "programIds": [
+    "g44790.gov24-459000000132"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "실제 청양사랑상품권 사업 benefit은 소비자 할인 외 가맹점의 매출증대·가맹점 안내 홍보 효과를 명시한다. 전체 원본의 사업자·대표자·등록정보·서명 또는 매출 회수대금 항목과 현행 제10조의 가맹점 등록 절차를 대조하여 해당 가맹점 대표자의 사용에 한정한다. 소비자 할인구매용으로 표시하지 않으며 환전은 실제 판매·용역 대가로 받은 상품권에 한정한다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2118347",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22870571",
@@ -63971,7 +65173,18 @@
    "lawId": "2118347",
    "title": "[별지 제5호서식] 청양사랑상품권 가맹점 등록변경 신청서",
    "format": "hwp",
-   "state": "pending"
+   "programIds": [
+    "g44790.gov24-459000000132"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "실제 청양사랑상품권 사업 benefit은 소비자 할인 외 가맹점의 매출증대·가맹점 안내 홍보 효과를 명시한다. 전체 원본의 사업자·대표자·등록정보·서명 또는 매출 회수대금 항목과 현행 제10조의 가맹점 등록사항 변경 절차를 대조하여 해당 가맹점 대표자의 사용에 한정한다. 소비자 할인구매용으로 표시하지 않으며 환전은 실제 판매·용역 대가로 받은 상품권에 한정한다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2118347",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22870573",
@@ -63979,7 +65192,18 @@
    "lawId": "2118347",
    "title": "[별지 제6호서식] 청양사랑상품권 가맹점 등록해지 신청서",
    "format": "hwp",
-   "state": "pending"
+   "programIds": [
+    "g44790.gov24-459000000132"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "실제 청양사랑상품권 사업 benefit은 소비자 할인 외 가맹점의 매출증대·가맹점 안내 홍보 효과를 명시한다. 전체 원본의 사업자·대표자·등록정보·서명 또는 매출 회수대금 항목과 현행 제10조의 가맹점 등록 해지 절차를 대조하여 해당 가맹점 대표자의 사용에 한정한다. 소비자 할인구매용으로 표시하지 않으며 환전은 실제 판매·용역 대가로 받은 상품권에 한정한다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2118347",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22870575",
@@ -63987,7 +65211,18 @@
    "lawId": "2118347",
    "title": "[별지 제7호서식] 청양사랑상품권 회수대금 청구서",
    "format": "hwp",
-   "state": "pending"
+   "programIds": [
+    "g44790.gov24-459000000132"
+   ],
+   "state": "linked",
+   "review": {
+    "disposition": "approved",
+    "reason": "실제 청양사랑상품권 사업 benefit은 소비자 할인 외 가맹점의 매출증대·가맹점 안내 홍보 효과를 명시한다. 전체 원본의 사업자·대표자·등록정보·서명 또는 매출 회수대금 항목과 현행 제15조의 판매로 받은 상품권의 환전대금 청구 절차를 대조하여 해당 가맹점 대표자의 사용에 한정한다. 소비자 할인구매용으로 표시하지 않으며 환전은 실제 판매·용역 대가로 받은 상품권에 한정한다.",
+    "report": "pipeline/forms/reviews/unmatched-dispositions-round1055.json",
+    "fullBodyReviewed": true,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2118347",
+    "relatedProgramIds": []
+   }
   },
   {
    "formId": "ordin-22873005",

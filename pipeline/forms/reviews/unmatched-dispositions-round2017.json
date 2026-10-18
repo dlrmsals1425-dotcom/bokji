@@ -2,7 +2,7 @@
   "schema": 1,
   "team": 2,
   "batchId": "batch-017",
-  "checkedAt": "2026-10-18",
+  "checkedAt": "2026-10-19",
   "scopeSha256": "96adfd066e38ba6ff99e37f1b3a8154c20262e3d0de528cd406f57f794d5a522",
   "status": "complete",
   "items": [
@@ -77,7 +77,14 @@
         ],
         "basis": "Full same-jurisdiction corpus name/summary/benefit search; hits alone are not approvals."
       },
-      "approvedAssociations": []
+      "approvedAssociations": [],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1814993",
+        "binding": "bound",
+        "officialFlSeq": "134575673"
+      }
     },
     {
       "index": 1,
@@ -182,7 +189,14 @@
             "창원시 다자녀(셋째아이상)가구 전세자금 이자 지원"
           ]
         }
-      ]
+      ],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1815063",
+        "binding": "bound",
+        "officialFlSeq": "167482417"
+      }
     },
     {
       "index": 2,
@@ -272,7 +286,14 @@
             "창원시 다자녀(셋째아이상)가구 전세자금 이자 지원"
           ]
         }
-      ]
+      ],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1815063",
+        "binding": "bound",
+        "officialFlSeq": "167482459"
+      }
     },
     {
       "index": 3,
@@ -343,7 +364,14 @@
         ],
         "basis": "Full same-jurisdiction corpus name/summary/benefit search; hits alone are not approvals."
       },
-      "approvedAssociations": []
+      "approvedAssociations": [],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1815133",
+        "binding": "bound",
+        "officialFlSeq": "167482471"
+      }
     },
     {
       "index": 4,
@@ -407,7 +435,14 @@
       "excludedParts": [],
       "role": "administrative",
       "regionSearch": {},
-      "approvedAssociations": []
+      "approvedAssociations": [],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1815133",
+        "binding": "bound",
+        "officialFlSeq": "167482477"
+      }
     },
     {
       "index": 5,
@@ -471,7 +506,14 @@
       "excludedParts": [],
       "role": "administrative",
       "regionSearch": {},
-      "approvedAssociations": []
+      "approvedAssociations": [],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1815133",
+        "binding": "bound",
+        "officialFlSeq": "167482479"
+      }
     },
     {
       "index": 6,
@@ -542,7 +584,14 @@
         ],
         "basis": "Full same-jurisdiction corpus name/summary/benefit search; hits alone are not approvals."
       },
-      "approvedAssociations": []
+      "approvedAssociations": [],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1815133",
+        "binding": "bound",
+        "officialFlSeq": "167482481"
+      }
     },
     {
       "index": 7,
@@ -606,7 +655,14 @@
       "excludedParts": [],
       "role": "application",
       "regionSearch": {},
-      "approvedAssociations": []
+      "approvedAssociations": [],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1815133",
+        "binding": "bound",
+        "officialFlSeq": "167482483"
+      }
     },
     {
       "index": 8,
@@ -670,7 +726,14 @@
       "excludedParts": [],
       "role": "administrative",
       "regionSearch": {},
-      "approvedAssociations": []
+      "approvedAssociations": [],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1815133",
+        "binding": "bound",
+        "officialFlSeq": "167482485"
+      }
     },
     {
       "index": 9,
@@ -734,7 +797,14 @@
       "excludedParts": [],
       "role": "administrative",
       "regionSearch": {},
-      "approvedAssociations": []
+      "approvedAssociations": [],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1815133",
+        "binding": "bound",
+        "officialFlSeq": "167482487"
+      }
     },
     {
       "index": 10,
@@ -807,7 +877,14 @@
         ],
         "basis": "Full same-jurisdiction corpus name/summary/benefit search; hits alone are not approvals."
       },
-      "approvedAssociations": []
+      "approvedAssociations": [],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1815153",
+        "binding": "bound",
+        "officialFlSeq": "128703909"
+      }
     },
     {
       "index": 11,
@@ -894,7 +971,14 @@
             "시흥시 관내 대학생 지원금"
           ]
         }
-      ]
+      ],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1815271",
+        "binding": "bound",
+        "officialFlSeq": "169360427"
+      }
     },
     {
       "index": 12,
@@ -974,7 +1058,14 @@
         ],
         "basis": "Full same-jurisdiction corpus name/summary/benefit search; hits alone are not approvals."
       },
-      "approvedAssociations": []
+      "approvedAssociations": [],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1816561",
+        "binding": "bound",
+        "officialFlSeq": "160473231"
+      }
     },
     {
       "index": 13,
@@ -1109,7 +1200,14 @@
             "장수노인 지원"
           ]
         }
-      ]
+      ],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1816591",
+        "binding": "bound",
+        "officialFlSeq": "142450131"
+      }
     },
     {
       "index": 14,
@@ -1185,7 +1283,14 @@
         ],
         "basis": "Full same-jurisdiction corpus name/summary/benefit search; hits alone are not approvals."
       },
-      "approvedAssociations": []
+      "approvedAssociations": [],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1818051",
+        "binding": "bound",
+        "officialFlSeq": "152942227"
+      }
     },
     {
       "index": 15,
@@ -1252,7 +1357,14 @@
       "excludedParts": [],
       "role": "delegation",
       "regionSearch": {},
-      "approvedAssociations": []
+      "approvedAssociations": [],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1818051",
+        "binding": "bound",
+        "officialFlSeq": "152942229"
+      }
     },
     {
       "index": 16,
@@ -1345,7 +1457,14 @@
             "효행수당"
           ]
         }
-      ]
+      ],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1818111",
+        "binding": "bound",
+        "officialFlSeq": "152035735"
+      }
     },
     {
       "index": 17,
@@ -1465,7 +1584,14 @@
             "산후 건강관리 지원"
           ]
         }
-      ]
+      ],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1818673",
+        "binding": "bound",
+        "officialFlSeq": "143582659"
+      }
     },
     {
       "index": 18,
@@ -1570,7 +1696,14 @@
             "산모·신생아 건강관리 본인부담금 지원"
           ]
         }
-      ]
+      ],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1818673",
+        "binding": "bound",
+        "officialFlSeq": "143582661"
+      }
     },
     {
       "index": 19,
@@ -1654,7 +1787,14 @@
             "장수수당"
           ]
         }
-      ]
+      ],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1818697",
+        "binding": "bound",
+        "officialFlSeq": "143519275"
+      }
     },
     {
       "index": 20,
@@ -1733,7 +1873,14 @@
         ],
         "basis": "Full same-jurisdiction corpus name/summary/benefit search; hits alone are not approvals."
       },
-      "approvedAssociations": []
+      "approvedAssociations": [],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1818759",
+        "binding": "bound",
+        "officialFlSeq": "143406205"
+      }
     },
     {
       "index": 21,
@@ -1819,7 +1966,14 @@
             "해난어업인 생활안정비 지급"
           ]
         }
-      ]
+      ],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1818759",
+        "binding": "bound",
+        "officialFlSeq": "143406207"
+      }
     },
     {
       "index": 22,
@@ -1892,7 +2046,14 @@
         ],
         "basis": "Full same-jurisdiction corpus name/summary/benefit search; hits alone are not approvals."
       },
-      "approvedAssociations": []
+      "approvedAssociations": [],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1818759",
+        "binding": "bound",
+        "officialFlSeq": "143406209"
+      }
     },
     {
       "index": 23,
@@ -1976,7 +2137,14 @@
         ],
         "basis": "Full same-jurisdiction corpus name/summary/benefit search; hits alone are not approvals."
       },
-      "approvedAssociations": []
+      "approvedAssociations": [],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1820309",
+        "binding": "bound",
+        "officialFlSeq": "152035771"
+      }
     },
     {
       "index": 24,
@@ -2062,7 +2230,14 @@
             "어르신 공경봉양수당"
           ]
         }
-      ]
+      ],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1820513",
+        "binding": "bound",
+        "officialFlSeq": "155307097"
+      }
     },
     {
       "index": 25,
@@ -2126,7 +2301,14 @@
       "excludedParts": [],
       "role": "administrative",
       "regionSearch": {},
-      "approvedAssociations": []
+      "approvedAssociations": [],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1820513",
+        "binding": "bound",
+        "officialFlSeq": "155307099"
+      }
     },
     {
       "index": 26,
@@ -2212,7 +2394,14 @@
             "저소득 중증장애인가구 유선방송료 지원"
           ]
         }
-      ]
+      ],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1820525",
+        "binding": "bound",
+        "officialFlSeq": "155307005"
+      }
     },
     {
       "index": 27,
@@ -2297,7 +2486,14 @@
             "다자녀 가구 상하수도 요금 감면"
           ]
         }
-      ]
+      ],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1820557",
+        "binding": "bound",
+        "officialFlSeq": "129119815"
+      }
     },
     {
       "index": 28,
@@ -2332,30 +2528,42 @@
       "candidateProgramIds": [
         "g51230.icare-0083-1489626-1-3-7"
       ],
-      "disposition": "requires_external_confirmation",
+      "disposition": "approved",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
           "programId": "g51230.icare-0083-1489626-1-3-7",
           "formId": "ordin-15704381",
-          "decision": "requires_external_confirmation",
-          "reason": "카드 발급 및 해당 조례 사업을 확인할 상세·신청·법규 정보가 없는 요약 기록."
+          "decision": "approved",
+          "reason": "실제 별지 제1호 전체를 다시 읽고 원본 바이트·SHA·전체 섹션을 재검증했다. 본인 성명·주소·호출전화·개인정보동의·서명으로 신규 또는 분실·훼손 재발급을 신청한다. 추가 확보된 정확한 프로그램 출처인 보건복지부 삼척 서비스 메뉴 PDF의 3쪽 전체 표를 이미지와 텍스트로 확인했다. '희망택시' 행은 대중교통 취약지역의 대상마을 한정 주민, 제공기관 삼척시 교통과를 명시하고 장애인 특별교통수단 및 병원동행은 별도 행으로 구분된다. 현행 조례 14개 조문을 다시 읽어 제2조제2호의 시장 선정 마을, 제4조의 그 마을 주민, 제9조제1항의 주민센터 별지 제1호 교통카드 신청을 대조해 동일 사업 관계를 확인했다. 이미 운행대상으로 선정된 마을의 이용대상 주민 카드 신규·재발급에 한정하며 새로운 마을 지정이나 모든 노인·장애인의 택시 신청으로 확대하지 않는다."
         }
       ],
       "verifiedDocumentTitle": "희망택시 교통카드 신규발급(재발급) 신청서",
-      "reason": "제9조제1항과 실제 원본은 삼척 희망택시 이용대상자의 교통카드 신규·재발급 및 개인정보동의·본인서명을 요구한다. 사이트 icare 기록은 희망택시라는 이름과 '대중교통 취약지역 대상마을 주민' 요약, 노인·장애인 대상만 있고 구체적 급여·카드·신청·법규 정보가 없다. 이름·지역·요약만으로 정확한 해당 카드 운영사업이라고 승인하지 않고 공식 사이트 상세 또는 신청절차 연결 확인을 남긴다.",
+      "reason": "실제 별지 제1호 전체를 다시 읽고 원본 바이트·SHA·전체 섹션을 재검증했다. 본인 성명·주소·호출전화·개인정보동의·서명으로 신규 또는 분실·훼손 재발급을 신청한다. 추가 확보된 정확한 프로그램 출처인 보건복지부 삼척 서비스 메뉴 PDF의 3쪽 전체 표를 이미지와 텍스트로 확인했다. '희망택시' 행은 대중교통 취약지역의 대상마을 한정 주민, 제공기관 삼척시 교통과를 명시하고 장애인 특별교통수단 및 병원동행은 별도 행으로 구분된다. 현행 조례 14개 조문을 다시 읽어 제2조제2호의 시장 선정 마을, 제4조의 그 마을 주민, 제9조제1항의 주민센터 별지 제1호 교통카드 신청을 대조해 동일 사업 관계를 확인했다. 이미 운행대상으로 선정된 마을의 이용대상 주민 카드 신규·재발급에 한정하며 새로운 마을 지정이나 모든 노인·장애인의 택시 신청으로 확대하지 않는다.",
       "lawClausesReviewed": true,
       "relatedArticles": [
         {
+          "text": "제2조(정의) 이 조례에 사용하는 용어의 뜻은 다음과 같다.1. \"희망택시\"란 교통 접근성이 취약한 마을 주민들에게 최소한의 이동권을 제공하기 위하여 요금의 일부를 공공재정에서 보전받아 운행하는 「여객자동차 운수사업법」제3조의 여객자동차운송사업용 승용자동차를 말한다.2. \"희망택시 운행 대상마을\"이란 교통 접근성이 취약한 마을 중 희망택시를 운행하도록 삼척시장(이하 “시장”이라 한다)이 선정하는 다음 각 목의 마을을 말한다.가. 노선버스(시내버스, 마을버스, 농어촌버스 등)가 운행되지 않는 마을나. 그 밖에 지역 교통 여건 등을 고려하여 희망택시 운행이 필요한 마을3. \"이용요금\"이란 희망택시 이용에 따른 전체 발생요금에서 희망택시 이용자(이하 “이용자”라 한다)가 부담한 금액을 제외한 나머지 금액을 말한다.4. \"운송사업자\"란 희망택시를 운행하는 사업자를 말한다."
+        },
+        {
+          "text": "제4조(희망택시 이용대상자) 희망택시 이용대상자(이하 “이용대상자”라 한다)는 제2조제2호의 마을에 「주민등록법」에 따른 주소를 두고 거주하는 사람으로 한다."
+        },
+        {
+          "text": "제7조(희망택시 콜센터의 설치 및 기능) ① 시장은 이용자의 이동에 관한 정보의 제공, 상담 및 서비스 연계를 위하여 다음 각 호의 기능을 수행하는 삼척시 희망택시 콜센터(이하 “콜센터”라 한다)를 설치·운영할 수 있다.1. 희망택시의 이용 신청·접수2. 희망택시 배차3. 희망택시 운행대장 작성4. 희망택시 운송사업자 및 이용대상자에 대한 안내·상담 및 교육5. 희망택시에 대한 홍보, 간행물의 발급 및 보급6. 그 밖에 희망택시 운영에 필요한 사항② 시장은 콜센터 수신전용 전화번호를 개설하고, 콜센터의 원할한 운영을 위하여 콜호출시스템, 택시운행 정보 등 전산프로그램을 설치할 수 있다."
+        },
+        {
           "text": "제9조(희망택시 이용방법 등) ① 이용대상자는 별지 제1호서식에 따라 주소지 읍·면·동 행정복지센터에 희망택시 교통카드(이하 “교통카드”라 한다)를 신청하여야 한다.② 시장은 제1항에 따라 교통카드 신청서를 접수하면 가용 예산, 이용자 수, 이용거리 및 이용 횟수 등을 종합적으로 판단하여 교통카드를 발행하고 이용대상자에게 이를 교부하여야 한다.③ 제2항에 따라 교통카드를 교부받은 이용대상자는 제7조에 따른 콜센터를 통하여 희망택시를 호출, 이용하여야 한다.④ 제2항에 따라 발행되는 교통카드에는 1매당 월 단위로 50,000원을 충전해 주며, 해당 월 충전액은 해당 월에 사용하지 않으면 자동으로 없어진다."
+        },
+        {
+          "text": "제10조(희망택시 이용요금 및 결제) ① 이용자는 희망택시 1회 이용 시 1,000원을 부담한다. 이 경우 이용자는 부담금을 제외한 이용요금을 교통카드로 결제한다.② 제1항에도 불구하고 이용자의 요청에 따라 제5조에 따른 희망택시 운행구간 외의 구간을 운행한 경우 그 구간의 비용은 이용요금에 포함되지 아니한다."
         }
       ],
       "reviewedParts": [
         {
           "number": "1",
           "title": "희망택시 교통카드 신규발급(재발급) 신청서",
-          "use": "main",
-          "author": "희망택시 이용대상 주민"
+          "use": "conditional",
+          "author": "이미 선정된 운행대상 마을에 거주하는 희망택시 이용대상 주민"
         }
       ],
       "excludedParts": [],
@@ -2368,7 +2576,49 @@
         ],
         "basis": "Full same-jurisdiction corpus name/summary/benefit search; hits alone are not approvals."
       },
-      "approvedAssociations": []
+      "approvedAssociations": [
+        {
+          "programIds": [
+            "g51230.icare-0083-1489626-1-3-7"
+          ],
+          "use": "conditional",
+          "condition": "이미 희망택시 운행대상 마을로 선정된 곳의 거주 주민 중 이용대상자가 교통카드를 신규 발급받거나 분실·훼손으로 재발급받을 때만 주소지 읍면동 행정복지센터에 제출합니다. 마을 신규 지정이나 모든 노인·장애인을 위한 일반 택시 신청서는 아닙니다.",
+          "applicationStage": "card_issue_or_reissue_for_designated_village_resident",
+          "additionalEvidenceArticles": [
+            {
+              "sourceKind": "official_program_attachment",
+              "url": "https://www.mohw.go.kr/boardDownload.es?bid=0083&list_no=1489626&seq=1",
+              "title": "삼척시 통합돌봄 서비스 메뉴 3쪽",
+              "sha256": "d1d24b529baaa40366f70f2207a4b740bff3573c9f91b9ce41db48bfde036b3b",
+              "text": "희망택시: 대중교통 취약지역(대상마을 한정) 주민들에 교통편의 제공. 제공기관: 삼척시 교통과. 교통약자 특별교통수단은 별도 행."
+            }
+          ],
+          "programNames": [
+            "희망택시"
+          ]
+        }
+      ],
+      "reviewCheckedAt": "2026-10-19",
+      "additionalLegalEvidence": [
+        {
+          "sourceKind": "official_program_attachment",
+          "sourceUrl": "https://www.mohw.go.kr/boardDownload.es?bid=0083&list_no=1489626&seq=1",
+          "sourcePageUrl": "https://www.mohw.go.kr/board.es?mid=a60609000000&bid=0083&act=view&list_no=1489626",
+          "recordPath": "logs/forms-completion/external-confirmations/samcheok-mohw-menu.pdf",
+          "sha256": "d1d24b529baaa40366f70f2207a4b740bff3573c9f91b9ce41db48bfde036b3b",
+          "pageReviewed": 3,
+          "visualReviewed": true,
+          "textReviewed": true,
+          "note": "정확한 icare 원문 출처에서 사업명·대상마을 주민·삼척시 교통과를 확인. 같은 표의 특별교통수단·병원동행과 구분."
+        }
+      ],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1821325",
+        "binding": "bound",
+        "officialFlSeq": "129231471"
+      }
     },
     {
       "index": 29,
@@ -2439,7 +2689,14 @@
         ],
         "basis": "Full same-jurisdiction corpus name/summary/benefit search; hits alone are not approvals."
       },
-      "approvedAssociations": []
+      "approvedAssociations": [],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1821325",
+        "binding": "bound",
+        "officialFlSeq": "129231475"
+      }
     },
     {
       "index": 30,
@@ -2524,7 +2781,14 @@
             "장수축하금 지급"
           ]
         }
-      ]
+      ],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1821643",
+        "binding": "bound",
+        "officialFlSeq": "143282875"
+      }
     },
     {
       "index": 31,
@@ -2644,7 +2908,14 @@
             "구로구 입양가정 지원사업"
           ]
         }
-      ]
+      ],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1821803",
+        "binding": "bound",
+        "officialFlSeq": "129258241"
+      }
     },
     {
       "index": 32,
@@ -2729,7 +3000,14 @@
             "호국보훈수당 지원"
           ]
         }
-      ]
+      ],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1821927",
+        "binding": "bound",
+        "officialFlSeq": "152031965"
+      }
     },
     {
       "index": 33,
@@ -2804,7 +3082,14 @@
             "호국보훈수당 지원"
           ]
         }
-      ]
+      ],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1821927",
+        "binding": "bound",
+        "officialFlSeq": "152031967"
+      }
     },
     {
       "index": 34,
@@ -2888,7 +3173,14 @@
             "호국보훈수당 지원"
           ]
         }
-      ]
+      ],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1821927",
+        "binding": "bound",
+        "officialFlSeq": "152031971"
+      }
     },
     {
       "index": 35,
@@ -2972,7 +3264,14 @@
             "참전유공자 공로수당지원"
           ]
         }
-      ]
+      ],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1821931",
+        "binding": "bound",
+        "officialFlSeq": "152031973"
+      }
     },
     {
       "index": 36,
@@ -3047,7 +3346,14 @@
             "참전유공자 공로수당지원"
           ]
         }
-      ]
+      ],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1821931",
+        "binding": "bound",
+        "officialFlSeq": "152031975"
+      }
     },
     {
       "index": 37,
@@ -3128,7 +3434,14 @@
             "참전유공자 공로수당지원"
           ]
         }
-      ]
+      ],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1821931",
+        "binding": "bound",
+        "officialFlSeq": "152032099"
+      }
     },
     {
       "index": 38,
@@ -3244,7 +3557,14 @@
         ],
         "basis": "Full same-jurisdiction corpus name/summary/benefit search; hits alone are not approvals."
       },
-      "approvedAssociations": []
+      "approvedAssociations": [],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1822285",
+        "binding": "bound",
+        "officialFlSeq": "168361863"
+      }
     },
     {
       "index": 39,
@@ -3337,7 +3657,14 @@
         ],
         "basis": "Full same-jurisdiction corpus name/summary/benefit search; hits alone are not approvals."
       },
-      "approvedAssociations": []
+      "approvedAssociations": [],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1822995",
+        "binding": "bound",
+        "officialFlSeq": "152030573"
+      }
     },
     {
       "index": 40,
@@ -3423,7 +3750,14 @@
             "저소득주민자녀 장학금"
           ]
         }
-      ]
+      ],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1823741",
+        "binding": "bound",
+        "officialFlSeq": "155489749"
+      }
     },
     {
       "index": 41,
@@ -3541,7 +3875,14 @@
             "참전유공자 등 명예수당 및 사망위로금 지원"
           ]
         }
-      ]
+      ],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1824237",
+        "binding": "bound",
+        "officialFlSeq": "142315229"
+      }
     },
     {
       "index": 42,
@@ -3622,7 +3963,14 @@
         ],
         "basis": "Full same-jurisdiction corpus name/summary/benefit search; hits alone are not approvals."
       },
-      "approvedAssociations": []
+      "approvedAssociations": [],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1824243",
+        "binding": "bound",
+        "officialFlSeq": "161542181"
+      }
     },
     {
       "index": 43,
@@ -3710,7 +4058,14 @@
             "장애인 양육비용 지원"
           ]
         }
-      ]
+      ],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1825027",
+        "binding": "bound",
+        "officialFlSeq": "148066085"
+      }
     },
     {
       "index": 44,
@@ -3793,7 +4148,14 @@
             "참전유공자 사망위로금 지급"
           ]
         }
-      ]
+      ],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1825129",
+        "binding": "bound",
+        "officialFlSeq": "154817751"
+      }
     },
     {
       "index": 45,
@@ -3860,7 +4222,14 @@
       "excludedParts": [],
       "role": "administrative",
       "regionSearch": {},
-      "approvedAssociations": []
+      "approvedAssociations": [],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1825137",
+        "binding": "bound",
+        "officialFlSeq": "154817753"
+      }
     },
     {
       "index": 46,
@@ -3930,7 +4299,14 @@
       "excludedParts": [],
       "role": "administrative",
       "regionSearch": {},
-      "approvedAssociations": []
+      "approvedAssociations": [],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1825319",
+        "binding": "bound",
+        "officialFlSeq": "155749785"
+      }
     },
     {
       "index": 47,
@@ -4033,7 +4409,14 @@
             "광주시 노인 목욕 및 이·미용권 지원"
           ]
         }
-      ]
+      ],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1826219",
+        "binding": "bound",
+        "officialFlSeq": "138494037"
+      }
     },
     {
       "index": 48,
@@ -4136,7 +4519,14 @@
             "의료급여 수급 어르신 틀니 본인부담금 지원"
           ]
         }
-      ]
+      ],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1826441",
+        "binding": "bound",
+        "officialFlSeq": "153820537"
+      }
     },
     {
       "index": 49,
@@ -4218,7 +4608,14 @@
         ],
         "basis": "Full same-jurisdiction corpus name/summary/benefit search; hits alone are not approvals."
       },
-      "approvedAssociations": []
+      "approvedAssociations": [],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1827227",
+        "binding": "bound",
+        "officialFlSeq": "157651367"
+      }
     },
     {
       "index": 50,
@@ -4310,7 +4707,14 @@
             "참전명예수당 등 지원"
           ]
         }
-      ]
+      ],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1827649",
+        "binding": "bound",
+        "officialFlSeq": "170528963"
+      }
     },
     {
       "index": 51,
@@ -4402,7 +4806,14 @@
             "생활민원 바로처리반 운영"
           ]
         }
-      ]
+      ],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1828713",
+        "binding": "bound",
+        "officialFlSeq": "149926475"
+      }
     },
     {
       "index": 52,
@@ -4483,7 +4894,14 @@
       "excludedParts": [],
       "role": "administrative",
       "regionSearch": {},
-      "approvedAssociations": []
+      "approvedAssociations": [],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1828741",
+        "binding": "bound",
+        "officialFlSeq": "154528617"
+      }
     },
     {
       "index": 53,
@@ -4564,7 +4982,14 @@
       "excludedParts": [],
       "role": "administrative",
       "regionSearch": {},
-      "approvedAssociations": []
+      "approvedAssociations": [],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1828741",
+        "binding": "bound",
+        "officialFlSeq": "154528699"
+      }
     },
     {
       "index": 54,
@@ -4634,7 +5059,14 @@
       "excludedParts": [],
       "role": "administrative",
       "regionSearch": {},
-      "approvedAssociations": []
+      "approvedAssociations": [],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1828743",
+        "binding": "bound",
+        "officialFlSeq": "154528713"
+      }
     },
     {
       "index": 55,
@@ -4735,7 +5167,14 @@
             "장수수당 및 장수축하금 지원"
           ]
         }
-      ]
+      ],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1828889",
+        "binding": "bound",
+        "officialFlSeq": "130048115"
+      }
     },
     {
       "index": 56,
@@ -4818,7 +5257,14 @@
             "장수수당 및 장수축하금 지원"
           ]
         }
-      ]
+      ],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1828889",
+        "binding": "bound",
+        "officialFlSeq": "130048117"
+      }
     },
     {
       "index": 57,
@@ -4964,20 +5410,28 @@
             "셋째이상 자녀 양육비 지원"
           ]
         }
-      ]
+      ],
+      "sourceLawCurrency": {
+        "state": "source_current",
+        "checkedAt": "2026-10-19",
+        "currentLawId": "1829273",
+        "binding": "bound",
+        "officialFlSeq": "142093301"
+      }
     }
   ],
   "summary": {
     "total": 58,
-    "approved": 31,
+    "approved": 32,
     "covered_by_existing": 0,
     "non_applicant": 16,
     "obsolete": 0,
     "no_matching_site_program": 8,
-    "requires_external_confirmation": 3,
+    "requires_external_confirmation": 2,
+    "not_yet_effective": 0,
     "pending": 0,
-    "approvedRows": 36,
-    "approvedAssociations": 40,
+    "approvedRows": 37,
+    "approvedAssociations": 41,
     "reviewedProgramPairs": 93
   },
   "checkpointsCompleted": [
@@ -4989,10 +5443,904 @@
     "allScopeIdsPresent": true,
     "allOriginalBodiesReviewed": true,
     "allActualByteChecksPassed": true,
-    "approvedRows": 36,
-    "existingDuplicateCandidates": [],
+    "approvedRows": 37,
+    "existingDuplicateCandidates": [
+      {
+        "formId": "ordin-22159271",
+        "existingFormId": "ordin-22159271",
+        "programIds": [
+          "g48120.bokjiro-WLF00004802"
+        ],
+        "path": "pipeline\\forms\\reviews\\municipal-reviewed-round2017.json",
+        "existingParts": [
+          {
+            "number": "1",
+            "title": "다자녀가구 전세자금 대출이자 지원신청서",
+            "use": "main",
+            "author": "다자녀가구 부모"
+          }
+        ],
+        "proposedParts": [
+          {
+            "number": "1",
+            "title": "다자녀가구 전세자금 대출이자 지원신청서",
+            "use": "main",
+            "author": "다자녀가구 부모"
+          }
+        ]
+      },
+      {
+        "formId": "ordin-22159273",
+        "existingFormId": "ordin-22159273",
+        "programIds": [
+          "g48120.bokjiro-WLF00004802"
+        ],
+        "path": "pipeline\\forms\\reviews\\municipal-reviewed-round2017.json",
+        "existingParts": [
+          {
+            "number": "2",
+            "title": "다자녀가구 전세자금 대출이자 지원 서약서 및 동의서",
+            "use": "additional",
+            "author": "다자녀가구 신청인"
+          }
+        ],
+        "proposedParts": [
+          {
+            "number": "2",
+            "title": "다자녀가구 전세자금 대출이자 지원 서약서 및 동의서",
+            "use": "additional",
+            "author": "다자녀가구 신청인"
+          }
+        ]
+      },
+      {
+        "formId": "ordin-22613773",
+        "existingFormId": "ordin-22613773",
+        "programIds": [
+          "g41390.gov24-401000000507"
+        ],
+        "path": "pipeline\\forms\\reviews\\municipal-reviewed-round2017.json",
+        "existingParts": [
+          {
+            "number": "1",
+            "title": "시흥시 관내대학생 지원금 신청서",
+            "use": "conditional",
+            "author": "지원대상 대학생 또는 허용된 대리신청인"
+          }
+        ],
+        "proposedParts": [
+          {
+            "number": "1",
+            "title": "시흥시 관내대학생 지원금 신청서",
+            "use": "conditional",
+            "author": "지원대상 대학생 또는 허용된 대리신청인"
+          }
+        ]
+      },
+      {
+        "formId": "ordin-18093997",
+        "existingFormId": "ordin-18093997",
+        "programIds": [
+          "g12730.gov24-487000000104"
+        ],
+        "path": "pipeline\\forms\\reviews\\municipal-reviewed-round2017.json",
+        "existingParts": [
+          {
+            "number": "1",
+            "title": "장수노인 생신상/장제비 지원 신청서",
+            "use": "main",
+            "author": "장수노인 또는 장제비 신청인"
+          }
+        ],
+        "proposedParts": [
+          {
+            "number": "1",
+            "title": "장수노인 생신상/장제비 지원 신청서",
+            "use": "main",
+            "author": "장수노인 또는 장제비 신청인"
+          }
+        ]
+      },
+      {
+        "formId": "ordin-18093997",
+        "existingFormId": "ordin-18093997",
+        "programIds": [
+          "g12730.gov24-487000000106"
+        ],
+        "path": "pipeline\\forms\\reviews\\municipal-reviewed-round2017.json",
+        "existingParts": [
+          {
+            "number": "1",
+            "title": "장수노인 생신상/장제비 지원 신청서",
+            "use": "main",
+            "author": "장수노인 또는 장제비 신청인"
+          }
+        ],
+        "proposedParts": [
+          {
+            "number": "1",
+            "title": "장수노인 생신상/장제비 지원 신청서",
+            "use": "main",
+            "author": "장수노인 또는 장제비 신청인"
+          }
+        ]
+      },
+      {
+        "formId": "ordin-18093997",
+        "existingFormId": "ordin-18093997",
+        "programIds": [
+          "g12730.bokjiro-WLF00003409"
+        ],
+        "path": "pipeline\\forms\\reviews\\municipal-reviewed-round2017.json",
+        "existingParts": [
+          {
+            "number": "1",
+            "title": "장수노인 생신상/장제비 지원 신청서",
+            "use": "main",
+            "author": "장수노인 또는 장제비 신청인"
+          }
+        ],
+        "proposedParts": [
+          {
+            "number": "1",
+            "title": "장수노인 생신상/장제비 지원 신청서",
+            "use": "main",
+            "author": "장수노인 또는 장제비 신청인"
+          }
+        ]
+      },
+      {
+        "formId": "ordin-19883901",
+        "existingFormId": "ordin-19883901",
+        "programIds": [
+          "g44770.gov24-458000000114"
+        ],
+        "path": "pipeline\\forms\\reviews\\municipal-reviewed-round2017.json",
+        "existingParts": [
+          {
+            "number": "1",
+            "title": "효행수당 지급신청서",
+            "use": "main",
+            "author": "효행수당 신청세대"
+          }
+        ],
+        "proposedParts": [
+          {
+            "number": "1",
+            "title": "효행수당 지급신청서",
+            "use": "main",
+            "author": "효행수당 신청세대"
+          }
+        ]
+      },
+      {
+        "formId": "ordin-18422495",
+        "existingFormId": "ordin-18422495",
+        "programIds": [
+          "g51110.gov24-418000000243",
+          "g51130.gov24-419000000120",
+          "s51000.gov24-642000000685"
+        ],
+        "path": "pipeline\\forms\\reviews\\municipal-reviewed-round2017.json",
+        "existingParts": [
+          {
+            "number": "2",
+            "title": "산후 건강관리 지원 신청서",
+            "use": "main",
+            "author": "산모 또는 대리인"
+          }
+        ],
+        "proposedParts": [
+          {
+            "number": "2",
+            "title": "산후 건강관리 지원 신청서",
+            "use": "main",
+            "author": "산모 또는 대리인"
+          }
+        ]
+      },
+      {
+        "formId": "ordin-18422497",
+        "existingFormId": "ordin-18422497",
+        "programIds": [
+          "s51000.gov24-642000000703"
+        ],
+        "path": "pipeline\\forms\\reviews\\municipal-reviewed-round2017.json",
+        "existingParts": [
+          {
+            "number": "3",
+            "title": "산모·신생아 건강관리서비스 본인부담금 지원 신청서",
+            "use": "main",
+            "author": "서비스 이용 산모 또는 대리인"
+          }
+        ],
+        "proposedParts": [
+          {
+            "number": "3",
+            "title": "산모·신생아 건강관리서비스 본인부담금 지원 신청서",
+            "use": "main",
+            "author": "서비스 이용 산모 또는 대리인"
+          }
+        ]
+      },
+      {
+        "formId": "ordin-18413417",
+        "existingFormId": "ordin-18413417",
+        "programIds": [
+          "s51000.gov24-642000000702"
+        ],
+        "path": "pipeline\\forms\\reviews\\municipal-reviewed-round2017.json",
+        "existingParts": [
+          {
+            "number": "1",
+            "title": "장수노인수당 지급신청서",
+            "use": "main",
+            "author": "사이트 해당 장수노인 또는 위임받은 신청인"
+          }
+        ],
+        "proposedParts": [
+          {
+            "number": "1",
+            "title": "장수노인수당 지급신청서",
+            "use": "main",
+            "author": "사이트 해당 장수노인 또는 위임받은 신청인"
+          }
+        ]
+      },
+      {
+        "formId": "ordin-18384473",
+        "existingFormId": "ordin-18384473",
+        "programIds": [
+          "s51000.gov24-642000000708"
+        ],
+        "path": "pipeline\\forms\\reviews\\municipal-reviewed-round2017.json",
+        "existingParts": [
+          {
+            "number": "2",
+            "title": "생활안정비 지원 신청서 및 동의",
+            "use": "main",
+            "author": "해난어업인 유가족"
+          }
+        ],
+        "proposedParts": [
+          {
+            "number": "2",
+            "title": "생활안정비 지원 신청서 및 동의",
+            "use": "main",
+            "author": "해난어업인 유가족"
+          }
+        ]
+      },
+      {
+        "formId": "ordin-20749103",
+        "existingFormId": "ordin-20749103",
+        "programIds": [
+          "g51210.gov24-423000000471"
+        ],
+        "path": "pipeline\\forms\\reviews\\municipal-reviewed-round2017.json",
+        "existingParts": [
+          {
+            "number": "1",
+            "title": "어르신 공경봉양수당 지급(변경)신청서",
+            "use": "main",
+            "author": "어르신을 사실상 봉양하는 지급대상자"
+          }
+        ],
+        "proposedParts": [
+          {
+            "number": "1",
+            "title": "어르신 공경봉양수당 지급(변경)신청서",
+            "use": "main",
+            "author": "어르신을 사실상 봉양하는 지급대상자"
+          }
+        ]
+      },
+      {
+        "formId": "ordin-20749023",
+        "existingFormId": "ordin-20749023",
+        "programIds": [
+          "g51210.bokjiro-WLF00003374"
+        ],
+        "path": "pipeline\\forms\\reviews\\municipal-reviewed-round2017.json",
+        "existingParts": [
+          {
+            "number": "1",
+            "title": "유료방송 이용요금 지원 신청서",
+            "use": "main",
+            "author": "장애인가구 본인·법정대리인·보호자"
+          }
+        ],
+        "proposedParts": [
+          {
+            "number": "1",
+            "title": "유료방송 이용요금 지원 신청서",
+            "use": "main",
+            "author": "장애인가구 본인·법정대리인·보호자"
+          }
+        ]
+      },
+      {
+        "formId": "ordin-15689911",
+        "existingFormId": "ordin-15689911",
+        "programIds": [
+          "g51210.gov24-423000000490",
+          "g51210.gov24-423000000491"
+        ],
+        "path": "pipeline\\forms\\reviews\\municipal-reviewed-round2017.json",
+        "existingParts": [
+          {
+            "number": "별지1",
+            "title": "행정정보 공동이용 사전동의서",
+            "use": "additional",
+            "author": "수도요금 감면자격 정보주체"
+          }
+        ],
+        "proposedParts": [
+          {
+            "number": "별지1",
+            "title": "행정정보 공동이용 사전동의서",
+            "use": "additional",
+            "author": "수도요금 감면자격 정보주체"
+          }
+        ]
+      },
+      {
+        "formId": "ordin-18360045",
+        "existingFormId": "ordin-18360045",
+        "programIds": [
+          "g48720.bokjiro-WLF00005690"
+        ],
+        "path": "pipeline\\forms\\reviews\\municipal-reviewed-round2017.json",
+        "existingParts": [
+          {
+            "number": "2",
+            "title": "장수축하금 지급신청 위임장",
+            "use": "conditional",
+            "author": "직접 신청이 어려운 장수노인"
+          }
+        ],
+        "proposedParts": [
+          {
+            "number": "2",
+            "title": "장수축하금 지급신청 위임장",
+            "use": "conditional",
+            "author": "직접 신청이 어려운 장수노인"
+          }
+        ]
+      },
+      {
+        "formId": "ordin-15707283",
+        "existingFormId": "ordin-15707283",
+        "programIds": [
+          "g11530.gov24-316000000139"
+        ],
+        "path": "pipeline\\forms\\reviews\\municipal-reviewed-round2017.json",
+        "existingParts": [
+          {
+            "number": "1",
+            "title": "입양축하금 지원 신청서",
+            "use": "main",
+            "author": "입양부모"
+          }
+        ],
+        "proposedParts": [
+          {
+            "number": "1",
+            "title": "입양축하금 지원 신청서",
+            "use": "main",
+            "author": "입양부모"
+          }
+        ]
+      },
+      {
+        "formId": "ordin-15707283",
+        "existingFormId": "ordin-15707283",
+        "programIds": [
+          "g11530.bokjiro-WLF00005503"
+        ],
+        "path": "pipeline\\forms\\reviews\\municipal-reviewed-round2017.json",
+        "existingParts": [
+          {
+            "number": "1",
+            "title": "입양축하금 지원 신청서",
+            "use": "main",
+            "author": "입양부모"
+          }
+        ],
+        "proposedParts": [
+          {
+            "number": "1",
+            "title": "입양축하금 지원 신청서",
+            "use": "main",
+            "author": "입양부모"
+          }
+        ]
+      },
+      {
+        "formId": "ordin-19880337",
+        "existingFormId": "ordin-19880337",
+        "programIds": [
+          "g51770.bokjiro-WLF00003077"
+        ],
+        "path": "pipeline\\forms\\reviews\\municipal-reviewed-round2017.json",
+        "existingParts": [
+          {
+            "number": "1",
+            "title": "호국보훈수당 지급신청서",
+            "use": "conditional",
+            "author": "호국보훈수당 대상자"
+          }
+        ],
+        "proposedParts": [
+          {
+            "number": "1",
+            "title": "호국보훈수당 지급신청서",
+            "use": "conditional",
+            "author": "호국보훈수당 대상자"
+          }
+        ]
+      },
+      {
+        "formId": "ordin-19880339",
+        "existingFormId": "ordin-19880339",
+        "programIds": [
+          "g51770.bokjiro-WLF00003077"
+        ],
+        "path": "pipeline\\forms\\reviews\\municipal-reviewed-round2017.json",
+        "existingParts": [
+          {
+            "number": "2",
+            "title": "사망위로금 지급신청서",
+            "use": "conditional",
+            "author": "국가보훈대상자 유족"
+          }
+        ],
+        "proposedParts": [
+          {
+            "number": "2",
+            "title": "사망위로금 지급신청서",
+            "use": "conditional",
+            "author": "국가보훈대상자 유족"
+          }
+        ]
+      },
+      {
+        "formId": "ordin-19880463",
+        "existingFormId": "ordin-19880463",
+        "programIds": [
+          "g51770.bokjiro-WLF00003077"
+        ],
+        "path": "pipeline\\forms\\reviews\\municipal-reviewed-round2017.json",
+        "existingParts": [
+          {
+            "number": "4 자격회복 항목",
+            "title": "호국보훈수당 자격회복 신청",
+            "use": "conditional",
+            "author": "재전입한 종전 호국보훈수당 수급자"
+          }
+        ],
+        "proposedParts": [
+          {
+            "number": "4 자격회복 항목",
+            "title": "호국보훈수당 자격회복 신청",
+            "use": "conditional",
+            "author": "재전입한 종전 호국보훈수당 수급자"
+          }
+        ]
+      },
+      {
+        "formId": "ordin-19880465",
+        "existingFormId": "ordin-19880465",
+        "programIds": [
+          "g51770.bokjiro-WLF00003728"
+        ],
+        "path": "pipeline\\forms\\reviews\\municipal-reviewed-round2017.json",
+        "existingParts": [
+          {
+            "number": "1",
+            "title": "참전유공자 공로·배우자 수당 지급신청서",
+            "use": "conditional",
+            "author": "참전유공자 또는 사망 참전유공자 배우자"
+          }
+        ],
+        "proposedParts": [
+          {
+            "number": "1",
+            "title": "참전유공자 공로·배우자 수당 지급신청서",
+            "use": "conditional",
+            "author": "참전유공자 또는 사망 참전유공자 배우자"
+          }
+        ]
+      },
+      {
+        "formId": "ordin-19880467",
+        "existingFormId": "ordin-19880467",
+        "programIds": [
+          "g51770.bokjiro-WLF00003728"
+        ],
+        "path": "pipeline\\forms\\reviews\\municipal-reviewed-round2017.json",
+        "existingParts": [
+          {
+            "number": "2",
+            "title": "참전유공자 사망위로금 지급신청서",
+            "use": "conditional",
+            "author": "사망 참전유공자의 유족"
+          }
+        ],
+        "proposedParts": [
+          {
+            "number": "2",
+            "title": "참전유공자 사망위로금 지급신청서",
+            "use": "conditional",
+            "author": "사망 참전유공자의 유족"
+          }
+        ]
+      },
+      {
+        "formId": "ordin-19880471",
+        "existingFormId": "ordin-19880471",
+        "programIds": [
+          "g51770.bokjiro-WLF00003728"
+        ],
+        "path": "pipeline\\forms\\reviews\\municipal-reviewed-round2017.json",
+        "existingParts": [
+          {
+            "number": "4 자격회복 항목",
+            "title": "참전 공로·배우자수당 자격회복 신청",
+            "use": "conditional",
+            "author": "관내 재전입한 종전 공로·배우자수당 대상자"
+          }
+        ],
+        "proposedParts": [
+          {
+            "number": "4 자격회복 항목",
+            "title": "참전 공로·배우자수당 자격회복 신청",
+            "use": "conditional",
+            "author": "관내 재전입한 종전 공로·배우자수당 대상자"
+          }
+        ]
+      },
+      {
+        "formId": "ordin-20767643",
+        "existingFormId": "ordin-20767643",
+        "programIds": [
+          "g30230.gov24-368000000104"
+        ],
+        "path": "pipeline\\forms\\reviews\\municipal-reviewed-round2017.json",
+        "existingParts": [
+          {
+            "number": "1",
+            "title": "장학금 신청서",
+            "use": "main",
+            "author": "학생 또는 보호자"
+          }
+        ],
+        "proposedParts": [
+          {
+            "number": "1",
+            "title": "장학금 신청서",
+            "use": "main",
+            "author": "학생 또는 보호자"
+          }
+        ]
+      },
+      {
+        "formId": "ordin-18024209",
+        "existingFormId": "ordin-18024209",
+        "programIds": [
+          "g31110.bokjiro-WLF00003817"
+        ],
+        "path": "pipeline\\forms\\reviews\\municipal-reviewed-round2017.json",
+        "existingParts": [
+          {
+            "number": "1 보훈항목",
+            "title": "국가보훈대상자 명예수당 지원 신청서",
+            "use": "main",
+            "author": "보훈명예수당 대상자"
+          }
+        ],
+        "proposedParts": [
+          {
+            "number": "1 보훈항목",
+            "title": "국가보훈대상자 명예수당 지원 신청서",
+            "use": "main",
+            "author": "보훈명예수당 대상자"
+          }
+        ]
+      },
+      {
+        "formId": "ordin-18024209",
+        "existingFormId": "ordin-18024209",
+        "programIds": [
+          "g31110.gov24-369000000104"
+        ],
+        "path": "pipeline\\forms\\reviews\\municipal-reviewed-round2017.json",
+        "existingParts": [
+          {
+            "number": "1",
+            "title": "국가보훈대상자·참전유공자 명예수당 지원 신청서",
+            "use": "main",
+            "author": "명예수당 대상자"
+          },
+          {
+            "number": "2",
+            "title": "참전유공자 사망위로금 지원 신청서",
+            "use": "conditional",
+            "author": "참전유공자 법정상속인 대표"
+          }
+        ],
+        "proposedParts": [
+          {
+            "number": "1",
+            "title": "국가보훈대상자·참전유공자 명예수당 지원 신청서",
+            "use": "main",
+            "author": "명예수당 대상자"
+          },
+          {
+            "number": "2",
+            "title": "참전유공자 사망위로금 지원 신청서",
+            "use": "conditional",
+            "author": "참전유공자 법정상속인 대표"
+          }
+        ]
+      },
+      {
+        "formId": "ordin-19127585",
+        "existingFormId": "ordin-19127585",
+        "programIds": [
+          "g11410.gov24-312000000123"
+        ],
+        "path": "pipeline\\forms\\reviews\\municipal-reviewed-round2017.json",
+        "existingParts": [
+          {
+            "number": "별지",
+            "title": "장애인 양육지원금 신청서",
+            "use": "main",
+            "author": "장애인 양육지원 대상자 또는 신청인"
+          }
+        ],
+        "proposedParts": [
+          {
+            "number": "별지",
+            "title": "장애인 양육지원금 신청서",
+            "use": "main",
+            "author": "장애인 양육지원 대상자 또는 신청인"
+          }
+        ]
+      },
+      {
+        "formId": "ordin-20675335",
+        "existingFormId": "ordin-20675335",
+        "programIds": [
+          "g26470.gov24-337000000118"
+        ],
+        "path": "pipeline\\forms\\reviews\\municipal-reviewed-round2017.json",
+        "existingParts": [
+          {
+            "number": "1",
+            "title": "참전유공자 사망위로금 지급신청서",
+            "use": "main",
+            "author": "선순위 유족 신청인"
+          }
+        ],
+        "proposedParts": [
+          {
+            "number": "1",
+            "title": "참전유공자 사망위로금 지급신청서",
+            "use": "main",
+            "author": "선순위 유족 신청인"
+          }
+        ]
+      },
+      {
+        "formId": "ordin-17263761",
+        "existingFormId": "ordin-17263761",
+        "programIds": [
+          "g41610.bokjiro-WLF00006717"
+        ],
+        "path": "pipeline\\forms\\reviews\\municipal-reviewed-round2017.json",
+        "existingParts": [
+          {
+            "number": "1",
+            "title": "광주시 노인 목욕 및 이·미용권 지원 신청서",
+            "use": "main",
+            "author": "대상노인 또는 허용된 대리신청인"
+          }
+        ],
+        "proposedParts": [
+          {
+            "number": "1",
+            "title": "광주시 노인 목욕 및 이·미용권 지원 신청서",
+            "use": "main",
+            "author": "대상노인 또는 허용된 대리신청인"
+          }
+        ]
+      },
+      {
+        "formId": "ordin-20330723",
+        "existingFormId": "ordin-20330723",
+        "programIds": [
+          "g26110.bokjiro-WLF00000848",
+          "g26110.gov24-325000000107"
+        ],
+        "path": "pipeline\\forms\\reviews\\municipal-reviewed-round2017.json",
+        "existingParts": [
+          {
+            "number": "별지",
+            "title": "의료급여 노인 틀니 본인부담금 및 지대치 비용 지급 청구서",
+            "use": "main",
+            "author": "의료급여 수급자 신청·시술치과 확인"
+          }
+        ],
+        "proposedParts": [
+          {
+            "number": "별지",
+            "title": "의료급여 노인 틀니 본인부담금 및 지대치 비용 지급 청구서",
+            "use": "main",
+            "author": "의료급여 수급자 신청·시술치과 확인"
+          }
+        ]
+      },
+      {
+        "formId": "ordin-22870521",
+        "existingFormId": "ordin-22870521",
+        "programIds": [
+          "g44790.gov24-459000000122"
+        ],
+        "path": "pipeline\\forms\\reviews\\municipal-reviewed-round2017.json",
+        "existingParts": [
+          {
+            "number": "2",
+            "title": "참전유공자 사망위로금 지급신청서",
+            "use": "conditional",
+            "author": "사망 참전유공자의 지급순위 유족 등"
+          }
+        ],
+        "proposedParts": [
+          {
+            "number": "2",
+            "title": "참전유공자 사망위로금 지급신청서",
+            "use": "conditional",
+            "author": "사망 참전유공자의 지급순위 유족 등"
+          }
+        ]
+      },
+      {
+        "formId": "ordin-19581759",
+        "existingFormId": "ordin-19581759",
+        "programIds": [
+          "g47820.icare-0090-1489808-1-5-2"
+        ],
+        "path": "pipeline\\forms\\reviews\\municipal-reviewed-round2017.json",
+        "existingParts": [
+          {
+            "number": "1",
+            "title": "생활민원 바로 처리반 신청서",
+            "use": "main",
+            "author": "생활민원 신청 군민"
+          }
+        ],
+        "proposedParts": [
+          {
+            "number": "1",
+            "title": "생활민원 바로 처리반 신청서",
+            "use": "main",
+            "author": "생활민원 신청 군민"
+          }
+        ]
+      },
+      {
+        "formId": "ordin-15813137",
+        "existingFormId": "ordin-15813137",
+        "programIds": [
+          "g44250.gov24-558000000109"
+        ],
+        "path": "pipeline\\forms\\reviews\\municipal-reviewed-round2017.json",
+        "existingParts": [
+          {
+            "number": "1 장수축하금 항목",
+            "title": "장수축하금 지급신청서",
+            "use": "conditional",
+            "author": "100세 축하금 대상자 또는 신청인"
+          }
+        ],
+        "proposedParts": [
+          {
+            "number": "1 장수축하금 항목",
+            "title": "장수축하금 지급신청서",
+            "use": "conditional",
+            "author": "100세 축하금 대상자 또는 신청인"
+          }
+        ]
+      },
+      {
+        "formId": "ordin-15813139",
+        "existingFormId": "ordin-15813139",
+        "programIds": [
+          "g44250.gov24-558000000109"
+        ],
+        "path": "pipeline\\forms\\reviews\\municipal-reviewed-round2017.json",
+        "existingParts": [
+          {
+            "number": "2 장수축하금 용도",
+            "title": "장수축하금 지급신청 위임장",
+            "use": "conditional",
+            "author": "장수축하금 지급대상 본인"
+          }
+        ],
+        "proposedParts": [
+          {
+            "number": "2 장수축하금 용도",
+            "title": "장수축하금 지급신청 위임장",
+            "use": "conditional",
+            "author": "장수축하금 지급대상 본인"
+          }
+        ]
+      },
+      {
+        "formId": "ordin-17897969",
+        "existingFormId": "ordin-17897969",
+        "programIds": [
+          "g41610.gov24-554000000119"
+        ],
+        "path": "pipeline\\forms\\reviews\\municipal-reviewed-round2017.json",
+        "existingParts": [
+          {
+            "number": "1 출산장려금",
+            "title": "출산 서비스 통합처리 신청서 중 출산장려금",
+            "use": "main",
+            "author": "출산자·부모 또는 대리인"
+          }
+        ],
+        "proposedParts": [
+          {
+            "number": "1 출산장려금",
+            "title": "출산 서비스 통합처리 신청서 중 출산장려금",
+            "use": "main",
+            "author": "출산자·부모 또는 대리인"
+          }
+        ]
+      },
+      {
+        "formId": "ordin-17897969",
+        "existingFormId": "ordin-17897969",
+        "programIds": [
+          "g41610.gov24-554000000103"
+        ],
+        "path": "pipeline\\forms\\reviews\\municipal-reviewed-round2017.json",
+        "existingParts": [
+          {
+            "number": "1 셋째·넷째 양육비",
+            "title": "출산서비스 통합신청서 중 셋째이상 자녀양육비",
+            "use": "conditional",
+            "author": "셋째 또는 넷째 아동 보호자"
+          }
+        ],
+        "proposedParts": [
+          {
+            "number": "1 셋째·넷째 양육비",
+            "title": "출산서비스 통합신청서 중 셋째이상 자녀양육비",
+            "use": "conditional",
+            "author": "셋째 또는 넷째 아동 보호자"
+          }
+        ]
+      }
+    ],
     "emptyLawBodiesNotClaimedRead": true,
-    "reviewedPartsUseEnumValid": true
+    "reviewedPartsUseEnumValid": true,
+    "publicationPrepareBatchPassed": true,
+    "publicationResolveRolePassed": true,
+    "pureBuildWithExistingReviewsPassed": true,
+    "pureBuildAssociations": 2906,
+    "pureBuildForms": 2324,
+    "sharedFilesWritten": false,
+    "replacesPreviouslyImportedSameBatch": true,
+    "newAssociationFormId": "ordin-15704381"
   },
-  "finalizedReviewSha256": "814dc1c12bb5f723aa6d73525046242d0eba41bf6c5cbfb53c647c7814abdde6"
+  "finalizedReviewSha256": "8c7a1b7c1b9249ee68c614ee209934e389ce989c16bb4a07ab53160f994d9f9e",
+  "sourceLawCurrencyEvidence": {
+    "path": "pipeline\\forms\\source-law-currency.json",
+    "sha256": "7f7a71a7b6fc17faaa5c59110374bd5a7c6f725d37246011360d3396c05c644a",
+    "checkedAt": "2026-10-19"
+  }
 }
