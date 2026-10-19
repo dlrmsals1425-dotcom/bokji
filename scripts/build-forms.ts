@@ -7,7 +7,7 @@ import type { Program } from "../src/lib/data/types";
 import type { ApplicationForm, FormFileFormat, FormLink, FormsRegion, FormsCoverage, ProgramFormEntry, FormStatus } from "../src/lib/data/forms";
 import { normalizeCensus, censusLinkConflict } from "../src/lib/data/forms";
 import { classifyFormRole, findFormCandidates } from "../src/lib/data/formMatching";
-import { applicationRoute, formStatus, validateFormLink, externalFormUrl, officialFormUrl, registeredAgencyForm, validateAgencyForm } from "../src/lib/data/formPublication";
+import { applicationRoute, formStatus, foundAttachmentSignal, validateFormLink, externalFormUrl, officialFormUrl, registeredAgencyForm, validateAgencyForm } from "../src/lib/data/formPublication";
 import { detailBucket } from "../src/lib/data/bucket";
 
 export interface DownloadRecord {
@@ -332,8 +332,8 @@ async function main() {
     const candidates = (portalMatches ? portalEntry?.candidates || [] : findFormCandidates(program, Object.values(forms)))
       .filter(item => forms[item.formId] && !rejected.has(program.id+"/"+item.formId) && !approved.some(link => link.formId === item.formId));
     const applyUrl = applicationRoute(program);
-    const status = formStatus(approved, candidates.map(item => item.formId), applyUrl);
     const investigation = census?.programs.get(program.id);
+    const status = formStatus(approved, candidates.map(item => item.formId), applyUrl, foundAttachmentSignal(investigation?.state));
     const conflict = investigation && censusLinkConflict(program.id, investigation, approved.length > 0);
     if (conflict) throw new Error("source-audit.json: " + conflict);
     const entry: ProgramFormEntry = { id: program.id, name: program.name, areaKey, status, links: approved,

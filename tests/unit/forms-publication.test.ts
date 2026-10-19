@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import type { Program } from "@/lib/data/types";
 import type { ApplicationForm, FormLink } from "@/lib/data/forms";
-import { applicationRoute, externalFormUrl, formAssetUrl, formStatus, validateFormLink, officialFormUrl } from "@/lib/data/formPublication";
+import { applicationRoute, externalFormUrl, formAssetUrl, formStatus, foundAttachmentSignal, validateFormLink, officialFormUrl } from "@/lib/data/formPublication";
 const program = { id: "g41280.test", scope: "sigungu", region: { sido: "41000", sigungu: "41280", label: "고양시" } } as Program;
 const form: ApplicationForm = { id: "ordin-1", title: "지원신청서", role: "application", lawId: "1", lawTitle: "고양시 지원 조례", annexId: "1", annexNumber: "1", regionCode: "41280", regionLabel: "고양시", effectiveDate: "2026-01-01", sourceUrl: "https://www.law.go.kr/file", lawUrl: "https://www.law.go.kr/law", fetchedAt: "2026-10-16" };
 const link: FormLink = { formId: "ordin-1", use: "main", checkedAt: "2026-10-16", evidenceUrl: form.lawUrl, evidenceNote: "제5조에 따른 개인 신청서로 대조했습니다." };
@@ -101,6 +101,25 @@ describe("application document publication", () => {
     expect(formStatus([], [])).toBe("missing");
     expect(formStatus([], [form.id], "https://www.gov.kr/")).toBe("online");
     expect(formStatus([link], [], "https://www.gov.kr/")).toBe("available");
+  });
+  it("a found official attachment is already under review, even without a portal candidate", () => {
+    const found = foundAttachmentSignal("attachment_found");
+    expect(found).toBe("program-official-attachment-found");
+    expect(formStatus([], [], undefined, found)).toBe("review");
+    expect(formStatus([], [form.id], undefined, found)).toBe("review");
+    // 찾은 첨부자료는 승인된 연결이 아니다 — 'available'로 올라가면 화면이 거짓말을 한다.
+    expect(formStatus([], [], undefined, found)).not.toBe("available");
+    expect(formStatus([], [], "https://www.gov.kr/", found)).toBe("online");
+    expect(formStatus([link], [], undefined, found)).toBe("available");
+    expect(formStatus([link], [], "https://www.gov.kr/", found)).toBe("available");
+    expect(formStatus([], [], undefined, undefined)).toBe("missing");
+  });
+  it("promotes only the found-attachment stage, not a mentioned or unfound source", () => {
+    for (const state of ["document_mentioned", "needs_source", "automatic", "institution", "candidate", "confirmed"] as const) {
+      expect(foundAttachmentSignal(state)).toBeUndefined();
+      expect(formStatus([], [], undefined, foundAttachmentSignal(state))).toBe("missing");
+    }
+    expect(foundAttachmentSignal(undefined)).toBeUndefined();
   });
   it("online routes need a dedicated source link and do not impose application on automatic benefits", () => {
     expect(applicationRoute({ applyUrl: "javascript:alert(1)" })).toBeUndefined();

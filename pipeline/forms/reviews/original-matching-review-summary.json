@@ -737,5 +737,26 @@
     "productionBuild": "passed",
     "typecheck": "passed",
     "lint": "passed"
+  },
+  "individualReviewCompleteScope": "Existing frozen4006 and prior/current/agency supplements only; additional official-page attachments require separate semantic review.",
+  "additionalSourceAttachmentReview": {
+    "worklist": "source-attachment-worklist-20261019.json",
+    "downloadAudit": "source-attachment-download-audit-20261019.json",
+    "candidates": 530,
+    "originalsCollected": 530,
+    "allSectionTextExtracted": 527,
+    "separateReadingRequired": 3,
+    "semanticReviewsCompleted": 0,
+    "publicationApprovals": 0,
+    "complete": false
+  },
+  "additionalOfficialAttachmentSourceScope": {
+    "scope": "unlinked-official-attachments-scope-20261019.json",
+    "attachmentURLs": 4021,
+    "programRecords": 3360,
+    "priorityFilesCollected": 530,
+    "otherAttachmentsAwaitingCollection": 3491,
+    "semanticReviewsCompleted": 0,
+    "complete": false
   }
 }

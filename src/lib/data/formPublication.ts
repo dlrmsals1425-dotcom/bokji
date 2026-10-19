@@ -1,5 +1,5 @@
 import type { Program } from "./types";
-import type { ApplicationForm, FormLink, FormStatus } from "./forms";
+import type { ApplicationForm, FormLink, FormStatus, InvestigationState } from "./forms";
 import sourceExclusions from "./sourceExclusions.json";
 import verifiedLawHistories from "./verifiedLawHistories.json";
 import verifiedAgencyForms from "./verifiedAgencyForms.json";
@@ -253,8 +253,16 @@ export function applicationRoute(program: Pick<Program, "applyUrl" | "applyType"
   return externalFormUrl(program.applyUrl) || undefined;
 }
 
-export function formStatus(links: FormLink[], candidates: string[], onlineUrl?: string): FormStatus {
+/** 그 사업 전용 공식 첨부자료를 이미 찾은 상태. 승인 연결이 아니므로 'available'까지 올라가지 못한다. */
+export type FoundAttachmentSignal = "program-official-attachment-found";
+
+/** 조사 단계 중 attachment_found만 신호가 된다. 준비서류 언급과 미발견 단계는 올리지 않는다. */
+export function foundAttachmentSignal(state: InvestigationState | undefined): FoundAttachmentSignal | undefined {
+  return state === "attachment_found" ? "program-official-attachment-found" : undefined;
+}
+
+export function formStatus(links: FormLink[], candidates: string[], onlineUrl?: string, foundAttachment?: FoundAttachmentSignal): FormStatus {
   if (links.length) return "available";
   if (onlineUrl) return "online";
-  return candidates.length ? "review" : "missing";
+  return candidates.length || foundAttachment === "program-official-attachment-found" ? "review" : "missing";
 }
