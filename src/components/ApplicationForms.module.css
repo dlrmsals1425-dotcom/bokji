@@ -31,5 +31,9 @@
 .coverage { display: inline-block; padding: .6rem 0; margin-top: .7rem; font-size: .9rem; font-weight: 600; }
 .empty { margin-bottom: 1rem; }
 .empty a { margin-top: .8rem; }
+.municipalityPicker { display: grid; gap: .5rem; margin: 1.1rem 0; }
+.municipalityPicker label { font-weight: 700; }
+.municipalityPicker select { width: 100%; min-height: 3rem; padding: .65rem; font: inherit; color: inherit; background: white; border: 1px solid #7b8994; border-radius: .4rem; }
+.municipalityPicker p { margin: 0; }
 @media (max-width: 480px) { .panel { padding: 1rem; } .actions { flex-direction: column; } .actions a { width: 100%; text-align: center; white-space: normal; } }
 @media print { .actions, .coverage { display: none; } .panel { background: white; } }

@@ -6,7 +6,55 @@ export const FORM_STATUS_LABEL: Record<FormStatus, string> = {
   available: "신청 서류 연결 확인", online: "온라인 신청 안내", review: "연결 검토 중", missing: "신청서 찾는 중",
 };
 export type FormRole = "application" | "consent" | "delegation" | "supporting" | "reference" | "administrative" | "deleted" | "unclassified";
-export type FormFileFormat = "hwp" | "hwpx" | "pdf" | "txt" | "gif";
+export type FormFileFormat = "hwp" | "hwpx" | "pdf" | "txt" | "gif" | "jpg";
+/**
+ * 본문 글자가 없는 이미지 원본(jpg)의 근거 — 사람이 그 이미지 전체를 직접 본 기록이다.
+ * 기계 판독이 아니라 검토자의 확인이며, 등록된 SHA·확인일·크기에 묶인다.
+ * 빈 신청 서식이고 기입된 개인정보가 없다는 확인을 그대로 싣는다.
+ */
+export interface AgencyVisualReview {
+  kind: "whole-original-image";
+  checkedAt: string;
+  sha256: string;
+  width: number;
+  height: number;
+  frames: 1;
+  blankApplicantForm: true;
+  noFilledPersonalData: true;
+  evidenceNote: string;
+}
+/**
+ * 본문 글자층이 없는 스캔 PDF 원본(pdf)의 근거 — 사람이 그 PDF의 모든 페이지를
+ * 띄워 직접 본 기록이다. 기계가 글자를 뽑아낸 결과가 아니라 검토자의 확인이며,
+ * 등록된 SHA·확인일·페이지 수에 묶인다. pagesRead는 page-1부터 모든 페이지를
+ * 빠짐없이 적어야 하고, 빈 신청 서식이고 기입된 개인정보가 없다는 확인을 싣는다.
+ */
+export interface AgencyPdfReview {
+  kind: "whole-original-pdf";
+  checkedAt: string;
+  sha256: string;
+  pageCount: number;
+  pagesRead: string[];
+  blankApplicantForm: true;
+  noFilledPersonalData: true;
+  evidenceNote: string;
+}
+/** 스캔 원본의 전체 확인 — 이미지는 프레임, PDF는 페이지 단위다. 서로의 kind를 주장할 수 없다. */
+export type AgencyOriginalReview = AgencyVisualReview | AgencyPdfReview;
+/**
+ * 개별 검토한 기관 서식의 대체 근거 — 그 사업의 공식 신청 안내 자체다.
+ * 안내 원문이 이 첨부의 사용처를 밝힌 경우에 쓰며, 조례가 없다고 주장하지 않는다.
+ * 법령 칸은 ID를 추측하지 않고 빈 문자열로 남긴다(lawUrl도 빈 문자열이다).
+ */
+export interface AgencyAuthorityBasis {
+  kind: "official-program";
+  /** 실제 안내·공고 제목 그대로. */
+  title: string;
+  evidenceUrl: string;
+  checkedAt: string;
+  evidenceNote: string;
+  pageSHA256: string;
+}
 export interface ApplicationForm {
   id: string;
   title: string;
@@ -28,8 +76,12 @@ export interface ApplicationForm {
   /** Exact reviewed agency source; no Law.go.kr annex identity is implied. */
   agency?: {
     agencyName: string; sourcePageUrl: string; finalUrl: string; attachmentId: string;
-    sha256: string; bytes: number; format: "hwp" | "hwpx" | "pdf";
+    sha256: string; bytes: number; format: "hwp" | "hwpx" | "pdf" | "jpg";
     checkedAt: string; authorityEvidenceUrl: string;
+    /** 공식 신청 안내를 근거로 등록한 경우에만 실린다. */
+    authorityBasis?: AgencyAuthorityBasis;
+    /** 스캔 원본(jpg 전체 이미지 / pdf 전체 페이지)에만 실린다. 다른 형식은 이 확인을 주장할 수 없다. */
+    visualReview?: AgencyOriginalReview;
   };
   officialPdfUrl?: string;
   /** hwp is the legacy original-file property; format identifies the actual bytes. */

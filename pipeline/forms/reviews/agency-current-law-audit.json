@@ -2,7 +2,7 @@
   "schema": 1,
   "checkedAt": "2026-10-19",
   "pendingLaws": 0,
-  "scope": "Two additional laws supporting separately reviewed agency attachments. Existing4006 source audit is unchanged.",
+  "scope": "Additional current-law evidence supporting individually reviewed agency originals. Existing frozen source scopes are unchanged.",
   "laws": {
     "1991151": {
       "lawId": "1991151",
@@ -42,6 +42,78 @@
       "fullBodyResponseBytes": 51896,
       "fullBodyAndAddendaReviewed": true,
       "bodyScope": "본칙1~25조·삭제26조·부칙4개",
+      "individualUseStillRequired": true
+    },
+    "2096825": {
+      "state": "source_current",
+      "currentLawId": "2096825",
+      "currentLaw": {
+        "lawId": "2096825",
+        "stableLawId": "2207939",
+        "title": "경기도교육청 당뇨병 학생 지원 조례",
+        "org": "경기도교육청",
+        "effectiveDate": "20251231"
+      },
+      "candidates": [
+        {
+          "lawId": "2096825",
+          "stableLawId": "2207939",
+          "title": "경기도교육청 당뇨병 학생 지원 조례",
+          "org": "경기도교육청",
+          "effectiveDate": "20251231"
+        }
+      ],
+      "checkedAt": "2026-10-19",
+      "lawId": "2096825",
+      "currentSearchEvidenceSHA256": "e7fc672e2cf199765942a3b3aad3e2ec58a675ac980bdd21d99ae976de55d485",
+      "publicLawUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2096825",
+      "fullBodyUrl": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=2096825&gubun=ELIS",
+      "fullBodyResponseSHA256": "b5a2c0bf40d966789ef5de0464e228e8ae225d991f2723eeb24cf8c7e28889c6",
+      "fullBodyResponseBytes": 12660,
+      "fullBodyAndAddendaReviewed": true,
+      "bodyScope": "본칙1~8조및2021.5.20/2025.12.31부칙2개전부읽음",
+      "individualUseStillRequired": true
+    },
+    "1570181": {
+      "lawId": "1570181",
+      "currentLawId": "1570181",
+      "state": "source_current",
+      "checkedAt": "2026-10-19",
+      "currentLaw": {
+        "lawId": "1570181",
+        "title": "경기도 소상공인 고용보험료 지원 조례",
+        "org": "경기도",
+        "stableLawId": "2205138",
+        "effectiveDate": "20210108"
+      },
+      "currentSearchEvidenceSHA256": "5c85e3b730fb8099c12aba764a9da361e6c3f6f9146f0168b53a20370991e0b9",
+      "publicLawUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1570181",
+      "fullBodyUrl": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=1570181&gubun=ELIS",
+      "fullBodyResponseSHA256": "1b005eeddd578e03669645c740a32f8d6cf006c398f374de57797df8e2eb74ae",
+      "fullBodyResponseBytes": 10979,
+      "fullBodyAndAddendaReviewed": true,
+      "bodyScope": "본칙 및 부칙 전체, 담당 원문 검토와 현재판 ID를 대조함",
+      "individualUseStillRequired": true
+    },
+    "2021175": {
+      "lawId": "2021175",
+      "currentLawId": "2021175",
+      "state": "source_current",
+      "checkedAt": "2026-10-19",
+      "currentLaw": {
+        "lawId": "2021175",
+        "title": "경기도 한부모가족 지원 조례",
+        "org": "경기도",
+        "stableLawId": "2025127",
+        "effectiveDate": "20250312"
+      },
+      "currentSearchEvidenceSHA256": "5c85e3b730fb8099c12aba764a9da361e6c3f6f9146f0168b53a20370991e0b9",
+      "publicLawUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2021175",
+      "fullBodyUrl": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=2021175&gubun=ELIS",
+      "fullBodyResponseSHA256": "b9377ba19c217a6b6224b59daf64ffe108636278bc080c2eb5b083ee5278eb18",
+      "fullBodyResponseBytes": 29342,
+      "fullBodyAndAddendaReviewed": true,
+      "bodyScope": "본칙 및 부칙 전체, 담당 원문 검토와 현재판 ID를 대조함",
       "individualUseStillRequired": true
     }
   }

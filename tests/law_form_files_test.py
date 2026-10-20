@@ -16,6 +16,12 @@ m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
 class LawFormFilesTest(unittest.TestCase):
     def test_download_url_requires_official_attachment_identity_without_credentials(self):
         self.assertTrue(m.official_download('https://www.law.go.kr/LSW/flDownload.do?flSeq=123'))
+        self.assertTrue(m.official_download('https://www.law.go.kr/flDownload.do?gubun=ELIS&flSeq=154783989'))
+        for url in ['https://example.go.kr/flDownload.do?flSeq=123',
+                    'https://www.law.go.kr/other/flDownload.do?flSeq=123',
+                    'https://www.law.go.kr/flDownload.do?flSeq=1&flSeq=2',
+                    'https://www.law.go.kr/flDownload.do?flSeq=1&OC=secret']:
+            self.assertFalse(m.official_download(url))
         for url in ['https://example.com/file.hwp','https://www.law.go.kr/login','https://www.law.go.kr/LSW/flDownload.do?flSeq=1&OC=secret']:
             self.assertFalse(m.official_download(url))
     def test_extended_controls_are_skipped_as_eight_wchars(self):

@@ -54,10 +54,12 @@ def write_json(path,value):
 
 def official_download(url):
     try:
-        p=urlsplit(url);q=dict(parse_qsl(p.query))
+        p=urlsplit(url);items=parse_qsl(p.query);q=dict(items)
         return (p.scheme=='https' and p.hostname in ('www.law.go.kr','law.go.kr')
                 and not p.username and not p.password and p.port in (None,443)
-                and p.path in ('/LSW/flDownload.do','/LSW/flDownloadPdf.do')
+                # Current ordinance API responses also use the root endpoint.
+                and p.path in ('/flDownload.do','/LSW/flDownload.do','/LSW/flDownloadPdf.do')
+                and len([v for k,v in items if k=='flSeq'])==1
                 and str(q.get('flSeq','')).isdigit()
                 and not any(re.search(r'^oc$|key|token|auth|secret|password',k,re.I) for k in q))
     except (ValueError,TypeError):return False
@@ -120,6 +122,17 @@ def inspect_document(data,format_hint=None):
         if not doc.pages:raise ValueError('empty_pdf')
         for i,page in enumerate(doc.pages):sections.append(f'page-{i+1}');texts.append(page.extract_text() or '')
         fmt='pdf'
+    elif data.startswith(b'\xff\xd8\xff'):
+        # A scanned original has no body text to extract. Reading every frame
+        # here is mechanical only: it proves the bytes are one decodable JPEG
+        # image, never that the form is blank. That judgement stays with the
+        # registered whole-image review.
+        with Image.open(io.BytesIO(data)) as doc:
+            if doc.format!='JPEG' or getattr(doc,'n_frames',1)!=1:raise ValueError('invalid_jpeg')
+            if doc.width<1 or doc.height<1 or doc.width*doc.height>50_000_000:raise ValueError('invalid_jpeg')
+            doc.load()
+            return {'format':'jpg','sectionsRead':['frame-1'],'text':'','textLength':0,
+                    'textScope':'all_original_image_frames','imageWidth':doc.width,'imageHeight':doc.height,'imageFrames':1}
     elif data.startswith((b'GIF87a',b'GIF89a')):
         with Image.open(io.BytesIO(data)) as doc:
             if doc.format!='GIF' or doc.width*doc.height>50_000_000 or doc.n_frames>100:raise ValueError('invalid_gif')
@@ -273,7 +286,7 @@ def cached_original(form,archive):
     # Fresh checkouts can reuse committed originals only through their manifest.
     if MANIFEST.exists():
         entry=read(MANIFEST).get('forms',{}).get(fid,{})
-        if entry.get('sourceUrl')==form['sourceUrl'] and entry.get('format') in ('hwp','hwpx','pdf','txt','gif'):
+        if entry.get('sourceUrl')==form['sourceUrl'] and entry.get('format') in ('hwp','hwpx','pdf','txt','gif','jpg'):
             expected_path=f"originals/{fid}.{entry['format']}"
             path=ROOT/'pipeline/forms'/expected_path
             if entry.get('path')==expected_path and path.is_file():
@@ -353,7 +366,9 @@ def main():
             write_json(LOG/(fid+'.json'),record)
             entry=None
             if fid in approved:
-                if info['format'] not in ('hwp','hwpx','pdf','txt','gif'):raise ValueError('unsupported_approved_original')
+                # An image original is publishable only as a registered agency
+                # attachment, whose own whole-image review already bound it.
+                if info['format'] not in ('hwp','hwpx','pdf','txt','gif') and not (registered and info['format']=='jpg'):raise ValueError('unsupported_approved_original')
                 if info['format'] in ('txt','gif') or info['textScope']=='legacy_hwp_requires_external_review':
                     evidence=body_evidence.get(fid,{})
                     expected_format='hwp3' if info['textScope']=='legacy_hwp_requires_external_review' else info['format']

@@ -353,7 +353,7 @@ export function Detail({ id }: { id: string }) {
               )}
             </dl>
             {!p.applyMethod && <p className="muted">{how.fallback}</p>}
-            <ApplicationForms key={p.id} program={p} parentMode={mode === "parent"} />
+            <ApplicationForms key={p.id} program={p} parentMode={mode === "parent"} preferredSigungu={sigungu} />
           </section>
 
           <section className="dsec" id="sec-contact" aria-labelledby="h-src">

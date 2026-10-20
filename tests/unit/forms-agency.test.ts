@@ -2,10 +2,10 @@ import { readFile, mkdtemp, mkdir, writeFile, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import type { ApplicationForm, FormLink } from "@/lib/data/forms";
+import type { AgencyAuthorityBasis, ApplicationForm, FormLink } from "@/lib/data/forms";
 import type { Program } from "@/lib/data/types";
 import registry from "@/lib/data/verifiedAgencyForms.json";
-import { agencyFormUrl, agencyProgramLinkMatches, formAssetUrl, officialFormUrl, registeredAgencyForm, safeAgencyUrl, validateAgencyForm, validateFormLink } from "@/lib/data/formPublication";
+import { agencyFormUrl, agencyProgramGuideUrl, agencyProgramLinkMatches, formAssetUrl, officialFormUrl, registeredAgencyForm, safeAgencyUrl, validateAgencyForm, validateFormLink } from "@/lib/data/formPublication";
 import { loadDownloadedOriginals, requireApprovedOriginals, validateDownloadManifest, type DownloadManifest } from "../../scripts/build-forms";
 import { basisText } from "@/components/ApplicationForms";
 
@@ -134,5 +134,110 @@ describe("exact curated agency originals",()=>{
       expect((await loader.loadProgramForms(program().id))?.forms[0].id).toBe(id);
       expect(fetcher).toHaveBeenCalledTimes(4);
     }
+  });
+});
+
+/* 공식 신청 안내를 근거로 등록한 경우. 시험 동안만 등록분을 끼워 넣고 자료로 남기지 않는다. */
+const BASIS_ID="agency-44250-36032-notice";
+const BASIS={kind:"official-program",title:"계룡시 화장장려금 지원 신청 안내",evidenceUrl:e.sourcePageUrl,checkedAt:e.checkedAt,
+  evidenceNote:"안내문의 처리절차는 신청인이 이 첨부 서식을 작성해 가족돌봄과에 제출하는 단계이며, 첨부 36032는 그 신청에 쓰는 신청서다.",
+  pageSHA256:"a".repeat(64)} as const satisfies AgencyAuthorityBasis;
+const EMPTY_LAW={lawId:"",lawTitle:"",lawEvidenceUrl:"",lawEffectiveDate:"",lawCurrentCheckedAt:""} as const;
+type Row=Record<string,unknown>;
+const registered=registry.forms as unknown as Record<string,Row>;
+const officialEntry=():Row & {authorityBasis:Row}=>({...structuredClone(registered[id]),id:BASIS_ID,...EMPTY_LAW,authorityBasis:{...BASIS}});
+const officialForm=():ApplicationForm=>({...form(),id:BASIS_ID,lawId:"",lawTitle:"",lawUrl:"",
+  agency:{...form().agency!,authorityBasis:{...BASIS}}});
+const withBasis=(value:unknown):ApplicationForm=>({...officialForm(),
+  agency:{...officialForm().agency!,authorityBasis:value as AgencyAuthorityBasis|undefined}});
+function withOfficial<T>(entry:Row,run:()=>T):T {
+  registered[BASIS_ID]=entry;
+  try { return run(); } finally { delete registered[BASIS_ID]; }
+}
+
+describe("curated agency form authorised by its benefit's official application guidance",()=>{
+  it("accepts the reviewed programme basis and publishes no law source",()=>{
+    withOfficial(officialEntry(),()=>{
+      const f=officialForm();
+      expect(registeredAgencyForm(BASIS_ID)?.sha256).toBe(e.sha256);
+      expect(()=>validateAgencyForm(f)).not.toThrow();
+      expect(f.lawUrl).toBe("");
+      expect(agencyProgramGuideUrl(f)).toBe(e.sourcePageUrl);
+      expect(()=>validateFormLink(program(),f,{...link(),formId:BASIS_ID})).not.toThrow();
+      expect(agencyFormUrl(BASIS_ID,e.sourceUrl)).toBe(e.sourceUrl);
+      expect(basisText(f)).toBe("기관 공식 배포 · 게시일 2026-05-12");
+    });
+    // 기존 조례 등록분은 그대로 '근거 법령'을 쓰고 공식 안내 링크를 얻지 않는다.
+    expect(registeredAgencyForm(id)?.lawEvidenceUrl).toBe(e.lawEvidenceUrl);
+    expect(()=>validateAgencyForm(form())).not.toThrow();
+    expect(agencyProgramGuideUrl(form())).toBeNull();
+    expect(agencyProgramGuideUrl({...form(),lawUrl:""})).toBeNull();
+  });
+  it("rejects a basis that does not match the reviewed page, day, note or hash",()=>{
+    for(const changes of [{kind:"official-law"},{kind:"ordinance"},{title:"   "},{title:42},{evidenceUrl:e.sourceUrl},
+      {evidenceUrl:e.sourcePageUrl+"&x=1"},{checkedAt:"2026-10-18"},{checkedAt:"2026-10-20"},{evidenceNote:"안내 확인함"},
+      {pageSHA256:"A".repeat(64)},{pageSHA256:"a".repeat(63)},{pageSHA256:""},{lawId:e.lawId}]){
+      const entry=officialEntry();Object.assign(entry.authorityBasis,changes);
+      withOfficial(entry,()=>expect(registeredAgencyForm(BASIS_ID)).toBeNull());
+    }
+    for(const basis of [null,[{...BASIS}],{},"official-program",{...BASIS,pageSHA256:undefined},
+      (()=>{const row:Row={...BASIS};delete row.evidenceNote;return row;})()]){
+      withOfficial({...officialEntry(),authorityBasis:basis},()=>expect(registeredAgencyForm(BASIS_ID)).toBeNull());
+    }
+    // 근거가 없으면 법령 칸을 비운 것만으로는 등록되지 않는다.
+    const bare:Row=officialEntry();delete bare.authorityBasis;
+    withOfficial(bare,()=>expect(registeredAgencyForm(BASIS_ID)).toBeNull());
+  });
+  it("refuses any coexisting law or annex identity in either direction",()=>{
+    for(const changes of [{lawId:e.lawId},{lawTitle:e.lawTitle},{lawEvidenceUrl:e.lawEvidenceUrl},
+      {lawEffectiveDate:e.lawEffectiveDate},{lawCurrentCheckedAt:e.checkedAt},{annexId:"17575933"},{annexNumber:"1"},
+      {annexId:null},{annexNumber:0},{annexId:false}])
+      withOfficial({...officialEntry(),...changes},()=>expect(registeredAgencyForm(BASIS_ID)).toBeNull());
+    const previous=registered[id];
+    try {
+      registered[id]={...previous,authorityBasis:{...BASIS}};
+      expect(registeredAgencyForm(id)).toBeNull();
+      registered[id]={...previous,authorityBasis:null};
+      expect(registeredAgencyForm(id)).toBeNull();
+    } finally { registered[id]=previous; }
+    expect(()=>validateAgencyForm({...form(),agency:{...form().agency!,authorityBasis:{...BASIS}}})).toThrow();
+  });
+  it("never lets the published form or its metadata show a law it does not have",()=>{
+    withOfficial(officialEntry(),()=>{
+      for(const changes of [{lawUrl:e.lawEvidenceUrl},{lawId:e.lawId},{lawTitle:e.lawTitle},{annexId:"1"}])
+        expect(()=>validateAgencyForm({...officialForm(),...changes})).toThrow();
+      for(const basis of [undefined,{...BASIS,title:"다른 사업 안내"},{...BASIS,evidenceUrl:e.sourceUrl},
+        {...BASIS,checkedAt:"2026-10-18"},{...BASIS,extra:"x"},{kind:"official-program"}])
+        expect(()=>validateAgencyForm(withBasis(basis))).toThrow();
+      expect(agencyProgramGuideUrl({...officialForm(),lawUrl:e.lawEvidenceUrl})).toBeNull();
+      expect(agencyProgramGuideUrl(withBasis({...BASIS,evidenceUrl:e.sourceUrl}))).toBeNull();
+    });
+  });
+  it("keeps exact source gates and opens no extra host in programme mode",()=>{
+    for(const changes of [{sourceUrl:e.sourceUrl+"&session=secret"},{sha256:"0".repeat(12)},{authorityEvidenceNote:""},
+      {authorityEvidenceUrl:"https://private.example.org/notice"},{attachmentId:"999"}])
+      withOfficial({...officialEntry(),...changes},()=>expect(registeredAgencyForm(BASIS_ID)).toBeNull());
+    // 바뀐 원문 해시는 등록 문법이 아니라 실제 파일·공개 메타데이터가 어긋나는 자리에서 걸린다.
+    withOfficial({...officialEntry(),sha256:"0".repeat(64)},()=>{
+      expect(registeredAgencyForm(BASIS_ID)?.sha256).toBe("0".repeat(64));
+      expect(()=>validateAgencyForm(officialForm())).toThrow();
+      expect(formAssetUrl(`/forms/files/${BASIS_ID}-${e.sha256.slice(0,12)}.hwp`)).toBeNull();
+      const f=officialForm();
+      f.agency={...f.agency!,sha256:"0".repeat(64)};
+      f.file={hwp:`/forms/files/${BASIS_ID}-${e.sha256.slice(0,12)}.hwp`,format:"hwp",bytes:e.bytes,sha256:e.sha256};
+      expect(()=>validateAgencyForm(f)).toThrow();
+    });
+    for(const page of ["http://gyeryong.go.kr/kr/html/sub01/0102.html",e.sourcePageUrl+"#top",e.sourcePageUrl+"&session=secret"]){
+      const entry=officialEntry();entry.sourcePageUrl=page;entry.authorityBasis.evidenceUrl=page;
+      withOfficial(entry,()=>expect(registeredAgencyForm(BASIS_ID)).toBeNull());
+    }
+    withOfficial(officialEntry(),()=>{
+      for(const url of ["https://gyeryong.go.kr/other.hwp",e.sourcePageUrl,e.sourceUrl+"&x=1"])
+        expect(agencyFormUrl(BASIS_ID,url)).toBeNull();
+      expect(agencyProgramGuideUrl({...officialForm(),agency:{...officialForm().agency!,sourcePageUrl:"https://example.org/notice"}})).toBeNull();
+    });
+    // 시험이 끝나면 끼워 넣은 등록분은 남지 않는다.
+    expect(registeredAgencyForm(BASIS_ID)).toBeNull();
+    expect(registered[BASIS_ID]).toBeUndefined();
   });
 });

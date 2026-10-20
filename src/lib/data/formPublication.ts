@@ -1,11 +1,15 @@
 import type { Program } from "./types";
-import type { ApplicationForm, FormLink, FormStatus, InvestigationState } from "./forms";
+import type { AgencyAuthorityBasis, AgencyOriginalReview, AgencyPdfReview, AgencyVisualReview, ApplicationForm, FormLink, FormStatus, InvestigationState } from "./forms";
 import sourceExclusions from "./sourceExclusions.json";
 import verifiedLawHistories from "./verifiedLawHistories.json";
 import verifiedAgencyForms from "./verifiedAgencyForms.json";
 
 export type VerifiedAgencyForm = Omit<(typeof verifiedAgencyForms.forms)[keyof typeof verifiedAgencyForms.forms], "publishedAt" | "attachmentIdentifier"> & {
   publishedAt?: string; attachmentIdentifier: { queryParam?: string; value?: string; path?: string };
+  /** 공식 신청 안내를 근거로 등록한 경우에만 있다. 없으면 기존 조례 근거 그대로다. */
+  authorityBasis?: AgencyAuthorityBasis;
+  /** 스캔 원본에만 있다. 사람이 이미지 전체(jpg) 또는 모든 페이지(pdf)를 본 기록이며 다른 형식은 가질 수 없다. */
+  visualReview?: AgencyOriginalReview;
 };
 const AGENCY_ID = /^agency-\d{5}-[a-zA-Z0-9][a-zA-Z0-9_-]{0,79}$/;
 const AGENCY_SECRET = /^oc$|api[-_]?key|service[-_]?key|token|secret|password|auth|session|login|email|phone|resident|jumin/i;
@@ -42,34 +46,145 @@ export function safeAgencyUrl(value: unknown): string | null {
 }
 const exactDay = (v: unknown): v is string => typeof v === "string" && /^\d{4}-\d{2}-\d{2}$/.test(v)
   && Number.isFinite(Date.parse(v)) && new Date(v).toISOString().slice(0,10) === v;
+const BASIS_FIELDS = ["kind","title","evidenceUrl","checkedAt","evidenceNote","pageSHA256"] as const;
+const VISUAL_FIELDS = ["kind","checkedAt","sha256","width","height","frames","blankApplicantForm","noFilledPersonalData","evidenceNote"] as const;
+const PDF_REVIEW_FIELDS = ["kind","checkedAt","sha256","pageCount","pagesRead","blankApplicantForm","noFilledPersonalData","evidenceNote"] as const;
+/** 그 확인이 실제로 어느 kind인지에 따라 싣는 정확한 키 목록. */
+const reviewFields = (review: AgencyOriginalReview): readonly string[] => review.kind==="whole-original-pdf" ? PDF_REVIEW_FIELDS : VISUAL_FIELDS;
+const AGENCY_LAW_FIELDS = ["lawId","lawTitle","lawEvidenceUrl","lawEffectiveDate","lawCurrentCheckedAt"] as const;
+const positiveInteger = (value: unknown): value is number => typeof value==="number" && Number.isSafeInteger(value) && value>0;
+
+/**
+ * 그 사업의 공식 신청 안내를 근거로 등록한 첨부. 안내 원문이 사용처를 밝힌 경우에만 쓰고,
+ * 조례의 존재 여부를 주장하지 않는다. 법령 칸은 모두 빈 문자열이어야 인정한다 —
+ * 안내가 법령 근거로 보이는 일을 막는다. null은 등록 거부, 빈 결과는 기존 조례 방식이다.
+ */
+function agencyAuthorityBasis(e: VerifiedAgencyForm): { basis?: AgencyAuthorityBasis } | null {
+  const value: unknown = e.authorityBasis;
+  if (value===undefined) return {};
+  if (!value || typeof value!=="object" || Array.isArray(value)) return null;
+  const row=value as Record<string,unknown>, entry=e as unknown as Record<string,unknown>;
+  if (Object.keys(row).length!==BASIS_FIELDS.length || BASIS_FIELDS.some(key=>!(key in row))
+      || row.kind!=="official-program" || typeof row.title!=="string" || !row.title.trim()
+      || row.evidenceUrl!==e.sourcePageUrl || row.checkedAt!==e.checkedAt
+      || typeof row.evidenceNote!=="string" || row.evidenceNote.trim().length<30
+      || typeof row.pageSHA256!=="string" || !/^[a-f0-9]{64}$/.test(row.pageSHA256)
+      || AGENCY_LAW_FIELDS.some(key=>entry[key]!=="")
+      || ["annexId","annexNumber"].some(key=>entry[key]!==undefined && entry[key]!=="")) return null;
+  return { basis: row as unknown as AgencyAuthorityBasis };
+}
+
+/**
+ * 글자층이 없는 스캔 PDF 원본(pdf)의 유일한 근거 — 사람이 그 PDF의 모든 페이지를 직접 본 기록이다.
+ * 등록된 바이트(SHA)·확인일·페이지 수에 묶고, pagesRead가 page-1부터 모든 페이지를 순서대로
+ * 담고 sectionsRead와 같아야 한다. 일부만 본 기록이나 다른 PDF는 이 확인을 물려받지 못한다.
+ * pdf만 가질 수 있으며, 글자층이 있는 PDF는 본문 글자로 스스로를 증명해야 한다.
+ */
+function agencyWholePdfReview(e: VerifiedAgencyForm, row: Record<string,unknown>): { review?: AgencyPdfReview } | null {
+  const entry=e as unknown as Record<string,unknown>, pages=row.pageCount;
+  if (entry.format!=="pdf" || Object.keys(row).length!==PDF_REVIEW_FIELDS.length || PDF_REVIEW_FIELDS.some(key=>!(key in row))
+      || row.kind!=="whole-original-pdf" || row.checkedAt!==e.checkedAt || row.sha256!==e.sha256
+      || !positiveInteger(pages) || !Array.isArray(row.pagesRead) || row.pagesRead.length!==pages
+      || row.pagesRead.some((page,index)=>page!==`page-${index+1}`)
+      || row.blankApplicantForm!==true || row.noFilledPersonalData!==true
+      || typeof row.evidenceNote!=="string" || row.evidenceNote.trim().length<30
+      || entry.textScope!=="all_body_sections_or_pages"
+      || !Array.isArray(entry.sectionsRead) || entry.sectionsRead.length!==pages
+      || entry.sectionsRead.some((section,index)=>section!==`page-${index+1}`)) return null;
+  return { review: row as unknown as AgencyPdfReview };
+}
+
+/**
+ * 본문 글자가 없는 이미지 원본(jpg)의 유일한 근거 — 사람이 그 이미지 전체를 직접 본 기록이다.
+ * 등록된 바이트(SHA)·확인일·프레임·픽셀 크기에 묶으므로, 바이트가 바뀌거나 다른 이미지가
+ * 이 확인을 물려받지 못한다. jpg만 가질 수 있고, 본문을 읽을 수 있는 형식은 주장할 수 없다.
+ * null은 등록 거부, 빈 결과는 이미지가 아닌 기존 형식이다. kind가 스캔 PDF면 위의
+ * 페이지 단위 확인으로 넘기므로, 두 형식이 서로의 kind를 주장할 수 없다.
+ */
+function agencyWholeImageReview(e: VerifiedAgencyForm): { review?: AgencyOriginalReview } | null {
+  const value: unknown = e.visualReview, image = (e as unknown as Record<string,unknown>).format==="jpg";
+  if (value===undefined) return image ? null : {};
+  if (!value || typeof value!=="object" || Array.isArray(value)) return null;
+  if ((value as Record<string,unknown>).kind==="whole-original-pdf") return agencyWholePdfReview(e, value as Record<string,unknown>);
+  if (!image) return null;
+  const row=value as Record<string,unknown>, entry=e as unknown as Record<string,unknown>;
+  if (Object.keys(row).length!==VISUAL_FIELDS.length || VISUAL_FIELDS.some(key=>!(key in row))
+      || row.kind!=="whole-original-image" || row.checkedAt!==e.checkedAt || row.sha256!==e.sha256
+      || !positiveInteger(row.width) || !positiveInteger(row.height) || row.frames!==1
+      || row.width*row.height>50_000_000
+      || row.blankApplicantForm!==true || row.noFilledPersonalData!==true
+      || typeof row.evidenceNote!=="string" || row.evidenceNote.trim().length<30
+      || entry.textScope!=="all_original_image_frames"
+      || !Array.isArray(entry.sectionsRead) || entry.sectionsRead.length!==1 || entry.sectionsRead[0]!=="frame-1") return null;
+  return { review: row as unknown as AgencyVisualReview };
+}
+
+/** 공개 메타데이터의 전체 확인이 등록된 확인과 글자 그대로 같은지(프레임·페이지 목록까지). */
+function sameVisualReview(value: unknown, review: AgencyOriginalReview | undefined): boolean {
+  if (review===undefined) return value===undefined;
+  if (!value || typeof value!=="object" || Array.isArray(value)) return false;
+  const row=value as Record<string,unknown>, fields=reviewFields(review), source=review as unknown as Record<string,unknown>;
+  const same=(a: unknown, b: unknown) => Array.isArray(b) ? Array.isArray(a) && a.length===b.length && b.every((item,index)=>a[index]===item) : a===b;
+  return Object.keys(row).length===fields.length && fields.every(key=>same(row[key],source[key]));
+}
+
+/** The existing basis: this municipality's own ordinance page on Law.go.kr. */
+function registeredOrdinanceAuthority(e: VerifiedAgencyForm): boolean {
+  const law = new URL(e.lawEvidenceUrl);
+  return ["www.law.go.kr","law.go.kr"].includes(law.hostname) && ["/ordinInfoP.do","/LSW/ordinInfoP.do"].includes(law.pathname)
+    && law.searchParams.getAll("ordinSeq").length===1 && law.searchParams.get("ordinSeq")===e.lawId && /^\d+$/.test(e.lawId)
+    && [e.lawEffectiveDate,e.lawCurrentCheckedAt].every(exactDay)
+    && e.lawCurrentCheckedAt===e.checkedAt && e.lawEffectiveDate<=e.checkedAt;
+}
+
+/** 공개 메타데이터의 근거가 등록된 근거와 글자 그대로 같은지. */
+function sameAuthorityBasis(value: unknown, basis: AgencyAuthorityBasis | undefined): boolean {
+  if (basis===undefined) return value===undefined;
+  if (!value || typeof value!=="object" || Array.isArray(value)) return false;
+  const row=value as Record<string,unknown>;
+  return Object.keys(row).length===BASIS_FIELDS.length && BASIS_FIELDS.every(key=>row[key]===basis[key]);
+}
 
 export function registeredAgencyForm(id: string): VerifiedAgencyForm | null {
   const e = (verifiedAgencyForms.forms as Record<string, VerifiedAgencyForm>)[id];
   if (!AGENCY_ID.test(id) || !e || e.id !== id || e.sourceKind !== "agency" || id.split("-")[1] !== e.regionCode) return null;
-  if (![e.sourcePageUrl,e.sourceUrl,e.finalUrl,e.authorityEvidenceUrl,e.lawEvidenceUrl,...e.programs.map(p=>p.url)].every(safeAgencyUrl)) return null;
-  const law = new URL(e.lawEvidenceUrl), identity = e.attachmentIdentifier;
+  const checked = agencyAuthorityBasis(e), image = agencyWholeImageReview(e);
+  if (!checked || !image) return null;
+  const basis = checked.basis, review = image.review;
+  if (![e.sourcePageUrl,e.sourceUrl,e.finalUrl,e.authorityEvidenceUrl,...e.programs.map(p=>p.url),...(basis?[]:[e.lawEvidenceUrl])].every(safeAgencyUrl)) return null;
+  const identity = e.attachmentIdentifier;
   const queryIdentity=Object.keys(identity).length===2 && !!identity.queryParam && !AGENCY_SECRET.test(identity.queryParam)
     && identity.value===e.attachmentId && new URL(e.sourceUrl).searchParams.getAll(identity.queryParam).length===1
     && new URL(e.sourceUrl).searchParams.get(identity.queryParam)===e.attachmentId;
   const pathIdentity=Object.keys(identity).length===1 && !!identity.path && identity.path.startsWith("/")
     && identity.path===new URL(e.sourceUrl).pathname && safeAgencyPath(identity.path);
-  if (!["www.law.go.kr","law.go.kr"].includes(law.hostname) || !["/ordinInfoP.do","/LSW/ordinInfoP.do"].includes(law.pathname)
-      || law.searchParams.getAll("ordinSeq").length!==1 || law.searchParams.get("ordinSeq")!==e.lawId || !/^\d+$/.test(e.lawId)
+  if (!exactDay(e.checkedAt) || (!basis && !registeredOrdinanceAuthority(e))
       || !["government","public_institution","delegated"].includes(e.authorityKind)
       || !["government","public_institution"].includes(e.authorityEvidenceKind)
       || (e.authorityEvidenceKind==="government" && !/^(gov\.kr|.+\.(go|gov)\.kr)$/.test(new URL(e.authorityEvidenceUrl).hostname))
       || (e.authorityKind==="delegated" && new URL(e.authorityEvidenceUrl).hostname===new URL(e.sourceUrl).hostname)
-      || e.authorityEvidenceNote.length<30 || ![e.checkedAt,e.lawEffectiveDate,e.lawCurrentCheckedAt].every(exactDay)
-      || e.lawCurrentCheckedAt!==e.checkedAt || e.lawEffectiveDate>e.checkedAt
+      || e.authorityEvidenceNote.length<30
       || (e.publishedAt!==undefined && (!exactDay(e.publishedAt) || e.publishedAt>e.checkedAt))
-      || !/^[a-f0-9]{64}$/.test(e.sha256) || !Number.isSafeInteger(e.bytes) || e.bytes<=0 || !["hwp","hwpx","pdf"].includes(e.format)
+      || !/^[a-f0-9]{64}$/.test(e.sha256) || !Number.isSafeInteger(e.bytes) || e.bytes<=0 || !["hwp","hwpx","pdf","jpg"].includes(e.format)
       || !e.attachmentId || (!queryIdentity && !pathIdentity)
       || !e.programs.length || new Set(e.programs.map(p=>p.id)).size!==e.programs.length
       || !["application","consent","delegation","supporting"].includes(e.role) || !["main","additional","conditional"].includes(e.use)
       || (e.role==="delegation" && e.use!=="conditional") || (e.use==="conditional" && !e.condition)
-      || e.textScope!=="all_body_sections_or_pages" || !e.sectionsRead.length || new Set(e.sectionsRead).size!==e.sectionsRead.length
+      || e.textScope!==(review?.kind==="whole-original-image"?"all_original_image_frames":"all_body_sections_or_pages")
+      || !e.sectionsRead.length || new Set(e.sectionsRead).size!==e.sectionsRead.length
       || !e.applicant || !e.selectedParts.length || e.selectedParts.some(p=>!p.number || !p.title || !p.author || !["main","additional","conditional"].includes(p.use))) return null;
   return e;
+}
+
+/**
+ * 공식 신청 안내를 근거로 등록한 기관 서식의 안내 주소.
+ * 등록된 근거와 글자 그대로 같을 때만 돌려준다 — 법령 근거 자리에는 쓰지 않는다.
+ */
+export function agencyProgramGuideUrl(form: ApplicationForm): string | null {
+  if (form.sourceKind!=="agency" || form.lawUrl!=="") return null;
+  let e: VerifiedAgencyForm;
+  try { e=validateAgencyForm(form); } catch { return null; }
+  return e.authorityBasis ? safeAgencyUrl(e.authorityBasis.evidenceUrl) : null;
 }
 
 /** Exact source/final endpoints only; registering a form never allows its whole host. */
@@ -85,6 +200,7 @@ export function validateAgencyForm(form: ApplicationForm): VerifiedAgencyForm {
       || form.regionCode!==e.regionCode || form.regionLabel!==e.regionLabel || form.annexId!=="" || form.annexNumber!==""
       || form.fetchedAt!==e.checkedAt || form.dateKind!==(e.publishedAt?"published":"checked") || form.effectiveDate!==(e.publishedAt??e.checkedAt)
       || (["agencyName","sourcePageUrl","finalUrl","attachmentId","sha256","bytes","format","checkedAt","authorityEvidenceUrl"] as const).some(k=>a[k]!==e[k])
+      || !sameAuthorityBasis(a.authorityBasis,e.authorityBasis) || !sameVisualReview(a.visualReview,e.visualReview)
       || form.officialPdfUrl || (form.displayTitle!==undefined && form.displayTitle!==e.title)
       || (form.file && (form.file.sha256!==e.sha256 || form.file.bytes!==e.bytes || form.file.format!==e.format
           || form.file.hwp!==`/forms/files/${e.id}-${e.sha256.slice(0,12)}.${e.format}`
@@ -119,7 +235,8 @@ export function externalFormUrl(value: unknown): string | null {
 export function formAssetUrl(value: unknown): string | null {
   if (typeof value!=="string") return null;
   if (/^\/forms\/files\/(ordin|law|rule)-\d+-[a-f0-9]{12}\.(hwp|hwpx|pdf|txt|gif)$/.test(value)) return value;
-  const match=/^\/forms\/files\/(agency-\d{5}-[a-zA-Z0-9][a-zA-Z0-9_-]{0,79})-([a-f0-9]{12})\.(hwp|hwpx|pdf)$/.exec(value);
+  // jpg exists only as a registered agency original; the portal keeps its own formats.
+  const match=/^\/forms\/files\/(agency-\d{5}-[a-zA-Z0-9][a-zA-Z0-9_-]{0,79})-([a-f0-9]{12})\.(hwp|hwpx|pdf|jpg)$/.exec(value);
   const e=match && registeredAgencyForm(match[1]);
   return e && match[2]===e.sha256.slice(0,12) && match[3]===e.format ? value : null;
 }

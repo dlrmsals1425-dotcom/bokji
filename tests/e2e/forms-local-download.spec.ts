@@ -41,6 +41,13 @@ for(const sample of [
   {program:'g30200.gov24-367000000117',form:'ordin-22377331',format:'hwp',instructions:'장수축하금이나 매월 참전명예수당 신청용이 아닙니다.'},
 ]) test(`real ${sample.form} ${sample.format} downloads with original bytes @mobile`,async({page})=>{
   await page.goto(`/p/${sample.program}`);
+  if(sample.municipality){
+    const panel=page.getByTestId('application-forms');
+    await expect(panel).toBeVisible();
+    await expect(panel.getByRole('status')).toHaveCount(0);
+    const chooser=panel.getByLabel('신청할 시·군');
+    if(await chooser.count()) await chooser.selectOption({label:sample.municipality});
+  }
   const button=page.getByTestId('application-forms').locator(`a[download][href="${catalog.forms[sample.form].file!.hwp}"]`);
   await expect(button).toContainText(sample.format.toUpperCase());
   await expect(button).toHaveAttribute('href',catalog.forms[sample.form].file!.hwp);

@@ -10,6 +10,16 @@ ROOT = Path(__file__).resolve().parents[1]
 REGISTRY = json.loads((ROOT/'src/lib/data/verifiedAgencyForms.json').read_text(encoding='utf-8'))['forms']
 AGENCY_ID = re.compile(r'agency-\d{5}-[a-zA-Z0-9][a-zA-Z0-9_-]{0,79}')
 SECRET = re.compile(r'^oc$|api[-_]?key|service[-_]?key|token|secret|password|auth|session|login|email|phone|resident|jumin', re.I)
+LAW_FIELDS = ('lawId', 'lawTitle', 'lawEvidenceUrl', 'lawEffectiveDate', 'lawCurrentCheckedAt')
+BASIS_FIELDS = ('kind', 'title', 'evidenceUrl', 'checkedAt', 'evidenceNote', 'pageSHA256')
+VISUAL_FIELDS = ('kind', 'checkedAt', 'sha256', 'width', 'height', 'frames', 'blankApplicantForm', 'noFilledPersonalData', 'evidenceNote')
+PDF_REVIEW_FIELDS = ('kind', 'checkedAt', 'sha256', 'pageCount', 'pagesRead', 'blankApplicantForm', 'noFilledPersonalData', 'evidenceNote')
+IMAGE_SECTIONS = ['frame-1']
+
+
+def review_fields(review):
+    """Which exact keys this one review kind publishes."""
+    return PDF_REVIEW_FIELDS if review.get('kind') == 'whole-original-pdf' else VISUAL_FIELDS
 
 
 def safe_path(value):
@@ -49,11 +59,99 @@ def valid_day(value):
     except ValueError:return False
 
 
+def official_program_basis(entry):
+    """A curated attachment authorised by the benefit's own official application instructions.
+
+    The reviewed source page states how the attachment is used; this asserts
+    nothing about whether an ordinance exists. Law fields stay empty strings
+    instead of guessing identifiers, so guidance is never published as a law.
+    The basis is bound to the same reviewed page and day as the attachment.
+    """
+    if 'authorityBasis' not in entry:return None
+    basis = entry['authorityBasis']
+    if (not isinstance(basis, dict) or set(basis) != set(BASIS_FIELDS) or basis['kind'] != 'official-program'
+            or not isinstance(basis['title'], str) or not basis['title'].strip()
+            or basis['evidenceUrl'] != entry.get('sourcePageUrl') or basis['checkedAt'] != entry.get('checkedAt')
+            or not isinstance(basis['evidenceNote'], str) or len(basis['evidenceNote'].strip()) < 30
+            or not re.fullmatch(r'[a-f0-9]{64}', str(basis['pageSHA256']))
+            or any(entry.get(k) != '' for k in LAW_FIELDS)
+            or entry.get('annexId', '') != '' or entry.get('annexNumber', '') != ''):
+        raise ValueError('invalid_official_program_authority_basis')
+    return basis
+
+
+def whole_pdf_review(entry, review):
+    """A scanned PDF original has no text layer, so a person's own reading of every rendered page is the evidence.
+
+    It records that each page of these exact bytes was rendered, looked at and
+    found to be a blank applicant form. The PDF reader only counts and extracts;
+    it never decides this. Bound to the registered SHA, day and page count, and
+    pagesRead must name every page in order, so a part-read document, changed
+    bytes or another PDF cannot inherit the review. Only pdf may carry it, and a
+    PDF that does have body text still has to prove itself by that text.
+    """
+    pages = review.get('pageCount')
+    return (isinstance(review, dict) and set(review) == set(PDF_REVIEW_FIELDS)
+            and entry.get('format') == 'pdf' and review['kind'] == 'whole-original-pdf'
+            and review['checkedAt'] == entry.get('checkedAt') and review['sha256'] == entry.get('sha256')
+            and type(pages) is int and pages > 0
+            and review['pagesRead'] == [f'page-{i}' for i in range(1, pages+1)]
+            and review['blankApplicantForm'] is True and review['noFilledPersonalData'] is True
+            and isinstance(review['evidenceNote'], str) and len(review['evidenceNote'].strip()) >= 30
+            and entry.get('textScope') == 'all_body_sections_or_pages'
+            and entry.get('sectionsRead') == review['pagesRead'])
+
+
+def whole_image_review(entry):
+    """A scanned original has no body text, so a person's own reading of the whole image is the evidence.
+
+    It records that every frame of these exact bytes was looked at and found to
+    be a blank applicant form. The reader only decodes the image; it never
+    decides this. Bound to the registered SHA, day and pixel size, so changed
+    bytes or another image cannot inherit the review. Only jpg may carry it —
+    a format whose body text is readable must prove itself by that text.
+    A pdf original carries the page-based review above instead; neither format
+    can claim the other's kind.
+    """
+    image = entry.get('format') == 'jpg'
+    if 'visualReview' not in entry:
+        if image:raise ValueError('image_original_lacks_whole_image_review')
+        return None
+    review = entry['visualReview']
+    if isinstance(review, dict) and review.get('kind') == 'whole-original-pdf':
+        if not whole_pdf_review(entry, review):raise ValueError('invalid_whole_pdf_review')
+        return review
+    if (not image or not isinstance(review, dict) or set(review) != set(VISUAL_FIELDS)
+            or review['kind'] != 'whole-original-image' or review['checkedAt'] != entry.get('checkedAt')
+            or review['sha256'] != entry.get('sha256')
+            or any(type(review[k]) is not int or review[k] <= 0 for k in ('width', 'height'))
+            or review['width'] * review['height'] > 50_000_000
+            or type(review['frames']) is not int or review['frames'] != 1
+            or review['blankApplicantForm'] is not True or review['noFilledPersonalData'] is not True
+            or not isinstance(review['evidenceNote'], str) or len(review['evidenceNote'].strip()) < 30
+            or entry.get('textScope') != 'all_original_image_frames' or entry.get('sectionsRead') != IMAGE_SECTIONS):
+        raise ValueError('invalid_whole_image_review')
+    return review
+
+
+def ordinance_authority(entry, law):
+    """The existing basis: this municipality's own ordinance page on Law.go.kr."""
+    return (law.hostname in ('law.go.kr', 'www.law.go.kr')
+            and law.path in ('/ordinInfoP.do', '/LSW/ordinInfoP.do')
+            and [v for k, v in parse_qsl(law.query) if k == 'ordinSeq'] == [entry.get('lawId')]
+            and str(entry.get('lawId', '')).isdigit()
+            and all(valid_day(entry.get(k)) for k in ('lawEffectiveDate', 'lawCurrentCheckedAt'))
+            and entry['lawCurrentCheckedAt'] == entry['checkedAt'] and entry['lawEffectiveDate'] <= entry['checkedAt'])
+
+
 def registry_entry(form_id):
     entry = REGISTRY.get(form_id)
     if not isinstance(entry, dict) or not AGENCY_ID.fullmatch(str(form_id)):
         raise ValueError('unregistered_agency_form')
-    urls = [entry.get(k) for k in ('sourcePageUrl', 'sourceUrl', 'finalUrl', 'authorityEvidenceUrl', 'lawEvidenceUrl')]
+    basis = official_program_basis(entry)
+    visual = whole_image_review(entry)
+    urls = [entry.get(k) for k in ('sourcePageUrl', 'sourceUrl', 'finalUrl', 'authorityEvidenceUrl')]
+    if not basis:urls.append(entry.get('lawEvidenceUrl'))
     law = urlsplit(str(entry.get('lawEvidenceUrl', '')))
     identity = entry.get('attachmentIdentifier') or {}
     programs = entry.get('programs') or []
@@ -75,16 +173,12 @@ def registry_entry(form_id):
             or (entry['authorityEvidenceKind'] == 'government' and not government_authority)
             or (entry['authorityKind'] == 'delegated' and authority.hostname == urlsplit(entry['sourceUrl']).hostname)
             or len(entry.get('authorityEvidenceNote', '')) < 30
-            or law.hostname not in ('law.go.kr', 'www.law.go.kr')
-            or law.path not in ('/ordinInfoP.do', '/LSW/ordinInfoP.do')
-            or [v for k, v in parse_qsl(law.query) if k == 'ordinSeq'] != [entry.get('lawId')]
-            or not str(entry.get('lawId', '')).isdigit()
-            or not all(valid_day(entry.get(k)) for k in ('checkedAt', 'lawEffectiveDate', 'lawCurrentCheckedAt'))
-            or entry['lawCurrentCheckedAt'] != entry['checkedAt'] or entry['lawEffectiveDate'] > entry['checkedAt']
+            or not valid_day(entry.get('checkedAt'))
+            or (not basis and not ordinance_authority(entry, law))
             or (entry.get('publishedAt') is not None and (not valid_day(entry['publishedAt']) or entry['publishedAt'] > entry['checkedAt']))
             or not re.fullmatch(r'[a-f0-9]{64}', str(entry.get('sha256', '')))
             or type(entry.get('bytes')) is not int or entry['bytes'] <= 0
-            or entry.get('format') not in ('hwp', 'hwpx', 'pdf')
+            or entry.get('format') not in ('hwp', 'hwpx', 'pdf', 'jpg')
             or not entry.get('attachmentId') or not (query_identity or path_identity)
             or not programs or any(not p.get('id') or not safe_url(p.get('url')) for p in programs)
             or len({p['id'] for p in programs}) != len(programs)
@@ -92,7 +186,7 @@ def registry_entry(form_id):
             or entry.get('use') not in ('main', 'additional', 'conditional')
             or (entry['role'] == 'delegation' and entry['use'] != 'conditional')
             or (entry['use'] == 'conditional' and not entry.get('condition'))
-            or entry.get('textScope') != 'all_body_sections_or_pages'
+            or entry.get('textScope') != ('all_original_image_frames' if (visual or {}).get('kind') == 'whole-original-image' else 'all_body_sections_or_pages')
             or not entry.get('sectionsRead') or len(set(entry['sectionsRead'])) != len(entry['sectionsRead'])
             or not parts or not entry.get('applicant')
             or any(not all(isinstance(p.get(k), str) and p[k].strip() for k in ('number', 'title', 'author'))
@@ -112,7 +206,13 @@ def validate_form(form):
 
 
 def agency_metadata(e):
-    return {k: e[k] for k in ('agencyName', 'sourcePageUrl', 'finalUrl', 'attachmentId', 'sha256', 'bytes', 'format', 'checkedAt', 'authorityEvidenceUrl')}
+    data = {k: e[k] for k in ('agencyName', 'sourcePageUrl', 'finalUrl', 'attachmentId', 'sha256', 'bytes', 'format', 'checkedAt', 'authorityEvidenceUrl')}
+    # Only a registered programme basis is published, and only as its own field.
+    if e.get('authorityBasis') is not None:data['authorityBasis'] = {k: e['authorityBasis'][k] for k in BASIS_FIELDS}
+    # Only a scanned original publishes a whole-original review, and only its
+    # own keys for the kind it actually is.
+    if e.get('visualReview') is not None:data['visualReview'] = {k: e['visualReview'][k] for k in review_fields(e['visualReview'])}
+    return data
 
 
 def validate_program(e, program, record):
@@ -131,10 +231,24 @@ def validate_program(e, program, record):
 
 def verify_original(form_id, data, info):
     e = registry_entry(form_id)
+    visual = e.get('visualReview')
     if (len(data) != e['bytes'] or hashlib.sha256(data).hexdigest() != e['sha256']
             or info.get('format') != e['format'] or info.get('textScope') != e['textScope']
-            or info.get('sectionsRead') != e['sectionsRead'] or not info.get('text', '').strip()):
+            or info.get('sectionsRead') != e['sectionsRead']):
         raise ValueError('agency_original_bytes_or_full_body_mismatch')
+    # Empty extracted text is accepted only for a reviewed whole-original scan,
+    # and then the actual frames/pixel size or the actual pages must be the
+    # reviewed ones. A PDF that does carry text keeps the ordinary body gate.
+    if not visual:
+        if not info.get('text', '').strip():raise ValueError('agency_original_bytes_or_full_body_mismatch')
+    elif visual['kind'] == 'whole-original-pdf':
+        if (info.get('format') != 'pdf' or info.get('text') != '' or info.get('textLength') != 0
+                or len(info.get('sectionsRead') or []) != visual['pageCount']
+                or info.get('sectionsRead') != visual['pagesRead']):
+            raise ValueError('agency_pdf_original_differs_from_whole_pdf_review')
+    elif (info.get('text') != '' or info.get('textLength') != 0 or info.get('imageFrames') != visual['frames']
+            or info.get('imageWidth') != visual['width'] or info.get('imageHeight') != visual['height']):
+        raise ValueError('agency_image_original_differs_from_whole_image_review')
     return e
 
 
@@ -146,7 +260,8 @@ def prepare_review(record, inspect_document):
     expected.update(formTitle=e['title'], originalFormat=e['format'], publishedAt=e.get('publishedAt'),
         dateKind='published' if e.get('publishedAt') else 'checked', effectiveDate=e.get('publishedAt') or e['checkedAt'],
         selectedParts=e['selectedParts'], reviewedParts=e['selectedParts'], annexId='', annexNumber='',
-        roleEvidenceUrl=e['sourceUrl'], roleCheckedAt=e['checkedAt'])
+        roleEvidenceUrl=e['sourceUrl'], roleCheckedAt=e['checkedAt'], authorityBasis=e.get('authorityBasis'),
+        visualReview=e.get('visualReview'))
     if (any(record.get(k) != v for k, v in expected.items())
             or record.get('verificationStatus') != 'verified' or record.get('officialAttachmentMatched') is not True
             or record.get('fullBodyReviewed') is not True or len(str(record.get('roleBasis', ''))) < 30

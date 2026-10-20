@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import type { Program } from "@/lib/data/types";
 import { lawPortalUrl, loadProgramForms, type LoadedProgramForms } from "@/lib/client/forms";
-import { externalFormUrl, formAssetUrl, agencyFormUrl } from "@/lib/data/formPublication";
+import { externalFormUrl, formAssetUrl, agencyFormUrl, agencyProgramGuideUrl } from "@/lib/data/formPublication";
 import { FORM_STATUS_LABEL, INVESTIGATION_LABEL, INVESTIGATION_NOTE, publicSourceUrl, type ApplicationForm } from "@/lib/data/forms";
 import styles from "./ApplicationForms.module.css";
 
@@ -11,6 +11,10 @@ const SOURCE_LABEL = { ordin: "조례", law: "법령", rule: "행정규칙", age
 const DATE_LABEL = { effective: "시행일", promulgated: "공포일", issued: "발령일", published: "게시일", checked: "공식배포 확인일" } as const;
 const FILE_TYPE = /\.(hwpx?|pdf|docx?|xlsx?|zip)(?:$|[?#])/i;
 const number = (value: number) => value.toLocaleString("ko-KR");
+const sourceKey = (value: string) => {
+  try { const url = new URL(value); url.searchParams.sort(); return url.href; }
+  catch { return value; }
+};
 const formTitle = (form: ApplicationForm) => {
   if (form.displayTitle) return form.displayTitle;
   const shortened = form.title.replace(/^\[.*?\]\s*/, "").trim();
@@ -23,9 +27,10 @@ export function basisText(form: ApplicationForm) {
   return `근거 ${kind} ${DATE_LABEL[form.dateKind ?? "effective"]} ${form.effectiveDate}`;
 }
 
-export function ApplicationForms({ program, parentMode = false }: { program: Program; parentMode?: boolean }) {
+export function ApplicationForms({ program, parentMode = false, preferredSigungu }: { program: Program; parentMode?: boolean; preferredSigungu?: string | null }) {
   const [result, setResult] = useState<{ id: string; value: LoadedProgramForms | null } | null>(null);
   const [attempt, setAttempt] = useState(0);
+  const [selectedMunicipality, setSelectedMunicipality] = useState<string | null>(null);
   useEffect(() => {
     let alive = true;
     loadProgramForms(program.id).then(value => { if (alive) setResult({ id: program.id, value }); });
@@ -33,6 +38,14 @@ export function ApplicationForms({ program, parentMode = false }: { program: Pro
   }, [program.id, attempt]);
   const loading = !result || result.id !== program.id;
   const data = loading ? null : result.value;
+  const municipalities = [...new Map((data?.entry.links ?? []).flatMap(link => link.municipalApplicationReference
+    ? [[link.municipalApplicationReference.sigungu, link.municipalApplicationReference.municipality] as const] : [])).entries()]
+    .sort((a, b) => a[1].localeCompare(b[1], "ko"));
+  const chooseMunicipality = municipalities.length > 1;
+  const hasCommonForm = (data?.entry.links ?? []).some(link => !link.municipalApplicationReference);
+  const municipality = selectedMunicipality ?? (municipalities.some(([code]) => code === preferredSigungu) ? preferredSigungu! : "");
+  const visibleLinks = (data?.entry.links ?? []).filter(link => !chooseMunicipality || !link.municipalApplicationReference
+    || link.municipalApplicationReference.sigungu === municipality);
   const official = externalFormUrl(program.url);
   const online = externalFormUrl(data?.entry.applyUrl);
   const portal = data?.entry.portalSearch;
@@ -44,7 +57,9 @@ export function ApplicationForms({ program, parentMode = false }: { program: Pro
   const candidateCount = Math.max(portal?.candidateCount ?? 0, (data?.entry.candidateFormIds ?? []).length, candidates.length);
   const census = data?.entry.investigation;
   // 공식 안내 페이지의 첨부자료는 '찾은 자료'일 뿐 승인한 신청서가 아니다 — 목록을 따로 둔다.
-  const attachments = (census?.sourceLinks ?? []).filter(link => link.kind === "attachment" && publicSourceUrl(link.url));
+  const approvedSources = new Set((data?.forms ?? []).flatMap(form => [form.sourceUrl, ...(form.agency ? [form.agency.finalUrl] : [])]).map(sourceKey));
+  const attachments = (census?.sourceLinks ?? []).filter(link => link.kind === "attachment" && publicSourceUrl(link.url)
+    && !approvedSources.has(sourceKey(link.url)));
   const pages = (census?.sourceLinks ?? []).filter(link => link.kind === "official_page" && publicSourceUrl(link.url));
   const hidden = (census?.sourceLinkTotal ?? 0) - (census?.sourceLinks.length ?? 0);
   const hiddenNames = (census?.documentNameTotal ?? 0) - (census?.documentNames.length ?? 0);
@@ -60,14 +75,25 @@ export function ApplicationForms({ program, parentMode = false }: { program: Pro
         <>
           <p>아래는 원문과의 연결을 확인한 작성용 서식이에요. 접수기관의 신청 안내도 함께 확인해 주세요.</p>
           {!data.entry.links.some(link => link.use === "main") && <p className={styles.note}>현재 연결한 것은 함께 준비하거나 해당되는 경우에 내는 서류예요. 주신청서와 전체 구비서류는 공식 신청 안내에서 확인해 주세요.</p>}
+          {chooseMunicipality && <div className={styles.municipalityPicker}>
+            <label htmlFor="application-forms-municipality">신청할 시·군</label>
+            <select id="application-forms-municipality" value={municipality} onChange={event => setSelectedMunicipality(event.target.value)}>
+              <option value="">{hasCommonForm ? "공통 서식 보기" : "시·군을 선택해 주세요"}</option>
+              {municipalities.map(([code, name]) => <option key={code} value={code}>{name}</option>)}
+            </select>
+            <p className="small muted">{hasCommonForm ? "지역을 선택하면 공통 서식과 해당 시·군의 신청서를 함께 보여드려요." : "지역을 선택하면 해당 시·군의 신청서를 보여드려요."}</p>
+          </div>}
           <ul className={styles.files}>
-            {data.entry.links.map(link => {
+            {visibleLinks.map(link => {
               const form = data.forms.find(item => item.id === link.formId)!;
               const title = link.displayTitle ?? formTitle(form);
                const agencySource = form.sourceKind === "agency" ? agencyFormUrl(form.id, form.sourceUrl) : null;
+              const lawSource = lawPortalUrl(form.lawUrl);
+              // 공식 신청 안내를 근거로 등록한 기관 서식 — 없는 법령 원문 대신 그 안내를 그대로 연다.
+              const programGuide = lawSource ? null : agencyProgramGuideUrl(form);
               const hwp = formAssetUrl(form.file?.hwp), pdf = formAssetUrl(form.file?.pdf);
               const format = form.file?.format ?? (hwp?.endsWith(".hwpx") ? "hwpx" : "hwp");
-              const downloadLabel = format === "hwp" || format === "hwpx" ? "한글 원본 받기" : format === "txt" ? "텍스트 원본 받기" : format === "gif" ? "이미지 원본 받기" : "PDF 원본 받기";
+              const downloadLabel = format === "hwp" || format === "hwpx" ? "한글 원본 받기" : format === "txt" ? "텍스트 원본 받기" : format === "gif" || format === "jpg" ? "이미지 원본 받기" : "PDF 원본 받기";
               // 받아 둔 파일이 없는 서식은 법령포털 원본을 그대로 연다 (후보가 아니라 연결을 확인한 서식만 여기 온다).
               const original = hwp ? null : lawPortalUrl(form.sourceUrl);
               const preview = pdf ?? (original ? lawPortalUrl(form.officialPdfUrl) : null);
@@ -78,11 +104,11 @@ export function ApplicationForms({ program, parentMode = false }: { program: Pro
                 {link.condition && <p>{link.condition}</p>}
                 <div className={styles.actions}>
                   {preview && <a className="btn btn-primary" href={preview} target="_blank" rel="noopener noreferrer">서식 보기·인쇄 <span className="sr-only">(PDF, 새 창)</span></a>}
-                  {hwp && <a className={`btn ${pdf ? "btn-ghost" : "btn-primary"}`} href={hwp} download={title.replace(/\.(hwpx?|pdf|txt|gif)$/i, "") + "." + format}>{downloadLabel} <span>({format.toUpperCase()})</span></a>}
+                  {hwp && <a className={`btn ${pdf ? "btn-ghost" : "btn-primary"}`} href={hwp} download={title.replace(/\.(hwpx?|pdf|txt|gif|jpe?g)$/i, "") + "." + format}>{downloadLabel} <span>({format.toUpperCase()})</span></a>}
                   {original && <a className={`btn ${preview ? "btn-ghost" : "btn-primary"}`} href={original} target="_blank" rel="noopener noreferrer">법령포털 원본 받기{originalType ? ` (${originalType})` : ""}<span className="sr-only"> (새 창)</span></a>}
                 </div>
                 <p className={styles.dates}>{basisText(form)} · 연결 확인일 {link.checkedAt}</p>
-                <p className={styles.source}><a href={agencySource ?? (original ? lawPortalUrl(form.lawUrl) ?? original : externalFormUrl(form.sourceUrl)!)} target="_blank" rel="noopener noreferrer">{original ? "근거 법령 원문" : "공식 서식 원본"}<span className="sr-only"> (새 창)</span></a>{agencySource && lawPortalUrl(form.lawUrl) && <> · <a href={lawPortalUrl(form.lawUrl)!} target="_blank" rel="noopener noreferrer">근거 조례 원문<span className="sr-only"> (새 창)</span></a></>}{externalFormUrl(link.evidenceUrl) && <> · <a href={externalFormUrl(link.evidenceUrl)!} target="_blank" rel="noopener noreferrer">신청 근거 확인<span className="sr-only"> (새 창)</span></a></>}</p>
+                <p className={styles.source}><a href={agencySource ?? (original ? lawSource ?? original : externalFormUrl(form.sourceUrl)!)} target="_blank" rel="noopener noreferrer">{original ? "근거 법령 원문" : "공식 서식 원본"}<span className="sr-only"> (새 창)</span></a>{agencySource && lawSource && <> · <a href={lawSource} target="_blank" rel="noopener noreferrer">근거 조례 원문<span className="sr-only"> (새 창)</span></a></>}{agencySource && programGuide && <> · <a href={programGuide} target="_blank" rel="noopener noreferrer">공식 신청 안내<span className="sr-only"> (새 창)</span></a></>}{externalFormUrl(link.evidenceUrl) && <> · <a href={externalFormUrl(link.evidenceUrl)!} target="_blank" rel="noopener noreferrer">신청 근거 확인<span className="sr-only"> (새 창)</span></a></>}</p>
               </li>;
             })}
           </ul>

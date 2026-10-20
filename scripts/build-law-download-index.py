@@ -70,8 +70,11 @@ def inventory_reviews(root, published):
         supplemental = directory/name
         if supplemental.exists():
             scope = dict(scope, forms=[*scope['forms'], *read(supplemental)['forms']])
+    for supplemental in sorted(directory.glob('gyeonggi-portal-originals-scope-round*.json')):
+        scope = dict(scope, forms=[*scope['forms'], *read(supplemental)['forms']])
     paths = (set(progress.review_paths(root)) | set(directory.glob('prior-edition-dispositions-*.json'))
-             | set(directory.glob('current-replacement-dispositions-*.json')) | set(directory.glob('agency-dispositions-round*.json')))
+             | set(directory.glob('current-replacement-dispositions-*.json')) | set(directory.glob('agency-dispositions-round*.json'))
+             | set(directory.glob('gyeonggi-portal-dispositions-round*.json')))
     reports = [(p.relative_to(root).as_posix(), read(p)) for p in sorted(paths) if p.exists()]
     return {row['formId']: row for row in progress.reconcile(scope, reports, published)['forms']}
 

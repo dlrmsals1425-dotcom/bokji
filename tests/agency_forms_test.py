@@ -23,6 +23,26 @@ ROW = json.loads((ROOT/'tests/fixtures/forms/agency-44250-36032-review.json').re
 BYTES = (ROOT/ROW['originalPath']).read_bytes()
 PROGRAM = {'id': ROW['programIds'][0], 'name': '화장장려금 지원', 'scope': 'sigungu',
            'region': {'sido': '44000', 'sigungu': '44250'}, 'url': ROW['programEvidenceUrl'], 'laws': [ROW['lawTitle']]}
+# 공식 신청 안내를 근거로 등록한 경우를 시험하는 합성 등록분. 실제 원문 바이트와 같은
+# 첨부를 쓰고 자료로 공개하지 않는다(시험 중에만 REGISTRY에 끼워 넣는다).
+BASIS_ID = 'agency-44250-36032-notice'
+BASIS = {'kind': 'official-program', 'title': '계룡시 화장장려금 지원 신청 안내',
+         'evidenceUrl': ROW['sourcePageUrl'], 'checkedAt': ROW['checkedAt'],
+         'evidenceNote': '안내문의 처리절차는 신청인이 이 첨부 서식을 작성해 가족돌봄과에 제출하는 단계이며, 첨부 36032는 그 신청에 쓰는 신청서다.',
+         'pageSHA256': 'a'*64}
+EMPTY_LAW = {'lawId': '', 'lawTitle': '', 'lawEvidenceUrl': '', 'lawEffectiveDate': '', 'lawCurrentCheckedAt': ''}
+
+
+def official_entry():
+    entry = copy.deepcopy(prepare.agency.REGISTRY[FID])
+    entry.update(id=BASIS_ID, authorityBasis=copy.deepcopy(BASIS), **EMPTY_LAW)
+    return entry
+
+
+def official_row():
+    row = copy.deepcopy(ROW)
+    row.update(formId=BASIS_ID, authorityBasis=copy.deepcopy(BASIS), **EMPTY_LAW)
+    return row
 
 
 class AgencyFormsTest(unittest.TestCase):
@@ -31,6 +51,10 @@ class AgencyFormsTest(unittest.TestCase):
         with tempfile.TemporaryDirectory(prefix='agency-review-') as folder:
             file = Path(folder)/'review.json'; file.write_text(json.dumps({'rows': [row]}), encoding='utf-8')
             return prepare.build({program['id']: program}, [file])
+
+    def build_official(self, entry=None, row=None):
+        with patch.dict(prepare.agency.REGISTRY, {BASIS_ID: entry or official_entry()}):
+            return self.build(row if row is not None else official_row())
 
     def test_actual_blank_original_passes_without_inventing_portal_annex(self):
         result = self.build(); form = result['forms'][FID]
@@ -68,6 +92,78 @@ class AgencyFormsTest(unittest.TestCase):
                            ('lawCurrentCheckedAt', '2025-01-01')]:
             row = copy.deepcopy(ROW); row[key] = value
             with self.subTest(key=key), self.assertRaises(ValueError):self.build(row)
+
+    def test_official_program_guidance_passes_without_inventing_an_ordinance(self):
+        form = self.build_official()['forms'][BASIS_ID]
+        self.assertEqual(form['lawUrl'], '')
+        self.assertEqual((form['lawId'], form['lawTitle']), ('', ''))
+        self.assertEqual((form['annexId'], form['annexNumber']), ('', ''))
+        self.assertEqual(form['agency']['authorityBasis'], BASIS)
+        self.assertEqual((form['agency']['sha256'], form['agency']['sourcePageUrl']), (ROW['sha256'], ROW['sourcePageUrl']))
+        self.assertEqual(self.build_official()['auditedRoles'][BASIS_ID]['sectionsRead'], ['BodyText/Section0'])
+        # 기존 조례 등록분은 그대로 — 근거 법령과 날짜 의미가 바뀌지 않는다.
+        ordinance = self.build()['forms'][FID]
+        self.assertEqual(ordinance['lawUrl'], ROW['lawEvidenceUrl'])
+        self.assertNotIn('authorityBasis', ordinance['agency'])
+
+    def test_official_program_basis_must_match_the_reviewed_page_and_day(self):
+        for key, value in [('kind', 'official-law'), ('kind', 'ordinance'), ('title', '   '), ('title', 42),
+                           ('evidenceUrl', ROW['sourceUrl']), ('evidenceUrl', ROW['authorityEvidenceUrl']+'&x=1'),
+                           ('checkedAt', '2026-10-18'), ('checkedAt', '2026-10-20'),
+                           ('evidenceNote', '안내 확인함'), ('pageSHA256', 'A'*64), ('pageSHA256', 'a'*63),
+                           ('pageSHA256', '')]:
+            entry = official_entry(); entry['authorityBasis'][key] = value
+            with self.subTest(key=key, value=value), self.assertRaises(ValueError):self.build_official(entry)
+        # 근거가 없으면 법령 칸을 비운 것만으로는 등록되지 않는다.
+        entry = official_entry(); del entry['authorityBasis']
+        with self.assertRaises(ValueError):self.build_official(entry)
+        for change in ['missing', 'extra', 'list', 'empty', 'text']:
+            entry = official_entry()
+            if change == 'missing':del entry['authorityBasis']['pageSHA256']
+            elif change == 'extra':entry['authorityBasis']['lawId'] = ROW['lawId']
+            elif change == 'list':entry['authorityBasis'] = [copy.deepcopy(BASIS)]
+            elif change == 'empty':entry['authorityBasis'] = {}
+            else:entry['authorityBasis'] = 'official-program'
+            with self.subTest(change=change), self.assertRaises(ValueError):self.build_official(entry)
+
+    def test_official_program_mode_refuses_any_law_or_annex_identity(self):
+        for key, value in [('lawId', ROW['lawId']), ('lawTitle', ROW['lawTitle']),
+                           ('lawEvidenceUrl', ROW['lawEvidenceUrl']), ('lawEffectiveDate', ROW['lawEffectiveDate']),
+                           ('lawCurrentCheckedAt', ROW['checkedAt']), ('annexId', '17575933'), ('annexNumber', '1')]:
+            entry = official_entry(); entry[key] = value
+            with self.subTest(key=key), self.assertRaises(ValueError):self.build_official(entry)
+        for key in EMPTY_LAW:
+            entry = official_entry(); del entry[key]
+            with self.subTest(missing=key), self.assertRaises(ValueError):self.build_official(entry)
+        # 조례 등록분이 공식 안내 근거를 함께 들고 올 수는 없다.
+        entry = copy.deepcopy(prepare.agency.REGISTRY[FID]); entry['authorityBasis'] = copy.deepcopy(BASIS)
+        with patch.dict(prepare.agency.REGISTRY, {FID: entry}), self.assertRaises(ValueError):
+            prepare.agency.registry_entry(FID)
+
+    def test_official_program_review_row_is_bound_to_the_registered_basis(self):
+        for change in ['missing', 'title', 'page', 'day', 'law']:
+            row = official_row()
+            if change == 'missing':del row['authorityBasis']
+            elif change == 'title':row['authorityBasis']['title'] = '다른 사업 안내'
+            elif change == 'page':row['authorityBasis']['evidenceUrl'] = ROW['sourceUrl']
+            elif change == 'day':row['authorityBasis']['checkedAt'] = '2026-10-18'
+            else:row.update(lawId=ROW['lawId'], lawTitle=ROW['lawTitle'], lawEvidenceUrl=ROW['lawEvidenceUrl'])
+            with self.subTest(change=change), self.assertRaises(ValueError):self.build_official(row=row)
+        # 조례 등록분의 검토 행에 공식 안내 근거를 더하는 것도 막는다.
+        row = copy.deepcopy(ROW); row['authorityBasis'] = copy.deepcopy(BASIS)
+        with self.assertRaises(ValueError):self.build(row)
+
+    def test_official_program_mode_keeps_source_identity_and_host_gates(self):
+        for key, value in [('sourceUrl', ROW['sourceUrl']+'&session=secret'), ('sha256', '0'*64),
+                           ('authorityEvidenceNote', ''), ('authorityEvidenceUrl', 'https://private.example.org/notice'),
+                           ('attachmentId', '999'), ('sourcePageUrl', 'http://gyeryong.go.kr/kr/html/sub01/0102.html')]:
+            entry = official_entry(); entry[key] = value
+            with self.subTest(key=key), self.assertRaises(ValueError):self.build_official(entry)
+        with patch.dict(prepare.agency.REGISTRY, {BASIS_ID: official_entry()}):
+            self.assertEqual(prepare.agency.registry_entry(BASIS_ID)['sourceUrl'], ROW['sourceUrl'])
+            self.assertFalse(download.agency.safe_url(''))
+        # 끼워 넣은 등록분은 시험이 끝나면 남지 않는다.
+        with self.assertRaisesRegex(ValueError, 'unregistered_agency_form'):prepare.agency.registry_entry(BASIS_ID)
 
     def test_path_escape_is_rejected_before_reading(self):
         for target in ['../outside.hwp', str((ROOT.parent/'outside.hwp').resolve()), 'tests/fixtures/forms/../outside.hwp']:
@@ -112,7 +208,7 @@ class AgencyFormsTest(unittest.TestCase):
 
     def test_registry_still_rejects_credentials_and_requires_delegation_authority(self):
         for changes in [{'sourceUrl': ROW['sourceUrl']+'&session=secret'},
-                        {'authorityKind': 'delegated'}, {'authorityEvidenceNote': ''}]:
+                        {'authorityKind': 'delegated'}, {'authorityEvidenceNote': ''}, {'authorityBasis': None}]:
             e = copy.deepcopy(download.agency.REGISTRY[FID]); e.update(changes)
             with patch.dict(download.agency.REGISTRY, {FID: e}), self.assertRaises(ValueError):
                 download.agency.registry_entry(FID)

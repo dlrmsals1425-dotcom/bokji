@@ -7,7 +7,7 @@ import type { Program } from "../src/lib/data/types";
 import type { ApplicationForm, FormFileFormat, FormLink, FormsRegion, FormsCoverage, ProgramFormEntry, FormStatus } from "../src/lib/data/forms";
 import { normalizeCensus, censusLinkConflict } from "../src/lib/data/forms";
 import { classifyFormRole, findFormCandidates } from "../src/lib/data/formMatching";
-import { applicationRoute, formStatus, foundAttachmentSignal, validateFormLink, externalFormUrl, officialFormUrl, registeredAgencyForm, validateAgencyForm } from "../src/lib/data/formPublication";
+import { applicationRoute, formStatus, foundAttachmentSignal, validateFormLink, externalFormUrl, officialFormUrl, registeredAgencyForm, validateAgencyForm, type VerifiedAgencyForm } from "../src/lib/data/formPublication";
 import { detailBucket } from "../src/lib/data/bucket";
 
 export interface DownloadRecord {
@@ -20,6 +20,14 @@ export interface DownloadManifest { schema: 1; forms: Record<string, DownloadRec
 export interface StoredOriginal { bytes: Buffer; format: FormFileFormat; pdf?: Buffer }
 const digestOf = (bytes: Buffer) => createHash("sha256").update(bytes).digest("hex");
 const recordObject = (value: unknown): value is Record<string, unknown> => !!value && typeof value === "object" && !Array.isArray(value);
+/** Match the downloader's exact endpoints and unambiguous attachment identity. */
+function officialDownloadUrl(value: unknown): string | null {
+  const safe = officialFormUrl(value);
+  if (!safe) return null;
+  const url = new URL(safe), ids = url.searchParams.getAll("flSeq");
+  return ["/flDownload.do", "/LSW/flDownload.do", "/LSW/flDownloadPdf.do"].includes(url.pathname)
+    && ids.length === 1 && /^\d+$/.test(ids[0]) ? safe : null;
+}
 
 function archivedMember(archive: Buffer, expectedName: string): Buffer {
   const end=archive.lastIndexOf(Buffer.from([0x50,0x4b,0x05,0x06]));
@@ -53,7 +61,10 @@ export function validateDownloadManifest(value: unknown): DownloadManifest {
   if (!recordObject(value) || value.schema !== 1 || !recordObject(value.forms)) throw new Error("Invalid download manifest schema");
   for (const [id, entry] of Object.entries(value.forms)) {
     const agency=registeredAgencyForm(id);
-    if ((!/^(ordin|law|rule)-\d+$/.test(id) && !agency) || !recordObject(entry) || !["hwp", "hwpx", "pdf", "txt", "gif"].includes(String(entry.format))) throw new Error("Invalid downloaded form id/format");
+    // An image original is only ever a registered agency attachment; the law
+    // portal keeps exactly the formats it already had.
+    const formats=agency?["hwp", "hwpx", "pdf", "jpg"]:["hwp", "hwpx", "pdf", "txt", "gif"];
+    if ((!/^(ordin|law|rule)-\d+$/.test(id) && !agency) || !recordObject(entry) || !formats.includes(String(entry.format))) throw new Error("Invalid downloaded form id/format");
     if (agency && (entry.sourceUrl!==agency.sourceUrl || entry.finalUrl!==agency.finalUrl || entry.sha256!==agency.sha256
         || entry.bytes!==agency.bytes || entry.format!==agency.format || entry.pdf!==undefined || entry.archive!==undefined)) throw new Error("Agency download identity mismatch: "+id);
     if (entry.path !== `originals/${id}.${entry.format}`) throw new Error("Downloaded original path/id mismatch: " + id);
@@ -63,18 +74,118 @@ export function validateDownloadManifest(value: unknown): DownloadManifest {
     if (entry.pdf !== undefined) {
       const pdf=entry.pdf as Record<string,unknown>;
       if (pdf.path !== `previews/${id}.pdf`) throw new Error("Downloaded PDF path/id mismatch: " + id);
-      const url=officialFormUrl(pdf.sourceUrl);
-      if (!url || !/\/flDownload(?:Pdf)?\.do$/.test(new URL(url).pathname) || !/^\d+$/.test(new URL(url).searchParams.get("flSeq")||"")) throw new Error("Invalid official PDF source: "+id);
+      if (!officialDownloadUrl(pdf.sourceUrl)) throw new Error("Invalid official PDF source: "+id);
     }
     if (entry.archive !== undefined) {
       const archive = entry.archive as Record<string, unknown>;
       if (archive.path !== `source-archives/${id}.zip` || typeof archive.member !== "string" || !/\.hwpx?$/i.test(archive.member)) throw new Error("Invalid source archive/member: " + id);
     }
-    const sourceUrl = officialFormUrl(entry.sourceUrl);
-    if (!agency && (!sourceUrl || !new URL(sourceUrl).pathname.endsWith("/flDownload.do") || !/^\d+$/.test(new URL(sourceUrl).searchParams.get("flSeq") || ""))) throw new Error("Downloaded source must be an official attachment: " + id);
+    if (!agency && !officialDownloadUrl(entry.sourceUrl)) throw new Error("Downloaded source must be an official attachment: " + id);
     if (typeof entry.downloadedAt !== "string" || !/^\d{4}-\d{2}-\d{2}T/.test(entry.downloadedAt) || !Number.isFinite(Date.parse(entry.downloadedAt))) throw new Error("Invalid download timestamp: " + id);
   }
   return value as unknown as DownloadManifest;
+}
+
+/**
+ * Walk the actual JPEG markers to the one frame header. This reads the image's
+ * own structure only; whether the form is blank stays with the registered
+ * whole-image review that these dimensions are checked against.
+ */
+export function jpegFrame(bytes: Buffer): { width: number; height: number } {
+  const invalid = () => new Error("Invalid JPEG original");
+  if (bytes.length < 4 || bytes.readUInt16BE(0) !== 0xffd8 || bytes.readUInt16BE(bytes.length - 2) !== 0xffd9) throw invalid();
+  const frames: { width: number; height: number }[] = [];
+  let position = 2;
+  while (position + 2 <= bytes.length) {
+    if (bytes[position] !== 0xff) throw invalid();
+    let marker = bytes[position + 1];
+    position += 2;
+    while (marker === 0xff && position < bytes.length) marker = bytes[position++]; // fill bytes
+    if (marker === 0xd9 || marker === 0xda) break; // end, or entropy-coded scan data
+    if (marker === 0x01 || (marker >= 0xd0 && marker <= 0xd8)) continue; // standalone markers
+    if (position + 2 > bytes.length) throw invalid();
+    const length = bytes.readUInt16BE(position);
+    if (length < 2 || position + length > bytes.length) throw invalid();
+    // SOF0..SOF15, excluding the DHT/JPG/DAC markers that share the range.
+    if (marker >= 0xc0 && marker <= 0xcf && ![0xc4, 0xc8, 0xcc].includes(marker)) {
+      if (length < 8) throw invalid();
+      frames.push({ height: bytes.readUInt16BE(position + 3), width: bytes.readUInt16BE(position + 5) });
+    }
+    position += length;
+  }
+  if (frames.length !== 1 || !frames[0].width || !frames[0].height || frames[0].width * frames[0].height > 50_000_000) throw invalid();
+  return frames[0];
+}
+
+/**
+ * Walk the actual cross-reference table and page tree to the number of pages.
+ * This reads the document's own structure only; whether every rendered page is
+ * a blank applicant form stays with the registered whole-original review that
+ * this count is checked against. Cross-reference streams are not read here, so
+ * a PDF this cannot account for fails instead of being counted loosely.
+ */
+export function pdfPageCount(bytes: Buffer): number {
+  const invalid = () => new Error("Invalid PDF page structure");
+  const text = bytes.toString("latin1");
+  const marker = text.lastIndexOf("startxref");
+  if (!text.startsWith("%PDF-") || !text.includes("%%EOF") || marker < 0) throw invalid();
+  const offsets = new Map<number, number>(), sections = new Set<number>();
+  let trailer = "", next: number | null = Number(/^[ \t\r\n]*(\d+)[ \t\r\n]/.exec(text.slice(marker + 9, marker + 40))?.[1]);
+  while (next !== null) {
+    const position: number = next;
+    if (!Number.isSafeInteger(position) || position <= 0 || position >= text.length || sections.has(position)) throw invalid();
+    sections.add(position);
+    const table = /^[ \t\r\n]*xref[ \t]*\r?\n/.exec(text.slice(position, position + 24));
+    if (!table) throw invalid();
+    let cursor = position + table[0].length;
+    for (;;) {
+      const head = /^(\d+)[ \t]+(\d+)[ \t]*\r?\n/.exec(text.slice(cursor, cursor + 48));
+      if (!head) break;
+      cursor += head[0].length;
+      const first = Number(head[1]);
+      for (let index = 0; index < Number(head[2]); index++) {
+        const row = /^(\d{10})[ \t]+(\d{5})[ \t]+([nf])[ \t]*\r?\n?/.exec(text.slice(cursor, cursor + 24));
+        if (!row) throw invalid();
+        // The newest table wins; older sections only fill objects it leaves out.
+        if (row[3] === "n" && !offsets.has(first + index)) offsets.set(first + index, Number(row[1]));
+        cursor += row[0].length;
+      }
+    }
+    const end = text.indexOf("trailer", cursor);
+    if (end < 0) throw invalid();
+    const dictionary = text.slice(end, end + 4096);
+    if (/\/XRefStm/.test(dictionary)) throw invalid();
+    if (!trailer) trailer = dictionary;
+    const previous = /\/Prev[ \t\r\n]+(\d+)/.exec(dictionary);
+    next = previous ? Number(previous[1]) : null;
+  }
+  const reference = (dictionary: string, key: string) => Number(new RegExp(`/${key}[ \t\r\n]+(\\d+)[ \t\r\n]+\\d+[ \t\r\n]+R`).exec(dictionary)?.[1]);
+  const body = (number: number) => {
+    const offset = Number.isSafeInteger(number) ? offsets.get(number) : undefined;
+    if (offset === undefined || offset <= 0 || offset >= text.length) throw invalid();
+    const header = new RegExp(`^${number}[ \t\r\n]+\\d+[ \t\r\n]+obj`).exec(text.slice(offset, offset + 48));
+    const close = text.indexOf("endobj", offset);
+    if (!header || close < 0) throw invalid();
+    return text.slice(offset + header[0].length, close);
+  };
+  const catalog = body(reference(trailer, "Root"));
+  const root = reference(catalog, "Pages"), queue = [root], counted = new Set<number>();
+  let pages = 0;
+  const declared = Number(/\/Count[ \t\r\n]+(\d+)/.exec(body(root))?.[1]);
+  while (queue.length) {
+    const number = queue.shift()!;
+    if (counted.has(number) || counted.size > 5000) throw invalid();
+    counted.add(number);
+    const node = body(number);
+    if (/\/Type[ \t\r\n]*\/Page(?![a-zA-Z])/.test(node)) { pages++; continue; }
+    if (!/\/Type[ \t\r\n]*\/Pages(?![a-zA-Z])/.test(node)) throw invalid();
+    const kids = /\/Kids[ \t\r\n]*\[([^\]]*)\]/.exec(node);
+    const children = [...(kids?.[1] ?? "").matchAll(/(\d+)[ \t\r\n]+\d+[ \t\r\n]+R/g)].map(match => Number(match[1]));
+    if (!children.length) throw invalid();
+    queue.push(...children);
+  }
+  if (!pages || !Number.isSafeInteger(declared) || declared !== pages) throw invalid();
+  return pages;
 }
 
 /** The downloader checks ZIP CRC/XML fully. Recheck the signed bytes and basic container identity here. */
@@ -93,6 +204,7 @@ export function validateOriginalFile(bytes: Buffer, format: FormFileFormat): voi
     if (bytes.length<14 || !["GIF87a","GIF89a"].includes(bytes.subarray(0,6).toString()) || !bytes.readUInt16LE(6) || !bytes.readUInt16LE(8) || bytes[bytes.length-1]!==0x3b) throw new Error("Invalid GIF original");
     return;
   }
+  if (format === "jpg") { jpegFrame(bytes); return; }
   if (format === "txt") {
     let text: string;
     try { text=new TextDecoder("utf-8",{fatal:true}).decode(bytes); }
@@ -139,12 +251,23 @@ export async function loadDownloadedOriginals(input: string, value: unknown, for
   };
   for (const [id, entry] of Object.entries(manifest.forms)) {
     const metadata = forms[id];
+    let registered: VerifiedAgencyForm | undefined;
     if (id.startsWith("agency-")) {
       if (!metadata || metadata.id!==id) throw new Error("Missing agency form metadata: "+id);
-      validateAgencyForm(metadata);
-    } else if (!metadata || metadata.id !== id || !officialFormUrl(metadata.sourceUrl) || new URL(metadata.sourceUrl).searchParams.get("flSeq") !== new URL(entry.sourceUrl).searchParams.get("flSeq")) throw new Error("Downloaded source does not match form metadata: " + id);
+      registered = validateAgencyForm(metadata);
+    } else if (!metadata || metadata.id !== id || !officialDownloadUrl(metadata.sourceUrl) || new URL(metadata.sourceUrl).searchParams.get("flSeq") !== new URL(entry.sourceUrl).searchParams.get("flSeq")) throw new Error("Downloaded source does not match form metadata: " + id);
     const bytes = await load(entry);
     validateOriginalFile(bytes, entry.format);
+    if (entry.format === "jpg") {
+      const review = registered?.visualReview, frame = jpegFrame(bytes);
+      if (review?.kind !== "whole-original-image" || frame.width !== review.width || frame.height !== review.height) throw new Error("Image original differs from the reviewed whole image: " + id);
+    }
+    // A scanned PDF original is published on a whole-original page review, so
+    // the actual document must have exactly the pages that were read.
+    if (entry.format === "pdf" && registered?.visualReview) {
+      const review = registered.visualReview;
+      if (review.kind !== "whole-original-pdf" || pdfPageCount(bytes) !== review.pageCount) throw new Error("PDF original differs from the reviewed whole original: " + id);
+    }
     if (entry.archive) {
       const archive = await load(entry.archive);
       if (archive.length < 22 || archive.readUInt32LE(0) !== 0x04034b50) throw new Error("Invalid source archive ZIP header: " + id);
@@ -152,7 +275,7 @@ export async function loadDownloadedOriginals(input: string, value: unknown, for
     }
     let pdf: Buffer | undefined;
     if (entry.pdf) {
-      if (!metadata.officialPdfUrl || !officialFormUrl(metadata.officialPdfUrl) || new URL(metadata.officialPdfUrl).searchParams.get("flSeq")!==new URL(entry.pdf.sourceUrl).searchParams.get("flSeq")) throw new Error("PDF source does not match form metadata: "+id);
+      if (!metadata.officialPdfUrl || !officialDownloadUrl(metadata.officialPdfUrl) || new URL(metadata.officialPdfUrl).searchParams.get("flSeq")!==new URL(entry.pdf.sourceUrl).searchParams.get("flSeq")) throw new Error("PDF source does not match form metadata: "+id);
       pdf = await load(entry.pdf);
       if (pdf.subarray(0, 5).toString() !== "%PDF-") throw new Error("Invalid downloaded PDF header: " + id);
     }
@@ -281,8 +404,7 @@ async function main() {
   for (const id of published) {
     const original = originals.get(id);
     if (!original) {
-      const sourceUrl = officialFormUrl(forms[id].sourceUrl);
-      if (!sourceUrl || !new URL(sourceUrl).pathname.endsWith("/flDownload.do")) throw new Error("Reviewed external form must link to an official attachment");
+      if (!officialDownloadUrl(forms[id].sourceUrl)) throw new Error("Reviewed external form must link to an official attachment");
       continue;
     }
     const { bytes, format } = original;
@@ -294,7 +416,8 @@ async function main() {
     if (format === "pdf") forms[id].file!.pdf = forms[id].file!.hwp;
     const check = pdfChecks[id];
     let pdf = format === "pdf" ? undefined : original.pdf;
-    if (format !== "pdf" && !pdf && check?.verified) {
+    // An image original gets no rendered stand-in: only its own bytes are published.
+    if (format !== "pdf" && format !== "jpg" && !pdf && check?.verified) {
       const pdfPath = path.join(input, "previews", id + ".pdf");
       pdf = await readFile(pdfPath);
       if (check.originalSha256 !== digest || hash(pdf) !== check.pdfSha256 || check.pages < 1 || pdf.subarray(0, 5).toString() !== "%PDF-") throw new Error("PDF preview no longer matches checked original");
@@ -309,7 +432,7 @@ async function main() {
   // Revoke only files owned by this generator; never recursively delete a directory.
   const assetsDirectory = path.resolve(output, "files");
   for (const name of await readdir(assetsDirectory)) {
-    if (!/^(?:(ordin|law|rule)-\d+|agency-\d{5}-[a-zA-Z0-9][a-zA-Z0-9_-]{0,79})-[a-f0-9]{12}\.(hwp|hwpx|pdf|txt|gif)$/.test(name) || expectedAssets.has(name)) continue;
+    if (!/^(?:(ordin|law|rule)-\d+|agency-\d{5}-[a-zA-Z0-9][a-zA-Z0-9_-]{0,79})-[a-f0-9]{12}\.(hwp|hwpx|pdf|txt|gif|jpg)$/.test(name) || expectedAssets.has(name)) continue;
     const target = path.resolve(assetsDirectory, name);
     if (path.dirname(target) !== assetsDirectory) throw new Error("Unexpected asset path");
     await unlink(target);

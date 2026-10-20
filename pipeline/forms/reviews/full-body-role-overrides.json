@@ -2347,6 +2347,270 @@
       "role": "application",
       "sha256": "194b6950aed4e2d82ce016d5ed876c060ac544def42f208a9dad4536e9ecf933",
       "reviewFile": "municipal-reviewed-round1010.json"
+    },
+    "ordin-20406127": {
+      "lawId": "1850929",
+      "role": "application",
+      "sha256": "4b78673824c829831b91285f942291a56864b6a3381e5f0354a776e27d58998d",
+      "reviewFile": "municipal-reviewed-round8101.json"
+    },
+    "ordin-22863613": {
+      "lawId": "1488745",
+      "role": "application",
+      "sha256": "6b4b253a614ab05e6d7bf6102ecf9eee13926e86715c1384b25b73ace11f6ce8",
+      "reviewFile": "municipal-reviewed-round8101.json"
+    },
+    "ordin-22185907": {
+      "lawId": "1918689",
+      "role": "application",
+      "sha256": "2ae5cdca275252fb6248635d5c3cbe3fab0cfee04528a2262c9f8e55b3a401c4",
+      "reviewFile": "municipal-reviewed-round8101.json"
+    },
+    "ordin-20588831": {
+      "lawId": "1795155",
+      "role": "application",
+      "sha256": "c551cfc4cbaaa222bcf5fc00049f330f364a2f961c69a5d9911f8508d9119171",
+      "reviewFile": "municipal-reviewed-round8101.json"
+    },
+    "ordin-20406387": {
+      "lawId": "2013733",
+      "role": "application",
+      "sha256": "12b62796eb9f7b5b16f5e91b2528718a038b3312f49fe091b6dffef6de45e450",
+      "reviewFile": "municipal-reviewed-round8101.json"
+    },
+    "ordin-21777279": {
+      "lawId": "2124391",
+      "role": "application",
+      "sha256": "f7dfb143b0a6981018db11d56e40e435a25eeabe3c0f3949cad874dc4a3bf3c7",
+      "reviewFile": "municipal-reviewed-round8101.json"
+    },
+    "ordin-20660061": {
+      "lawId": "1864929",
+      "role": "application",
+      "sha256": "9ef45d024645174e67e9bd0336ef9661fe756845659144bb6d5d93474082d79a",
+      "reviewFile": "municipal-reviewed-round8103.json"
+    },
+    "ordin-20660063": {
+      "lawId": "1864929",
+      "role": "delegation",
+      "sha256": "f50aacc03ee0a91ab29c197485395af87e7fff39c0bebcab5b9c94632a55155d",
+      "reviewFile": "municipal-reviewed-round8103.json"
+    },
+    "ordin-20406221": {
+      "lawId": "1870717",
+      "role": "application",
+      "sha256": "4db2bd1a91f2a976a77873a9ac582751de407f3b3c56907b9b2daba97d0cdcba",
+      "reviewFile": "municipal-reviewed-round8103.json"
+    },
+    "ordin-19975651": {
+      "lawId": "1732647",
+      "role": "application",
+      "sha256": "9e6ab2304b077c999b4a08f4df3848205fd1d6dbc9c328d2726f091be86ffaf0",
+      "reviewFile": "municipal-reviewed-round8103.json"
+    },
+    "ordin-19386893": {
+      "lawId": "1996235",
+      "role": "application",
+      "sha256": "c649cf06cc45f84b01cdebb79b3ff3a3bc0162079970282deb71333cc328ac18",
+      "reviewFile": "municipal-reviewed-round8103.json"
+    },
+    "ordin-22869569": {
+      "lawId": "1728931",
+      "role": "application",
+      "sha256": "b3a6a821c32ab0d1ff2310bb7215f4d6eb898bc2744dfdf737f933eb85fd35c8",
+      "reviewFile": "municipal-reviewed-round8104.json"
+    },
+    "ordin-21869393": {
+      "lawId": "1740199",
+      "role": "application",
+      "sha256": "4a72f6eb9b1be79386614f4fb26ac914a7581f693b4c6869a4fc553434c35c79",
+      "reviewFile": "municipal-reviewed-round8104.json"
+    },
+    "ordin-20011073": {
+      "lawId": "1741841",
+      "role": "application",
+      "sha256": "dcb4eb584f96d9b1fdae2e18e1fa26a0e475d866abe0d7d25492ff7a2eaa01c6",
+      "reviewFile": "municipal-reviewed-round8104.json"
+    },
+    "ordin-20872019": {
+      "lawId": "1745445",
+      "role": "application",
+      "sha256": "ef9ee193ea6cf37d6e5b3a532562e41380cb4c045c3f8c8fe44cb7b5d5d8f8e1",
+      "reviewFile": "municipal-reviewed-round8104.json"
+    },
+    "ordin-21025359": {
+      "lawId": "2081723",
+      "role": "application",
+      "sha256": "b1af414f4f65deb10d12776306c35fba94dcf58903eb108bd2c9b7909765d509",
+      "reviewFile": "municipal-reviewed-round8104.json"
+    },
+    "ordin-21832751": {
+      "lawId": "2127669",
+      "role": "application",
+      "sha256": "c4c376861f86ae4eb4b5eea0b027ccc115735c02b37ff0f34ff673366a6b31b2",
+      "reviewFile": "municipal-reviewed-round8104.json"
+    },
+    "ordin-20305101": {
+      "lawId": "1404738",
+      "role": "application",
+      "sha256": "df776e7f56766c1559bc4df2511ce27d6bb4756a45632c56c7f3c9cbb9c92266",
+      "reviewFile": "municipal-reviewed-round8104.json"
+    },
+    "ordin-21869201": {
+      "lawId": "1436387",
+      "role": "application",
+      "sha256": "c8815db2e9a247e8abe28266be200c6846741c30c38a93b549d28ed1e835016a",
+      "reviewFile": "municipal-reviewed-round8104.json"
+    },
+    "ordin-22844907": {
+      "lawId": "1748723",
+      "role": "application",
+      "sha256": "a1ab7dce30c5248b55f45cf6ee20c547e6329ee94108a898c720fbaa1ef4ff7d",
+      "reviewFile": "municipal-reviewed-round8104.json"
+    },
+    "ordin-15008013": {
+      "lawId": "1391632",
+      "role": "application",
+      "sha256": "fc0e4692d5d09e14566ce269df0d4231f4a871774dea0ba29aa026ee77bd9510",
+      "reviewFile": "municipal-reviewed-round8106.json"
+    },
+    "ordin-21219351": {
+      "lawId": "2095721",
+      "role": "application",
+      "sha256": "858cab147363c7bbf8c18d8444208f2edaef66f047e1a1fd939adac83b1ac88f",
+      "reviewFile": "municipal-reviewed-round8106.json"
+    },
+    "ordin-21338669": {
+      "lawId": "2105321",
+      "role": "application",
+      "sha256": "55bd0f91ba206b446889a219516103c6f289ff43e774f1a27910aa3184036d37",
+      "reviewFile": "municipal-reviewed-round8106.json"
+    },
+    "ordin-18138737": {
+      "lawId": "1784715",
+      "role": "application",
+      "sha256": "870768df2fae1616bc1825c8470685dc091ada1fcae6d730e352818e05688f64",
+      "reviewFile": "municipal-reviewed-round8106.json"
+    },
+    "ordin-18138741": {
+      "lawId": "1784715",
+      "role": "application",
+      "sha256": "8362f3c2c3aadd53509bf9f609be1ff795bda0f4e313448c5d4f9d958c15e0e7",
+      "reviewFile": "municipal-reviewed-round8106.json"
+    },
+    "ordin-22522495": {
+      "lawId": "2166375",
+      "role": "supporting",
+      "sha256": "42824a6b22fcff0b09888f0ca54de9367ab5b99dd1039204e3fb87095e47fdb7",
+      "reviewFile": "municipal-reviewed-round8107.json"
+    },
+    "ordin-22288653": {
+      "lawId": "2063871",
+      "role": "application",
+      "sha256": "4665cd90d883f861fdcc5cc90740dfa0cfa9aaa1cfecad3355bbbb19c6596e89",
+      "reviewFile": "municipal-reviewed-round8108.json"
+    },
+    "ordin-22288655": {
+      "lawId": "2063871",
+      "role": "application",
+      "sha256": "9ae94b374222887d1fdcf796d0c3c8b29c69f05dc0e17026e871c61002df6e90",
+      "reviewFile": "municipal-reviewed-round8108.json"
+    },
+    "ordin-22288657": {
+      "lawId": "2063871",
+      "role": "application",
+      "sha256": "0a7f21564971a3f465d6a95a0e97d76aa5af583af8307a99f909ce987acd0aa6",
+      "reviewFile": "municipal-reviewed-round8108.json"
+    },
+    "ordin-22288659": {
+      "lawId": "2063871",
+      "role": "application",
+      "sha256": "e8ae3c9aa29042d5422f1a37af17ff95cb3ae124bee575a4c5075a124c47f3cb",
+      "reviewFile": "municipal-reviewed-round8108.json"
+    },
+    "ordin-20204783": {
+      "lawId": "1480751",
+      "role": "supporting",
+      "sha256": "184f9ff242a91e95a799ea22974c65617a83d4de264db2283177d04d18c9323c",
+      "reviewFile": "municipal-reviewed-round8109.json"
+    },
+    "ordin-20163381": {
+      "lawId": "1628713",
+      "role": "application",
+      "sha256": "43b0f2430e397ad7e126b21e84bfbba978632455029b1ecfb3b015a2263a3ba3",
+      "reviewFile": "municipal-reviewed-round8109.json"
+    },
+    "ordin-20163383": {
+      "lawId": "1628713",
+      "role": "application",
+      "sha256": "70505ca54f414d60dc2a0defef6dfb0808c653ef48207cd99006550fd0f4ff82",
+      "reviewFile": "municipal-reviewed-round8109.json"
+    },
+    "ordin-20163385": {
+      "lawId": "1628713",
+      "role": "supporting",
+      "sha256": "f392b2d2774dcca9271011baea5e8c333d62444c805d0fa07138770c37509137",
+      "reviewFile": "municipal-reviewed-round8109.json"
+    },
+    "ordin-20163387": {
+      "lawId": "1628713",
+      "role": "application",
+      "sha256": "ce2cd84ffbca117bd3f4beeebbd3073d0e8b1095e8398ebef7e7af857ecab7e0",
+      "reviewFile": "municipal-reviewed-round8109.json"
+    },
+    "ordin-20163389": {
+      "lawId": "1628713",
+      "role": "supporting",
+      "sha256": "f2fae8add394aa158603a01f37fd8fe84e15927c8f8600493f95cbbfcf1d09d4",
+      "reviewFile": "municipal-reviewed-round8109.json"
+    },
+    "ordin-20163391": {
+      "lawId": "1628713",
+      "role": "supporting",
+      "sha256": "9ad2c1da83f12516b188dca7dfd929a7248f0ed861debbfe490ba7a1becc336b",
+      "reviewFile": "municipal-reviewed-round8109.json"
+    },
+    "ordin-22900805": {
+      "lawId": "1918695",
+      "role": "application",
+      "sha256": "cf930f89b1792653572ba29423e6cf6cfe6bcde16ee73b40646710d4b515f508",
+      "reviewFile": "municipal-reviewed-round8109.json"
+    },
+    "ordin-22664085": {
+      "lawId": "2028953",
+      "role": "supporting",
+      "sha256": "3c6324365b7b803b1d5e8e2b0d9bfaa3294ece1f416a03ce5de708296d3646a2",
+      "reviewFile": "municipal-reviewed-round8109.json"
+    },
+    "ordin-21678593": {
+      "lawId": "2116799",
+      "role": "supporting",
+      "sha256": "507a735a79e7501c56f9f0335e172f7fbea674a7c802056449661eb0cf092f5a",
+      "reviewFile": "municipal-reviewed-round8109.json"
+    },
+    "ordin-20543091": {
+      "lawId": "1375182",
+      "role": "supporting",
+      "sha256": "4db952e991d3decd50f20c3895e731a78612ae58cbdfa674c5fb2a2c39de1512",
+      "reviewFile": "municipal-reviewed-round8109.json"
+    },
+    "ordin-22900107": {
+      "lawId": "1406334",
+      "role": "application",
+      "sha256": "ca140fd799e89d45990dc1d96e997211becaf09682d95e2250eb5d02661c6ed7",
+      "reviewFile": "municipal-reviewed-round8110.json"
+    },
+    "ordin-22901167": {
+      "lawId": "2049835",
+      "role": "application",
+      "sha256": "e6f031a951ebd84d9375df3c7608c904e87e9e945890b2bac0d042bd73960938",
+      "reviewFile": "municipal-reviewed-round8110.json"
+    },
+    "ordin-22901313": {
+      "lawId": "2123407",
+      "role": "application",
+      "sha256": "3975c5b2b78035cdf5e8cb652d2950d171c4f86905bab7adaa180f08543b2b88",
+      "reviewFile": "municipal-reviewed-round8110.json"
     }
   }
 }

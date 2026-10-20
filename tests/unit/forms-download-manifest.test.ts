@@ -115,6 +115,23 @@ describe("downloaded original manifest", () => {
     entry.forms[id].pdf!.path = "previews/law-999.pdf";
     expect(() => validateDownloadManifest(entry)).toThrow(/path\/id/);
   });
+  it("accepts official endpoint aliases but rejects nested paths and ambiguous attachment IDs at each boundary", async () => {
+    await writeFile(path.join(temporary,"originals",id+".hwp"),hwp);
+    const alias=manifest();alias.forms[id].sourceUrl=sourceUrl.replace("/LSW/","/");
+    expect((await loadDownloadedOriginals(temporary,alias,forms)).get(id)?.bytes.equals(hwp)).toBe(true);
+    for(const invalidUrl of [sourceUrl.replace("/LSW/","/other/"),sourceUrl+"&flSeq=999",sourceUrl+"&flSeq=456"]){
+      const invalid=manifest();invalid.forms[id].sourceUrl=invalidUrl;
+      expect(()=>validateDownloadManifest(invalid)).toThrow(/official attachment/);
+      await expect(loadDownloadedOriginals(temporary,manifest(),{[id]:{...forms[id],sourceUrl:invalidUrl}})).rejects.toThrow(/metadata/);
+    }
+    const pdf=Buffer.from("%PDF-1.7\n%%EOF");await writeFile(path.join(temporary,"previews",id+".pdf"),pdf);
+    for(const invalidUrl of [pdfSourceUrl.replace("/LSW/","/other/"),pdfSourceUrl+"&flSeq=789"]){
+      const invalid=manifest();invalid.forms[id].pdf={path:`previews/${id}.pdf`,bytes:pdf.length,sha256:hash(pdf),sourceUrl:invalidUrl};
+      expect(()=>validateDownloadManifest(invalid)).toThrow(/official PDF/);
+      invalid.forms[id].pdf!.sourceUrl=pdfSourceUrl;
+      await expect(loadDownloadedOriginals(temporary,invalid,{[id]:{...forms[id],officialPdfUrl:invalidUrl}})).rejects.toThrow(/PDF source/);
+    }
+  });
   it("rejects an originals directory redirected outside the manifest root", async () => {
     const input = path.join(temporary, "input"), outside = path.join(temporary, "outside");
     await mkdir(input); await mkdir(outside); await writeFile(path.join(outside, id + ".hwp"), hwp);

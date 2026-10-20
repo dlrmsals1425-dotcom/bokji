@@ -1,34 +1,36 @@
 {
  "schema": 1,
- "generatedAt": "2026-10-18T19:17:10.468734+00:00",
+ "generatedAt": "2026-10-20T03:13:24.367267+00:00",
  "scope": "Actual downloaded originals; saved files are not automatically approved for a benefit.",
  "summary": {
-  "savedOriginals": 4768,
-  "uniqueOriginalContents": 4737,
+  "savedOriginals": 4881,
+  "uniqueOriginalContents": 4845,
   "formats": {
    "gif": 5,
    "htm": 1,
-   "hwp": 4302,
+   "hwp": 4388,
    "hwp3": 8,
-   "hwpx": 437,
-   "pdf": 1,
+   "hwpx": 454,
+   "jpg": 1,
+   "pdf": 10,
    "protected_hwp": 6,
    "txt": 8
   },
-  "readableHangulOriginals": 4739,
-  "publishedOriginals": 2658,
+  "readableHangulOriginals": 4842,
+  "publishedOriginals": 2771,
   "publishedFormats": {
-   "hwp": 2379,
-   "hwpx": 273,
+   "hwp": 2465,
+   "hwpx": 290,
+   "pdf": 10,
+   "jpg": 1,
    "txt": 4,
-   "gif": 1,
-   "pdf": 1
+   "gif": 1
   },
-  "publishedPrograms": 2431,
-  "publishedAssociations": 3346,
+  "publishedPrograms": 2510,
+  "publishedAssociations": 3476,
   "reviewStates": {
    "covered_by_existing": 13,
-   "linked": 2658,
+   "linked": 2771,
    "replacement_available": 1,
    "requires_external_confirmation": 88,
    "reviewed_not_linked": 2008
@@ -176,6 +178,1962 @@
    "reviewState": "linked",
    "reviewLabel": "혜택에 연결",
    "reviewReason": "코디네이터가 군 공식2026-64호 공고와 새 HWP 전체4431자·신청서 앞뒤와 위임장, 현행1966081 제1~12조/부칙 및 정확2026 청소년성장지원금 사업을 대조했다. 새 신청서는 옛 분기25만원 표를 제거하고 실제 교통비20만원+분기포인트20만원 공고·현재접수2.9~11.30과 일치한다. 붙임1 신청·동의와 허용대리인의 붙임2만 용도별 안내한다. 현행조례·공고12/20 대 신청서뒤12/19 포인트 만료 차이는 보존하고 조건에 표시하며 임의 정정하지 않는다. 옛 ordin 원본ID/SHA를 덮어쓰지 않는다."
+  },
+  {
+   "formId": "agency-41000-child-meal-2026-00688",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "2026 결식아동 급식지원 안내·신청(추천)서",
+   "regionCode": "41000",
+   "format": "hwpx",
+   "bytes": 104164,
+   "sha256": "542cb83a4f7029de71e42a303bc4920a25787220ce1b577fc9ae29b7fac30c15",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260604UUWBM1556280195223004&atcflSn=1&wlfareInfoId=WLF00000688",
+   "downloadedAt": "2026-10-19T08:39:50.085555+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00000688&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260604UUWBM1556280195223004&atcflSn=1&wlfareInfoId=WLF00000688",
+   "attachmentId": "20260604UUWBM1556280195223004",
+   "relativePath": "agency-41000-child-meal-2026-00688.hwpx",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "s41000.gov24-641000000171",
+     "name": "결식아동급식지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "2026결식아동급식지원안내전체Section0를읽어사업개요뒤에실제서식1호아동급식신청(추천)서앞뒤가포함됨을확인했다. 신청자·보호자·대상아동2명·결식사유·식사시간/방법·급식카드선택·서명·행정정보동의로구성된다. 현재복지로WLF00000688이정확2026원본을배포하며읍면동신청을명시하고,사이트정부24-641000000171은급식신청서를구비서류로요구한다. 급식기관의보조금청구나행정대장이아니라아동급식이용신청이다."
+  },
+  {
+   "formId": "agency-41000-disability-medical-06696",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "저소득장애인 의료비 지급 신청서",
+   "regionCode": "41000",
+   "format": "pdf",
+   "bytes": 112695,
+   "sha256": "b306e25c32bb57994203cde3263d6b1d7f1ca252cd382a1cb971a2bd03e48258",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260727UUWBM1531460202568975&atcflSn=1&wlfareInfoId=WLF00006696",
+   "downloadedAt": "2026-10-19T07:28:04.169618+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00006696&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260727UUWBM1531460202568975&atcflSn=1&wlfareInfoId=WLF00006696",
+   "attachmentId": "20260727UUWBM1531460202568975",
+   "relativePath": "agency-41000-disability-medical-06696.pdf",
+   "usableHangul": false,
+   "publishedPrograms": [
+    {
+     "id": "s41000.gov24-641000000147",
+     "name": "저소득장애인 의료비 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "현재복지로WLF00006696의실제본문은중위소득80%이하등록장애인의연150만원의료비지원과읍면동신청서제출·온라인불가를명시하고정확한단독신청서PDF를배포한다. 단독1쪽을전체텍스트·시각확인했으며동일페이지의2026경기도사업안내9쪽도전부읽었다. 안내5쪽이서식1지급신청서를요구하고6쪽이같은신청서임을대조했다. 서식2전출입지급내역·3지급대장·4조사서는기관용이므로단독시민신청서만연결한다."
+  },
+  {
+   "formId": "agency-41000-ggbaro-insurance-2026-r2",
+   "lawId": "1570181",
+   "lawTitle": "경기도 소상공인 고용보험료 지원 조례",
+   "title": "2026년 경기도 1인 소상공인 고용보험료 지원 2차 공고·신청서",
+   "regionCode": "41000",
+   "format": "hwp",
+   "bytes": 187392,
+   "sha256": "f20878aabcb02a531915245a1672c134f7e46b651ae6e754a282d1a0415d0d1e",
+   "sourceUrl": "https://ggbaro.kr/biz-file?type=NOTICEFILE&bizType=01&bizId=2026-022-01&seq=2",
+   "downloadedAt": "2026-10-19T07:28:03.386843+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://ggbaro.kr/apply/biz-announce.do?bizId=2026-022-01&bizType=01",
+   "finalUrl": "https://ggbaro.kr/biz-file?type=NOTICEFILE&bizType=01&bizId=2026-022-01&seq=2",
+   "attachmentId": "2",
+   "relativePath": "agency-41000-ggbaro-insurance-2026-r2.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "s41000.bokjiro-WLF00001739",
+     "name": "1인 소상공인 고용보험료 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "현재경기바로사업2026-022-01이접수중·2026.9.1~12.31 18시를명시하고seq2를2차모집공고및신청서식으로직접배포한다. 의왕시2026.9.7공식게시의동일지원첨부도동일SHA이다. 원본6218자전체Section0를읽어실제1인소상공인대표의고용보험료지원신청1호·동의2호·필수서류·온오프라인접수임을확인했다. 고용보험가입기관에가입하는신청서가아니라기납입보험료를도에서지원받는별도신청이다. 기존복지로첨부의6/30마감과구분했다. 현행법규 1570181 본문과부칙전체를추가대조했다. 제4조는보험료지원신청서제출자선정,제7조는신청사무위임을규정한다."
+  },
+  {
+   "formId": "agency-41000-goe-diabetes-20260904",
+   "lawId": "2096825",
+   "lawTitle": "경기도교육청 당뇨병 학생 지원 조례",
+   "title": "2026 제1형 당뇨병 학생 의료물품 구입비 지원 변경 안내문·신청서",
+   "regionCode": "41000",
+   "format": "hwpx",
+   "bytes": 89345,
+   "sha256": "2d676147f06b464fbdf43b9f71f2195ff318a4ca4ed892ab9bb7cbbba8debb79",
+   "sourceUrl": "https://www.goe.go.kr/goe/na/ntt/comm/nttFileDownload.do?fileKey=1cc79c51135a37e77f922e976c726e7f",
+   "downloadedAt": "2026-10-19T07:16:07.402078+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.goe.go.kr/goe/na/ntt/selectNttInfo.do?mi=10961&nttSn=2366482",
+   "finalUrl": "https://www.goe.go.kr/goe/na/ntt/comm/nttFileDownload.do?fileKey=1cc79c51135a37e77f922e976c726e7f",
+   "attachmentId": "1cc79c51135a37e77f922e976c726e7f",
+   "relativePath": "agency-41000-goe-diabetes-20260904.hwpx",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "s41000.bokjiro-WLF00006330",
+     "name": "제1형 당뇨병 학생 의료물품 구입비 지원 사업"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "경기도교육청2026-09-04 변경공고가 담당부서·우편접수주소·신청서 일부를 변경한다고 직접 고지하고 정확fileKey를 배포한다. 새원본 전체Section0(3684자)를 읽어 학생/보호자의 구입비 지원신청1호와 개인정보·민감정보·제3자제공 동의2호 및 제출서류안내임을 확인했다. 현행조례2096825 제6조제2호의 학생의료비지원과 WLF00006330의 제1형당뇨 의료물품 본인부담90% 지원을 대조했다. 기존6월원본과 달리 계좌소유주 식별정보·중복지원 체크·접수부서가 수정되어 최신공고원본을 사용해야 한다."
+  },
+  {
+   "formId": "agency-41000-grandparent-college-03470",
+   "lawId": "2021175",
+   "lawTitle": "경기도 한부모가족 지원 조례",
+   "title": "조손가족 손자녀 대학 입학(등록)금 지원 신청서",
+   "regionCode": "41000",
+   "format": "hwpx",
+   "bytes": 86510,
+   "sha256": "970f759df9735690ff7c032b8f42da595f035d76d7c3a2a823b577c897df8b23",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20230517UUWBM1053160035011079&atcflSn=1&wlfareInfoId=WLF00003470",
+   "downloadedAt": "2026-10-19T07:28:04.358573+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003470&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20230517UUWBM1053160035011079&atcflSn=1&wlfareInfoId=WLF00003470",
+   "attachmentId": "20230517UUWBM1053160035011079",
+   "relativePath": "agency-41000-grandparent-college-03470.hwpx",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "s41000.bokjiro-WLF00003470",
+     "name": "조손가정 손자녀 대학신입생 입학금(등록금) 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "원본전체Section0의대상대학생·보호자·타장학금·계좌·신청서명·개인정보동의·공무원확인·시장군수추천을읽었다. 현재2026-10-19복지로WLF00003470이정확한첨부를배포하며도내저소득조손가족국내대학신입생의첫학기등록금차액최대500만원과읍면동신청을명시한다. 경기도공식도비한부모안내도같은조손입학등록금과별도250만원입학준비금을구분한다. 이원본은등록금용이며250만원준비금으로확대연결하지않는다. 현행법규 2021175 본문과부칙전체를추가대조했다. 제2조제3호보호대상자범위·제6조지원대상·제8조제2호교육지원과실제조손대학지원사업을대조한다."
+  },
+  {
+   "formId": "agency-41000-single-parent-followup-2026-05606",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "2026년 경기도 한부모가족 아동양육비 선정 후 동의서·계좌변경신청서",
+   "regionCode": "41000",
+   "format": "hwpx",
+   "bytes": 204691,
+   "sha256": "8a629f76b4a05692a8dadb5e73e32c0dda36845cd68ede18611e538cf6e55022",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260710UUWBM1429470200687935&atcflSn=1&wlfareInfoId=WLF00005606",
+   "downloadedAt": "2026-10-20T00:46:36.776113+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00005606&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260710UUWBM1429470200687935&atcflSn=1&wlfareInfoId=WLF00005606",
+   "attachmentId": "20260710UUWBM1429470200687935",
+   "relativePath": "agency-41000-single-parent-followup-2026-05606.hwpx",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "s41000.bokjiro-WLF00005606",
+     "name": "한부모가족 아동양육비 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "2026 경기도 한부모가족 아동양육비 지침의2개섹션24,076자 전체와 서식1~6을 읽었다.Ⅲ구비서류와Ⅴ지급관리가 소득재산조사 후 경기도 사업대상 선정자에게 서식4 개인정보동의 및5 행정공동이용동의를 받도록 명시하며 계좌변경 시 서식2를 직접 지정한다. 현재 복지로의 국비기준65% 초과100% 이하 도비사업과 정확첨부를 대조했다. 최초 신청서·재산신고·금융동의는 별도 공통서식으로 지시될 뿐 이 원본에 포함되지 않음을 구별했다."
+  },
+  {
+   "formId": "agency-41000-unregistered-alternative-meal-2026",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "2026년 미등록 대안교육기관 급식비 교부신청서·사업계획서",
+   "regionCode": "41000",
+   "format": "hwpx",
+   "bytes": 282030,
+   "sha256": "331647d47a69d0dbea7bf127f6f5f70ce9bb6ed6297f29bcbddf800a714d7596",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260612UUWBM1441140196722688&atcflSn=1&wlfareInfoId=WLF00001235",
+   "downloadedAt": "2026-10-20T00:46:35.921993+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00001235&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260612UUWBM1441140196722688&atcflSn=1&wlfareInfoId=WLF00001235",
+   "attachmentId": "20260612UUWBM1441140196722688",
+   "relativePath": "agency-41000-unregistered-alternative-meal-2026.hwpx",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "s41000.bokjiro-WLF00001235",
+     "name": "미등록 대안교육기관 이용 청소년 급식비 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "2026 급식비 운영지침의2개 HWPX 섹션15,875자를 모두 읽었다. 지원 절차는기관→시군 교부신청이며 붙임2의 실제 교부신청서·사업계획서가 기관명·대표자·학생수·급식일수·신청액·기관장 날인을 요구한다. 현재 복지로는2025.3.25까지 도에 기신고한 교육청 미등록기관 대상과 소재지시군 신청을 명시한다. 학생 개인 신청서가 아니라 실제 사업 수행기관의 해당 분기 신청으로 조건을 제한한다."
+  },
+  {
+   "formId": "agency-41000-winter-heating-proxy-2026-03678",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "2026년 노인 월동난방비 운영지침 중 급여 대리수령 신청서",
+   "regionCode": "41000",
+   "format": "hwpx",
+   "bytes": 123714,
+   "sha256": "4dadc77cb36f1f5ffe37ea644a40c872e4c4ee189caa15d7a32f7cac587b0867",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260710UUWBM1549180200711999&atcflSn=1&wlfareInfoId=WLF00003678",
+   "downloadedAt": "2026-10-19T08:39:51.525757+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003678&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260710UUWBM1549180200711999&atcflSn=1&wlfareInfoId=WLF00003678",
+   "attachmentId": "20260710UUWBM1549180200711999",
+   "relativePath": "agency-41000-winter-heating-proxy-2026-03678.hwpx",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "s41000.bokjiro-WLF00003678",
+     "name": "기초생활수급 노인 월동난방비 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "현재 복지로의 정확한 경기도 기초생활수급 노인 월동난방비 사업에서 배포하는 2026 운영지침 전체 Section0을 읽었다. 지급방법의 예외지급 절차가 제3자 대리계좌를 허용하고 붙임 급여 대리수령 신청서를 직접 지정한다. 말미 실제 빈 서식의 수급자·대리기간·후견인·대리수령인·계좌·양 당사자 서명과 시장군수 수신을 대조했다. 이는 이미 해당 급여를 받는 사람의 대리수령 절차이며 최초 수급 신청서가 아니다."
+  },
+  {
+   "formId": "agency-41110-bokjiro-WLF00001375-20260814UUWBM1653260204979963",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "수원시 아동담당의 의료비 등록·지원 신청서",
+   "regionCode": "41110",
+   "format": "hwpx",
+   "bytes": 621686,
+   "sha256": "0cf8a7c1b9d681ca45c88681b3d7587ee582f318cef0ef31644d56b245bd6c19",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260814UUWBM1653260204979963&atcflSn=1&wlfareInfoId=WLF00001375",
+   "downloadedAt": "2026-10-20T00:46:38.297751+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00001375&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260814UUWBM1653260204979963&atcflSn=1&wlfareInfoId=WLF00001375",
+   "attachmentId": "20260814UUWBM1653260204979963",
+   "relativePath": "agency-41110-bokjiro-WLF00001375-20260814UUWBM1653260204979963.hwpx",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41110.bokjiro-WLF00001375",
+     "name": "수원시 아동담당의 의료지원 사업"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "2026추진계획 전체15,463자와내장이미지5개를읽었다.본문은보호자또는기관의아동등록신청/추천과병원의등록비·치료비청구를분리한다.실제붙임5는기관/개인선택,아동·보호자·질환·추천사유·서명및법정대리인동의가있고현재exactWLF00001375도같은등록지원신청서/개인정보동의의보건소방문·우편제출을명시하고이파일을직접배포한다.지급처가의료기관이라는이유로주민신청을제외하지않았으며의료기관1~4/6~10과쿠폰11을선택부분에서제외했다.내장쿠폰은빈시안이며작성된개인정보는없다."
+  },
+  {
+   "formId": "agency-41110-bokjiro-WLF00005426-20260609UUWBM1800140196102714",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "전세보증금반환보증 보증료 지원 신청서",
+   "regionCode": "41110",
+   "format": "hwpx",
+   "bytes": 362047,
+   "sha256": "b91f9b0ee767c31e842301e46e5b10dcbd26d1e4d490efe8b3b549aa7a0aa768",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260609UUWBM1800140196102714&atcflSn=1&wlfareInfoId=WLF00005426",
+   "downloadedAt": "2026-10-19T08:39:53.648683+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00005426&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260609UUWBM1800140196102714&atcflSn=1&wlfareInfoId=WLF00005426",
+   "attachmentId": "20260609UUWBM1800140196102714",
+   "relativePath": "agency-41110-bokjiro-WLF00005426-20260609UUWBM1800140196102714.hwpx",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41110.bokjiro-WLF00005426",
+     "name": "전세보증금 반환보증 보증료 지원사업"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "3개 본문 섹션 21,968자 전체를 읽었다. 현재 정확한 수원 WLF00005426가 이 지침을 직접 배포하고 지원액40만원·소득조건 및 각동 방문접수와 일치한다. II 신청접수는 주민 본인/제한된 대리인의 신청서·서약서 제출을 정하며 실제 빈 서식1은 전세보증·납부액·본인계좌·개인정보 동의·신청 서명으로 구성된다. 서식2의 대리권은 같은 지원 신청에만 한정한다. 서식9의2025 고정 날짜 및 기관용 서식3/5/7/8/10은 제외하며 가상 홍길동 예시는 실제 작성된 개인정보로 보지 않지만 선택 부분에 포함하지 않는다."
+  },
+  {
+   "formId": "agency-41130-bokjiro-WLF00001382-20230518UUWBM1435130035230995",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "중증장애인활동지원서비스 시추가 지원 신청서",
+   "regionCode": "41130",
+   "format": "hwp",
+   "bytes": 40960,
+   "sha256": "e464b615ad3437da523a8a251e25095116294e2197ef587c3a76702f4538b9ea",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20230518UUWBM1435130035230995&atcflSn=1&wlfareInfoId=WLF00001382",
+   "downloadedAt": "2026-10-19T07:16:08.007851+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00001382&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20230518UUWBM1435130035230995&atcflSn=1&wlfareInfoId=WLF00001382",
+   "attachmentId": "20230518UUWBM1435130035230995",
+   "relativePath": "agency-41130-bokjiro-WLF00001382-20230518UUWBM1435130035230995.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41130.bokjiro-WLF00001382",
+     "name": "중증장애인활동지원사업(시비)"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "성남시장 수신, 신청자 주소·생년월일·이용기관·장애유형 및 신청 서명 전체를 읽었다. 현재 WLF00001382의 대상·선정기준·지원내용은 도비 추가대상 희망자 월10시간을 명시하고 정확한 첨부를 제공한다. 원본 첫 선택란과 일치하는 부분만 한정하며 다른60/193시간 급여는 승인범위에서 제외한다."
+  },
+  {
+   "formId": "agency-41130-bokjiro-WLF00004843-20260730UUWBM1416490202996361",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "성남시 건설일용노동자 파상풍 예방접종비 지원 신청서",
+   "regionCode": "41130",
+   "format": "hwp",
+   "bytes": 255488,
+   "sha256": "ef3e6deecc1c077e60281ef99a70a2a7daa5bbd53f46732bd7571e901399eb91",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260730UUWBM1416490202996361&atcflSn=1&wlfareInfoId=WLF00004843",
+   "downloadedAt": "2026-10-19T08:39:53.153395+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004843&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260730UUWBM1416490202996361&atcflSn=1&wlfareInfoId=WLF00004843",
+   "attachmentId": "20260730UUWBM1416490202996361",
+   "relativePath": "agency-41130-bokjiro-WLF00004843-20260730UUWBM1416490202996361.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41130.bokjiro-WLF00004843",
+     "name": "성남시 건설일용노동자 파상풍 예방접종비 지원사업"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "2026지침1개본문섹션12,264자와내장그림4개전부를읽었다.현재exactWLF00004843의성남거주/성남현장건설일용노동자·접종후2개월·90%최대45,000원·방문/등기신청과원본이일치한다.실제서식1은노동자의접종·사업장·계좌·서명,위임과뒤동의/확약이며업체지원신청이아니다.서식2의대리수령은지침본문과양식모두압류/계좌개설불가증빙및양측서명을명시하므로그경우로만제한한다.서식3환수통지는기관전용으로제외했다."
+  },
+  {
+   "formId": "agency-41150-bok-20260820UUWBM1619330205556340-1",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "2026년 장애인활동지원 의정부시 자체사업 안내 중 추가지원 신청서",
+   "regionCode": "41150",
+   "format": "pdf",
+   "bytes": 436326,
+   "sha256": "40b65d7e3bcd702c6c98b8227f5bc089daf9b45032488c9cb972e5ae5ede0119",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260820UUWBM1619330205556340&atcflSn=1&wlfareInfoId=WLF00000714",
+   "downloadedAt": "2026-10-19T07:28:11.431121+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00000714&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260820UUWBM1619330205556340&atcflSn=1&wlfareInfoId=WLF00000714",
+   "attachmentId": "20260820UUWBM1619330205556340",
+   "relativePath": "agency-41150-bok-20260820UUWBM1619330205556340-1.pdf",
+   "usableHangul": false,
+   "publishedPrograms": [
+    {
+     "id": "g41150.bokjiro-WLF00000714",
+     "name": "장애인활동지원 의정부시 추가 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "13쪽 전체 원문과 렌더링을 확인했다. 5쪽은 주민센터 신청과 대리신청 범위, 9쪽은 서식 목록을 명시하고 11쪽은 신규·변경·중지·가족급여 제공자 변경 및 개인정보 동의/서명을 받는 빈 신청서다. 현재 복지로의 정확한 의정부 사업이 2026년 안내와 같은 원본을 직접 배포한다. 12~13쪽은 기관의 관리대장·결정통지서 예시로 구분된다."
+  },
+  {
+   "formId": "agency-41170-student-loan-credit-2026-01897",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "2026년 안양시 청년 학자금대출 연체자 신용회복 신청서·동의서",
+   "regionCode": "41170",
+   "format": "hwpx",
+   "bytes": 68674,
+   "sha256": "a3a530f2627a8a6ec1fd56d509cff801f41350d3e00327a14b744853a2667544",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260416UUWBM1750380186762798&atcflSn=1&wlfareInfoId=WLF00001897",
+   "downloadedAt": "2026-10-19T08:39:54.084323+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00001897&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260416UUWBM1750380186762798&atcflSn=1&wlfareInfoId=WLF00001897",
+   "attachmentId": "20260416UUWBM1750380186762798",
+   "relativePath": "agency-41170-student-loan-credit-2026-01897.hwpx",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41170.gov24-383000000191",
+     "name": "안양시 청년 학자금 대출 연체자 신용회복 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "2026 신청서 전체 Section0과 동반 2026-297호 모집 공고 전체를 대조했다. 서식1의 초입금 지원/성실상환자 조기상환 선택란,1년 거주,한국장학재단 대출 정보 및 서식2 동의서가 정확한 안양 사업과 일치한다. 오늘 복지로 현재 본문과 정확한 첨부 두 개를 확인했고 시 구청 현재 안내도3.3~12.11 모집을 게시한다. 실제 접수는 잡아바 온라인이며 종이 방문 제출을 요구하는 것으로 해석하지 않는다."
+  },
+  {
+   "formId": "agency-41170-welfare-fund-medical-funeral-2026",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "2026년 안양 저소득주민지원복지기금 의료·간병·장제비 신청서",
+   "regionCode": "41170",
+   "format": "hwpx",
+   "bytes": 150971,
+   "sha256": "93a9443b84c259eba5ad6efb0596d12958397d37df10111eddb92e96f83e21b4",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260709UUWBM1557440200538895&atcflSn=1&wlfareInfoId=WLF00003113",
+   "downloadedAt": "2026-10-19T08:39:55.943452+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003113&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260709UUWBM1557440200538895&atcflSn=1&wlfareInfoId=WLF00003113",
+   "attachmentId": "20260709UUWBM1557440200538895",
+   "relativePath": "agency-41170-welfare-fund-medical-funeral-2026.hwpx",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41170.gov24-383000000119",
+     "name": "저소득주민지원복지기금 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "2026 안양 저소득주민지원복지기금 운영계획 전체 Section0과 서식1~5를 읽었다. 첨부 출처의 중고 입학축하금은3~5월 종료지만 같은 파일이 명시하는 의료비·간병비·장제비 지원은2026.1~12월이며 실제 서식1에 각 신청 선택란이 있다. 현재 정부24의 정확한 기존 복합사업383000000119를 별도 GET해 최종수정2026.8.6/상시신청/비급여의료·장제비/관할동 방문을 확인했다. 후보 사업명만 보고 묶지 않고 전체 계획의 해당급여와 현재 별도 사업을 대조했다."
+  },
+  {
+   "formId": "agency-41190-activity-existing-renewal-2026-01367",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "2026년 부천시 장애인활동지원 기존 수급자 변경·갱신 신청서",
+   "regionCode": "41190",
+   "format": "hwp",
+   "bytes": 80896,
+   "sha256": "9cee47c5e4e38ab8cb698312130d412203697dbe2bc58864ae80377dae21a9d4",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260611UUWBM0932060196445331&atcflSn=1&wlfareInfoId=WLF00001367",
+   "downloadedAt": "2026-10-19T08:39:55.943092+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00001367&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260611UUWBM0932060196445331&atcflSn=1&wlfareInfoId=WLF00001367",
+   "attachmentId": "20260611UUWBM0932060196445331",
+   "relativePath": "agency-41190-activity-existing-renewal-2026-01367.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41190.bokjiro-WLF00001367",
+     "name": "장애인활동지원 시추가지원사업"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "2026 부천 추가지원 계획 전체 Section0과 말미 신규(변경)신청서·개인정보동의서를 모두 읽었다. 현재 복지로 본문도10시간과192시간 모두 신규진입 없음을 명시한다. 계획은 기존10시간 수급자의3년 주기 갱신 및192시간 수급자의2년 범위 재지정을 규정하고 신청서·의사소견서·현장조사서 역할을 구별한다. 따라서 정확한 기존 수급자의 변경·갱신에만 조건부 제안하며 신규 신청용으로 제공하지 않는다."
+  },
+  {
+   "formId": "agency-41190-housekeeping-2026-76487",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "2026년 부천 워킹맘(대디) 가사지원 신청서·동의서",
+   "regionCode": "41190",
+   "format": "hwp",
+   "bytes": 64000,
+   "sha256": "886a560829c0e01752d8738318d2778c166ed5cb6eefb044eed4c67da03e8fa2",
+   "sourceUrl": "https://www.bwyf.or.kr/woman/downloadBbsFile.do?atchmnflNo=76487",
+   "downloadedAt": "2026-10-19T08:39:56.201578+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bwyf.or.kr/woman/contents.do?key=2622",
+   "finalUrl": "https://www.bwyf.or.kr/woman/downloadBbsFile.do?atchmnflNo=76487",
+   "attachmentId": "76487",
+   "relativePath": "agency-41190-housekeeping-2026-76487.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41190.bokjiro-WLF00005135",
+     "name": "워킹맘(대디) 가사지원서비스"
+    },
+    {
+     "id": "g41190.gov24-O00049400003",
+     "name": "워킹맘(대디) 가사지원서비스"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "부천시여성회관의2026.1~12월 상시모집 공식 안내에서 정확한76487 첨부를 내려받아 전체 Section0의 서식1 신청·2 동의·3 사업주 고용임금확인·4 근로소득신고를 읽었다.2023 구본과 달리 모든 작성연도가2026이며 신청인·맞벌이 배우자·소득증빙의 목적이 두 기존 동일 서비스 사업과 일치한다. 부천시청2026.7.24 사전정보공표의 실제 링크가 bwyf.or.kr/woman으로 연결됨을 원문 GET으로 확인했다."
+  },
+  {
+   "formId": "agency-41190-housekeeping-agreement-77086",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "부천 워킹맘(대디) 가사지원서비스 이용 약정서",
+   "regionCode": "41190",
+   "format": "hwp",
+   "bytes": 173568,
+   "sha256": "d07830b8767d61709cd36936f4fce4bcb0fb7cf07e4f1d2eb3ae2ac857ec201e",
+   "sourceUrl": "https://www.bwyf.or.kr/woman/downloadBbsFile.do?atchmnflNo=77086",
+   "downloadedAt": "2026-10-19T08:39:57.727482+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bwyf.or.kr/woman/selectBbsNttView.do?key=2628&bbsNo=56&nttNo=68141",
+   "finalUrl": "https://www.bwyf.or.kr/woman/downloadBbsFile.do?atchmnflNo=77086",
+   "attachmentId": "77086",
+   "relativePath": "agency-41190-housekeeping-agreement-77086.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41190.bokjiro-WLF00005135",
+     "name": "워킹맘(대디) 가사지원서비스"
+    },
+    {
+     "id": "g41190.gov24-O00049400003",
+     "name": "워킹맘(대디) 가사지원서비스"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "현재 부천시여성회관 서식자료실68141이 이용약정서를 확인 후 서명·제출하도록 직접 안내하고 정확77086 HWP를 배포한다. 전체 Section0의10개 조항과 이용자·가사관리사·제공기관의3자 서명란을 확인했다. 파일명은2025개정이지만 실제 서명연도는2026으로 인쇄돼 있으며 현재2026 연중 서비스와 일치한다. 선정 이후 이용 조건을 합의하는 서류로 최초 신청서와 구분한다."
+  },
+  {
+   "formId": "agency-41190-school-uniform-jpg",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "대안교육기관 등 교복비 지원 신청서",
+   "regionCode": "41190",
+   "format": "jpg",
+   "bytes": 101647,
+   "sha256": "8ae64f84823eadcfd2cbe87a917625d34e97fcbc64170a4e2cc987ee3417f395",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20230518UUWBM1354180035220635&atcflSn=1&wlfareInfoId=WLF00000001",
+   "downloadedAt": "2026-10-19T08:39:58.495792+00:00",
+   "textScope": "all_original_image_frames",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00000001&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20230518UUWBM1354180035220635&atcflSn=1&wlfareInfoId=WLF00000001",
+   "attachmentId": "20230518UUWBM1354180035220635",
+   "relativePath": "agency-41190-school-uniform-jpg.jpg",
+   "usableHangul": false,
+   "publishedPrograms": [
+    {
+     "id": "g41190.bokjiro-WLF00000001",
+     "name": "부천시 대안교육기관 등 교복비 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "JPEG원본전체를시각으로읽어참고5교복지원신청서임을확인했다. 학생·보호자·대안교육기관/타시도학교선택·입전학일·주소·교복품목별구입액·중복수혜·정보제공동의·서명란이있고실제개인정보는채워지지않았다. 현재복지로WLF00000001이정확이미지를배포하며부천거주대안교육기관/타시도중고입학생·실구매비상한40만원·부득이한방문신청경로를명시하므로실제신청용도는맞는다. OO시군은작성용빈칸이며과천처럼다른관할이인쇄된서식이아니다."
+  },
+  {
+   "formId": "agency-41220-bokjiro-WLF00000783-20230525UUWBM1328390036214748",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "행려자 귀향 여비 지급 확인서 및 개인정보 동의서",
+   "regionCode": "41220",
+   "format": "pdf",
+   "bytes": 765434,
+   "sha256": "52c51ab35888a593f4ab018b6fff5ffa31d78c0c3ff78e54f5178a10a654ede9",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20230525UUWBM1328390036214748&atcflSn=1&wlfareInfoId=WLF00000783",
+   "downloadedAt": "2026-10-20T00:46:40.746204+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00000783&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20230525UUWBM1328390036214748&atcflSn=1&wlfareInfoId=WLF00000783",
+   "attachmentId": "20230525UUWBM1328390036214748",
+   "relativePath": "agency-41220-bokjiro-WLF00000783-20230525UUWBM1328390036214748.pdf",
+   "usableHangul": false,
+   "publishedPrograms": [
+    {
+     "id": "g41220.bokjiro-WLF00000783",
+     "name": "행려자 귀향여비 및 급식비(송탄출장소)"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "실제 스캔PDF3쪽을모두렌더하여직접읽었다.텍스트추출결과는0자로유지했다.2쪽지급확인서에는신청금액·신청사유·신청인서명과평택시송탄출장소장수신이있어실제주민신청이다.1쪽은같은귀향여비의정보수집·민감정보·제3자제공동의,3쪽은지급후영수증이다.현재정확WLF00000783은송탄북부권역의타지역귀향행려자·본인방문·평택시민신청불가와동일첨부를명시한다.3쪽전부빈양식이며작성된개인정보는없다."
+  },
+  {
+   "formId": "agency-41220-bokjiro-WLF00001309-7951GOWF14GOWF147951",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "행려자 귀향 여비(숙박비) 지급 확인서 및 개인정보 동의서",
+   "regionCode": "41220",
+   "format": "hwp",
+   "bytes": 14848,
+   "sha256": "79ec61749d3cc6f479ec56f6fb17f29a221d497795aa02e4e8b7a46dc1f2ca59",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=7951GOWF14GOWF147951&atcflSn=1&wlfareInfoId=WLF00001309",
+   "downloadedAt": "2026-10-19T07:16:08.456485+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00001309&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=7951GOWF14GOWF147951&atcflSn=1&wlfareInfoId=WLF00001309",
+   "attachmentId": "7951GOWF14GOWF147951",
+   "relativePath": "agency-41220-bokjiro-WLF00001309-7951GOWF14GOWF147951.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41220.bokjiro-WLF00000783",
+     "name": "행려자 귀향여비 및 급식비(송탄출장소)"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "전체 원문은 신청인이 금액·사유를 기입해 서명하는 지급확인서와 개인정보 동의서다. 현재 파일 배포 페이지 WLF00001309는 안중출장소 서부권역 방문신청을 명시한다. 그 출처가 현재 g41220.bokjiro-WLF00000783의 sources에 병합되어 있지만 기본 제목은 송탄출장소이므로 안중 경로에만 명시적으로 조건을 붙인다. 기관 또는 지급대장이 아니라 신청인 문서임을 확인했다."
+  },
+  {
+   "formId": "agency-41220-bokjiro-WLF00003327-20250602UUWBM0936570140303465",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "행려자 귀향 여비 지급 확인서 및 개인정보 동의서",
+   "regionCode": "41220",
+   "format": "hwp",
+   "bytes": 26112,
+   "sha256": "c69e52e12b08542666e50ceae40fb66c31974cddff1ec3255eab4152cbb5a098",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20250602UUWBM0936570140303465&atcflSn=1&wlfareInfoId=WLF00003327",
+   "downloadedAt": "2026-10-19T07:16:09.900581+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003327&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20250602UUWBM0936570140303465&atcflSn=1&wlfareInfoId=WLF00003327",
+   "attachmentId": "20250602UUWBM0936570140303465",
+   "relativePath": "agency-41220-bokjiro-WLF00003327-20250602UUWBM0936570140303465.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41220.bokjiro-WLF00003327",
+     "name": "행려자 귀향여비,숙식비(본청)"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "원문 제목은 지급 확인서이나 전체 본문은 성명·주소·신청금액·신청사유와 신청인 서명을 받는 주민 작성 신청 양식이며 뒤에 개인정보 동의가 있다. 현재 WLF00003327은 선정기준에서 신분증·신청서·개인정보 동의를 명시하고 사회복지과/당직실 방문접수와 이 직접 첨부를 제공한다. 제목만으로 기관용 정산서로 분류하지 않았다."
+  },
+  {
+   "formId": "agency-41220-bokjiro-WLF00005525-20230109UUWBM1405150016381710",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "치매검사비 지원 신청서",
+   "regionCode": "41220",
+   "format": "hwp",
+   "bytes": 88576,
+   "sha256": "d627b3a7c365175135e57329b587a3dadf7efed89750ce17e76c217e12575748",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20230109UUWBM1405150016381710&atcflSn=1&wlfareInfoId=WLF00005525",
+   "downloadedAt": "2026-10-19T07:16:10.172984+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00005525&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20230109UUWBM1405150016381710&atcflSn=1&wlfareInfoId=WLF00005525",
+   "attachmentId": "20230109UUWBM1405150016381710",
+   "relativePath": "agency-41220-bokjiro-WLF00005525-20230109UUWBM1405150016381710.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41220.bokjiro-WLF00005525",
+     "name": "치매정밀검사 의료비 지원 확대"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "원본 서식2-4의 전체 본문을 읽었으며 시민의 검사비 신청과 대리신청 조건을 확인했다. 같은 HWP가 화성에서도 배포되지만 현재 WLF00005525가 정확한 평택 사업에 결속된 wlfareInfoId로 이 첨부를 직접 배포한다. 현재 안내의 검사 의뢰·본인부담 검사비 지원과 목적이 일치한다."
+  },
+  {
+   "formId": "agency-41250-bok-20260617UUWBM1624260197448245-1",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "화장장려금 신청서",
+   "regionCode": "41250",
+   "format": "hwp",
+   "bytes": 47104,
+   "sha256": "8cd90bca5d9c8dcbf2c9c59128cbc5f064923479ee7e11814bef36dde84a61e4",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260617UUWBM1624260197448245&atcflSn=1&wlfareInfoId=WLF00006421",
+   "downloadedAt": "2026-10-19T07:28:06.047230+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00006421&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260617UUWBM1624260197448245&atcflSn=1&wlfareInfoId=WLF00006421",
+   "attachmentId": "20260617UUWBM1624260197448245",
+   "relativePath": "agency-41250-bok-20260617UUWBM1624260197448245-1.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41250.bokjiro-WLF00006421",
+     "name": "동두천시 화장장려금 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "신청 연고자·사망자 또는 개장 사항·화장장·지출액·청구계좌와 행정정보 이용동의를 받는 빈 신청서이다. 현재 공식 사업 페이지와 2026년 시행 조례 제6조가 같은 별지 제1호를 요구한다. 조례 제5조의 70%/30만원·개장10만원 및 제6조의 6개월 내 신청과 충돌하는 고정수치가 원본에 없다."
+  },
+  {
+   "formId": "agency-41270-ansanuc-registration-24597",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "교통약자 이동지원 이용대상 등록 신청서·동의서",
+   "regionCode": "41270",
+   "format": "pdf",
+   "bytes": 150370,
+   "sha256": "1043f85d82a20e9286363a950f4496b4df4897fe0a10efa1d6112e25b1d830b3",
+   "sourceUrl": "https://www.ansanuc.net/homenew/bbs/fileDownload.do?fileIdx=24597",
+   "downloadedAt": "2026-10-19T08:39:59.342720+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.ansanuc.net/homenew/12230/20318/bbsDetail.do?bbsIdx=14076",
+   "finalUrl": "https://www.ansanuc.net/homenew/bbs/fileDownload.do?fileIdx=24597",
+   "attachmentId": "24597",
+   "relativePath": "agency-41270-ansanuc-registration-24597.pdf",
+   "usableHangul": false,
+   "publishedPrograms": [
+    {
+     "id": "g41270.bokjiro-WLF00004704",
+     "name": "교통약자 바우처 택시운영"
+    },
+    {
+     "id": "g41270.gov24-O00007400004",
+     "name": "교통약자 이동지원(하모니콜/바우처택시)"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "현재안산도시공사의고객등록안내와등록서식게시물(fileIdx24597)을대조하고PDF4쪽전체를읽었다. 복지로WLF00004704도해당공단공식주소로직접연결한다. 별지1은장애정도·일시보행장애의휠체어/비휠체어를구분하며등록주체는이용자이다. 2026.10.1시행대체수단운영기준전체도별도다운로드해비휠체어중증보행장애·일시장애·임신부와사전등록요건을확인했다. 기존복지로HWP의장기요양·65세/전문병원문구와다른현재공단배포PDF를대체제안한다. 현행2172447의본칙1~16조·13조의2와표시된부칙전체를읽었다. 제8조제3호이용대상심사등록·제10조제5항서면신청·제11조특별교통수단대상·제13조의2비휠체어대체수단을각각대조했다. 2023부칙의기존이용대상경과조치와2026-09-30공포즉시시행도확인했다."
+  },
+  {
+   "formId": "agency-41270-longevity-02784",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "안산시 노인장수수당 신청서·위임장",
+   "regionCode": "41270",
+   "format": "hwp",
+   "bytes": 35328,
+   "sha256": "ebc658e2244ab0611ff673bb3b6464549db12549bc41e5d259e632c27bf25a8e",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20230525UUWBM1519260036251540&atcflSn=1&wlfareInfoId=WLF00002784",
+   "downloadedAt": "2026-10-19T08:39:59.152239+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00002784&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20230525UUWBM1519260036251540&atcflSn=1&wlfareInfoId=WLF00002784",
+   "attachmentId": "20230525UUWBM1519260036251540",
+   "relativePath": "agency-41270-longevity-02784.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41270.gov24-393000000112",
+     "name": "장수수당"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "현재복지로WLF00002784의전체사업본문과정확첨부목록을읽어안산1년거주85세이상·기초연금제외·월3만원수당·동행정복지센터신청을확인했다. 사이트정부24사업393000000112의같은대상·월수당·신청서/위임장요구와일치한다. 원본전체는급여계좌·서명장수수당신청1호와대리신청위임2호이며기관청구서가아니다. 개정일2014.10.21인쇄는남아있으나날짜·금액·연령을고정해신청자격을잘못제한하지않고현재공식사업페이지가정확원본을계속배포한다."
+  },
+  {
+   "formId": "agency-41280-a881d8eb-2c45-4110-b4e2-6731130f8922",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "2026년 경기도·고양시 대안교육기관 등 학생 교복 지원 신청서",
+   "regionCode": "41280",
+   "format": "hwp",
+   "bytes": 90112,
+   "sha256": "74e7b23b6546d703dbcb5e56c0edda93d23fceea0ff4a8f79027c4a78ec559b0",
+   "sourceUrl": "https://www.goyang.go.kr/component/file/ND_fileDownload.do?q_fileSn=188487&q_fileId=a881d8eb-2c45-4110-b4e2-6731130f8922",
+   "downloadedAt": "2026-10-20T01:52:12.489392+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.goyang.go.kr/dong/user/bbs/BD_selectBbs.do?q_bbsCode=1071&q_bbscttSn=20260303112725340&q_clCode=12&q_pClCode=",
+   "finalUrl": "https://www.goyang.go.kr/component/file/ND_fileDownload.do?q_fileSn=188487&q_fileId=a881d8eb-2c45-4110-b4e2-6731130f8922",
+   "attachmentId": "a881d8eb-2c45-4110-b4e2-6731130f8922",
+   "relativePath": "agency-41280-a881d8eb-2c45-4110-b4e2-6731130f8922.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41280.bokjiro-WLF00002809",
+     "name": "대안교육기관 및 경기도 외 중고등학교 신입생 교복구입비 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "2026-03-03 고양시 행신2동 공식 배포 게시물은 정확 신청서 다운로드와40만원·2026.3.9~12.11 접수·대안교육기관/타시도1학년·입전학일 고양 거주를 함께 안내한다. 현재 복지로WLF00002809의 대상·40만원·고양 동센터/경기민원24 신청과 일치한다. 실제90112바이트 HWP 전체1개 본문섹션3244자를 읽어 빈 신청/개인정보동의/영수증첨부와 뒤쪽 명시된 작성사례를 구분했다. 내장그림은 없고 사례의 이름·전화·계좌는 서식 작성방법을 보여주는 명확한 가상값이다. 다른 신청인의 완성된 제출문서가 아니다."
+  },
+  {
+   "formId": "agency-41280-bok-20250612UUWBM1104000141730341-1",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "미혼 한부모가족 지원 신청서 및 동의서",
+   "regionCode": "41280",
+   "format": "hwp",
+   "bytes": 40960,
+   "sha256": "c683451d3e8d0b3658713e9734dbbc39c1d6d17facf8d6a021ad68bd176acaec",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20250612UUWBM1104000141730341&atcflSn=1&wlfareInfoId=WLF00004720",
+   "downloadedAt": "2026-10-19T07:16:10.746145+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004720&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20250612UUWBM1104000141730341&atcflSn=1&wlfareInfoId=WLF00004720",
+   "attachmentId": "20250612UUWBM1104000141730341",
+   "relativePath": "agency-41280-bok-20250612UUWBM1104000141730341-1.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41280.bokjiro-WLF00004720",
+     "name": "고양시 저소득 미혼 한부모 양육생계비 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "신청인·자녀·고양 전입일·부모교육·통합사례관리 동의·계좌 및 서명을 받는 실제 신청서와 개인정보 동의서 전체를 확인했다. 현 복지로의 정확한 미혼한부모 양육생계비 사업이 이 첨부를 직접 배포하고 고양시의 2026-01-23 수정 안내도 같은 의무교육·동의 및 동 행정복지센터 접수를 안내한다."
+  },
+  {
+   "formId": "agency-41290-gcuc-mobility-registration-809c013d",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "과천시 교통약자 이동지원 이용대상자 등록신청서·동의서",
+   "regionCode": "41290",
+   "format": "hwp",
+   "bytes": 128512,
+   "sha256": "88e8af83b7470f9fe010a4e299f9b9d859adca3378df3c819a0007a48268b054",
+   "sourceUrl": "https://www.gcuc.or.kr/File/Download/809c013dfa6b3ddea33eb3e9f87dd3a5",
+   "downloadedAt": "2026-10-20T00:46:40.295033+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.gcuc.or.kr/fmcs/1282",
+   "finalUrl": "https://www.gcuc.or.kr/File/Download/809c013dfa6b3ddea33eb3e9f87dd3a5",
+   "attachmentId": "809c013dfa6b3ddea33eb3e9f87dd3a5",
+   "relativePath": "agency-41290-gcuc-mobility-registration-809c013d.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41290.bokjiro-WLF00000974",
+     "name": "교통약자이동지원센터 운영"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "과천도시공사 현재 이용절차1282가 이용대상 등록신청서 작성 및 메일·팩스 제출을 직접 명시하고809c013dfa6b3ddea33eb3e9f87dd3a5 원본을 배포한다. 실제 두 BodyText 섹션 전체에서 특별/대체수단 선택,과천시장 수신,신청인·이용대상자,서약과 경기도·과천시 통합 개인정보·민감정보 동의를 확인했다. 구 복지로 지침의 수탁기관·14일 심사와 달리 현재 공사 안내는7일 심사 및 현행 차량유형별 증빙을 명시한다. 과천시 공식 기관소개가 gcuc.or.kr로 직접 연결됨도 대조했다."
+  },
+  {
+   "formId": "agency-41290-pregnancy-city-164743",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "과천시 임신축하금 신청서·동의서·위임장",
+   "regionCode": "41290",
+   "format": "hwp",
+   "bytes": 49152,
+   "sha256": "61b76a0a6f053283b009a067e870afca40d8c04404b4e0ef9ae2e5c039a2781e",
+   "sourceUrl": "https://www.gccity.go.kr/cmm/fms/FileDown.do?atchFileId=25be50ace52ef0796ab9d9d2daa8acea4ca92f1373ef71d6d7793b0daf984522&fileSn=f9a1967c526603d17ab488b9d2747cda",
+   "downloadedAt": "2026-10-20T00:46:41.154530+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.gccity.go.kr/ghc/bbs/view.do?bIdx=164743&ptIdx=281&mId=0708010000",
+   "finalUrl": "https://www.gccity.go.kr/cmm/fms/FileDown.do?atchFileId=25be50ace52ef0796ab9d9d2daa8acea4ca92f1373ef71d6d7793b0daf984522&fileSn=f9a1967c526603d17ab488b9d2747cda",
+   "attachmentId": "25be50ace52ef0796ab9d9d2daa8acea4ca92f1373ef71d6d7793b0daf984522",
+   "relativePath": "agency-41290-pregnancy-city-164743.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41290.gov24-397000000142",
+     "name": "임신축하금 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "과천 보건소의 현재 임신·출산 관리 안내는 카드형 지역화폐20만원·3개월 거주·출산후30일 이내 및 보건소/보조금24 신청을 설명하며164743 신청서 페이지로 직접 연결한다. 해당 페이지의 실제 HWP를 내려받아 서식1 신청·2 정보제공동의·3 위임장 전체 Section0을 읽었다. 보류한 복지로 구원본과 달리 통장 사본 요구가 없어 현재 지급방식과 충돌이 해소됐으며 실제SHA도 다르다."
+  },
+  {
+   "formId": "agency-41310-162546",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "사실상 혼인관계 당사자의 보조생식술 동의서",
+   "regionCode": "41310",
+   "format": "hwp",
+   "bytes": 49152,
+   "sha256": "7a63c610abd3263a652d872f692c4a67b89bb798d1c0b63f21e604c0e8861173",
+   "sourceUrl": "https://www.guri.go.kr/health/downloadBbsFile.do?atchmnflNo=162546",
+   "downloadedAt": "2026-10-19T08:39:59.803819+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.guri.go.kr/health/selectBbsNttView.do?key=1243&bbsNo=493&nttNo=44378&searchCtgry=&searchCnd=all&searchKrwd=&integrDeptCode=&pageIndex=1",
+   "finalUrl": "https://www.guri.go.kr/health/downloadBbsFile.do?atchmnflNo=162546",
+   "attachmentId": "162546",
+   "relativePath": "agency-41310-162546.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41310.bokjiro-WLF00005283",
+     "name": "난임부부 시술비 지원(경기형) 사업"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "구리시2026-09-21수정 난임 지원 안내가 사실혼 추가서류로 링크한 공식 모자보건 민원서식 게시물44378에서 직접 다운로드했다. 전체Section0의 1년 이상 실질 혼인관계 확인·지원목적 한정·당사자2명 서명·구리보건소장 수신을 확인했고 구연도/소득180%/거주6개월 제한은 인쇄되어 있지 않다."
+  },
+  {
+   "formId": "agency-41310-162547",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "사실혼 확인보증서",
+   "regionCode": "41310",
+   "format": "hwp",
+   "bytes": 44544,
+   "sha256": "4f2676b98788be4ae329023fafdffe8c6dc79b2e88a94f9a3f63f1b4af1eddb4",
+   "sourceUrl": "https://www.guri.go.kr/health/downloadBbsFile.do?atchmnflNo=162547",
+   "downloadedAt": "2026-10-19T08:40:00.227118+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.guri.go.kr/health/selectBbsNttView.do?key=1243&bbsNo=493&nttNo=44378&searchCtgry=&searchCnd=all&searchKrwd=&integrDeptCode=&pageIndex=1",
+   "finalUrl": "https://www.guri.go.kr/health/downloadBbsFile.do?atchmnflNo=162547",
+   "attachmentId": "162547",
+   "relativePath": "agency-41310-162547.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41310.bokjiro-WLF00005283",
+     "name": "난임부부 시술비 지원(경기형) 사업"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "현재 구리시보건소 난임 지원 페이지가 직접 연결한 게시물44378의 공식 빈 보증서다. 전체Section0에서 사실혼 당사자2명·동거 시작일·보증인2명 서명·보증인 정보처리 동의·구리보건소장 제출을 확인했다. 현재 안내의 생략 조건과1년 이상 사실혼 관계 확인용도에 맞는다."
+  },
+  {
+   "formId": "agency-41310-bok-20260608UUWBM1658150195804377-1",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "어린이집 이용아동 입소료 지원 신청서(학부모 신청 서식)",
+   "regionCode": "41310",
+   "format": "hwp",
+   "bytes": 67584,
+   "sha256": "6b41ea1fbe8ad852dd50f249b61b98d76240040787281c0a72aa6b37fc2becf7",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260608UUWBM1658150195804377&atcflSn=1&wlfareInfoId=WLF00003554",
+   "downloadedAt": "2026-10-19T07:16:11.220944+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003554&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260608UUWBM1658150195804377&atcflSn=1&wlfareInfoId=WLF00003554",
+   "attachmentId": "20260608UUWBM1658150195804377",
+   "relativePath": "agency-41310-bok-20260608UUWBM1658150195804377-1.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41310.gov24-398000000109",
+     "name": "어린이집 이용아동 입소료 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "학부모 신청이라고 명시된 원문 전체의 보호자·아동·입소료 납입내역·계좌·보호자 서명을 읽었다. 현재 복지로 WLF00003554의2026사업 안내에 정확한 학부모 원본이 첨부되어 있고, 대상구분·최대10만원·어린이집 또는 동행정복지센터 접수가 정부24의 동일 구리시 사업과 일치한다. 별도 어린이집 취합 신청서는 주민용으로 제안하지 않는다."
+  },
+  {
+   "formId": "agency-41360-bok-20230614UUWBM1332110039090877-1",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "(서식)가정위탁아동 능력개발비 신청서",
+   "regionCode": "41360",
+   "format": "hwp",
+   "bytes": 48128,
+   "sha256": "9269bf0da895fd8bc849a4d96ea44438cec2bdd8cb9b14364bf3773d1d8dc1b4",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20230614UUWBM1332110039090877&atcflSn=1&wlfareInfoId=WLF00003557",
+   "downloadedAt": "2026-10-19T07:16:11.550878+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003557&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20230614UUWBM1332110039090877&atcflSn=1&wlfareInfoId=WLF00003557",
+   "attachmentId": "20230614UUWBM1332110039090877",
+   "relativePath": "agency-41360-bok-20230614UUWBM1332110039090877-1.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41360.gov24-399000000111",
+     "name": "가정위탁 아동 능력개발비 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "남양주시장 수신의 원문 전체가 위탁아동·보호자 관계, 학원·수강과목, 신청금액, 계좌 및 영수증 증빙을 받는다. 현재 특정 복지로 WLF00003557이 이 서식을 배포하고 읍면동 신청·월20만원 실비를 안내하며 정부24의 남양주시 교과목 학원비 사업과 일치한다. 정부24가 추가로 요구하는 이전달 출석부는 원본의 첨부목록에 없으므로 준비서류 조건에 함께 보존한다."
+  },
+  {
+   "formId": "agency-41360-bok-20260617UUWBM1339220197397350-1",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "2026년 남양주시 청년 이사비 지원사업 공고 및 신청서식",
+   "regionCode": "41360",
+   "format": "pdf",
+   "bytes": 244543,
+   "sha256": "7646c5ae4285b8c9728184cd3ef278060d16203b2576fde338009464755ee0b8",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260617UUWBM1339220197397350&atcflSn=1&wlfareInfoId=WLF00006419",
+   "downloadedAt": "2026-10-19T08:40:04.195924+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00006419&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260617UUWBM1339220197397350&atcflSn=1&wlfareInfoId=WLF00006419",
+   "attachmentId": "20260617UUWBM1339220197397350",
+   "relativePath": "agency-41360-bok-20260617UUWBM1339220197397350-1.pdf",
+   "usableHangul": false,
+   "publishedPrograms": [
+    {
+     "id": "g41360.gov24-399000000398",
+     "name": "남양주시 청년 이사비 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "10쪽 전체 본문과 렌더링을 확인했다. 4쪽 제출서류 목록은 붙임1·2와 임대차계약서 부재 시 붙임3을 명시하고 실제6~10쪽에 빈 작성 서식이 있다. 현재 복지로WLF00006419가 정확한 파일을 배포하고 정부24의 남양주 이사비399000000398(2026-09-01 수정)도 같은2026전입·19~39세·중위120%·최대40만원·잡아바 접수를 안내한다."
+  },
+  {
+   "formId": "agency-41370-bokjiro-WLF00001044-20260616UUWBM1037410197146166",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "안경구입비 지원신청서",
+   "regionCode": "41370",
+   "format": "hwp",
+   "bytes": 88064,
+   "sha256": "1d9c0b93fdafcccc0588e68f55c740e394c78058f12dc83b05c4873521e0d249",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260616UUWBM1037410197146166&atcflSn=1&wlfareInfoId=WLF00001044",
+   "downloadedAt": "2026-10-19T08:40:02.912080+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00001044&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260616UUWBM1037410197146166&atcflSn=1&wlfareInfoId=WLF00001044",
+   "attachmentId": "20260616UUWBM1037410197146166",
+   "relativePath": "agency-41370-bokjiro-WLF00001044-20260616UUWBM1037410197146166.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41370.bokjiro-WLF00001044",
+     "name": "저소득 한부모가족 안경 구입비 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "2026계획의2개본문섹션4,184자를모두읽었다.5개한부모사업중안경구입비는매월수시신청,연5만원·18세미만/고교재학기준및증빙을명시하고붙임2는부모/보호자서명·개인정보동의가있는빈신청이다. 현재exactWLF00001044가같은파일을직접배포하고초중고재학생·연5만원·동주민센터신청을명시한다.같은SHA가다른4사업에도배포되지만그사업용신청으로복제승인하지않으며3월마감대학입학금붙임1을제외했다."
+  },
+  {
+   "formId": "agency-41410-first-childcare-entry-01640",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "군포시 어린이집 생애최초 입학준비금 지원 신청서",
+   "regionCode": "41410",
+   "format": "hwp",
+   "bytes": 81920,
+   "sha256": "89647d52a58b95ba429ef0cc7a9b9598ac6d5c3eb79e1ffa84d9a84309091dd0",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20230518UUWBM1754330035287847&atcflSn=1&wlfareInfoId=WLF00001640",
+   "downloadedAt": "2026-10-19T08:40:03.020029+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00001640&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20230518UUWBM1754330035287847&atcflSn=1&wlfareInfoId=WLF00001640",
+   "attachmentId": "20230518UUWBM1754330035287847",
+   "relativePath": "agency-41410-first-childcare-entry-01640.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41410.gov24-402000000110",
+     "name": "어린이집 생애 최초 입학준비금 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "2026-10-19 현재 복지로 군포시 WLF00001640의 전체 지원내용·선정기준·접수방법과 정확한 신청서 다운로드를 대조했다. 만1세 미만 출생등록부터 거주 예외가 현재 안내와 동반 방침에도 명시돼 있으며 독립 신청서의 부모/아동/관내 어린이집/실납부금/통장/동의/보호자 서명 및 군포시장 수신과 일치한다. 원본 전체 Section0은 날짜가 공란인 빈 신청서이다."
+  },
+  {
+   "formId": "agency-41430-integrated-birth-03887",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "의왕시 출산장려금·산후조리비 통합신청서",
+   "regionCode": "41430",
+   "format": "hwp",
+   "bytes": 108032,
+   "sha256": "5336f50212b20cfc4f4bd4e6e2b74a639583e941785cadea8cfe53ed3c562f81",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20250528UUWBM1729140139785759&atcflSn=1&wlfareInfoId=WLF00003887",
+   "downloadedAt": "2026-10-19T08:40:03.573014+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003887&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20250528UUWBM1729140139785759&atcflSn=1&wlfareInfoId=WLF00003887",
+   "attachmentId": "20250528UUWBM1729140139785759",
+   "relativePath": "agency-41430-integrated-birth-03887.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41430.gov24-403000000105",
+     "name": "출산장려금 지원"
+    },
+    {
+     "id": "g41430.gov24-403000000151",
+     "name": "의왕시 산후조리비 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "의왕통합출산원본6921자전체를읽어출산장려금의출생순위·의왕전입일,의왕시산후조리비와경기도산후조리비의별도선택,급여계좌·신청서명·개인정보동의를확인했다. 현재복지로WLF03887과WLF05090이동일atcflId·동일SHA파일을각각출산장려금/의왕시산후조리비신청에직접배포한다. 두공식본문의6개월거주·출산1년이내·온라인또는주민센터방문과각정부24사업을대조했다. 함께배포된조례2024.4.8판5조2항도두급여에통합신청별지2를지정하며3항건강관리사본인부담금은별도서식으로구분한다."
+  },
+  {
+   "formId": "agency-41430-merchant-contract-1049",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "의왕사랑 상품권 가맹점 등록 계약서",
+   "regionCode": "41430",
+   "format": "hwp",
+   "bytes": 16896,
+   "sha256": "91cdde239ed53ae9203b28e4020140b8ec72bb96d37ff714e14cd94d5fcbe0a1",
+   "sourceUrl": "https://www.uiwang.go.kr/comm/getFile?srvcId=MEDIA&upperNo=1049&fileTy=MEDIA&fileNo=1",
+   "downloadedAt": "2026-10-20T02:51:21.215617+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.uiwang.go.kr/UWKORECO0802",
+   "finalUrl": "https://www.uiwang.go.kr/comm/getFile?srvcId=MEDIA&upperNo=1049&fileTy=MEDIA&fileNo=1",
+   "attachmentId": "1049",
+   "relativePath": "agency-41430-merchant-contract-1049.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41430.gov24-403000000121",
+     "name": "지역화폐(의왕사랑상품권)"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "현재의왕시가맹점안내페이지(최종수정2026.7.20)가연중수시신청·계약서2부제출과정확MEDIA1049다운로드를명시한다. 실제HWP전체Section0의12개계약조항과가맹점대표서명란1872자를읽었다. 현행시행규칙1643447전체조문·부칙제3조제1항도등록신청과별지3계약체결을요구한다. 정확사업정부24-403000000121은소비자외가맹점수수료절감혜택을명시하며 이미해당사업에등록·변경·해지신청서가연결되어있다. 소비자카드구매자가아닌가맹점대표의등록계약단계로만제안한다."
+  },
+  {
+   "formId": "agency-41460-bokjiro-WLF00006180-20230523UUWBM1336260035790168",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "예방접종 예진표(한국어·영어)",
+   "regionCode": "41460",
+   "format": "hwp",
+   "bytes": 91136,
+   "sha256": "d4d873f4a6d5f9738cb15bc0477d83fbc5c2ab0d22d30c7cb769b7ad7889a408",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20230523UUWBM1336260035790168&atcflSn=1&wlfareInfoId=WLF00006180",
+   "downloadedAt": "2026-10-19T08:40:04.218592+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00006180&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20230523UUWBM1336260035790168&atcflSn=1&wlfareInfoId=WLF00006180",
+   "attachmentId": "20230523UUWBM1336260035790168",
+   "relativePath": "agency-41460-bokjiro-WLF00006180-20230523UUWBM1336260035790168.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41460.bokjiro-WLF00006180",
+     "name": "용인시 취약계층 어르신 대상포진 무료 예방접종"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "한국어와영어예진표전체6,768자를읽었다.실제성명·건강문진·정보/문자동의·피접종자또는보호자서명과의사기록란이분리되어있다.현재정확한WLF00006180은용인65세이상기초수급자의대상포진접종절차에예진표작성을명시하고이동일HWP를직접배포한다.주민의접종준비부속자료로연결하며현금지급주신청이나의사만작성하는기관서식으로분류하지않는다.문자동의선택과의사예진란의작성주체를유지한다."
+  },
+  {
+   "formId": "agency-41480-919-31c66a5c",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "파주시 아빠 육아휴직 장려금 지원 신청서 및 개인정보 동의서",
+   "regionCode": "41480",
+   "format": "pdf",
+   "bytes": 178101,
+   "sha256": "5741c494cc2f68bb859df9ff21b21279c23578b4595d505312acf4d3c6c02466",
+   "sourceUrl": "https://www.paju.go.kr/component/file/ND_fileDownload.do?id=31c66a5c-ced5-41a8-a507-1dd914976bfb",
+   "downloadedAt": "2026-10-19T08:40:05.504925+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.paju.go.kr/user/complaintsForm/BD_complaintsFormView.do?q_sn=919",
+   "finalUrl": "https://www.paju.go.kr/component/file/ND_fileDownload.do?id=31c66a5c-ced5-41a8-a507-1dd914976bfb",
+   "attachmentId": "31c66a5c-ced5-41a8-a507-1dd914976bfb",
+   "relativePath": "agency-41480-919-31c66a5c.pdf",
+   "usableHangul": false,
+   "publishedPrograms": [
+    {
+     "id": "g41480.gov24-406000000538",
+     "name": "파주시 아빠 육아휴직 장려금 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "시청 민원편람의 정확한 서식919가 이 PDF를 직접 배포한다. 5쪽 전체 본문·렌더링에서 파주시장 수신, 육아휴직기간·중복특례 확인·계좌·본인서명과 별도 동의서를 확인했다. 현재 정부24의 동일 사업은2026휴직·1년거주·월30만원3개월과 온라인 접수를 안내하며 원본에 충돌하는 구금액·구연도가 없다."
+  },
+  {
+   "formId": "agency-41500-bokjiro-WLF00001595-9668GOWF14GOWF149668",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "행려자(부랑인) 귀향여비 수령증",
+   "regionCode": "41500",
+   "format": "hwp",
+   "bytes": 49664,
+   "sha256": "0ca6766b7aedb3dc19666bc30679d7bb308a460e61c0cc0af7815275bb9a8a8d",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=9668GOWF14GOWF149668&atcflSn=1&wlfareInfoId=WLF00001595",
+   "downloadedAt": "2026-10-19T08:40:05.488381+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00001595&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=9668GOWF14GOWF149668&atcflSn=1&wlfareInfoId=WLF00001595",
+   "attachmentId": "9668GOWF14GOWF149668",
+   "relativePath": "agency-41500-bokjiro-WLF00001595-9668GOWF14GOWF149668.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41500.bokjiro-WLF00001595",
+     "name": "노숙자 구호비 등"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "당직조치매뉴얼전체3,526자와내장사진1개를읽었다.귀향여비요청자확인후승차권선지급과수령증작성·신분증사본을구분하고제4항은명시적으로대상자작성,당직실비치라고기재한다. 빈수령증은실제지급사유·금액·수령인서명/이천시장수신으로구성된다. 현재WLF00001595는귀향경제무능력자의교통비실비·결정후즉시버스승차권구입및신청창구를명시하고동일원본을배포한다.제3항경찰인계서와숙박시설정보는주민작성부분에서제외한다."
+  },
+  {
+   "formId": "agency-41500-bokjiro-WLF00004612-20250530UUWBM0958080140065366",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "입양아동 입학지원금 지원 신청서",
+   "regionCode": "41500",
+   "format": "pdf",
+   "bytes": 138986,
+   "sha256": "6c9b2985fe03db667df1c3c41740ad339eb67f85d2f2896df0b17ea7475a8603",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20250530UUWBM0958080140065366&atcflSn=1&wlfareInfoId=WLF00004612",
+   "downloadedAt": "2026-10-19T08:40:07.601991+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004612&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20250530UUWBM0958080140065366&atcflSn=1&wlfareInfoId=WLF00004612",
+   "attachmentId": "20250530UUWBM0958080140065366",
+   "relativePath": "agency-41500-bokjiro-WLF00004612-20250530UUWBM0958080140065366.pdf",
+   "usableHangul": false,
+   "publishedPrograms": [
+    {
+     "id": "g41500.gov24-407000000102",
+     "name": "입양아동 입학지원금 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "조례1~12조·부칙·실제별지1/2를포함한PDF5쪽3,606자전체를읽었다.2024개정부칙은2025-01-01시행,제5조는초30만원/중고50만원입학지원,제7조는입학후6개월내1호신청과입학확인/통장자료를지정한다. 현재exactWLF00004612(수록gov24-407000000102의병합출처)가동일PDF를직접배포하며지원대상·금액·6개월기한이일치한다. 입양시지급하던옛장려금이나기관입양알선비용과혼동하지않고,2호는기관대장으로제외했다."
+  },
+  {
+   "formId": "agency-41550-bokjiro-WLF00006699-20260616UUWBM2113570197312184",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "안성맞춤 주택바우처 신청서 및 동의서",
+   "regionCode": "41550",
+   "format": "hwpx",
+   "bytes": 96976,
+   "sha256": "79e1695b76a487ec75694fc686aea1e953b64dfa3093d1bff4df4e37a63099d2",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260616UUWBM2113570197312184&atcflSn=1&wlfareInfoId=WLF00006699",
+   "downloadedAt": "2026-10-19T08:40:07.572676+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00006699&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260616UUWBM2113570197312184&atcflSn=1&wlfareInfoId=WLF00006699",
+   "attachmentId": "20260616UUWBM2113570197312184",
+   "relativePath": "agency-41550-bokjiro-WLF00006699-20260616UUWBM2113570197312184.hwpx",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41550.bokjiro-WLF00006699",
+     "name": "안성맞춤 주택바우처"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "사업안내(안)라는 파일명이지만 전체4560자 안에2026 시행계획과 주민 작성 서식1 신청·2 동의·3 타인계좌 신청이 실제 포함된다. 앞쪽 III는 읍면동 신청자·서식1/2와 주거급여 병행접수를, IV는 본인 일반계좌가 없는 경우에만 서식3으로 가족·지인 계좌를 사용하는 조건을 명시한다. 현재 정확한 WLF00006699 페이지의 안성 수급탈락 후 긴급생계비 선정6개월 이내 가구, 임차료 기준50% 지급 및 읍면동 접수와 일치하고 그 페이지가 이 원본을 직접 배포한다. 주민 신청과 별도 기관보고를 혼동하지 않았다."
+  },
+  {
+   "formId": "agency-41570-bok-20230605UUWBM1024500037838961-1",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "장애인 이동기기 수리신청서",
+   "regionCode": "41570",
+   "format": "hwp",
+   "bytes": 35328,
+   "sha256": "666ea98b3f3afc2bdee8f5a86be44f369d68d13a70bf1c8e79d7c41e1b81b2aa",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20230605UUWBM1024500037838961&atcflSn=1&wlfareInfoId=WLF00005193",
+   "downloadedAt": "2026-10-19T07:28:06.804207+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00005193&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20230605UUWBM1024500037838961&atcflSn=1&wlfareInfoId=WLF00005193",
+   "attachmentId": "20230605UUWBM1024500037838961",
+   "relativePath": "agency-41570-bok-20230605UUWBM1024500037838961-1.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41570.bokjiro-WLF00005193",
+     "name": "장애인 이동기기 수리비 지원 사업"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "수동·전동 휠체어와 스쿠터의 고장 부위, 신청 장애인의 주소·수급 구분·서명을 받는 실제 수리신청서이다. 현재 김포시 사업의 복지로 특정 페이지가 이 원본을 배포하고 지정 수리센터 신청과 수급·차상위 30만원/일반 20만원 한도 지원을 안내한다. 원본에는 고정 구금액이 인쇄되어 있지 않다."
+  },
+  {
+   "formId": "agency-41590-bokjiro-WLF00000284-20230109UUWBM1405150016381710",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "치매검사비 지원 신청서",
+   "regionCode": "41590",
+   "format": "hwp",
+   "bytes": 88576,
+   "sha256": "d627b3a7c365175135e57329b587a3dadf7efed89750ce17e76c217e12575748",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20230109UUWBM1405150016381710&atcflSn=1&wlfareInfoId=WLF00000284",
+   "downloadedAt": "2026-10-19T07:16:12.254570+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00000284&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20230109UUWBM1405150016381710&atcflSn=1&wlfareInfoId=WLF00000284",
+   "attachmentId": "20230109UUWBM1405150016381710",
+   "relativePath": "agency-41590-bokjiro-WLF00000284-20230109UUWBM1405150016381710.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41590.bokjiro-WLF00000284",
+     "name": "치매정밀검사 의료비 지원 확대"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "대상자와 본인·대리신청인, 진단검사 1·2단계/감별검사, 협약병원, 개인정보 제3자 제공 동의와 서명을 받는 서식2-4 전체를 읽었다. 현재 정확한 WLF00000284 페이지가 화성시 확대지원의 방문접수와 이 URL의 첨부를 제공한다. 검사비를 협약병원에 지급하더라도 원본 신청 주체는 시민이다."
+  },
+  {
+   "formId": "agency-41590-bokjiro-WLF00004393-20230519UUWBM1803080035449844",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "화성시 장수수당 신청서",
+   "regionCode": "41590",
+   "format": "hwp",
+   "bytes": 31744,
+   "sha256": "f6b9697e52756aca79ea1f06ba06fb28af09450512125e8b246d359a26c7def2",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20230519UUWBM1803080035449844&atcflSn=1&wlfareInfoId=WLF00004393",
+   "downloadedAt": "2026-10-19T07:16:12.672215+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004393&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20230519UUWBM1803080035449844&atcflSn=1&wlfareInfoId=WLF00004393",
+   "attachmentId": "20230519UUWBM1803080035449844",
+   "relativePath": "agency-41590-bokjiro-WLF00004393-20230519UUWBM1803080035449844.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41590.gov24-553000000115",
+     "name": "장수수당"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "실제 별지1 전체는 대상자·대리신청인·관계·은행계좌와 서명을 받고 화성시장에게 장수수당을 신청하는 문서다. 현재 WLF00004393이 같은 파일을 직접 배포하며 1년 주소·85세 이상·기초연금 미수급자의 월3만원 및 주소지 읍면동 신청을 명시한다. 수록 g41590.gov24-553000000115의 merged sources에 해당 WLF가 정확히 포함됨을 확인했다."
+  },
+  {
+   "formId": "agency-41590-hscity-784039-7728d704-8591-4020-86b2-ea30c02c02a1",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "화성시 노인 보청기 구입비 지원 신청서",
+   "regionCode": "41590",
+   "format": "hwp",
+   "bytes": 85504,
+   "sha256": "4060191cc5cd2d8f2b85b97eb92da9cdb34bb28fff787f24794e8f9b585fd5be",
+   "sourceUrl": "https://www.hscity.go.kr/component/file/ND_fileDownload.do?q_fileSn=784039&q_fileId=7728d704-8591-4020-86b2-ea30c02c02a1",
+   "downloadedAt": "2026-10-19T08:40:07.929420+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.hscity.go.kr/town/user/bbs/BD_selectBbs.do?q_bbsCode=1049&q_bbscttSn=20260929151107489",
+   "finalUrl": "https://www.hscity.go.kr/component/file/ND_fileDownload.do?q_fileSn=784039&q_fileId=7728d704-8591-4020-86b2-ea30c02c02a1",
+   "attachmentId": "7728d704-8591-4020-86b2-ea30c02c02a1",
+   "relativePath": "agency-41590-hscity-784039-7728d704-8591-4020-86b2-ea30c02c02a1.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41590.bokjiro-WLF00005079",
+     "name": "노인 보청기 및 성인용 보행기 지원 사업"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "2026-09-29 시청 행정복지센터의 노인보청기 사업 재개 공고와 정확한 공개 첨부를 직접 GET했다. 전체5565자 원본을 읽어 최초 지원선정 신청의 첫 빈 별지1과 뒤 동의가 신청인 작성 서류임을 확인했다. 이 현행 배포본은 옛 복지로 파일의 지정업체3곳 제한을 화성시 소재 장애인 보조기기 등록업소로 고쳤으며 실제 재개 공고와 일치한다. 1년 주소·65세·수급/차상위·난청·5년 중복제한 및 최대117만9천원 지원의 동일 사업이고 현재 WLF00005079 원문과 대상·목적을 대조했다. 작성예시와 후속 청구·공무원확인·위임 부분은 모두 읽었지만 최초 주민신청의 선택부분에는 포함하지 않는다."
+  },
+  {
+   "formId": "agency-41610-bokjiro-WLF00006471-20260625UUWBM1731370198695083",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "다태임신 임산부 교통비 지원 신청서 및 개인정보 수집·이용 동의서",
+   "regionCode": "41610",
+   "format": "hwp",
+   "bytes": 73216,
+   "sha256": "28494a4f7080e6445a8f9473d5ce9ce9bc1143d56d67924ccd1f796c687bb975",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260625UUWBM1731370198695083&atcflSn=1&wlfareInfoId=WLF00006471",
+   "downloadedAt": "2026-10-19T07:16:13.419920+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00006471&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260625UUWBM1731370198695083&atcflSn=1&wlfareInfoId=WLF00006471",
+   "attachmentId": "20260625UUWBM1731370198695083",
+   "relativePath": "agency-41610-bokjiro-WLF00006471-20260625UUWBM1731370198695083.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41610.gov24-554000000205",
+     "name": "다태임신 임산부 교통비 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "실제 저장된 HWP 전체와 오늘 같은 복지로 공개 첨부의 GET 바이트를 대조했다. 원본은 광주시장 수신의 임산부 신청서로 신청인·본인 계좌·분만예정일·타교통지원 여부·진료일/기관/교통비 10칸·서명과 개인정보·민감정보 동의를 받는다. 현재 복지로 WLF00006471의 정확한 본문이 광주시 6개월 주소, 다태임신, 임신12주~분만후3개월 진료 교통비 실비 최대50만원·회당5만원, 보건소 방문/보조금24 신청을 명시하고 이 정확한 atcflId를 배포한다. 현재 수록 g41610.gov24-554000000205의 sources에도 해당 WLF가 포함된다. 의료기관은 진료·영수증 확인 대상이며 실제 작성·청구자는 임산부이다."
+  },
+  {
+   "formId": "agency-41630-bok-20240628UUWBM1116070091665482-1",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "화장장려금지급신청서",
+   "regionCode": "41630",
+   "format": "hwp",
+   "bytes": 36352,
+   "sha256": "f6af85b5be1169f1e17252c4a856fc01f99f3ae9e99bda25b1ab12a51d61e7f7",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20240628UUWBM1116070091665482&atcflSn=1&wlfareInfoId=WLF00003126",
+   "downloadedAt": "2026-10-19T07:16:13.929225+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003126&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20240628UUWBM1116070091665482&atcflSn=1&wlfareInfoId=WLF00003126",
+   "attachmentId": "20240628UUWBM1116070091665482",
+   "relativePath": "agency-41630-bok-20240628UUWBM1116070091665482-1.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41630.bokjiro-WLF00003126",
+     "name": "화장장려 정책 추진"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "양주시장 수신의 별지1 전체에서 신청인 계좌·사망자 화장·분묘 개장 후 화장 내역과 신청 서명을 확인했다. 현재 복지로 WLF00003126이 바로 이 원본을 신청서로 배포하고 읍면동 신청·화장 및 개장증명·통장 증빙을 요구하여 주체와 절차가 일치한다."
+  },
+  {
+   "formId": "agency-41630-bok-20240628UUWBM1117010091667683-1",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "개인정보동의서(화장장려금)",
+   "regionCode": "41630",
+   "format": "hwp",
+   "bytes": 54272,
+   "sha256": "8b9d5db82ddf668341a6683bd2a93cff3c035be1440c5528a05a735667da425c",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20240628UUWBM1117010091667683&atcflSn=1&wlfareInfoId=WLF00003126",
+   "downloadedAt": "2026-10-19T07:16:14.728196+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003126&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20240628UUWBM1117010091667683&atcflSn=1&wlfareInfoId=WLF00003126",
+   "attachmentId": "20240628UUWBM1117010091667683",
+   "relativePath": "agency-41630-bok-20240628UUWBM1117010091667683-1.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41630.bokjiro-WLF00003126",
+     "name": "화장장려 정책 추진"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "전체 원문은 양주시 화장장려금 신청인의 이름·연락처·주소·생년월일을 지급대상자 조회에 사용하는 것에 대한 서명 동의다. WLF00003126의 현재 특정 사업 페이지가 화장장려금 신청서와 함께 직접 첨부하므로 같은 신청의 추가 서류로 제안한다."
+  },
+  {
+   "formId": "agency-41630-bok-20240702UUWBM1118150092155083-1",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "효행장려지원을 위한 효도수당 지급신청서",
+   "regionCode": "41630",
+   "format": "hwp",
+   "bytes": 12800,
+   "sha256": "7c284c8eaefccb25cb43107fb92869e267c2308898279242a177be9e6ad11586",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20240702UUWBM1118150092155083&atcflSn=1&wlfareInfoId=WLF00005610",
+   "downloadedAt": "2026-10-19T07:16:15.971019+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00005610&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20240702UUWBM1118150092155083&atcflSn=1&wlfareInfoId=WLF00005610",
+   "attachmentId": "20240702UUWBM1118150092155083",
+   "relativePath": "agency-41630-bok-20240702UUWBM1118150092155083-1.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41630.bokjiro-WLF00005610",
+     "name": "효행장려지원"
+    },
+    {
+     "id": "g41630.gov24-559000000134",
+     "name": "효행장려금 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "별지1 전체는 지급계좌와 4대 가족 구성원의 관계·생년월일·주소·전입일을 신청인이 기재해 읍면동장에게 제출하는 서식이다. 현재 복지로와 정부24의 양주시 효행장려금은 70세 이상 직계존비속 포함4대·주소 및 실거주·연50만원과 해당 신청서를 요구한다. 원문 마지막의 현지 사실조사서 표제는 신청인 작성부분으로 안내하지 않는다."
+  },
+  {
+   "formId": "agency-41630-bok-20240702UUWBM1127550092158628-1",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "개인정보동의서(효행장려)",
+   "regionCode": "41630",
+   "format": "hwp",
+   "bytes": 12800,
+   "sha256": "5c0fc8b27e5cd39658dc8130240f176b3aa534ebc4311d0e44564a4d02ac812e",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20240702UUWBM1127550092158628&atcflSn=1&wlfareInfoId=WLF00005610",
+   "downloadedAt": "2026-10-19T07:16:16.105236+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00005610&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20240702UUWBM1127550092158628&atcflSn=1&wlfareInfoId=WLF00005610",
+   "attachmentId": "20240702UUWBM1127550092158628",
+   "relativePath": "agency-41630-bok-20240702UUWBM1127550092158628-1.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41630.bokjiro-WLF00005610",
+     "name": "효행장려지원"
+    },
+    {
+     "id": "g41630.gov24-559000000134",
+     "name": "효행장려금 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "효행장려금 신청인의 가족구성·지급계좌 등 지급대상 조회에 대한 동의서 전체다. 현재 양주시 효행장려지원 특정 복지로 페이지가 신청서와 함께 직접 배포하고 동일 대상·급여·접수기관인 정부24 사업과 대조했다. 신청을 대신하는 주서류가 아니라 추가 동의서로 제안한다."
+  },
+  {
+   "formId": "agency-41630-bok-20240702UUWBM1847100092264050-1",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "장애인활동지원 양주시 추가지원 신청서",
+   "regionCode": "41630",
+   "format": "hwp",
+   "bytes": 61952,
+   "sha256": "b73f3bf22981db210dac38034984d4167405e6fed4c6dda9c6d363fa7881a3ff",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20240702UUWBM1847100092264050&atcflSn=1&wlfareInfoId=WLF00004146",
+   "downloadedAt": "2026-10-19T07:28:07.189825+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004146&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20240702UUWBM1847100092264050&atcflSn=1&wlfareInfoId=WLF00004146",
+   "attachmentId": "20240702UUWBM1847100092264050",
+   "relativePath": "agency-41630-bok-20240702UUWBM1847100092264050-1.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41630.bokjiro-WLF00004146",
+     "name": "장애인활동지원 시추가"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "현재 복지로의 양주시 추가지원 사업에 정확한 원본이 직접 첨부되어 있다. 원본은 신청인·대리인·국비 급여량·추가지원 사유·서명 및 의사소견을 기재하는 빈 신청서이며, 인쇄된 국비 급여량의 10% 기본지원은 현재 사업안내와 일치한다."
+  },
+  {
+   "formId": "agency-41650-bok-20230517UUWBM1651450035096355-1",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "포천시 전입대학생 및 제대군인 지원금 신청서",
+   "regionCode": "41650",
+   "format": "hwp",
+   "bytes": 72192,
+   "sha256": "1b8a9316660c10711877744058ca13b2c6c4bffc3d87276534fe9e25a2d5082d",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20230517UUWBM1651450035096355&atcflSn=1&wlfareInfoId=WLF00004887",
+   "downloadedAt": "2026-10-19T07:28:07.960643+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004887&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20230517UUWBM1651450035096355&atcflSn=1&wlfareInfoId=WLF00004887",
+   "attachmentId": "20230517UUWBM1651450035096355",
+   "relativePath": "agency-41650-bok-20230517UUWBM1651450035096355-1.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41650.bokjiro-WLF00004887",
+     "name": "포천시 전입 대학생 및 정착 제대군인 지원 사업"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "신청인이 전입대학생 또는 제대군인 지원을 선택하고 주소·전입·재학/전역·계좌를 작성하는 앞뒤 빈 서식 전체를 확인했다. 현재 특정 사업 페이지의 첨부와 동일하며 별표는 대학생 30만원과 제대군인 50만원의 6개월/1년 분할지급을 규정한다. 원본 신청서에는 구금액이나 고정 구연도가 없어 현재 안내와 충돌하지 않는다."
+  },
+  {
+   "formId": "agency-41650-bok-20230524UUWBM1603050036049683-1",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "출산서비스 통합처리 신청서 중 포천시 출생아 건강보험 가입지원",
+   "regionCode": "41650",
+   "format": "hwpx",
+   "bytes": 109805,
+   "sha256": "bfeb803b69be2c54164c25b767095bf312614f8a166e40aa5b02ee29b98deefd",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20230524UUWBM1603050036049683&atcflSn=1&wlfareInfoId=WLF00003349",
+   "downloadedAt": "2026-10-19T07:28:09.423399+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003349&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20230524UUWBM1603050036049683&atcflSn=1&wlfareInfoId=WLF00003349",
+   "attachmentId": "20230524UUWBM1603050036049683",
+   "relativePath": "agency-41650-bok-20230524UUWBM1603050036049683-1.hwpx",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41650.bokjiro-WLF00003349",
+     "name": "출생아 건강보험 가입지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "통합신청서 전체 3개 면과 동의문을 확인했다. 포천시의 지역서비스 선택란에 출생아 건강보험(만 1세 미만 둘째 이상)이 인쇄되어 있고, 공식 사업의 대상과 맞는다. 공식 사업 페이지는 이 정확한 원본을 직접 첨부하며 관련 조례 제5조는 출산서비스 통합처리 별지 제1호 신청을 명시한다."
+  },
+  {
+   "formId": "agency-41670-bokjiro-WLF00001564-20260605UUWBM1431470195452020",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "여주시 아빠 육아휴직 장려금 개인정보 수집·이용 및 제공 동의서",
+   "regionCode": "41670",
+   "format": "hwpx",
+   "bytes": 74764,
+   "sha256": "c5bfcff2f39d6cb121456f09fc329d838070aea6b5aaae028eac4ded1f5ba20c",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260605UUWBM1431470195452020&atcflSn=1&wlfareInfoId=WLF00001564",
+   "downloadedAt": "2026-10-19T08:40:08.524940+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00001564&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260605UUWBM1431470195452020&atcflSn=1&wlfareInfoId=WLF00001564",
+   "attachmentId": "20260605UUWBM1431470195452020",
+   "relativePath": "agency-41670-bokjiro-WLF00001564-20260605UUWBM1431470195452020.hwpx",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41670.gov24-570000000104",
+     "name": "여주시 아빠 육아휴직 장려금 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "전체3033자를 읽어 아빠육아휴직 대상자 선정·가구 건강보험료 및 거주 확인·6+6육아휴직 특례 확인을 위한 정보동의와 가구원 자필서명을 확인했다. 현재 정확한 WLF00001564와 수록 정부24 사업은1년 주소·중위소득150% 및6+6특례 제외를 안내하고 해당 동의를 첨부서류로 요구한다. 신청자·정보주체가 작성하는 부속서류이며 기관의 급여청구서가 아니다."
+  },
+  {
+   "formId": "agency-41670-bokjiro-WLF00004815-20260313UUWBM1434150180378524",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "2026년 여주시 초등학생 입학축하금 신청서",
+   "regionCode": "41670",
+   "format": "hwp",
+   "bytes": 427520,
+   "sha256": "ead5f6a1d7c67b898c84f9d9b1d86fae3fbed390729eeb49e205362a910d458b",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260313UUWBM1434150180378524&atcflSn=1&wlfareInfoId=WLF00004815",
+   "downloadedAt": "2026-10-19T07:16:17.253637+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004815&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260313UUWBM1434150180378524&atcflSn=1&wlfareInfoId=WLF00004815",
+   "attachmentId": "20260313UUWBM1434150180378524",
+   "relativePath": "agency-41670-bokjiro-WLF00004815-20260313UUWBM1434150180378524.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41670.gov24-570000000135",
+     "name": "여주시 초등학생 입학축하금 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "2026 안내문과 뒤 신청서 전체2693자를 읽었다. 지원10만원 지역화폐, 보호자 신청, 2026-12-31 마감, 관내외·대안학교의 증빙 및 중복금지, 신청·동의·담당확인 단계가 현재 프로그램과 일치한다. 현재 WLF00004815는 이2026 원본과 구독립 신청서를 함께 배포하므로 명의일치 안내가 보완된2026 파일을 제안하고 구파일을 중복 승인하지 않는다."
+  },
+  {
+   "formId": "agency-41670-bokjiro-WLF00005933-20250604UUWBM1434520140648644",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "여주시 산후조리비 지원 신청서 및 개인정보 제공 동의서",
+   "regionCode": "41670",
+   "format": "hwpx",
+   "bytes": 61428,
+   "sha256": "07c5c397f1b18d770867e2afec353fb94b6612e981ec67eb0ff6adb4540689c6",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20250604UUWBM1434520140648644&atcflSn=1&wlfareInfoId=WLF00005933",
+   "downloadedAt": "2026-10-19T08:40:08.646804+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00005933&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20250604UUWBM1434520140648644&atcflSn=1&wlfareInfoId=WLF00005933",
+   "attachmentId": "20250604UUWBM1434520140648644",
+   "relativePath": "agency-41670-bokjiro-WLF00005933-20250604UUWBM1434520140648644.hwpx",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41670.gov24-570000000140",
+     "name": "여주시 산후조리비 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "조례문과 뒤의 실제 별지1 앞·뒷면 전체3602자를 읽었다. 제7조는 출생·사산일부터6개월 이내 신청서와 지출증빙을 제출하도록 하고, 원본은 산모·신청인·출생아·사용처·계좌·금액·서명과 개인정보 동의를 받는다. 현재 정확한 WLF00005933이 이 HWPX를 배포하며100만원 본인부담 정산을 안내한다. 같은 수록 정부24 570000000140을 직접 GET하여 신청일 기준6개월 주소,2025년 이후 출생,4개 사용처,산모통장 및신청서·동의 제출을 추가 확인했다. 복지로 요약의 출생일 기준이라는 표현과 상세 선정기준의 신청일 기준 차이는 숨기지 않고, 현재 정부24와 원문 조문의 신청일 기준을 대조 근거로 기록했다."
+  },
+  {
+   "formId": "agency-41800-bok-20260722UUWBM0922300201996757-1",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "2026년 연천군 무연고 기초생활수급자 간병비 지원계획 중 신청서",
+   "regionCode": "41800",
+   "format": "hwp",
+   "bytes": 1171456,
+   "sha256": "7fa3ad71a79fea663ecadcbcd1af76a44990f677e115ae0c42a2ed80bc5ae290",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260722UUWBM0922300201996757&atcflSn=1&wlfareInfoId=WLF00001895",
+   "downloadedAt": "2026-10-19T07:28:11.407494+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00001895&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260722UUWBM0922300201996757&atcflSn=1&wlfareInfoId=WLF00001895",
+   "attachmentId": "20260722UUWBM0922300201996757",
+   "relativePath": "agency-41800-bok-20260722UUWBM0922300201996757-1.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41800.bokjiro-WLF00001895",
+     "name": "무연고 기초수급자 간병비 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "2026년 사업계획 전체 5,169자와 포함 이미지 6개(군 로고·마스코트·장식)를 확인했다. 2절은 신청인을 본인·친족·후견인·법정대리인·담당공무원으로 명시하고 붙임2의 입원환자·간병인 배치·신청인 개인정보 동의 서식을 제출하도록 한다. 현재 복지로의 동일 연천 사업은 1인120만원/연1회와 같은 신청인·서류를 안내하며 해당 원본을 직접 배포한다."
+  },
+  {
+   "formId": "agency-41820-72921",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "보조기기 수리비 지원 개인정보 수집·이용 및 제3자 제공 동의서",
+   "regionCode": "41820",
+   "format": "hwp",
+   "bytes": 46080,
+   "sha256": "5a2247012ac2e140850079dcfd21a5ad778f93305b7eed147348eb19967a1bb3",
+   "sourceUrl": "https://sang.gp.go.kr/gapyeong/downloadBbsFile.do?atchmnflNo=72921",
+   "downloadedAt": "2026-10-20T00:46:44.379830+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://sang.gp.go.kr/gapyeong/selectBbsNttView.do?key=298&bbsNo=175&nttNo=240908&searchCtgry=&searchCnd=all&searchKrwd=&pageIndex=2&integrDeptCode=00000026",
+   "finalUrl": "https://sang.gp.go.kr/gapyeong/downloadBbsFile.do?atchmnflNo=72921",
+   "attachmentId": "72921",
+   "relativePath": "agency-41820-72921.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41820.icare-0085-1489618-1-1-19",
+     "name": "보조기기 수리비용 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "가평군 가평읍 민원안내/서식자료 게시물240908은 보조기기 수리 신청서와 이 개인정보수집이용동의서를 함께 배포한다. 실제 첨부72921 전체692자를 읽어 장애인보조기기수리비용 지원 목적, 가평군지체장애인협회 제3자 제공,5년 보관, 신청인 서명의 빈 서식임을 확인했다. 현행 조례1870717 별지3 신청서20406221은 이 개인정보 수집·이용·제3자 제공동의서를 구비서류로 요구하며,2026년 가평군 서비스 메뉴판1쪽19행은 같은 수리센터 사업을 현재사업으로 특정한다. 동의서의 목적이 장애인에 한정되므로 해당 사업의 장애인 신청자만 추가서류로 연결한다."
+  },
+  {
+   "formId": "agency-41820-96924",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "2026년 하반기 가평군 신혼부부 주거자금 대출이자 신청서·서약서·동의서",
+   "regionCode": "41820",
+   "format": "hwpx",
+   "bytes": 96603,
+   "sha256": "6c1f38f578cd68ea7953a4fba3c3bc1bb1b1857383287a9fd8b2e968a36f850b",
+   "sourceUrl": "https://gp.go.kr/sang/downloadBbsFile.do?atchmnflNo=96924",
+   "downloadedAt": "2026-10-20T01:52:15.919546+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://gp.go.kr/sang/selectBbsNttView.do?bbsNo=150&integrDeptCode=&key=375&nttNo=289812&pageIndex=1&searchCnd=all&searchCtgry=&searchKrwd=",
+   "finalUrl": "https://gp.go.kr/sang/downloadBbsFile.do?atchmnflNo=96924",
+   "attachmentId": "96924",
+   "relativePath": "agency-41820-96924.hwpx",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41820.bokjiro-WLF00004881",
+     "name": "가평군 신혼부부 주거자금 대출이자 지원사업"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "가평군 상면 공식2026-10-13 게시물289812가 이 HWPX 첨부96924와 공고96925/FAQ96926을 직접 배포한다. 공고 제2026-2286호(문서작성2026-10-01)의10/1~10/30접수·2026상반기이자150만원·대출주택/혼인/주소/소득요건과 현재복지로WLF00004881을 대조했다. 실제 신청원본96603바이트의3개 전체섹션3704자를 읽어 신청·서약·신청인/배우자 별도동의를 구별했고 모두 빈 작성란이며 내장그림은 없다. 공고4222자와 FAQ5004자 전체 및 그 내장그림10개도 읽었으나 게시할 원본은 빈 신청서 묶음만이다."
+  },
+  {
+   "formId": "agency-41820-96972",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "2026년 가평군 청년면접지원 사업 공고 및 신청서식",
+   "regionCode": "41820",
+   "format": "hwpx",
+   "bytes": 81768,
+   "sha256": "20a0e95b43b7be8a4beba1afe966f341799b707a475a734306e6cdced664ca43",
+   "sourceUrl": "https://m.gp.go.kr/gpnongup/downloadBbsFile.do?atchmnflNo=96972",
+   "downloadedAt": "2026-10-19T07:28:11.067085+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://m.gp.go.kr/gpnongup/selectBbsNttView.do?bbsNo=150&integrDeptCode=00000018&key=919&nttNo=289892",
+   "finalUrl": "https://m.gp.go.kr/gpnongup/downloadBbsFile.do?atchmnflNo=96972",
+   "attachmentId": "96972",
+   "relativePath": "agency-41820-96972.hwpx",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41820.bokjiro-WLF00005976",
+     "name": "청년 면접 지원 사업"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "가평군 공식 게시물(2026-10-15)이 직접 배포하는 2026-4호 공고와 3개 전체 섹션 4,850자를 확인했다. 원본은 2026년 면접/2026년 신청란, 연3회 회당10만원, 본인 신청·개인정보·유의사항·업체확인서를 포함한다. 기존 복지로의 2025년 인쇄 서식과 달리 2026년 공고와 원본 신청연도가 일치한다."
+  },
+  {
+   "formId": "agency-41820-bok-20260619UUWBM1546050197820233-1",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "가평군 홍보(축하)물품 신청서 — 전입가구",
+   "regionCode": "41820",
+   "format": "pdf",
+   "bytes": 501290,
+   "sha256": "7d8aaacfed045df6fb011624b872c1de15b9ec0b4437abf2e830f29bc5786d63",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260619UUWBM1546050197820233&atcflSn=1&wlfareInfoId=WLF00006454",
+   "downloadedAt": "2026-10-19T08:40:10.786799+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00006454&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260619UUWBM1546050197820233&atcflSn=1&wlfareInfoId=WLF00006454",
+   "attachmentId": "20260619UUWBM1546050197820233",
+   "relativePath": "agency-41820-bok-20260619UUWBM1546050197820233-1.pdf",
+   "usableHangul": false,
+   "publishedPrograms": [
+    {
+     "id": "g41820.bokjiro-WLF00006454",
+     "name": "전입세대 환영물품 지급"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "5쪽 전체 본문과 렌더링을 확인했다. 3쪽은 신고시 별지1 작성 후 물품 배부를 명시하고4쪽은 전입/혼인/출생을 선택하는 빈 신청서다. 현재 복지로의 정확한 전입세대 환영물품 사업은 이 동일 파일을 직접 배포한다. 5쪽 기관 관리대장을 분리하였다."
+  },
+  {
+   "formId": "agency-41820-bok-20260619UUWBM1553510197822896-1",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "가평군 홍보(축하)물품 신청서 — 혼인·출산가구",
+   "regionCode": "41820",
+   "format": "pdf",
+   "bytes": 501290,
+   "sha256": "7d8aaacfed045df6fb011624b872c1de15b9ec0b4437abf2e830f29bc5786d63",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260619UUWBM1553510197822896&atcflSn=1&wlfareInfoId=WLF00006455",
+   "downloadedAt": "2026-10-19T08:40:13.462270+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00006455&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260619UUWBM1553510197822896&atcflSn=1&wlfareInfoId=WLF00006455",
+   "attachmentId": "20260619UUWBM1553510197822896",
+   "relativePath": "agency-41820-bok-20260619UUWBM1553510197822896-1.pdf",
+   "usableHangul": false,
+   "publishedPrograms": [
+    {
+     "id": "g41820.bokjiro-WLF00006455",
+     "name": "가평군 혼인, 출산 축하물품 지급"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "5쪽 원본은 가평 전입사업 첨부와 바이트SHA가 동일하다. 전체 본문·시각 대조에서 혼인/출생 선택란과 신청인 서명·개인정보 동의를 확인했다. 현재 정확한 혼인·출산 축하물품 복지로 사업은 별도의 첨부식별자로 이 동일 원본을 배포하므로 해당 사업 조건으로만 제안한다."
+  },
+  {
+   "formId": "agency-41830-bokjiro-WLF00006105-20250527UUWBM1439230139569874",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "치매치료관리비 지원 신청서",
+   "regionCode": "41830",
+   "format": "hwp",
+   "bytes": 80896,
+   "sha256": "8dc2b1b66e86dd3f2ae031a8eebc1b35c6dbd955ce1947ccdfa022e0b43e089c",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20250527UUWBM1439230139569874&atcflSn=1&wlfareInfoId=WLF00006105",
+   "downloadedAt": "2026-10-19T07:16:17.096931+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00006105&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20250527UUWBM1439230139569874&atcflSn=1&wlfareInfoId=WLF00006105",
+   "attachmentId": "20250527UUWBM1439230139569874",
+   "relativePath": "agency-41830-bokjiro-WLF00006105-20250527UUWBM1439230139569874.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41830.bokjiro-WLF00006105",
+     "name": "양평군 치매치료관리비 확대 지원사업"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "서식6-4 전체의 지원 대상자·대리신청·가족 연락망·계좌·신청 서명 및 대리인별 제출서류를 읽었다. 현재 WLF00006105가 양평군의 치매치료제 복용자·기준중위140% 초과 확대지원, 월3만원/연36만원의 치료관리비와 방문접수를 명시하고 이 정확한 첨부를 제공한다. 의료기관 정산 서식이 아니다."
+  },
+  {
+   "formId": "agency-41830-bokjiro-WLF00006105-20250527UUWBM1446200139571761",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "행정정보 공동이용 사전 동의서",
+   "regionCode": "41830",
+   "format": "hwp",
+   "bytes": 69632,
+   "sha256": "53afb5687ce83db985b318e7f7a14f2533fc22a44337c9f84083777bf4c967ab",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20250527UUWBM1446200139571761&atcflSn=1&wlfareInfoId=WLF00006105",
+   "downloadedAt": "2026-10-19T07:16:17.673681+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00006105&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20250527UUWBM1446200139571761&atcflSn=1&wlfareInfoId=WLF00006105",
+   "attachmentId": "20250527UUWBM1446200139571761",
+   "relativePath": "agency-41830-bokjiro-WLF00006105-20250527UUWBM1446200139571761.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41830.bokjiro-WLF00006105",
+     "name": "양평군 치매치료관리비 확대 지원사업"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "서식6-6 전체는 치매안심센터의 주민등록·보험료·수급자격 확인을 위한 정보주체의 동의서이고 거부 시 직접 서류 제출 가능성을 명시한다. 현재 정확한 치료관리비 WLF00006105가 이 첨부를 함께 제공한다. 신청서와 분리한 조건부 동의로만 제안한다."
+  },
+  {
+   "formId": "agency-41830-bokjiro-WLF00006106-20230109UUWBM1405150016381710",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "치매검사비 지원 신청서",
+   "regionCode": "41830",
+   "format": "hwp",
+   "bytes": 88576,
+   "sha256": "d627b3a7c365175135e57329b587a3dadf7efed89750ce17e76c217e12575748",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20230109UUWBM1405150016381710&atcflSn=1&wlfareInfoId=WLF00006106",
+   "downloadedAt": "2026-10-19T07:16:18.540446+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00006106&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20230109UUWBM1405150016381710&atcflSn=1&wlfareInfoId=WLF00006106",
+   "attachmentId": "20230109UUWBM1405150016381710",
+   "relativePath": "agency-41830-bokjiro-WLF00006106-20230109UUWBM1405150016381710.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41830.bokjiro-WLF00006106",
+     "name": "양평군 치매조기검진비 확대 지원사업"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "원본 전체의 대상자·신청자·검사 구분·협약병원·동의·서명과 현재 WLF00006106의 양평군 방문신청·진단/감별검사 지원을 대조했다. 동일한 국가 공통 형식이라는 이유로 승인한 것이 아니라 이 정확한 양평 사업 페이지의 직접 배포 첨부임을 확인했다."
+  },
+  {
+   "formId": "agency-41830-bokjiro-WLF00006106-20250527UUWBM1446200139571761",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "행정정보 공동이용 사전 동의서",
+   "regionCode": "41830",
+   "format": "hwp",
+   "bytes": 69632,
+   "sha256": "53afb5687ce83db985b318e7f7a14f2533fc22a44337c9f84083777bf4c967ab",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20250527UUWBM1446200139571761&atcflSn=1&wlfareInfoId=WLF00006106",
+   "downloadedAt": "2026-10-19T07:16:20.254347+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00006106&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20250527UUWBM1446200139571761&atcflSn=1&wlfareInfoId=WLF00006106",
+   "attachmentId": "20250527UUWBM1446200139571761",
+   "relativePath": "agency-41830-bokjiro-WLF00006106-20250527UUWBM1446200139571761.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41830.bokjiro-WLF00006106",
+     "name": "양평군 치매조기검진비 확대 지원사업"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "동일한6-6 동의서 바이트가 치료관리비와 조기검진 사업에 각각 배포되어 있으므로 현재 WLF00006106 페이지의 정확한 별도 다운로드 URL도 대조했다. 원본에는 치매안심센터 사업 선택란이 있고 현재 조기검진 안내는 소득·재산 확인과 센터 방문신청을 설명한다. 해당 자격확인 동의만 조건부 연결하며 치료관리비 신청으로 혼동하지 않는다."
   },
   {
    "formId": "agency-43000-cbfc-2026-art-grant",
@@ -4645,6 +6603,30 @@
    "reviewState": "reviewed_not_linked",
    "reviewLabel": "대응하는 수록 혜택 미확인",
    "reviewReason": "제4·5조는 부모 상속채무의 상속포기·한정승인 법률지원, 제7조는 아동·청소년 또는 보호자의 별지 제1호 신청을 규정한다. 실제 원본은 법률지원 요청내역·대리사유·서명·개인신용정보 동의로 작성주체는 주민이 맞다. 그러나 후보는 심리상담 바우처로 목적·법규·서류가 다르며 구로구 전체 사업에서 해당 상속채무 법률지원을 찾지 못했다."
+  },
+  {
+   "formId": "ordin-15008013",
+   "lawId": "1391632",
+   "lawTitle": "가평군 교복 지원 조례",
+   "title": "별표 1~3",
+   "regionCode": "41820",
+   "format": "hwp",
+   "bytes": 21504,
+   "sha256": "fc0e4692d5d09e14566ce269df0d4231f4a871774dea0ba29aa026ee77bd9510",
+   "sourceUrl": "https://www.law.go.kr/flDownload.do?gubun=ELIS&flSeq=124586253&flNm=%EB%B3%84%ED%91%9C+1~3",
+   "downloadedAt": "2026-10-20T01:52:19.182177+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-15008013.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41820.bokjiro-WLF00000942",
+     "name": "가평군 중·고등학생 무상교복 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "현행 가평군 교복 지원 조례1391632 전체8개 조문 및 부칙을 읽었다. 제6조제1·2항은 지원금을 학교에 지급하고 학교가 업체에 대금을 지급하여 학생에게 현물을 제공하며, 제3항은 학생이 학교에 교복구매 신청하도록 정한다. 현재 정확 복지로WLF00000942도 학교에서 학교주관구매로 신청 받아1인40만원 이내 현물 지원한다고 안내한다. 현재 법정첨부15008013 전체2개 섹션1188자를 읽어 별지1 읍면 제출·별지2 학교장 제출 신청·별지3 검토조서를 구별했다. 학생·학부모 서명과 중복지원 확인을 갖춘 별지2만 학교에서 신청서 제출을 요청하는 단계에 연결하며 학교 현물지원 사업을 학생 현금청구로 바꾸지 않는다."
   },
   {
    "formId": "ordin-15008865",
@@ -12421,6 +14403,54 @@
    "reviewState": "linked",
    "reviewLabel": "혜택에 연결",
    "reviewReason": ""
+  },
+  {
+   "formId": "ordin-18138737",
+   "lawId": "1784715",
+   "lawTitle": "포천시 아동급식 지원에 관한 조례",
+   "title": "[별지 제1호서식] 아동급식 신청(추천)서",
+   "regionCode": "41650",
+   "format": "hwp",
+   "bytes": 62976,
+   "sha256": "870768df2fae1616bc1825c8470685dc091ada1fcae6d730e352818e05688f64",
+   "sourceUrl": "https://www.law.go.kr/flDownload.do?gubun=ELIS&flSeq=142541561&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%95%84%EB%8F%99%EA%B8%89%EC%8B%9D+%EC%8B%A0%EC%B2%AD%28%EC%B6%94%EC%B2%9C%29%EC%84%9C",
+   "downloadedAt": "2026-10-20T01:52:20.568038+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-18138737.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "s41000.gov24-641000000171",
+     "name": "결식아동급식지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "Grok의 전체본문 판독 결과를 받은 뒤 Codex가 실제 원본 전체를 독립 재추출·판독하고 SHA/text를 대조했다. 현행 포천시 조례1784715 전체10개 조문·부칙에서 제2조 수급/차상위·한부모·중위52%·외국국적 등 대상과 제4조제2항의 별지1 읍면동 제출을 확인했다. 현재 경기도 정부24사업641000000171의 동일급식대상·현물/카드급식·읍면동접수·급식신청서 제출과 일치한다. 빈 신청인·아동·추천사유·급식유형·동의·서명 전체를 확인했으며 기관급식비 청구서가 아니다."
+  },
+  {
+   "formId": "ordin-18138741",
+   "lawId": "1784715",
+   "lawTitle": "포천시 아동급식 지원에 관한 조례",
+   "title": "[별지 제3호서식] 이의신청서",
+   "regionCode": "41650",
+   "format": "hwp",
+   "bytes": 38400,
+   "sha256": "8362f3c2c3aadd53509bf9f609be1ff795bda0f4e313448c5d4f9d958c15e0e7",
+   "sourceUrl": "https://www.law.go.kr/flDownload.do?gubun=ELIS&flSeq=142541565&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C3%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%9D%B4%EC%9D%98%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-20T01:52:19.819728+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-18138741.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "s41000.gov24-641000000171",
+     "name": "결식아동급식지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "Grok의 전체본문 판독 후 Codex도 전체 빈 서식을 독립 재추출·판독했다. 현행 포천시 조례1784715 제6조의2는 급식지원 결과 통지 후60일 이내 별지3 이의신청 및 접수 후10일 이내 심의·결정을 명시한다. 원본의 신청인·아동과 관계·통지일·부적합내용·이의취지·본인서명과 첨부서류를 대조했다. 경기도 결식아동 사업641000000171의 포천시 선정 절차에 대한 사후서류이며 다른 급여의 포괄 이의신청으로 연결하지 않는다."
   },
   {
    "formId": "ordin-18151309",
@@ -22369,6 +24399,30 @@
    "reviewReason": ""
   },
   {
+   "formId": "ordin-19386893",
+   "lawId": "1996235",
+   "lawTitle": "여주시 난임부부 시술비 지원 조례",
+   "title": "여주시 난임부부 시술비 지원 조례",
+   "regionCode": "41670",
+   "format": "hwpx",
+   "bytes": 62102,
+   "sha256": "c649cf06cc45f84b01cdebb79b3ff3a3bc0162079970282deb71333cc328ac18",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=148800285&flNm=%EC%97%AC%EC%A3%BC%EC%8B%9C+%EB%82%9C%EC%9E%84%EB%B6%80%EB%B6%80+%EC%8B%9C%EC%88%A0%EB%B9%84+%EC%A7%80%EC%9B%90+%EC%A1%B0%EB%A1%80",
+   "downloadedAt": "2026-10-20T00:46:50.154923+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-19386893.hwpx",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41670.bokjiro-WLF00005948",
+     "name": "여주시 난임부부 시술비 지원사업"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "현행1996235의8조문·부칙및별표19386893/flSeq148800285의실제HWPX전체를읽었다.제3/4조는건강보험횟수소진후여주추가지원연5회·200/100만원으로WLF00005948과일치한다.제5조는주민1호신청·사전결정·3개월내시술,제6조는대상자의종료1개월내2호청구를명시하며실제원본은여성신청인서명·추가1~5차·본인계좌·동의로작성되어있다.복지로의별도신청없음문구는현재보건소공식key3471 GET본문의사전신청및대상자직접청구안내로보완해불일치를명시하였다."
+  },
+  {
    "formId": "ordin-19387619",
    "lawId": "1553019",
    "lawTitle": "서울특별시 은평구 입양가정 지원에 관한 조례",
@@ -29524,6 +31578,30 @@
    "reviewReason": ""
   },
   {
+   "formId": "ordin-19975651",
+   "lawId": "1732647",
+   "lawTitle": "안성시 노인 목욕비 및 이ㆍ미용비 지원 조례",
+   "title": "별지 서식(제1호부터 제4호까지)",
+   "regionCode": "41550",
+   "format": "hwp",
+   "bytes": 124928,
+   "sha256": "9e6ab2304b077c999b4a08f4df3848205fd1d6dbc9c328d2726f091be86ffaf0",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152185575&flNm=%EB%B3%84%EC%A7%80+%EC%84%9C%EC%8B%9D%28%EC%A0%9C1%ED%98%B8%EB%B6%80%ED%84%B0+%EC%A0%9C4%ED%98%B8%EA%B9%8C%EC%A7%80%29",
+   "downloadedAt": "2026-10-20T00:46:51.070343+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-19975651.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41550.bokjiro-WLF00005220",
+     "name": "안성시 노인 목욕비 및 이미용비 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "현행1732647의12개조문·부칙과별표19975651/flSeq152185575의HWP전체를읽었다.제4조①은주민1호신청,②는직접신청불가시2호대리위임,제5조③은분실훼손시1호재발급,제8조는기관3/4대장으로정확히구분한다.현재WLF00005220의안성70세이상·연10만원·주민등록지방문·1호신청/2호위임이일치하며원문1/2는실제본인/대리서명과빈정보란을포함한다.포털목록순번1을파일속4개서식의인쇄번호로복사하지않았다."
+  },
+  {
    "formId": "ordin-19975935",
    "lawId": "1879215",
    "lawTitle": "안성시 수도급수 조례 시행규칙",
@@ -31509,6 +33587,30 @@
    "reviewState": "linked",
    "reviewLabel": "혜택에 연결",
    "reviewReason": "독립유공자·유족이 보훈번호와 지급계좌를 적어 독립유공자수당 또는 건강증진수당을 선택한다. 제7조 별지 1호와 사이트의 수당·건강증진수당에 일치하며 3·1절/광복절 위문금을 별도 선택하는 서식은 아니다."
+  },
+  {
+   "formId": "ordin-20011073",
+   "lawId": "1741841",
+   "lawTitle": "파주시 아동급식 지원에 관한 조례",
+   "title": "[별지 서식] 아동급식 신청(추천)서",
+   "regionCode": "41480",
+   "format": "hwp",
+   "bytes": 18944,
+   "sha256": "dcb4eb584f96d9b1fdae2e18e1fa26a0e475d866abe0d7d25492ff7a2eaa01c6",
+   "sourceUrl": "https://www.law.go.kr/flDownload.do?gubun=ELIS&flSeq=152246789&flNm=%5B%EB%B3%84%EC%A7%80+%EC%84%9C%EC%8B%9D%5D+%EC%95%84%EB%8F%99%EA%B8%89%EC%8B%9D+%EC%8B%A0%EC%B2%AD%28%EC%B6%94%EC%B2%9C%29%EC%84%9C",
+   "downloadedAt": "2026-10-20T00:52:14.818647+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-20011073.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "s41000.gov24-641000000171",
+     "name": "결식아동급식지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "파주시 현행 법규1741841 전체 조문과 부칙을 읽고 현재 목록의 별지ID20011073·flSeq152246789를 재GET 원본SHA와 대조했다. 제2조의 파주시 거주 결식우려 아동 및52% 등 대상과 제4조제2항의 별지 신청서·증빙을 관할 읍면동장에게 제출하는 절차를 확인했다. 제4조제3항은 가족·이웃·교사·사회복지사·통리반장 및 담당공무원 신청 경로를 명시한다. 전체 서식1505자와 1개 본문섹션을 읽고 실제 신청인·주소·서명·동의와 빈 기입란을 확인했다. 현재 도정부24의 18세 미만 결식우려 대상, 수급·한부모·중위52% 등 기준, 읍면동 방문 및 급식신청서 제출 요구와 교차 대조했다. 기관 급식비 정산·청구서가 아닌 아동 신청서다."
   },
   {
    "formId": "ordin-20013675",
@@ -35439,6 +37541,150 @@
    "reviewReason": "안양시 시행규칙 제3조와 별지1 전체의 소유자·공사비·지원액·공사기간·사업계획·에너지사용량·정보동의를 읽었다. 사업이 신청단계 별지1과 같은 첨부서류를 구체적으로 명시하여 녹색건축물 보조금 최초 신청에 일치한다. 원본 계획서에 여러 설비가 있어도 실제 지원 공종은 현재 사업의 창호·LED 등 공고 범위에 한정한다."
   },
   {
+   "formId": "ordin-20163381",
+   "lawId": "1628713",
+   "lawTitle": "안양시 녹색건축물 조성 지원 조례 시행규칙",
+   "title": "[별지 제3호서식] 녹색건축물 조성 보조금 지원사업 착수 신고서",
+   "regionCode": "41170",
+   "format": "hwp",
+   "bytes": 41472,
+   "sha256": "43b0f2430e397ad7e126b21e84bfbba978632455029b1ecfb3b015a2263a3ba3",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152717285&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C3%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EB%85%B9%EC%83%89%EA%B1%B4%EC%B6%95%EB%AC%BC+%EC%A1%B0%EC%84%B1+%EB%B3%B4%EC%A1%B0%EA%B8%88+%EC%A7%80%EC%9B%90%EC%82%AC%EC%97%85+%EC%B0%A9%EC%88%98+%EC%8B%A0%EA%B3%A0%EC%84%9C",
+   "downloadedAt": "2026-10-20T02:51:29.146516+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-20163381.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41170.gov24-383000000192",
+     "name": "녹색건축물 조성 보조금 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "원본전체2202자를 모든BodyText섹션에서 읽어 이미 선정된 건축주와 공사시공자가 녹색건축물 조성 보조금 지원사업 착수 신고서·성실이행각서·청렴서약서를 작성하는 목적을 확인했다. 현행규칙1628713 전체조문·부칙의 제5조가 해당별지를직접지정한다. 오늘정확사업정부24-383000000192의구비서류가 해당착공·준공·정산단계의별지와첨부서류를직접명시한다. 최초모집과선정후절차를구별하고이미선정된건축주에게해당하는단계에서만연결한다."
+  },
+  {
+   "formId": "ordin-20163383",
+   "lawId": "1628713",
+   "lawTitle": "안양시 녹색건축물 조성 지원 조례 시행규칙",
+   "title": "[별지 제4호서식] 녹색건축물 조성 완료 신고서",
+   "regionCode": "41170",
+   "format": "hwp",
+   "bytes": 35328,
+   "sha256": "70505ca54f414d60dc2a0defef6dfb0808c653ef48207cd99006550fd0f4ff82",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152717287&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C4%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EB%85%B9%EC%83%89%EA%B1%B4%EC%B6%95%EB%AC%BC+%EC%A1%B0%EC%84%B1+%EC%99%84%EB%A3%8C+%EC%8B%A0%EA%B3%A0%EC%84%9C",
+   "downloadedAt": "2026-10-20T02:51:31.007776+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-20163383.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41170.gov24-383000000192",
+     "name": "녹색건축물 조성 보조금 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "원본전체898자를 모든BodyText섹션에서 읽어 선정된 건축물 소유자·신청인가 녹색건축물 조성 완료 신고서·사업완료보고서를 작성하는 목적을 확인했다. 현행규칙1628713 전체조문·부칙의 제6조제1항가 해당별지를직접지정한다. 오늘정확사업정부24-383000000192의구비서류가 해당착공·준공·정산단계의별지와첨부서류를직접명시한다. 최초모집과선정후절차를구별하고이미선정된건축주에게해당하는단계에서만연결한다."
+  },
+  {
+   "formId": "ordin-20163385",
+   "lawId": "1628713",
+   "lawTitle": "안양시 녹색건축물 조성 지원 조례 시행규칙",
+   "title": "[별지 제5호서식] 준공검사조서",
+   "regionCode": "41170",
+   "format": "hwp",
+   "bytes": 28672,
+   "sha256": "f392b2d2774dcca9271011baea5e8c333d62444c805d0fa07138770c37509137",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152717289&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C5%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%A4%80%EA%B3%B5%EA%B2%80%EC%82%AC%EC%A1%B0%EC%84%9C",
+   "downloadedAt": "2026-10-20T02:51:29.823396+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-20163385.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41170.gov24-383000000192",
+     "name": "녹색건축물 조성 보조금 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "원본전체340자를 모든BodyText섹션에서 읽어 보조사업 신청인·건축주가 준공검사조서를 작성하는 목적을 확인했다. 현행규칙1628713 전체조문·부칙의 제6조제1항·제2항가 해당별지를직접지정한다. 오늘정확사업정부24-383000000192의구비서류가 해당착공·준공·정산단계의별지와첨부서류를직접명시한다. 최초모집과선정후절차를구별하고이미선정된건축주에게해당하는단계에서만연결한다."
+  },
+  {
+   "formId": "ordin-20163387",
+   "lawId": "1628713",
+   "lawTitle": "안양시 녹색건축물 조성 지원 조례 시행규칙",
+   "title": "[별지 제6호서식] 녹색건축물 조성 지방보조금 교부신청서",
+   "regionCode": "41170",
+   "format": "hwp",
+   "bytes": 35840,
+   "sha256": "ce2cd84ffbca117bd3f4beeebbd3073d0e8b1095e8398ebef7e7af857ecab7e0",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152717291&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C6%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EB%85%B9%EC%83%89%EA%B1%B4%EC%B6%95%EB%AC%BC+%EC%A1%B0%EC%84%B1+%EC%A7%80%EB%B0%A9%EB%B3%B4%EC%A1%B0%EA%B8%88+%EA%B5%90%EB%B6%80%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-20T02:51:30.375469+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-20163387.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41170.gov24-383000000192",
+     "name": "녹색건축물 조성 보조금 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "원본전체934자를 모든BodyText섹션에서 읽어 선정된 건축주·지방보조사업자가 녹색건축물 조성 지방보조금 교부신청서·청구서·관리카드를 작성하는 목적을 확인했다. 현행규칙1628713 전체조문·부칙의 제6조제1항가 해당별지를직접지정한다. 오늘정확사업정부24-383000000192의구비서류가 해당착공·준공·정산단계의별지와첨부서류를직접명시한다. 최초모집과선정후절차를구별하고이미선정된건축주에게해당하는단계에서만연결한다."
+  },
+  {
+   "formId": "ordin-20163389",
+   "lawId": "1628713",
+   "lawTitle": "안양시 녹색건축물 조성 지원 조례 시행규칙",
+   "title": "[별지 제7호서식] 녹색건축물 조성 보조금 정산서",
+   "regionCode": "41170",
+   "format": "hwp",
+   "bytes": 34816,
+   "sha256": "f2fae8add394aa158603a01f37fd8fe84e15927c8f8600493f95cbbfcf1d09d4",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152717293&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C7%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EB%85%B9%EC%83%89%EA%B1%B4%EC%B6%95%EB%AC%BC+%EC%A1%B0%EC%84%B1+%EB%B3%B4%EC%A1%B0%EA%B8%88+%EC%A0%95%EC%82%B0%EC%84%9C",
+   "downloadedAt": "2026-10-20T02:51:31.701888+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-20163389.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41170.gov24-383000000192",
+     "name": "녹색건축물 조성 보조금 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "원본전체422자를 모든BodyText섹션에서 읽어 보조금을 지급받은 건축주·신청인가 녹색건축물 조성 보조금 정산서를 작성하는 목적을 확인했다. 현행규칙1628713 전체조문·부칙의 제7조제1항가 해당별지를직접지정한다. 오늘정확사업정부24-383000000192의구비서류가 해당착공·준공·정산단계의별지와첨부서류를직접명시한다. 최초모집과선정후절차를구별하고이미선정된건축주에게해당하는단계에서만연결한다."
+  },
+  {
+   "formId": "ordin-20163391",
+   "lawId": "1628713",
+   "lawTitle": "안양시 녹색건축물 조성 지원 조례 시행규칙",
+   "title": "[별지 제8호서식] 에너지사용량 사후관리",
+   "regionCode": "41170",
+   "format": "hwp",
+   "bytes": 28672,
+   "sha256": "9ad2c1da83f12516b188dca7dfd929a7248f0ed861debbfe490ba7a1becc336b",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152717295&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C8%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%97%90%EB%84%88%EC%A7%80%EC%82%AC%EC%9A%A9%EB%9F%89+%EC%82%AC%ED%9B%84%EA%B4%80%EB%A6%AC",
+   "downloadedAt": "2026-10-20T02:51:32.313274+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-20163391.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41170.gov24-383000000192",
+     "name": "녹색건축물 조성 보조금 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "원본전체420자를 모든BodyText섹션에서 읽어 지원받은 건축물 소유자·보조사업자가 에너지사용량 사후관리 서식를 작성하는 목적을 확인했다. 현행규칙1628713 전체조문·부칙의 제8조가 해당별지를직접지정한다. 오늘정확사업정부24-383000000192의구비서류가 해당착공·준공·정산단계의별지와첨부서류를직접명시한다. 최초모집과선정후절차를구별하고이미선정된건축주에게해당하는단계에서만연결한다."
+  },
+  {
    "formId": "ordin-20163711",
    "lawId": "2042707",
    "lawTitle": "시흥시 국가보훈대상자 등 예우 및 지원에 관한 조례",
@@ -36695,6 +38941,30 @@
    "reviewState": "linked",
    "reviewLabel": "혜택에 연결",
    "reviewReason": "통장인 보호자가 재직경력·자녀 재학·소득수준과 학교장 추천서를 제출하는 장학금 최초 신청서이다. 안양 통장자녀 장학금 대상·절차와 일치한다."
+  },
+  {
+   "formId": "ordin-20204783",
+   "lawId": "1480751",
+   "lawTitle": "안양시 통장자녀장학금 지급 조례 시행규칙",
+   "title": "[별지 제2호서식] 통장자녀장학생 추천서(학교장용)",
+   "regionCode": "41170",
+   "format": "hwp",
+   "bytes": 28672,
+   "sha256": "184f9ff242a91e95a799ea22974c65617a83d4de264db2283177d04d18c9323c",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152876797&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C2%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%ED%86%B5%EC%9E%A5%EC%9E%90%EB%85%80%EC%9E%A5%ED%95%99%EC%83%9D+%EC%B6%94%EC%B2%9C%EC%84%9C%28%ED%95%99%EA%B5%90%EC%9E%A5%EC%9A%A9%29",
+   "downloadedAt": "2026-10-20T02:51:32.936420+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-20204783.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41170.gov24-383000000181",
+     "name": "통장자녀장학금 지급"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "원본전체339자를 모든BodyText섹션에서 읽어 재학 학교의 학교장가 통장자녀장학생 추천서(학교장용)를 작성하는 목적을 확인했다. 현행규칙1480751 전체조문·부칙의 제2조제2호가 해당별지를직접지정한다. 규칙제2조는 신청인이학교장추천서를받아첨부하도록명시하고,동장용추천서는제3조의기관송부문서로구별한다. 현재정부24도고등학생·대학생의학교장추천을대상조건에직접표시한다."
   },
   {
    "formId": "ordin-20204787",
@@ -38902,6 +41172,30 @@
    "reviewReason": "원본 전체의 보훈예우수당 대상자 사망위로금 지급 신청서 목적·본인 및 유족 구분·지급계좌·증빙을 판독했다. 연결된 통합 사업이 참전수당과 보훈예우수당, 각 사망위로금을 모두 명시하므로 해당 조례와 급여에 맞는 서식으로 구분해 연결한다."
   },
   {
+   "formId": "ordin-20305101",
+   "lawId": "1404738",
+   "lawTitle": "파주시 교복 지원 조례",
+   "title": "[별지 서식] 교복구입비 지원신청서",
+   "regionCode": "41480",
+   "format": "hwp",
+   "bytes": 18944,
+   "sha256": "df776e7f56766c1559bc4df2511ce27d6bb4756a45632c56c7f3c9cbb9c92266",
+   "sourceUrl": "https://www.law.go.kr/flDownload.do?gubun=ELIS&flSeq=153585595&flNm=%5B%EB%B3%84%EC%A7%80+%EC%84%9C%EC%8B%9D%5D+%EA%B5%90%EB%B3%B5%EA%B5%AC%EC%9E%85%EB%B9%84+%EC%A7%80%EC%9B%90%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-20T00:52:15.846534+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-20305101.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "s41000.gov24-641000000129",
+     "name": "경기도민 중고등 신입생 교복비 지원(대안교육기관, 다른 시도)"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "파주시 현행 법규1404738 전체 조문과 부칙을 읽고 현재 목록의 별지ID20305101·flSeq153585595를 재GET 원본SHA와 대조했다. 제4조는 경기도·교육청 협력사업 기준 우선을 명시하고 대안교육기관 신입생을 포함한다. 제6조제2항은 학교장 신청 외 개인 신청자가 별지 신청서를 주소지 읍면동장에게 제출하도록 규정한다. 제5조는 매년 정한 금액 및 중복감액을 적용하며 원본에 구금액이 인쇄되지 않았다. 전체 서식947자와 1개 본문섹션을 읽고 실제 신청인·주소·서명·동의와 빈 기입란을 확인했다. 현재 도정부24의 해당 시 담당처·접수기간·방문예외·대상·40만원 실비 요건과 교차 대조했다."
+  },
+  {
    "formId": "ordin-20306067",
    "lawId": "1314344",
    "lawTitle": "해남군 노인에 대한 성인용 보행기 지원 조례",
@@ -40667,6 +42961,54 @@
    "reviewReason": "조례 제5조제1항은 화장 장려금 지급을 별지 제1호로 신청하도록 한다. 전체 원본의 사망자·연고자·화장일장소·지급계좌·신청 서명과 사업의 가평 주민 장례·읍면 방문·화장증명서 제출이 일치한다."
   },
   {
+   "formId": "ordin-20406127",
+   "lawId": "1850929",
+   "lawTitle": "가평군 아이돌봄서비스 지원 조례",
+   "title": "별지 제1호서식",
+   "regionCode": "41820",
+   "format": "hwp",
+   "bytes": 18432,
+   "sha256": "4b78673824c829831b91285f942291a56864b6a3381e5f0354a776e27d58998d",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=154077373&flNm=%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D",
+   "downloadedAt": "2026-10-19T08:40:21.916114+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-20406127.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41820.bokjiro-WLF00002656",
+     "name": "아이돌봄서비스 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "현재 ELIS 가평군 법규목록은2023-09-13 시행 제3130호 판을 지정한다. 해당판 제3조의 관내 거주·동거·서비스이용 대상, 제6조의 별지1 주소지읍면장 제출, 모든부칙을 읽었다. ELIS의별지1과 국가법령정보센터20406127/flSeq154077373을 각각GET200으로 받아18432바이트/SHA동일함을 확인하고, 신청인·아동3명·동거·유형·계좌·양육공백·서명·행정정보동의까지 전체Section0을 확인했다. 현재복지로의 가평사업 대상/읍면 신청과도 일치한다."
+  },
+  {
+   "formId": "ordin-20406221",
+   "lawId": "1870717",
+   "lawTitle": "가평군 장애인ㆍ노인 등을 위한 보조기기 유지관리 지원 조례",
+   "title": "[별지 제3호서식]보조기기 수리 신청서",
+   "regionCode": "41820",
+   "format": "hwp",
+   "bytes": 49664,
+   "sha256": "4db2bd1a91f2a976a77873a9ac582751de407f3b3c56907b9b2daba97d0cdcba",
+   "sourceUrl": "https://www.law.go.kr/flDownload.do?gubun=ELIS&flSeq=154077463&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C3%ED%98%B8%EC%84%9C%EC%8B%9D%5D%EB%B3%B4%EC%A1%B0%EA%B8%B0%EA%B8%B0+%EC%88%98%EB%A6%AC+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-20T00:52:16.464115+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-20406221.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41820.icare-0085-1489618-1-1-19",
+     "name": "보조기기 수리비용 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "현재 보건복지부 배포 가평군2026년4월 서비스 메뉴판 PDF 전체3쪽 중1쪽19행은 보조기기 수리비용 지원, 이동보조기기 수리, 노인·장애인, 지체장애인협회·읍면 제공을 정확히 특정한다. 이 행이 사이트사업g41820.icare-0085-1489618-1-1-19의 원천이다. 현행 조례1870717 제2조·제5조의 대상 및 지정센터 요건, 제6조제1항의 별지3 신청을 대조했다. 전체 원본641자는 지원대상/수급유형, 기기와 수리내용, 최근지원, 신청인 서명, 행정정보 확인동의와 구비서류의 빈 서식이다. 센터 지정신청이나 센터 수리비 청구서가 아닌 이용자 신청서다."
+  },
+  {
    "formId": "ordin-20406227",
    "lawId": "1870717",
    "lawTitle": "가평군 장애인ㆍ노인 등을 위한 보조기기 유지관리 지원 조례",
@@ -40684,6 +43026,30 @@
    "reviewState": "reviewed_not_linked",
    "reviewLabel": "신청인이 작성하는 서류 아님",
    "reviewReason": "조례 제6조제4항은 지정 수리센터가 수리 명세서를 붙여 별지 제6호 비용을 청구하도록 한다. 실제 원본의 센터·수리기사·수리내역·대표자 서명과 일치한다. 사이트는 장애인·노인의 보조기기 수리서비스로 수리센터 자체 운영 지원이 아니며 같은 군 관련 사업에서도 기관 청구 대상으로 확인되지 않아 시민 신청서로 연결하지 않는다."
+  },
+  {
+   "formId": "ordin-20406387",
+   "lawId": "2013733",
+   "lawTitle": "가평군 다문화가족 및 외국인주민 지원 조례 시행규칙",
+   "title": "별지 제1호서식 ~ 별지 제2호서식",
+   "regionCode": "41820",
+   "format": "hwp",
+   "bytes": 71168,
+   "sha256": "12b62796eb9f7b5b16f5e91b2528718a038b3312f49fe091b6dffef6de45e450",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=154077643&flNm=%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D+~+%EB%B3%84%EC%A7%80+%EC%A0%9C2%ED%98%B8%EC%84%9C%EC%8B%9D",
+   "downloadedAt": "2026-10-19T08:40:21.520916+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-20406387.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41820.bokjiro-WLF00000943",
+     "name": "다문화가족 정착장려금"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "현행 시행규칙2013733 제2조는 매년100만원3년 지급, 제3조제1항은 별지1 가족센터 신청, 제3조제4항은90%교육이수 후 별지2 청구를 명시한다. 전체 원본1606자에서 혼인·외국인등록·센터교육·신청인 서명·개인정보 동의·교육이수 청구계좌를 확인했다. 현재 복지로WLF00000943은 동일 가평 다문화가족 정착장려금과 가족센터 신청을 특정하고 있어 기관운영 신청이 아닌 실제 대상가족의 두 단계 서식으로 제안한다."
   },
   {
    "formId": "ordin-20407121",
@@ -42529,6 +44895,30 @@
    "reviewReason": "기계종류·대수·임대기간·용도·사용구역을 제출하는 별지2이다. 제3조가 선정된 임대사업자의 임대차계약 단계에서 제출하도록 하므로 선정 후 사용신청에 한정한다."
   },
   {
+   "formId": "ordin-20543091",
+   "lawId": "1375182",
+   "lawTitle": "연천군 농기계 임대사업 운영조례 시행규칙",
+   "title": "[별지 제3호서식] 농기계 임대차 계약서",
+   "regionCode": "41800",
+   "format": "hwp",
+   "bytes": 87040,
+   "sha256": "4db952e991d3decd50f20c3895e731a78612ae58cbdfa674c5fb2a2c39de1512",
+   "sourceUrl": "https://www.law.go.kr/flDownload.do?gubun=ELIS&flSeq=154405711&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C3%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EB%86%8D%EA%B8%B0%EA%B3%84+%EC%9E%84%EB%8C%80%EC%B0%A8+%EA%B3%84%EC%95%BD%EC%84%9C",
+   "downloadedAt": "2026-10-20T02:51:33.988793+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-20543091.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41800.gov24-414000000450",
+     "name": "농기계임대사업"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "현행 시행규칙1375182의 전체11조와 부칙에서 제3조제1항이 이미 임대사업자로 선정된 사람에게 별지2 임대사용신청과 별지3 임대차계약을 요구하며 제4조는1년이상 내구연수 장기임대를 규정하는 것을 확인했다. 현재 정부24의 정확 사업414000000450은 연천 경작·농업경영체 등록 농업인에게 고가농기계를 기금으로 구입하여 임대료를 납부하고 종료후 감정가로 인수하는 사업이다. 전체 원본2938자를 읽어 장기임대·기계 인도·연차임대료·관리·보험·반환/인수·해지·분쟁·양측서명·개인정보 동의의 빈 서식을 대조했다. 신규8월 모집과 선정후 계약단계를 분리하여 조건부 보조서류로 제안한다."
+  },
+  {
    "formId": "ordin-20543095",
    "lawId": "1375182",
    "lawTitle": "연천군 농기계 임대사업 운영조례 시행규칙",
@@ -44037,6 +46427,30 @@
    "reviewReason": ""
   },
   {
+   "formId": "ordin-20588831",
+   "lawId": "1795155",
+   "lawTitle": "동두천시 교복 지원 조례",
+   "title": "별지",
+   "regionCode": "41250",
+   "format": "hwp",
+   "bytes": 72704,
+   "sha256": "c551cfc4cbaaa222bcf5fc00049f330f364a2f961c69a5d9911f8508d9119171",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=154562589&flNm=%EB%B3%84%EC%A7%80",
+   "downloadedAt": "2026-10-19T08:40:23.295562+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-20588831.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "s41000.gov24-641000000129",
+     "name": "경기도민 중고등 신입생 교복비 지원(대안교육기관, 다른 시도)"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "현행 동두천 교복 조례1795155 제6조제2호는 대안교육기관/관외학교에 경기도 대안교육기관 등 학생 교복지원 조례 제6조를 준용하고 도지사를 시장으로 보며 신청서는 해당 별지로 정한다. 현재 도 정부24는 동두천시 접수 담당처와2026 온라인/예외방문 접수를 명시한다. 전체 원본1149자는 같은 학생유형·보호자·중복수혜·영수증·계좌·동의를 담으며 고정 구금액을 인쇄하지 않는다."
+  },
+  {
    "formId": "ordin-20589281",
    "lawId": "2058863",
    "lawTitle": "파주시 출생축하 및 다자녀가정 지원에 관한 조례",
@@ -45461,6 +47875,54 @@
    "reviewState": "linked",
    "reviewLabel": "혜택에 연결",
    "reviewReason": "제5조가 유족의60일 이내 별지 제1호 신청을 지정한다. 실제 원본은 사망자·화장일·납부액·신청금·유족관계·계좌·서명과 차상위 증빙 확인란을 갖추어 사이트 일반50%·차상위70% 화장비 지원과 일치한다. 별도 무연고 공영장례 비용사업에는 확대하지 않는다."
+  },
+  {
+   "formId": "ordin-20660061",
+   "lawId": "1864929",
+   "lawTitle": "구리시 노인 목욕비 등에 관한 지원 조례",
+   "title": "[별지 제1호서식] 노인 목욕, 안경, 이미용비 카드 (재)발급 신청서",
+   "regionCode": "41310",
+   "format": "hwp",
+   "bytes": 65536,
+   "sha256": "9ef45d024645174e67e9bd0336ef9661fe756845659144bb6d5d93474082d79a",
+   "sourceUrl": "https://www.law.go.kr/flDownload.do?gubun=ELIS&flSeq=154783989&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EB%85%B8%EC%9D%B8+%EB%AA%A9%EC%9A%95%2C+%EC%95%88%EA%B2%BD%2C+%EC%9D%B4%EB%AF%B8%EC%9A%A9%EB%B9%84+%EC%B9%B4%EB%93%9C+%28%EC%9E%AC%29%EB%B0%9C%EA%B8%89+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-20T00:52:17.346623+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-20660061.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41310.gov24-398000000118",
+     "name": "노인 목욕비 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "현행 조례1864929 제3조제1항은 구리시65세 이상 생계·의료급여 수급자의 목욕비 지원을 규정하고 제5조제1항 및 제6조제3항은 별지1을 주민등록지 동장에게 제출하는 카드 신규·재발급 신청으로 특정한다. 전체 본문1009자에서 신청인·주소·카드발급사유·개인정보 동의·신청인/대리인 서명과 빈 기입란을 모두 확인했다. 정확 정부24 사업398000000118의2026-08-14 안내는 같은 구리시 목욕비 대상과 주민센터 접수를 표시한다."
+  },
+  {
+   "formId": "ordin-20660063",
+   "lawId": "1864929",
+   "lawTitle": "구리시 노인 목욕비 등에 관한 지원 조례",
+   "title": "[별지 제2호서식] 노인 목욕, 안경, 이미용비 카드(재)발급 위임장",
+   "regionCode": "41310",
+   "format": "hwp",
+   "bytes": 33792,
+   "sha256": "f50aacc03ee0a91ab29c197485395af87e7fff39c0bebcab5b9c94632a55155d",
+   "sourceUrl": "https://www.law.go.kr/flDownload.do?gubun=ELIS&flSeq=154783991&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C2%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EB%85%B8%EC%9D%B8+%EB%AA%A9%EC%9A%95%2C+%EC%95%88%EA%B2%BD%2C+%EC%9D%B4%EB%AF%B8%EC%9A%A9%EB%B9%84+%EC%B9%B4%EB%93%9C%28%EC%9E%AC%29%EB%B0%9C%EA%B8%89+%EC%9C%84%EC%9E%84%EC%9E%A5",
+   "downloadedAt": "2026-10-20T00:52:17.898420+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-20660063.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41310.gov24-398000000118",
+     "name": "노인 목욕비 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "현행 조례1864929 제5조제2항은 직접 신청할 수 없는 대상자가 별지2를 첨부하여 대리 신청할 수 있음을 명시한다. 전체 본문266자에서 위임자·대리인·관계·위임사유·신분증 사본과 카드발급 신청 위임 문구를 확인했다. 제7조제2항의 카드 본인사용 제한을 유지하며, 정부24의 정확 구리시 목욕비 사업398000000118의 신청 보조서류로만 연결한다."
   },
   {
    "formId": "ordin-20660345",
@@ -50246,6 +52708,30 @@
    "reviewReason": "규칙 제3조는 기금 수혜자가 사업내용·예산 용도를 바꾸려면 사전 승인받도록 한다. 실제 별지 제15호는 기존 지원내용·예산·사업 변경 전후와 신청 서명을 받는다. 자활계정 사업단·기업 지원에도 적용되는 공통 기금 변경 절차로 확인하여 지원 결정 후 해당 사업자의 변경 신청에만 연결한다."
   },
   {
+   "formId": "ordin-20872019",
+   "lawId": "1745445",
+   "lawTitle": "고양시 아동급식지원에 관한 조례",
+   "title": "[별지 서식] 아동급식 신청서",
+   "regionCode": "41280",
+   "format": "hwp",
+   "bytes": 18432,
+   "sha256": "ef9ee193ea6cf37d6e5b3a532562e41380cb4c045c3f8c8fe44cb7b5d5d8f8e1",
+   "sourceUrl": "https://www.law.go.kr/flDownload.do?gubun=ELIS&flSeq=156559915&flNm=%5B%EB%B3%84%EC%A7%80+%EC%84%9C%EC%8B%9D%5D+%EC%95%84%EB%8F%99%EA%B8%89%EC%8B%9D+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-20T00:52:18.692540+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-20872019.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "s41000.gov24-641000000171",
+     "name": "결식아동급식지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "고양시 현행 법규1745445 전체 조문과 부칙을 읽고 현재 목록의 별지ID20872019·flSeq156559915를 재GET 원본SHA와 대조했다. 제3조의 결식우려·수급/차상위/한부모/52% 등 대상과 제5조제2항의 별지 신청서 및 증빙 제출을 확인했다. 제5조제3항은 이웃·교사·사회복지사·통반장 신청 또는 공무원 직권신청을 허용한다. 전체 서식1609자와 1개 본문섹션을 읽고 실제 신청인·주소·서명·동의와 빈 기입란을 확인했다. 현재 도정부24의 18세 미만 결식우려 대상, 수급·한부모·중위52% 등 기준, 읍면동 방문 및 급식신청서 제출 요구와 교차 대조했다. 기관 급식비 정산·청구서가 아닌 아동 신청서다."
+  },
+  {
    "formId": "ordin-20875749",
    "lawId": "2069757",
    "lawTitle": "나주사랑상품권 관리 및 운영 조례",
@@ -54373,6 +56859,30 @@
    "reviewState": "reviewed_not_linked",
    "reviewLabel": "대응하는 수록 혜택 미확인",
    "reviewReason": "사망 참전유공자의 유족이 일회성 사망위로금을 청구하는 별지2이다. 사이트 참전 명예수당은 월수당 수급자만 설명하고 사망위로금은 별도로 등재되어 있지 않다."
+  },
+  {
+   "formId": "ordin-21025359",
+   "lawId": "2081723",
+   "lawTitle": "양주시 아동 급식지원 조례",
+   "title": "아동 급식 신청서",
+   "regionCode": "41630",
+   "format": "hwp",
+   "bytes": 17408,
+   "sha256": "b1af414f4f65deb10d12776306c35fba94dcf58903eb108bd2c9b7909765d509",
+   "sourceUrl": "https://www.law.go.kr/flDownload.do?gubun=ELIS&flSeq=157738799&flNm=%EC%95%84%EB%8F%99+%EA%B8%89%EC%8B%9D+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-20T00:52:20.137348+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-21025359.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "s41000.gov24-641000000171",
+     "name": "결식아동급식지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "양주시 현행 법규2081723 전체 조문과 부칙을 읽고 현재 목록의 별지ID21025359·flSeq157738799를 재GET 원본SHA와 대조했다. 현행2025 개정 제2조는18세 미만 결식우려 아동·52% 등 요건과 위원회 추천 결정을 규정하고, 제4조제2항은 별지 신청서·증빙 제출을 명시한다. 제4조제3항의 가족·이웃·교사·사회복지사·이통반장 및 공무원 신청 경로를 확인했다. 전체 서식1471자와 1개 본문섹션을 읽고 실제 신청인·주소·서명·동의와 빈 기입란을 확인했다. 현재 도정부24의 18세 미만 결식우려 대상, 수급·한부모·중위52% 등 기준, 읍면동 방문 및 급식신청서 제출 요구와 교차 대조했다. 기관 급식비 정산·청구서가 아닌 아동 신청서다."
   },
   {
    "formId": "ordin-21026875",
@@ -61365,6 +63875,30 @@
    "reviewReason": "현행 제9조제5호의 사망위로금20만원과 제11조 별지2 및 사망 후1년 신청을 전체 원본의 국가보훈대상자·사망·유족·계좌·사망증빙과 대조했다. 포천 복합 보훈사업의 사망위로금20만원 항목에 정확히 해당하며 월수당 신규신청으로 분류하지 않는다."
   },
   {
+   "formId": "ordin-21219351",
+   "lawId": "2095721",
+   "lawTitle": "포천시 국가보훈대상자 등 예우 및 지원에 관한 조례",
+   "title": "[별지 제3호서식]보훈명예수당 등 지급신청 변경사항 신고서",
+   "regionCode": "41650",
+   "format": "hwp",
+   "bytes": 54784,
+   "sha256": "858cab147363c7bbf8c18d8444208f2edaef66f047e1a1fd939adac83b1ac88f",
+   "sourceUrl": "https://www.law.go.kr/flDownload.do?gubun=ELIS&flSeq=159455241&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C3%ED%98%B8%EC%84%9C%EC%8B%9D%5D%EB%B3%B4%ED%9B%88%EB%AA%85%EC%98%88%EC%88%98%EB%8B%B9+%EB%93%B1+%EC%A7%80%EA%B8%89%EC%8B%A0%EC%B2%AD+%EB%B3%80%EA%B2%BD%EC%82%AC%ED%95%AD+%EC%8B%A0%EA%B3%A0%EC%84%9C",
+   "downloadedAt": "2026-10-20T01:52:23.673889+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-21219351.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41650.gov24-560000000104",
+     "name": "보훈명예수당"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "현행 포천시 국가보훈대상자 조례2095721 전체21조와 부칙을 읽고 제13조의 주소·예금계좌 변경 시 별지3 신고 의무를 확인했다. 현재 정확 정부24사업560000000104는 동일 조례의 보훈명예·참전·독립유공자·배우자수당을 한 사업으로 안내한다. 원본 전체에서 신고인·변경주소·금융기관/계좌/예금주·서명과 계좌변경 시 통장사본만 요구하는 것을 확인했다. 조례와Gov24 금액 차이는 원본 변형 없이 공개 조건에 명시한다."
+  },
+  {
    "formId": "ordin-21222497",
    "lawId": "2095803",
    "lawTitle": "화순군 참전유공자 지원 조례",
@@ -64275,6 +66809,30 @@
    "reviewState": "linked",
    "reviewLabel": "혜택에 연결",
    "reviewReason": "원본 전체 앞뒤면에 주택수리비·주택/농업창고 설계비·영농정착금 세 신청항목과 각각 증빙·전입1년 신청·본인 동의가 있다. 시행규칙2105321은 공식API와 공개HTML 모두 조문·부칙이 비어 있어 sourceMainBodyReviewed=false를 유지한다. 대신 정상인 현행 상위조례2105327 제4조제1항제1·2호와 제5조의 지원·신청 위임, 실제 사업 documents의 인구유입시책지원 장려금 신청서 및 항목별 증빙이 원본과 정확히 일치함을 대조하였다. 2025전입 정착상품권10/20만원은 원본 항목에 없어 제외한다."
+  },
+  {
+   "formId": "ordin-21338669",
+   "lawId": "2105321",
+   "lawTitle": "연천군 인구유입시책에 관한 조례 시행규칙",
+   "title": "[별지 제2호서식] 귀농인신고서",
+   "regionCode": "41800",
+   "format": "hwp",
+   "bytes": 35840,
+   "sha256": "55bd0f91ba206b446889a219516103c6f289ff43e774f1a27910aa3184036d37",
+   "sourceUrl": "https://www.law.go.kr/flDownload.do?gubun=ELIS&flSeq=160466383&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C2%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EA%B7%80%EB%86%8D%EC%9D%B8%EC%8B%A0%EA%B3%A0%EC%84%9C",
+   "downloadedAt": "2026-10-20T01:52:23.249296+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-21338669.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41800.gov24-414000000118",
+     "name": "귀농귀촌인 정착 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "2026-10-20 현재 정부24의 정확 사업414000000118 구비서류가 영농정착금 항목에서 귀농인 신고서 및 귀농인 신고 관련 개인정보 동의서를 명시한다. 현행 목록에서 확인된 시행규칙2105321의 정확 별지21338669/flSeq160466383이 전체 서식과 같은 SHA로 재다운로드됐다. 전체 앞·뒷면은 귀농인 인적사항·전현주소·영농현황·이주정착계획·본인 신고와 개인정보 동의이며 가평 등 타지역 서식이 아니다. 현행 DRF 및 기존 ELIS 법규본문은 미수록/미확인 상태이므로 조문내용을 추정하지 않았다. 이 연결은 공식 사업의 제출서류 지정과 정확 현행 첨부 결속에 근거한다."
   },
   {
    "formId": "ordin-21338679",
@@ -70827,6 +73385,10 @@
     {
      "id": "g41390.gov24-401000000113",
      "name": "출생축하금 지원"
+    },
+    {
+     "id": "g41390.gov24-401000000489",
+     "name": "시흥시 산후조리비 지원"
     }
    ],
    "reviewState": "linked",
@@ -72281,6 +74843,30 @@
    "reviewState": "linked",
    "reviewLabel": "혜택에 연결",
    "reviewReason": "실제 파주페이 사업은 소비자 인센티브 외에 가맹점 수수료 절감·홍보·매출증대 혜택을 명시한다. 현행 제4조의 사업자 등록 절차 및 전체 원본의 대표자·사업장·등록정보·증빙·서명을 대조하여 가맹점 대표자가 해당 지위를 신청/관리하는 경우에만 연결한다. 소비자 카드발급·충전 신청으로 사용하지 않는다."
+  },
+  {
+   "formId": "ordin-21678593",
+   "lawId": "2116799",
+   "lawTitle": "파주시 지역화폐 발행 및 운영 조례 시행규칙",
+   "title": "[별지 제2호서식] 파주시 지역화폐 가맹점 등록 계약서",
+   "regionCode": "41480",
+   "format": "hwp",
+   "bytes": 15872,
+   "sha256": "507a735a79e7501c56f9f0335e172f7fbea674a7c802056449661eb0cf092f5a",
+   "sourceUrl": "https://www.law.go.kr/flDownload.do?gubun=ELIS&flSeq=162864159&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C2%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%ED%8C%8C%EC%A3%BC%EC%8B%9C+%EC%A7%80%EC%97%AD%ED%99%94%ED%8F%90+%EA%B0%80%EB%A7%B9%EC%A0%90+%EB%93%B1%EB%A1%9D+%EA%B3%84%EC%95%BD%EC%84%9C",
+   "downloadedAt": "2026-10-20T02:51:34.359921+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-21678593.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41480.gov24-406000000112",
+     "name": "지역화폐(파주페이)"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "현재 정확 정부24사업406000000112는 소비자뿐 아니라 가맹점 수수료 절감·홍보·매출증대 혜택도 포함한다. 현행2026-03-26 시행규칙2116799의 전체 조문과 제공부칙을 읽어 제4조제3항이 등록심사 후 별지2 계약을 직접 요구하고 제4항이 운영대행사 가맹계약 시 생략을 허용하는 것을 확인했다. 원본 전체1292자는 파주시와 가맹점대표의 등록·변경·해지·준수사항·계약기간 및 서명이다. 등록된 가맹점 사업자 경로에만 조건부 연결하며 일반소비자 가입서식으로 확대하지 않는다."
   },
   {
    "formId": "ordin-21678597",
@@ -76838,6 +79424,30 @@
    "reviewReason": "묶음 전체 두 섹션의 별지1 신청/정보동의와 별지2 학교검토서를 읽었다. 현행 제7조제1항은 학생 신청서를 학교장에게 제출하도록 하고 제2항은 학교장이 검토서를 작성하도록 한다. 실제 중고학생2km이상 통학·기숙사제외·학교접수 사업과 별지1의 보호자/학생·통학/중복지원 확인이 일치하며 기관용 별지2는 시민 작성범위에서 제외한다."
   },
   {
+   "formId": "ordin-21777279",
+   "lawId": "2124391",
+   "lawTitle": "가평군 아동급식 지원에 관한 조례",
+   "title": "별지 제1호서식 ~ 별지 제2호서식",
+   "regionCode": "41820",
+   "format": "hwp",
+   "bytes": 28160,
+   "sha256": "f7dfb143b0a6981018db11d56e40e435a25eeabe3c0f3949cad874dc4a3bf3c7",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=163593427&flNm=%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D+~+%EB%B3%84%EC%A7%80+%EC%A0%9C2%ED%98%B8%EC%84%9C%EC%8B%9D",
+   "downloadedAt": "2026-10-19T08:40:26.959983+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-21777279.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "s41000.gov24-641000000171",
+     "name": "결식아동급식지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "현재 경기도 결식아동급식지원 정부24는 도내 결식우려아동에 읍면동 방문 급식신청서 제출을 명시한다. 현행 가평 조례2124391 제2조의52%/가족유형/외국국적 기준이 도사업 및 실제양식과 일치하고 제4조는 관할 읍면장에게 별지1 제출 및 허용 신청인을 명시한다. 전체2014자에서 해당아동2명·결식 유형·희망 급식방법·신청추천 사유·서명·동의와 별지2 이의를 확인했으며 제13조의60일/10일 처리도 대조했다."
+  },
+  {
    "formId": "ordin-21777513",
    "lawId": "2124661",
    "lawTitle": "횡성군 행복출산 지원 조례",
@@ -78047,6 +80657,30 @@
    "reviewReason": "부산 강서구 현행 제5조의2제2항과 전체 원본의 사망일·유족 관계·사망/유족증빙·계좌를 확인했다. 사망조위금 사업은 같은 신청서·증빙을 명시하므로 연결하고 월별 참전명예수당은 별도 신청 없는 급여여서 제외한다. 원본의 과거 제5조제3항 인용은 현행 사망위로금 조항과 대조했다."
   },
   {
+   "formId": "ordin-21832751",
+   "lawId": "2127669",
+   "lawTitle": "동두천시 아동급식 지원 조례",
+   "title": "별지(아동급식 신청서)",
+   "regionCode": "41250",
+   "format": "hwp",
+   "bytes": 16896,
+   "sha256": "c4c376861f86ae4eb4b5eea0b027ccc115735c02b37ff0f34ff673366a6b31b2",
+   "sourceUrl": "https://www.law.go.kr/flDownload.do?gubun=ELIS&flSeq=164039749&flNm=%EB%B3%84%EC%A7%80%28%EC%95%84%EB%8F%99%EA%B8%89%EC%8B%9D+%EC%8B%A0%EC%B2%AD%EC%84%9C%29",
+   "downloadedAt": "2026-10-20T00:52:22.992274+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-21832751.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "s41000.gov24-641000000171",
+     "name": "결식아동급식지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "동두천시 현행 법규2127669 전체 조문과 부칙을 읽고 현재 목록의 별지ID21832751·flSeq164039749를 재GET 원본SHA와 대조했다. 현행2026 조례 제2조의 결식우려·수급/한부모/52% 등 대상, 제4조제2항의 별지 신청서·증빙 제출 및 제4조제3항의 가족·이웃·교사·사회복지사·통반장/공무원 신청을 확인했다. 전체 서식1071자와 1개 본문섹션을 읽고 실제 신청인·주소·서명·동의와 빈 기입란을 확인했다. 현재 도정부24의 18세 미만 결식우려 대상, 수급·한부모·중위52% 등 기준, 읍면동 방문 및 급식신청서 제출 요구와 교차 대조했다. 기관 급식비 정산·청구서가 아닌 아동 신청서다."
+  },
+  {
    "formId": "ordin-21833055",
    "lawId": "1660525",
    "lawTitle": "태백시 출산양육비 지원 조례",
@@ -79146,6 +81780,30 @@
    "reviewReason": "참전유공자 또는 공상군경의 사망, 유족 관계·계좌·사망확인서 등을 작성하는 별지2로 제7조①과 합천 통합 보훈사업의 사망위로금에 일치한다. 이름만 유사한 Bokjiro 보훈단체지원은 지정단체 보조사업 교부·정산을 접수하므로 제외한다."
   },
   {
+   "formId": "ordin-21869201",
+   "lawId": "1436387",
+   "lawTitle": "남양주시 교복 지원 조례",
+   "title": "[별지 서식] 교복구입비 지원 신청서",
+   "regionCode": "41360",
+   "format": "hwp",
+   "bytes": 17408,
+   "sha256": "c8815db2e9a247e8abe28266be200c6846741c30c38a93b549d28ed1e835016a",
+   "sourceUrl": "https://www.law.go.kr/flDownload.do?gubun=ELIS&flSeq=164229375&flNm=%5B%EB%B3%84%EC%A7%80+%EC%84%9C%EC%8B%9D%5D+%EA%B5%90%EB%B3%B5%EA%B5%AC%EC%9E%85%EB%B9%84+%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-20T00:52:23.652139+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-21869201.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "s41000.gov24-641000000129",
+     "name": "경기도민 중고등 신입생 교복비 지원(대안교육기관, 다른 시도)"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "남양주시 현행 법규1436387 전체 조문과 부칙을 읽고 현재 목록의 별지ID21869201·flSeq164229375를 재GET 원본SHA와 대조했다. 제3조는 거주 학생의 교복비·중복지원 공제·매년 신청기간을 규정하고, 제4조제1항은 별지 신청서 제출을 정한다. 제4조제3항은 타 기관과 공동사업인 경우 합의된 별도방법을 허용한다. 현재 도정부24는 남양주시 담당처와 예외 방문접수를 명시한다. 원본 금액란은 빈칸이며 구금액 고정기재가 없다. 전체 서식668자와 1개 본문섹션을 읽고 실제 신청인·주소·서명·동의와 빈 기입란을 확인했다. 현재 도정부24의 해당 시 담당처·접수기간·방문예외·대상·40만원 실비 요건과 교차 대조했다."
+  },
+  {
    "formId": "ordin-21869295",
    "lawId": "1683229",
    "lawTitle": "남양주시 장애인가정 출산지원금 지원에 관한 조례",
@@ -79216,6 +81874,30 @@
    "reviewState": "linked",
    "reviewLabel": "혜택에 연결",
    "reviewReason": ""
+  },
+  {
+   "formId": "ordin-21869393",
+   "lawId": "1740199",
+   "lawTitle": "남양주시 아동 급식지원 조례",
+   "title": "[별지 제1호서식] 아동 급식지원 신청서",
+   "regionCode": "41360",
+   "format": "hwp",
+   "bytes": 20992,
+   "sha256": "4a72f6eb9b1be79386614f4fb26ac914a7581f693b4c6869a4fc553434c35c79",
+   "sourceUrl": "https://www.law.go.kr/flDownload.do?gubun=ELIS&flSeq=164229567&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%95%84%EB%8F%99+%EA%B8%89%EC%8B%9D%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-20T00:52:24.785026+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-21869393.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "s41000.gov24-641000000171",
+     "name": "결식아동급식지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "남양주시 현행 법규1740199 전체 조문과 부칙을 읽고 현재 목록의 별지ID21869393·flSeq164229567를 재GET 원본SHA와 대조했다. 제2조의 결식우려·수급/차상위/한부모/52% 등 대상과 제4조제1항의 별지1을 아동 주소지 읍면동장에게 제출하는 절차를 확인했다. 부득이한 사정이 있는 경우 교사·사회복지사·이통장·담당공무원 등의 신청은 제4조제2항 범위로 제한한다. 전체 서식1665자와 1개 본문섹션을 읽고 실제 신청인·주소·서명·동의와 빈 기입란을 확인했다. 현재 도정부24의 18세 미만 결식우려 대상, 수급·한부모·중위52% 등 기준, 읍면동 방문 및 급식신청서 제출 요구와 교차 대조했다. 기관 급식비 정산·청구서가 아닌 아동 신청서다."
   },
   {
    "formId": "ordin-21870157",
@@ -84753,6 +87435,30 @@
    "reviewReason": "원문 전체와 현행 신청조항을 대조했다. 4호는 기존 월 참전명예수당 수급자의 입금계좌 변경이며 유족의 사망위로금 지급계좌를 신청하는 서식이 아니다. 후보 복지로 01320은 제목에 명예수당이 있지만 실제 지원 내용·첨부 안내는 사망위로금뿐이며 정부24 108도 사망위로금 전용이다. 같은 관할 전체 참전·명예·보훈 검색에서 별도 월수당 사업이 확인되지 않아 사망급여 페이지에 연결하지 않는다."
   },
   {
+   "formId": "ordin-22185907",
+   "lawId": "1918689",
+   "lawTitle": "여주시 고령노인 목욕비 및 이ㆍ미용비 지원 조례",
+   "title": "여주시 고령노인 목욕비 및 이ㆍ미용비 지원 조례",
+   "regionCode": "41670",
+   "format": "hwp",
+   "bytes": 64512,
+   "sha256": "2ae5cdca275252fb6248635d5c3cbe3fab0cfee04528a2262c9f8e55b3a401c4",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=167550603&flNm=%EC%97%AC%EC%A3%BC%EC%8B%9C+%EA%B3%A0%EB%A0%B9%EB%85%B8%EC%9D%B8+%EB%AA%A9%EC%9A%95%EB%B9%84+%EB%B0%8F+%EC%9D%B4%E3%86%8D%EB%AF%B8%EC%9A%A9%EB%B9%84+%EC%A7%80%EC%9B%90+%EC%A1%B0%EB%A1%80",
+   "downloadedAt": "2026-10-19T08:40:27.511091+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-22185907.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41670.gov24-570000000123",
+     "name": "고령노인 목욕비 및 이미용비 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "현행1918689의10개조문·부칙과 별표22185907/flSeq167550603의실제HWP전체를읽었다. 제4조②의주민신청·④의시장절차와 실제별지1신청/2재발급/3신청위임을대조했다. 기관카드배부대장4는제외한다. 현재WLF00006580(정확gov24-570000000123병합출처)은1호신청/3호대리위임과현재75세대상·시설무료서비스제외를직접명시하고공식복지로배포본도같은선택양식을담고있다. 법규조문의별표목록순번1을인쇄된1~3호로오인하지않았다."
+  },
+  {
    "formId": "ordin-22208641",
    "lawId": "1840215",
    "lawTitle": "인천광역시 중구 저소득 노인 부분틀니 지원에 관한 조례",
@@ -86144,6 +88850,102 @@
    "reviewState": "requires_external_confirmation",
    "reviewLabel": "공식 사용 확인 필요",
    "reviewReason": "현재 정부24 자연채 포장재 지원은 인증 생산자 등의 포장재 구입비50% 지원과 농업정책과 사업신청서 제출을 안내한다. 상표 표시·포장재 사용허가 원본이 그 보조금 수요·교부 신청을 겸한다는 광주시 공식 공고나 해당 첨부는 찾지 못했다. 상표 사용허가와 구입비 보조 신청을 분리하여 보류한다."
+  },
+  {
+   "formId": "ordin-22288653",
+   "lawId": "2063871",
+   "lawTitle": "하남시 마루공원 설치 및 운영 조례 시행규칙",
+   "title": "[별지 제1호서식] 봉안당 개인단 사용(재사용)신고서",
+   "regionCode": "41450",
+   "format": "hwp",
+   "bytes": 44032,
+   "sha256": "4665cd90d883f861fdcc5cc90740dfa0cfa9aaa1cfecad3355bbbb19c6596e89",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=167802735&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EB%B4%89%EC%95%88%EB%8B%B9+%EA%B0%9C%EC%9D%B8%EB%8B%A8+%EC%82%AC%EC%9A%A9%28%EC%9E%AC%EC%82%AC%EC%9A%A9%29%EC%8B%A0%EA%B3%A0%EC%84%9C",
+   "downloadedAt": "2026-10-20T01:52:24.058524+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-22288653.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41450.gov24-O00011300001",
+     "name": "장사시설 이용요금 감면"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "실제원본 전체760자에서 상단 이용자 신고·서명과 하단 기관발급 신고증을 구별해 읽었다. 현행 상위조례2173843 전체15조·9부칙 및 규칙2063871 전체조문·부칙을 읽었다. 조례 제5조·제6조제3항·제8조제2항, 규칙 제2조제1항제1호가 사용신고/변경을 지정한다. 상위조례제6조는 감면사유 증빙을 붙여 사용신고할 경우 사용료를감면할수있도록 직접규정하므로 단순한동일법규확장이아니다. 현재정부24 정확사업은 마루공원 방문접수와 장례식장·봉안당감면 및 감면증빙제출을 안내한다."
+  },
+  {
+   "formId": "ordin-22288655",
+   "lawId": "2063871",
+   "lawTitle": "하남시 마루공원 설치 및 운영 조례 시행규칙",
+   "title": "[별지 제2호서식] 봉안당 부부단 사용(재사용)신고서",
+   "regionCode": "41450",
+   "format": "hwp",
+   "bytes": 43008,
+   "sha256": "9ae94b374222887d1fdcf796d0c3c8b29c69f05dc0e17026e871c61002df6e90",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=167802737&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C2%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EB%B4%89%EC%95%88%EB%8B%B9+%EB%B6%80%EB%B6%80%EB%8B%A8+%EC%82%AC%EC%9A%A9%28%EC%9E%AC%EC%82%AC%EC%9A%A9%29%EC%8B%A0%EA%B3%A0%EC%84%9C",
+   "downloadedAt": "2026-10-20T01:52:25.484115+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-22288655.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41450.gov24-O00011300001",
+     "name": "장사시설 이용요금 감면"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "실제원본 전체766자에서 상단 이용자 신고·서명과 하단 기관발급 신고증을 구별해 읽었다. 현행 상위조례2173843 전체15조·9부칙 및 규칙2063871 전체조문·부칙을 읽었다. 조례 제5조·제6조제3항·제8조제2항·제6항, 규칙 제2조제1항제2호가 사용신고/변경을 지정한다. 상위조례제6조는 감면사유 증빙을 붙여 사용신고할 경우 사용료를감면할수있도록 직접규정하므로 단순한동일법규확장이아니다. 현재정부24 정확사업은 마루공원 방문접수와 장례식장·봉안당감면 및 감면증빙제출을 안내한다."
+  },
+  {
+   "formId": "ordin-22288657",
+   "lawId": "2063871",
+   "lawTitle": "하남시 마루공원 설치 및 운영 조례 시행규칙",
+   "title": "[별지 제3호서식] 장례식장 사용 신고서",
+   "regionCode": "41450",
+   "format": "hwp",
+   "bytes": 43008,
+   "sha256": "0a7f21564971a3f465d6a95a0e97d76aa5af583af8307a99f909ce987acd0aa6",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=167802739&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C3%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%9E%A5%EB%A1%80%EC%8B%9D%EC%9E%A5+%EC%82%AC%EC%9A%A9+%EC%8B%A0%EA%B3%A0%EC%84%9C",
+   "downloadedAt": "2026-10-20T01:52:25.502776+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-22288657.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41450.gov24-O00011300001",
+     "name": "장사시설 이용요금 감면"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "실제원본 전체876자에서 상단 이용자 신고·서명과 하단 기관발급 신고증을 구별해 읽었다. 현행 상위조례2173843 전체15조·9부칙 및 규칙2063871 전체조문·부칙을 읽었다. 조례 제5조·제6조제2항, 규칙 제2조제1항제3호가 사용신고/변경을 지정한다. 상위조례제6조는 감면사유 증빙을 붙여 사용신고할 경우 사용료를감면할수있도록 직접규정하므로 단순한동일법규확장이아니다. 현재정부24 정확사업은 마루공원 방문접수와 장례식장·봉안당감면 및 감면증빙제출을 안내한다."
+  },
+  {
+   "formId": "ordin-22288659",
+   "lawId": "2063871",
+   "lawTitle": "하남시 마루공원 설치 및 운영 조례 시행규칙",
+   "title": "[별지 제4호서식] 봉안당 사용자 변경 신고서",
+   "regionCode": "41450",
+   "format": "hwp",
+   "bytes": 39424,
+   "sha256": "e8ae3c9aa29042d5422f1a37af17ff95cb3ae124bee575a4c5075a124c47f3cb",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=167802741&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C4%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EB%B4%89%EC%95%88%EB%8B%B9+%EC%82%AC%EC%9A%A9%EC%9E%90+%EB%B3%80%EA%B2%BD+%EC%8B%A0%EA%B3%A0%EC%84%9C",
+   "downloadedAt": "2026-10-20T01:52:26.128230+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-22288659.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41450.gov24-O00011300001",
+     "name": "장사시설 이용요금 감면"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "실제원본 전체649자에서 상단 이용자 신고·서명과 하단 기관발급 신고증을 구별해 읽었다. 현행 상위조례2173843 전체15조·9부칙 및 규칙2063871 전체조문·부칙을 읽었다. 조례 제5조제1항, 규칙 제4조가 사용신고/변경을 지정한다. 기존봉안시설이용자의사용자변경 후속절차이며 최초사용료감면으로표시하지않는다. 현재정부24 정확사업은 마루공원 방문접수와 장례식장·봉안당감면 및 감면증빙제출을 안내한다."
   },
   {
    "formId": "ordin-22288663",
@@ -93979,6 +96781,30 @@
    "reviewReason": "업체 대표자가 자원봉사자증 소지자에게 제공할 할인품목·할인율을 약정하는 가맹점 등록서이다. 후보는 자원봉사자 본인·가족의 병간호비 지원으로 가맹점 운영과 다른 목적이다."
   },
   {
+   "formId": "ordin-22522495",
+   "lawId": "2166375",
+   "lawTitle": "경기도 의사상자 예우 및 지원 조례 시행규칙",
+   "title": "[별지 제1호서식] 의사상자 특별위로금등 수령 포기서",
+   "regionCode": "41000",
+   "format": "hwp",
+   "bytes": 123392,
+   "sha256": "42824a6b22fcff0b09888f0ca54de9367ab5b99dd1039204e3fb87095e47fdb7",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=168861495&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%9D%98%EC%82%AC%EC%83%81%EC%9E%90+%ED%8A%B9%EB%B3%84%EC%9C%84%EB%A1%9C%EA%B8%88%EB%93%B1+%EC%88%98%EB%A0%B9+%ED%8F%AC%EA%B8%B0%EC%84%9C",
+   "downloadedAt": "2026-10-20T01:52:27.284460+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-22522495.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "s41000.gov24-641000000177",
+     "name": "의사상자특별위로금및수당"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "원본587자 전체Section0의 특별위로금·수당·명절위문금 선택,전액수령자·포기자 인적사항과 서명 및 동의를 읽었다. 현행규칙2166375 전체9조·3부칙을 읽었고 제4조제3항·제5조제3항이 같은순위 유족 협의 시 별지1포기서의 제출을 직접 지정한다. 현재정부24 정확사업641000000177은 의사상자 특별위로금·수당·명절위문금 지급을 안내한다. 별지2 본신청은 이미연결되어 있으며 이 원본은 해당 협의상황에서만 함께제출하는조건부서류다."
+  },
+  {
    "formId": "ordin-22522497",
    "lawId": "2166375",
    "lawTitle": "경기도 의사상자 예우 및 지원 조례 시행규칙",
@@ -99217,6 +102043,30 @@
    "reviewReason": "제9조제3항 및 제11조제3항의 변경 신청을 별지 제2호 전체의 등록번호·변경 전후·증빙서류·신청인 서명과 대조했다. 사업이 가맹점 등록 신청과 혜택을 함께 다루므로 이미 등록한 사업장 대표의 변경에 한정한다. 소비자 이용 신청 또는 신규 가맹 등록과 구분한다."
   },
   {
+   "formId": "ordin-22664085",
+   "lawId": "2028953",
+   "lawTitle": "포천시 포천사랑상품권 발행 및 운영 조례",
+   "title": "[별지 제3호서식] 포천사랑상품권 가맹점 등록 계약서",
+   "regionCode": "41650",
+   "format": "hwp",
+   "bytes": 65536,
+   "sha256": "3c6324365b7b803b1d5e8e2b0d9bfaa3294ece1f416a03ce5de708296d3646a2",
+   "sourceUrl": "https://www.law.go.kr/flDownload.do?gubun=ELIS&flSeq=169512631&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C3%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%ED%8F%AC%EC%B2%9C%EC%82%AC%EB%9E%91%EC%83%81%ED%92%88%EA%B6%8C+%EA%B0%80%EB%A7%B9%EC%A0%90+%EB%93%B1%EB%A1%9D+%EA%B3%84%EC%95%BD%EC%84%9C",
+   "downloadedAt": "2026-10-20T02:51:36.668115+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-22664085.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41650.gov24-560000000108",
+     "name": "지역화폐(포천사랑)"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "현재 정부24의 정확 사업560000000108은 소비자와 별도로 사업장대표 신청 경로 및 가맹점 수수료 절감 혜택을 명시하고, 신청서란에 포천사랑상품권 가맹점 등록 계약서(별지3)를 직접 지정한다. 현행 조례2028953 전체33조 및 부칙을 읽어 제9조제3~5항의 신청·적합심사·별지3계약 절차를 확인했다. 원본 전체2046자는 포천시장과 가맹점대표가 서명하는 계약기간·준수사항·환전·해지·책임사항의 빈 계약서로, 소비자의 할인신청이나 판매대행 금융기관 계약이 아니다."
+  },
+  {
    "formId": "ordin-22664089",
    "lawId": "2028953",
    "lawTitle": "포천시 포천사랑상품권 발행 및 운영 조례",
@@ -104021,6 +106871,30 @@
    "reviewReason": "국가보훈대상자사망위로금 신청·동의 전체를 읽었다.2027시행판을현재용으로사용하지않고유효이전판1982555의실제원본22836737을별도검토했다."
   },
   {
+   "formId": "ordin-22844907",
+   "lawId": "1748723",
+   "lawTitle": "의정부시 교복 지원 조례",
+   "title": "[별지 서식] 교복구입비 지원 신청서",
+   "regionCode": "41150",
+   "format": "hwp",
+   "bytes": 22528,
+   "sha256": "a1ab7dce30c5248b55f45cf6ee20c547e6329ee94108a898c720fbaa1ef4ff7d",
+   "sourceUrl": "https://www.law.go.kr/flDownload.do?gubun=ELIS&flSeq=170352967&flNm=%5B%EB%B3%84%EC%A7%80+%EC%84%9C%EC%8B%9D%5D+%EA%B5%90%EB%B3%B5%EA%B5%AC%EC%9E%85%EB%B9%84+%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-20T00:52:28.496559+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-22844907.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "s41000.gov24-641000000129",
+     "name": "경기도민 중고등 신입생 교복비 지원(대안교육기관, 다른 시도)"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "의정부시 현행 법규1748723 전체 조문과 부칙을 읽고 현재 목록의 별지ID22844907·flSeq170352967를 재GET 원본SHA와 대조했다. 제4조제2호·제3호는 대안교육기관 및 경기도 외 중고1학년 학생을 특정한다. 제6조제1항제2호는 경기도 대안교육기관 등 학생 교복지원 조례 제6조를 준용하며 도지사를 시장으로 보고 이 별지 신청서를 사용하도록 명시한다. 전체 원본의 학생유형·입학일·중복지원·교복세목·영수증/구입내역서와 서명을 대조했다. 전체 서식1452자와 1개 본문섹션을 읽고 실제 신청인·주소·서명·동의와 빈 기입란을 확인했다. 현재 도정부24의 해당 시 담당처·접수기간·방문예외·대상·40만원 실비 요건과 교차 대조했다."
+  },
+  {
    "formId": "ordin-22845667",
    "lawId": "2107005",
    "lawTitle": "의정부시 출산장려금 지원에 관한 조례",
@@ -104553,6 +107427,30 @@
    "reviewReason": ""
   },
   {
+   "formId": "ordin-22863613",
+   "lawId": "1488745",
+   "lawTitle": "여주시 노인 성인용 보행기 비용 지원 조례",
+   "title": "여주시 노인 성인용 보행기 비용 지원 조례",
+   "regionCode": "41670",
+   "format": "hwp",
+   "bytes": 26624,
+   "sha256": "6b4b253a614ab05e6d7bf6102ecf9eee13926e86715c1384b25b73ace11f6ce8",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=170440583&flNm=%EC%97%AC%EC%A3%BC%EC%8B%9C+%EB%85%B8%EC%9D%B8+%EC%84%B1%EC%9D%B8%EC%9A%A9+%EB%B3%B4%ED%96%89%EA%B8%B0+%EB%B9%84%EC%9A%A9+%EC%A7%80%EC%9B%90+%EC%A1%B0%EB%A1%80",
+   "downloadedAt": "2026-10-19T08:40:29.933835+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-22863613.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41670.bokjiro-WLF00003819",
+     "name": "노인 성인용보행기 비용 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "현행 1488745의8개 조문·부칙과 별표22863613/flSeq170440583의 실제 HWP 전체를 읽었다. 제5조①은 별지1 신청·동의,③은 선정 후60일 이내 구입 뒤 별지2 지급청구,⑤는 기관관리대장3으로 구분한다. 원문1호/2호와 뒤동의·붙임1 위임의 실제작성란을 확인하고기관관리대장은제외한다. 같은시현재WLF00003819의20/18만원·60일구입과 직접배포 업무매뉴얼의해당빈양식이동일목적·내용이다. 위임범위는현재매뉴얼이허용한배우자/자녀의이사업신청에만한정한다."
+  },
+  {
    "formId": "ordin-22864161",
    "lawId": "2021755",
    "lawTitle": "나주시 참전유공자 지원 조례",
@@ -104735,6 +107633,30 @@
    "reviewState": "linked",
    "reviewLabel": "혜택에 연결",
    "reviewReason": ""
+  },
+  {
+   "formId": "ordin-22869569",
+   "lawId": "1728931",
+   "lawTitle": "김포시 아동 급식지원에 관한 조례",
+   "title": "[별지 서식] 아동급식 신청서",
+   "regionCode": "41570",
+   "format": "hwp",
+   "bytes": 17408,
+   "sha256": "b3a6a821c32ab0d1ff2310bb7215f4d6eb898bc2744dfdf737f933eb85fd35c8",
+   "sourceUrl": "https://www.law.go.kr/flDownload.do?gubun=ELIS&flSeq=170527981&flNm=%5B%EB%B3%84%EC%A7%80+%EC%84%9C%EC%8B%9D%5D+%EC%95%84%EB%8F%99%EA%B8%89%EC%8B%9D+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-20T00:52:30.103738+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-22869569.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "s41000.gov24-641000000171",
+     "name": "결식아동급식지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "김포시 현행 법규1728931 전체 조문과 부칙을 읽고 현재 목록의 별지ID22869569·flSeq170527981를 재GET 원본SHA와 대조했다. 제2조의 결식우려·수급/차상위/한부모/52% 등 대상과 제4조제1항의 별지 신청서·증빙 제출을 확인했다. 제4조제2항은 본인·보호자가 신청할 수 없는 경우 가족·이웃·교사·사회복지사·통리반장 신청과 담당공무원 직권신청을 허용한다. 전체 서식1082자와 1개 본문섹션을 읽고 실제 신청인·주소·서명·동의와 빈 기입란을 확인했다. 현재 도정부24의 18세 미만 결식우려 대상, 수급·한부모·중위52% 등 기준, 읍면동 방문 및 급식신청서 제출 요구와 교차 대조했다. 기관 급식비 정산·청구서가 아닌 아동 신청서다."
   },
   {
    "formId": "ordin-22869617",
@@ -105749,6 +108671,102 @@
    "reviewReason": "원본은 행복택시 운행자 명의로 운행기간·횟수·탑승인원·운행요금·주민부담과 보조금을 청구하는 서식이며 주민의 택시 이용 신청서가 아니다. 원본의 법규1938133은 2026-10-15 시행2179111로 변경되었고 최신 공식 첨부에서 이 annexId/flSeq가 확인되지 않는다. 최신 제7조도 운행자 청구 및 전산대체를 정하므로 현재 주민 혜택의 신청서로 게시하지 않는다."
   },
   {
+   "formId": "ordin-22900107",
+   "lawId": "1406334",
+   "lawTitle": "여주시 여성장애인 출산지원금 지급 조례",
+   "title": "여주시 여성장애인 출산지원금 지급 조례",
+   "regionCode": "41670",
+   "format": "hwp",
+   "bytes": 24064,
+   "sha256": "ca140fd799e89d45990dc1d96e997211becaf09682d95e2250eb5d02661c6ed7",
+   "sourceUrl": "https://www.law.go.kr/flDownload.do?gubun=ELIS&flSeq=170749699&flNm=%EC%97%AC%EC%A3%BC%EC%8B%9C+%EC%97%AC%EC%84%B1%EC%9E%A5%EC%95%A0%EC%9D%B8+%EC%B6%9C%EC%82%B0%EC%A7%80%EC%9B%90%EA%B8%88+%EC%A7%80%EA%B8%89+%EC%A1%B0%EB%A1%80",
+   "downloadedAt": "2026-10-20T03:12:09.474349+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-22900107.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41670.gov24-570000000105",
+     "name": "여성장애인 출산지원금 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "전체4495자의조문8개·부칙/타조례개정표와끝무번호별지를읽었다.제5조는출산여성/유고시양육자신청주체,제6조는별지신청+통장사본을정하며실제본문에여성장애인의장애정도·신생아·출산일·신청인서명이있다.20일정확정부24는여주180일·중증300/경증150만원·읍면동방문을명시한다.현행20일annex키22900107·flSeq170749699로다시다운로드했고구원본과SHA가같아도ID를덮지않고새현행ID만제안한다."
+  },
+  {
+   "formId": "ordin-22900805",
+   "lawId": "1918695",
+   "lawTitle": "여주시 결혼장려금 지원 조례",
+   "title": "여주시 결혼장려금 지원 조례",
+   "regionCode": "41670",
+   "format": "hwp",
+   "bytes": 131072,
+   "sha256": "cf930f89b1792653572ba29423e6cf6cfe6bcde16ee73b40646710d4b515f508",
+   "sourceUrl": "https://www.law.go.kr/flDownload.do?gubun=ELIS&flSeq=170751185&flNm=%EC%97%AC%EC%A3%BC%EC%8B%9C+%EA%B2%B0%ED%98%BC%EC%9E%A5%EB%A0%A4%EA%B8%88+%EC%A7%80%EC%9B%90+%EC%A1%B0%EB%A1%80",
+   "downloadedAt": "2026-10-20T02:51:37.503273+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-22900805.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41670.gov24-570000000131",
+     "name": "여주시 결혼장려금 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "2026-10-20 현행 nw=1 검색과 법규1918695의7조문·부칙, 새별표키22900805/flSeq170751185를 실제 HWP전체2,693자와 대조했다.제3조는1인100만원일시금,제5조는혼인6개월내1호신청을지정하고개정원문에는이전복지로서식의1차/2차지급선택이없다.오늘정확WLF00005187이초혼·1년계속거주·6개월신청·100만원을명시하여수록gov24-570000000131과맞는다.구포털18193891URL은오늘59B비문서를반환했고동일법규의현행첨부키만변경되었으므로기존ID/SHA를덮지않고새22900805로제안한다.양식전체는빈신청·본인/배우자동의이며기관서식이나작성된개인정보는없다."
+  },
+  {
+   "formId": "ordin-22901167",
+   "lawId": "2049835",
+   "lawTitle": "여주시 장애인보장구 수리비용 지원에 관한 조례",
+   "title": "여주시 장애인보장구 수리비용 지원에 관한 조례",
+   "regionCode": "41670",
+   "format": "hwp",
+   "bytes": 65024,
+   "sha256": "e6f031a951ebd84d9375df3c7608c904e87e9e945890b2bac0d042bd73960938",
+   "sourceUrl": "https://www.law.go.kr/flDownload.do?gubun=ELIS&flSeq=170752711&flNm=%EC%97%AC%EC%A3%BC%EC%8B%9C+%EC%9E%A5%EC%95%A0%EC%9D%B8%EB%B3%B4%EC%9E%A5%EA%B5%AC+%EC%88%98%EB%A6%AC%EB%B9%84%EC%9A%A9+%EC%A7%80%EC%9B%90%EC%97%90+%EA%B4%80%ED%95%9C+%EC%A1%B0%EB%A1%80",
+   "downloadedAt": "2026-10-20T03:12:08.102334+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-22901167.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41670.gov24-570000000106",
+     "name": "장애인 보장구 수리비용 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "전체4221자의현행9조문·부칙·별지1~6을읽었다.제6조①이주민3호신청을명시하고②는기관4호의뢰,③은업체5/6호청구로분리한다.실제3호는수급유형·보장구유형·수리부위·신청인서명으로작성된다.20일정부24의여주등록장애인/수급차상위연20만원·일반연10만원50%및주민센터접수가현행제5조와일치한다.양식의남아있는장애등급표현을별도등급자격제한으로해석하지않았다.현행키22901167/flSeq170752711의실제바이트를확인했다."
+  },
+  {
+   "formId": "ordin-22901313",
+   "lawId": "2123407",
+   "lawTitle": "여주시 저소득주민 자녀 학력 향상 생활자금 지원 조례 시행규칙",
+   "title": "여주시 저소득주민 자녀 학력 향상 생활자금 지원 조례 시행규칙",
+   "regionCode": "41670",
+   "format": "hwp",
+   "bytes": 54784,
+   "sha256": "3975c5b2b78035cdf5e8cb652d2950d171c4f86905bab7adaa180f08543b2b88",
+   "sourceUrl": "https://www.law.go.kr/flDownload.do?gubun=ELIS&flSeq=170753247&flNm=%EC%97%AC%EC%A3%BC%EC%8B%9C+%EC%A0%80%EC%86%8C%EB%93%9D%EC%A3%BC%EB%AF%BC+%EC%9E%90%EB%85%80+%ED%95%99%EB%A0%A5+%ED%96%A5%EC%83%81+%EC%83%9D%ED%99%9C%EC%9E%90%EA%B8%88+%EC%A7%80%EC%9B%90+%EC%A1%B0%EB%A1%80+%EC%8B%9C%ED%96%89%EA%B7%9C%EC%B9%99",
+   "downloadedAt": "2026-10-20T03:12:10.155129+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-22901313.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41670.gov24-570000000112",
+     "name": "저소득 주민 자녀 학력향상 생활자금 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "규칙7조문·부칙·별지1/2전체3313자와상위현행조례2178721의7조문·부칙을읽었다.규칙제3조는학생또는보호자의1호제출,4/5조는읍면동의2호조사를구분한다.상위3조중고생/고등교육학생과규칙6조40/60/100만원이20일정부24의정확사업과일치한다.법령상현재원본키22901313/flSeq170753247의바이트와서명란을확인했으나정부24가10월말~11월중순만안내하므로현재20일즉시접수가능으로주장하지않고모집기간조건으로만제안한다."
+  },
+  {
    "formId": "ordin-5842214",
    "lawId": "1365427",
    "lawTitle": "충주시 농업안정기금 조례 시행규칙",
@@ -106325,6 +109343,14 @@
    "usableHangul": true,
    "publishedPrograms": [
     {
+     "id": "g41110.gov24-374000000109",
+     "name": "기초생활보장 교육급여"
+    },
+    {
+     "id": "g41110.gov24-374000000145",
+     "name": "기초생활보장 생계급여"
+    },
+    {
      "id": "n.bokjiro-WLF00001089",
      "name": "교육급여(맞춤형 급여)"
     },
@@ -106407,6 +109433,10 @@
     {
      "id": "n.welfare100-near-poverty-certificate",
      "name": "차상위계층 확인"
+    },
+    {
+     "id": "s41000.bokjiro-WLF00005606",
+     "name": "한부모가족 아동양육비 지원"
     }
    ],
    "reviewState": "linked",
@@ -106429,6 +109459,14 @@
    "usableHangul": true,
    "publishedPrograms": [
     {
+     "id": "g41110.gov24-374000000109",
+     "name": "기초생활보장 교육급여"
+    },
+    {
+     "id": "g41110.gov24-374000000145",
+     "name": "기초생활보장 생계급여"
+    },
+    {
      "id": "n.bokjiro-WLF00001089",
      "name": "교육급여(맞춤형 급여)"
     },
@@ -106491,6 +109529,10 @@
     {
      "id": "n.welfare100-near-poverty-certificate",
      "name": "차상위계층 확인"
+    },
+    {
+     "id": "s41000.bokjiro-WLF00005606",
+     "name": "한부모가족 아동양육비 지원"
     }
    ],
    "reviewState": "linked",
@@ -106513,6 +109555,14 @@
    "usableHangul": true,
    "publishedPrograms": [
     {
+     "id": "g41110.gov24-374000000109",
+     "name": "기초생활보장 교육급여"
+    },
+    {
+     "id": "g41110.gov24-374000000145",
+     "name": "기초생활보장 생계급여"
+    },
+    {
      "id": "n.bokjiro-WLF00001089",
      "name": "교육급여(맞춤형 급여)"
     },
@@ -106575,6 +109625,10 @@
     {
      "id": "n.welfare100-near-poverty-certificate",
      "name": "차상위계층 확인"
+    },
+    {
+     "id": "s41000.bokjiro-WLF00005606",
+     "name": "한부모가족 아동양육비 지원"
     }
    ],
    "reviewState": "linked",
@@ -106596,6 +109650,10 @@
    "relativePath": "rule-3211501.hwpx",
    "usableHangul": true,
    "publishedPrograms": [
+    {
+     "id": "g41480.bokjiro-WLF00003882",
+     "name": "산모신생아 건강관리사지원"
+    },
     {
      "id": "n.gov24-134200005036",
      "name": "영유아보육료 지원"

@@ -6424,7 +6424,7 @@
       "programIds": [
         "g41650.bokjiro-WLF00003609"
       ],
-      "semanticReviewStatus": "pending",
+      "semanticReviewStatus": "excluded_filled_personal_data",
       "publicationApproved": false,
       "priority": "requires_body_inspection",
       "collectionStatus": "pending"
@@ -22045,12 +22045,12 @@
     },
     {
       "candidateId": "page-594b327bda354859350e",
-      "title": "조건부수급자 생계급여 중지 통보서-김관현.hwp",
+      "title": "개인정보가 작성된 기관 통보자료(공개 제외)",
       "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20250804UUWBM1136500149242602&atcflSn=1&wlfareInfoId=WLF00003124",
       "programIds": [
         "g41630.bokjiro-WLF00003124"
       ],
-      "semanticReviewStatus": "pending",
+      "semanticReviewStatus": "excluded_filled_personal_data",
       "publicationApproved": false,
       "priority": "requires_body_inspection",
       "collectionStatus": "pending"
@@ -34074,7 +34074,7 @@
       "programIds": [
         "g41360.gov24-399000000113"
       ],
-      "semanticReviewStatus": "pending",
+      "semanticReviewStatus": "excluded_filled_personal_data",
       "publicationApproved": false,
       "priority": "requires_body_inspection",
       "collectionStatus": "pending"
