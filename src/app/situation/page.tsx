@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { SituationForm } from "./SituationForm";
+import { SituationEntry } from "./SituationEntry";
 
-export const metadata: Metadata = { title: "내 상황 알려주기" };
+export const metadata: Metadata = { title: "말로 찾기" };
 
 export default function SituationPage() {
   return (
     <Suspense fallback={<div className="narrow page muted">불러오는 중…</div>}>
-      <SituationForm />
+      <SituationEntry />
     </Suspense>
   );
 }

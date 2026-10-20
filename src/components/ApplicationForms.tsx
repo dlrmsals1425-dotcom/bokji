@@ -45,7 +45,6 @@ export function ApplicationForms({ program, parentMode = false }: { program: Pro
         <div role="status"><p>서식 연결 정보를 불러오지 못했어요. 신청서가 없다는 뜻은 아니에요.</p><button type="button" className="btn btn-quiet" onClick={() => { setResult(null); setAttempt(value => value + 1); }}>다시 확인하기</button></div>
       ) : data.entry.status === "available" ? (
         <>
-          <p>아래는 원문과의 연결을 확인한 빈 서식이에요. 접수기관의 신청 안내도 함께 확인해 주세요.</p>
           <ul className={styles.files}>
             {data.entry.links.map(link => {
               const form = data.forms.find(item => item.id === link.formId)!;
@@ -68,11 +67,11 @@ export function ApplicationForms({ program, parentMode = false }: { program: Pro
               </li>;
             })}
           </ul>
-          <p className="small muted">서식 외에 필요한 증빙은 위 구비서류와 공식 신청 안내를 확인해 주세요. 내려받기는 접수 완료를 뜻하지 않아요.</p>
+          <p className="small muted">작성한 서식은 신청처에 제출하세요. 추가 증빙은 공식 안내를 확인하세요.</p>
         </>
       ) : (
         <div className={styles.empty}>
-          <p>{data.entry.status === "online" ? "자료에 안내된 온라인 신청 창구를 확인할 수 있어요." : data.entry.status === "review" ? "관련 서식의 적용 여부를 검토하고 있어요. 공식 신청 안내에서 필요한 서류를 확인해 주세요." : "아직 확보한 신청서가 없어요. 신청서가 필요 없다는 뜻은 아니에요."}</p>
+          {data.entry.status !== "online" && <p>{data.entry.status === "review" ? "서식 검토 중입니다. 필요한 서류는 공식 안내를 확인하세요." : "확보한 서식이 없어요. 필요한 서류는 담당 기관에 확인하세요."}</p>}
           {online && <a className="btn btn-primary" href={online} target="_blank" rel="noopener noreferrer">공식 신청 안내 열기<span className="sr-only"> (새 창)</span></a>}
           {!online && official && <a className="btn btn-quiet" href={official} target="_blank" rel="noopener noreferrer">공식 사업 안내 확인<span className="sr-only"> (새 창)</span></a>}
         </div>
@@ -85,7 +84,7 @@ export function ApplicationForms({ program, parentMode = false }: { program: Pro
       }</p>}
       {data && (!!candidates.length || data.candidatesIncomplete) && <details className={styles.candidates} data-testid="forms-candidates">
         <summary>법령포털에서 찾은 관련 서식 {number(candidateCount)}개 · 적용 여부 확인 중</summary>
-        <p className="small">이름과 근거 법령이 비슷해 자동으로 함께 찾은 서식이에요. 이 사업에 적용되는 서식인지 확인 중이라, 신청서로 내려받을 수 있게 제공하지 않아요.</p>
+        <p className="small">적용 여부가 확인되지 않아 신청서로 제공하지 않습니다.</p>
         {data.candidatesIncomplete ? <p className="small muted">후보 서식 정보를 일부 불러오지 못했어요. 아래 목록이 전부가 아닐 수 있어요.</p>
           : candidates.length < candidateCount ? <p className="small muted">{number(candidateCount)}개 가운데 관련 서식 앞 {number(candidates.length)}개를 보여요.</p> : null}
         {!!candidates.length && <ul className={styles.files}>
@@ -98,9 +97,9 @@ export function ApplicationForms({ program, parentMode = false }: { program: Pro
         </ul>}
       </details>}
       {(program.applyType === "auto" || program.applyType === "institution") && <p className={styles.note}>자료상 {program.applyType === "auto" ? "자동 제공" : "기관 추천·선정"} 방식인 사업이에요. 별도 신청이나 확인이 필요한지는 담당기관에 문의해 주세요.</p>}
-      {parentMode && <p className={styles.note}>부모님 대신 신청할 때는 해당 사업의 대리신청 가능 여부와 준비서류를 확인해 주세요. 부모님의 신청서와 대리인의 서류는 다를 수 있어요.</p>}
+      {parentMode && <p className={styles.note}>대리신청 가능 여부와 대리인 준비서류는 신청처에 확인하세요.</p>}
       {data?.entry.note && <p className="small muted">{data.entry.note}</p>}
-      <Link className={styles.coverage} href="/forms">다른 지역의 서식 연결 현황 보기 →</Link>
+      <Link className={styles.coverage} href="/forms">전체 신청 서식 →</Link>
     </div>
   );
 }

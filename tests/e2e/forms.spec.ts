@@ -46,7 +46,7 @@ test("candidate or missing forms are explicit and never expose candidate downloa
   const missing = other.programs.find(program => program.status === "missing")!;
   await page.goto(`/p/${missing.id}`);
   section = page.getByTestId("application-forms");
-  await expect(section).toContainText("아직 확보한 신청서가 없어요");
+  await expect(section).toContainText("확보한 서식이 없어요");
   await expect(section.getByRole("link", { name: /한글 원본 받기/ })).toHaveCount(0);
 });
 
@@ -62,6 +62,8 @@ test("source online route is separate from a confirmed application file", async 
 
 test("coverage filters agree with rows and region switching cannot retain Goyang downloads @mobile", async ({ page }) => {
   await page.goto("/forms");
+  await expect(page.getByRole("heading", { name: `수록 사업 ${coverage.totalPrograms.toLocaleString("ko-KR")}건의 연결 상태` })).toBeHidden();
+  await page.getByText("수집 현황·출처", { exact: true }).click();
   await expect(page.getByRole("heading", { name: `수록 사업 ${coverage.totalPrograms.toLocaleString("ko-KR")}건의 연결 상태` })).toBeVisible();
   await page.getByLabel("연결 상태", { exact: true }).selectOption("available");
   await expect(page.locator("main ul > li")).toHaveCount(goyang.region.counts.available);

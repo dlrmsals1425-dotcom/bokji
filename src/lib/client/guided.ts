@@ -1,8 +1,8 @@
 /**
  * 질문 따라 찾기 (2026-10-16): 사는 곳을 확인한 뒤 한 화면에 한 질문씩.
- * 다음 질문 = 지금 '답하면 정해져요'에 있는 혜택 가운데 그 답으로 정해지는 것이 가장 많은 질문 (답이 나올 가능성으로 가중).
+ * 나이 → 가구원 수 → 자녀·출산 상황을 먼저 확인하고, 이후 필요한 질문만 혜택 판정 기댓값으로 고른다.
  * 판정은 결과 화면과 같은 규칙(v2.ts)을 그대로 쓰고, 이미 '해당하지 않아요'로 정해진 사업은 다음 계산에서 뺀다(소거).
- * 31개 페르소나 시뮬레이션: 질문 5개로 '답하면 정해져요'가 약 82% 줄고 '받으실 수 있어요'는 5번째 이후 늘지 않음 → 5개 + 드문 사항 한 번에.
+ * 기본 질문은 5개까지, 나머지 조건은 결과에서 더 확인할 수 있다.
  * 답은 이 기기 안에서만 쓰고 주소에는 싣지 않는다.
  */
 import type { Program } from "../data/types";
@@ -18,6 +18,44 @@ export const FLOW_LIMIT = 5;
 /** 하나씩 묻지 않고 마지막 '해당하는 것 모두 고르기'로만 묻는 드문 사항 */
 export const RARE_DIMS_FLOW: ReadonlySet<DimId> = new Set<DimId>(["veteran", "multicultural"]);
 
+export type FlowQuestionId = DimId | "family";
+type FlowDim = Omit<Dim, "id"> & { id: FlowQuestionId };
+
+const hasChildren = (s: Situation) => s.x.family === "children" || s.x.family === "both" ||
+  (s.x.childCount ?? 0) > 0 || !!s.profile.children?.some((c) => c !== "pregnant");
+
+const familyAnswer = (s: Situation, family: NonNullable<Situation["x"]["family"]>): Situation => {
+  const x = { ...s.x, family };
+  // 자녀가 있다는 답만으로 자녀 수·나이를 추정하지 않는다.
+  if (family === "none" || family === "expecting") x.childCount = 0;
+  else delete x.childCount;
+  return { ...s, x, profile: { ...s.profile, children: family === "none" ? [] : family === "expecting" ? ["pregnant"] : null } };
+};
+
+export const FLOW_DIM_BY_ID: Record<FlowQuestionId, FlowDim> = {
+  ...DIM_BY_ID,
+  family: {
+    id: "family",
+    q: () => "자녀·출산 상황은 어떤가요?",
+    isUnknown: (s) => s.x.family === undefined && s.x.childCount == null && s.profile.children === null,
+    answers: [
+      { key: "children", label: "자녀가 있어요", apply: (s) => familyAnswer(s, "children") },
+      { key: "expecting", label: "출산 예정이에요", apply: (s) => familyAnswer(s, "expecting") },
+      { key: "both", label: "자녀가 있고, 출산 예정이에요", apply: (s) => familyAnswer(s, "both") },
+      { key: "none", label: "둘 다 해당 없어요", apply: (s) => familyAnswer(s, "none") },
+    ],
+  },
+};
+
+/** 자녀 관련 세부 질문은 해당한다고 답한 뒤에만 묻는다. 건너뛰기는 부정으로 해석하지 않는다. */
+function flowAvailable(d: Dim, s: Situation): boolean {
+  if (!dimAvailable(d, s)) return false;
+  if (d.id === "children") return hasChildren(s);
+  if (d.id === "singleParent" && s.mode === "self") return hasChildren(s);
+  if (d.id === "daycare") return !!s.profile.children?.some((c) => c === "0-1" || c === "2-5");
+  return true;
+}
+
 export function blankSituation(sido: string, sigungu: string, mode: FindMode): Situation {
   return { profile: { ...EMPTY_PROFILE, sido, sigungu }, x: { ...EMPTY_EXTRAS, benefits: {}, traits: {}, facts: {} }, mode };
 }
@@ -30,8 +68,9 @@ const manwon = (won: number) => Math.floor(won / 10000).toLocaleString("ko-KR");
  * - 나이: 본인 찾기는 '18세 이하'도 (10대 본인이 나이에 답하지 못하던 문제 — 시뮬레이션에서 확인)
  * - 소득: 가구원 수에 맞춘 기준 중위소득 금액 구간 (구간 자체는 결과 화면 소득 질문과 같음)
  */
-export function flowAnswers(d: Dim, s: Situation): Answer[] {
-  const base = answersFor(d, s);
+export function flowAnswers(d: FlowDim, s: Situation): Answer[] {
+  if (d.id === "family") return d.answers;
+  const base = answersFor(DIM_BY_ID[d.id], s);
   if (d.id === "age" && s.mode !== "parent") {
     return [{ key: "0-18", label: AGE_LABEL["0-18"], apply: (x: Situation) => withAge(x, "0-18") }, ...base];
   }
@@ -99,10 +138,19 @@ export function flowStep(pool: Program[], s: Situation, prev?: FlowStep): FlowSt
 }
 
 /** 다음 질문: 그 답으로 '답하면 정해져요'에서 빠지는 혜택 묶음 수의 기댓값이 가장 큰 질문 */
-export function nextQuestion(st: FlowStep, s: Situation, asked: readonly DimId[]): { id: DimId; gain: number } | null {
+export function nextQuestion(st: FlowStep, s: Situation, asked: readonly FlowQuestionId[]): { id: FlowQuestionId; gain: number } | null {
+  // 통계상 소거 효과가 크더라도 기본 가구 정보보다 자녀·임신 질문을 먼저 내지 않는다.
+  for (const id of ["age", "alone"] as const) {
+    if (!asked.includes(id) && DIM_BY_ID[id].isUnknown(s)) return { id, gain: 0 };
+  }
+  if (!asked.includes("family") && dimAvailable(DIM_BY_ID.children, s) && FLOW_DIM_BY_ID.family.isUnknown(s))
+    return { id: "family", gain: 0 };
+  if (!asked.includes("children") && DIM_BY_ID.children.isUnknown(s) && flowAvailable(DIM_BY_ID.children, s))
+    return { id: "children", gain: 0 };
+
   let best: { id: DimId; gain: number } | null = null;
   for (const d of DIMS) {
-    if (asked.includes(d.id) || RARE_DIMS_FLOW.has(d.id) || !d.isUnknown(s) || !dimAvailable(d, s)) continue;
+    if (asked.includes(d.id) || RARE_DIMS_FLOW.has(d.id) || !d.isUnknown(s) || !flowAvailable(d, s)) continue;
     const groups = st.view.ask.filter((g) => g.some((i) => i.dims.includes(d.id)));
     if (!groups.length) continue;
     const answers = flowAnswers(d, s);
@@ -139,7 +187,7 @@ export function rarePicks(s: Situation): RarePick[] {
   const out: RarePick[] = [];
   for (const id of Object.keys(RARE_LABEL) as DimId[]) {
     const d = DIM_BY_ID[id];
-    if (!d.isUnknown(s) || !dimAvailable(d, s)) continue;
+    if (!d.isUnknown(s) || !flowAvailable(d, s)) continue;
     out.push({ key: id, label: RARE_LABEL[id]![s.mode === "parent" ? 1 : 0] });
   }
   return out;

@@ -1,6 +1,6 @@
 "use client";
 /**
- * 질문 따라 찾기 (2026-10-16): 누구 → 사는 곳 확인(현재 위치) → 정해지는 혜택이 많은 질문 5개 → 드문 사항 한 번에 → 결과.
+ * 누구 → 사는 곳 확인 → 나이·가구 확인 → 해당하는 후속 질문 → 드문 사항 한 번에 → 결과.
  * 한 화면에 한 질문. 판정은 이 기기에서, 답은 이 기기에만 저장하고 주소에는 싣지 않는다. 위치(좌표)는 시·군·구로만 바꾸고 버린다.
  */
 import { useEffect, useRef, useState } from "react";
@@ -8,19 +8,20 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Icon } from "@/components/Icon";
 import { loadForRegion, loadRegions } from "@/lib/client/bundles";
-import { currentPosition, loadBoundaries, sigunguAt } from "@/lib/client/locate";
-import { FLOW_LIMIT, blankSituation, flowAnswers, flowStep, nextQuestion, rareApply, rarePicks, type FlowStep } from "@/lib/client/guided";
+import { suggestLocation } from "@/lib/client/locationSuggestion";
+import { FLOW_LIMIT, FLOW_DIM_BY_ID, blankSituation, flowAnswers, flowStep, nextQuestion, rareApply, rarePicks, type FlowStep, type FlowQuestionId } from "@/lib/client/guided";
 import { resultsPath, type FindMode } from "@/lib/client/mode";
 import { sidoOptionLabel } from "@/lib/client/regionLabel";
 import { saveSituation } from "@/lib/client/start";
 import { saveFiller } from "@/lib/client/storage";
-import { DIM_BY_ID, type DimId, type Situation } from "@/lib/client/v2";
+import { type DimId, type Situation } from "@/lib/client/v2";
 import type { Program, RegionIndex } from "@/lib/data/types";
+import styles from "../finder.module.css";
 
 type Where = { sido: string; sigungu: string; label: string };
 type LocStatus = { kind: "idle" } | { kind: "busy" } | { kind: "found"; where: Where } | { kind: "error"; text: string };
 /** 질문 단계 하나 (이전으로 돌아갈 때 그대로 되돌린다) */
-type Snap = { sit: Situation; st: FlowStep; asked: DimId[]; q: DimId | null };
+type Snap = { sit: Situation; st: FlowStep; asked: FlowQuestionId[]; q: FlowQuestionId | null };
 type Phase = "who" | "where" | "loading" | "ask" | "rare" | "done";
 /** 지나온 화면 — 어느 화면(질문·드문 사항·끝)이었는지도 함께 (끝·더 답하기에서 '이전'을 누르면 질문 칸이 비던 문제) */
 type Past = { snap: Snap; phase: Phase };
@@ -46,7 +47,6 @@ export function GuidedFlow() {
   const [pickSido, setPickSido] = useState("");
   const [pickSgg, setPickSgg] = useState("");
   const [where, setWhere] = useState<Where | null>(null);
-  const [total, setTotal] = useState(0);
   const [cur, setCur] = useState<Snap | null>(null);
   const [history, setHistory] = useState<Past[]>([]);
   // '질문 더 답하기'를 누르면 5개를 넘겨 정해지는 혜택이 남는 동안 계속 묻는다
@@ -60,47 +60,52 @@ export function GuidedFlow() {
 
   useEffect(() => {
     loadRegions().then(setRegions, () => setRegions(null));
+    // /ask로 바로 들어와도 대상을 고르는 동안 위치를 준비한다.
+    void suggestLocation();
+    return () => {
+      // A request generation counter, not a DOM ref: invalidate outstanding work on unmount.
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      seq.current++;
+    };
   }, []);
   // 화면(질문)이 바뀌면 제목으로 초점을 옮겨 화면낭독기가 새 질문부터 읽게
   useEffect(() => {
     headRef.current?.focus();
-  }, [phase, cur?.q]);
+  }, [phase, cur?.q, manual, loc.kind]);
 
   const parent = mode === "parent";
-  const regionsOrLoad = async () => regions ?? (await loadRegions().catch(() => null));
-
-  const locate = async () => {
+  const locate = async (refresh = false) => {
     const my = ++seq.current;
     setManual(false);
     setLoc({ kind: "busy" });
     try {
-      const [pos, b, rg] = await Promise.all([currentPosition(), loadBoundaries(), regionsOrLoad()]);
+      const w = await suggestLocation(refresh);
       if (my !== seq.current) return;
-      const sgg = sigunguAt(b, pos.lat, pos.lng);
-      const w = sgg && rg ? whereOf(rg, sgg) : null;
       if (!w) {
-        setLoc({ kind: "error", text: "국내 시·군·구 안의 위치가 아니에요. 아래에서 직접 골라 주세요." });
+        setLoc({ kind: "error", text: "현재 위치로 지역을 확인하지 못했어요. 직접 골라 주세요." });
         setManual(true);
         return;
       }
       setLoc({ kind: "found", where: w });
     } catch {
       if (my !== seq.current) return;
-      setLoc({ kind: "error", text: "위치를 확인하지 못했어요(권한을 허용하지 않았거나 기기가 위치를 지원하지 않아요). 아래에서 직접 골라 주세요." });
+      setLoc({ kind: "error", text: "현재 위치로 지역을 확인하지 못했어요. 직접 골라 주세요." });
       setManual(true);
     }
+  };
+
+  const chooseManual = () => {
+    // 직접 선택으로 바꾼 뒤 도착하는 위치 응답은 화면에 반영하지 않는다.
+    seq.current++;
+    setLoc({ kind: "idle" });
+    setManual(true);
   };
 
   const chooseWho = (m: FindMode) => {
     setMode(m);
     setPhase("where");
-    // 본인 찾기는 바로 현재 위치부터 — 부모님 찾기는 부모님이 사시는 곳이라 직접 고르기부터
-    if (m === "self") void locate();
-    else {
-      seq.current++;
-      setLoc({ kind: "idle" });
-      setManual(true);
-    }
+    // 두 대상 모두 GPS를 먼저 제안하고, 실제 주소지는 사용자가 확인한다.
+    void locate();
   };
 
   const start = async (w: Where) => {
@@ -121,7 +126,6 @@ export function GuidedFlow() {
     if (my !== seq.current) return;
     const sit = blankSituation(w.sido, w.sigungu, mode);
     const st = flowStep(programs, sit);
-    setTotal(programs.length);
     setHistory([]);
     setExtra(false);
     setRareOn([]);
@@ -129,7 +133,7 @@ export function GuidedFlow() {
   };
 
   /** 다음 질문을 고르고, 다 물었으면 드문 사항 → 끝 */
-  const advance = (snap: Omit<Snap, "q"> & { q: DimId | null }, more: boolean) => {
+  const advance = (snap: Snap, more: boolean) => {
     const limitHit = !more && snap.asked.length >= FLOW_LIMIT;
     const q = limitHit ? null : (nextQuestion(snap.st, snap.sit, snap.asked)?.id ?? null);
     const next: Snap = { ...snap, q };
@@ -144,7 +148,7 @@ export function GuidedFlow() {
     setPhase("done");
   };
 
-  /** 답(또는 '잘 모르겠어요')을 반영하고 다시 계산 */
+  /** 답(또는 건너뛰기)을 반영하고 다시 계산 */
   const answer = async (sit2: Situation | null) => {
     if (!cur || !cur.q || busy) return;
     setBusy(true);
@@ -208,9 +212,10 @@ export function GuidedFlow() {
   const sidoObj = regions?.sidos.find((s) => s.code === pickSido);
 
   return (
-    <>
+    <div className={`${styles.finder} ${styles.guided}`}>
       <div className="form-head">
         <div className="narrow">
+          <div className={styles.routeRow}>
           <ol className="crumbs" aria-label="현재 위치">
             <li>
               <Link href="/">
@@ -218,12 +223,10 @@ export function GuidedFlow() {
               </Link>
             </li>
             <li>
-              <span aria-current="page">질문 따라 찾기</span>
+              <span aria-current="page">골라서 찾기</span>
             </li>
           </ol>
-          <p className="small muted" style={{ margin: 0 }}>
-            한 화면에 한 질문 · 버튼만 누르면 돼요 · 답과 위치는 이 기기 안에서만 써요
-          </p>
+          </div>
           <div className="gq-bar" aria-hidden="true">
             <i style={{ width: `${progress}%` }} />
           </div>
@@ -232,64 +235,51 @@ export function GuidedFlow() {
       <div className="form-body">
         <div className="narrow">
           <div className="form-panel gq" data-testid="guided" data-phase={phase} data-mode={mode}>
-            {counts && (phase === "ask" || phase === "rare" || phase === "done") && (
-              <div className="gq-counts" aria-live="polite" data-testid="gq-counts">
-                <div>
-                  <span>받으실 수 있어요</span>
-                  <b data-testid="gq-fit">{counts.fit}</b>
-                </div>
-                <div>
-                  <span>답하면 정해져요</span>
-                  <b data-testid="gq-ask">{counts.ask}</b>
-                </div>
-                <div>
-                  <span>신청할 때 확인</span>
-                  <b>{counts.office}</b>
-                </div>
-              </div>
-            )}
-
             {phase === "who" && (
-              <section aria-labelledby="gq-h">
+              <section aria-labelledby="gq-h" className={styles.questionLayout}>
+                <div className={styles.questionIntro}>
                 <h1 className="h2 gq-q" id="gq-h" tabIndex={-1} ref={headRef}>
-                  누구의 복지를 찾으세요?
+                  누구의 혜택을 찾나요?
                 </h1>
+                </div>
                 <div className="gq-opts">
                   <button type="button" className="gq-opt" onClick={() => chooseWho("self")} data-testid="gq-self">
-                    <Icon name="users" size={22} /> 나
+                    나 <Icon name="arrowRight" size={22} />
                   </button>
                   <button type="button" className="gq-opt" onClick={() => chooseWho("parent")} data-testid="gq-parent">
-                    <Icon name="heart" size={22} /> 부모님 (대신 알아보기)
+                    부모님 <Icon name="arrowRight" size={22} />
                   </button>
                 </div>
               </section>
             )}
 
             {phase === "where" && (
-              <section aria-labelledby="gq-h">
+              <section aria-labelledby="gq-h" className={styles.questionLayout}>
+                <div className={styles.questionIntro}>
                 <h1 className="h2 gq-q" id="gq-h" tabIndex={-1} ref={headRef}>
-                  {loc.kind === "found"
-                    ? `${loc.where.label}에서 복지를 받으시나요?`
-                    : parent
-                      ? "부모님은 어디에 사세요?"
-                      : "어디에 사세요?"}
+                  {loc.kind === "busy" ? "현재 위치를 찾고 있어요" : loc.kind === "found" && !manual ? (
+                    <>{loc.where.label}<br />{parent ? "부모님 주소가 여기 맞나요?" : "여기 맞나요?"}</>
+                  ) : parent ? "부모님이 사는 지역을 골라 주세요" : "사는 지역을 골라 주세요"}
                 </h1>
-                {loc.kind === "busy" && (
-                  <p className="small muted" role="status" data-testid="gq-locating">
-                    현재 위치를 확인하고 있어요…
-                  </p>
+                {loc.kind === "found" && !manual && (
+                  <p className="small muted">{parent ? "부모님 주민등록상 주소를 확인해 주세요." : "주민등록상 주소를 확인해 주세요."}</p>
                 )}
-                {loc.kind === "found" && (
+                </div>
+                <div className={styles.questionControls}>
+                {loc.kind === "busy" && (
                   <>
-                    <p className="small muted">
-                      <Icon name="mapPin" size={16} /> 현재 위치로 찾았어요. {parent ? "부모님이 사시는 곳과 같은지 확인해 주세요." : "주소지(주민등록) 기준이에요."}
-                    </p>
+                    <p className="sr-only" role="status" data-testid="gq-locating">위치 확인 중…</p>
+                    <button type="button" className={styles.skipAnswer} onClick={chooseManual} data-testid="gq-manual">직접 고르기</button>
+                  </>
+                )}
+                {loc.kind === "found" && !manual && (
+                  <>
                     <div className="gq-opts">
-                      <button type="button" className="gq-opt" onClick={() => start(loc.where)} data-testid="gq-here">
-                        네, 여기예요
+                      <button type="button" className="gq-opt gq-here" onClick={() => start(loc.where)} data-testid="gq-here">
+                        여기 맞아요 <Icon name="arrowRight" size={22} />
                       </button>
-                      <button type="button" className="gq-opt gq-unknown" onClick={() => setManual(true)} data-testid="gq-elsewhere">
-                        다른 곳이에요 (직접 고르기)
+                      <button type="button" className="gq-opt" onClick={chooseManual} data-testid="gq-elsewhere">
+                        아니요, 다른 곳이에요
                       </button>
                     </div>
                   </>
@@ -350,28 +340,28 @@ export function GuidedFlow() {
                         }}
                         data-testid="gq-region-ok"
                       >
-                        이 지역으로 <Icon name="arrowRight" size={18} />
+                        이 지역으로 계속 <Icon name="arrowRight" size={18} />
                       </button>
                       {loc.kind !== "busy" && (
-                        <button type="button" className="btn btn-ghost" onClick={locate} data-testid="gq-locate">
-                          <Icon name="mapPin" size={18} /> {parent ? "부모님과 같이 살아요 — 현재 위치로" : "현재 위치로 다시 찾기"}
+                        <button type="button" className="btn btn-ghost" onClick={() => void locate(true)} data-testid="gq-locate">
+                          <Icon name="mapPin" size={18} /> 현재 위치로 다시 찾기
                         </button>
                       )}
                     </div>
                   </div>
                 )}
-                <p className="small muted" style={{ marginTop: "1rem" }}>
-                  위치는 이 기기 안에서만 시·군·구로 바꾸고, 어디에도 보내거나 저장하지 않아요.
-                </p>
-                <button type="button" className="btn-quiet" onClick={() => setPhase("who")}>
+                </div>
+                <div className={styles.locationFoot}>
+                <button type="button" className="btn-quiet" onClick={() => { seq.current++; setPhase("who"); }}>
                   <Icon name="arrowLeft" size={16} /> 이전
                 </button>
+                </div>
               </section>
             )}
 
             {phase === "loading" && (
               <p className="muted" role="status" data-testid="gq-loading">
-                {where?.label} 복지를 불러와 판정하고 있어요…
+                {where?.label} 혜택을 찾는 중…
               </p>
             )}
 
@@ -383,7 +373,7 @@ export function GuidedFlow() {
               <section aria-labelledby="gq-h" data-testid="gq-rare">
                 <p className="gq-step">마지막 · 해당하는 것만</p>
                 <h1 className="h2 gq-q" id="gq-h" tabIndex={-1} ref={headRef}>
-                  {parent ? "부모님께 해당하는 것이 있으면 모두 골라 주세요" : "해당하는 것이 있으면 모두 골라 주세요"}
+                  {parent ? "부모님께 해당하는 것을 모두 골라 주세요" : "해당하는 것을 모두 골라 주세요"}
                 </h1>
                 <div className="opts gq-checks">
                   {rarePicks(cur.sit).map((r) => (
@@ -400,10 +390,10 @@ export function GuidedFlow() {
                 </div>
                 <div className="btn-row" style={{ marginTop: "1.25rem" }}>
                   <button type="button" className="btn btn-primary" disabled={busy} onClick={() => finishRare(rareOn)} data-testid="gq-rare-ok">
-                    {rareOn.length ? "고른 것으로 다음" : "해당 없음"}
+                    {rareOn.length ? "다음" : "해당 없음"}
                   </button>
                   <button type="button" className="btn btn-ghost" disabled={busy} onClick={() => finishRare(null)} data-testid="gq-rare-skip">
-                    잘 모르겠어요
+                    건너뛰기
                   </button>
                 </div>
               </section>
@@ -412,12 +402,8 @@ export function GuidedFlow() {
             {phase === "done" && cur && (
               <section aria-labelledby="gq-h" data-testid="gq-done">
                 <h1 className="h2 gq-q" id="gq-h" tabIndex={-1} ref={headRef}>
-                  이렇게 정리됐어요
+                  답변을 마쳤어요
                 </h1>
-                <p className="body">
-                  {where?.label} 복지 {total.toLocaleString("ko-KR")}개 가운데 해당하지 않는 {cur.st.counts.no.toLocaleString("ko-KR")}개는 이유와 함께 결과 화면 맨 아래에 모아 둬요.
-                  {cur.st.counts.ask > 0 && ` 아직 ${cur.st.counts.ask}개는 답에 따라 갈려요.`}
-                </p>
                 <div className="btn-row">
                   <button type="button" className="btn btn-primary" onClick={showResults} data-testid="gq-results">
                     결과 보기 <Icon name="arrowRight" size={18} />
@@ -429,6 +415,17 @@ export function GuidedFlow() {
                   )}
                 </div>
               </section>
+            )}
+
+            {counts && (phase === "ask" || phase === "rare" || phase === "done") && (
+              <details className={styles.countDetails}>
+                <summary>현재 혜택 후보 보기</summary>
+                <div className="gq-counts" data-testid="gq-counts">
+                  <div><span>입력 조건에 맞는 후보</span><b data-testid="gq-fit">{counts.fit}</b></div>
+                  <div><span>추가 답변 필요</span><b data-testid="gq-ask">{counts.ask}</b></div>
+                  <div><span>신청처 확인 필요</span><b>{counts.office}</b></div>
+                </div>
+              </details>
             )}
 
             {(phase === "ask" || phase === "rare" || phase === "done") && (
@@ -446,12 +443,12 @@ export function GuidedFlow() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
 function Question(props: {
-  id: DimId;
+  id: FlowQuestionId;
   sit: Situation;
   mode: FindMode;
   n: number;
@@ -461,33 +458,35 @@ function Question(props: {
   onAnswer: (s: Situation | null) => void;
 }) {
   const { id, sit, mode, n, extra, busy, headRef, onAnswer } = props;
-  const d = DIM_BY_ID[id];
+  const d = FLOW_DIM_BY_ID[id];
   const opts = flowAnswers(d, sit);
   return (
-    <section aria-labelledby="gq-h" data-testid="gq-question" data-dim={id}>
+    <section aria-labelledby="gq-h" data-testid="gq-question" data-dim={id} className={styles.questionLayout}>
+      <div className={styles.questionIntro}>
       <p className="gq-step">{extra && n > FLOW_LIMIT ? `더 답하기 · 질문 ${n}` : `질문 ${n} / ${FLOW_LIMIT}`}</p>
       <h1 className="h2 gq-q" id="gq-h" tabIndex={-1} ref={headRef}>
         {d.q(mode, sit)}
       </h1>
-      {d.help && <p className="small muted">{d.help}</p>}
+      {d.help && <details className={styles.questionHelp}><summary>선택 도움말</summary><p>{d.help}</p></details>}
       {id === "income" && sit.profile.householdSize !== "unknown" && (
-        <p className="small muted">{sit.profile.householdSize === 6 ? "6명 이상" : `${sit.profile.householdSize}인`} 가구 기준 중위소득 구간이에요. 세금 떼기 전 금액으로 골라 주세요.</p>
+        <p className="small muted">{sit.profile.householdSize === 6 ? "6명 이상" : `${sit.profile.householdSize}인`} 가구 · 세전 월소득 기준</p>
       )}
+      </div>
+      <div className={styles.questionControls}>
       <div className="gq-opts" role="group" aria-label="답">
         {opts.map((a) => (
           <button type="button" className="gq-opt" key={a.key} disabled={busy} onClick={() => onAnswer(a.apply(sit))} data-testid={`gq-a-${a.key}`}>
             {a.label}
           </button>
         ))}
-        <button type="button" className="gq-opt gq-unknown" disabled={busy} onClick={() => onAnswer(null)} data-testid="gq-a-unknown">
-          잘 모르겠어요
-        </button>
       </div>
+      <button type="button" className={styles.skipAnswer} disabled={busy} onClick={() => onAnswer(null)} data-testid="gq-a-unknown">건너뛰기</button>
       {busy && (
         <p className="small muted" role="status">
-          다시 판정하고 있어요…
+          반영 중…
         </p>
       )}
+      </div>
     </section>
   );
 }

@@ -40,12 +40,12 @@ export function FormsOverview() {
   return <div className={`wrap page ${styles.page}`}>
     <Link href="/about" className={styles.back}>← 데이터·판정 기준</Link>
     <header className={styles.header}>
-      <p className="eyebrow">공식 서식을 혜택에 연결하고 있어요</p>
-      <h1 className="h1">신청서 연결 현황</h1>
-      <p className="lead">지역별로 어떤 혜택의 신청서가 준비되어 있는지 확인할 수 있어요. 서식을 확보하지 못한 사업도 공식 창구에서 신청할 수 있습니다.</p>
+      <h1 className="h1">신청 서식</h1>
+      <p className="lead">서식이 없는 사업은 담당 기관에서 확인하세요.</p>
     </header>
     {coverage === undefined ? <p role="status">전국 연결 현황을 불러오고 있어요.</p> : coverage === null ? <div role="status"><p>전국 현황을 불러오지 못했어요.</p><button className="btn btn-quiet" onClick={retry}>다시 확인하기</button></div> : <>
-      <section className={styles.summary} aria-labelledby="forms-national-title">
+      <details className={styles.summary}>
+        <summary>수집 현황·출처</summary>
         <h2 id="forms-national-title">수록 사업 {number(coverage.totalPrograms)}건의 연결 상태</h2>
         <dl className={styles.counts}>{statuses.map(key => <div key={key}><dt>{FORM_STATUS_LABEL[key]}</dt><dd>{number(coverage.counts[key])}<span>건</span></dd></div>)}</dl>
         <p className={styles.source}>{coverage.sourceNote}</p>
@@ -58,9 +58,9 @@ export function FormsOverview() {
         {!!coverage.portalScan?.sources.length && <p className="small muted">법령포털 수집 {coverage.portalScan.sources.map(source =>
           `${SCAN_SOURCE_LABEL[source.kind] ?? source.kind} ${number(source.collected)}/${number(source.total)}`).join(" · ")}</p>}
         <p className="small muted">등록한 서식 정보 {number(coverage.totalForms)}개 · 원문 연결 확인 {number(coverage.publishedForms)}개 · 현황 생성일 {coverage.generatedAt.slice(0, 10)}</p>
-      </section>
+      </details>
       <section className={styles.browse} aria-labelledby="forms-area-title">
-        <h2 id="forms-area-title">지역별 혜택 살펴보기</h2>
+        <h2 id="forms-area-title">서식 찾기</h2>
         <div className={styles.filters}>
           <div><label htmlFor="forms-region">찾을 지역</label><select id="forms-region" value={areaKey} onChange={event => { setAreaKey(event.target.value); setLimit(20); }}>
             {(["national", "sido", "sigungu"] as const).map(scope => <optgroup key={scope} label={scope === "national" ? "전국 공통" : scope === "sido" ? "시·도 사업" : "시·군·구 사업"}>
@@ -75,9 +75,9 @@ export function FormsOverview() {
           {!filtered.length ? <p className={styles.empty}>현재 검색 조건에 맞는 자료가 없어요. 검색어나 연결 상태를 바꿔 보세요.</p> : <ul className={styles.results}>
             {filtered.slice(0, limit).map(program => <li key={program.id}>
               <div><p className={styles.state} data-status={program.status}>{FORM_STATUS_LABEL[program.status]}{program.links.length ? ` · 서식 ${program.links.length}개` : ""}</p><h3><Link href={`/p/${encodeURIComponent(program.id)}`}>{program.name}</Link></h3>
-              {program.status === "review" ? <p className="small muted">자동으로 찾은 후보 서식의 적용 여부를 확인 중입니다.</p>
-                : program.portalSearch?.outcome === "not_found" ? <p className="small muted">법령포털 서식에서는 맞는 신청서를 찾지 못했습니다. 지원 대상이 아니라는 뜻은 아닙니다.</p>
-                  : program.portalSearch?.outcome === "incomplete" ? <p className="small muted">법령포털 서식 전수 확인이 아직 끝나지 않았습니다.</p> : null}</div>
+              {program.status === "review" ? <p className="small muted">이 사업에 적용되는 서식인지 확인 중</p>
+                : program.portalSearch?.outcome === "not_found" ? <p className="small muted">법령포털에서 서식 미확인 · 담당 기관 문의</p>
+                  : program.portalSearch?.outcome === "incomplete" ? <p className="small muted">서식 조사 중</p> : null}</div>
               <Link className={styles.detailLink} href={`/p/${encodeURIComponent(program.id)}`}>상세 보기 <span className="sr-only">{program.name}</span> →</Link>
             </li>)}
           </ul>}
