@@ -365,8 +365,8 @@ export function ResultsV2({ profile, mode }: { profile: Profile; mode: FindMode 
                 {copy.picksTitle(picks.length)}
               </h2>
               <p className="body">
-                {parent ? "부모님 상황에 가장 관련 깊은 순서예요." : "내 상황에 가장 관련 깊은 순서예요."}{" "}
-                {picks.some((g) => g[0].bucket === "ask") ? "‘답하면 정해져요’인 것은 위 질문에 답하면 바로 정해져요." : "‘받으실 수 있어요’를 먼저 넣었어요."}
+                {parent ? "부모님 상황에 가까운 순서예요." : "내 상황에 가까운 순서예요."}
+                {picks.some((g) => g[0].bucket === "ask") && " ‘답하면 정해져요’는 위 질문에 답하면 정해져요."}
               </p>
               {moreHint && (
                 <p className="body muted" data-testid="picks-more-hint">

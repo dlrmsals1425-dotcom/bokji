@@ -14,6 +14,8 @@
     "forms:build": "tsx scripts/build-forms.ts",
     "ingest:gov24": "tsx pipeline/src/gov24/ingest.ts",
     "ingest:bokjiro": "tsx pipeline/src/bokjiro/ingest.ts",
+    "ingest:mohw": "tsx pipeline/src/mohw/ingest.ts",
+    "parse:mohw": "python3 pipeline/mohw/parse_menus.py",
     "build:safe": "env -i PATH=\"$PATH\" HOME=\"$HOME\" next build",
     "start:safe": "env -i PATH=\"$PATH\" HOME=\"$HOME\" next start -p 3217"
   },
