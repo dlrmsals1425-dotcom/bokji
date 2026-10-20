@@ -5,6 +5,7 @@ import type { Program } from "@/lib/data/types";
 import { lawPortalUrl, loadProgramForms, type LoadedProgramForms } from "@/lib/client/forms";
 import { externalFormUrl, formAssetUrl, agencyFormUrl, agencyProgramGuideUrl } from "@/lib/data/formPublication";
 import { FORM_STATUS_LABEL, INVESTIGATION_LABEL, INVESTIGATION_NOTE, publicSourceUrl, type ApplicationForm } from "@/lib/data/forms";
+import { writingTemplate } from "@/lib/data/formWritingRegistry";
 import styles from "./ApplicationForms.module.css";
 
 const SOURCE_LABEL = { ordin: "조례", law: "법령", rule: "행정규칙", agency: "기관 공식 배포" } as const;
@@ -98,15 +99,21 @@ export function ApplicationForms({ program, parentMode = false, preferredSigungu
               const original = hwp ? null : lawPortalUrl(form.sourceUrl);
               const preview = pdf ?? (original ? lawPortalUrl(form.officialPdfUrl) : null);
               const originalType = original ? FILE_TYPE.exec(original)?.[1].toUpperCase() : undefined;
+              // 화면 작성은 등록해 둔 원본(HWPX)과 공개 파일이 정확히 같을 때만 열어 준다.
+              const writer = writingTemplate(form.id);
+              const writable = writer && format === "hwpx" && hwp === writer.asset.path
+                && form.file?.bytes === writer.asset.bytes && form.file?.sha256 === writer.asset.sha256;
               return <li key={form.id}>
                 <p className={styles.kind}>{link.municipalApplicationReference ? `${link.municipalApplicationReference.municipality} 방문 접수용` : link.use === "main" ? "신청서" : link.use === "conditional" ? "해당하는 경우" : "함께 확인할 서류"}</p>
                 <h4>{title}</h4>
                 {link.condition && <p>{link.condition}</p>}
                 <div className={styles.actions}>
-                  {preview && <a className="btn btn-primary" href={preview} target="_blank" rel="noopener noreferrer">서식 보기·인쇄 <span className="sr-only">(PDF, 새 창)</span></a>}
-                  {hwp && <a className={`btn ${pdf ? "btn-ghost" : "btn-primary"}`} href={hwp} download={title.replace(/\.(hwpx?|pdf|txt|gif|jpe?g)$/i, "") + "." + format}>{downloadLabel} <span>({format.toUpperCase()})</span></a>}
+                  {preview && <a className={`btn ${writable ? "btn-ghost" : "btn-primary"}`} href={preview} target="_blank" rel="noopener noreferrer">서식 보기·인쇄 <span className="sr-only">(PDF, 새 창)</span></a>}
+                  {writable && <Link className="btn btn-primary" href={`/forms/write/${form.id}?program=${encodeURIComponent(program.id)}`} data-testid="form-writer-link">화면에서 작성하기</Link>}
+                  {hwp && <a className={`btn ${pdf || writable ? "btn-ghost" : "btn-primary"}`} href={hwp} download={title.replace(/\.(hwpx?|pdf|txt|gif|jpe?g)$/i, "") + "." + format}>{downloadLabel} <span>({format.toUpperCase()})</span></a>}
                   {original && <a className={`btn ${preview ? "btn-ghost" : "btn-primary"}`} href={original} target="_blank" rel="noopener noreferrer">법령포털 원본 받기{originalType ? ` (${originalType})` : ""}<span className="sr-only"> (새 창)</span></a>}
                 </div>
+                {writable && <p className="small muted">화면에서 작성하면 원본 서식의 해당 칸에 적은 내용이 들어간 한글 파일을 받을 수 있어요. 서명·날인은 인쇄한 뒤 직접 해야 해요.</p>}
                 <p className={styles.dates}>{basisText(form)} · 연결 확인일 {link.checkedAt}</p>
                 <p className={styles.source}><a href={agencySource ?? (original ? lawSource ?? original : externalFormUrl(form.sourceUrl)!)} target="_blank" rel="noopener noreferrer">{original ? "근거 법령 원문" : "공식 서식 원본"}<span className="sr-only"> (새 창)</span></a>{agencySource && lawSource && <> · <a href={lawSource} target="_blank" rel="noopener noreferrer">근거 조례 원문<span className="sr-only"> (새 창)</span></a></>}{agencySource && programGuide && <> · <a href={programGuide} target="_blank" rel="noopener noreferrer">공식 신청 안내<span className="sr-only"> (새 창)</span></a></>}{externalFormUrl(link.evidenceUrl) && <> · <a href={externalFormUrl(link.evidenceUrl)!} target="_blank" rel="noopener noreferrer">신청 근거 확인<span className="sr-only"> (새 창)</span></a></>}</p>
               </li>;
