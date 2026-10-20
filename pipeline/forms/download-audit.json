@@ -1,36 +1,36 @@
 {
  "schema": 1,
- "generatedAt": "2026-10-20T03:13:24.367267+00:00",
+ "generatedAt": "2026-10-20T05:23:47.175077+00:00",
  "scope": "Actual downloaded originals; saved files are not automatically approved for a benefit.",
  "summary": {
-  "savedOriginals": 4881,
-  "uniqueOriginalContents": 4845,
+  "savedOriginals": 4901,
+  "uniqueOriginalContents": 4865,
   "formats": {
    "gif": 5,
    "htm": 1,
-   "hwp": 4388,
+   "hwp": 4405,
    "hwp3": 8,
-   "hwpx": 454,
+   "hwpx": 457,
    "jpg": 1,
    "pdf": 10,
    "protected_hwp": 6,
    "txt": 8
   },
-  "readableHangulOriginals": 4842,
-  "publishedOriginals": 2771,
+  "readableHangulOriginals": 4862,
+  "publishedOriginals": 2791,
   "publishedFormats": {
-   "hwp": 2465,
-   "hwpx": 290,
+   "hwp": 2482,
+   "hwpx": 293,
    "pdf": 10,
    "jpg": 1,
    "txt": 4,
    "gif": 1
   },
-  "publishedPrograms": 2510,
-  "publishedAssociations": 3476,
+  "publishedPrograms": 2527,
+  "publishedAssociations": 3512,
   "reviewStates": {
    "covered_by_existing": 13,
-   "linked": 2771,
+   "linked": 2791,
    "replacement_available": 1,
    "requires_external_confirmation": 88,
    "reviewed_not_linked": 2008
@@ -14381,6 +14381,102 @@
    "reviewReason": ""
   },
   {
+   "formId": "ordin-18138569",
+   "lawId": "1572301",
+   "lawTitle": "포천시 청소년수련시설 설치 및 운영에 관한 조례 시행규칙",
+   "title": "[별지 제1호 서식] 수련시설의 사용허가·변경허가 신청서",
+   "regionCode": "41650",
+   "format": "hwp",
+   "bytes": 44032,
+   "sha256": "8d79546c403dfc54d1c06125d41a434384b9cfee45809f36cca71add31bb84de",
+   "sourceUrl": "https://www.law.go.kr/flDownload.do?gubun=ELIS&flSeq=142541341&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8+%EC%84%9C%EC%8B%9D%5D+%EC%88%98%EB%A0%A8%EC%8B%9C%EC%84%A4%EC%9D%98+%EC%82%AC%EC%9A%A9%ED%97%88%EA%B0%80%C2%B7%EB%B3%80%EA%B2%BD%ED%97%88%EA%B0%80+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-20T04:37:50.050406+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-18138569.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41650.bokjiro-WLF00003346",
+     "name": "의사상자지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "원본 전체300자·1본문섹션 및 내장이미지0을 읽고 실제 신청인·서명·사용목적·구비서류를 확인했다. 현재 동일법규1572301의 전조문·부칙과 정확별지18138569/fl142541341를 대조하고20일 재GET 원본SHA 일치를 확인했다. 제18~19조의 시설사용 허가와 제21조제2항제2호타목50%감면, 시행규칙제2조제1항 별지1 및제3조 별지6의 병행 접수 경로를 확인했다. 현행 상위조례2095713와 의사상자지원조례1970263도 전조문·부칙을 읽었다. 오늘 정확복지로WLF00003346의 대상자 인정요건과 시 설치/직영/위탁 시설감면 지원내용을 대조해 그 혜택 이용 단계에만 제한한다."
+  },
+  {
+   "formId": "ordin-18138575",
+   "lawId": "1572301",
+   "lawTitle": "포천시 청소년수련시설 설치 및 운영에 관한 조례 시행규칙",
+   "title": "[별지 제4호서식] 수강신청서",
+   "regionCode": "41650",
+   "format": "hwp",
+   "bytes": 41984,
+   "sha256": "d6e3891bc3d1f7b784653ad8b6183de820b72ae3b1d7d50b02dee179fa9f5985",
+   "sourceUrl": "https://www.law.go.kr/flDownload.do?gubun=ELIS&flSeq=142541347&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C4%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%88%98%EA%B0%95%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-20T04:37:50.727365+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-18138575.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41650.bokjiro-WLF00003346",
+     "name": "의사상자지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "원본 전체235자·1본문섹션 및 내장이미지0을 읽고 실제 신청인·서명·사용목적·구비서류를 확인했다. 현재 동일법규1572301의 전조문·부칙과 정확별지18138575/fl142541347를 대조하고20일 재GET 원본SHA 일치를 확인했다. 조례제21조는 시설 또는 프로그램 이용자와 수강료를 포함하고 의사상자/유족/가족50%감면을 명시한다. 시행규칙제2조제4항이 실제 수강신청에 별지4를 지정한다. 현행 상위조례2095713와 의사상자지원조례1970263도 전조문·부칙을 읽었다. 오늘 정확복지로WLF00003346의 대상자 인정요건과 시 설치/직영/위탁 시설감면 지원내용을 대조해 그 혜택 이용 단계에만 제한한다."
+  },
+  {
+   "formId": "ordin-18138579",
+   "lawId": "1572301",
+   "lawTitle": "포천시 청소년수련시설 설치 및 운영에 관한 조례 시행규칙",
+   "title": "[별지 제6호서식] 수련시설의 사용료 감·면 신청서",
+   "regionCode": "41650",
+   "format": "hwp",
+   "bytes": 43008,
+   "sha256": "ae81b2a80da529f66d531f0c8f29fb2a925778045dc9851ad718298df53f6403",
+   "sourceUrl": "https://www.law.go.kr/flDownload.do?gubun=ELIS&flSeq=142541351&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C6%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%88%98%EB%A0%A8%EC%8B%9C%EC%84%A4%EC%9D%98+%EC%82%AC%EC%9A%A9%EB%A3%8C+%EA%B0%90%C2%B7%EB%A9%B4+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-20T04:37:51.298062+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-18138579.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41650.bokjiro-WLF00003346",
+     "name": "의사상자지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "원본 전체254자·1본문섹션 및 내장이미지0을 읽고 실제 신청인·서명·사용목적·구비서류를 확인했다. 현재 동일법규1572301의 전조문·부칙과 정확별지18138579/fl142541351를 대조하고20일 재GET 원본SHA 일치를 확인했다. 제21조제2항제2호타목의 의사상자/유족/가족50%감면과 시행규칙제3조 별지6 감면신청을 직접 결속했다. 현행 상위조례2095713와 의사상자지원조례1970263도 전조문·부칙을 읽었다. 오늘 정확복지로WLF00003346의 대상자 인정요건과 시 설치/직영/위탁 시설감면 지원내용을 대조해 그 혜택 이용 단계에만 제한한다."
+  },
+  {
+   "formId": "ordin-18138581",
+   "lawId": "1572301",
+   "lawTitle": "포천시 청소년수련시설 설치 및 운영에 관한 조례 시행규칙",
+   "title": "[별지 제7호 서식] 사용료반환청구서",
+   "regionCode": "41650",
+   "format": "hwp",
+   "bytes": 49152,
+   "sha256": "e3a910cc0f327b28ad02d8823abb74028e2cbc267337fc94a6301202dcb3da2b",
+   "sourceUrl": "https://www.law.go.kr/flDownload.do?gubun=ELIS&flSeq=142541353&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C7%ED%98%B8+%EC%84%9C%EC%8B%9D%5D+%EC%82%AC%EC%9A%A9%EB%A3%8C%EB%B0%98%ED%99%98%EC%B2%AD%EA%B5%AC%EC%84%9C",
+   "downloadedAt": "2026-10-20T04:37:51.994210+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-18138581.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41650.bokjiro-WLF00003346",
+     "name": "의사상자지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "원본 전체253자·1본문섹션 및 내장이미지0을 읽고 실제 신청인·서명·사용목적·구비서류를 확인했다. 현재 동일법규1572301의 전조문·부칙과 정확별지18138581/fl142541353를 대조하고20일 재GET 원본SHA 일치를 확인했다. 조례제22조의 실제납부 사용료·수강료 반환조건과 시행규칙제4조 별지7 지정 및 영수증/허가증 첨부를 대조했다. 동일 감면시설의 이미 이용한 수혜자가 취소하는 단계만 연결한다. 현행 상위조례2095713와 의사상자지원조례1970263도 전조문·부칙을 읽었다. 오늘 정확복지로WLF00003346의 대상자 인정요건과 시 설치/직영/위탁 시설감면 지원내용을 대조해 그 혜택 이용 단계에만 제한한다."
+  },
+  {
    "formId": "ordin-18138655",
    "lawId": "1629259",
    "lawTitle": "포천시 출산축하 지원에 관한 조례",
@@ -15108,6 +15204,30 @@
    "reviewState": "linked",
    "reviewLabel": "혜택에 연결",
    "reviewReason": ""
+  },
+  {
+   "formId": "ordin-18290969",
+   "lawId": "1388392",
+   "lawTitle": "포천시 장사시설의 설치 및 관리 조례 시행규칙",
+   "title": "[별지 제1호서식] 장사시설 사용허가 신청서",
+   "regionCode": "41650",
+   "format": "hwp",
+   "bytes": 52224,
+   "sha256": "e968fddae58fea754a0254fd60ad7af54c1a09b587da9be8a2c867aea71890ef",
+   "sourceUrl": "https://www.law.go.kr/flDownload.do?gubun=ELIS&flSeq=142999653&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%9E%A5%EC%82%AC%EC%8B%9C%EC%84%A4+%EC%82%AC%EC%9A%A9%ED%97%88%EA%B0%80+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-20T04:37:53.652757+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-18290969.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41650.bokjiro-WLF00003346",
+     "name": "의사상자지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "원본 전체814자·1본문섹션 및 내장이미지0을 읽고 실제 신청인·서명·사용목적·구비서류를 확인했다. 현재 동일법규1388392의 전조문·부칙과 정확별지18290969/fl142999653를 대조하고20일 재GET 원본SHA 일치를 확인했다. 의사상자지원 조례1970263 제4조제2항제7호의 장사시설 감면을 장사조례1629249 제15조제1항제4호의 의사상자/배우자 면제 및제2항 증명문서, 제12~14조 사용허가와 동시요금징수, 시행규칙1388392제2조제1항 별지1 경로에 결속했다. 현행 상위조례1629249와 의사상자지원조례1970263도 전조문·부칙을 읽었다. 오늘 정확복지로WLF00003346의 대상자 인정요건과 시 설치/직영/위탁 시설감면 지원내용을 대조해 그 혜택 이용 단계에만 제한한다."
   },
   {
    "formId": "ordin-18291013",
@@ -19004,6 +19124,34 @@
    "reviewState": "linked",
    "reviewLabel": "혜택에 연결",
    "reviewReason": ""
+  },
+  {
+   "formId": "ordin-18824709",
+   "lawId": "1969525",
+   "lawTitle": "광주시 산모ㆍ신생아 건강관리 지원 조례",
+   "title": "[별지 제2호서식] 본인부담금 납부영수증",
+   "regionCode": "41610",
+   "format": "hwp",
+   "bytes": 50176,
+   "sha256": "27975e36780d9d12383f3d8cfcbc31e3e71cba47286de4f7eaf9d8f4535061f3",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=145956595&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C2%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EB%B3%B8%EC%9D%B8%EB%B6%80%EB%8B%B4%EA%B8%88+%EB%82%A9%EB%B6%80%EC%98%81%EC%88%98%EC%A6%9D",
+   "downloadedAt": "2026-10-20T05:22:11.053488+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-18824709.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41610.bokjiro-WLF00005227",
+     "name": "산모·신생아 건강관리 지원사업 본인부담금 지원"
+    },
+    {
+     "id": "g41610.gov24-554000000178",
+     "name": "산모·신생아 건강관리 서비스 본인부담금 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "실제2호 전체는 제공기관 보관분과 이용자 제출분 두 영수증이다. 제공기관이 본인부담금 수령을 확인하고 이용자가 서명하는 작성주체를 확인했다. 현행1969525 제6조제1호가 본인부담금 청구서와 함께2호 영수증 제출을 직접 지정한다. 현재 WLF00005227은 제공업체 발행 영수증을 구비서류로 명시하고 동일 정부24 554000000178로 직접 연결한다. 추가로 그 정확 정부24도 GET하여 경기도 광주시·180일 거주/미달자경과·단축표준90%·서비스후60일·영수증 제출을 확인했다. 정부24의 법령 목록에는 이 지역조례가 없다는 점을 숨기지 않되, 복지로의 정확 접수URL 연결과 동일 사업의 직접 제출서류 안내를 별도 근거로 기록한다. 주민이 받아 제출하는 필수 증빙이며 기관 청구서나 독립 주민 주신청서로 표시하지 않는다."
   },
   {
    "formId": "ordin-18833345",
@@ -33267,6 +33415,10 @@
    "usableHangul": true,
    "publishedPrograms": [
     {
+     "id": "g41130.bokjiro-WLF00001629",
+     "name": "성남시 아동의료비 본인부담 100만원 상한제 사업"
+    },
+    {
      "id": "g41130.gov24-378000000137",
      "name": "아동 의료비 지원"
     }
@@ -33386,6 +33538,34 @@
    "reviewState": "linked",
    "reviewLabel": "혜택에 연결",
    "reviewReason": "별지9의 실제3쪽 전체를 읽어 신청인·가구원 서명, 소득·중복의료비·보험 조회, 민감정보 및14세미만 법정대리인 동의란을 확인했다. 현행 제3조제2항제3호가 지급신청 때 별지9를 직접 지정하며, 제8조도 제3조제2항 첨부를 요구한다. WLF00001629 구비서류에도 같은 별지9가 명시되어 두 동일 아동의료비 사업의 보조 동의서로 연결한다."
+  },
+  {
+   "formId": "ordin-20004409",
+   "lawId": "2041475",
+   "lawTitle": "성남시 아동의료비 본인부담 100만원 상한제 조례 시행규칙",
+   "title": "[별지 제10호서식]타 의료비 지원금 등 수령내역 신고서",
+   "regionCode": "41130",
+   "format": "hwp",
+   "bytes": 16896,
+   "sha256": "92383fc976e3252f2999a8d63d55dc7958a16ab6ebf596657666e40b6fe879a2",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152239513&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C10%ED%98%B8%EC%84%9C%EC%8B%9D%5D%ED%83%80+%EC%9D%98%EB%A3%8C%EB%B9%84+%EC%A7%80%EC%9B%90%EA%B8%88+%EB%93%B1+%EC%88%98%EB%A0%B9%EB%82%B4%EC%97%AD+%EC%8B%A0%EA%B3%A0%EC%84%9C",
+   "downloadedAt": "2026-10-20T04:37:56.426026+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-20004409.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41130.bokjiro-WLF00001629",
+     "name": "성남시 아동의료비 본인부담 100만원 상한제 사업"
+    },
+    {
+     "id": "g41130.gov24-378000000137",
+     "name": "아동 의료비 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "실제 원본 전체 1054자와 모든 BodyText 섹션을 읽었고 내장 그림 및 작성된 개인정보가 없다. 실제 10호 전체는 환자/법정대리인의 다른 의료비 수령내역과 중복 지원 환수 동의·신고 서명을 받는다. 시행규칙 제3조제2항제6호는 보험금 등 지급제외 금품 확인자료를 요구하지만 10호 번호를 직접 지정하지는 않는다. 이 점을 구분하여, 20일 현재 정확 복지로 WLF00001629가 직접 배포하는 10호 HWPX를 GET해 전체 XML 섹션을 읽고 법령포털 HWP와 공백 제거 전체 본문이 동일함을 확인했다. 정부24 378000000137도 동일 성남 18세 미만 아동의 연간 본인부담 100만원 초과 비급여 지원을 명시한다. 두 정확 사업의 신청 부속만 승인하며 기관 6호 직접청구와 혼동하지 않는다."
   },
   {
    "formId": "ordin-20004411",
@@ -33611,6 +33791,30 @@
    "reviewState": "linked",
    "reviewLabel": "혜택에 연결",
    "reviewReason": "파주시 현행 법규1741841 전체 조문과 부칙을 읽고 현재 목록의 별지ID20011073·flSeq152246789를 재GET 원본SHA와 대조했다. 제2조의 파주시 거주 결식우려 아동 및52% 등 대상과 제4조제2항의 별지 신청서·증빙을 관할 읍면동장에게 제출하는 절차를 확인했다. 제4조제3항은 가족·이웃·교사·사회복지사·통리반장 및 담당공무원 신청 경로를 명시한다. 전체 서식1505자와 1개 본문섹션을 읽고 실제 신청인·주소·서명·동의와 빈 기입란을 확인했다. 현재 도정부24의 18세 미만 결식우려 대상, 수급·한부모·중위52% 등 기준, 읍면동 방문 및 급식신청서 제출 요구와 교차 대조했다. 기관 급식비 정산·청구서가 아닌 아동 신청서다."
+  },
+  {
+   "formId": "ordin-20011179",
+   "lawId": "1906081",
+   "lawTitle": "파주시 방역취약계층 방문방역 지원에 관한 조례",
+   "title": "[별지 제1호서식] 방문방역신청서",
+   "regionCode": "41480",
+   "format": "hwpx",
+   "bytes": 40271,
+   "sha256": "b5288d34f736352e4bc4eced303aa84cea73579c1f3be2ae16bd0f3365fd26be",
+   "sourceUrl": "https://www.law.go.kr/flDownload.do?gubun=ELIS&flSeq=152246895&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EB%B0%A9%EB%AC%B8%EB%B0%A9%EC%97%AD%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-20T04:37:56.303033+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-20011179.hwpx",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41480.icare-0085-1489599-1-6-3",
+     "name": "감염병 예방관리"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "현행1906081 전7조와 부칙을 읽어 제2조의 취약가구·300세대미만 대상주택, 제4조 별지1 읍면동신청/연2회, 제5조 보건소 방역기동반 운영을 대조했다. 오늘nw1의 정확관할·제명·시행일과 별지20011179/fl152246895를 검증하고 재GET한 원본SHA가 보존파일과 일치함을 확인했다. 실제HWPX 전체section0 602자 및 내장이미지0을 읽어 세대주/주택/희망일시/서명·행정정보동의를 확인했다. MOHW가 배포한2026.3 파주시 메뉴판 PDF6쪽의 실제본문3번째행(기타 연번2) 감염병예방관리의 방역취약가구·300세대미만 공동/단독주택·보건소 지역특화사업과 정확P ID의 원천행을 결속했다. 12쪽 중 해당6쪽만 전체 텍스트·시각판독했으며 공유메뉴 페이지를 개별사업페이지로 허위표시하지 않았다."
   },
   {
    "formId": "ordin-20013675",
@@ -48111,6 +48315,30 @@
    "reviewReason": ""
   },
   {
+   "formId": "ordin-20666403",
+   "lawId": "1923203",
+   "lawTitle": "양주시 여성청소년 생리용품 지원 조례",
+   "title": "여성청소년 생리용품 보편지원사업 중지 신청서",
+   "regionCode": "41630",
+   "format": "hwpx",
+   "bytes": 45995,
+   "sha256": "dedb3a543b5db54a496503968e0c47a2bc0d53d6a95dac874cb6e0272690b634",
+   "sourceUrl": "https://www.law.go.kr/flDownload.do?gubun=ELIS&flSeq=154790805&flNm=%EC%97%AC%EC%84%B1%EC%B2%AD%EC%86%8C%EB%85%84+%EC%83%9D%EB%A6%AC%EC%9A%A9%ED%92%88+%EB%B3%B4%ED%8E%B8%EC%A7%80%EC%9B%90%EC%82%AC%EC%97%85+%EC%A4%91%EC%A7%80+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-20T04:37:58.407030+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-20666403.hwpx",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "s41000.gov24-641000000180",
+     "name": "경기도 여성청소년 생리용품 보편지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "양주시 현행 조례1923203 전6조와 부칙을 읽고 제4조제3항이 중도 자발적 포기에 별지 제3호를 시장에게 제출하도록 명시한 것을 확인했다. 현재 별지20666403/flSeq154790805를 실제 다시 내려받아 보존원본 SHA와 일치시켰다. HWPX 전체 section0의486자를 판독하여 청소년 본인 또는 보호자 신청인, 지원대상자, 중지사유·적용일·서명·시장 제출과 미사용 정책카드 잔액회수·신분증 요건을 확인했다. 정확 정부24 경기도 여성청소년 보편지원641000000180이 양주시11~18세 및 주민·외국인·국내거소 등록, 지역화폐 지원을 명시하여 같은 제도임을 대조했다. 신규 접수 기간을 확인한 것이 아니라 이미 지원 중인 양주시 수급자의 자발적 중지 절차만 연결한다."
+  },
+  {
    "formId": "ordin-20672009",
    "lawId": "2060779",
    "lawTitle": "홍천군 무궁화장학회 설치 및 운영 조례",
@@ -50112,6 +50340,30 @@
    "reviewState": "linked",
    "reviewLabel": "혜택에 연결",
    "reviewReason": ""
+  },
+  {
+   "formId": "ordin-20768729",
+   "lawId": "1503943",
+   "lawTitle": "수원시 효도수당 지원에 관한 조례",
+   "title": "[별지 제3호서식] 효도수당 수급자격 변동신고서",
+   "regionCode": "41110",
+   "format": "hwp",
+   "bytes": 17408,
+   "sha256": "15ec241668904215f3e077eb0f163fbfd2d9e2ef5f90b3470b879ceaf7b2ca2e",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=155490815&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C3%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%ED%9A%A8%EB%8F%84%EC%88%98%EB%8B%B9+%EC%88%98%EA%B8%89%EC%9E%90%EA%B2%A9+%EB%B3%80%EB%8F%99%EC%8B%A0%EA%B3%A0%EC%84%9C",
+   "downloadedAt": "2026-10-20T04:37:59.590941+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-20768729.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41110.gov24-374000000146",
+     "name": "수원시 효도수당"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "실제 3호 전체의 직계존속/비속 사망·주소변동·그 외 사유, 기존 3세대 가정 신고 문구, 본인 서명과 공동이용 동의를 읽었다. 20일 공식 현행 법규1503943 제7조는 제6조제1항제1호의 수급자격 변동이 생기면 15일 이내 3호 제출하도록 정확히 정한다. 정부24 374000000146 현재 안내의 80세 이상 직계존속 포함 3세대·수원5년·반기5만원 효도수당과 같은 제도다. 실제 지급 후 자격변동 단계만 보조/조건부로 제공하며 신규 신청1호나 임의 대리수령에 확대하지 않는다."
   },
   {
    "formId": "ordin-20768749",
@@ -52663,6 +52915,30 @@
    "reviewState": "linked",
    "reviewLabel": "혜택에 연결",
    "reviewReason": "규칙 제10조제4항과 제12조는 자활기업·사업단의 사업자금 대여에 별지 제11호를 지정한다. 실제 원본의 대여액·상환기간·이자·용도 및 상환확약을 확인했고 사업이 같은 자활계정의 사업자금 지원을 명시하므로 대여 신청 항목으로 연결한다."
+  },
+  {
+   "formId": "ordin-20871883",
+   "lawId": "1803075",
+   "lawTitle": "수원시 사회복지기금 설치 및 운용 조례 시행규칙",
+   "title": "[별지 제12호서식] 자활기금 대여 약정서",
+   "regionCode": "41110",
+   "format": "hwp",
+   "bytes": 47616,
+   "sha256": "d4082fc63c1e03bdbb0ffdbfb637ee6a142ccbcd73d354c59edc172c7d504efd",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=156559751&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C12%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%9E%90%ED%99%9C%EA%B8%B0%EA%B8%88+%EB%8C%80%EC%97%AC+%EC%95%BD%EC%A0%95%EC%84%9C",
+   "downloadedAt": "2026-10-20T05:22:13.491404+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-20871883.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41110.bokjiro-WLF00001374",
+     "name": "사회복지기금(자활계정) 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "실제12호 전체를 읽어 지원기관과 신청자, 목적·금액·용도·기간·금리·상환 조건 및 양쪽 서명을 확인했다. 20일 현행법규1803075의 전체19조문·부칙은 앞서 완독한 공식 본문과 일치한다. 제10조제4항이 점포임대/사업자금 대여 신청에서10호 또는11호와12호 약정서를 제출하도록 직접 지정하고, 제11~13조가 자활기업/사업단의 대상·대여 및 점포임대 범위를 정한다. 정확 WLF00001374의 현재 본문은 지역자활센터 소속 자활근로사업단·자활기업과 창업/임대보증금 목적을 명시한다. 기관이 실제 지원대상이므로 기관이라는 이유로 제외하지 않는다. 페이지의 직접지원·별도신청없음 안내를 주민 신규접수로 바꾸지 않고 해당 대여 절차에서 필요한 약정 부속으로만 조건을 붙였다."
   },
   {
    "formId": "ordin-20871885",
@@ -71468,6 +71744,30 @@
    "reviewReason": "실제 2호 개인용 전체는 수급자·차상위 개인의 창업·운영, 전월세보증금 및 학자금 융자를 신청하는 내용과 본인 서명이다. 규칙 제2조제1항이 2호와 사업계획서·재학자료·보증보험·16호 동의를 지정한다. 사이트 03045의 개인 융자 목적과 일치한다. 사이트의 옛 연대보증 설명을 원문에 덧씌우지 않고 2026년 현행 규칙에서 해당 항 삭제 및 보증보험 제출을 확인했다."
   },
   {
+   "formId": "ordin-21518117",
+   "lawId": "2109347",
+   "lawTitle": "광주시 자활기금 설치ㆍ운용 조례 시행규칙",
+   "title": "[별지 제4호서식] 사업계획서",
+   "regionCode": "41610",
+   "format": "hwp",
+   "bytes": 45056,
+   "sha256": "df93c6e8ed0230585c34e4fa5fb72ae20baefe800665b0282127d87c42f7469b",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=161545845&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C4%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%82%AC%EC%97%85%EA%B3%84%ED%9A%8D%EC%84%9C",
+   "downloadedAt": "2026-10-20T05:22:13.502385+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-21518117.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41610.bokjiro-WLF00003045",
+     "name": "자활기금 융자 사업"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "실제4호 전체의 개인 사업장 보유·자영업/근로 경력·창업/기존사업 투자·소요재원·시설/운영비·개시일정·약도·신청 사유를 읽었다. 현행2109347 제2조제1항제1호가 융자신청1호 또는2호에 별지4 사업계획서를 첨부하도록 직접 지정한다. 정확 WLF00003045의 현재 본문은 개인 저소득층 창업·운용자금도 지원하므로 그 용도에만 조건부 부속으로 맞춘다. 같은 사업의 학자금/주거보증금에 이 사업장 계획을 일괄 요구하지 않으며, 별도 점포임대 기관용17호와도 구분한다. 현재 프로그램의 옛 연대보증 안내를 바탕으로 대출 금액/보증 요건을 확정하지 않고 현행 신청부속의 실제 내용만 검토했다."
+  },
+  {
    "formId": "ordin-21518119",
    "lawId": "2109347",
    "lawTitle": "광주시 자활기금 설치ㆍ운용 조례 시행규칙",
@@ -71485,6 +71785,54 @@
    "reviewState": "reviewed_not_linked",
    "reviewLabel": "대응하는 수록 혜택 미확인",
    "reviewReason": "원문 6호는 이자차액·기관 운영·저소득층 자립 등의 보조성 지원 내역과 사업계획을 적는 신청이며 제2조제2항이 조례 제9조제2항 지원에 지정한다. 개인 융자 신청인 2호와 구분된다. 사이트 03045는 개인의 상환 의무가 있는 창업·주거·학자금 융자이고 이러한 보조사업을 안내하지 않는다. 전체 관할 검색에서도 정확히 대응하는 사업이 없다."
+  },
+  {
+   "formId": "ordin-21518127",
+   "lawId": "2109347",
+   "lawTitle": "광주시 자활기금 설치ㆍ운용 조례 시행규칙",
+   "title": "[별지 제10호서식] 사업변경(중단, 폐지) 신고서",
+   "regionCode": "41610",
+   "format": "hwp",
+   "bytes": 35328,
+   "sha256": "f1f3149e009ab2682c6d0131b4f7b92f2a15ef140158852d78b2c3f9a4b5484a",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=161545855&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C10%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%82%AC%EC%97%85%EB%B3%80%EA%B2%BD%28%EC%A4%91%EB%8B%A8%2C+%ED%8F%90%EC%A7%80%29+%EC%8B%A0%EA%B3%A0%EC%84%9C",
+   "downloadedAt": "2026-10-20T04:38:02.937795+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-21518127.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41610.bokjiro-WLF00003045",
+     "name": "자활기금 융자 사업"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "실제 원본 전체 340자와 모든 BodyText 섹션을 읽었고 내장 그림 및 작성된 개인정보가 없다. 인쇄된 실제 번호는 10호이나 포털 별표번호는 목록순서 0008이다. 원본 전체에서 기존 융자 용도·변경 전후·변경 사유·본인 서명을 확인했고, 현행 시행규칙 제8조가 기존 융자·지원자가 15일 전에 10호를 제출하도록 정한다. 현재 WLF00003045의 기초수급·차상위 개인 창업/보증금/학자금 융자에 한정한다. 프로그램의 옛 연대보증 설명을 현재 규칙의 보증보험 절차로 임의 덮어쓰지 않고, 이 서식은 금액·재정보증 자격을 다시 승인하는 신규 신청이 아닌 사후 변경 단계로 제한한다."
+  },
+  {
+   "formId": "ordin-21518129",
+   "lawId": "2109347",
+   "lawTitle": "광주시 자활기금 설치ㆍ운용 조례 시행규칙",
+   "title": "[별지 제11호서식] 기금 사용 신고서",
+   "regionCode": "41610",
+   "format": "hwp",
+   "bytes": 50688,
+   "sha256": "953de49aeb9cb1a6cbd05c304c7d0a24d6805a3a712f4f103def7f2ab62365c3",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=161545857&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C11%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EA%B8%B0%EA%B8%88+%EC%82%AC%EC%9A%A9+%EC%8B%A0%EA%B3%A0%EC%84%9C",
+   "downloadedAt": "2026-10-20T04:38:02.384150+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-21518129.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41610.bokjiro-WLF00003045",
+     "name": "자활기금 융자 사업"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "실제 원본 전체 800자와 모든 BodyText 섹션을 읽었고 내장 그림 및 작성된 개인정보가 없다. 포털 제목은 11호이고 목록번호는 0009이나 실제 원본 800자 전체에는 인쇄된 11호 사용신고서와 12호 미사용 사유서가 함께 있다. 현행 제10조제1항은 융자받은 개인 등의 교부 후 15일 이내 11호 및 증명자료, 제2항은 불가피한 미사용자의 12호를 지정한다. 두 부분의 본인 서명과 영수증/잔액증명을 각각 확인했다. WLF00003045의 개인 창업·주거보증금·학자금 융자 사후 단계만 범위에 포함하며 기관 지원·상가 임대 및 다른 금액/대상은 확장하지 않는다."
   },
   {
    "formId": "ordin-21518131",
@@ -73898,6 +74246,42 @@
    "reviewState": "linked",
    "reviewLabel": "혜택에 연결",
    "reviewReason": ""
+  },
+  {
+   "formId": "ordin-21626799",
+   "lawId": "2113821",
+   "lawTitle": "평택시 국가보훈대상자 등 예우 및 지원에 관한 조례",
+   "title": "[별지 제4호서식] (명예수당, 참전유공자 수당, 독립유공자 수당, 사망참전유공자의 배우자복지수당) 지급신청 변경사항 신고서",
+   "regionCode": "41220",
+   "format": "hwpx",
+   "bytes": 61036,
+   "sha256": "bab6d486d51303d0bee702a8a33c57e3a166f7dad91e76fdf2737c6a5c7fe7a6",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=162073129&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C4%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%28%EB%AA%85%EC%98%88%EC%88%98%EB%8B%B9%2C+%EC%B0%B8%EC%A0%84%EC%9C%A0%EA%B3%B5%EC%9E%90+%EC%88%98%EB%8B%B9%2C+%EB%8F%85%EB%A6%BD%EC%9C%A0%EA%B3%B5%EC%9E%90+%EC%88%98%EB%8B%B9%2C+%EC%82%AC%EB%A7%9D%EC%B0%B8%EC%A0%84%EC%9C%A0%EA%B3%B5%EC%9E%90%EC%9D%98+%EB%B0%B0%EC%9A%B0%EC%9E%90%EB%B3%B5%EC%A7%80%EC%88%98%EB%8B%B9%29+%EC%A7%80%EA%B8%89%EC%8B%A0%EC%B2%AD+%EB%B3%80%EA%B2%BD%EC%82%AC%ED%95%AD+%EC%8B%A0%EA%B3%A0%EC%84%9C",
+   "downloadedAt": "2026-10-20T05:22:13.972383+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-21626799.hwpx",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41220.bokjiro-WLF00001562",
+     "name": "국가보훈대상자 예우 및 지원(보훈수당 지급)"
+    },
+    {
+     "id": "g41220.gov24-391000000104",
+     "name": "사망 참전유공자의 배우자 복지수당"
+    },
+    {
+     "id": "g41220.gov24-391000000108",
+     "name": "참전유공자수당"
+    },
+    {
+     "id": "g41220.gov24-391000000147",
+     "name": "국가보훈대상자 명예수당"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "정확 정부24 391000000147은 평택시 국가보훈대상자의 명예수당 사업이며 현행 제13조가 해당 기존 신청자의4호 변경신고를 지정한다. 정부24는 월10만원만 안내하고 현행2026년 제8조/부칙 및 복지로는85세 이상13만원을 명시한다. 이차이는 지급액 안내 차이로 기록하며 금액을 계산·변경하지 않고 금액 기재란 없는 기존 주소/계좌 변경 단계만 제공한다."
   },
   {
    "formId": "ordin-21627193",
@@ -77412,6 +77796,34 @@
    "reviewReason": "안성 사망조위금의 사망자·유가족·관계·입금계좌 및 사망 증빙을 읽었다. 제3조제3항 별지2로 사망 후 1년 이내 신청과 사업의 사망위로금 절차가 일치한다."
   },
   {
+   "formId": "ordin-21750515",
+   "lawId": "2121079",
+   "lawTitle": "안성시 국가보훈대상자 등 예우 및 지원에 관한 조례 시행규칙",
+   "title": "[별지 제3호서식] 국가보훈대상자 명예수당 지급 변경신고서",
+   "regionCode": "41550",
+   "format": "hwp",
+   "bytes": 9728,
+   "sha256": "b0ff5d50c6d729d45a12dda5d789b36067b751f686a24ba168cbf103db24d7ad",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=163394129&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C3%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EA%B5%AD%EA%B0%80%EB%B3%B4%ED%9B%88%EB%8C%80%EC%83%81%EC%9E%90+%EB%AA%85%EC%98%88%EC%88%98%EB%8B%B9+%EC%A7%80%EA%B8%89+%EB%B3%80%EA%B2%BD%EC%8B%A0%EA%B3%A0%EC%84%9C",
+   "downloadedAt": "2026-10-20T05:22:15.460189+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-21750515.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41550.bokjiro-WLF00001502",
+     "name": "안성시 국가보훈대상자 보훈명예수당 지급"
+    },
+    {
+     "id": "g41550.gov24-408000000525",
+     "name": "국가보훈명예수당 등 지급"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "실제 3호 전체302자·본인 주소/계좌/서명·통장사본 요구를 읽었으며 내장 그림과 작성된 개인정보는 없다. 20일 공식 현행 조례2121057 및 시행규칙2121079 전체·부칙·현재 별표키21750515/flSeq163394129를 확인하고 실제 HWP를 다시 GET하여 동일 SHA를 확인했다. 현재 시행규칙 제5조는 본인명의 계좌 지급, 제6조는 주소/계좌 변경 시3호 신고를 정확히 지정한다. 원본에는 옛 제7조가 인쇄되어 있으나 현재 제7조는 지급중단이며, 이를 숨기거나 서식을 수정하지 않고 제6조의 직접 지정과 현행 원본 결속을 근거로 한다. 현재 두 프로그램 페이지에는 명예수당 월10만원이 남아 있으나 상위 현행법규는 월15만원이다. 이 행은 금액이나 신규 지원대상을 판정하는 신청이 아닌 이미 수급 중인 본인의 주소/계좌변경만을 제공하며 옛 금액을 현재 금액으로 승인하지 않는다. 사망위로금 WLF00001408 및 옛 배우자 신규지원 WLF00003880에는 연결하지 않는다."
+  },
+  {
    "formId": "ordin-21750839",
    "lawId": "2121151",
    "lawTitle": "평창군 노인 목욕비 및 이ㆍ미용비 지원 조례",
@@ -78751,6 +79163,34 @@
    "reviewState": "linked",
    "reviewLabel": "혜택에 연결",
    "reviewReason": "현행 제3·6조의 거동불편65세이상 노인과 별지 보행기 신청을 전체 원본 인적사항·성인용보행기·건강/경제/기지원 확인 및 등급외 통보 첨부와 대조했다. 실제 당진 어르신 보행기 사업의 목적·읍면동 접수와 일치한다. 제3조제2·3항의 기타 보행불편자는 진단서/소견서 절차가 있으므로 등급외 결과지가 없는 모든 사람을 제외한다고 보지 않는다."
+  },
+  {
+   "formId": "ordin-21767433",
+   "lawId": "2123455",
+   "lawTitle": "여주시 수도급수 조례 시행규칙",
+   "title": "여주시 수도급수 조례 시행규칙",
+   "regionCode": "41670",
+   "format": "hwp",
+   "bytes": 98816,
+   "sha256": "705f1cf9f69a4fc97a3a5979198244f19562e8acd011c122a74b1ae3cdb19af2",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=163523815&flNm=%EC%97%AC%EC%A3%BC%EC%8B%9C+%EC%88%98%EB%8F%84%EA%B8%89%EC%88%98+%EC%A1%B0%EB%A1%80+%EC%8B%9C%ED%96%89%EA%B7%9C%EC%B9%99",
+   "downloadedAt": "2026-10-20T04:38:03.733290+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-21767433.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41670.bokjiro-WLF00002922",
+     "name": "여주시 수도요금 감면신청"
+    },
+    {
+     "id": "g41670.gov24-O00008900001",
+     "name": "상수도요금 감면"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "실제 시행규칙 원본 17,471자의 7개 BodyText 섹션을 전부 읽었고 모든 조문·부칙·1~22호(삭제 표시 포함)를 확인했다. 내장 이미지 및 작성된 개인정보가 없다. 상위 조례 원본도 51조문·부칙·별표 전체 16,445자를 읽었다. 제25조제7항은 20호 제출을 정하며, 실제 2026.4.15 개정 20호에는 수급자·장애정도가 심한 장애인·2명 이상 다자녀·국가보훈·한부모/조손/청소년한부모 및 본인 서명·공동이용/개인정보 동의가 있다. 한부모는 제25조제7항의 열거 목록에는 13호가 누락되어 있으므로 그 항에서 직접 열거했다고 주장하지 않는다. 상위 제37조제1항제13호·규칙 제25조제1항제13호의 지원근거, 현행20호의 명시 선택칸 및 현재 두 공식 사업 안내가 함께 한부모 지원과 제출을 확인한다. 현재 정부24 O00008900001은 자격 감면 외에 지하·벽체 누수복구 후 감면을 실제 별도로 명시한다. 규칙 제25조제6항이 19호와 복구 증빙을 지정하고 제1항제2호의 귀책/육안 식별 제외·평균사용량 공제 후 누수량50% 범위를 실제19호의 누수위치·원인·복구완료·신청인 서명과 대조했다. 따라서 이 사업은20호와 조건부19호 두 접수 사유를 구분한다."
   },
   {
    "formId": "ordin-21768413",
@@ -107707,6 +108147,30 @@
    "reviewReason": "김포시 조례 제5조제1항은 제3조제3호 이사비용 지원에 별지 제1호 신청을 지정한다. 원본 전체는 공공요금과 이사비용의 공통 신청서이며 전출입 주소·계좌·신청인 서명, 확정일자 계약서·이사비 영수증 첨부가 실제 정부24 이사비용 사업과 일치한다. 이사비 신청 부분만 연결하며 다른 공공요금 지원으로 범위를 넓히지 않는다."
   },
   {
+   "formId": "ordin-22869643",
+   "lawId": "1958071",
+   "lawTitle": "김포시 공영장례 지원에 관한 조례",
+   "title": "[별지 서식]공영장례 지원 신청서",
+   "regionCode": "41570",
+   "format": "hwp",
+   "bytes": 51712,
+   "sha256": "c5cf32ab88a382c76a790c941b7d30bdadf5981c51bffeb6cd18537b8cfa20b3",
+   "sourceUrl": "https://www.law.go.kr/flDownload.do?gubun=ELIS&flSeq=170528015&flNm=%5B%EB%B3%84%EC%A7%80+%EC%84%9C%EC%8B%9D%5D%EA%B3%B5%EC%98%81%EC%9E%A5%EB%A1%80+%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-20T04:38:08.678318+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-22869643.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41570.bokjiro-WLF00001243",
+     "name": "취약계층 복지증진(무연고 사망자 및 노숙인 지원)"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "전체 HWP 신청서803자와 BodyText/Section0을 읽고 빈 신청인·사망자·관계·장례지원 동의·서명 및 신분/관계/사망증빙을 대조했다. 김포시 현행 법규1958071 전10조와 부칙을 읽고 제4조의 무연고 사망자 범위, 제5조 현물원칙과 현금예외, 제7조의 지원대상 연고자 등 별지 제출을 확인했다. 현행 별지22869643/flSeq170528015의 실제 재GET 원본 SHA가 수집원본과 일치한다. 오늘 정확 복지로WLF00001243이 무연고 사망자의 장례지원과 별도의 노숙인 의료비를 명시한다. 2026 김포시의회 공식 사업설명서 PDF372쪽의 연중 무연고 사망자 장례지원이 바로 김포시 공영장례 조례에 근거한다고 명시하여 사업과 법정별지의 경로를 보완했다. 711쪽 자료 중 이1쪽만 전체 텍스트·시각 판독했고 다른 쪽을 읽었다고 표시하지 않았다."
+  },
+  {
    "formId": "ordin-22869747",
    "lawId": "2028077",
    "lawTitle": "김포시 국가보훈대상자 예우 및 지원에 관한 조례",
@@ -108719,6 +109183,42 @@
    "reviewReason": "2026-10-20 현행 nw=1 검색과 법규1918695의7조문·부칙, 새별표키22900805/flSeq170751185를 실제 HWP전체2,693자와 대조했다.제3조는1인100만원일시금,제5조는혼인6개월내1호신청을지정하고개정원문에는이전복지로서식의1차/2차지급선택이없다.오늘정확WLF00005187이초혼·1년계속거주·6개월신청·100만원을명시하여수록gov24-570000000131과맞는다.구포털18193891URL은오늘59B비문서를반환했고동일법규의현행첨부키만변경되었으므로기존ID/SHA를덮지않고새22900805로제안한다.양식전체는빈신청·본인/배우자동의이며기관서식이나작성된개인정보는없다."
   },
   {
+   "formId": "ordin-22901113",
+   "lawId": "1997195",
+   "lawTitle": "여주시 국가보훈대상자 예우와 지원에 관한 조례",
+   "title": "여주시 국가보훈대상자 예우와 지원에 관한 조례",
+   "regionCode": "41670",
+   "format": "hwp",
+   "bytes": 67072,
+   "sha256": "fe09a654117fd7998820e0e11229c36aaf8e0da698d8207efa4a921a48d26e3c",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=170752281&flNm=%EC%97%AC%EC%A3%BC%EC%8B%9C+%EA%B5%AD%EA%B0%80%EB%B3%B4%ED%9B%88%EB%8C%80%EC%83%81%EC%9E%90+%EC%98%88%EC%9A%B0%EC%99%80+%EC%A7%80%EC%9B%90%EC%97%90+%EA%B4%80%ED%95%9C+%EC%A1%B0%EB%A1%80",
+   "downloadedAt": "2026-10-20T04:38:10.317773+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-22901113.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41670.bokjiro-WLF00001051",
+     "name": "국가보훈대상자 사망위로금"
+    },
+    {
+     "id": "g41670.bokjiro-WLF00001503",
+     "name": "보훈명예수당 지급"
+    },
+    {
+     "id": "g41670.bokjiro-WLF00002920",
+     "name": "국가보훈대상자 참전유공자수당"
+    },
+    {
+     "id": "g41670.gov24-570000000117",
+     "name": "여주시 국가보훈대상자 보훈수당 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "실제 원본 전체 7,216자, 모든 조문·부칙·서식과 전체 BodyText 섹션을 읽었으며 내장 이미지 및 작성된 개인정보가 없다. 정확 정부24 570000000117의 복합 보훈사업이 실제 6개 선택 항목을 모두 포함함을 확인했다. 제7조제4호 의료비 연 40만원 이내와 페이지의 월 3만원, 제8조·제9조 각 수당 요건, 제10조 별지 신청·6개월·무신청 예외를 각각 대조했다. 정부24의 첨부 없음 표시는 실제 법정 별지 부재로 해석하지 않았다. 20일 현행 원문은 새 별표 키 22901113이며, 현재 flSeq로 직접 GET한 실제 바이트가 이미 완독한 옛 키 원본과 동일 SHA임을 확인했다. 옛 ID를 덮어쓰지 않고 새 현행 ID로 별도 제안한다."
+  },
+  {
    "formId": "ordin-22901167",
    "lawId": "2049835",
    "lawTitle": "여주시 장애인보장구 수리비용 지원에 관한 조례",
@@ -108741,6 +109241,38 @@
    "reviewState": "linked",
    "reviewLabel": "혜택에 연결",
    "reviewReason": "전체4221자의현행9조문·부칙·별지1~6을읽었다.제6조①이주민3호신청을명시하고②는기관4호의뢰,③은업체5/6호청구로분리한다.실제3호는수급유형·보장구유형·수리부위·신청인서명으로작성된다.20일정부24의여주등록장애인/수급차상위연20만원·일반연10만원50%및주민센터접수가현행제5조와일치한다.양식의남아있는장애등급표현을별도등급자격제한으로해석하지않았다.현행키22901167/flSeq170752711의실제바이트를확인했다."
+  },
+  {
+   "formId": "ordin-22901285",
+   "lawId": "2095769",
+   "lawTitle": "여주시 출산장려 및 다자녀 가정 양육 지원에 관한 조례",
+   "title": "여주시 출산장려 및 다자녀 가정 양육 지원에 관한 조례",
+   "regionCode": "41670",
+   "format": "hwp",
+   "bytes": 78848,
+   "sha256": "98ef861c17125c9f20f10097b4a40526d126c5658831a4d39fbf13975c3582a5",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=170753217&flNm=%EC%97%AC%EC%A3%BC%EC%8B%9C+%EC%B6%9C%EC%82%B0%EC%9E%A5%EB%A0%A4+%EB%B0%8F+%EB%8B%A4%EC%9E%90%EB%85%80+%EA%B0%80%EC%A0%95+%EC%96%91%EC%9C%A1+%EC%A7%80%EC%9B%90%EC%97%90+%EA%B4%80%ED%95%9C+%EC%A1%B0%EB%A1%80",
+   "downloadedAt": "2026-10-20T04:38:10.476205+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "relativePath": "ordin-22901285.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g41670.gov24-570000000116",
+     "name": "여주시 다자녀 가정 입학축하금 지원"
+    },
+    {
+     "id": "g41670.gov24-570000000125",
+     "name": "여주시 출산장려금 지원"
+    },
+    {
+     "id": "g41670.gov24-570000000126",
+     "name": "여주시 다자녀장려금 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "실제 원본 전체 13,142자, 모든 조문·부칙·서식과 전체 BodyText 섹션을 읽었으며 내장 이미지 및 작성된 개인정보가 없다. 제2조의 두 자녀 이상 정의, 제14~17조 대상·20만원·제2호 제출 및 제20조제2항 입학 연도 1회 기준을 실제 2호 보호자·아동·학교·출생순위·서명/동의와 대조했다. 정부24 570000000116 현재 안내의 초중고 신입생 다자녀 가정과 방문/온라인 신청에 정확히 대응한다. 20일 현행 원문은 새 별표 키 22901285이며, 현재 flSeq로 직접 GET한 실제 바이트가 이미 완독한 옛 키 원본과 동일 SHA임을 확인했다. 옛 ID를 덮어쓰지 않고 새 현행 ID로 별도 제안한다."
   },
   {
    "formId": "ordin-22901313",
@@ -109467,6 +109999,10 @@
      "name": "기초생활보장 생계급여"
     },
     {
+     "id": "g41390.gov24-401000000104",
+     "name": "시흥형 주거비(아동 주거비) 지원"
+    },
+    {
      "id": "n.bokjiro-WLF00001089",
      "name": "교육급여(맞춤형 급여)"
     },
@@ -109650,6 +110186,14 @@
    "relativePath": "rule-3211501.hwpx",
    "usableHangul": true,
    "publishedPrograms": [
+    {
+     "id": "g41370.bokjiro-WLF00001023",
+     "name": "장애인활동지원 시추가지원"
+    },
+    {
+     "id": "g41370.gov24-400000000110",
+     "name": "장애인 활동지원(추가)"
+    },
     {
      "id": "g41480.bokjiro-WLF00003882",
      "name": "산모신생아 건강관리사지원"

@@ -7,16 +7,16 @@
   "jurisdictionCount": 32,
   "sourceRecords": 3001,
   "baselineAvailableRecords": 327,
-  "availableRecords": 406,
-  "newPublishedOriginals": 113,
-  "newOriginalAssociations": 119,
-  "allPublishedOriginalsForGyeonggi": 493,
-  "allPublishedAssociationsForGyeonggi": 574,
+  "availableRecords": 423,
+  "newPublishedOriginals": 133,
+  "newOriginalAssociations": 151,
+  "allPublishedOriginalsForGyeonggi": 513,
+  "allPublishedAssociationsForGyeonggi": 610,
   "officialAttachmentScope": {
     "urls": 554,
     "bytesCollected": 554,
-    "fullBodyReviews": 492,
-    "notFullyRead": 62,
+    "fullBodyReviews": 495,
+    "notFullyRead": 59,
     "sameBytePublishedCoverage": 54,
     "reviewDispositions": {
       "requires_standalone_source": 15,
@@ -38,7 +38,7 @@
       "excluded_empty_original": 5,
       "non_applicant_operational_forms": 3,
       "requires_current_standalone_form": 12,
-      "excluded": 44,
+      "excluded": 45,
       "online_input_reference_forms": 1,
       "unread_full_body": 9,
       "reference_intake_instructions_only": 4,
@@ -50,11 +50,10 @@
       "propose_conditional_approval": 4,
       "closed_to_new_applications": 1,
       "empty_attachment_not_application": 11,
-      "requires_current_edition_confirmation": 7,
+      "requires_current_edition_confirmation": 9,
       "initial_round_closed_change_use_unconfirmed": 1,
       "requires_current_notice": 3,
       "requires_selected_part_confirmation": 1,
-      "requires_accessible_original": 3,
       "reference_with_explicit_application_route": 2,
       "unread_protected_original": 1,
       "provider_claim_not_initial_application": 1,
@@ -104,12 +103,12 @@
       "sourceRecords": 189,
       "baselineAvailable": 7,
       "currentStatuses": {
-        "available": 15,
+        "available": 16,
         "review": 73,
-        "online": 43,
+        "online": 42,
         "missing": 58
       },
-      "additionalAvailable": 8
+      "additionalAvailable": 9
     },
     {
       "regionCode": "41110",
@@ -202,11 +201,11 @@
       "baselineAvailable": 10,
       "currentStatuses": {
         "missing": 37,
-        "review": 29,
-        "available": 13,
+        "review": 28,
+        "available": 14,
         "online": 4
       },
-      "additionalAvailable": 3
+      "additionalAvailable": 4
     },
     {
       "regionCode": "41250",
@@ -300,11 +299,11 @@
       "baselineAvailable": 6,
       "currentStatuses": {
         "missing": 40,
-        "review": 20,
-        "available": 7,
+        "review": 18,
+        "available": 9,
         "online": 3
       },
-      "additionalAvailable": 1
+      "additionalAvailable": 3
     },
     {
       "regionCode": "41390",
@@ -313,12 +312,12 @@
       "sourceRecords": 135,
       "baselineAvailable": 13,
       "currentStatuses": {
-        "available": 14,
+        "available": 15,
         "online": 12,
         "missing": 81,
-        "review": 28
+        "review": 27
       },
-      "additionalAvailable": 1
+      "additionalAvailable": 2
     },
     {
       "regionCode": "41410",
@@ -383,12 +382,12 @@
       "sourceRecords": 95,
       "baselineAvailable": 10,
       "currentStatuses": {
-        "missing": 65,
+        "missing": 64,
         "review": 14,
-        "available": 12,
+        "available": 13,
         "online": 4
       },
-      "additionalAvailable": 2
+      "additionalAvailable": 3
     },
     {
       "regionCode": "41500",
@@ -426,11 +425,11 @@
       "baselineAvailable": 8,
       "currentStatuses": {
         "missing": 45,
-        "online": 6,
-        "available": 9,
+        "online": 5,
+        "available": 10,
         "review": 17
       },
-      "additionalAvailable": 1
+      "additionalAvailable": 2
     },
     {
       "regionCode": "41590",
@@ -453,12 +452,12 @@
       "sourceRecords": 105,
       "baselineAvailable": 20,
       "currentStatuses": {
-        "review": 34,
+        "review": 33,
         "missing": 39,
-        "available": 21,
+        "available": 22,
         "online": 11
       },
-      "additionalAvailable": 1
+      "additionalAvailable": 2
     },
     {
       "regionCode": "41630",
@@ -495,12 +494,12 @@
       "sourceRecords": 87,
       "baselineAvailable": 0,
       "currentStatuses": {
-        "missing": 49,
-        "review": 23,
-        "available": 10,
-        "online": 5
+        "missing": 47,
+        "review": 17,
+        "available": 19,
+        "online": 4
       },
-      "additionalAvailable": 10
+      "additionalAvailable": 19
     },
     {
       "regionCode": "41800",
@@ -547,11 +546,11 @@
   "sourceReviewInputs": [
     {
       "file": "logs/forms-completion/gyeonggi-20261019/team1/body-review.json",
-      "sha256": "63b2d1216f2494f8e21cbd19c0935301fc50767f64b0f4644473abbf19731e6b"
+      "sha256": "d510f641c1407e7bc2abf8f1e872dc7a03d66c4528716d2e718780b303b54714"
     },
     {
       "file": "logs/forms-completion/gyeonggi-20261019/team2/review-progress.json",
-      "sha256": "0f10f5d7fd938c9b0de2e235d5ab0b288f276797c3d2b5a37850860575f2d284"
+      "sha256": "5d5f28156cf8aa3b5e81b7bb9cfc10034cdcfe983485ced3dc2018a4302e5565"
     },
     {
       "file": "logs/forms-completion/gyeonggi-20261019/team3/review-status.json",
@@ -2833,10 +2832,10 @@
       "programIds": [
         "g41670.gov24-570000000104"
       ],
-      "fullBodyReviewed": false,
+      "fullBodyReviewed": true,
       "reviewEvidenceBound": true,
-      "reviewDisposition": "requires_accessible_original",
-      "reviewedBy": "native-codex-reviewer",
+      "reviewDisposition": "requires_current_edition_confirmation",
+      "reviewedBy": "native-codex",
       "publishedSameByteCoverage": [],
       "publicationApprovedByThisReport": false
     },
@@ -2908,10 +2907,10 @@
       "programIds": [
         "g41130.bokjiro-WLF00001569"
       ],
-      "fullBodyReviewed": false,
+      "fullBodyReviewed": true,
       "reviewEvidenceBound": true,
-      "reviewDisposition": "requires_accessible_original",
-      "reviewedBy": "native-codex-reviewer",
+      "reviewDisposition": "requires_current_edition_confirmation",
+      "reviewedBy": "native-codex",
       "publishedSameByteCoverage": [],
       "publicationApprovedByThisReport": false
     },
@@ -6593,10 +6592,10 @@
       "programIds": [
         "g41130.bokjiro-WLF00003842"
       ],
-      "fullBodyReviewed": false,
+      "fullBodyReviewed": true,
       "reviewEvidenceBound": true,
-      "reviewDisposition": "requires_accessible_original",
-      "reviewedBy": "native-codex-reviewer",
+      "reviewDisposition": "excluded",
+      "reviewedBy": "native-codex",
       "publishedSameByteCoverage": [],
       "publicationApprovedByThisReport": false
     },
