@@ -253,6 +253,8 @@ npm run forms:build
 
 ## 배포 (Vercel)
 
+- **운영 주소**: https://bokji-compass.vercel.app — 사용자 확인 기준 배포 대상이다. `goyang-welfare.vercel.app`은 다른 사이트다.
+- **작업 저장소**: https://github.com/dlrmsals1425-dotcom/bokji. 이 저장소의 병합과 운영 Vercel 프로젝트 배포는 별도로 확인한다. 운영 프로젝트 관리자가 변경 사항을 가져오는 절차는 [배포 안내](docs/DEPLOYMENT.md)를 참고한다.
 - **데이터 키 불필요**: 앱은 커밋된 `public/bundles/v1/*`(정적 JSON)만 읽고, 판정은 브라우저에서 한다. `DATA_GO_KR_SERVICE_KEY`는
   데이터를 다시 수집할 때(`npm run ingest:*`, 로컬 전용)만 쓰며 **Vercel 환경 변수에 넣지 않는다**. 빌드(`next build`)는 수집·파이프라인을 실행하지 않는다.
 - **설정**: Framework Preset `Next.js` · Build Command `npm run build`(= `next build`) · Output 기본값(`.next`) · Install `npm ci` · Node 20 이상. 환경 변수 없음.
