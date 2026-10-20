@@ -9,6 +9,14 @@
 .counts dd span { font-size: .9rem; font-weight: 400; margin-left: .2rem; }
 .source { padding-left: .8rem; border-left: 3px solid #2854a3; margin: 1rem 0 .5rem; line-height: 1.75; }
 .scan { margin: .9rem 0 .5rem; line-height: 1.8; }
+.census { margin: 1.2rem 0 .5rem; padding: 1rem 1.1rem; border: 1px solid #d5deea; border-radius: .6rem; background: #f7faff; }
+.census h3 { font-size: 1.1rem; margin: 0 0 .8rem; }
+.stages { display: grid; grid-template-columns: repeat(auto-fit,minmax(9rem,1fr)); gap: .9rem 1rem; margin: 0 0 1rem; }
+.stages dt { font-size: .9rem; color: #495a72; line-height: 1.5; }
+.stages dd { font-size: 1.35rem; font-weight: 700; margin: .2rem 0 0; }
+.stages dd span { font-size: .85rem; font-weight: 400; margin-left: .15rem; }
+.progress { margin: 0; padding-left: 1.2rem; }
+.progress li { margin: .45rem 0; line-height: 1.8; }
 .browse { margin-top: 2rem; }
 .filters { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 .filters > div { display: grid; gap: .4rem; min-width: 0; }

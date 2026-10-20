@@ -45,6 +45,27 @@ async function serve(page: Page, options: { bundle: FormsRegionBundle; shards?: 
 }
 const panel = (page: Page) => page.getByTestId("application-forms");
 
+test("a combined original shows the part selected for this benefit @mobile",async({page})=>{
+  const original=form("ordin-90002",{title:"별지",displayTitle:"다른 혜택의 신청서",
+    file:{hwp:"/forms/files/ordin-90002-012345abcdef.hwp",format:"hwp",bytes:123,sha256:"a".repeat(64)}});
+  await serve(page,{bundle:bundle([entry({status:"available",links:[link(original.id,{displayTitle:"장수축하금 지급 신청서"})]})]),catalog:catalog([original])});
+  await page.goto(`/p/${PROGRAM}`);
+  await expect(panel(page).getByRole("heading",{name:"장수축하금 지급 신청서",exact:true})).toBeVisible();
+  await expect(panel(page).getByText("다른 혜택의 신청서",{exact:true})).toHaveCount(0);
+  await expect(panel(page).getByRole("link",{name:/한글 원본 받기/})).toHaveAttribute("download","장수축하금 지급 신청서.hwp");
+});
+
+for (const format of ["hwp", "hwpx"] as const) test(`stored ${format} preserves its actual download extension @mobile`, async ({page}) => {
+  const original=form("ordin-90001",{title:"[별지 제1호서식] 지원 신청서",file:{hwp:`/forms/files/ordin-90001-012345abcdef.${format}`,format,bytes:123,sha256:"a".repeat(64)}});
+  await serve(page,{bundle:bundle([entry({status:"available",links:[link(original.id)]})]),catalog:catalog([original])});
+  await page.goto(`/p/${PROGRAM}`);
+  const download=panel(page).getByRole('link',{name:/한글 원본 받기/});
+  await expect(download).toHaveAttribute('href',original.file!.hwp);
+  await expect(download).toHaveAttribute('download',`지원 신청서.${format}`);
+  await expect(download).toContainText(`(${format.toUpperCase()})`);
+  await expect(panel(page).getByRole('link',{name:/법령포털 원본 받기/})).toHaveCount(0);
+});
+
 test("sharded catalog fetches only the buckets a benefit needs @mobile", async ({ page }) => {
   const bucket = detailBucket(localForm.id);
   const asked = await serve(page, { bundle: bundle([entry({ status: "available", links: [link(localForm.id)] })], true), shards: { [bucket]: catalog([localForm]) } });
@@ -127,8 +148,8 @@ test("unreadable candidate shard is admitted instead of looking like no forms", 
 test("portal not_found and incomplete say what was searched without closing the door", async ({ page }) => {
   await serve(page, { bundle: bundle([entry({ portalSearch: { outcome: "not_found", checkedAt: "2026-10-14", candidateCount: 0, method: "full-index" } })], true) });
   await page.goto(`/p/${PROGRAM}`);
-  await expect(panel(page).getByTestId("forms-portal-search")).toContainText("법령포털에 수록된 서식에서는 이 사업에 해당하는 신청서를 찾지 못했어요");
-  await expect(panel(page).getByTestId("forms-portal-search")).toContainText("담당기관이 해마다 내는 공고에 서식이 따로 있을 수 있어요. (법령포털 확인일 2026-10-14)");
+  await expect(panel(page).getByTestId("forms-portal-search")).toContainText("법령포털 서식 목록을 사업명·근거 법규와 대조했지만 연결 후보를 찾지 못했어요");
+  await expect(panel(page).getByTestId("forms-portal-search")).toContainText("모든 본문과 파일을 확인했다는 뜻은 아니며, 담당기관 공고에 서식이 따로 있을 수 있어요. (법령포털 확인일 2026-10-14)");
   await expect(panel(page).getByTestId("forms-candidates")).toHaveCount(0);
 
   await page.unrouteAll();
@@ -189,5 +210,5 @@ test("overview reports what the portal scan actually covered @mobile", async ({ 
   await expect(page.getByText("법령포털 수집 법령 서식 40,036/40,036 · 자치법규 서식 35,100/283,751 · 행정규칙 서식 100/84,484")).toBeVisible();
   await expect(page.getByText("경기도 고양시 수록 2건 중 현재 조건 2건")).toBeVisible();
   await expect(page.getByText("자동으로 찾은 후보 서식의 적용 여부를 확인 중입니다.")).toBeVisible();
-  await expect(page.getByText("법령포털 서식에서는 맞는 신청서를 찾지 못했습니다. 지원 대상이 아니라는 뜻은 아닙니다.")).toBeVisible();
+  await expect(page.getByText("법령포털 서식 목록 대조에서 연결 후보를 찾지 못했습니다. 신청서가 없거나 지원 대상이 아니라는 뜻은 아닙니다.")).toBeVisible();
 });

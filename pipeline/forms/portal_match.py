@@ -45,6 +45,11 @@ _INSTITUTION = re.compile(
     r"기관용|학교용|교육지원청용|공무원용|담당자용|수탁운영|수리업체지정|교부|정산|"
     r"출납|접수부|대장|명부|통지|통보|지정서|점검표|심사기준|관리대장|관리카드|관리부"
 )
+# 닫는 괄호가 제목 끝이면 괄호 안이 서식명이다. 별지 번호만 떼고 그 글자는 남긴다.
+_WHOLE_FORM_BRACKET = re.compile(r"^\s*\[([^\]]*)\]\s*$")
+_LEADING_FORM_BRACKET = re.compile(r"^\s*\[[^\]]*\]\s*")
+_ANNEX_LABEL = re.compile(r"^(?:별지|별표)\s*(?:제\s*\d+\s*호)?\s*(?:서식)?\s*")
+_PARENS = re.compile(r"[（(]([^)）]*)[)）]")
 _DIRECT_SCORE = {
     ("exact", "specific"): 86,
     ("exact", "generic"): 40,
@@ -72,6 +77,8 @@ def normalize_law(text: str | None) -> str:
     if not folded.strip():
         return ""
     folded = "".join(ch for ch in folded if ch not in _QUOTES and ch not in _DOTS)
+    # Article headings are citation metadata, not part of the law's title.
+    folded = re.sub(r'(제\s*\d+\s*조(?:\s*의\s*\d+)?)\s*\([^()]*\)(?=\s*(?:$|제\d+항|[,，、]|및\s*제))', r'\1', folded)
     for _ in range(4):
         nxt = _strip_article_parens(folded)
         nxt = _strip_trailing_articles(nxt)
@@ -83,6 +90,77 @@ def normalize_law(text: str | None) -> str:
     if glued and glued.start() > 0:
         compact = compact[:glued.start()]
     return compact.casefold()
+
+
+_CITATION_SUFFIXES = ('법', '법률', '특별법', '시행령', '시행규칙', '조례', '규칙',
+                      '규정', '준칙', '지침', '고시', '훈령', '예규', '요령', '기준')
+
+
+def _complete_law_citation(text: str) -> bool:
+    """접속어 직전이 법규명 또는 법규명+조문인지 확인한다."""
+    def named(value):
+        key = normalize_law(value)
+        return bool(key and key not in _CITATION_SUFFIXES and key.endswith(_CITATION_SUFFIXES))
+
+    plain = unicodedata.normalize('NFKC', text)
+    plain = ''.join(ch for ch in plain if ch not in _QUOTES)
+    article = re.search(r'제\s*\d+\s*조', plain)
+    if not article:
+        return named(text)
+    if not named(plain[:article.start()].rstrip(' ([{')):
+        return False
+    # 제20조(청년 주거지원) 같은 조문 제목은 인용의 일부다. 설명 문장
+    # 중간의 '및'까지 새 법규 경계로 보지 않도록 조문 형식만 허용한다.
+    tail = plain[article.start():]
+    while re.search(r'\([^()]*\)', tail):
+        tail = re.sub(r'\([^()]*\)', '', tail)
+    tail = re.sub(r'(?:제\s*)?\d+\s*(?:조(?:\s*의\s*\d+)?|항|호|목)', '', tail)
+    tail = re.sub(r'및|또는|부터|까지|내지|등', '', tail)
+    return not tail.strip(' \t\r\n,，、()[]{}~-')
+
+
+def split_law_citations(text: str) -> list[str]:
+    """법명 안의 접속어·쉼표와 조문 목록은 보존하고 인용 경계만 나눈다.
+
+    접속어 뒤의 생략 제명·계획은 보충하지 않는다. 다음 단계가 원문대로
+    특정하거나 미확정 인용으로 남기도록 분리한 텍스트만 돌려준다.
+    """
+    text = str(text).replace('||', ';')
+    parts, stack, buffer = [], [], ''
+    pairs = dict(zip('([{（［｛「『“', ')]}）］｝」』”'))
+    bullets = '○◦●□■▪▫'
+    for position, character in enumerate(text):
+        if character in ('"', "'"):
+            if stack and stack[-1] == character:
+                stack.pop()
+            else:
+                stack.append(character)
+        elif character in pairs:
+            stack.append(pairs[character])
+        elif stack and character == stack[-1]:
+            stack.pop()
+        separator = False
+        if not stack:
+            if character in ';；/\n' + bullets:
+                separator = True
+            elif character in ',，、' or character == '및':
+                right = text[position + 1:].lstrip(' \t\r\n「『“\"\'')
+                next_article = re.match(r'(?:제\s*)?\d+\s*[조항호목]', right)
+                # 실제 일괄개정 조례명 속 '법 및 같은 법 시행령 ... 개정에
+                # 따른 ... 조례'는 두 인용으로 자르지 않는다.
+                title_continuation = (character == '및' and re.match(
+                    r'(?:같은\s*법|동법)\s*시행(?:령|규칙)\s*(?:전부|일부)?개정에\s*따른', right))
+                separator = bool(right and not next_article and not title_continuation
+                                 and _complete_law_citation(buffer))
+        if separator:
+            if buffer.strip():
+                parts.append(buffer.strip())
+            buffer = ''
+        else:
+            buffer += character
+    if buffer.strip():
+        parts.append(buffer.strip())
+    return parts
 
 
 def law_variants(text: str | None) -> list[str]:
@@ -103,6 +181,27 @@ def law_variants(text: str | None) -> list[str]:
     return [base]
 
 
+def law_aliases(text: str | None, geography: dict | None = None) -> list[str]:
+    """같은 시·군·구 조례 앞에 그 시·도 공식 이름만 붙인 제명.
+
+    geography는 호출자가 이미 아는 이름이다. 예: {"sido": "서울특별시", "sigungu": "종로구"}.
+    제목이 그 시·군·구로 시작할 때만 시·도를 앞에 붙인다. 다른 지역 이름은 빼지 않고,
+    시·도만 있는 제명도 줄이지 않는다. 지역 코드로 이름을 만들지 않는다.
+    """
+    base = normalize_law(text)
+    if not base:
+        return []
+    if not isinstance(geography, dict):
+        return [base]
+    sido = normalize_law(str(geography.get("sido") or ""))
+    sigungu = normalize_law(str(geography.get("sigungu") or ""))
+    if len(sido) < 2 or len(sigungu) < 2:
+        return [base]
+    if base.startswith(sigungu) and len(base) > len(sigungu) and not base.startswith(sido):
+        return [base, sido + base]
+    return [base]
+
+
 def classify_role(title: str | None, declared_kind: str | None) -> str:
     """서식 역할. 삭제와 기관·회계 서식을 동의서·신청서보다 먼저 가른다."""
     kind = unicodedata.normalize("NFKC", str(declared_kind or "")).strip().casefold()
@@ -111,7 +210,7 @@ def classify_role(title: str | None, declared_kind: str | None) -> str:
         return "deleted"
     if _is_annex(raw, kind):
         return "reference"
-    body = re.sub(r"^\s*\[[^\]]*\]\s*", "", raw).strip()
+    body = _strip_leading_form_bracket(raw).strip()
     compact = re.sub(r"\s+", "", body)
     if _INSTITUTION.search(compact):
         return "administrative"
@@ -119,10 +218,11 @@ def classify_role(title: str | None, declared_kind: str | None) -> str:
         return "delegation"
     if re.search(r"동의서|서약서", compact):
         return "consent"
-    # Official common forms often spell this 신청(변경)서; optional
-    # application variants must not hide the actual application role.
-    application_title = re.sub(r"\([^)]*\)", "", compact)
-    if "피해신고서" in application_title or "신청서" in application_title:
+    # Join 신청(변경)서 into 신청서, but keep 신청서·피해신고서 that
+    # appear only inside parentheses, as in 별지서식(신청서).
+    joined = _PARENS.sub("", compact)
+    visible = joined + "".join(_PARENS.findall(compact))
+    if re.search(r'피해(?:발생)?신고서',visible) or any(word in visible for word in ('신청서','청구서')):
         return "application"
     if re.search(r"확인서|증명서|진단서|소견서|사유서|진술서", compact):
         return "supporting"
@@ -208,6 +308,14 @@ def _strip_trailing_articles(text: str) -> str:
     return current
 
 
+def _strip_leading_form_bracket(text: str) -> str:
+    """앞의 [별지 …]만 뺀다. 괄호가 제목 전체이면 안의 서식명을 남긴다."""
+    whole = _WHOLE_FORM_BRACKET.match(text)
+    if whole:
+        return _ANNEX_LABEL.sub("", whole.group(1).strip(), count=1).strip()
+    return _LEADING_FORM_BRACKET.sub("", text, count=1)
+
+
 def _is_deleted(raw: str, kind: str) -> bool:
     if kind in {"삭제", "deleted", "폐지"}:
         return True
@@ -255,7 +363,7 @@ def _region_words(program: dict | None, form: dict | None) -> set[str]:
 
 def _content_tokens(text: str, skip: set[str]) -> list[str]:
     plain = unicodedata.normalize("NFKC", str(text or ""))
-    plain = re.sub(r"^\s*\[[^\]]*\]\s*", "", plain)
+    plain = _strip_leading_form_bracket(plain)
     plain = _unwrap_non_article_parens(plain)
     plain = plain.casefold()
     found: list[str] = []
@@ -336,25 +444,40 @@ def _cited_norms(program: dict) -> list[str]:
     for entry in raw:
         if not isinstance(entry, str):
             continue
-        for part in entry.split("||"):
+        for part in split_law_citations(entry):
             norm = normalize_law(part)
             if norm and norm not in found:
                 found.append(norm)
     return found
 
 
+def _pair_geography(form: dict) -> dict | None:
+    """서식 표기에 적힌 시·도와 시·군·구. 코드로 이름을 만들지 않는다."""
+    code = str(form.get("regionCode") or "").strip()
+    if not re.fullmatch(r"\d{5}", code) or re.fullmatch(r"\d{2}000", code):
+        return None
+    parts = str(form.get("regionLabel") or "").split()
+    if len(parts) != 2 or min(len(parts[0]), len(parts[1])) < 2:
+        return None
+    return {"sido": parts[0], "sigungu": parts[1]}
+
+
 def _law_kind(program: dict, form: dict) -> str | None:
     form_norm = normalize_law(str(form.get("lawTitle") or ""))
     if not form_norm:
         return None
+    geography = _pair_geography(form)
     exact = False
     family = False
     form_family = set(law_variants(form_norm)[1:])
     for cited in _cited_norms(program):
-        if cited == form_norm:
+        cited_names = law_aliases(cited, geography)
+        if form_norm in cited_names:
             exact = True
             break
-        cited_family = law_variants(cited)[1:]
+        cited_family: list[str] = []
+        for name in cited_names:
+            cited_family.extend(law_variants(name)[1:])
         if form_norm in cited_family or cited in form_family:
             family = True
     if exact:
@@ -384,7 +507,7 @@ def _title_overlap(program: dict, form: dict) -> list[str] | None:
 
 def _compact_title(text: str) -> str:
     plain = unicodedata.normalize("NFKC", text).casefold()
-    plain = re.sub(r"^\s*\[[^\]]*\]\s*", "", plain)
+    plain = _strip_leading_form_bracket(plain)
     return re.sub(r"[^0-9a-z가-힣]", "", plain)
 
 

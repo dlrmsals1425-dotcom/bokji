@@ -11,6 +11,17 @@
 .dates, .source { font-size: .85rem; line-height: 1.7; color: #4b5b72; }
 .source a, .coverage { text-decoration: underline; text-underline-offset: .2em; }
 .portal { margin-top: .9rem; font-size: .9rem; line-height: 1.75; color: #42526a; }
+.census { margin-top: .9rem; padding-top: .9rem; border-top: 1px solid #d5ddea; line-height: 1.75; }
+.censusTitle { font-size: 1rem; margin: 0 0 .5rem; }
+.census > p { margin: .4rem 0; }
+.block { margin-top: 1rem; padding-top: .8rem; border-top: 1px dashed #cdd7e6; }
+.block p { margin: .35rem 0; }
+.names, .links { margin: .5rem 0; padding-left: 1.2rem; }
+.names li, .links li { margin: .35rem 0; line-height: 1.7; overflow-wrap: anywhere; }
+.links a { text-decoration: underline; text-underline-offset: .2em; }
+.detail { margin-top: .8rem; }
+.detail summary { font-size: .95rem; font-weight: 650; padding: .5rem 0; cursor: pointer; }
+.detail .names { font-size: .9rem; color: #42526a; }
 .candidates { margin-top: .9rem; padding-top: .9rem; border-top: 1px solid #d5ddea; }
 .candidates summary { font-size: .95rem; font-weight: 650; padding: .5rem 0; cursor: pointer; }
 .candidates p { margin: .4rem 0; }
@@ -20,5 +31,9 @@
 .coverage { display: inline-block; padding: .6rem 0; margin-top: .7rem; font-size: .9rem; font-weight: 600; }
 .empty { margin-bottom: 1rem; }
 .empty a { margin-top: .8rem; }
+.municipalityPicker { display: grid; gap: .5rem; margin: 1.1rem 0; }
+.municipalityPicker label { font-weight: 700; }
+.municipalityPicker select { width: 100%; min-height: 3rem; padding: .65rem; font: inherit; color: inherit; background: white; border: 1px solid #7b8994; border-radius: .4rem; }
+.municipalityPicker p { margin: 0; }
 @media (max-width: 480px) { .panel { padding: 1rem; } .actions { flex-direction: column; } .actions a { width: 100%; text-align: center; white-space: normal; } }
 @media print { .actions, .coverage { display: none; } .panel { background: white; } }
