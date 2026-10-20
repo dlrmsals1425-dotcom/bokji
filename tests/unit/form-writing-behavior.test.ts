@@ -57,4 +57,24 @@ describe("작성한 의사와 실제 문서의 일치",()=>{
    for(const set of exclusiveSets(template)) for(const key of set) expect(keys.has(key),key).toBe(true);
   }
  });
+ it("휴대전화 감면을 취소하면 가구원 전용 칸과 통신사도 작성본에서 빠진다",()=>{
+  const raw=xml(regular.formId),values={"disc0.name":"홍길순","disc0.mobile":"010-0000-0000"};
+  expect(buildFilledSection(regular,raw,{values,checks:{"disc0.carrier0":true}})).toBe(raw);
+  const positive=buildFilledSection(regular,raw,{values,checks:{"d.mobile":true,"disc0.carrier0":true}});
+  expect(findParagraph(indexSection(positive),1,21,2,0).text).toBe("홍길순");
+ });
+ it("서비스 유형과 카드사를 바꾸면 이전 유형의 부속 이름이 남지 않는다",()=>{
+  const input={"dl.basicName":"가나","dl.specialName1":"다라","fm.bcBank":"가나","fm.kbBank":"다라"};
+  const normalized=normalizeInput(voucher,input,{"s.daily":true,"dl.special":true,"s.firstMeet":true,"fm.card4":true});
+  expect(normalized.values).toEqual({"dl.specialName1":"다라","fm.kbBank":"다라"});
+  const filled=buildFilledSection(voucher,xml(voucher.formId),{values:input,checks:normalized.checks});
+  expect(findParagraph(indexSection(filled),1,28,3,0).text.includes("가나")).toBe(false);
+  expect(findParagraph(indexSection(filled),1,28,3,0).text.includes("다라")).toBe(true);
+ });
+ it("괄호 안 하위 선택은 그 원래 신청 항목을 고른 경우에만 남는다",()=>{
+  expect(normalizeInput(voucher,{}, {"s.childcare":true,"cc0.basic.disabled":true}).checks["cc0.basic.disabled"]).toBeUndefined();
+  expect(normalizeInput(voucher,{}, {"s.childcare":true,"cc0.basic":true,"cc0.basic.disabled":true}).checks["cc0.basic.disabled"]).toBe(true);
+  expect(normalizeInput(voucher,{}, {"s.diaper":true,"dp.x2":true}).checks["dp.x2"]).toBeUndefined();
+  expect(normalizeInput(regular,{}, {"d.basic.living":true}).checks["d.basic.living"]).toBeUndefined();
+ });
 });

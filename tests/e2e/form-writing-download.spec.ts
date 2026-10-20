@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
 import { mkdirSync, readFileSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { unzipSync, strFromU8 } from "fflate";
@@ -121,4 +121,45 @@ test("등록되지 않은 서식 주소는 404다 @mobile", async ({ page }) => 
     const response = await page.goto(`/forms/write/${id}`);
     expect(response?.status()).toBe(404);
   }
+});
+
+async function advanceToChoice(page: Page, key: string) {
+  await expect(page.getByTestId("writer-step")).toBeVisible();
+  for (let step = 0; step < 12; step += 1) {
+    if (await page.getByTestId(`writer-check-${key}`).isVisible()) return;
+    await page.getByRole("button", { name: /^(다음|마지막 확인으로)$/ }).click();
+  }
+  throw new Error(`선택 항목을 찾을 수 없음: ${key}`);
+}
+
+test("휴대전화 할인 취소 후 가구원 입력은 지워진다 @mobile", async ({ page }) => {
+  await page.goto("/forms/write/rule-3211495?program=n.welfare100-livelihood-benefit");
+  await advanceToChoice(page, "d.mobile");
+  const mobile = page.getByTestId("writer-check-d.mobile");
+  const name = page.locator('[id="f-disc0.name"]');
+  await expect(name).toHaveCount(0);
+  await mobile.check();
+  await name.fill("홍길순");
+  await page.getByTestId("writer-check-disc0.carrier0").check();
+  await mobile.uncheck();
+  await expect(name).toHaveCount(0);
+  await mobile.check();
+  await expect(name).toHaveValue("");
+  await expect(page.getByTestId("writer-check-disc0.carrier0")).not.toBeChecked();
+});
+
+test("카드사를 바꾸면 다른 카드의 은행명은 남지 않는다 @mobile", async ({ page }) => {
+  await page.goto("/forms/write/rule-3211501?program=n.gov24-VOU000000020");
+  await advanceToChoice(page, "s.firstMeet");
+  await page.getByTestId("writer-check-s.firstMeet").check();
+  await page.getByTestId("writer-check-fm.card1").check();
+  const bc = page.locator('[id="f-fm.bcBank"]'), kb = page.locator('[id="f-fm.kbBank"]');
+  await bc.fill("가나");
+  await expect(kb).toHaveCount(0);
+  await page.getByTestId("writer-check-fm.card4").check();
+  await expect(bc).toHaveCount(0);
+  await kb.fill("다라");
+  await page.getByTestId("writer-check-fm.card1").check();
+  await expect(bc).toHaveValue("");
+  await expect(kb).toHaveCount(0);
 });

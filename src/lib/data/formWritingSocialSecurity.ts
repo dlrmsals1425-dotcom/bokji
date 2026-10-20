@@ -359,6 +359,7 @@ export const SOCIAL_SECURITY_TEMPLATE: WritingTemplate = {
         {
           id: "d-household",
           title: "가구원 추가 기재(휴대전화 요금할인 신청 시)",
+          whenAny: ["d.mobile", "d.all"],
           rows: discountRows,
           groups: discountCarrierGroups,
         },

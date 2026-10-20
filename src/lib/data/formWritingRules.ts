@@ -332,6 +332,18 @@ const REQUIRES_ANY: Record<string, Record<string,string[]>> = {
     "d.phoneCo.lg": [
       "d.phone",
       "d.all"
+    ],
+    "d.basic.living": [
+      "d.basic"
+    ],
+    "d.basic.medical": [
+      "d.basic"
+    ],
+    "d.basic.housing": [
+      "d.basic"
+    ],
+    "d.basic.education": [
+      "d.basic"
     ]
   },
   "rule-3211501": {
@@ -436,6 +448,117 @@ const REQUIRES_ANY: Record<string, Record<string,string[]>> = {
     ],
     "pp.t4b": [
       "pp.t4"
+    ],
+    "dl.basicName": [
+      "dl.basic"
+    ],
+    "dl.specialName1": [
+      "dl.special"
+    ],
+    "dl.specialName2": [
+      "dl.special"
+    ],
+    "fm.bcBank": [
+      "fm.card1"
+    ],
+    "fm.kbBank": [
+      "fm.card4"
+    ],
+    "rh.needEtc": [
+      "rh.n11"
+    ],
+    "lg.needEtc": [
+      "lg.n3"
+    ],
+    "pc.relEtc": [
+      "pc.rel3"
+    ],
+    "cc0.basic.disabled": [
+      "cc0.basic"
+    ],
+    "cc0.basic.multi": [
+      "cc0.basic"
+    ],
+    "cc0.age35.disabled": [
+      "cc0.age35"
+    ],
+    "cc0.age35.multi": [
+      "cc0.age35"
+    ],
+    "cc0.kinder.private": [
+      "cc0.kinder"
+    ],
+    "cc1.basic.disabled": [
+      "cc1.basic"
+    ],
+    "cc1.basic.multi": [
+      "cc1.basic"
+    ],
+    "cc1.age35.disabled": [
+      "cc1.age35"
+    ],
+    "cc1.age35.multi": [
+      "cc1.age35"
+    ],
+    "cc1.kinder.private": [
+      "cc1.kinder"
+    ],
+    "cc2.basic.disabled": [
+      "cc2.basic"
+    ],
+    "cc2.basic.multi": [
+      "cc2.basic"
+    ],
+    "cc2.age35.disabled": [
+      "cc2.age35"
+    ],
+    "cc2.age35.multi": [
+      "cc2.age35"
+    ],
+    "cc2.kinder.private": [
+      "cc2.kinder"
+    ],
+    "dp.b2": [
+      "dp.b1"
+    ],
+    "dp.b3": [
+      "dp.b1"
+    ],
+    "dp.b4": [
+      "dp.b1"
+    ],
+    "dp.b5": [
+      "dp.b1"
+    ],
+    "dp.b7": [
+      "dp.b6"
+    ],
+    "dp.b8": [
+      "dp.b6"
+    ],
+    "dp.b9": [
+      "dp.b6"
+    ],
+    "dp.x2": [
+      "dp.x1"
+    ],
+    "dp.x3": [
+      "dp.x1"
+    ],
+    "dp.x4": [
+      "dp.x1"
+    ],
+    "dp.x5": [
+      "dp.x1"
+    ],
+    "dp.x7": [
+      "dp.x6"
+    ],
+    "dp.x8": [
+      "dp.x6"
+    ],
+    "dp.x9": [
+      "dp.x6"
     ]
   }
 };

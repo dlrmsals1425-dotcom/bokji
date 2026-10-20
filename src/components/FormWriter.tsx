@@ -155,7 +155,7 @@ export function FormWriter({ template, programId }: { template: WritingTemplate;
       <input
         id={`f-${field.key}`}
         type={field.input === "email" ? "email" : field.input === "tel" ? "tel" : "text"}
-        inputMode={field.input === "tel" ? "tel" : undefined}
+        inputMode={registrationField(field) || /\.(year|month|day)$/.test(field.key) ? "numeric" : field.input === "tel" ? "tel" : undefined}
         value={values[field.key] ?? ""}
         onChange={event => setValue(field.key, event.target.value)}
         aria-invalid={errors[field.key] ? true : undefined}
@@ -169,13 +169,14 @@ export function FormWriter({ template, programId }: { template: WritingTemplate;
   const renderCheck = (item: WriteCheck, lead = false) => !entryEnabled(template.formId, item.key, checks) ? null : (
     <li key={item.key}>
       <label className={`${styles.check} ${lead ? styles.lead : ""}`}>
-        <input type="checkbox" checked={!!checks[item.key]} onChange={event => setCheck(item.key, event.target.checked)} />
+        <input type="checkbox" data-testid={`writer-check-${item.key}`} checked={!!checks[item.key]} onChange={event => setCheck(item.key, event.target.checked)} />
         <span>{item.label}</span>
       </label>
     </li>
   );
 
   const renderGroup = (group: WriteGroup, depth = 0) => {
+    if (group.whenAny && !group.whenAny.some(key => checks[key])) return null;
     const open = !group.lead || !!checks[group.lead.key];
     const shown = rowsShown[group.id] ?? 1;
     const disclosure = writingDisclosure(template.formId, group.id);

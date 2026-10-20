@@ -60,6 +60,8 @@ export interface WriteGroup {
   note?: string;
   /** 이 항목을 고른 사람에게만 아래 세부 입력을 보여 준다. */
   lead?: WriteCheck;
+  /** 원본이 명시한 적용 조건에 해당하는 보조 항목만 표시한다. */
+  whenAny?: string[];
   /** 원본이 "1개 선택"이라고 적어 둔 묶음 — 이 묶음의 선택칸은 하나만 고를 수 있다. */
   exclusive?: string[][];
   checks?: WriteCheck[];
@@ -133,11 +135,6 @@ export function budgetLabel(units: number): string {
   return `한글 ${Math.floor(units / 2)}자(영문·숫자 ${units}자)까지`;
 }
 
-/** 지금 화면에 보이는(= 윗 선택칸을 고른) 묶음만 추린다. */
-export function activeGroups(groups: WriteGroup[], checks: WriteChecks): WriteGroup[] {
-  return groups.filter(group => !group.lead || checks[group.lead.key] === true);
-}
-
 /** 단계·묶음을 평탄화해 모든 입력칸과 선택칸을 모은다. */
 export function allFields(template: WritingTemplate): WriteField[] {
   const out: WriteField[] = [];
@@ -185,6 +182,7 @@ export function activeEntries(template: WritingTemplate, checks: WriteChecks): {
   const fields: WriteField[] = [];
   const items: WriteCheck[] = [];
   const walk = (group: WriteGroup) => {
+    if (group.whenAny && !group.whenAny.some(key => checks[key])) return;
     if (group.lead) {
       items.push(group.lead);
       if (checks[group.lead.key] !== true) return;
