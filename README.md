@@ -1,5 +1,7 @@
 # 복지나침반 (MVP)
 
+**현재 UI 배포:** [ChatGPT Sites에서 열기](https://bokji-jinwoo-ui.nutmeg-frog-5006.chatgpt.site) · 현재 소유자 계정만 접근 가능. 배포된 소스는 [`sites/bokji-jinwoo-ui`](sites/bokji-jinwoo-ui)에 있으며, [배포·실행 안내](docs/SITES_DEPLOYMENT.md)를 따른다. 아래 실행 안내는 루트의 기존 Next.js 앱 기준이다.
+
 로그인 없이 **내 상황을 먼저 알려주면**(사는 곳만 필수, 나머지는 모름 가능) **중앙정부·청 / 시도 / 시군구 / 공공기관** 복지 서비스를
 **받으실 수 있어요 · 신청할 때 확인 · 답하면 정해져요 · 맞지 않아 뺐어요**로 나눠, 이유와 함께 보여주는 서비스입니다.
 입력값은 서버로 보내지 않고 브라우저 안에서 판정합니다. 예전 3단계 화면은 비교용으로 `/results?v=1`, `/check?v=1`.
