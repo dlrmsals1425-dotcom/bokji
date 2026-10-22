@@ -1,14 +1,14 @@
 {
  "schema": 1,
- "generatedAt": "2026-10-20T05:23:47.175077+00:00",
+ "generatedAt": "2026-10-22T15:18:33.059780+00:00",
  "scope": "Actual downloaded originals; saved files are not automatically approved for a benefit.",
  "summary": {
-  "savedOriginals": 4901,
-  "uniqueOriginalContents": 4865,
+  "savedOriginals": 4902,
+  "uniqueOriginalContents": 4866,
   "formats": {
    "gif": 5,
    "htm": 1,
-   "hwp": 4405,
+   "hwp": 4406,
    "hwp3": 8,
    "hwpx": 457,
    "jpg": 1,
@@ -16,21 +16,21 @@
    "protected_hwp": 6,
    "txt": 8
   },
-  "readableHangulOriginals": 4862,
-  "publishedOriginals": 2791,
+  "readableHangulOriginals": 4863,
+  "publishedOriginals": 2792,
   "publishedFormats": {
-   "hwp": 2482,
+   "hwp": 2483,
    "hwpx": 293,
    "pdf": 10,
    "jpg": 1,
    "txt": 4,
    "gif": 1
   },
-  "publishedPrograms": 2527,
-  "publishedAssociations": 3512,
+  "publishedPrograms": 2528,
+  "publishedAssociations": 3513,
   "reviewStates": {
    "covered_by_existing": 13,
-   "linked": 2791,
+   "linked": 2792,
    "replacement_available": 1,
    "requires_external_confirmation": 88,
    "reviewed_not_linked": 2008
@@ -2246,6 +2246,34 @@
    "reviewState": "linked",
    "reviewLabel": "혜택에 연결",
    "reviewReason": "코디네이터가 2026.5.12 계룡시청 가족돌봄과의 공식 민원사무편람 게시물·첨부36032 전체 HWP1497자 및 현행1933095 제1~8조와 부칙, 실제 수록 화장장려금 혜택을 대조했다. 새 원본은 1년 이상 거주 확인란을 제거하고 사망·사산/영아·분묘개장 유형, 본인계좌·관계·서명·공동이용 동의와 10만원/5만원 지급기준·6개월 접수를 담아 현행 조례와 맞는다. 옛 ordin17575933을 덮어쓰지 않고 별도 agency 원본으로 정확히 해당 혜택에 제공한다."
+  },
+  {
+   "formId": "agency-48120-baro-453-1401",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "전세보증금반환보증 보증료 지원 신청서 및 서약서",
+   "regionCode": "48120",
+   "format": "hwp",
+   "bytes": 50176,
+   "sha256": "7b216cf387911fa163115c3b87a3ad09d228f7db048c3ee4040bbc2707a30456",
+   "sourceUrl": "https://baro.gyeongnam.go.kr/baro/fileDown.es?file_no=1401&filenameOrg=%5B%EA%B3%B5%EA%B3%A0%EB%AC%B8%20%EB%B6%99%EC%9E%84%20%EC%84%9C%EC%8B%9D%5D%20%EC%A0%84%EC%84%B8%EB%B3%B4%EC%A6%9D%EA%B8%88%EB%B0%98%ED%99%98%EB%B3%B4%EC%A6%9D%20%EB%B3%B4%EC%A6%9D%EB%A3%8C%20%EC%A7%80%EC%9B%90%EC%82%AC%EC%97%85%20%EC%8B%A0%EC%B2%AD%EC%84%9C%20%EB%B0%8F%20%EC%84%9C%EC%95%BD%EC%84%9C.hwp&service_no=453",
+   "downloadedAt": "2026-10-22T15:16:01.630742+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://baro.gyeongnam.go.kr/baro/serviceView.es?mid=a10202000000&service_no=453",
+   "finalUrl": "https://baro.gyeongnam.go.kr/baro/fileDown.es?file_no=1401&filenameOrg=%5B%EA%B3%B5%EA%B3%A0%EB%AC%B8%20%EB%B6%99%EC%9E%84%20%EC%84%9C%EC%8B%9D%5D%20%EC%A0%84%EC%84%B8%EB%B3%B4%EC%A6%9D%EA%B8%88%EB%B0%98%ED%99%98%EB%B3%B4%EC%A6%9D%20%EB%B3%B4%EC%A6%9D%EB%A3%8C%20%EC%A7%80%EC%9B%90%EC%82%AC%EC%97%85%20%EC%8B%A0%EC%B2%AD%EC%84%9C%20%EB%B0%8F%20%EC%84%9C%EC%95%BD%EC%84%9C.hwp&service_no=453",
+   "attachmentId": "1401",
+   "relativePath": "agency-48120-baro-453-1401.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g48120.gov24-567000000116",
+     "name": "전세보증금반환보증 보증료 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "정확한 정부24 567000000116의 현재 국비 보증료 사업과 경남바로서비스453의 창원 거주·보증금3억원 이하·최대40만원·구청접수 경로를 대조했다. 공식 HWP50176바이트/SHA와 같은 페이지의 PDF3쪽 전체를 검토했으며 개인 신청서1~2쪽과 2026서약서3쪽이 한 원본이다. 인쇄된 계좌는 신청인 본인 명의에 한정하고 개인정보 동의·유의사항·서명과 별도 증빙을 함께 안내한다. 예산 소진 시 조기 종료와 2026년 사용 제한을 명시했다. 2026-10-23 총괄이 공식 안내와 정확한 파일1401을 다시 GET하여 동일 원본을 확인했다. 기존 지방 조례2억원 서식22159377을 바꾸거나 승인한 것이 아니라 현재 국비사업용 별도 원본을 추가한다."
   },
   {
    "formId": "law-17621759",
