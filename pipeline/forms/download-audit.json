@@ -1,14 +1,14 @@
 {
  "schema": 1,
- "generatedAt": "2026-10-22T15:18:33.059780+00:00",
+ "generatedAt": "2026-10-22T17:58:59.183899+00:00",
  "scope": "Actual downloaded originals; saved files are not automatically approved for a benefit.",
  "summary": {
-  "savedOriginals": 4902,
-  "uniqueOriginalContents": 4866,
+  "savedOriginals": 4904,
+  "uniqueOriginalContents": 4868,
   "formats": {
    "gif": 5,
    "htm": 1,
-   "hwp": 4406,
+   "hwp": 4408,
    "hwp3": 8,
    "hwpx": 457,
    "jpg": 1,
@@ -16,27 +16,27 @@
    "protected_hwp": 6,
    "txt": 8
   },
-  "readableHangulOriginals": 4863,
-  "publishedOriginals": 2792,
+  "readableHangulOriginals": 4865,
+  "publishedOriginals": 2796,
   "publishedFormats": {
-   "hwp": 2483,
-   "hwpx": 293,
+   "hwp": 2486,
+   "hwpx": 294,
    "pdf": 10,
    "jpg": 1,
    "txt": 4,
    "gif": 1
   },
-  "publishedPrograms": 2528,
-  "publishedAssociations": 3513,
+  "publishedPrograms": 2532,
+  "publishedAssociations": 3519,
   "reviewStates": {
-   "covered_by_existing": 13,
-   "linked": 2792,
+   "covered_by_existing": 14,
+   "linked": 2796,
    "replacement_available": 1,
-   "requires_external_confirmation": 88,
-   "reviewed_not_linked": 2008
+   "requires_external_confirmation": 84,
+   "reviewed_not_linked": 2009
   },
   "unavailableSourceAttachments": 4,
-  "unpublishedOriginals": 2110
+  "unpublishedOriginals": 2108
  },
  "forms": [
   {
@@ -2246,6 +2246,66 @@
    "reviewState": "linked",
    "reviewLabel": "혜택에 연결",
    "reviewReason": "코디네이터가 2026.5.12 계룡시청 가족돌봄과의 공식 민원사무편람 게시물·첨부36032 전체 HWP1497자 및 현행1933095 제1~8조와 부칙, 실제 수록 화장장려금 혜택을 대조했다. 새 원본은 1년 이상 거주 확인란을 제거하고 사망·사산/영아·분묘개장 유형, 본인계좌·관계·서명·공동이용 동의와 10만원/5만원 지급기준·6개월 접수를 담아 현행 조례와 맞는다. 옛 ordin17575933을 덮어쓰지 않고 별도 agency 원본으로 정확히 해당 혜택에 제공한다."
+  },
+  {
+   "formId": "agency-47000-bokjiro-wlf00004401-allowance-application",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "경상북도 의사상자 특별위로금·수당지급 신청서",
+   "regionCode": "47000",
+   "format": "hwp",
+   "bytes": 15872,
+   "sha256": "6402b5bea3df64d266234775f15b05d8dc76c4098391a0c6ae1e73bc9601d552",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20240703UUWBM1634190092425119&atcflSn=1&wlfareInfoId=WLF00004401",
+   "downloadedAt": "2026-10-22T17:36:20.891313+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004401&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20240703UUWBM1634190092425119&atcflSn=1&wlfareInfoId=WLF00004401",
+   "attachmentId": "20240703UUWBM1634190092425119",
+   "relativePath": "agency-47000-bokjiro-wlf00004401-allowance-application.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "s47000.bokjiro-WLF00004401",
+     "name": "경상북도의사상자 지원"
+    },
+    {
+     "id": "s47000.gov24-647000000122",
+     "name": "의사상자 예우 및 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "2026-10-23 총괄이 정확한 복지로WLF00004401의 현재 배포 HTML과 독립 신청서 atcflId20240703UUWBM1634190092425119를 다시 GET하여 SHA/15872바이트를 대조했다. 전체 Section0 826자와 실제 한글 원본1쪽을 모두 읽고 보상금 종류·현행10/8/5만원·신청인/수신기관·서명·증빙·정보동의가 빈 신청서임을 확인했다. 정확한 정부24 647000000122도 동일 지급대상/수당/특별위로금/시군청접수와 신청서/등본/가족/통장사본을 요구한다. 과거 인용조문과 복지로의2024기준 잔존은 조건과sourceIssues로 보존하고 원문은 수정하지 않는다. 명부가 포함된 별도2026지침은 공개첨부에서 차단한다. 옛 법령포털22706053의5/3/2만원 원본은 그대로 미승인 유지하며 별개기관원본만2개 사업에 추가한다."
+  },
+  {
+   "formId": "agency-47230-health-kit-080701",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "임신준비 키트 지원 신청서",
+   "regionCode": "47230",
+   "format": "hwp",
+   "bytes": 102912,
+   "sha256": "f1e5886e5e39ead2ffe928b62b24b32607a52af14a0bf2f5cdafa65966329005",
+   "sourceUrl": "https://www.yc.go.kr/common/jsp/common/contentFileDownload.jsp?path=%2Fhealth%2F08%2F&file=%EC%9E%84%EC%8B%A0%EC%A4%80%EB%B9%84+%ED%82%A4%ED%8A%B8+%EC%A7%80%EC%9B%90+%EC%82%AC%EC%97%85+%EC%8B%A0%EC%B2%AD%EC%84%9C.hwp",
+   "downloadedAt": "2026-10-22T17:48:03.501755+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.yc.go.kr/health/contents.do?mId=0807010000",
+   "finalUrl": "https://www.yc.go.kr/common/jsp/common/contentFileDownload.jsp?path=%2Fhealth%2F08%2F&file=%EC%9E%84%EC%8B%A0%EC%A4%80%EB%B9%84+%ED%82%A4%ED%8A%B8+%EC%A7%80%EC%9B%90+%EC%82%AC%EC%97%85+%EC%8B%A0%EC%B2%AD%EC%84%9C.hwp",
+   "attachmentId": "임신준비 키트 지원 사업 신청서.hwp",
+   "relativePath": "agency-47230-health-kit-080701.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g47230.bokjiro-WLF00004929",
+     "name": "예비·신혼부부 임신준비물품 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "2026-10-23 총괄이 영천시 보건소의 정확한 임신준비 키트 안내(c27)와 해당 다운로드를 다시 GET하여 102912바이트/SHA를 확인했다. 실제 한글1쪽 전체를 시각 검토했고, 신청인·배우자 정보와 예비/기혼 표시·1가구1회확인·영천시장 수신·개인정보동의·혼인/예식증빙·주소확인란이 빈 양식임을 확인했다. 복지로WLF00004929의 정확한 지원대상과 키트 지원 부분 및 그곳의 동일전본문 별도첨부를 교차검토했다. 키트 소진 종료와 현장 수령 조건은 유지하고 건강검진 이용권 또는 산모 본인부담금 환급에 확대하지 않는다. 전체본문이 같은 복지로 배포본은 SHA차이를 증거로만 남겨 중복 신청서를 추가하지 않는다. 기존17542133의 환급형 원본 상태와 바이트는 그대로 유지한다."
   },
   {
    "formId": "agency-48120-baro-453-1401",
@@ -12904,9 +12964,9 @@
    "relativePath": "ordin-17770713.hwp",
    "usableHangul": true,
    "publishedPrograms": [],
-   "reviewState": "requires_external_confirmation",
-   "reviewLabel": "공식 사용 확인 필요",
-   "reviewReason": "공식MCP 재검색에서2026.10.12 시행의 새 상위조례2178167을 확보하고 전체9조를 읽었다. 현행은 지정마을 주민·외국인, 바우처카드 결제 및 운송사업자 비용청구를 규정하고 기존 시행규칙1633745도 검색된다. 그러나 읍면장 신규마을 지정 신청서를 통합돌봄 메뉴판의 선정마을 주민 이용사업 신청자료로 제공한다는 직접 안내는 없으며 새 상위조례 제5조의 별지1은 운송사업자 지원청구로 원본과 다른 문서이다. 입법예고/현행 제명변경은 확인했으나 기존 원본의 해당사업 접수용도는 미해소이다."
+   "reviewState": "reviewed_not_linked",
+   "reviewLabel": "신청인이 작성하는 서류 아님",
+   "reviewReason": "2026-10-23 원본12288바이트/SHA와 전체239자, 현행 규칙1633745 제2조제2항·제3조 및 새 상위조례2178167 제3조·제5조·부칙을 대조하고 독립 재검토했다. 별지1은 읍·면장이 마을 위치·가구·거리·버스 현황을 작성해 군수에게 제출하는 행정 마을선정용이다. 사이트의 정확한 희망택시 사업은 이미 지정된 마을 주민의 탑승 이용으로, 규칙은 주민의 위성콜 요청을, 새 조례는 지정마을 주민 이용과 운송사업자 비용청구를 구분한다. 주민이 직접 내는 택시 이용신청서나 운송업자 청구서로 붙이지 않는다. 검색 실패가 아니라 작성 주체와 행정 단계의 적극적 불일치로 비신청인으로 분류하며 해당 교통복지나 주민 이용권이 없다는 뜻은 아니다."
   },
   {
    "formId": "ordin-17771051",
@@ -76775,10 +76835,15 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-21714439.hwp",
    "usableHangul": true,
-   "publishedPrograms": [],
-   "reviewState": "requires_external_confirmation",
-   "reviewLabel": "공식 사용 확인 필요",
-   "reviewReason": "현재 학습관 수강안내는 정규프로그램4만원과1인1과목 면제·증빙을 명시한다. 다만 대상 사업2030혼밥 강좌가 그 유료 정규과정에 포함되는지 또는 별도 특화과정인지 공개자료에서 확정하지 못해, 제1호 면제서식을 해당 강좌용으로 연결하지 않는다. 면제 제도 자체가 없다는 뜻은 아니다."
+   "publishedPrograms": [
+    {
+     "id": "g43110.gov24-571000000197",
+     "name": "2030 혼밥족을 위한 건강밥상"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "2026-10-23 현재 운영기관의 실제 강좌 목록과 상세(6722 상반기, 7189 하반기)를 확인했다. 2030 혼밥족을 위한 건강밥상이 수강료4만원의 정규프로그램(C0020001)이고 학습비 면제를 적용하는 강좌(useExempt:true)임을 명시하여 이전의 유료과정 여부 미확정이 해소됐다. 2026.9.1~12.15 진행 중인 하반기 과정과 현행 규칙2119115 제6조제3항의 교육종료 전 별지1 제출, 제5조의 국가유공자·유족/수급자/한부모/등록장애인, 제6조제2항 기당1과목을 대조했다. 운영기관 수강안내는 면제 인터넷·방문 신청과 증빙서류 제출을 안내한다. 법령포털 원본15872바이트의 SHA와 전체 Section0의 면제 사유·신청인·교육기간·증빙·수신기관을 다시 확인했다. 일반 수강신청서 또는 환불청구로 표시하지 않고 해당 수강생의 학습비 면제에만 연결한다."
   },
   {
    "formId": "ordin-21714441",
@@ -93100,10 +93165,19 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-22425515.hwpx",
    "usableHangul": true,
-   "publishedPrograms": [],
-   "reviewState": "requires_external_confirmation",
-   "reviewLabel": "공식 사용 확인 필요",
-   "reviewReason": "정부242026.8.9 최신 배우자수당 안내가 별지4 지급신청 및 대리 신청시 가족관계·위임장을 지정함을 직접 확인했다. 별지6은 대리인의 계좌에서 수령하는 별도 금융 절차로, 대리 신청 허용만으로 수령까지 허용된다고 추정할 수 없다. 현재 배우자수당에서 대리수령6호를 받는 직접 근거가 남아 미해소이다."
+   "publishedPrograms": [
+    {
+     "id": "g11215.bokjiro-WLF00002162",
+     "name": "국가보훈대상자 예우 및 공훈선양"
+    },
+    {
+     "id": "g11215.gov24-304000000233",
+     "name": "참전유공자 배우자 복지수당 지급"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "2026-10-23 광진구 공식 민원편람6553903(등록2026-08-05)을 직접 GET하였다. 이 페이지는 참전유공자 배우자 복지수당의 월10만원·연중상시·구청10층 복지돌봄과 접수와 두 근거 조례를 명시하고, 별지4 지급신청서·별지5 신청위임장·별지6 대리수령신청서를 별개 다운로드로 배포한다. fileSn=3 원본을 실제 GET한 SHA3759d8f21c50aaa43b5960021da8b6a874acf6fdde2caa017dbe36ae792d2909/59139B가 법령포털 원본22425515 및22425553과 각각 정확히 일치한다. HWPX의 Contents/section0.xml 전체974자를 읽고 BinData0개를 확인했다. 본문은 국가보훈조례2060833 제9조의5에 따른 참전유공자 배우자 복지수당 대리수령, 지급사유·대리수령기간·법정대리인·친족관계·계좌·서명·구비서류를 명시한다. 현재 정부24 304000000233과 복지로WLF00002162의 배우자 복지수당 부분에 한정한다. 304000000122 사망위로금과304000000123 일반 보훈예우수당에는 연결하지 않는다. 이전 보류의 핵심인 현재 별지6 직접 배포 근거를 새로 확보했으며 신청 위임을 대리수령으로 추정한 것이 아니다."
   },
   {
    "formId": "ordin-22425533",
@@ -93206,9 +93280,9 @@
    "relativePath": "ordin-22425553.hwpx",
    "usableHangul": true,
    "publishedPrograms": [],
-   "reviewState": "requires_external_confirmation",
-   "reviewLabel": "공식 사용 확인 필요",
-   "reviewReason": "현재 정부24 배우자 복지수당 안내는 별지4 지급신청과 대리신청 시 위임장·관계증빙만 요구한다. 원본 별지6의 제3자 대리수령, 압류·치매 등의 사유 및 관계 제한을 허용하는 현행 지침은 찾지 못했다. 신청 대리를 급여 대리수령으로 확대하지 않는다."
+   "reviewState": "covered_by_existing",
+   "reviewLabel": "게시된 대체 서식으로 안내",
+   "reviewReason": "2026-10-23 현행 광진구 민원편람6553903이 두 근거 조례와 별지6 대리수령 신청서를 직접 배포하며, 실제 기관 파일 및 법령포털22425553·22425515가 모두59139바이트/SHA3759d8f21c50aaa43b5960021da8b6a874acf6fdde2caa017dbe36ae792d2909로 동일함을 재확인했다. 전체 Section0와 실제 한글1쪽을 검토했다. 본문이 인용하는 국가보훈조례2060833에 연결된22425515를 정부24 304000000233 및 복지로WLF00002162의 참전유공자 배우자수당 부분에 실제 게시했고, 두 화면자료의 조건부 링크와 공개원본파일 SHA를 확인했다. 같은 원본을 두 번 첨부하지 않고 이 동일 바이트의 실제 게시본으로 안내한다. 원래22425553의 법규ID·원본·SHA는 보존한다. 사망위로금이나 일반 보훈예우수당의 대리수령으로 확대하지 않는다."
   },
   {
    "formId": "ordin-22427209",

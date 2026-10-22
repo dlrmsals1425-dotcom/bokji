@@ -1,15 +1,15 @@
 {
  "schema": 1,
- "generatedAt": "2026-10-22T15:19:06.057348+00:00",
+ "generatedAt": "2026-10-22T17:58:50.108819+00:00",
  "baselineCommit": "dff0a8195d740254bc3dfbe792fd0b8c0c4d7d31",
  "scopeForms": 4006,
  "note": "Every fixed-scope original remains visible. Linked counts require a real published file; covered counts require the exact replacement SHA and program links to be published. Source retrieval and queue creation do not resolve a review.",
  "fullScopeMatchingComplete": false,
  "counts": {
-  "reviewed_not_linked": 1981,
-  "linked": 1923,
-  "requires_external_confirmation": 88,
-  "covered_by_existing": 13,
+  "reviewed_not_linked": 1982,
+  "linked": 1925,
+  "requires_external_confirmation": 84,
+  "covered_by_existing": 14,
   "replacement_available": 1
  },
  "sourceReviews": 4006,
@@ -7275,10 +7275,10 @@
    "lawId": "1633745",
    "title": "[별지 제1호서식] 희망택시 운행대상 마을 신청서",
    "format": "hwp",
-   "state": "requires_external_confirmation",
+   "state": "reviewed_not_linked",
    "review": {
-    "disposition": "requires_external_confirmation",
-    "reason": "공식MCP 재검색에서2026.10.12 시행의 새 상위조례2178167을 확보하고 전체9조를 읽었다. 현행은 지정마을 주민·외국인, 바우처카드 결제 및 운송사업자 비용청구를 규정하고 기존 시행규칙1633745도 검색된다. 그러나 읍면장 신규마을 지정 신청서를 통합돌봄 메뉴판의 선정마을 주민 이용사업 신청자료로 제공한다는 직접 안내는 없으며 새 상위조례 제5조의 별지1은 운송사업자 지원청구로 원본과 다른 문서이다. 입법예고/현행 제명변경은 확인했으나 기존 원본의 해당사업 접수용도는 미해소이다.",
+    "disposition": "non_applicant",
+    "reason": "2026-10-23 원본12288바이트/SHA와 전체239자, 현행 규칙1633745 제2조제2항·제3조 및 새 상위조례2178167 제3조·제5조·부칙을 대조하고 독립 재검토했다. 별지1은 읍·면장이 마을 위치·가구·거리·버스 현황을 작성해 군수에게 제출하는 행정 마을선정용이다. 사이트의 정확한 희망택시 사업은 이미 지정된 마을 주민의 탑승 이용으로, 규칙은 주민의 위성콜 요청을, 새 조례는 지정마을 주민 이용과 운송사업자 비용청구를 구분한다. 주민이 직접 내는 택시 이용신청서나 운송업자 청구서로 붙이지 않는다. 검색 실패가 아니라 작성 주체와 행정 단계의 적극적 불일치로 비신청인으로 분류하며 해당 교통복지나 주민 이용권이 없다는 뜻은 아니다.",
     "report": "pipeline/forms/reviews/unmatched-dispositions-round1010.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1633745",
@@ -50216,10 +50216,13 @@
    "lawId": "2119115",
    "title": "[별지 제1호서식] 학습비 면제 신청서",
    "format": "hwp",
-   "state": "requires_external_confirmation",
+   "programIds": [
+    "g43110.gov24-571000000197"
+   ],
+   "state": "linked",
    "review": {
-    "disposition": "requires_external_confirmation",
-    "reason": "현재 학습관 수강안내는 정규프로그램4만원과1인1과목 면제·증빙을 명시한다. 다만 대상 사업2030혼밥 강좌가 그 유료 정규과정에 포함되는지 또는 별도 특화과정인지 공개자료에서 확정하지 못해, 제1호 면제서식을 해당 강좌용으로 연결하지 않는다. 면제 제도 자체가 없다는 뜻은 아니다.",
+    "disposition": "approved",
+    "reason": "2026-10-23 현재 운영기관의 실제 강좌 목록과 상세(6722 상반기, 7189 하반기)를 확인했다. 2030 혼밥족을 위한 건강밥상이 수강료4만원의 정규프로그램(C0020001)이고 학습비 면제를 적용하는 강좌(useExempt:true)임을 명시하여 이전의 유료과정 여부 미확정이 해소됐다. 2026.9.1~12.15 진행 중인 하반기 과정과 현행 규칙2119115 제6조제3항의 교육종료 전 별지1 제출, 제5조의 국가유공자·유족/수급자/한부모/등록장애인, 제6조제2항 기당1과목을 대조했다. 운영기관 수강안내는 면제 인터넷·방문 신청과 증빙서류 제출을 안내한다. 법령포털 원본15872바이트의 SHA와 전체 Section0의 면제 사유·신청인·교육기간·증빙·수신기관을 다시 확인했다. 일반 수강신청서 또는 환불청구로 표시하지 않고 해당 수강생의 학습비 면제에만 연결한다.",
     "report": "pipeline/forms/reviews/unmatched-dispositions-round2056.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2119115",
@@ -60956,18 +60959,20 @@
    "lawId": "2060833",
    "title": "[별지 제6호서식] 배우자 복지수당 대리 수령 신청서<신설 2025.7.28.>",
    "format": "hwpx",
-   "state": "requires_external_confirmation",
+   "programIds": [
+    "g11215.bokjiro-WLF00002162",
+    "g11215.gov24-304000000233"
+   ],
+   "state": "linked",
    "review": {
-    "disposition": "requires_external_confirmation",
-    "reason": "정부242026.8.9 최신 배우자수당 안내가 별지4 지급신청 및 대리 신청시 가족관계·위임장을 지정함을 직접 확인했다. 별지6은 대리인의 계좌에서 수령하는 별도 금융 절차로, 대리 신청 허용만으로 수령까지 허용된다고 추정할 수 없다. 현재 배우자수당에서 대리수령6호를 받는 직접 근거가 남아 미해소이다.",
+    "disposition": "approved",
+    "reason": "2026-10-23 광진구 공식 민원편람6553903(등록2026-08-05)을 직접 GET하였다. 이 페이지는 참전유공자 배우자 복지수당의 월10만원·연중상시·구청10층 복지돌봄과 접수와 두 근거 조례를 명시하고, 별지4 지급신청서·별지5 신청위임장·별지6 대리수령신청서를 별개 다운로드로 배포한다. fileSn=3 원본을 실제 GET한 SHA3759d8f21c50aaa43b5960021da8b6a874acf6fdde2caa017dbe36ae792d2909/59139B가 법령포털 원본22425515 및22425553과 각각 정확히 일치한다. HWPX의 Contents/section0.xml 전체974자를 읽고 BinData0개를 확인했다. 본문은 국가보훈조례2060833 제9조의5에 따른 참전유공자 배우자 복지수당 대리수령, 지급사유·대리수령기간·법정대리인·친족관계·계좌·서명·구비서류를 명시한다. 현재 정부24 304000000233과 복지로WLF00002162의 배우자 복지수당 부분에 한정한다. 304000000122 사망위로금과304000000123 일반 보훈예우수당에는 연결하지 않는다. 이전 보류의 핵심인 현재 별지6 직접 배포 근거를 새로 확보했으며 신청 위임을 대리수령으로 추정한 것이 아니다.",
     "report": "pipeline/forms/reviews/unmatched-dispositions-round2041.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2060833",
     "relatedProgramIds": [
-     "g11215.bokjiro-WLF00002162",
-     "g11215.gov24-304000000122",
-     "g11215.gov24-304000000123",
-     "g11215.gov24-304000000233"
+     "g11215.gov24-304000000233",
+     "g11215.bokjiro-WLF00002162"
     ]
    }
   },
@@ -61051,16 +61056,28 @@
    "lawId": "2060759",
    "title": "[별지 제6호서식] 배우자 복지수당 대리 수령 신청서<신설 2025.7.28.>",
    "format": "hwpx",
-   "state": "requires_external_confirmation",
+   "state": "covered_by_existing",
    "review": {
-    "disposition": "requires_external_confirmation",
-    "reason": "현재 정부24 배우자 복지수당 안내는 별지4 지급신청과 대리신청 시 위임장·관계증빙만 요구한다. 원본 별지6의 제3자 대리수령, 압류·치매 등의 사유 및 관계 제한을 허용하는 현행 지침은 찾지 못했다. 신청 대리를 급여 대리수령으로 확대하지 않는다.",
+    "disposition": "covered_by_existing",
+    "reason": "2026-10-23 현행 광진구 민원편람6553903이 두 근거 조례와 별지6 대리수령 신청서를 직접 배포하며, 실제 기관 파일 및 법령포털22425553·22425515가 모두59139바이트/SHA3759d8f21c50aaa43b5960021da8b6a874acf6fdde2caa017dbe36ae792d2909로 동일함을 재확인했다. 전체 Section0와 실제 한글1쪽을 검토했다. 본문이 인용하는 국가보훈조례2060833에 연결된22425515를 정부24 304000000233 및 복지로WLF00002162의 참전유공자 배우자수당 부분에 실제 게시했고, 두 화면자료의 조건부 링크와 공개원본파일 SHA를 확인했다. 같은 원본을 두 번 첨부하지 않고 이 동일 바이트의 실제 게시본으로 안내한다. 원래22425553의 법규ID·원본·SHA는 보존한다. 사망위로금이나 일반 보훈예우수당의 대리수령으로 확대하지 않는다.",
     "report": "pipeline/forms/reviews/unmatched-dispositions-round1040.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2060759",
     "relatedProgramIds": [
-     "g11215.gov24-304000000233"
-    ]
+     "g11215.gov24-304000000233",
+     "g11215.bokjiro-WLF00002162"
+    ],
+    "coverageReferences": [
+     {
+      "formId": "ordin-22425515",
+      "sha256": "3759d8f21c50aaa43b5960021da8b6a874acf6fdde2caa017dbe36ae792d2909",
+      "programIds": [
+       "g11215.bokjiro-WLF00002162",
+       "g11215.gov24-304000000233"
+      ]
+     }
+    ],
+    "coveragePublicationConfirmed": true
    }
   },
   {

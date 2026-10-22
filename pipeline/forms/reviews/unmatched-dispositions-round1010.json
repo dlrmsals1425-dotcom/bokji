@@ -880,57 +880,80 @@
         "sourceArticlesAvailable": true,
         "sourceArticleCount": 5
       },
-      "disposition": "requires_external_confirmation",
-      "reason": "공식MCP 재검색에서2026.10.12 시행의 새 상위조례2178167을 확보하고 전체9조를 읽었다. 현행은 지정마을 주민·외국인, 바우처카드 결제 및 운송사업자 비용청구를 규정하고 기존 시행규칙1633745도 검색된다. 그러나 읍면장 신규마을 지정 신청서를 통합돌봄 메뉴판의 선정마을 주민 이용사업 신청자료로 제공한다는 직접 안내는 없으며 새 상위조례 제5조의 별지1은 운송사업자 지원청구로 원본과 다른 문서이다. 입법예고/현행 제명변경은 확인했으나 기존 원본의 해당사업 접수용도는 미해소이다.",
+      "disposition": "non_applicant",
+      "reason": "2026-10-23 원본12288바이트/SHA와 전체239자, 현행 규칙1633745 제2조제2항·제3조 및 새 상위조례2178167 제3조·제5조·부칙을 대조하고 독립 재검토했다. 별지1은 읍·면장이 마을 위치·가구·거리·버스 현황을 작성해 군수에게 제출하는 행정 마을선정용이다. 사이트의 정확한 희망택시 사업은 이미 지정된 마을 주민의 탑승 이용으로, 규칙은 주민의 위성콜 요청을, 새 조례는 지정마을 주민 이용과 운송사업자 비용청구를 구분한다. 주민이 직접 내는 택시 이용신청서나 운송업자 청구서로 붙이지 않는다. 검색 실패가 아니라 작성 주체와 행정 단계의 적극적 불일치로 비신청인으로 분류하며 해당 교통복지나 주민 이용권이 없다는 뜻은 아니다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
           "programId": "g51810.icare-0083-1489635-1-3-6",
           "disposition": "not_connected",
-          "reason": "인제군 제2조제2항과 별지1 전체는 읍면장이 가구수·승강장거리·버스운행·이동수단을 조사해 마을 자체를 운행대상으로 선정 신청하는 문서이다. icare 후보는 이미 선정된 대상마을 주민의 희망택시 이용을 안내하며 신청절차·지역법 근거가 없고 owner도 전국공통으로 표시돼 있다. 신규 대상마을 선정 서식을 그 이용사업의 기관용 신청으로 연결할 관계를 추가 확인해야 한다.",
-          "applyType": "unknown",
-          "applyMethod": null,
-          "target": "희망택시 대상마을 거주자"
+          "reason": "2026-10-23 원본12288바이트/SHA와 전체239자, 현행 규칙1633745 제2조제2항·제3조 및 새 상위조례2178167 제3조·제5조·부칙을 대조하고 독립 재검토했다. 별지1은 읍·면장이 마을 위치·가구·거리·버스 현황을 작성해 군수에게 제출하는 행정 마을선정용이다. 사이트의 정확한 희망택시 사업은 이미 지정된 마을 주민의 탑승 이용으로, 규칙은 주민의 위성콜 요청을, 새 조례는 지정마을 주민 이용과 운송사업자 비용청구를 구분한다. 주민이 직접 내는 택시 이용신청서나 운송업자 청구서로 붙이지 않는다. 검색 실패가 아니라 작성 주체와 행정 단계의 적극적 불일치로 비신청인으로 분류하며 해당 교통복지나 주민 이용권이 없다는 뜻은 아니다."
         }
       ],
       "relatedArticles": [
         "제2조(대상마을 선정기준)① 「인제군 농어촌버스 미운행지역 희망택시 운행 및 이용주민 지원에 관한 조례」(이하 \"조례\"라 한다) 제2조제2호의 희망택시 운행대상마을은 다음 각 호의 어느 하나에 해당하는 마을 중, 읍·면장의 추천을 받아 인제군수(이하 “군수”라 한다)가 정한다.1. 마을과 최단거리에 있는 버스승강장(버스 승하차 표지판 포함)에서 마을회관(마을회관이 없는 경우 마을정자, 경로당, 마을 중심건물)까지 도로(「도로법」 제10조의 도로 및 비법정도로, 농로 포함)기준으로 500미터 이상 떨어져 있으며 5가구 이상 거주하는 마을2. 농어촌버스 및 공영버스 노선폐지로 버스 운행이 중단된 마을② 제1항에 해당하는 경우 읍·면장은 별지 제1호서식 희망택시 운행   대상마을 신청서를 작성하여 군수에게 신청하고, 군수는 현지 확인을   거쳐 대상마을을 선정한다.③ 제1항에도 불구하고 군수가 그 밖에 도로여건, 대중교통과 연계성, 생활 편의시설 및 터미널 등 대중교통 시설 접근성 개선 등을 위해 희망택시가 필요하다고 인정하는 경우에는 희망택시 운행대상마을로 선정할 수 있다.",
         "제3조(이용방법) 희망택시를 이용하고자 하는 자는 인제브랜드택시(이하 “위성 콜”이라 한다)를 이용하여 희망택시 운송사업자에게 운행을 요청하여야 한다.(택시 정류장 등에 정차하고 있는 택시를 이용할 경우 위성콜을 사용하지 아니하여도 된다.) 이 경우 위성 콜을 접수한 운송사업자는 최대한 빠른 시간 안에 이용객에게 희망택시를 제공하여야 한다."
       ],
-      "reviewedBy": "codex-national_form_audit",
-      "reviewedAt": "2026-10-18",
+      "reviewedBy": "codex-coordinator-with-independent-review",
+      "reviewedAt": "2026-10-23",
       "sourceBodyPath": "logs/forms-completion/law-bodies/1633745.json.gz",
       "sourceBodySHA256": "f7c337a0aef9e83d7825f834e2a3796bfe90304fecc9607cc69bc95001d0c857",
-      "checkedAt": "2026-10-19",
+      "checkedAt": "2026-10-23",
       "officialFollowup": {
-        "checkedAt": "2026-10-19",
-        "sourceResult": "logs/forms-completion/official-followup/team1/team1-results.json",
-        "sourceResultSHA256": "1636a6e15bbf67808ab71c4d605f84f84d98ec0f4e389ea11ddb598de11ab1b8",
-        "proposedStatus": "confirmed_unresolved",
-        "officialEvidence": [
-          {
-            "url": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2178167",
-            "status": "official_mcp_full_articles_read",
-            "newEvidence": "2026.10.12 새 상위조례 제2·3·5조의 주민 이용/운송사업자 비용청구 구별",
-            "savedEvidence": [
-              {
-                "path": "logs/forms-completion/official-followup/team1/inje-current-law-mcp.json",
-                "sha256": "5218adf3d17a3d171f0381792da0daea6118ebe9ccbc30e90db366cf51f6490a",
-                "kind": "official_evidence_metadata"
-              }
-            ]
-          },
-          {
-            "url": "https://inje.go.kr/mobile/notice/notify?articleSeq=244621",
-            "status": "official_indexed_notice_reviewed",
-            "newEvidence": "2026 정주형택시 운행사업자 모집은 사업자 참여절차이며 읍면장 신규대상마을 신청과 다름",
-            "savedEvidence": []
-          }
-        ],
-        "allFormsConnected": false
+        "checkedAt": "2026-10-23",
+        "sourceResultSHA256": "f2d639115f7d99860d41af5c055e41fa3c01f79d3fe8dec132926685c6d945a0",
+        "proposedStatus": "non_applicant_administrative_village_selection",
+        "allOriginalsMatched": false
       },
       "relatedProgramIds": [
         "g51810.icare-0083-1489635-1-3-6"
+      ],
+      "priorDispositions": [
+        {
+          "checkedAt": "2026-10-19",
+          "disposition": "requires_external_confirmation",
+          "reason": "공식MCP 재검색에서2026.10.12 시행의 새 상위조례2178167을 확보하고 전체9조를 읽었다. 현행은 지정마을 주민·외국인, 바우처카드 결제 및 운송사업자 비용청구를 규정하고 기존 시행규칙1633745도 검색된다. 그러나 읍면장 신규마을 지정 신청서를 통합돌봄 메뉴판의 선정마을 주민 이용사업 신청자료로 제공한다는 직접 안내는 없으며 새 상위조례 제5조의 별지1은 운송사업자 지원청구로 원본과 다른 문서이다. 입법예고/현행 제명변경은 확인했으나 기존 원본의 해당사업 접수용도는 미해소이다.",
+          "relatedProgramIds": [
+            "g51810.icare-0083-1489635-1-3-6"
+          ],
+          "reviewedProgramPairs": [
+            {
+              "programId": "g51810.icare-0083-1489635-1-3-6",
+              "disposition": "not_connected",
+              "reason": "인제군 제2조제2항과 별지1 전체는 읍면장이 가구수·승강장거리·버스운행·이동수단을 조사해 마을 자체를 운행대상으로 선정 신청하는 문서이다. icare 후보는 이미 선정된 대상마을 주민의 희망택시 이용을 안내하며 신청절차·지역법 근거가 없고 owner도 전국공통으로 표시돼 있다. 신규 대상마을 선정 서식을 그 이용사업의 기관용 신청으로 연결할 관계를 추가 확인해야 한다.",
+              "applyType": "unknown",
+              "applyMethod": null,
+              "target": "희망택시 대상마을 거주자"
+            }
+          ],
+          "officialFollowup": {
+            "checkedAt": "2026-10-19",
+            "sourceResult": "logs/forms-completion/official-followup/team1/team1-results.json",
+            "sourceResultSHA256": "1636a6e15bbf67808ab71c4d605f84f84d98ec0f4e389ea11ddb598de11ab1b8",
+            "proposedStatus": "confirmed_unresolved",
+            "officialEvidence": [
+              {
+                "url": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2178167",
+                "status": "official_mcp_full_articles_read",
+                "newEvidence": "2026.10.12 새 상위조례 제2·3·5조의 주민 이용/운송사업자 비용청구 구별",
+                "savedEvidence": [
+                  {
+                    "path": "logs/forms-completion/official-followup/team1/inje-current-law-mcp.json",
+                    "sha256": "5218adf3d17a3d171f0381792da0daea6118ebe9ccbc30e90db366cf51f6490a",
+                    "kind": "official_evidence_metadata"
+                  }
+                ]
+              },
+              {
+                "url": "https://inje.go.kr/mobile/notice/notify?articleSeq=244621",
+                "status": "official_indexed_notice_reviewed",
+                "newEvidence": "2026 정주형택시 운행사업자 모집은 사업자 참여절차이며 읍면장 신규대상마을 신청과 다름",
+                "savedEvidence": []
+              }
+            ],
+            "allFormsConnected": false
+          }
+        }
       ]
     },
     {

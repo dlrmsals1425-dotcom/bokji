@@ -212,7 +212,16 @@ const TRAILING_CONSENT = /(미\s*동\s*의|동\s*의(?:\s*하지\s*않(?:음|습
 const CONSENT_INFO_HEADING = /^(?:수집[·ㆍ]?이용목적|개인정보수집항목)$/;
 const INSTRUCTION_HEADING = /^(?:[<〈]?\s*)?(?:작성\s*방법(?:\s*및\s*유의\s*사항)?|처리\s*절차)(?:\s*[>〉])?$/;
 const INSTRUCTION_EXAMPLE = /(?:\[ *\]|□|☐).*(?:안에|에)\s*["“']?[√✓].*(?:표시|표를)|^(?:※\s*)?(?:예시|작성\s*예|기재\s*예|예\s*[:：])/;
+/** 인쇄된 별지 표식·개정 이력과 설명문은 옆의 여백에 이름을 부여하지 않는다. */
+function printedReferenceLabel(label: string): boolean {
+  const compact = label.normalize("NFKC").replace(/\s+/g, "").replace(/^[■□○●]/, "")
+    .replace(/[【〔]/g, "[").replace(/[】〕]/g, "]").replace(/[ㆍᆞ]/g, "·");
+  return /^(?:[^<>\[\]]*(?:법|조례|규칙|지침))?\[?(?:별지(?:제?\d+(?:[-의]\d+)?호?)?(?:서식)?|서식제?\d+호)\]?(?:<[^<>]*>|\([^()]*관련\)|제\d+조(?:제\d+항)?관련)*$/.test(compact)
+    || /^<(?:개정|신설)[^<>]*>$/.test(compact)
+    || /접수[ㆍ·]?보관되지않|(?:신청|제출|동의|확인|허가)합니다/.test(compact);
+}
 const shortFieldLabel = (label: string | null) => !!label && label.length <= 50 && /[가-힣A-Za-z]/.test(label)
+  && !printedReferenceLabel(label)
   && !/작성\s*방법|처리\s*절차|유의\s*사항|구비\s*서류|제출\s*서류|신청서\s*작성|귀하|\d\s*쪽|\[ *\]|[□☐]/.test(label)
   && !/(?:신청서|위임장|이사장|시장|군수|구청장|도지사|장관)\s*$/.test(label);
 

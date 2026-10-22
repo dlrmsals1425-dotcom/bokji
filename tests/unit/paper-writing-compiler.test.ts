@@ -44,6 +44,27 @@ const hostTable = (table: string) => `<hp:p paraPrIDRef="0"><hp:run charPrIDRef=
 const bodySection = (body: string) => `<hs:sec xmlns:hs="http://www.hancom.co.kr/hwpml/2011/section" xmlns:hp="http://www.hancom.co.kr/hwpml/2011/paragraph">${body}</hs:sec>`;
 
 describe("paper-writing compiler — actual source semantics", () => {
+  it.each(["[별지 제1호 서식]", "별지 제2호서식", "【별지 제1호서식】", "■ [별지 제4호 서식]",
+    "[서식 3호]", "[별지 제3-1호서식]", "[별지 서식]", "[별지]",
+    "■ 고용보험법 시행규칙[별지 제107호서식] <개정 2026. 8. 19.>",
+    "〔별지 제1호서식〕<개정 2024. 1. 26.>", "【별지 제1호서식】 제6조제1항 관련",
+    "<개정 2025.4.25. 조례 제2953호>", "<개정이유 및 주요내용>",
+    "※ 아래의 내용은 서식 작성 시 필요한 사항을 안내하는 부분으로 접수ㆍ보관되지 않습니다.",
+    "「성주군 인구정책 조례」 및 동법 시행규칙에 따라 위와 같이 신청합니다. 년 월 일",
+  ])("별지 표식·안내문 %s 옆의 여백은 입력란으로 열지 않는다", label => {
+    const { manifest } = synthetic(section(cell(0, 0, paragraph(label)) + cell(0, 1, paragraph())));
+    expect(Object.keys(manifest.slots)).toHaveLength(0);
+    const genuine = synthetic(section(cell(0, 0, paragraph("성명")) + cell(0, 1, paragraph())));
+    expect(textSlots(genuine.manifest).map(slot => slot.label)).toEqual(["성명"]);
+  });
+
+  it("경북 실제 신청서의 머리말만 쓸 수 있는 경우 작성 가능으로 표시하지 않는다", () => {
+    const { manifest, entry } = sample("agency-47000-bokjiro-wlf00004401-allowance-application");
+    expect(Object.values(manifest.slots).filter(slot => !slot.locked)).toHaveLength(0);
+    expect(entry.slotCount).toBe(0);
+    expect(manifest.unsupported.some(row => /한양신명조/.test(row.reason))).toBe(true);
+  });
+
   it("원본에 ASCII 공백만 남은 실제 빈 셀도 런타임에서 같은 신원으로 읽는다", () => {
     const s = sample("ordin-20088657");
     const slot = Object.values(s.manifest.slots).find(item => item.kind === "text" && item.expect === "  " && !item.locked)!;

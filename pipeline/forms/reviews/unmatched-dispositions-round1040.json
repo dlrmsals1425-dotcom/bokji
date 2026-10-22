@@ -3774,8 +3774,8 @@
         "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2060759",
         "currentAnnexBinding": "bound"
       },
-      "disposition": "requires_external_confirmation",
-      "reason": "현재 정부24 배우자 복지수당 안내는 별지4 지급신청과 대리신청 시 위임장·관계증빙만 요구한다. 원본 별지6의 제3자 대리수령, 압류·치매 등의 사유 및 관계 제한을 허용하는 현행 지침은 찾지 못했다. 신청 대리를 급여 대리수령으로 확대하지 않는다.",
+      "disposition": "covered_by_existing",
+      "reason": "2026-10-23 현행 광진구 민원편람6553903이 두 근거 조례와 별지6 대리수령 신청서를 직접 배포하며, 실제 기관 파일 및 법령포털22425553·22425515가 모두59139바이트/SHA3759d8f21c50aaa43b5960021da8b6a874acf6fdde2caa017dbe36ae792d2909로 동일함을 재확인했다. 전체 Section0와 실제 한글1쪽을 검토했다. 본문이 인용하는 국가보훈조례2060833에 연결된22425515를 정부24 304000000233 및 복지로WLF00002162의 참전유공자 배우자수당 부분에 실제 게시했고, 두 화면자료의 조건부 링크와 공개원본파일 SHA를 확인했다. 같은 원본을 두 번 첨부하지 않고 이 동일 바이트의 실제 게시본으로 안내한다. 원래22425553의 법규ID·원본·SHA는 보존한다. 사망위로금이나 일반 보훈예우수당의 대리수령으로 확대하지 않는다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -3803,29 +3803,71 @@
       ],
       "sourceBodyPath": "logs/forms-completion/law-bodies/2060759.json.gz",
       "sourceBodySHA256": "fd56683ada0b793e51e913f0fd94d9dbacfd6de4c8998bcfa1f1be7b5c90eebc",
-      "checkedAt": "2026-10-19",
+      "checkedAt": "2026-10-23",
       "officialFollowup": {
-        "checkedAt": "2026-10-19",
-        "sourceResult": "logs/forms-completion/official-followup/team2/team2-results.json",
-        "sourceResultSHA256": "badd63d72d5f96dcc6815ad79e43ba695490e25777144516a69934cdab93a48a",
-        "proposedStatus": "confirmed_unresolved",
-        "officialEvidence": [
-          {
-            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/304000000233",
-            "httpStatus": 200,
-            "savedEvidence": [
-              {
-                "path": "logs/forms-completion/official-followup/team2/case27-gov24.json",
-                "sha256": "962400f5acc4fc953d417ecae1f11f694d0f959329d9ba034b868bda51256e59",
-                "kind": "official_evidence_metadata"
-              }
-            ]
-          }
+        "checkedAt": "2026-10-23",
+        "proposedStatus": "published_exact_duplicate_coverage_verified",
+        "sameOriginalBytes": true,
+        "actualPublicFileSHA256": "3759d8f21c50aaa43b5960021da8b6a874acf6fdde2caa017dbe36ae792d2909",
+        "publishedProgramIds": [
+          "g11215.gov24-304000000233",
+          "g11215.bokjiro-WLF00002162"
         ],
-        "allFormsConnected": false
+        "allOriginalsMatched": false
       },
       "relatedProgramIds": [
-        "g11215.gov24-304000000233"
+        "g11215.gov24-304000000233",
+        "g11215.bokjiro-WLF00002162"
+      ],
+      "priorDispositions": [
+        {
+          "checkedAt": "2026-10-19",
+          "disposition": "requires_external_confirmation",
+          "reason": "현재 정부24 배우자 복지수당 안내는 별지4 지급신청과 대리신청 시 위임장·관계증빙만 요구한다. 원본 별지6의 제3자 대리수령, 압류·치매 등의 사유 및 관계 제한을 허용하는 현행 지침은 찾지 못했다. 신청 대리를 급여 대리수령으로 확대하지 않는다.",
+          "relatedProgramIds": [
+            "g11215.gov24-304000000233"
+          ],
+          "reviewedProgramPairs": [
+            {
+              "programId": "g11215.gov24-304000000233",
+              "disposition": "not_connected",
+              "reason": "전체 원본은 배우자 복지수당의 대리수령 신청이며 최초 지급신청 또는 신청 위임과 다르다. 한정치산·금치산·압류·치매 등의 수령 사유 및 대리수령 관계 제한이 인쇄되어 있다. 참전 조례2060759 제9조의2와 원본이 인용한 보훈 조례2060833 제9조의5는 지급·신청 위임만 명시하고 이 대리수령 조건·별지6 사용은 직접 규정하지 않는다. 사업 원천도 신청 위임만 안내해 현재 대리수령 적용 근거를 추가 확인하기 전 보류한다.",
+              "applyType": "self",
+              "applyMethod": "방문 접수(광진구청 10층 복지돌봄과)",
+              "target": "- 신청일 기준 광진구에 주민등록을 두고 거주하고 있는 사망 참전유공자의 배우자\n- 관외 사망 참전유공자라도 그 배우자가 현재 광진구 구민이라면 신청가능\n- 사망 참전유공자의 배우자가 재혼으로 가족관계등록부를 달리하는 경우 지원 제외\n- 기존 광진구 보훈예우수당(10만원) 수령자는 제외(중복 지원 불가)"
+            }
+          ],
+          "officialFollowup": {
+            "checkedAt": "2026-10-19",
+            "sourceResult": "logs/forms-completion/official-followup/team2/team2-results.json",
+            "sourceResultSHA256": "badd63d72d5f96dcc6815ad79e43ba695490e25777144516a69934cdab93a48a",
+            "proposedStatus": "confirmed_unresolved",
+            "officialEvidence": [
+              {
+                "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/304000000233",
+                "httpStatus": 200,
+                "savedEvidence": [
+                  {
+                    "path": "logs/forms-completion/official-followup/team2/case27-gov24.json",
+                    "sha256": "962400f5acc4fc953d417ecae1f11f694d0f959329d9ba034b868bda51256e59",
+                    "kind": "official_evidence_metadata"
+                  }
+                ]
+              }
+            ],
+            "allFormsConnected": false
+          }
+        }
+      ],
+      "existingCoverage": [
+        {
+          "formId": "ordin-22425515",
+          "sha256": "3759d8f21c50aaa43b5960021da8b6a874acf6fdde2caa017dbe36ae792d2909",
+          "programIds": [
+            "g11215.gov24-304000000233",
+            "g11215.bokjiro-WLF00002162"
+          ]
+        }
       ]
     },
     {

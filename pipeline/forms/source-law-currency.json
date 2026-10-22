@@ -10,13 +10,13 @@
  "checkedAt": "2026-10-19",
  "checkedLaws": 1854,
  "counts": {
-  "source_current": 1836,
+  "future_or_undated_current_result": 17,
   "newer_current_version": 1,
-  "future_or_undated_current_result": 17
+  "source_current": 1836
  },
  "currentAnnexBindings": {
-  "bound": 3970,
-  "annex_absent": 1
+  "annex_absent": 1,
+  "bound": 3970
  },
  "laws": {
   "1005149": {
@@ -56033,7 +56033,7 @@
      "title": "서울특별시 광진구 참전유공자 예우 및 지원에 관한 조례"
     }
    ],
-   "checkedAt": "2026-10-19",
+   "checkedAt": "2026-10-23",
    "currentBodyArticleState": "available",
    "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2060759",
    "currentLaw": {
@@ -56044,6 +56044,12 @@
     "title": "서울특별시 광진구 참전유공자 예우 및 지원에 관한 조례"
    },
    "currentLawId": "2060759",
+   "followupEvidence": {
+    "checkedAt": "2026-10-23",
+    "kind": "current_official_body_and_annex",
+    "sha256": "b56b9346cf495d3cb43f63ff7c8c761c3199ab753b52990126b0fb1bb15baf76",
+    "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=2060759&gubun=ELIS&chrClsCd=010202"
+   },
    "forms": {
     "ordin-22425549": {
      "binding": "bound",
@@ -56177,7 +56183,7 @@
      "title": "서울특별시 광진구 국가보훈대상자 예우 및 지원에 관한 조례"
     }
    ],
-   "checkedAt": "2026-10-19",
+   "checkedAt": "2026-10-23",
    "currentBodyArticleState": "available",
    "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2060833",
    "currentLaw": {
@@ -56188,6 +56194,12 @@
     "title": "서울특별시 광진구 국가보훈대상자 예우 및 지원에 관한 조례"
    },
    "currentLawId": "2060833",
+   "followupEvidence": {
+    "checkedAt": "2026-10-23",
+    "kind": "current_official_body_and_annex",
+    "sha256": "7fed8ad0a5ce24f8059c79f4b8b4ea59787356c217953e00fe8def3edc9d0724",
+    "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=2060833&gubun=ELIS&chrClsCd=010202"
+   },
    "forms": {
     "ordin-22425505": {
      "binding": "bound",
@@ -75357,7 +75369,7 @@
      "title": "청주시 평생교육 진흥 조례 시행규칙"
     }
    ],
-   "checkedAt": "2026-10-19",
+   "checkedAt": "2026-10-23",
    "currentBodyArticleState": "available",
    "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2119115",
    "currentLaw": {
@@ -75368,6 +75380,12 @@
     "title": "청주시 평생교육 진흥 조례 시행규칙"
    },
    "currentLawId": "2119115",
+   "followupEvidence": {
+    "checkedAt": "2026-10-23",
+    "kind": "current_official_law_body_and_annex",
+    "sha256": "7c8b88a379355738462150d38a6fdecb9a942692889181714139fc235a0aa5b7",
+    "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=2119115&gubun=ELIS&chrClsCd=010202"
+   },
    "forms": {
     "ordin-21714439": {
      "binding": "bound",
@@ -91152,44 +91170,44 @@
     }
    ],
    "checkedAt": "2026-10-19",
-   "lawId": "935965",
-   "queryVariantsChecked": true,
-   "sourceTitle": "청도군 친환경농업 육성 조례 시행규칙",
-   "state": "source_current",
-   "currentLawId": "935965",
+   "currencyResolution": {
+    "annexUrl": "https://www.elis.go.kr/allalr/attListDown?alrNo=47820113237008&histNo=001&attlistSn=001",
+    "bodyUrl": "https://www.elis.go.kr/alrpop/alrDtlsPop?alrNo=47820113237008&histNo=001",
+    "evidenceFile": "pipeline/forms/reviews/current-law-currency-resolutions.json",
+    "lawId": "935965",
+    "reportedEffectiveDate": "99991231",
+    "resolvedEffectiveDate": "20070807",
+    "sha256": "3c2e70e4d254b484b183a11b1b5a174613b51b0bb6a127a6b3e66b48693e106d",
+    "stableLawId": "2125626",
+    "state": "official_elis_confirmed"
+   },
+   "currentBodyArticleState": "available",
+   "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=935965",
    "currentLaw": {
     "effectiveDate": "20070807",
     "lawId": "935965",
     "org": "경상북도 청도군",
+    "reportedEffectiveDate": "99991231",
     "stableLawId": "2125626",
-    "title": "청도군 친환경농업 육성 조례 시행규칙",
-    "reportedEffectiveDate": "99991231"
+    "title": "청도군 친환경농업 육성 조례 시행규칙"
    },
-   "currentBodyArticleState": "available",
-   "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=935965",
+   "currentLawId": "935965",
    "forms": {
     "ordin-22722233": {
      "binding": "bound",
      "bindingReason": "OFFICIAL_ANNEX_BOUND_WITH_SAME_FILE",
+     "officialAnnexDeleted": false,
      "officialAnnexId": "22722233",
      "officialAnnexNumber": "1",
      "officialAnnexTitle": "[별지 제1호서식] 친환경농업육성 지원사업 신청서",
-     "officialFlSeq": "169778039",
      "officialAnnexUrl": "https://www.law.go.kr/flDownload.do?gubun=ELIS&flSeq=169778039&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%B9%9C%ED%99%98%EA%B2%BD%EB%86%8D%EC%97%85%EC%9C%A1%EC%84%B1+%EC%A7%80%EC%9B%90%EC%82%AC%EC%97%85+%EC%8B%A0%EC%B2%AD%EC%84%9C",
-     "officialAnnexDeleted": false
+     "officialFlSeq": "169778039"
     }
    },
-   "currencyResolution": {
-    "evidenceFile": "pipeline/forms/reviews/current-law-currency-resolutions.json",
-    "sha256": "3c2e70e4d254b484b183a11b1b5a174613b51b0bb6a127a6b3e66b48693e106d",
-    "state": "official_elis_confirmed",
-    "reportedEffectiveDate": "99991231",
-    "resolvedEffectiveDate": "20070807",
-    "lawId": "935965",
-    "stableLawId": "2125626",
-    "bodyUrl": "https://www.elis.go.kr/alrpop/alrDtlsPop?alrNo=47820113237008&histNo=001",
-    "annexUrl": "https://www.elis.go.kr/allalr/attListDown?alrNo=47820113237008&histNo=001&attlistSn=001"
-   }
+   "lawId": "935965",
+   "queryVariantsChecked": true,
+   "sourceTitle": "청도군 친환경농업 육성 조례 시행규칙",
+   "state": "source_current"
   },
   "952875": {
    "candidates": [

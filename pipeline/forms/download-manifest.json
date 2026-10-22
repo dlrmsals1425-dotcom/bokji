@@ -22553,6 +22553,40 @@
    "downloadedAt": "2026-10-22T15:16:01.630742+00:00",
    "path": "originals/agency-48120-baro-453-1401.hwp",
    "finalUrl": "https://baro.gyeongnam.go.kr/baro/fileDown.es?file_no=1401&filenameOrg=%5B%EA%B3%B5%EA%B3%A0%EB%AC%B8%20%EB%B6%99%EC%9E%84%20%EC%84%9C%EC%8B%9D%5D%20%EC%A0%84%EC%84%B8%EB%B3%B4%EC%A6%9D%EA%B8%88%EB%B0%98%ED%99%98%EB%B3%B4%EC%A6%9D%20%EB%B3%B4%EC%A6%9D%EB%A3%8C%20%EC%A7%80%EC%9B%90%EC%82%AC%EC%97%85%20%EC%8B%A0%EC%B2%AD%EC%84%9C%20%EB%B0%8F%20%EC%84%9C%EC%95%BD%EC%84%9C.hwp&service_no=453"
+  },
+  "agency-47000-bokjiro-wlf00004401-allowance-application": {
+   "format": "hwp",
+   "bytes": 15872,
+   "sha256": "6402b5bea3df64d266234775f15b05d8dc76c4098391a0c6ae1e73bc9601d552",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20240703UUWBM1634190092425119&atcflSn=1&wlfareInfoId=WLF00004401",
+   "downloadedAt": "2026-10-22T17:36:20.891313+00:00",
+   "path": "originals/agency-47000-bokjiro-wlf00004401-allowance-application.hwp",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20240703UUWBM1634190092425119&atcflSn=1&wlfareInfoId=WLF00004401"
+  },
+  "ordin-21714439": {
+   "format": "hwp",
+   "bytes": 15872,
+   "sha256": "c09381d0b67b0ea52a3fc6eafea066f303d9a59c12c725079fb671cc9c071d50",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=163070987&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%ED%95%99%EC%8A%B5%EB%B9%84+%EB%A9%B4%EC%A0%9C+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:19:26.052259+00:00",
+   "path": "originals/ordin-21714439.hwp"
+  },
+  "agency-47230-health-kit-080701": {
+   "format": "hwp",
+   "bytes": 102912,
+   "sha256": "f1e5886e5e39ead2ffe928b62b24b32607a52af14a0bf2f5cdafa65966329005",
+   "sourceUrl": "https://www.yc.go.kr/common/jsp/common/contentFileDownload.jsp?path=%2Fhealth%2F08%2F&file=%EC%9E%84%EC%8B%A0%EC%A4%80%EB%B9%84+%ED%82%A4%ED%8A%B8+%EC%A7%80%EC%9B%90+%EC%82%AC%EC%97%85+%EC%8B%A0%EC%B2%AD%EC%84%9C.hwp",
+   "downloadedAt": "2026-10-22T17:48:03.501755+00:00",
+   "path": "originals/agency-47230-health-kit-080701.hwp",
+   "finalUrl": "https://www.yc.go.kr/common/jsp/common/contentFileDownload.jsp?path=%2Fhealth%2F08%2F&file=%EC%9E%84%EC%8B%A0%EC%A4%80%EB%B9%84+%ED%82%A4%ED%8A%B8+%EC%A7%80%EC%9B%90+%EC%82%AC%EC%97%85+%EC%8B%A0%EC%B2%AD%EC%84%9C.hwp"
+  },
+  "ordin-22425515": {
+   "format": "hwpx",
+   "bytes": 59139,
+   "sha256": "3759d8f21c50aaa43b5960021da8b6a874acf6fdde2caa017dbe36ae792d2909",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=168362067&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C6%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EB%B0%B0%EC%9A%B0%EC%9E%90+%EB%B3%B5%EC%A7%80%EC%88%98%EB%8B%B9+%EB%8C%80%EB%A6%AC+%EC%88%98%EB%A0%B9+%EC%8B%A0%EC%B2%AD%EC%84%9C%3C%EC%8B%A0%EC%84%A4+2025.7.28.%3E",
+   "downloadedAt": "2026-10-16T16:04:30.899574+00:00",
+   "path": "originals/ordin-22425515.hwpx"
   }
  }
 }
