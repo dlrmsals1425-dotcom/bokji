@@ -84,6 +84,16 @@ describe("paper-writing compiler — actual source semantics", () => {
     expect(() => compileForm(id, changedForm, changedConversion, bytes)).toThrow(/원본이 바뀌어.*재검토/);
   });
 
+  it("당진 건강음료의 부분 승인 통합서식은 다른 서비스 입력을 제공하지 않는다", () => {
+    const id = "ordin-21685783";
+    const form = catalog[id], conversion = conversions[id];
+    const bytes = new Uint8Array(readFileSync(`public${conversion.asset.path}`));
+    expect(() => validateConversion(id, form, conversion, bytes)).not.toThrow();
+    expect(() => compileForm(id, form, conversion, bytes)).toThrow(/건강음료 지원 부분만.*다른 서비스/);
+    expect(hash(readFileSync(`public${conversion.source.path}`)))
+      .toBe("c6713e5df348d8103c5b3a294fa8f61ae9ba0ee0cdecd1390379eb1987f6557c");
+  });
+
   it("원본에 ASCII 공백만 남은 실제 빈 셀도 런타임에서 같은 신원으로 읽는다", () => {
     const s = sample("ordin-20088657");
     const slot = Object.values(s.manifest.slots).find(item => item.kind === "text" && item.expect === "  " && !item.locked)!;

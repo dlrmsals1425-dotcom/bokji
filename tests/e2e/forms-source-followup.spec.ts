@@ -44,10 +44,46 @@ const exactFiles = [
     bytes: 89277, sha256: "7964c66ed5e1fbccd0c220afd57f4244eeb5ec659637b6a133c599d4b5116057",
     condition: "출생신고와 함께 출산서비스를 통합신청할 때", excluded: [], writable: false,
   },
+  {
+    program: "g44270.gov24-568000000105", form: "ordin-21685783",
+    title: "당진시 중증장애아동 건강지원 신청·변경서(건강음료)", format: "hwp",
+    bytes: 21504, sha256: "c6713e5df348d8103c5b3a294fa8f61ae9ba0ee0cdecd1390379eb1987f6557c",
+    condition: "자동지원 중인 모든 가구가 이 서식을 새로 제출해야 한다는 뜻은 아닙니다", excluded: [], writable: false,
+  },
+  {
+    program: "g44270.gov24-568000000105", form: "ordin-21685785",
+    title: "당진시 중증장애아동 건강지원 금융정보 제공 동의서", format: "hwp",
+    bytes: 27648, sha256: "75f0574b032abacabad0685540a11eafa036724c7359dc54132dcdf5a3b1e553",
+    condition: "일반 자동지원 가구 전원에게 새로 금융동의를 요구하거나", excluded: [], writable: true,
+  },
+  {
+    program: "g44250.gov24-558000000116", form: "ordin-15092343",
+    title: "계룡시 생활안정 특별지원 신청·변경서(월동·건강·교육)", format: "hwp",
+    bytes: 30720, sha256: "2d0964c9d36fb0c7c8aba2cce47a72d5b1706dbd8e421c46b79e97a6b918ee82",
+    condition: "월동대책비·건강증진보조비·교육활동지원비", excluded: [], writable: false,
+  },
+  {
+    program: "g41650.gov24-560000000105", form: "ordin-18291051",
+    title: "포천시 장수수당 미지급 청구서", format: "hwp",
+    bytes: 32768, sha256: "7e8d073e336ce00a0b22b197dfaecc42742d8c5852bcb76da9e9b10405001e0c",
+    condition: "일반 장수수당 신규 신청이나 모든 상속인의 승계 신청으로 확대하지 않습니다", excluded: [], writable: true,
+  },
+  {
+    program: "g41130.gov24-378000000137", form: "ordin-20004411",
+    title: "성남시 아동의료비 지원금 지급계좌 변경 신청서", format: "hwp",
+    bytes: 76288, sha256: "1f6567f2bceb85cd84f1849222f354f32922c1cadf60374455b1daea20cd39e1",
+    condition: "사망·파산·압류 등 부득이한 사유", excluded: [], writable: false,
+  },
+  {
+    program: "g41130.gov24-378000000137", form: "ordin-20004423",
+    title: "성남시 아동의료비 지원금 상속대표 합의 동의서", format: "hwp",
+    bytes: 14336, sha256: "13354e643ec9ecac326ca7d29d68fa2bd1919f10e75f4a5552342a404e5ef390",
+    condition: "상속대표", excluded: [], writable: false,
+  },
 ];
 
 for (const item of exactFiles) {
-  test(`${item.program}: 용도 조건과 검증된 원본 바이트를 함께 제공한다 @mobile`, async ({ page, request }) => {
+  test(`${item.program} / ${item.form}: 용도 조건과 검증된 원본 바이트를 함께 제공한다 @mobile`, async ({ page, request }) => {
     await page.goto(`/p/${item.program}`);
     const panel = page.getByTestId("application-forms");
     await expect(panel.getByRole("heading", { name: item.title, exact: true })).toBeVisible();
@@ -65,7 +101,7 @@ for (const item of exactFiles) {
     const card = panel.getByRole("listitem").filter({ has: page.getByRole("heading", { name: item.title, exact: true }) });
     await expect(card).toHaveCount(1);
     await expect(card.getByTestId("paper-writer-link")).toHaveCount(item.writable ? 1 : 0);
-    if (item.form === "agency-26110-bokjiro-wlf00006649-20260720-1") {
+    if (["agency-26110-bokjiro-wlf00006649-20260720-1", "ordin-21685783"].includes(item.form)) {
       expect((await request.get(`/forms/writing/v1/manifest/${item.form}.json`)).status()).toBe(404);
     }
     if (item.program === "s47000.bokjiro-WLF00004401") {
@@ -81,6 +117,8 @@ test("같은 사업의 다른 자료에서도 원본의 조건부 연결을 유�
     ["s47000.gov24-647000000122", "agency-47000-bokjiro-wlf00004401-allowance-application"],
     ["g11215.bokjiro-WLF00002162", "ordin-22425515"],
     ["g11215.bokjiro-WLF00004044", "ordin-18989767"],
+    ["g41130.bokjiro-WLF00001629", "ordin-20004411"],
+    ["g41130.bokjiro-WLF00001629", "ordin-20004423"],
   ]) {
     await page.goto(`/p/${program}`);
     const panel = page.getByTestId("application-forms");

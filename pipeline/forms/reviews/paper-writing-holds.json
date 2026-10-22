@@ -8,6 +8,14 @@
       "evidenceNote": "공식 HWP119808바이트/전체3쪽과 검증된 변환본을 확인했다. 독립 검토한 열린67칸은 공통정보후보25칸, 다른서비스37칸, 빈구분행·처리절차간격5칸으로 나뉜다. 승인한 중구 출산축하금의row22 col1·9·27에는 열린칸이0개다. 적용 부분의 입력 범위가 확인될 때까지 다운로드 승인과 화면 작성 승인을 구분한다. 다른 원본의 모든 입력칸을 함께 검토·수정했다고 주장하지 않는다.",
       "independentReviewSHA256": "a463c85a91c38a334f7f96bfcb959c08fbc14c2d5bc885c56c0db6f7b846ceca",
       "evidenceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00006649&wlfareInfoReldBztpCd=02"
+    },
+    "ordin-21685783": {
+      "sourceSHA256": "c6713e5df348d8103c5b3a294fa8f61ae9ba0ee0cdecd1390379eb1987f6557c",
+      "checkedAt": "2026-10-23",
+      "reason": "이 통합서식은 건강음료 지원 부분만 연결을 확인했습니다. 현재 화면 입력은 의료비·보조기구·발달재활 등 다른 서비스의 칸도 열어 화면 작성을 보류합니다. 공식 원본은 그대로 받을 수 있습니다.",
+      "evidenceNote": "원본 전체2쪽과 검증된 변환본을 대조했다. 열린73칸 중 건강음료 정보18칸, 다른서비스49칸, 공통첨부·신청인6칸이다. 승인한 건강음료 선택칸과 지원대상자 이름은 현재 열린칸에 없고, 다른서비스 선택·입력을 승인된 사업으로 오인할 수 있다. 다운로드와 화면입력 승인을 구분한다.",
+      "independentReviewSHA256": "163c421de197b9ba15ed494617582b4bf397d2df685b29c4c579a4f0d52c1f1b",
+      "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2092475"
     }
   }
 }

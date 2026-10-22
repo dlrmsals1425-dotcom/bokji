@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "generatedAt": "2026-10-22T19:24:12.549387+00:00",
+ "generatedAt": "2026-10-22T19:57:20.414898+00:00",
  "scope": "Actual downloaded originals; saved files are not automatically approved for a benefit.",
  "summary": {
   "savedOriginals": 4905,
@@ -17,26 +17,26 @@
    "txt": 8
   },
   "readableHangulOriginals": 4866,
-  "publishedOriginals": 2799,
+  "publishedOriginals": 2805,
   "publishedFormats": {
-   "hwp": 2488,
+   "hwp": 2494,
    "hwpx": 295,
    "pdf": 10,
    "jpg": 1,
    "txt": 4,
    "gif": 1
   },
-  "publishedPrograms": 2535,
-  "publishedAssociations": 3523,
+  "publishedPrograms": 2537,
+  "publishedAssociations": 3531,
   "reviewStates": {
    "covered_by_existing": 14,
-   "linked": 2799,
+   "linked": 2805,
    "replacement_available": 1,
-   "requires_external_confirmation": 81,
+   "requires_external_confirmation": 75,
    "reviewed_not_linked": 2010
   },
   "unavailableSourceAttachments": 4,
-  "unpublishedOriginals": 2106
+  "unpublishedOriginals": 2100
  },
  "forms": [
   {
@@ -6967,10 +6967,15 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-15092343.hwp",
    "usableHangul": true,
-   "publishedPrograms": [],
-   "reviewState": "requires_external_confirmation",
-   "reviewLabel": "공식 사용 확인 필요",
-   "reviewReason": "현재 정부24 원문(2026-09-02 수정)은 개인 신청절차와 신청 시기가 없고 법정 저소득 자격자에게 별도 신청 없이 지원한다고 명시한다. 공통 사회복지 신청서의 지역 급여 선택·변경 접수 용도를 보완하는 예외 절차나 현행 첨부는 찾지 못했다. 자동지원 안내를 근거로 이 종이서식을 현재 주신청서로 승격하지 않는다."
+   "publishedPrograms": [
+    {
+     "id": "g44250.gov24-558000000116",
+     "name": "저소득 주민 생활 안정 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "조례제6조본문의신청권과단서의무신청지원허용은동시에규정되어있다. 정확사이트사업이법정저소득층에게자동지원함을안내하는것은본문신청경로를폐지하거나금지했다는증거가아니다. 규칙3조가바로그조례6조신청에별지1을지정하므로확인된지방급여의개별신청/변경부분만conditional제공가능하다. 기타긴급지원의범위를같은사이트사업에추가하지않는다. 고정원본전체 BodyText/Section0 6135자를재판독하고실제바이트SHA/크기및내장자료없음을재확인했다. 구명칭이나미확인실무사항은sourceIssues에보존하며원본문구를수정하지않는다. 2026-10-23 총괄이 고정 원본 SHA·전체 본문 및 실제 한글 출력 전체 쪽을 독립 확인하고, 공식 현행 본문·정확 별표키와 flSeq 결속을 새로 확인했다. 일반 사업안내에 예외 경로가 다시 적혀 있지 않다는 사유만으로 현행 별지의 명시 용도를 배제하지 않되, 해당 조건부 신청·변경·부속 경로에 한정한다. 원본 다른 급여나 일반 신규신청 요건까지 승인한 것은 아니다."
   },
   {
    "formId": "ordin-15092403",
@@ -15407,10 +15412,15 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-18291051.hwp",
    "usableHangul": true,
-   "publishedPrograms": [],
-   "reviewState": "requires_external_confirmation",
-   "reviewLabel": "공식 사용 확인 필요",
-   "reviewReason": "현재 포천시 장수수당 안내와 정확한 병합 복지로 WLF00004621은 1943년 이전 출생·2023년 말 주소 기준의 월 2만원 지급과 일반 별지1 신청을 안내한다. 복지로 첨부는 별지1과 조례이고 사망한 수급자의 미지급금 상속·대표수령 절차나 이 별지2의 사용 안내는 없다. 일반 지급계좌 조항을 미지급 승계로 확장할 근거를 찾지 못했다."
+   "publishedPrograms": [
+    {
+     "id": "g41650.gov24-560000000105",
+     "name": "장수수당"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "기존수급자가사망한후발생한미지급청구는신규장수수당수급자선정과다르다. 현행법에결속되고동일개정에서신설된별지2가사망자의미지급분청구를명시한다. 따라서일반사업안내에미지급부분이별도로반복되지않았다는사실만으로원본목적을부정할수없다. 본문이별지2번호를직접인용한다고주장하지않고,일반계좌조항의기초연금준용을포괄상속권의근거로사용하지않는다. 고정원본전체 BodyText/Section0 288자를재판독하고실제바이트SHA/크기및내장자료없음을재확인했다. 구명칭이나미확인실무사항은sourceIssues에보존하며원본문구를수정하지않는다. 2026-10-23 총괄이 고정 원본 SHA·전체 본문 및 실제 한글 출력 전체 쪽을 독립 확인하고, 공식 현행 본문·정확 별표키와 flSeq 결속을 새로 확인했다. 일반 사업안내에 예외 경로가 다시 적혀 있지 않다는 사유만으로 현행 별지의 명시 용도를 배제하지 않되, 해당 조건부 신청·변경·부속 경로에 한정한다. 원본 다른 급여나 일반 신규신청 요건까지 승인한 것은 아니다."
   },
   {
    "formId": "ordin-18296439",
@@ -33706,10 +33716,19 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20004411.hwp",
    "usableHangul": true,
-   "publishedPrograms": [],
-   "reviewState": "requires_external_confirmation",
-   "reviewLabel": "공식 사용 확인 필요",
-   "reviewReason": "성남 아동의료비 현재 정부24는 18세 미만의 의료비 지원과 상담 후 방문 신청을 안내하나 가족·제3자 계좌 수령의 예외 요건이나 별지11 계좌변경서를 지정하지 않는다. 공식 시 자료 검색에서도 현행 별도 지급기준은 확보하지 못했다. 통상의 본인 지정계좌 지급 근거로 사망·압류 등 제3자 수령을 허용하지 않는다."
+   "publishedPrograms": [
+    {
+     "id": "g41130.bokjiro-WLF00001629",
+     "name": "성남시 아동의료비 본인부담 100만원 상한제 사업"
+    },
+    {
+     "id": "g41130.gov24-378000000137",
+     "name": "아동 의료비 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "현행 검색은 시행규칙 2041475(2025-05-26 시행)를 반환하며, 2026-10-23 공식 전체 본문 HTML의 별지 목록에서 정확한 별표키 20004411를 확인했다. 공식 API 별표 원기록의 키·번호·flSeq와 원본 바이트 SHA를 결속했다. 별지 11 전체 1193자에는 본인 계좌 지급 원칙, 사망·파산·압류 등 부득이한 경우 입증서류 제출 시에만 계좌변경 가능하다는 제한, 가족·제3자·이해관계인별 증빙, 수령인 반환 확약이 직접 적혀 있다. 상위 조례 1844651 제9·10조와 시행규칙 제3·6·7조의 같은 의료비 지원·지급 절차를 비교했다. 별지 자체의 명시 용도에 한정하므로 두 정확한 성남 사업에 conditional 연결을 제안한다. 본문이 이 별지를 직접 호명하거나 새로운 사망후 청구권을 명문화했다고 주장하지 않는다. 2026-10-23 총괄이 고정 원본 SHA·전체 본문 및 실제 한글 출력 전체 쪽을 독립 확인하고, 공식 현행 본문·정확 별표키와 flSeq 결속을 새로 확인했다. 일반 사업안내에 예외 경로가 다시 적혀 있지 않다는 사유만으로 현행 별지의 명시 용도를 배제하지 않되, 해당 조건부 신청·변경·부속 경로에 한정한다. 원본 다른 급여나 일반 신규신청 요건까지 승인한 것은 아니다."
   },
   {
    "formId": "ordin-20004423",
@@ -33725,10 +33744,19 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-20004423.hwp",
    "usableHangul": true,
-   "publishedPrograms": [],
-   "reviewState": "requires_external_confirmation",
-   "reviewLabel": "공식 사용 확인 필요",
-   "reviewReason": "성남 아동의료비 현재 정부24와 공식 시 자료 검색에서 사망환자 지원금의 상속채권·대표상속인 합의·별지17 제출 절차를 특정하지 못했다. 일반 의료비 지원 안내는 확인되었지만 사망 이후 대표수령 조건을 보완하지 못하여 상속 합의서의 실제 접수 여부는 계속 미확인이다."
+   "publishedPrograms": [
+    {
+     "id": "g41130.bokjiro-WLF00001629",
+     "name": "성남시 아동의료비 본인부담 100만원 상한제 사업"
+    },
+    {
+     "id": "g41130.gov24-378000000137",
+     "name": "아동 의료비 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "현행 검색은 시행규칙 2041475(2025-05-26 시행)를 반환하며, 2026-10-23 공식 전체 본문 HTML의 별지 목록에서 정확한 별표키 20004423를 확인했다. 공식 API 별표 원기록의 키·번호·flSeq와 원본 바이트 SHA를 결속했다. 별지 17 전체 325자는 환자(사망인), 아동의료비지원금액(상속대상액), 대표상속인, 망인에게 지급되는 지원금의 대표 선정·지급 동의와 상속인 서명 및 가족관계증명서로 구성되어 있다. 상위 조례 1844651 제9·10조와 시행규칙 제3·6·7조의 같은 의료비 지원·지급 절차를 비교했다. 별지 자체의 명시 용도에 한정하므로 두 정확한 성남 사업에 conditional 연결을 제안한다. 본문이 이 별지를 직접 호명하거나 새로운 사망후 청구권을 명문화했다고 주장하지 않는다. 2026-10-23 총괄이 고정 원본 SHA·전체 본문 및 실제 한글 출력 전체 쪽을 독립 확인하고, 공식 현행 본문·정확 별표키와 flSeq 결속을 새로 확인했다. 일반 사업안내에 예외 경로가 다시 적혀 있지 않다는 사유만으로 현행 별지의 명시 용도를 배제하지 않되, 해당 조건부 신청·변경·부속 경로에 한정한다. 원본 다른 급여나 일반 신규신청 요건까지 승인한 것은 아니다."
   },
   {
    "formId": "ordin-20004895",
@@ -75768,10 +75796,15 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-21685783.hwp",
    "usableHangul": true,
-   "publishedPrograms": [],
-   "reviewState": "requires_external_confirmation",
-   "reviewLabel": "공식 사용 확인 필요",
-   "reviewReason": "정부24의2026.8.12 최신 공식 상세를 직접 GET하여 신청불필요·담당자 직접관리·신청서 및 구비서류 해당없음을 재확인했다. 현재 월3만원 건강지원에서 옛 건강음료 신청/변경 원본을 예외적으로 받는다는 근거는 확인되지 않았다. 다른 장애아동수당의 전국 서류를 같은 건강지원으로 전용하지 않는다."
+   "publishedPrograms": [
+    {
+     "id": "g44270.gov24-568000000105",
+     "name": "중증장애아동 건강 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "정부24의 일반 자동지원은 등록대상자의 통상 운영 설명이다. 현재 조례는 건강지원을 제23조에 포함하고 신청을 희망하는 사람의 별지1 제출을 제24조에 직접 정한다. 같은 canonical 사업에 병합된 정확WLF81은 건강음료대금 월3만원·읍면동 신청을 안내하므로 원본의 건강음료 항목이 다른 옛 급여라는 추정을 뒷받침하지 않는다. 모든 대상자에게 제출의무를 추가하지 않고 법정 신청/변경 경로의 해당 부분을 제공할 수 있다. 고정원본전체 BodyText/Section0 1624자를재판독하고실제바이트SHA/크기및내장자료없음을재확인했다. 구명칭이나미확인실무사항은sourceIssues에보존하며원본문구를수정하지않는다. 2026-10-23 총괄이 고정 원본 SHA·전체 본문 및 실제 한글 출력 전체 쪽을 독립 확인하고, 공식 현행 본문·정확 별표키와 flSeq 결속을 새로 확인했다. 일반 사업안내에 예외 경로가 다시 적혀 있지 않다는 사유만으로 현행 별지의 명시 용도를 배제하지 않되, 해당 조건부 신청·변경·부속 경로에 한정한다. 원본 다른 급여나 일반 신규신청 요건까지 승인한 것은 아니다."
   },
   {
    "formId": "ordin-21685785",
@@ -75787,10 +75820,15 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-21685785.hwp",
    "usableHangul": true,
-   "publishedPrograms": [],
-   "reviewState": "requires_external_confirmation",
-   "reviewLabel": "공식 사용 확인 필요",
-   "reviewReason": "정부242026.8.12 건강지원 상세가 신청·제출서류 불필요로 안내하여 이 금융정보 동의서의 현재 제출근거를 해소하지 못했다. 별지1의 옛 장애아동 복지지원에 종속된 원본을 자산형성통장·임신출산 등 별도 사업의 동의서로 확대하지 않는다."
+   "publishedPrograms": [
+    {
+     "id": "g44270.gov24-568000000105",
+     "name": "중증장애아동 건강 지원"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "동의서는그자체로별도지원신청이아니라제24조①신청에종속된②의법정첨부다. 일반자동지원전원에게금융동의를받으라는뜻으로연결하지않고해당법정신청경로에서만제공하면자동지원안내와병존가능하다. 접수서식의직접지정을다시증명하기위해현재운영기관이같은문구를반복하는별도패키지를필수로요구할필요는없다. 고정원본전체 BodyText/Section0 2859자를재판독하고실제바이트SHA/크기및내장자료없음을재확인했다. 구명칭이나미확인실무사항은sourceIssues에보존하며원본문구를수정하지않는다. 2026-10-23 총괄이 고정 원본 SHA·전체 본문 및 실제 한글 출력 전체 쪽을 독립 확인하고, 공식 현행 본문·정확 별표키와 flSeq 결속을 새로 확인했다. 일반 사업안내에 예외 경로가 다시 적혀 있지 않다는 사유만으로 현행 별지의 명시 용도를 배제하지 않되, 해당 조건부 신청·변경·부속 경로에 한정한다. 원본 다른 급여나 일반 신규신청 요건까지 승인한 것은 아니다."
   },
   {
    "formId": "ordin-21685787",

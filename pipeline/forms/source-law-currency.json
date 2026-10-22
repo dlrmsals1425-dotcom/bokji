@@ -13911,7 +13911,7 @@
      "title": "계룡시 저소득 주민 생활안정을 위한 특별지원 조례 시행규칙"
     }
    ],
-   "checkedAt": "2026-10-19",
+   "checkedAt": "2026-10-23",
    "currentBodyArticleState": "available",
    "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1634557",
    "currentLaw": {
@@ -13922,6 +13922,12 @@
     "title": "계룡시 저소득 주민 생활안정을 위한 특별지원 조례 시행규칙"
    },
    "currentLawId": "1634557",
+   "followupEvidence": {
+    "checkedAt": "2026-10-23",
+    "kind": "current_official_body_and_exact_annex",
+    "sha256": "21c41a5b007afc3bdc2487dc045eb94c24c5adabc1aa5d0ae7ecba97ab2a8a39",
+    "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=1634557&gubun=ELIS"
+   },
    "forms": {
     "ordin-15092343": {
      "binding": "bound",
@@ -28919,7 +28925,7 @@
      "title": "포천시 장수수당 지급 조례"
     }
    ],
-   "checkedAt": "2026-10-19",
+   "checkedAt": "2026-10-23",
    "currentBodyArticleState": "available",
    "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1858535",
    "currentLaw": {
@@ -28930,6 +28936,12 @@
     "title": "포천시 장수수당 지급 조례"
    },
    "currentLawId": "1858535",
+   "followupEvidence": {
+    "checkedAt": "2026-10-23",
+    "kind": "current_official_body_and_exact_annex",
+    "sha256": "1ca1de1cbed4326833a1927ba4962c303d81b4ec2f6d1da28c71a123b413fc3b",
+    "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=1858535&gubun=ELIS"
+   },
    "forms": {
     "ordin-18291049": {
      "binding": "bound",
@@ -53276,7 +53288,7 @@
      "title": "성남시 아동의료비 본인부담 100만원 상한제 조례 시행규칙"
     }
    ],
-   "checkedAt": "2026-10-19",
+   "checkedAt": "2026-10-23",
    "currentBodyArticleState": "available",
    "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2041475",
    "currentLaw": {
@@ -53287,6 +53299,12 @@
     "title": "성남시 아동의료비 본인부담 100만원 상한제 조례 시행규칙"
    },
    "currentLawId": "2041475",
+   "followupEvidence": {
+    "checkedAt": "2026-10-23",
+    "kind": "current_official_body_and_exact_annex",
+    "sha256": "43b45df9de0d9143bb7131ab8603e0cde35afaa5df95b5fc8673cb877ac11761",
+    "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=2041475&gubun=ELIS"
+   },
    "forms": {
     "ordin-20004393": {
      "binding": "bound",
@@ -66138,7 +66156,7 @@
      "title": "당진시 장애인복지 증진에 관한 조례"
     }
    ],
-   "checkedAt": "2026-10-19",
+   "checkedAt": "2026-10-23",
    "currentBodyArticleState": "available",
    "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2092475",
    "currentLaw": {
@@ -66149,6 +66167,12 @@
     "title": "당진시 장애인복지 증진에 관한 조례"
    },
    "currentLawId": "2092475",
+   "followupEvidence": {
+    "checkedAt": "2026-10-23",
+    "kind": "current_official_body_and_exact_annex",
+    "sha256": "8bc586f3a2f27529cd729f6575444760ccc10d2a7fd29507be7f62e0eb9709fb",
+    "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=2092475&gubun=ELIS"
+   },
    "forms": {
     "ordin-21685783": {
      "binding": "bound",
