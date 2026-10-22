@@ -2731,6 +2731,12 @@
       "role": "supporting",
       "sha256": "df93c6e8ed0230585c34e4fa5fb72ae20baefe800665b0282127d87c42f7469b",
       "reviewFile": "municipal-reviewed-round8116.json"
+    },
+    "ordin-18989767": {
+      "lawId": "2001319",
+      "role": "application",
+      "sha256": "7964c66ed5e1fbccd0c220afd57f4244eeb5ec659637b6a133c599d4b5116057",
+      "reviewFile": "municipal-reviewed-round8204.json"
     }
   }
 }

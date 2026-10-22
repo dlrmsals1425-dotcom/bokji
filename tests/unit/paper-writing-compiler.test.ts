@@ -65,6 +65,25 @@ describe("paper-writing compiler — actual source semantics", () => {
     expect(manifest.unsupported.some(row => /한양신명조/.test(row.reason))).toBe(true);
   });
 
+  it("부산 중구의 부분 승인 통합서식은 다른 혜택의 체크란을 작성기로 제공하지 않는다", () => {
+    const id = "agency-26110-bokjiro-wlf00006649-20260720-1";
+    const form = catalog[id], conversion = conversions[id];
+    const bytes = new Uint8Array(readFileSync(`public${conversion.asset.path}`));
+    expect(() => validateConversion(id, form, conversion, bytes)).not.toThrow();
+    expect(() => compileForm(id, form, conversion, bytes)).toThrow(/중구 출산축하금 부분만.*다른 서비스/);
+    const source = readFileSync(`public${conversion.source.path}`);
+    expect(hash(source)).toBe("6caa2fb4b460d4b841be849958f2af44e251be1eddbed48a9d219ddff03b7afb");
+    expect(hash(bytes)).toBe(conversion.asset.sha256);
+
+    const changedSHA = "a".repeat(64);
+    const changedPath = conversion.source.path.replace(conversion.source.sha256.slice(0, 12), changedSHA.slice(0, 12));
+    const changedForm = { ...form, file: { ...form.file!, hwp: changedPath, sha256: changedSHA } };
+    const changedConversion = { ...conversion, source: { ...conversion.source, path: changedPath, sha256: changedSHA },
+      asset: { ...conversion.asset, path: conversion.asset.path.replace(conversion.source.sha256.slice(0, 12), changedSHA.slice(0, 12)) } };
+    expect(() => validateConversion(id, changedForm, changedConversion, bytes)).not.toThrow();
+    expect(() => compileForm(id, changedForm, changedConversion, bytes)).toThrow(/원본이 바뀌어.*재검토/);
+  });
+
   it("원본에 ASCII 공백만 남은 실제 빈 셀도 런타임에서 같은 신원으로 읽는다", () => {
     const s = sample("ordin-20088657");
     const slot = Object.values(s.manifest.slots).find(item => item.kind === "text" && item.expect === "  " && !item.locked)!;

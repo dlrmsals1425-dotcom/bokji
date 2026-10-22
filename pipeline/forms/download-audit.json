@@ -1,14 +1,14 @@
 {
  "schema": 1,
- "generatedAt": "2026-10-22T17:58:59.183899+00:00",
+ "generatedAt": "2026-10-22T19:24:12.549387+00:00",
  "scope": "Actual downloaded originals; saved files are not automatically approved for a benefit.",
  "summary": {
-  "savedOriginals": 4904,
-  "uniqueOriginalContents": 4868,
+  "savedOriginals": 4905,
+  "uniqueOriginalContents": 4869,
   "formats": {
    "gif": 5,
    "htm": 1,
-   "hwp": 4408,
+   "hwp": 4409,
    "hwp3": 8,
    "hwpx": 457,
    "jpg": 1,
@@ -16,27 +16,27 @@
    "protected_hwp": 6,
    "txt": 8
   },
-  "readableHangulOriginals": 4865,
-  "publishedOriginals": 2796,
+  "readableHangulOriginals": 4866,
+  "publishedOriginals": 2799,
   "publishedFormats": {
-   "hwp": 2486,
-   "hwpx": 294,
+   "hwp": 2488,
+   "hwpx": 295,
    "pdf": 10,
    "jpg": 1,
    "txt": 4,
    "gif": 1
   },
-  "publishedPrograms": 2532,
-  "publishedAssociations": 3519,
+  "publishedPrograms": 2535,
+  "publishedAssociations": 3523,
   "reviewStates": {
    "covered_by_existing": 14,
-   "linked": 2796,
+   "linked": 2799,
    "replacement_available": 1,
-   "requires_external_confirmation": 84,
-   "reviewed_not_linked": 2009
+   "requires_external_confirmation": 81,
+   "reviewed_not_linked": 2010
   },
   "unavailableSourceAttachments": 4,
-  "unpublishedOriginals": 2108
+  "unpublishedOriginals": 2106
  },
  "forms": [
   {
@@ -66,6 +66,34 @@
    "reviewState": "linked",
    "reviewLabel": "혜택에 연결",
    "reviewReason": "코디네이터가 현재 공단의 실제 방문신청 배포 링크·2026 운영 안내, 원본 앞뒤2399자 및 현행2107613 제5조/제6조와 구청→공단→주차포털 공식 연결 근거를 대조했다. 이전 법령묶음과 SHA가 다른 실제 현재 배포 신청서로, 방문배정과 감면 증빙의 접수에만 조건부 제공한다. 옛 장애등급·조문 인쇄는 보존하고 현재 자격을 구등급으로 추정하지 않는다."
+  },
+  {
+   "formId": "agency-26110-bokjiro-wlf00006649-20260720-1",
+   "lawId": "",
+   "lawTitle": "",
+   "title": "출산서비스 통합처리 신청서(중구) — 2025.10.1. 이후 출생아 출산축하금",
+   "regionCode": "26110",
+   "format": "hwp",
+   "bytes": 119808,
+   "sha256": "6caa2fb4b460d4b841be849958f2af44e251be1eddbed48a9d219ddff03b7afb",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260720UUWBM1801570201761423&atcflSn=1&wlfareInfoId=WLF00006649",
+   "downloadedAt": "2026-10-22T18:56:59.130669+00:00",
+   "textScope": "all_body_sections_or_pages",
+   "sourceKind": "agency",
+   "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00006649&wlfareInfoReldBztpCd=02",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260720UUWBM1801570201761423&atcflSn=1&wlfareInfoId=WLF00006649",
+   "attachmentId": "20260720UUWBM1801570201761423",
+   "relativePath": "agency-26110-bokjiro-wlf00006649-20260720-1.hwp",
+   "usableHangul": true,
+   "publishedPrograms": [
+    {
+     "id": "g26110.bokjiro-WLF00006649",
+     "name": "출산축하금 지원 사업"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "2026-10-23 총괄이 현재 정확한 복지로WLF00006649 HTML의 동일 사업·첨부식별자20260720UUWBM1801570201761423과 실제 HWP119808바이트/SHA6caa2fb4b460d4b841be849958f2af44e251be1eddbed48a9d219ddff03b7afb를 다시 GET했다. 전체Section0 6628자와 실제한글3쪽을 모두 읽고 빈 신청인·출생자·가족·해당 지방서비스 체크란·보호자 계좌·서명·동의 및 선택동의 구분을 확인했다. 현행2109641 제2·5~8조/부칙과 중구 현재출산보육시책은2025-10-01이후 출생아의 출생6개월내 통합신청/통장사본 제출 및1~7세 분할지급을 직접 명시하며 실제 서식도 이전/이후 출생아를 구분한다. 제안의 날짜를 출생신고일 기준으로 오해하지 않도록 출생일 기준으로 명확히 고쳤다. 공통규정 인쇄별지2를 지방조례 별표ID로 쓰지 않고 정확기관원본의 직접배포 근거로 별도등록한다. 종전21161135 원본 상태·바이트는 유지하고 새원본을 이 정확사업의 신규출생아 해당부분에만 연결한다."
   },
   {
    "formId": "agency-26290-health-postpartum-339544",
@@ -21062,10 +21090,19 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-18989767.hwpx",
    "usableHangul": true,
-   "publishedPrograms": [],
-   "reviewState": "requires_external_confirmation",
-   "reviewLabel": "공식 사용 확인 필요",
-   "reviewReason": "첫돌축하금 정부24 현재 안내는 출생 1년 후의 별도 신청 절차이다. 장애인가정 출산비용·양육지원금의 정확한 정부24 두 페이지도 각각의 조례와 별도 신청서·동의를 안내하나 이 과거 출산서비스 통합 파일 사용을 지정하지 않는다. 구 통합 원본을 첫돌·장애인 출산·양육의 공통 신청서로 사용한다는 직접 근거는 보완되지 않았다."
+   "publishedPrograms": [
+    {
+     "id": "g11215.bokjiro-WLF00004044",
+     "name": "장애인 양육지원금 지원사업"
+    },
+    {
+     "id": "g11215.gov24-304000000105",
+     "name": "장애인가정 양육지원금 지급"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "2026-10-23 총괄·독립Codex조사자와 실제Herdr Claude가 원본SHA/89277바이트·전체본문 및 현행 법규 계열을 교차검토했다.1822227 부칙제1284호제2조는2022년에출산통합별지1의장애인양육지원금칸을개정했고,그문구가현재2001319의2024-05-02개정별지1에남아있다.2001319 부칙제1374호제3·4조로구제명에서현제명으로의계열을확인했다. 현재정확정부24·복지로의7세미만/광진1년/월10만원/장애인본인명의통장/동주민센터신청과대조했다. 이통합원본은출생신고와함께해당양육지원금칸을표시할때만연결하며전입·기존아동의별도신청서로확대하지않는다.별도개인정보동의는현재정부24안내에따른다.현재구청페이지의옛성별표현과원문다른급여의옛연도·인접출산비용을승인하지않고,조례별지2삭제와공통규정별지2인용을같다고단정하지않는다.실제한글4쪽을총괄이모두확인했고4쪽은원본자체빈쪽이다.공식원문바이트는그대로유지한다."
   },
   {
    "formId": "ordin-18989771",
@@ -31628,9 +31665,9 @@
    "relativePath": "ordin-19969609.hwp",
    "usableHangul": true,
    "publishedPrograms": [],
-   "reviewState": "requires_external_confirmation",
-   "reviewLabel": "공식 사용 확인 필요",
-   "reviewReason": "2026년 공식 기금운용계획9쪽 전체 및 지출6쪽 도표를 재확인했다. 자립활동·자립구직·사회보험료·의료검사비는 일반보전금이고 자활기업 세무·교육·안전지원은 별도 민간이전으로 구분된다. 정부242026.8.12도 개인신청 없이 센터 발굴·안내라고 명시한다. 별지 제4호는 자활사업 실시기관이 지원대상의 사업자금 사용과 대여금 상환을 지도·감독하겠다는 서약이다. 규칙 제2조의 첨부서류임은 확인했으나 현 사업은 주민 자립활동·구직·의료비 등 위탁지원이며 기관 자체 또는 사업대여를 지원대상으로 하지 않는다. 기관 명칭만으로 제외하지 않고 해당 사업의 지원 항목·신청경로와 대조한 결과 이 사업의 필수 부속서류 근거가 없다. 현행 센터 내부서식과 이 별지의 실제 제출관계는 새 공개자료에서도 해소되지 않았다."
+   "reviewState": "reviewed_not_linked",
+   "reviewLabel": "신청인이 작성하는 서류 아님",
+   "reviewReason": "2026-10-23 독립 조사자와 총괄이 고정원본12800바이트/SHA 및 전체414자를 각각 확인했다. 원본의 유일한 서약자·날인자는 자활사업 실시기관이며, 지원대상의 사업자금 용도·대여금 상환을 지도감독하고 경영지도계획을 첨부하는 기관의 관리책임 서약이다. 현행규칙1715997 제2조는 직접기금 신청서류와 센터위탁 내부서식 경로를 구분한다. 상위조례1971779 제3·8·9·11조는 기관·기업이 실제 지원대상인 점포·설비·대여 경로도 두므로 기관 명칭 자체를 보편적 제외사유로 삼지 않는다. 다만 현재 정확한 정부24 394000000124는 참여주민의 자립활동·구직·의료비·사회보험료4항목과 센터발굴·안내를 명시한다. 이 현재 주민급여 신청인의 서식으로 기관의 대여상환 관리서약을 붙이지 않는 non_applicant로 분류한다. 서약서 자체의 폐지나 별도 기관직접지원사업에서도 사용할 수 없다는 결론은 아니다."
   },
   {
    "formId": "ordin-19969617",
@@ -96415,10 +96452,15 @@
    "textScope": "all_body_sections_or_pages",
    "relativePath": "ordin-22498207.hwp",
    "usableHangul": true,
-   "publishedPrograms": [],
-   "reviewState": "requires_external_confirmation",
-   "reviewLabel": "공식 사용 확인 필요",
-   "reviewReason": "현재 원주시 상품권 전용 공식 안내는 온라인뿐 아니라 오프라인도 Chak 가입 후 충전이며 앱·카드형이다. 지류권 가맹점 환전의 현재 접수 공고·원본은 찾지 못했다. 종이권 환전서를 모바일 정산에 연결하지 않고 지류 운영 여부를 미해소로 유지한다."
+   "publishedPrograms": [
+    {
+     "id": "g51130.gov24-419000000129",
+     "name": "원주사랑상품권"
+    }
+   ],
+   "reviewState": "linked",
+   "reviewLabel": "혜택에 연결",
+   "reviewReason": "2026-10-23 새 GET한 원주시 전용 공식 소개는 카드·모바일·지류를 함께 명시하고 지류발행 축소와2천원권을 안내한다. 공식 가맹점 준수사항은 지정은행 방문→환전신청서 작성→가맹점 지정여부 및 상품권금액 확인→입금 순서를 직접 안내하고 실제 매출없는 수취·과다거래 환전을 금지한다. 같은 날 현행규칙2165511(2026-08-28시행) 본문 제8조는 등록가맹점의 별지10 환전청구서와 접수후3일 환전을 명시하고 별지목록의22498207을 확인했다. 고정원본과 새 다운로드의36352바이트/SHA914df6e674262f770d618cad658293179b27a6963bd230737a75a6d37094d3c9가 같고 전체401자를 읽었다. 한글에서1쪽을 렌더링하여 빈 가맹점 신청서·하단 접수증,2천원권 포함권종,은행수신/계좌/서명과 원본불변을 확인했다. 현재 정확 정부24 원주사랑상품권 사업은 소비자와 가맹점 혜택을 함께 안내한다. 기존 카드앱 안내만으로는 부족했던 지류 가맹점 환전 사용근거를 공식 별도 안내와 현행 별지 지정으로 보완한다. 개인 현금할인구매 별지12의 현재판매 여부는 이 승인에 포함하지 않는다."
   },
   {
    "formId": "ordin-22498211",

@@ -1,14 +1,14 @@
 {
  "schema": 1,
- "generatedAt": "2026-10-22T17:58:50.108819+00:00",
+ "generatedAt": "2026-10-22T19:24:03.178350+00:00",
  "baselineCommit": "dff0a8195d740254bc3dfbe792fd0b8c0c4d7d31",
  "scopeForms": 4006,
  "note": "Every fixed-scope original remains visible. Linked counts require a real published file; covered counts require the exact replacement SHA and program links to be published. Source retrieval and queue creation do not resolve a review.",
  "fullScopeMatchingComplete": false,
  "counts": {
-  "reviewed_not_linked": 1982,
-  "linked": 1925,
-  "requires_external_confirmation": 84,
+  "reviewed_not_linked": 1983,
+  "linked": 1927,
+  "requires_external_confirmation": 81,
   "covered_by_existing": 14,
   "replacement_available": 1
  },
@@ -12708,22 +12708,20 @@
    "lawId": "2001319",
    "title": "[별지 제1호서식] 출산서비스 통합처리 신청서 <개정 2024.5.2.>",
    "format": "hwpx",
-   "state": "requires_external_confirmation",
+   "programIds": [
+    "g11215.bokjiro-WLF00004044",
+    "g11215.gov24-304000000105"
+   ],
+   "state": "linked",
    "review": {
-    "disposition": "requires_external_confirmation",
-    "reason": "첫돌축하금 정부24 현재 안내는 출생 1년 후의 별도 신청 절차이다. 장애인가정 출산비용·양육지원금의 정확한 정부24 두 페이지도 각각의 조례와 별도 신청서·동의를 안내하나 이 과거 출산서비스 통합 파일 사용을 지정하지 않는다. 구 통합 원본을 첫돌·장애인 출산·양육의 공통 신청서로 사용한다는 직접 근거는 보완되지 않았다.",
+    "disposition": "approved",
+    "reason": "2026-10-23 총괄·독립Codex조사자와 실제Herdr Claude가 원본SHA/89277바이트·전체본문 및 현행 법규 계열을 교차검토했다.1822227 부칙제1284호제2조는2022년에출산통합별지1의장애인양육지원금칸을개정했고,그문구가현재2001319의2024-05-02개정별지1에남아있다.2001319 부칙제1374호제3·4조로구제명에서현제명으로의계열을확인했다. 현재정확정부24·복지로의7세미만/광진1년/월10만원/장애인본인명의통장/동주민센터신청과대조했다. 이통합원본은출생신고와함께해당양육지원금칸을표시할때만연결하며전입·기존아동의별도신청서로확대하지않는다.별도개인정보동의는현재정부24안내에따른다.현재구청페이지의옛성별표현과원문다른급여의옛연도·인접출산비용을승인하지않고,조례별지2삭제와공통규정별지2인용을같다고단정하지않는다.실제한글4쪽을총괄이모두확인했고4쪽은원본자체빈쪽이다.공식원문바이트는그대로유지한다.",
     "report": "pipeline/forms/reviews/unmatched-dispositions-round1034.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2001319",
     "relatedProgramIds": [
-     "g11215.bokjiro-WLF00002664",
      "g11215.bokjiro-WLF00004044",
-     "g11215.gov24-304000000102",
-     "g11215.gov24-304000000105",
-     "g11215.gov24-304000000108",
-     "g11215.gov24-304000000140",
-     "g11215.gov24-304000000141",
-     "g11215.gov24-304000000142"
+     "g11215.gov24-304000000105"
     ]
    }
   },
@@ -19788,10 +19786,10 @@
    "lawId": "1715997",
    "title": "[별지 제4호서식] 서약서",
    "format": "hwp",
-   "state": "requires_external_confirmation",
+   "state": "reviewed_not_linked",
    "review": {
-    "disposition": "requires_external_confirmation",
-    "reason": "2026년 공식 기금운용계획9쪽 전체 및 지출6쪽 도표를 재확인했다. 자립활동·자립구직·사회보험료·의료검사비는 일반보전금이고 자활기업 세무·교육·안전지원은 별도 민간이전으로 구분된다. 정부242026.8.12도 개인신청 없이 센터 발굴·안내라고 명시한다. 별지 제4호는 자활사업 실시기관이 지원대상의 사업자금 사용과 대여금 상환을 지도·감독하겠다는 서약이다. 규칙 제2조의 첨부서류임은 확인했으나 현 사업은 주민 자립활동·구직·의료비 등 위탁지원이며 기관 자체 또는 사업대여를 지원대상으로 하지 않는다. 기관 명칭만으로 제외하지 않고 해당 사업의 지원 항목·신청경로와 대조한 결과 이 사업의 필수 부속서류 근거가 없다. 현행 센터 내부서식과 이 별지의 실제 제출관계는 새 공개자료에서도 해소되지 않았다.",
+    "disposition": "non_applicant",
+    "reason": "2026-10-23 독립 조사자와 총괄이 고정원본12800바이트/SHA 및 전체414자를 각각 확인했다. 원본의 유일한 서약자·날인자는 자활사업 실시기관이며, 지원대상의 사업자금 용도·대여금 상환을 지도감독하고 경영지도계획을 첨부하는 기관의 관리책임 서약이다. 현행규칙1715997 제2조는 직접기금 신청서류와 센터위탁 내부서식 경로를 구분한다. 상위조례1971779 제3·8·9·11조는 기관·기업이 실제 지원대상인 점포·설비·대여 경로도 두므로 기관 명칭 자체를 보편적 제외사유로 삼지 않는다. 다만 현재 정확한 정부24 394000000124는 참여주민의 자립활동·구직·의료비·사회보험료4항목과 센터발굴·안내를 명시한다. 이 현재 주민급여 신청인의 서식으로 기관의 대여상환 관리서약을 붙이지 않는 non_applicant로 분류한다. 서약서 자체의 폐지나 별도 기관직접지원사업에서도 사용할 수 없다는 결론은 아니다.",
     "report": "pipeline/forms/reviews/unmatched-dispositions-round1013.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1715997",
@@ -63195,10 +63193,13 @@
    "lawId": "2165511",
    "title": "[별지 제10호서식] 원주사랑상품권 환전 청구서",
    "format": "hwp",
-   "state": "requires_external_confirmation",
+   "programIds": [
+    "g51130.gov24-419000000129"
+   ],
+   "state": "linked",
    "review": {
-    "disposition": "requires_external_confirmation",
-    "reason": "현재 원주시 상품권 전용 공식 안내는 온라인뿐 아니라 오프라인도 Chak 가입 후 충전이며 앱·카드형이다. 지류권 가맹점 환전의 현재 접수 공고·원본은 찾지 못했다. 종이권 환전서를 모바일 정산에 연결하지 않고 지류 운영 여부를 미해소로 유지한다.",
+    "disposition": "approved",
+    "reason": "2026-10-23 새 GET한 원주시 전용 공식 소개는 카드·모바일·지류를 함께 명시하고 지류발행 축소와2천원권을 안내한다. 공식 가맹점 준수사항은 지정은행 방문→환전신청서 작성→가맹점 지정여부 및 상품권금액 확인→입금 순서를 직접 안내하고 실제 매출없는 수취·과다거래 환전을 금지한다. 같은 날 현행규칙2165511(2026-08-28시행) 본문 제8조는 등록가맹점의 별지10 환전청구서와 접수후3일 환전을 명시하고 별지목록의22498207을 확인했다. 고정원본과 새 다운로드의36352바이트/SHA914df6e674262f770d618cad658293179b27a6963bd230737a75a6d37094d3c9가 같고 전체401자를 읽었다. 한글에서1쪽을 렌더링하여 빈 가맹점 신청서·하단 접수증,2천원권 포함권종,은행수신/계좌/서명과 원본불변을 확인했다. 현재 정확 정부24 원주사랑상품권 사업은 소비자와 가맹점 혜택을 함께 안내한다. 기존 카드앱 안내만으로는 부족했던 지류 가맹점 환전 사용근거를 공식 별도 안내와 현행 별지 지정으로 보완한다. 개인 현금할인구매 별지12의 현재판매 여부는 이 승인에 포함하지 않는다.",
     "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
     "fullBodyReviewed": true,
     "evidenceUrl": null,

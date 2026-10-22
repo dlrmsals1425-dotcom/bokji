@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "forms": {
+    "agency-26110-bokjiro-wlf00006649-20260720-1": {
+      "sourceSHA256": "6caa2fb4b460d4b841be849958f2af44e251be1eddbed48a9d219ddff03b7afb",
+      "checkedAt": "2026-10-23",
+      "reason": "이 통합서식은 중구 출산축하금 부분만 연결을 확인했습니다. 현재 자동 입력은 다른 서비스의 선택란도 열지만 해당 출산축하금 칸은 지원하지 못해 화면 작성을 보류합니다. 공식 원본은 그대로 받을 수 있습니다.",
+      "evidenceNote": "공식 HWP119808바이트/전체3쪽과 검증된 변환본을 확인했다. 독립 검토한 열린67칸은 공통정보후보25칸, 다른서비스37칸, 빈구분행·처리절차간격5칸으로 나뉜다. 승인한 중구 출산축하금의row22 col1·9·27에는 열린칸이0개다. 적용 부분의 입력 범위가 확인될 때까지 다운로드 승인과 화면 작성 승인을 구분한다. 다른 원본의 모든 입력칸을 함께 검토·수정했다고 주장하지 않는다.",
+      "independentReviewSHA256": "a463c85a91c38a334f7f96bfcb959c08fbc14c2d5bc885c56c0db6f7b846ceca",
+      "evidenceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00006649&wlfareInfoReldBztpCd=02"
+    }
+  }
+}

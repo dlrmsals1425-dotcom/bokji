@@ -26,6 +26,24 @@ const exactFiles = [
     bytes: 59139, sha256: "3759d8f21c50aaa43b5960021da8b6a874acf6fdde2caa017dbe36ae792d2909",
     condition: "대리인 계좌 수령", excluded: ["ordin-22425553"], writable: false,
   },
+  {
+    program: "g51130.gov24-419000000129", form: "ordin-22498207",
+    title: "원주사랑상품권 환전 청구서", format: "hwp",
+    bytes: 36352, sha256: "914df6e674262f770d618cad658293179b27a6963bd230737a75a6d37094d3c9",
+    condition: "등록가맹점이 실제 물품 판매나 용역 제공으로 받은 지류", excluded: ["ordin-22498211"], writable: false,
+  },
+  {
+    program: "g26110.bokjiro-WLF00006649", form: "agency-26110-bokjiro-wlf00006649-20260720-1",
+    title: "출산서비스 통합처리 신청서(중구) — 2025.10.1. 이후 출생아 출산축하금", format: "hwp",
+    bytes: 119808, sha256: "6caa2fb4b460d4b841be849958f2af44e251be1eddbed48a9d219ddff03b7afb",
+    condition: "2025년 10월 1일 이후 태어나", excluded: ["ordin-21161135"], writable: false,
+  },
+  {
+    program: "g11215.gov24-304000000105", form: "ordin-18989767",
+    title: "광진구 장애인 양육지원금 통합신청서(출생신고 시)", format: "hwpx",
+    bytes: 89277, sha256: "7964c66ed5e1fbccd0c220afd57f4244eeb5ec659637b6a133c599d4b5116057",
+    condition: "출생신고와 함께 출산서비스를 통합신청할 때", excluded: [], writable: false,
+  },
 ];
 
 for (const item of exactFiles) {
@@ -44,7 +62,12 @@ for (const item of exactFiles) {
     expect(bytes.length).toBe(item.bytes);
     expect(createHash("sha256").update(bytes).digest("hex")).toBe(item.sha256);
     for (const id of item.excluded) await expect(panel.locator(`a[href^="/forms/files/${id}-"]`)).toHaveCount(0);
-    await expect(panel.getByTestId("paper-writer-link")).toHaveCount(item.writable ? 1 : 0);
+    const card = panel.getByRole("listitem").filter({ has: page.getByRole("heading", { name: item.title, exact: true }) });
+    await expect(card).toHaveCount(1);
+    await expect(card.getByTestId("paper-writer-link")).toHaveCount(item.writable ? 1 : 0);
+    if (item.form === "agency-26110-bokjiro-wlf00006649-20260720-1") {
+      expect((await request.get(`/forms/writing/v1/manifest/${item.form}.json`)).status()).toBe(404);
+    }
     if (item.program === "s47000.bokjiro-WLF00004401") {
       await expect(panel.locator('a[href*="20260820UUWBM0928100205473333"]')).toHaveCount(0);
       await expect(panel).toContainText("통장사본");
@@ -53,10 +76,11 @@ for (const item of exactFiles) {
   });
 }
 
-test("경북 정부24와 광진 종합사업에서도 같은 원본의 조건부 연결을 유지한다", async ({ page }) => {
+test("같은 사업의 다른 자료에서도 원본의 조건부 연결을 유지한다", async ({ page }) => {
   for (const [program, form] of [
     ["s47000.gov24-647000000122", "agency-47000-bokjiro-wlf00004401-allowance-application"],
     ["g11215.bokjiro-WLF00002162", "ordin-22425515"],
+    ["g11215.bokjiro-WLF00004044", "ordin-18989767"],
   ]) {
     await page.goto(`/p/${program}`);
     const panel = page.getByTestId("application-forms");
@@ -65,4 +89,13 @@ test("경북 정부24와 광진 종합사업에서도 같은 원본의 조건부
   }
   await page.goto("/p/g51810.icare-0083-1489635-1-3-6");
   await expect(page.getByTestId("application-forms").locator('a[href^="/forms/files/ordin-17770713-"]')).toHaveCount(0);
+});
+
+test("광진 출생신고 통합서식을 첫돌축하금의 신청서로 확대하지 않는다", async ({ page }) => {
+  for (const program of ["g11215.bokjiro-WLF00002664", "g11215.gov24-304000000108"]) {
+    await page.goto(`/p/${program}`);
+    const panel = page.getByTestId("application-forms");
+    await expect(panel).toBeVisible();
+    await expect(panel.locator('a[href^="/forms/files/ordin-18989767-"]')).toHaveCount(0);
+  }
 });

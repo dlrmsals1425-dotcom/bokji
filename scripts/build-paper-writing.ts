@@ -30,6 +30,7 @@ import { measurePaperText, measurePaperSourceRange, type PaperGlyphStyles, type 
 import { estimateHwpTextWidth, type FormGlyphStyle } from "../src/lib/client/formGlyphMetrics";
 import { detailBucket } from "../src/lib/data/bucket";
 import { paperSlotAtKey, type PaperAt, type PaperCellView, type PaperIndexEntry, type PaperLockKind, type PaperManifest, type PaperNode, type PaperSegment, type PaperSlot, type PaperUnsupported } from "../src/lib/data/paperWritingTypes";
+import writingHolds from "../pipeline/forms/reviews/paper-writing-holds.json";
 
 /* ── 경로와 입력 ──────────────────────────────────────────────────── */
 
@@ -42,6 +43,7 @@ const UNSUPPORTED = `${WRITING}/unsupported.json`;
 const REPORT_DEFAULT = "logs/hwp-writing/paper-writing-report.json";
 /** 시민이 직접 작성하는 서식만. 지급대장 같은 기관 서류는 작성기에 올리지 않는다. */
 const CITIZEN_ROLES = ["application", "consent", "delegation", "supporting"];
+const WRITING_HOLDS = writingHolds.forms as Record<string, { sourceSHA256: string; reason: string }>;
 const PREVIEW_TEXT = "Preview/PrvText.txt";
 /** 빈 원본 그림 — 완성 파일에 남으면 낡은 미리보기가 된다. 어느 선언 파일에도 들어 있지 않다. */
 const PREVIEW_IMAGE = "Preview/PrvImage.png";
@@ -340,6 +342,12 @@ interface Compiled { manifest: PaperManifest; entry: PaperIndexEntry }
 
 export function compileForm(formId: string, form: CatalogForm, conversion: Conversion, assetBytes: Uint8Array): Compiled {
   validateConversion(formId, form, conversion, assetBytes);
+  // 다운로드에 승인한 일부와 실제 입력 가능한 부분이 다른 묶음 서식은 자동으로 열지 않는다.
+  const writingHold = WRITING_HOLDS[formId];
+  if (writingHold) {
+    if (writingHold.sourceSHA256 !== conversion.source.sha256) throw new Error("화면 작성 보류 후 원본이 바뀌어 적용 범위 재검토가 필요합니다.");
+    throw new Error(writingHold.reason);
+  }
   const files = unzipSync(assetBytes);
   const order = Object.keys(files);
   if (order[0] !== "mimetype" || strFromU8(files["mimetype"]).trim() !== "application/hwp+zip") {

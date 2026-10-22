@@ -47491,7 +47491,7 @@
      "title": "서울특별시 광진구 출산·양육 및 다자녀가정 지원에 관한 조례"
     }
    ],
-   "checkedAt": "2026-10-19",
+   "checkedAt": "2026-10-23",
    "currentBodyArticleState": "available",
    "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2001319",
    "currentLaw": {
@@ -47502,6 +47502,15 @@
     "title": "서울특별시 광진구 출산·양육 및 다자녀가정 지원에 관한 조례"
    },
    "currentLawId": "2001319",
+   "followupEvidence": {
+    "checkedAt": "2026-10-23",
+    "kind": "current_official_body_and_annex_with_related_family",
+    "relatedBodySHA256": "820b893df71376a2eb121d67b639603050e5d49f1d8fca5b02a8ac07be0a1ae7",
+    "relatedLawId": "1822227",
+    "relatedLawUrl": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=1822227&gubun=ELIS",
+    "sha256": "b6b7d341258be28e853bcd9622576fc414841217b0d2d0a8670bf429aa0f99bf",
+    "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=2001319&gubun=ELIS"
+   },
    "forms": {
     "ordin-18989767": {
      "binding": "bound",
@@ -87129,7 +87138,7 @@
      "title": "원주사랑상품권 발행 및 운영 조례 시행규칙"
     }
    ],
-   "checkedAt": "2026-10-19",
+   "checkedAt": "2026-10-23",
    "currentBodyArticleState": "available",
    "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2165511",
    "currentLaw": {
@@ -87140,6 +87149,12 @@
     "title": "원주사랑상품권 발행 및 운영 조례 시행규칙"
    },
    "currentLawId": "2165511",
+   "followupEvidence": {
+    "checkedAt": "2026-10-23",
+    "kind": "current_official_body_and_annex",
+    "sha256": "ed101232d2b274085ee317e52c7320dfee437b017c5a3a9c8a4ce3422d13d2f2",
+    "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=2165511&gubun=ELIS&chrClsCd=010202"
+   },
    "forms": {
     "ordin-22498193": {
      "binding": "bound",

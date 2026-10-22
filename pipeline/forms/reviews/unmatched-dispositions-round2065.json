@@ -2654,15 +2654,18 @@
     {
       "formId": "ordin-22498207",
       "sha256": "914df6e674262f770d618cad658293179b27a6963bd230737a75a6d37094d3c9",
-      "disposition": "requires_external_confirmation",
-      "reason": "현재 원주시 상품권 전용 공식 안내는 온라인뿐 아니라 오프라인도 Chak 가입 후 충전이며 앱·카드형이다. 지류권 가맹점 환전의 현재 접수 공고·원본은 찾지 못했다. 종이권 환전서를 모바일 정산에 연결하지 않고 지류 운영 여부를 미해소로 유지한다.",
+      "disposition": "approved",
+      "reason": "2026-10-23 새 GET한 원주시 전용 공식 소개는 카드·모바일·지류를 함께 명시하고 지류발행 축소와2천원권을 안내한다. 공식 가맹점 준수사항은 지정은행 방문→환전신청서 작성→가맹점 지정여부 및 상품권금액 확인→입금 순서를 직접 안내하고 실제 매출없는 수취·과다거래 환전을 금지한다. 같은 날 현행규칙2165511(2026-08-28시행) 본문 제8조는 등록가맹점의 별지10 환전청구서와 접수후3일 환전을 명시하고 별지목록의22498207을 확인했다. 고정원본과 새 다운로드의36352바이트/SHA914df6e674262f770d618cad658293179b27a6963bd230737a75a6d37094d3c9가 같고 전체401자를 읽었다. 한글에서1쪽을 렌더링하여 빈 가맹점 신청서·하단 접수증,2천원권 포함권종,은행수신/계좌/서명과 원본불변을 확인했다. 현재 정확 정부24 원주사랑상품권 사업은 소비자와 가맹점 혜택을 함께 안내한다. 기존 카드앱 안내만으로는 부족했던 지류 가맹점 환전 사용근거를 공식 별도 안내와 현행 별지 지정으로 보완한다. 개인 현금할인구매 별지12의 현재판매 여부는 이 승인에 포함하지 않는다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
           "programId": "g51130.gov24-419000000129",
-          "programName": "원주사랑상품권",
-          "disposition": "requires_external_confirmation",
-          "reason": "현행 지류상품권 환전 접수 및 해당 별지10 사용 여부 필요."
+          "formId": "ordin-22498207",
+          "decision": "matched",
+          "disposition": "approved",
+          "use": "conditional",
+          "condition": "원주시 등록가맹점이 실제 물품 판매나 용역 제공으로 받은 지류 원주사랑상품권을 지정 판매대행점(은행)에서 환전할 때 쓰는 청구서입니다. 가맹점 번호·권종별 수량과 금액·대표자·입금계좌를 적고 원본의 서명란을 준비합니다. 카드·모바일 QR 결제 자동정산이나 소비자 잔액환불, 상품권 할인구매 신청에는 쓰지 않습니다. 지류 발행은 축소 중이므로 현재 취급 권종과 방문은행은 원주시 공식 가맹점 안내 및 담당부서에서 확인합니다. 하단 접수증의 접수일·담당자란은 접수기관 작성 부분입니다.",
+          "reason": "2026-10-23 새 GET한 원주시 전용 공식 소개는 카드·모바일·지류를 함께 명시하고 지류발행 축소와2천원권을 안내한다. 공식 가맹점 준수사항은 지정은행 방문→환전신청서 작성→가맹점 지정여부 및 상품권금액 확인→입금 순서를 직접 안내하고 실제 매출없는 수취·과다거래 환전을 금지한다. 같은 날 현행규칙2165511(2026-08-28시행) 본문 제8조는 등록가맹점의 별지10 환전청구서와 접수후3일 환전을 명시하고 별지목록의22498207을 확인했다. 고정원본과 새 다운로드의36352바이트/SHA914df6e674262f770d618cad658293179b27a6963bd230737a75a6d37094d3c9가 같고 전체401자를 읽었다. 한글에서1쪽을 렌더링하여 빈 가맹점 신청서·하단 접수증,2천원권 포함권종,은행수신/계좌/서명과 원본불변을 확인했다. 현재 정확 정부24 원주사랑상품권 사업은 소비자와 가맹점 혜택을 함께 안내한다. 기존 카드앱 안내만으로는 부족했던 지류 가맹점 환전 사용근거를 공식 별도 안내와 현행 별지 지정으로 보완한다. 개인 현금할인구매 별지12의 현재판매 여부는 이 승인에 포함하지 않는다."
         }
       ],
       "sourceEvidence": {
@@ -2697,58 +2700,99 @@
           "annexBinding": "bound"
         }
       },
-      "checkedAt": "2026-10-19",
+      "checkedAt": "2026-10-23",
       "additionalEvidence": {
         "officialCurrentGuide": "https://www.wonju.go.kr/wonjusarang/user_sub.php?gid=www&mu_idx=7"
       },
       "officialFollowup": {
-        "checkedAt": "2026-10-19",
-        "sourceResult": "logs/forms-completion/official-followup/team3-results.json",
-        "sourceResultSHA256": "7e8e63b2e007e7deed1d20ab71367066ef036d087d892df780147ee63e67b764",
-        "proposedStatus": "confirmed_unresolved",
-        "officialEvidence": [
-          {
-            "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=2165511&gubun=ELIS",
-            "httpStatus": 200,
-            "responseSha256": "ed101232d2b274085ee317e52c7320dfee437b017c5a3a9c8a4ce3422d13d2f2",
-            "savedEvidence": [
-              {
-                "path": "logs/forms-completion/official-followup/team3/law-2165511.json",
-                "sha256": "7795e71ca38ed496010988dd5cfb5cdf66394bd86ab03d7179d5ad94cd65babc",
-                "kind": "official_evidence_metadata"
-              }
-            ]
-          },
-          {
-            "url": "https://www.wonju.go.kr/wonjusarang/user_sub.php?gid=www&mu_idx=7",
-            "httpStatus": 200,
-            "responseSha256": "07dee472bfa67665563f83ed41d24d89fcd34bcfdc87a5697bcfc121ce53c673",
-            "savedEvidence": [
-              {
-                "path": "logs/forms-completion/official-followup/team3/wonju.json",
-                "sha256": "9a65840d7ff9be1397a7eba3f8258078dbe7874e86b615c07f7de7b624ea7cb7",
-                "kind": "official_evidence_metadata"
-              }
-            ]
-          },
-          {
-            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/419000000129",
-            "httpStatus": 200,
-            "bodyTextSha256": "0775466af7e17ab6851c592502d24d0945e0922a8a0a0b21cd62b082b6c751db",
-            "savedEvidence": [
-              {
-                "path": "logs/forms-completion/official-followup/team3/program-g51130.gov24-419000000129.json",
-                "sha256": "659b291c0b0f938c9d1ccf09d8bbb1cc22a9144cd591827eb13641052f5306a2",
-                "kind": "official_evidence_metadata"
-              }
-            ]
-          }
-        ],
-        "allFormsConnected": false
+        "checkedAt": "2026-10-23",
+        "sourceResult": "pipeline/forms/reviews/municipal-reviewed-round8203.json",
+        "sourceResultSHA256": "72e75acb4a05ba1a8bebca9b3ceb36b014fc6341ba8c4c80cf71256935d7b5ac",
+        "independentReviewSHA256": "ba1d6001eaf6bc0f6acb86f1b5c23eae0351707eb2a5ab3af47b000356a17be6",
+        "sourceProposalSHA256": "b7bc72086cc70c0853575cd23ef4e24d1f648bef0d5e8ea88727891611f6c519",
+        "proposedStatus": "approved_conditional_registered_merchant_paper_exchange_only",
+        "allOriginalsMatched": false
       },
       "relatedProgramIds": [
         "g51130.gov24-419000000129"
-      ]
+      ],
+      "priorDispositions": [
+        {
+          "checkedAt": "2026-10-19",
+          "disposition": "requires_external_confirmation",
+          "reason": "현재 원주시 상품권 전용 공식 안내는 온라인뿐 아니라 오프라인도 Chak 가입 후 충전이며 앱·카드형이다. 지류권 가맹점 환전의 현재 접수 공고·원본은 찾지 못했다. 종이권 환전서를 모바일 정산에 연결하지 않고 지류 운영 여부를 미해소로 유지한다.",
+          "relatedProgramIds": [
+            "g51130.gov24-419000000129"
+          ],
+          "reviewedProgramPairs": [
+            {
+              "programId": "g51130.gov24-419000000129",
+              "programName": "원주사랑상품권",
+              "disposition": "requires_external_confirmation",
+              "reason": "현행 지류상품권 환전 접수 및 해당 별지10 사용 여부 필요."
+            }
+          ],
+          "officialFollowup": {
+            "checkedAt": "2026-10-19",
+            "sourceResult": "logs/forms-completion/official-followup/team3-results.json",
+            "sourceResultSHA256": "7e8e63b2e007e7deed1d20ab71367066ef036d087d892df780147ee63e67b764",
+            "proposedStatus": "confirmed_unresolved",
+            "officialEvidence": [
+              {
+                "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=2165511&gubun=ELIS",
+                "httpStatus": 200,
+                "responseSha256": "ed101232d2b274085ee317e52c7320dfee437b017c5a3a9c8a4ce3422d13d2f2",
+                "savedEvidence": [
+                  {
+                    "path": "logs/forms-completion/official-followup/team3/law-2165511.json",
+                    "sha256": "7795e71ca38ed496010988dd5cfb5cdf66394bd86ab03d7179d5ad94cd65babc",
+                    "kind": "official_evidence_metadata"
+                  }
+                ]
+              },
+              {
+                "url": "https://www.wonju.go.kr/wonjusarang/user_sub.php?gid=www&mu_idx=7",
+                "httpStatus": 200,
+                "responseSha256": "07dee472bfa67665563f83ed41d24d89fcd34bcfdc87a5697bcfc121ce53c673",
+                "savedEvidence": [
+                  {
+                    "path": "logs/forms-completion/official-followup/team3/wonju.json",
+                    "sha256": "9a65840d7ff9be1397a7eba3f8258078dbe7874e86b615c07f7de7b624ea7cb7",
+                    "kind": "official_evidence_metadata"
+                  }
+                ]
+              },
+              {
+                "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/419000000129",
+                "httpStatus": 200,
+                "bodyTextSha256": "0775466af7e17ab6851c592502d24d0945e0922a8a0a0b21cd62b082b6c751db",
+                "savedEvidence": [
+                  {
+                    "path": "logs/forms-completion/official-followup/team3/program-g51130.gov24-419000000129.json",
+                    "sha256": "659b291c0b0f938c9d1ccf09d8bbb1cc22a9144cd591827eb13641052f5306a2",
+                    "kind": "official_evidence_metadata"
+                  }
+                ]
+              }
+            ],
+            "allFormsConnected": false
+          }
+        }
+      ],
+      "reviewCheckedAt": "2026-10-23",
+      "reviewedBy": "codex-coordinator-with-independent-review",
+      "approvedAssociations": [
+        {
+          "programId": "g51130.gov24-419000000129",
+          "formId": "ordin-22498207",
+          "use": "conditional"
+        }
+      ],
+      "sourceLawCurrency": {
+        "checkedAt": "2026-10-23",
+        "currentLawId": "2165511",
+        "state": "source_current"
+      }
     },
     {
       "formId": "ordin-22498211",
