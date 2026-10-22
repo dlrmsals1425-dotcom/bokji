@@ -4382,62 +4382,71 @@
       "formId": "ordin-22562413",
       "sha256": "f0855cd3633e79746071926d95564335a0069a244cd9741306765deb90c369e1",
       "disposition": "requires_external_confirmation",
-      "reason": "현재 정부24(2026-08-06)는 영광 임산부 대상 초음파3회 쿠폰과 임신확인서·신분증·등본 접수를 명시한다. 원본 본문의 쿠폰 목적과는 관련되지만 제목과 현행 시행규칙은 신혼부부 검진 후 청구로 다르다. 정정된 원본이나 해당 쿠폰 접수에 이 별지10을 받는다는 현재 근거는 확보되지 않았다.",
+      "reason": "제목과규칙3조⑤의별지10은검진후3개월내신혼검진지원신청이지만실제본문은임신부주수·초음파1~3회·쿠폰·임산부수첩/임신확인이다. 현정부24exact106은그쿠폰사업을명시하고군모자보건안내는지원신청서작성(별지1)→쿠폰발급→검사→병원청구를명시한다. 따라서현재파일이쿠폰용본문임은확정되지만별지10오제목파일을현재별지1대신접수한다는근거는없다. 무관한8개사업쌍은명확한목적차이로제외하고쿠폰1개쌍만미해소로유지한다. 정확 초음파497000000106 한쌍은 현행별지1 대신 이오제목별지10을쓰는접수근거가미해소여서추가확인을유지한다. 나머지무관8쌍만제외하며 다른정상급여서식을변경하지않는다. 2026-10-23 총괄이 실제고정SHA와전체본문을재추출하고 현행공식조문을새로대조했으며, 실제Herdr Grok의반대검토와정상비교원본공개SHA/관계를확인했다. 이검토는현재4원본과명시한사업쌍범위이다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
           "programId": "g12830.bokjiro-WLF00002427",
-          "programName": "임산부(해피맘) 교통비 지원사업",
-          "disposition": "not_applicable",
-          "reason": "원본 신청 주체·목적과 이 사업의 지원 범위를 대조했으며 이 연결은 승인하지 않음."
+          "formId": "ordin-22562413",
+          "decision": "excluded",
+          "disposition": "excluded",
+          "reason": "교통카드·산후조리·난임·출산용품·건강관리바우처·결혼장려금은이초음파쿠폰서식의급여가아님"
         },
         {
           "programId": "g12830.bokjiro-WLF00006042",
-          "programName": "산후조리비 지원사업",
-          "disposition": "not_applicable",
-          "reason": "원본 신청 주체·목적과 이 사업의 지원 범위를 대조했으며 이 연결은 승인하지 않음."
+          "formId": "ordin-22562413",
+          "decision": "excluded",
+          "disposition": "excluded",
+          "reason": "교통카드·산후조리·난임·출산용품·건강관리바우처·결혼장려금은이초음파쿠폰서식의급여가아님"
         },
         {
           "programId": "g12830.gov24-497000000105",
-          "programName": "난임부부 시술비 본인부담금 지원(추가)",
-          "disposition": "not_applicable",
-          "reason": "원본 신청 주체·목적과 이 사업의 지원 범위를 대조했으며 이 연결은 승인하지 않음."
+          "formId": "ordin-22562413",
+          "decision": "excluded",
+          "disposition": "excluded",
+          "reason": "교통카드·산후조리·난임·출산용품·건강관리바우처·결혼장려금은이초음파쿠폰서식의급여가아님"
         },
         {
           "programId": "g12830.gov24-497000000116",
-          "programName": "출산축하용품 구입비 지원",
-          "disposition": "not_applicable",
-          "reason": "원본 신청 주체·목적과 이 사업의 지원 범위를 대조했으며 이 연결은 승인하지 않음."
+          "formId": "ordin-22562413",
+          "decision": "excluded",
+          "disposition": "excluded",
+          "reason": "교통카드·산후조리·난임·출산용품·건강관리바우처·결혼장려금은이초음파쿠폰서식의급여가아님"
         },
         {
           "programId": "g12830.gov24-497000000106",
-          "programName": "임산부 영유아 건강관리 서비스",
+          "formId": "ordin-22562413",
+          "decision": "requires_external_confirmation",
           "disposition": "requires_external_confirmation",
-          "reason": "원본 본문은 산전초음파이나 제목·현행 조문은 신혼부부 검진사후청구로 달라 현재 접수용 확인 필요."
+          "reason": "쿠폰목적일치하나정확현재서식번호/배포결속미해소"
         },
         {
           "programId": "g12830.gov24-497000000118",
-          "programName": "산모·신생아 건강관리 지원",
-          "disposition": "not_applicable",
-          "reason": "원본 신청 주체·목적과 이 사업의 지원 범위를 대조했으며 이 연결은 승인하지 않음."
+          "formId": "ordin-22562413",
+          "decision": "excluded",
+          "disposition": "excluded",
+          "reason": "교통카드·산후조리·난임·출산용품·건강관리바우처·결혼장려금은이초음파쿠폰서식의급여가아님"
         },
         {
           "programId": "g12830.bokjiro-WLF00002312",
-          "programName": "난임부부 시술비 본인부담금 추가지원",
-          "disposition": "not_applicable",
-          "reason": "원본 신청 주체·목적과 이 사업의 지원 범위를 대조했으며 이 연결은 승인하지 않음."
+          "formId": "ordin-22562413",
+          "decision": "excluded",
+          "disposition": "excluded",
+          "reason": "교통카드·산후조리·난임·출산용품·건강관리바우처·결혼장려금은이초음파쿠폰서식의급여가아님"
         },
         {
           "programId": "g12830.gov24-497000000102",
-          "programName": "임신부(해피맘) 교통카드 지원",
-          "disposition": "not_applicable",
-          "reason": "원본 신청 주체·목적과 이 사업의 지원 범위를 대조했으며 이 연결은 승인하지 않음."
+          "formId": "ordin-22562413",
+          "decision": "excluded",
+          "disposition": "excluded",
+          "reason": "교통카드·산후조리·난임·출산용품·건강관리바우처·결혼장려금은이초음파쿠폰서식의급여가아님"
         },
         {
           "programId": "g12830.gov24-497000000111",
-          "programName": "영광군 결혼장려금 지원",
-          "disposition": "not_applicable",
-          "reason": "원본 신청 주체·목적과 이 사업의 지원 범위를 대조했으며 이 연결은 승인하지 않음."
+          "formId": "ordin-22562413",
+          "decision": "excluded",
+          "disposition": "excluded",
+          "reason": "교통카드·산후조리·난임·출산용품·건강관리바우처·결혼장려금은이초음파쿠폰서식의급여가아님"
         }
       ],
       "sourceEvidence": {
@@ -4470,7 +4479,7 @@
           "annexBinding": "bound"
         }
       },
-      "checkedAt": "2026-10-19",
+      "checkedAt": "2026-10-23",
       "additionalEvidence": {
         "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=2000515&gubun=ELIS&chrClsCd=010202",
         "lawId": "2000515",
@@ -4481,37 +4490,11 @@
         "externalCondition": "영광 모자보건/인구 담당자의 산전쿠폰 실제 접수용 또는 신혼검진 수정원본 확인 필요."
       },
       "officialFollowup": {
-        "checkedAt": "2026-10-19",
-        "sourceResult": "logs/forms-completion/official-followup/team3-results.json",
-        "sourceResultSHA256": "7e8e63b2e007e7deed1d20ab71367066ef036d087d892df780147ee63e67b764",
-        "proposedStatus": "confirmed_unresolved",
-        "officialEvidence": [
-          {
-            "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=2160643&gubun=ELIS",
-            "httpStatus": 200,
-            "responseSha256": "2ec211deea85a3140dad229d1ad835ca87d97b7172a00b6ff0344d4204cbf519",
-            "savedEvidence": [
-              {
-                "path": "logs/forms-completion/official-followup/team3/law-2160643.json",
-                "sha256": "45433e1f1bac9f1c41d010d570def261f3c940ad272315e3faa65de799c5fad4",
-                "kind": "official_evidence_metadata"
-              }
-            ]
-          },
-          {
-            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/497000000106",
-            "httpStatus": 200,
-            "bodyTextSha256": "ea9f2a5fa965f2c8661ad15d3abedd74a586e7f08ff29f9952db8a43e709209e",
-            "savedEvidence": [
-              {
-                "path": "logs/forms-completion/official-followup/team3/program-g12830.gov24-497000000106.json",
-                "sha256": "f133fba499a50f805868c89614c28000abe5e85aef28906f630fd3c4931511be",
-                "kind": "official_evidence_metadata"
-              }
-            ]
-          }
-        ],
-        "allFormsConnected": false
+        "checkedAt": "2026-10-23",
+        "sourceResult": "pipeline/forms/reviews/official-source-exclusions-20261023e.json",
+        "sourceResultSHA256": "0a2c9d1cfe9189aa3520698de3464629f2583b11e5880104fd18d8dcb10ac1d0",
+        "allOriginalsMatched": false,
+        "wrongSourcePairOnly": true
       },
       "relatedProgramIds": [
         "g12830.bokjiro-WLF00002427",
@@ -4523,7 +4506,114 @@
         "g12830.bokjiro-WLF00002312",
         "g12830.gov24-497000000102",
         "g12830.gov24-497000000111"
-      ]
+      ],
+      "priorDispositions": [
+        {
+          "checkedAt": "2026-10-19",
+          "disposition": "requires_external_confirmation",
+          "reason": "현재 정부24(2026-08-06)는 영광 임산부 대상 초음파3회 쿠폰과 임신확인서·신분증·등본 접수를 명시한다. 원본 본문의 쿠폰 목적과는 관련되지만 제목과 현행 시행규칙은 신혼부부 검진 후 청구로 다르다. 정정된 원본이나 해당 쿠폰 접수에 이 별지10을 받는다는 현재 근거는 확보되지 않았다.",
+          "reviewedProgramPairs": [
+            {
+              "programId": "g12830.bokjiro-WLF00002427",
+              "programName": "임산부(해피맘) 교통비 지원사업",
+              "disposition": "not_applicable",
+              "reason": "원본 신청 주체·목적과 이 사업의 지원 범위를 대조했으며 이 연결은 승인하지 않음."
+            },
+            {
+              "programId": "g12830.bokjiro-WLF00006042",
+              "programName": "산후조리비 지원사업",
+              "disposition": "not_applicable",
+              "reason": "원본 신청 주체·목적과 이 사업의 지원 범위를 대조했으며 이 연결은 승인하지 않음."
+            },
+            {
+              "programId": "g12830.gov24-497000000105",
+              "programName": "난임부부 시술비 본인부담금 지원(추가)",
+              "disposition": "not_applicable",
+              "reason": "원본 신청 주체·목적과 이 사업의 지원 범위를 대조했으며 이 연결은 승인하지 않음."
+            },
+            {
+              "programId": "g12830.gov24-497000000116",
+              "programName": "출산축하용품 구입비 지원",
+              "disposition": "not_applicable",
+              "reason": "원본 신청 주체·목적과 이 사업의 지원 범위를 대조했으며 이 연결은 승인하지 않음."
+            },
+            {
+              "programId": "g12830.gov24-497000000106",
+              "programName": "임산부 영유아 건강관리 서비스",
+              "disposition": "requires_external_confirmation",
+              "reason": "원본 본문은 산전초음파이나 제목·현행 조문은 신혼부부 검진사후청구로 달라 현재 접수용 확인 필요."
+            },
+            {
+              "programId": "g12830.gov24-497000000118",
+              "programName": "산모·신생아 건강관리 지원",
+              "disposition": "not_applicable",
+              "reason": "원본 신청 주체·목적과 이 사업의 지원 범위를 대조했으며 이 연결은 승인하지 않음."
+            },
+            {
+              "programId": "g12830.bokjiro-WLF00002312",
+              "programName": "난임부부 시술비 본인부담금 추가지원",
+              "disposition": "not_applicable",
+              "reason": "원본 신청 주체·목적과 이 사업의 지원 범위를 대조했으며 이 연결은 승인하지 않음."
+            },
+            {
+              "programId": "g12830.gov24-497000000102",
+              "programName": "임신부(해피맘) 교통카드 지원",
+              "disposition": "not_applicable",
+              "reason": "원본 신청 주체·목적과 이 사업의 지원 범위를 대조했으며 이 연결은 승인하지 않음."
+            },
+            {
+              "programId": "g12830.gov24-497000000111",
+              "programName": "영광군 결혼장려금 지원",
+              "disposition": "not_applicable",
+              "reason": "원본 신청 주체·목적과 이 사업의 지원 범위를 대조했으며 이 연결은 승인하지 않음."
+            }
+          ],
+          "officialFollowup": {
+            "checkedAt": "2026-10-19",
+            "sourceResult": "logs/forms-completion/official-followup/team3-results.json",
+            "sourceResultSHA256": "7e8e63b2e007e7deed1d20ab71367066ef036d087d892df780147ee63e67b764",
+            "proposedStatus": "confirmed_unresolved",
+            "officialEvidence": [
+              {
+                "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=2160643&gubun=ELIS",
+                "httpStatus": 200,
+                "responseSha256": "2ec211deea85a3140dad229d1ad835ca87d97b7172a00b6ff0344d4204cbf519",
+                "savedEvidence": [
+                  {
+                    "path": "logs/forms-completion/official-followup/team3/law-2160643.json",
+                    "sha256": "45433e1f1bac9f1c41d010d570def261f3c940ad272315e3faa65de799c5fad4",
+                    "kind": "official_evidence_metadata"
+                  }
+                ]
+              },
+              {
+                "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/497000000106",
+                "httpStatus": 200,
+                "bodyTextSha256": "ea9f2a5fa965f2c8661ad15d3abedd74a586e7f08ff29f9952db8a43e709209e",
+                "savedEvidence": [
+                  {
+                    "path": "logs/forms-completion/official-followup/team3/program-g12830.gov24-497000000106.json",
+                    "sha256": "f133fba499a50f805868c89614c28000abe5e85aef28906f630fd3c4931511be",
+                    "kind": "official_evidence_metadata"
+                  }
+                ]
+              }
+            ],
+            "allFormsConnected": false
+          }
+        }
+      ],
+      "sourceLawId": "2160643",
+      "actualPurpose": "본문은임신부초음파3회쿠폰신청,인쇄제목은신혼예비부부건강검진",
+      "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=168989541&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C10%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%8B%A0%ED%98%BC%28%EC%98%88%EB%B9%84%29%EB%B6%80%EB%B6%80+%EA%B1%B4%EA%B0%95%EA%B2%80%EC%A7%84+%EC%A7%80%EC%9B%90+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+      "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2160643",
+      "correctCounterpart": null,
+      "sourceResultSHA256": "3bdfc7762307e767c6e5c40717b711d47cfa5f1b0cd4b7ca217fafa9c2646c72",
+      "independentReviewSHA256": "540b25f3b986ed6a1d65323e0c0fd56d0d4f398edb67e4058f369a156e9ad8b1",
+      "originalBytesPreserved": true,
+      "noGlobalSHAExclusion": true,
+      "underlyingServiceCorrectApplicationStillNeeded": true,
+      "reviewCheckedAt": "2026-10-23"
     },
     {
       "formId": "ordin-22562417",

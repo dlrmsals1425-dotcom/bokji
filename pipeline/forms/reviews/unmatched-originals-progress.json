@@ -1,15 +1,15 @@
 {
  "schema": 1,
- "generatedAt": "2026-10-22T20:34:40.999848+00:00",
+ "generatedAt": "2026-10-22T21:32:07.358075+00:00",
  "baselineCommit": "dff0a8195d740254bc3dfbe792fd0b8c0c4d7d31",
  "scopeForms": 4006,
  "note": "Every fixed-scope original remains visible. Linked counts require a real published file; covered counts require the exact replacement SHA and program links to be published. Source retrieval and queue creation do not resolve a review.",
  "fullScopeMatchingComplete": false,
  "counts": {
-  "reviewed_not_linked": 1983,
-  "linked": 1943,
+  "reviewed_not_linked": 1986,
+  "linked": 1945,
   "covered_by_existing": 14,
-  "requires_external_confirmation": 65,
+  "requires_external_confirmation": 60,
   "replacement_available": 1
  },
  "sourceReviews": 4006,
@@ -22981,10 +22981,10 @@
    "lawId": "1220731",
    "title": "[별지 제1호서식] 청소년보호법 위반신고자 포상금 신청서",
    "format": "hwp",
-   "state": "requires_external_confirmation",
+   "state": "reviewed_not_linked",
    "review": {
-    "disposition": "requires_external_confirmation",
-    "reason": "현재 공식 flSeq=152490437을 직접 다시 GET해 전체 HWP를 읽었으며 SHA 1e45a2022a94a7ee868dc67dc4925074f90c78c22ec7b110963bd1989c5ac50c의 별지2 청소년보호법 위반신고 포상금 신청서가 동일하게 내려온다. 정부24의 합천 긴급지원 안내도 이 포상금 서식을 쓰지 않는다. 저소득 긴급지원 법규의 별지1 지정과 실제 파일이 계속 충돌하여 올바른 공식 대체첨부가 필요하다.",
+    "disposition": "no_matching_site_program",
+    "reason": "실제원본은신고일·신고기관·피신고인·위반행위·포상금계좌를기재하는별지2이다. 긴급생계·화재보험·전기교체·명절위문어느절차와도목적과사실관계가다르다. 현재별도포상금규칙1578617제7조①의정확별지2(20113099)를새로받아전체272자동일함을확인했다. 2016생활안정규칙1149호부칙2가청소년포상금규칙별지2를함께개정한경위가양쪽규칙에명시되어,본문의실제포상금용도를직접뒷받침한다. 타법개정첨부의존재를저소득지원신청서로오인한후보연결을제외할수있다. 현재 공개 합천54개 고유사업·별칭3·출처58 전체에서 정확 청소년 위반신고 포상금 사업은 확인되지 않았다. 생활안정 규칙의2016부칙 타법개정 첨부를 긴급지원 신청서로 오인하지 않는다. 이 현재 로컬 범위 밖의 사업 부재를 주장하지 않는다. 2026-10-23 총괄이 실제고정SHA와전체본문을재추출하고 현행공식조문을새로대조했으며, 실제Herdr Grok의반대검토와정상비교원본공개SHA/관계를확인했다. 이검토는현재4원본과명시한사업쌍범위이다.",
     "report": "pipeline/forms/reviews/unmatched-dispositions-round2002.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1220731",
@@ -24944,15 +24944,17 @@
    "lawId": "1934335",
    "title": "[별지 제1호서식] 순천시 지방보조금 교부 신청서",
    "format": "hwp",
-   "state": "requires_external_confirmation",
+   "programIds": [
+    "g12150.gov24-482000000133"
+   ],
+   "state": "linked",
    "review": {
-    "disposition": "requires_external_confirmation",
-    "reason": "2026년 시설원예 시비사업 공고의 소형비닐하우스 지침·별지1 사업신청·개인정보동의를 실제 내려받아 전체 판독했다. 0.8ha 이하·미보유 농가 등 정부24 시설원예 사업 대상과 일치하나 이 문서는 최초 사업신청이며 기존 일반 보조금 교부신청서 사용을 증명하지는 않는다. 1월16일 모집이 마감된 별도 공식 원본으로 제안하며, 정원수 자재지원에 확대하지 않는다. 참고 공고는 모집이 종료된 최초 사업신청 자료이며, 기존 일반 교부신청서의 현행 후속 제출관계는 여전히 확인이 필요하다.",
+    "disposition": "approved",
+    "reason": "정확2026시설원예 소형비닐하우스 시비보조사업의 신청인/시설/50%비율과 현행농업조례2062937 제12조 일반조례준용을 대조했다. 일반조례1934335 제5조제1항은 정확별지1·1-1·1-2·1-3 작성제출을직접요구하며 실제원본1호도그조문을역인용한다. 이법정교부신청원본을 해당사업에조건부로안내하되 선정후필수추가제출 또는 그기일을단정하지않는다. 공고자체의최초신청별지1과는서로다른서식이며 그모집은2026.1.16종료했다. 자체서식이일반법정별지를전부대체한다는명문도선정후재첨부금지명문도확인되지않았다. 개인농가에게단체실적·단체통장을허위기재하도록요구하지않고 필요한전체부속서류가이1장으로완비되었다고표시하지않는다. 정원수사업에는확대하지않는다. 실제Herdr Claude Code의2차검토가1차의단계추론을정정하고이정확조건부경로를확인했다. 2026-10-23 총괄이 고정 원본SHA·전체본문·실제한글출력을 확인하고 현행공식본문의 정확별표키/flSeq를 새로 대조했다. 표시한 용도·관할·신청주체·선택부분에 한정해 원본 다운로드를 제공한다. 다른 급여·다른 지역·단계까지 승인하지 않으며 원본 바이트는 변경하지 않는다.",
     "report": "pipeline/forms/reviews/unmatched-dispositions-round3027.json",
     "fullBodyReviewed": true,
     "evidenceUrl": null,
     "relatedProgramIds": [
-     "g12150.gov24-482000000141",
      "g12150.gov24-482000000133"
     ]
    }
@@ -39113,10 +39115,13 @@
    "lawId": "1891429",
    "title": "[별지 제1호서식] 출산서비스 통합처리 신청서",
    "format": "hwp",
-   "state": "requires_external_confirmation",
+   "programIds": [
+    "g44200.gov24-452000000339"
+   ],
+   "state": "linked",
    "review": {
-    "disposition": "requires_external_confirmation",
-    "reason": "현재 정부24와 병합 복지로 WLF00005064는 출산일 전 12개월 주소 요건을 안내하고 복지로는 2022 공통 통합처리 신청서를 첨부한다. 반면 아산시 현재 사업 페이지는 6개월 거주를 안내한다. 아산 산후관리비 선택란을 갖춘 완성 서식과 서로 다른 거주기간을 해소하는 공식 설명은 확보하지 못했으므로 00은행 등 공통 예시가 남은 원본을 승인하지 않는다.",
+    "disposition": "approved",
+    "reason": "현행제5조②가정확별지1의통합신청서제출을요구한다. 원본지방서비스영역은지자체별작성이고서비스명칭등은법령/지자체여건에따라변경사용하도록한다. 원본에는6개월또는12개월거주확약·고정지원금액이없다. 아산산후관리비의공통신청정보와급여계좌대상서비스란을기재하는용도로한정하면지방예시를거짓자격확약으로만들지않는다. 아산현재안내와법은6개월,정확Gov339는12개월을안내하는차이를사업정보충돌로남기되그차이가이서식에틀린거주조건을인쇄했다는뜻은아니다. 2026-10-23 총괄이 고정 원본SHA·전체본문·실제한글출력을 확인하고 현행공식본문의 정확별표키/flSeq를 새로 대조했다. 표시한 용도·관할·신청주체·선택부분에 한정해 원본 다운로드를 제공한다. 다른 급여·다른 지역·단계까지 승인하지 않으며 원본 바이트는 변경하지 않는다.",
     "report": "pipeline/forms/reviews/unmatched-dispositions-round3024.json",
     "fullBodyReviewed": true,
     "evidenceUrl": null,
@@ -61658,13 +61663,13 @@
    "lawId": "2164367",
    "title": "[별지 제1호서식] 수술비 등 의료비 지원 신청서",
    "format": "hwpx",
-   "state": "requires_external_confirmation",
+   "state": "reviewed_not_linked",
    "review": {
-    "disposition": "requires_external_confirmation",
-    "reason": "현행 2026.8.20 의료비 조례 제5조는 수술 후 1년 이내 별지1 신청서 및 개인정보 동의 제출을 요구한다. 그러나 국가법령정보센터 원본의 전체 section0을 확인하면 출산장려금 신청서이고, 자치법규정보시스템 현재 003차 별지1을 독립 GET한 결과도 46,225바이트·동일 SHA인 출산장려금 신청서여서 오첨부가 두 공식 경로에 공통으로 남아 있다. 보건소 현재 고정 공지(2025.1.13 게시)를 확인하여 65세 이상/1년 거주/1안30만원·2안60만원/방문접수/구비서류는 재확인했으나 게시물은 안내 이미지뿐이고 별도 신청서 다운로드는 없다. 시청 민원사무편람의 백내장·수술비 제목 검색에도 신청서를 확보하지 못했다. 출산장려금 파일을 의료비 혜택에 연결하지 않으며 올바른 현행 신청서를 접수기관에서 확보하기 전까지 보류한다.",
+    "disposition": "excluded",
+    "reason": "실제본문은부모·신생아·출생순위·출생신고일·출산장려금근거및지급계좌이고백내장진단·수술·의료비항목이없다. 정상출산법2164361/22429439/flSeq168367907의원본과46225B 및SHA8e1bf9...가완전히동일하며해당출산사업에이미공개되어있다. 의료비법2164367제2·3·5조는백내장65세이상·수술신청으로다르므로잘못결속된22429465/flSeq168367933을의료비2사업에서제외하는직접근거가충분하다. 제외는 의료비법2164367/fl168367933에 잘못 결속된 이원본identity와 정확의료비2쌍에 한정한다. 동일SHA 정상출산22429439의 기존공개를 유지하며 SHA전역차단을하지않는다. 올바른백내장별지1은 여전히 별도확보가필요하다. 2026-10-23 총괄이 실제고정SHA와전체본문을재추출하고 현행공식조문을새로대조했으며, 실제Herdr Grok의반대검토와정상비교원본공개SHA/관계를확인했다. 이검토는현재4원본과명시한사업쌍범위이다.",
     "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
     "fullBodyReviewed": true,
-    "evidenceUrl": null,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2164367",
     "relatedProgramIds": [
      "g44250.bokjiro-WLF00006176",
      "g44250.icare-0087-1489655-1-2-5"
@@ -64632,10 +64637,10 @@
    "state": "requires_external_confirmation",
    "review": {
     "disposition": "requires_external_confirmation",
-    "reason": "현재 정부24(2026-08-06)는 영광 임산부 대상 초음파3회 쿠폰과 임신확인서·신분증·등본 접수를 명시한다. 원본 본문의 쿠폰 목적과는 관련되지만 제목과 현행 시행규칙은 신혼부부 검진 후 청구로 다르다. 정정된 원본이나 해당 쿠폰 접수에 이 별지10을 받는다는 현재 근거는 확보되지 않았다.",
+    "reason": "제목과규칙3조⑤의별지10은검진후3개월내신혼검진지원신청이지만실제본문은임신부주수·초음파1~3회·쿠폰·임산부수첩/임신확인이다. 현정부24exact106은그쿠폰사업을명시하고군모자보건안내는지원신청서작성(별지1)→쿠폰발급→검사→병원청구를명시한다. 따라서현재파일이쿠폰용본문임은확정되지만별지10오제목파일을현재별지1대신접수한다는근거는없다. 무관한8개사업쌍은명확한목적차이로제외하고쿠폰1개쌍만미해소로유지한다. 정확 초음파497000000106 한쌍은 현행별지1 대신 이오제목별지10을쓰는접수근거가미해소여서추가확인을유지한다. 나머지무관8쌍만제외하며 다른정상급여서식을변경하지않는다. 2026-10-23 총괄이 실제고정SHA와전체본문을재추출하고 현행공식조문을새로대조했으며, 실제Herdr Grok의반대검토와정상비교원본공개SHA/관계를확인했다. 이검토는현재4원본과명시한사업쌍범위이다.",
     "report": "pipeline/forms/reviews/unmatched-dispositions-round3063.json",
     "fullBodyReviewed": true,
-    "evidenceUrl": null,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2160643",
     "relatedProgramIds": [
      "g12830.bokjiro-WLF00002427",
      "g12830.bokjiro-WLF00006042",
@@ -65442,13 +65447,13 @@
    "lawId": "2165359",
    "title": "[별지 제2호서식] 국가보훈대상자 사망위로금 지급신청서",
    "format": "hwpx",
-   "state": "requires_external_confirmation",
+   "state": "reviewed_not_linked",
    "review": {
-    "disposition": "requires_external_confirmation",
-    "reason": "현재 공식 flSeq를 다시 GET해도 참전유공자 전용 본문의 SHA가 동일하다. 현 복지로의 관련조례 ZIP도 새로 받아 두 HWPML을 전체 구조 추출했으나 별지·표·그림이 없는 옛 조문 문서이며 일반 보훈 사망 신청서가 아니다. 다른 목적의 서식을 일반 보훈 대상으로 확대하지 않는다.",
+    "disposition": "excluded",
+    "reason": "실제전체본문은참전유공자·참전대상자·참전법제6조를명시한다. 일반국가보훈법2165359제8조④는참전명예수당수급자를제외하고제9조②가일반사망별지2를요구하므로이본문을일반보훈사망용으로확대할수없다. 올바른참전법2165413/22484275가같은전체665자본문을가지며정확복합WLF00004138의참전사망부분에이미조건부공개되어있다. 명절위문Gov108은사망급여조차아니다. 따라서잘못된일반보훈출처22583083을별도공개하지않고정확한참전출처기존연결을유지하는판정이적합하다. 일반보훈 출처의 이identity를 승인하지않고 정상참전22484275의 참전사망부분 기존공개를유지한다. 본문같음은 바이너리/SHA동일이라는뜻이아니다. 일반보훈사망의올바른별지는별도미해소다. 2026-10-23 총괄이 실제고정SHA와전체본문을재추출하고 현행공식조문을새로대조했으며, 실제Herdr Grok의반대검토와정상비교원본공개SHA/관계를확인했다. 이검토는현재4원본과명시한사업쌍범위이다.",
     "report": "pipeline/forms/reviews/unmatched-dispositions-round2065.json",
     "fullBodyReviewed": true,
-    "evidenceUrl": null,
+    "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2165359",
     "relatedProgramIds": [
      "g51820.gov24-434000000108",
      "g51820.bokjiro-WLF00004138"

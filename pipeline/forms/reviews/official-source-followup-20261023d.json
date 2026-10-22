@@ -280,12 +280,23 @@
     "newWandoHold": {
       "formId": "ordin-22371299",
       "sourceSHA256": "49b5991d6753869d07b09067f5108d9359e405aca330073bc42cc4f597157ee7",
-      "openedBeforeHold": 109,
-      "staffSlots": 22,
+      "openedBeforeHold": 106,
       "otherBenefitSlots": 13,
       "coreWandoSelectionSlotsSupported": 5,
       "actualClaudeReviewSHA256": "3d87f400da38337a20dad45a991508991fcb8b261d3db04154e94f32e9b52059",
-      "originalAndConversionRetained": true
+      "originalAndConversionRetained": true,
+      "previouslyReportedCounts": {
+        "openedBeforeHold": 109,
+        "staffSlots": 22
+      },
+      "manifestSlotsTotal": 109,
+      "manifestSlotsLocked": 3,
+      "staffSlotsTotal": 22,
+      "staffSlotsOpen": 20,
+      "staffSlotsLocked": 2,
+      "otherBenefitSlotsOpen": 13,
+      "slotCountCorrectedAt": "2026-10-23",
+      "correctionFile": "official-writing-slot-recount-20261023e.json"
     },
     "newlyPublishedOriginalsHaveScreenWriterEnabled": false
   },

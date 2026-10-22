@@ -2833,6 +2833,18 @@
       "role": "application",
       "sha256": "9be92b87549e1410ba24d69f4a8319f7317ca9da33b4e75adf93e6c2344d6a58",
       "reviewFile": "municipal-reviewed-round8206.json"
+    },
+    "ordin-21127609": {
+      "lawId": "1891429",
+      "role": "application",
+      "sha256": "b6100833b99537ce6e62a7fb00a82d5721d4226943c5f84a73d9d1c3e3a77599",
+      "reviewFile": "municipal-reviewed-round8207.json"
+    },
+    "ordin-20214487": {
+      "lawId": "1934335",
+      "role": "application",
+      "sha256": "2a4a805d19cb24737fc2656145672ce83188a4bdbc93cfd3c1afaf5d1b5c1483",
+      "reviewFile": "municipal-reviewed-round8209.json"
     }
   }
 }

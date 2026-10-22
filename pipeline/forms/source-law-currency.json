@@ -33266,7 +33266,7 @@
      "title": "아산시 산후관리비 지원 조례"
     }
    ],
-   "checkedAt": "2026-10-19",
+   "checkedAt": "2026-10-23",
    "currentBodyArticleState": "available",
    "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1891429",
    "currentLaw": {
@@ -33277,6 +33277,13 @@
     "title": "아산시 산후관리비 지원 조례"
    },
    "currentLawId": "1891429",
+   "followupEvidence": {
+    "checkedAt": "2026-10-23",
+    "coordinatorReviewFile": "municipal-reviewed-round8207.json",
+    "kind": "current_official_body_and_exact_annex",
+    "sha256": "2574a2d227a5abfcac005b1119d43f04d4d6bc495f5b024a626667a9fceecd44",
+    "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=1891429&gubun=ELIS"
+   },
    "forms": {
     "ordin-21127609": {
      "binding": "bound",
@@ -38464,7 +38471,7 @@
      "title": "순천시 지방보조금 관리 조례"
     }
    ],
-   "checkedAt": "2026-10-19",
+   "checkedAt": "2026-10-23",
    "currentBodyArticleState": "available",
    "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1934335",
    "currentLaw": {
@@ -38475,6 +38482,13 @@
     "title": "순천시 지방보조금 관리 조례"
    },
    "currentLawId": "1934335",
+   "followupEvidence": {
+    "checkedAt": "2026-10-23",
+    "coordinatorReviewFile": "municipal-reviewed-round8209.json",
+    "kind": "current_official_body_and_exact_annex",
+    "sha256": "9bab96ba6b69acff4f026056a7e960c95d9b6e964b57bd5e7621208e7c0efb6e",
+    "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=1934335&gubun=ELIS"
+   },
    "forms": {
     "ordin-20214487": {
      "binding": "bound",

@@ -1245,6 +1245,36 @@
       "bytes": 77176,
       "format": "hwpx",
       "relativePath": "agency-52180-jeongeup-249275.hwpx"
+    },
+    {
+      "formId": "agency-43770-eumseong-pepper-148280",
+      "lawId": "",
+      "lawTitle": "",
+      "title": "2026 회차자료 · 접수종료(금왕읍 2026.2.9) — 고추 생산장비 사업 신청서",
+      "sourceKind": "agency",
+      "regionCode": "43770",
+      "sourceUrl": "https://www.eumseong.go.kr/jumin/downloadBbsFile.do?atchmnflNo=148280",
+      "sourcePageUrl": "https://www.eumseong.go.kr/jumin/selectBbsNttView.do?key=1304&bbsNo=221&nttNo=184347",
+      "attachmentId": "148280",
+      "sha256": "9d65c74524d840783d127f44c2b4fe4f96951a6644969b9acfb3e4df94af846a",
+      "bytes": 134656,
+      "format": "hwp",
+      "relativePath": "agency-43770-eumseong-pepper-148280.hwp"
+    },
+    {
+      "formId": "agency-12150-suncheon-small-71811",
+      "lawId": "",
+      "lawTitle": "",
+      "title": "2026 회차자료 · 접수종료(2026.1.16) — 영세농가 소형 비닐하우스 신청·동의서 포함 계획",
+      "sourceKind": "agency",
+      "regionCode": "12150",
+      "sourceUrl": "https://sc.go.kr/board/file/bbs_0000000000000190/1906/FILE_000001000071811/2026010616560993618",
+      "sourcePageUrl": "https://sc.go.kr/sca/news/0001/?boardId=bbs_0000000000000190&category=&cntId=1906&mode=view&pageIdx=98",
+      "attachmentId": "FILE_000001000071811",
+      "sha256": "db42f2522e415d43fbd838308b7ff0dbe954ae670c9d9f80a4de904253449093",
+      "bytes": 65536,
+      "format": "hwp",
+      "relativePath": "agency-12150-suncheon-small-71811.hwp"
     }
   ],
   "rounds": [
@@ -1315,8 +1345,12 @@
     {
       "file": "agency-originals-scope-round8017.json",
       "sha256": "18fcb3741f2879a967ff0c026270f9fd5658821c88bf7f7ed28102b8097bed49"
+    },
+    {
+      "file": "agency-originals-scope-round8018.json",
+      "sha256": "781a3126a2bc83eae27e4ab36a8ad160f0279ec4e262dbfa01ab7c7d33f646db"
     }
   ],
   "checkedAt": "2026-10-23",
-  "formCount": 83
+  "formCount": 85
 }

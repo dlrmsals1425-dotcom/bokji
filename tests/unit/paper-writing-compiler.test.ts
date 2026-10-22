@@ -104,6 +104,19 @@ describe("paper-writing compiler — actual source semantics", () => {
       .toBe("49b5991d6753869d07b09067f5108d9359e405aca330073bc42cc4f597157ee7");
   });
 
+  it.each([
+    ["ordin-21127609", "b6100833b99537ce6e62a7fb00a82d5721d4226943c5f84a73d9d1c3e3a77599", /산후관리비 부분만.*다른 국가급여/],
+    ["agency-43770-eumseong-pepper-148280", "9d65c74524d840783d127f44c2b4fe4f96951a6644969b9acfb3e4df94af846a", /성별 남.*동의 선체크/],
+    ["agency-12150-suncheon-small-71811", "db42f2522e415d43fbd838308b7ff0dbe954ae670c9d9f80a4de904253449093", /선인쇄 V표시3곳.*기관평가표/],
+  ] as const)("%s: 부분 승인 밖 선택이나 인쇄 동의를 작성기로 생성하지 않는다", (id, sourceSHA, reason) => {
+    const form = catalog[id], conversion = conversions[id];
+    const bytes = new Uint8Array(readFileSync(`public${conversion.asset.path}`));
+    expect(() => validateConversion(id, form, conversion, bytes)).not.toThrow();
+    expect(hash(readFileSync(`public${conversion.source.path}`))).toBe(sourceSHA);
+    expect(hash(bytes)).toBe(conversion.asset.sha256);
+    expect(() => compileForm(id, form, conversion, bytes)).toThrow(reason);
+  });
+
   it("원본에 ASCII 공백만 남은 실제 빈 셀도 런타임에서 같은 신원으로 읽는다", () => {
     const s = sample("ordin-20088657");
     const slot = Object.values(s.manifest.slots).find(item => item.kind === "text" && item.expect === "  " && !item.locked)!;
