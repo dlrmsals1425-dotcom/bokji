@@ -2454,15 +2454,18 @@
     {
       "formId": "ordin-19976627",
       "sha256": "9b711e559913fd9d4b80143320c71681dfe82243c11d180120b67d7da2fa7795",
-      "disposition": "requires_external_confirmation",
-      "reason": "정확한 정부24 및 병합 복지로 WLF00002613은 어린이집 원복·체육복 등 10만원 준비금과 어린이집 입금 방식을 안내한다. 복지로에는 실질 신청서 대신 첨부파일없음 항목만 있다. 입소신청서가 이 준비금의 신청을 겸한다는 작성란·공식 제출 지시는 찾지 못했으므로 입소 시점이 같다는 이유로 승인하지 않는다.",
+      "disposition": "approved",
+      "reason": "정확 Gov417000000101은 관내 저소득·다문화 어린이집 입학아동을 대상으로 관할 어린이집 입소시 방문접수를 안내하고, 병합 원천 Bokjiro WLF00002613은 어린이집 입학준비금과 시설 입금방식을 명시한다. 현행 상위조례1926225 제16조 군립어린이집 및 제25조2호 아동입소료 지원과 규칙793158 제4조1항의 의무 입소신청 별지2를 대조했다. 원본320자는 군립어린이집 입소 의사·보호자 서명·우선순위 증빙과 시설장 수신이며 청구액·계좌란은 없다. 따라서 준비금 겸용이 아니라 해당 지원의 실제 입소 전제에 필요한 군립 입소 경로로 조건부 연결한다. 규칙 문장은 이에 준하는 정부지원 시설도 포함하나 원본의 군립이라는 신청인 문구를 바꾸거나 그밖의 시설까지 확장하지 않는다. 2026-10-23 총괄이 고정 원본SHA·전체본문·실제한글출력을 확인하고 현행공식본문의 정확별표키/flSeq를 새로 대조했다. 표시한 용도·관할·신청주체·선택부분에 한정해 원본 다운로드를 제공한다. 다른 급여·다른 지역·단계까지 승인하지 않으며 원본 바이트는 변경하지 않는다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
           "programId": "g41830.gov24-417000000101",
-          "programName": "저소득 및 다문화가정 아동 입학준비금 지원",
-          "disposition": "not_applicable",
-          "reason": "원본 신청 주체·목적과 이 사업의 지원 범위를 대조했으며 이 연결은 승인하지 않음."
+          "formId": "ordin-19976627",
+          "decision": "matched",
+          "disposition": "approved",
+          "use": "conditional",
+          "condition": "양평군 저소득·다문화가정 입학준비금 대상 아동이 군립어린이집에 입소할 때 보호자가 시설장에게 제출하는 입소 절차용 서류입니다. 해당 입소순위 증빙을 함께 제출합니다. 준비금 10만원 청구나 지급계좌 신고를 겸하는 서식은 아니며, 입학준비금 지원 절차는 해당 어린이집에서 별도로 진행합니다. 이미 입소한 아동에게 재제출을 요구하는 안내가 아닙니다. 원본에 군립어린이집 입소라고 인쇄되어 있어 다른 유형 어린이집의 입소신청서로 확대하지 않습니다.",
+          "reason": "정확 Gov417000000101은 관내 저소득·다문화 어린이집 입학아동을 대상으로 관할 어린이집 입소시 방문접수를 안내하고, 병합 원천 Bokjiro WLF00002613은 어린이집 입학준비금과 시설 입금방식을 명시한다. 현행 상위조례1926225 제16조 군립어린이집 및 제25조2호 아동입소료 지원과 규칙793158 제4조1항의 의무 입소신청 별지2를 대조했다. 원본320자는 군립어린이집 입소 의사·보호자 서명·우선순위 증빙과 시설장 수신이며 청구액·계좌란은 없다. 따라서 준비금 겸용이 아니라 해당 지원의 실제 입소 전제에 필요한 군립 입소 경로로 조건부 연결한다. 규칙 문장은 이에 준하는 정부지원 시설도 포함하나 원본의 군립이라는 신청인 문구를 바꾸거나 그밖의 시설까지 확장하지 않는다. 2026-10-23 총괄이 고정 원본SHA·전체본문·실제한글출력을 확인하고 현행공식본문의 정확별표키/flSeq를 새로 대조했다. 표시한 용도·관할·신청주체·선택부분에 한정해 원본 다운로드를 제공한다. 다른 급여·다른 지역·단계까지 승인하지 않으며 원본 바이트는 변경하지 않는다."
         }
       ],
       "sourceEvidence": {
@@ -2495,41 +2498,81 @@
           "annexBinding": "bound"
         }
       },
-      "checkedAt": "2026-10-19",
+      "checkedAt": "2026-10-23",
       "officialFollowup": {
-        "checkedAt": "2026-10-19",
-        "sourceResult": "logs/forms-completion/official-followup/team2/team2-results.json",
-        "sourceResultSHA256": "badd63d72d5f96dcc6815ad79e43ba695490e25777144516a69934cdab93a48a",
-        "proposedStatus": "confirmed_unresolved",
-        "officialEvidence": [
-          {
-            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/417000000101",
-            "httpStatus": 200,
-            "savedEvidence": [
-              {
-                "path": "logs/forms-completion/official-followup/team2/case07-gov24.json",
-                "sha256": "5e1b373168afabbbb23ccbecbbf8aebbd2d18a846c9733446ffa7a34bd9074a5",
-                "kind": "official_evidence_metadata"
-              }
-            ]
-          },
-          {
-            "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00002613&wlfareInfoReldBztpCd=02",
-            "httpStatus": 200,
-            "savedEvidence": [
-              {
-                "path": "logs/forms-completion/official-followup/team2/case07-bokjiro-merged.json",
-                "sha256": "f489c836dff052a87d80af124a8510aa68b35f874d170656fc196f675548ae02",
-                "kind": "official_evidence_metadata"
-              }
-            ]
-          }
-        ],
-        "allFormsConnected": false
+        "checkedAt": "2026-10-23",
+        "sourceResult": "pipeline/forms/reviews/municipal-reviewed-round8210.json",
+        "sourceResultSHA256": "3b762e7bde5f9a7d180612030dd16ea0e51521e2ea86b4a422d0e202c18a9cdd",
+        "coordinatorPlanSHA256": "a3aa9cfb7bf546454d97628fb287ecdc4978c73c966b3f91d8222698c0cc7183",
+        "proposedStatus": "approved_exact_current_conditional_route",
+        "allOriginalsMatched": false
       },
       "relatedProgramIds": [
         "g41830.gov24-417000000101"
-      ]
+      ],
+      "priorDispositions": [
+        {
+          "checkedAt": "2026-10-19",
+          "disposition": "requires_external_confirmation",
+          "reason": "정확한 정부24 및 병합 복지로 WLF00002613은 어린이집 원복·체육복 등 10만원 준비금과 어린이집 입금 방식을 안내한다. 복지로에는 실질 신청서 대신 첨부파일없음 항목만 있다. 입소신청서가 이 준비금의 신청을 겸한다는 작성란·공식 제출 지시는 찾지 못했으므로 입소 시점이 같다는 이유로 승인하지 않는다.",
+          "relatedProgramIds": [
+            "g41830.gov24-417000000101"
+          ],
+          "reviewedProgramPairs": [
+            {
+              "programId": "g41830.gov24-417000000101",
+              "programName": "저소득 및 다문화가정 아동 입학준비금 지원",
+              "disposition": "not_applicable",
+              "reason": "원본 신청 주체·목적과 이 사업의 지원 범위를 대조했으며 이 연결은 승인하지 않음."
+            }
+          ],
+          "officialFollowup": {
+            "checkedAt": "2026-10-19",
+            "sourceResult": "logs/forms-completion/official-followup/team2/team2-results.json",
+            "sourceResultSHA256": "badd63d72d5f96dcc6815ad79e43ba695490e25777144516a69934cdab93a48a",
+            "proposedStatus": "confirmed_unresolved",
+            "officialEvidence": [
+              {
+                "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/417000000101",
+                "httpStatus": 200,
+                "savedEvidence": [
+                  {
+                    "path": "logs/forms-completion/official-followup/team2/case07-gov24.json",
+                    "sha256": "5e1b373168afabbbb23ccbecbbf8aebbd2d18a846c9733446ffa7a34bd9074a5",
+                    "kind": "official_evidence_metadata"
+                  }
+                ]
+              },
+              {
+                "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00002613&wlfareInfoReldBztpCd=02",
+                "httpStatus": 200,
+                "savedEvidence": [
+                  {
+                    "path": "logs/forms-completion/official-followup/team2/case07-bokjiro-merged.json",
+                    "sha256": "f489c836dff052a87d80af124a8510aa68b35f874d170656fc196f675548ae02",
+                    "kind": "official_evidence_metadata"
+                  }
+                ]
+              }
+            ],
+            "allFormsConnected": false
+          }
+        }
+      ],
+      "reviewCheckedAt": "2026-10-23",
+      "reviewedBy": "codex-coordinator-with-independent-source-review",
+      "approvedAssociations": [
+        {
+          "programId": "g41830.gov24-417000000101",
+          "formId": "ordin-19976627",
+          "use": "conditional"
+        }
+      ],
+      "sourceLawCurrency": {
+        "checkedAt": "2026-10-23",
+        "currentLawId": "793158",
+        "state": "source_current"
+      }
     },
     {
       "formId": "ordin-20121685",

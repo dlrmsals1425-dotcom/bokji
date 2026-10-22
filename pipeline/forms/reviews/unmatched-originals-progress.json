@@ -1,15 +1,15 @@
 {
  "schema": 1,
- "generatedAt": "2026-10-22T21:32:07.358075+00:00",
+ "generatedAt": "2026-10-22T23:06:56.644921+00:00",
  "baselineCommit": "dff0a8195d740254bc3dfbe792fd0b8c0c4d7d31",
  "scopeForms": 4006,
  "note": "Every fixed-scope original remains visible. Linked counts require a real published file; covered counts require the exact replacement SHA and program links to be published. Source retrieval and queue creation do not resolve a review.",
  "fullScopeMatchingComplete": false,
  "counts": {
   "reviewed_not_linked": 1986,
-  "linked": 1945,
+  "linked": 1952,
   "covered_by_existing": 14,
-  "requires_external_confirmation": 60,
+  "requires_external_confirmation": 53,
   "replacement_available": 1
  },
  "sourceReviews": 4006,
@@ -18480,10 +18480,13 @@
    "lawId": "1645749",
    "title": "[별지 제11호서식] 동해사랑상품권 환전 청구서(제9조제1항 관련)",
    "format": "hwp",
-   "state": "requires_external_confirmation",
+   "programIds": [
+    "g51170.gov24-421000000638"
+   ],
+   "state": "linked",
    "review": {
-    "disposition": "requires_external_confirmation",
-    "reason": "현재 정부24(2026.7.28 수정)는 그리고앱·충전 캐시백과 카드가맹점 수수료를 안내한다. 2025 공식 의회자료의 관광시설 지류발행 언급만으로 이 서비스의 카드 정산에 지류 환전 제11호가 쓰인다고 확정할 수 없다. 원본의 지류 환전 용도는 확인되며 해당 사업쌍 적용만 미확인이다.",
+    "disposition": "approved",
+    "reason": "종전에는 지류환전의 현재 실제 접수 안내가 없다는 이유로 보류했다. 이번 공식 홈페이지의 독립 지류형 상품권 메뉴(key1922)를 실제 GET하여 지류가맹점주→금융기관→환전청구서 작성→등록계좌 익일 이체 절차와15개 금융기관을 확인했다. 현행규칙1645749 제9조①은 이 청구에 별지11을 직접 지정하며 원본의 가맹점번호·상호·권종·매수·금액·계좌와 정확히 맞는다. 원본은 미리 채워진 신청인이나 고정 할인율/한도가 없는 빈 청구서이고 전체388자와 내장WMF1개의 빈 렌더를 확인했다. 정확 수록사업Gov638은 같은 동해사랑상품권 조례를 근거로 가맹점의 수수료 절감·홍보·매출증대도 안내한다. 해당 사업의 일반 소비자 카드발급 절차를 지류권으로 바꾸지 않고, 같은 상품권의 별도 지류가맹점 후속환전 경로에만 제한하는 연결을 제안한다. 이 프로그램의 지류 경로 포함 판단은 공식시청 추가근거에 기초한 검토 제안이며 총괄 독립검증 전 공개승인하지 않는다. 2026-10-23 총괄이 고정 원본SHA·전체본문·실제한글출력을 확인하고 현행공식본문의 정확별표키/flSeq를 새로 대조했다. 표시한 용도·관할·신청주체·선택부분에 한정해 원본 다운로드를 제공한다. 다른 급여·다른 지역·단계까지 승인하지 않으며 원본 바이트는 변경하지 않는다.",
     "report": "pipeline/forms/reviews/unmatched-dispositions-round2011.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1645749",
@@ -19941,10 +19944,13 @@
    "lawId": "793158",
    "title": "[별지 제2호서식] 입소신청서",
    "format": "hwp",
-   "state": "requires_external_confirmation",
+   "programIds": [
+    "g41830.gov24-417000000101"
+   ],
+   "state": "linked",
    "review": {
-    "disposition": "requires_external_confirmation",
-    "reason": "정확한 정부24 및 병합 복지로 WLF00002613은 어린이집 원복·체육복 등 10만원 준비금과 어린이집 입금 방식을 안내한다. 복지로에는 실질 신청서 대신 첨부파일없음 항목만 있다. 입소신청서가 이 준비금의 신청을 겸한다는 작성란·공식 제출 지시는 찾지 못했으므로 입소 시점이 같다는 이유로 승인하지 않는다.",
+    "disposition": "approved",
+    "reason": "정확 Gov417000000101은 관내 저소득·다문화 어린이집 입학아동을 대상으로 관할 어린이집 입소시 방문접수를 안내하고, 병합 원천 Bokjiro WLF00002613은 어린이집 입학준비금과 시설 입금방식을 명시한다. 현행 상위조례1926225 제16조 군립어린이집 및 제25조2호 아동입소료 지원과 규칙793158 제4조1항의 의무 입소신청 별지2를 대조했다. 원본320자는 군립어린이집 입소 의사·보호자 서명·우선순위 증빙과 시설장 수신이며 청구액·계좌란은 없다. 따라서 준비금 겸용이 아니라 해당 지원의 실제 입소 전제에 필요한 군립 입소 경로로 조건부 연결한다. 규칙 문장은 이에 준하는 정부지원 시설도 포함하나 원본의 군립이라는 신청인 문구를 바꾸거나 그밖의 시설까지 확장하지 않는다. 2026-10-23 총괄이 고정 원본SHA·전체본문·실제한글출력을 확인하고 현행공식본문의 정확별표키/flSeq를 새로 대조했다. 표시한 용도·관할·신청주체·선택부분에 한정해 원본 다운로드를 제공한다. 다른 급여·다른 지역·단계까지 승인하지 않으며 원본 바이트는 변경하지 않는다.",
     "report": "pipeline/forms/reviews/unmatched-dispositions-round2068.json",
     "fullBodyReviewed": true,
     "evidenceUrl": null,
@@ -29904,16 +29910,20 @@
    "lawId": "2058863",
    "title": "[별지 제1호서식] 출산 서비스 통합처리 신청서",
    "format": "hwpx",
-   "state": "requires_external_confirmation",
+   "programIds": [
+    "g41480.bokjiro-WLF00001658",
+    "g41480.gov24-406000000102"
+   ],
+   "state": "linked",
    "review": {
-    "disposition": "requires_external_confirmation",
-    "reason": "파주시 현재 상세 안내와 정부24(2026.8.12 수정)는 첫째100/둘째200/셋째이상300만원 및 출산서비스 통합처리 신청을 명시한다. 기존 파일의 옛 금액·거주조건은 그대로 사용할 근거가 없다. 현행 예규370의 별지2 원본도 실제 다운로드해 전체를 읽었으나 지자체별 작성란은 둘째이상 예시와 가상 기관·연락처로 남아 있고 제9조제4항은 지자체별 확정 서식을 요구한다. 파주 확정본을 확보하지 못해 전국 예시를 억지로 대체하지 않는다.",
+    "disposition": "approved",
+    "reason": "원본출생축하금란에인쇄된첫째10만원·둘째30만원·셋째이상100만원은현행제5조①의최초신청시지급액과정확히같다. 현재정확정부24도총액100/200/300을최초10/30/100과1년후90/170/200으로나누어안내한다. 종전검토는원본금액을총액으로비교했지만원본이그금액을총액이라고확약하는문구는없다. 현행초기신청에한정하면인쇄금액을경고로억지고치는것이아니라법이실제로정한단계와일치한다. 다른산후조리비란의경기도1년거주문구는현재조건확인이안된별도급여이므로이번연결에서제외한다. 2026-10-23 총괄이 고정 원본SHA·전체본문·실제한글출력을 확인하고 현행공식본문의 정확별표키/flSeq를 새로 대조했다. 표시한 용도·관할·신청주체·선택부분에 한정해 원본 다운로드를 제공한다. 다른 급여·다른 지역·단계까지 승인하지 않으며 원본 바이트는 변경하지 않는다.",
     "report": "pipeline/forms/reviews/unmatched-dispositions-round1040.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2058863",
     "relatedProgramIds": [
-     "g41480.bokjiro-WLF00001658",
-     "g41480.gov24-406000000102"
+     "g41480.gov24-406000000102",
+     "g41480.bokjiro-WLF00001658"
     ]
    }
   },
@@ -40745,10 +40755,13 @@
    "lawId": "2069271",
    "title": "[별지 제2호서식] 결혼장려금 지원 이행서약서",
    "format": "hwp",
-   "state": "requires_external_confirmation",
+   "programIds": [
+    "g51770.bokjiro-WLF00006371"
+   ],
+   "state": "linked",
    "review": {
-    "disposition": "requires_external_confirmation",
-    "reason": "정선군의 2026-03-17 수정 인구정책 안내와 현재 복지로는 부부 중 1명 이상 거주를 명시하고, 복지로는 별지2 이행서약 제출을 요구한다. 그러나 구 문구의 '지원 대상자가 군 외로 전출'과 현행 제8조의 '부부 모두 전출' 사이 명확한 정정 또는 작성 기준은 확인되지 않아 그대로 보류한다.",
+    "disposition": "approved",
+    "reason": "원본327자전체는조례에따른대상자확인및관련규정에따른지급중단·부정수급반환의이행서약이다. 현행제2조는지원금을결혼가구에지급하고그결혼가구를부부단위의기본신청단위로정한다. 제5조는부부중1명이상거주를요구하고제8조2호는부부모두전출한경우중지한다. 서약에는한명이라도전출하면중지한다는문구가없고관련규정에따른다고명시하므로지원대상자를개인1명으로확대해새로운중지조건을확약한다고단정할수없다. 제7조②4호와정확복지로는이별지2제출을직접요구한다. 현재법의결혼가구및중지조건그대로읽는용도로제안하며공식정정문이새로발급되었다고주장하지않는다. 2026-10-23 총괄이 고정 원본SHA·전체본문·실제한글출력을 확인하고 현행공식본문의 정확별표키/flSeq를 새로 대조했다. 표시한 용도·관할·신청주체·선택부분에 한정해 원본 다운로드를 제공한다. 다른 급여·다른 지역·단계까지 승인하지 않으며 원본 바이트는 변경하지 않는다.",
     "report": "pipeline/forms/reviews/unmatched-dispositions-round1043.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2069271",
@@ -54692,10 +54705,13 @@
    "lawId": "2133271",
    "title": "[별지 제5호 서식] 장사시설 사용허가 변경 신청서",
    "format": "hwp",
-   "state": "requires_external_confirmation",
+   "programIds": [
+    "g51760.gov24-O00002700004"
+   ],
+   "state": "linked",
    "review": {
-    "disposition": "requires_external_confirmation",
-    "reason": "현재 정부24 장사시설 감면 안내는 감면 대상 및 방문 접수를 설명할 뿐 사용기간15년을 고정 인쇄한 변경서의 현행30년 허가 처리, 또는 종전15년 허가에 한정한 재사용 지침을 제공하지 않는다. 현행·종전 기간을 구분하는 원본이 추가 확인되어야 하므로 일반 감면사업용으로 승인하지 않는다.",
+    "disposition": "approved",
+    "reason": "정확 GovO00002700004는 평창군 공설묘원 사용료 면제 및 같은 상위조례16조3항을 명시한다. 현행 상위2110005 제7조1항은 기존15년 허가를 명시하여 30년 연장 후15년 추가연장 경로까지 규정하고, 제17조는 모든 장사시설 사용자의 주소·상속승계·개장·시설변경 신고를 의무화하며, 규칙2133271 제11조는 그 신고를 별지5로 지정한다. 면제 이용자도 해당 시설 사용자이므로 현행 법정 후속 의무에 적용되는 것으로 판독하며, 감면 재심사·유지용 별도 신청이라고 주장하지 않는다. 원본 전체568자의 현재사용기간15년·변경전후·허가증·승계증빙·동의를 확인했다. 이15년 표시는 모든 변경서의 무효 근거가 아니나 실제30년허가를 담지 못하므로 현재허가15년인 경로에 한정한다. 규칙2조3항의 별지3 기간연장과 조례16조의2 반환청구는 별개다. 2026-10-23 총괄이 고정 원본SHA·전체본문·실제한글출력을 확인하고 현행공식본문의 정확별표키/flSeq를 새로 대조했다. 표시한 용도·관할·신청주체·선택부분에 한정해 원본 다운로드를 제공한다. 다른 급여·다른 지역·단계까지 승인하지 않으며 원본 바이트는 변경하지 않는다.",
     "report": "pipeline/forms/reviews/unmatched-dispositions-round3060.json",
     "fullBodyReviewed": true,
     "evidenceUrl": null,
@@ -58643,16 +58659,18 @@
    "lawId": "2156975",
    "title": "별지7",
    "format": "hwp",
-   "state": "requires_external_confirmation",
+   "programIds": [
+    "g41610.gov24-554000000158"
+   ],
+   "state": "linked",
    "review": {
-    "disposition": "requires_external_confirmation",
-    "reason": "현재 정부24 자연채 포장재 지원은 인증 생산자 등의 포장재 구입비50% 지원과 농업정책과 사업신청서 제출을 안내한다. 상표 표시·포장재 사용허가 원본이 그 보조금 수요·교부 신청을 겸한다는 광주시 공식 공고나 해당 첨부는 찾지 못했다. 상표 사용허가와 구입비 보조 신청을 분리하여 보류한다.",
+    "disposition": "approved",
+    "reason": "정확 정부24 554000000158은 자연채 인증 생산자단체·개인의 자연채 포장재 구입비 50% 지원과 같은 상위조례를 명시한다. 현행 상위조례 1992815 제12~14조·18조는 상표사용권과 그 생산자 자금지원, 현행 규칙 2156975 제7조1항은 사용권자가 포장재 등에 자연채를 표시할 때 별지7 제출을 직접 의무화한다. 원본 전체311자는 승인번호·허가품목·포장재 규격과 수량·사용기한·대표 서명을 담으므로 그 포장재의 법정 사용절차에만 연결한다. 신청자 제작비 부담이라는 제7조2항을 50% 보조사업 부존재로 해석하지 않으며, 이 서식이 별도 보조금 사업신청을 겸한다는 주장도 하지 않는다. 2026-10-23 총괄이 고정 원본SHA·전체본문·실제한글출력을 확인하고 현행공식본문의 정확별표키/flSeq를 새로 대조했다. 표시한 용도·관할·신청주체·선택부분에 한정해 원본 다운로드를 제공한다. 다른 급여·다른 지역·단계까지 승인하지 않으며 원본 바이트는 변경하지 않는다.",
     "report": "pipeline/forms/reviews/unmatched-dispositions-round3063.json",
     "fullBodyReviewed": true,
     "evidenceUrl": null,
     "relatedProgramIds": [
-     "g41610.gov24-554000000158",
-     "g41610.gov24-554000000159"
+     "g41610.gov24-554000000158"
     ]
    }
   },
@@ -61019,16 +61037,17 @@
    "lawId": "2060801",
    "title": "[별지] 제1호서식~제2호서식<개정 2025.7.28.>",
    "format": "hwpx",
-   "state": "requires_external_confirmation",
+   "programIds": [
+    "g11215.gov24-304000000236"
+   ],
+   "state": "linked",
    "review": {
-    "disposition": "requires_external_confirmation",
-    "reason": "정부24의 현재 1인가구 인문학 사업은 2026년7~9월 온라인접수와 제출서류 없음을 유지한다. 공식 교육포털에서 확인한 과거 1인가구 인문학 강좌는 수강료0원이지만 2026 해당 사업의 유료징수·감면 적용을 대신 증명하지 못한다. 강남인강 등 다른 후보와도 징수주체가 달라 현재 별지1·2 연결은 보류한다.",
+    "disposition": "approved",
+    "reason": "2026-10-23 광진구 공식 교육포털 progrmSn7558 상세를 실제 GET200으로 읽었다. 정확 사업 g11215.gov24-304000000236의 프로그램명 유네스코가 인정한 우리의 세계 문화유산, 1인가구 구민 대상, 평생학습센터, 문의02-450-9768이 일치한다. 상세에는 교육2026.7.8~9.9, 모집6.29~7.22 접수마감 및 수강료20,000원을 명시한다. 이전의 2024 무료강좌를 대신 근거로 쓰지 않는다. 현행2060801 제19조3·4항은 별표1·2 감면기준과 별지 감면·반환 신청서를 직접 정한다. 같은 현행 별표22425543의 전체도 실제GET하여 감면대상과 증명서 제출요건을 확인했다. 원본22425545의 전체874자/section0/BinData0은 신청인 서명·수강료·감면/반환 사유·계좌를 받는 별지1과2이며 기관 대장이 없다. 해당 회차의 수강료 감면·반환 절차 자료로만 연결한다. 강좌 신규신청서가 아니며 일반강남인강·무료진학설명회로 확대하지 않는다. 현재 모집 재개나 종료강좌에 대한 새 환급권·소급감면을 보증하지 않는다. 2026-10-23 총괄이 고정 원본SHA·전체본문·실제한글출력을 확인하고 현행공식본문의 정확별표키/flSeq를 새로 대조했다. 표시한 용도·관할·신청주체·선택부분에 한정해 원본 다운로드를 제공한다. 다른 급여·다른 지역·단계까지 승인하지 않으며 원본 바이트는 변경하지 않는다.",
     "report": "pipeline/forms/reviews/unmatched-dispositions-round1040.json",
     "fullBodyReviewed": true,
     "evidenceUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2060801",
     "relatedProgramIds": [
-     "g11215.gov24-304000000150",
-     "g11215.gov24-304000000151",
      "g11215.gov24-304000000236"
     ]
    }

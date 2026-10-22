@@ -14922,7 +14922,7 @@
      "title": "동해시 동해사랑상품권 발행 및 운영에 관한 조례 시행규칙"
     }
    ],
-   "checkedAt": "2026-10-19",
+   "checkedAt": "2026-10-23",
    "currentBodyArticleState": "available",
    "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1645749",
    "currentLaw": {
@@ -14933,6 +14933,13 @@
     "title": "동해시 동해사랑상품권 발행 및 운영에 관한 조례 시행규칙"
    },
    "currentLawId": "1645749",
+   "followupEvidence": {
+    "checkedAt": "2026-10-23",
+    "coordinatorReviewFile": "municipal-reviewed-round8210.json",
+    "kind": "current_official_body_and_exact_annex",
+    "sha256": "2e0a0c3bb25ec0fef42a15c20098b52f7c9cebf0f6418a996272595bcfe54a0c",
+    "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=1645749&gubun=ELIS"
+   },
    "forms": {
     "ordin-19859337": {
      "binding": "bound",
@@ -46196,7 +46203,7 @@
      "title": "증평군 독립유공자 지원 조례"
     }
    ],
-   "checkedAt": "2026-10-19",
+   "checkedAt": "2026-10-23",
    "currentBodyArticleState": "available",
    "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=1995491",
    "currentLaw": {
@@ -46207,6 +46214,16 @@
     "title": "증평군 독립유공자 지원 조례"
    },
    "currentLawId": "1995491",
+   "followupEvidence": {
+    "checkedAt": "2026-10-23",
+    "coordinatorReviewFile": "municipal-reviewed-round8019.json",
+    "currentIdentityProofSHA256": "5698b10ff80bfc90666915f8b25f9ae82a77d59c653baf9624e3e8f3e8d70031",
+    "currentIdentityQuery": "증평군 독립유공자 지원 조례",
+    "kind": "current_official_body_and_native_current_identity",
+    "sha256": "963a3474ffa696bae6a0ba81e7acde7cfc652d16c3d521ca34c69bfc348af2f4",
+    "storedHtmlPath": "logs/forms-followup-20261023h/root/evidence/1995491.html",
+    "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=1995491&gubun=ELIS"
+   },
    "forms": {
     "ordin-19766693": {
      "binding": "bound",
@@ -46222,7 +46239,15 @@
    "lawId": "1995491",
    "queryVariantsChecked": true,
    "sourceTitle": "증평군 독립유공자 지원 조례",
-   "state": "source_current"
+   "state": "source_current",
+   "verifiedEnforcement": {
+    "addendumText": "이 조례는 2025년 1월 1일부터 시행한다.",
+    "bodySHA256": "51751b9cc44eb456e53c114922b6de7dac25362001323a7e17961fee1087f461",
+    "effectiveDate": "2025-01-01",
+    "lawId": "1995491",
+    "promulgationDate": "20241220",
+    "promulgationNumber": "1192"
+   }
   },
   "1996069": {
    "candidates": [
@@ -55812,7 +55837,7 @@
      "title": "파주시 출생축하 및 다자녀가정 지원에 관한 조례"
     }
    ],
-   "checkedAt": "2026-10-19",
+   "checkedAt": "2026-10-23",
    "currentBodyArticleState": "available",
    "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2058863",
    "currentLaw": {
@@ -55823,6 +55848,13 @@
     "title": "파주시 출생축하 및 다자녀가정 지원에 관한 조례"
    },
    "currentLawId": "2058863",
+   "followupEvidence": {
+    "checkedAt": "2026-10-23",
+    "coordinatorReviewFile": "municipal-reviewed-round8210.json",
+    "kind": "current_official_body_and_exact_annex",
+    "sha256": "0a4c973db51dc8429182f632a3674497e9064ad0d41c0b5b3d3e9d7e51095731",
+    "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=2058863&gubun=ELIS"
+   },
    "forms": {
     "ordin-20589281": {
      "binding": "bound",
@@ -56200,7 +56232,7 @@
      "title": "서울특별시 광진구 평생교육 진흥 조례"
     }
    ],
-   "checkedAt": "2026-10-19",
+   "checkedAt": "2026-10-23",
    "currentBodyArticleState": "available",
    "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2060801",
    "currentLaw": {
@@ -56211,6 +56243,13 @@
     "title": "서울특별시 광진구 평생교육 진흥 조례"
    },
    "currentLawId": "2060801",
+   "followupEvidence": {
+    "checkedAt": "2026-10-23",
+    "coordinatorReviewFile": "municipal-reviewed-round8210.json",
+    "kind": "current_official_body_and_exact_annex",
+    "sha256": "45f5cfec240826258b78d8d9c28e850bf06cdc3a202badd25fb58e8b77bbbd55",
+    "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=2060801&gubun=ELIS"
+   },
    "forms": {
     "ordin-22425545": {
      "binding": "bound",
@@ -58820,7 +58859,7 @@
      "title": "정선군 결혼장려금 지원 조례"
     }
    ],
-   "checkedAt": "2026-10-19",
+   "checkedAt": "2026-10-23",
    "currentBodyArticleState": "available",
    "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2069271",
    "currentLaw": {
@@ -58831,6 +58870,13 @@
     "title": "정선군 결혼장려금 지원 조례"
    },
    "currentLawId": "2069271",
+   "followupEvidence": {
+    "checkedAt": "2026-10-23",
+    "coordinatorReviewFile": "municipal-reviewed-round8210.json",
+    "kind": "current_official_body_and_exact_annex",
+    "sha256": "bf782f26d0eaf4e58658ed919e4ae0e6f1eb068b56d9912a6d5a7331a8300afc",
+    "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=2069271&gubun=ELIS"
+   },
    "forms": {
     "ordin-21184715": {
      "binding": "bound",
@@ -80451,7 +80497,7 @@
      "title": "평창군 장사시설의 설치 및 운영에 관한 조례 시행규칙"
     }
    ],
-   "checkedAt": "2026-10-19",
+   "checkedAt": "2026-10-23",
    "currentBodyArticleState": "available",
    "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2133271",
    "currentLaw": {
@@ -80462,6 +80508,13 @@
     "title": "평창군 장사시설의 설치 및 운영에 관한 조례 시행규칙"
    },
    "currentLawId": "2133271",
+   "followupEvidence": {
+    "checkedAt": "2026-10-23",
+    "coordinatorReviewFile": "municipal-reviewed-round8210.json",
+    "kind": "current_official_body_and_exact_annex",
+    "sha256": "e48a7c39408d1458facea11b06346295fb819722051509ef17f2ea6a8143f4ce",
+    "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=2133271&gubun=ELIS"
+   },
    "forms": {
     "ordin-21934307": {
      "binding": "bound",
@@ -83739,7 +83792,7 @@
      "title": "광주시 자연채 상표 사용에 관한 조례 시행규칙"
     }
    ],
-   "checkedAt": "2026-10-19",
+   "checkedAt": "2026-10-23",
    "currentBodyArticleState": "available",
    "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=2156975",
    "currentLaw": {
@@ -83750,6 +83803,13 @@
     "title": "광주시 자연채 상표 사용에 관한 조례 시행규칙"
    },
    "currentLawId": "2156975",
+   "followupEvidence": {
+    "checkedAt": "2026-10-23",
+    "coordinatorReviewFile": "municipal-reviewed-round8210.json",
+    "kind": "current_official_body_and_exact_annex",
+    "sha256": "c33ed000c1b8b9f66ee415ded80610e9d8e68d33cddd45c709973701eef79a56",
+    "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=2156975&gubun=ELIS"
+   },
    "forms": {
     "ordin-22282163": {
      "binding": "bound",
@@ -90666,7 +90726,7 @@
      "title": "양평군 영유아 보육 조례 시행규칙"
     }
    ],
-   "checkedAt": "2026-10-19",
+   "checkedAt": "2026-10-23",
    "currentBodyArticleState": "available",
    "currentBodyUrl": "https://www.law.go.kr/LSW/ordinInfoP.do?ordinSeq=793158",
    "currentLaw": {
@@ -90677,6 +90737,13 @@
     "title": "양평군 영유아 보육 조례 시행규칙"
    },
    "currentLawId": "793158",
+   "followupEvidence": {
+    "checkedAt": "2026-10-23",
+    "coordinatorReviewFile": "municipal-reviewed-round8210.json",
+    "kind": "current_official_body_and_exact_annex",
+    "sha256": "f6f32f08fa510da0b490adc4914f6519a2ba92826263c790aec17b5aa34630c8",
+    "url": "https://www.law.go.kr/LSW/ordinInfoR.do?ordinSeq=793158&gubun=ELIS"
+   },
    "forms": {
     "ordin-19976625": {
      "binding": "bound",

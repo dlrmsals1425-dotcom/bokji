@@ -335,8 +335,8 @@
     {
       "formId": "ordin-22282177",
       "sha256": "2129a6988fb231bf180d5b4ad537edd2d82e91cf5900b360ef2029f7e4eef29b",
-      "disposition": "requires_external_confirmation",
-      "reason": "현재 정부24 자연채 포장재 지원은 인증 생산자 등의 포장재 구입비50% 지원과 농업정책과 사업신청서 제출을 안내한다. 상표 표시·포장재 사용허가 원본이 그 보조금 수요·교부 신청을 겸한다는 광주시 공식 공고나 해당 첨부는 찾지 못했다. 상표 사용허가와 구입비 보조 신청을 분리하여 보류한다.",
+      "disposition": "approved",
+      "reason": "정확 정부24 554000000158은 자연채 인증 생산자단체·개인의 자연채 포장재 구입비 50% 지원과 같은 상위조례를 명시한다. 현행 상위조례 1992815 제12~14조·18조는 상표사용권과 그 생산자 자금지원, 현행 규칙 2156975 제7조1항은 사용권자가 포장재 등에 자연채를 표시할 때 별지7 제출을 직접 의무화한다. 원본 전체311자는 승인번호·허가품목·포장재 규격과 수량·사용기한·대표 서명을 담으므로 그 포장재의 법정 사용절차에만 연결한다. 신청자 제작비 부담이라는 제7조2항을 50% 보조사업 부존재로 해석하지 않으며, 이 서식이 별도 보조금 사업신청을 겸한다는 주장도 하지 않는다. 2026-10-23 총괄이 고정 원본SHA·전체본문·실제한글출력을 확인하고 현행공식본문의 정확별표키/flSeq를 새로 대조했다. 표시한 용도·관할·신청주체·선택부분에 한정해 원본 다운로드를 제공한다. 다른 급여·다른 지역·단계까지 승인하지 않으며 원본 바이트는 변경하지 않는다.",
       "fullBodyReviewed": true,
       "reviewedProgramPairs": [
         {
@@ -347,9 +347,12 @@
         },
         {
           "programId": "g41610.gov24-554000000158",
-          "programName": "자연채 포장재 지원사업",
-          "disposition": "requires_external_confirmation",
-          "reason": "포장재 사용허가와50% 구입비 보조사업 신청의 동일서식 여부 미확인."
+          "formId": "ordin-22282177",
+          "decision": "matched",
+          "disposition": "approved",
+          "use": "conditional",
+          "condition": "경기도 광주시 자연채 포장재 지원사업 대상인 인증 생산자단체·개인이, 사용권을 받은 품목의 포장재에 자연채 상표를 표시하려는 때 제출하는 법정 포장재 사용신청서입니다. 승인번호와 품목, 포장재 규격·수량·사용기한을 적어 광주시장에게 제출합니다. 포장재 구입비 50% 지원의 사업수요·보조금 신청서, 최초 상표사용권 신청서 또는 홈쇼핑 방송비 신청서를 대신하지 않습니다. 지원사업 수요량 확인은 매년 말에 이루어지며, 이 사용신청만으로 보조금 지급이 확정되는 것은 아닙니다.",
+          "reason": "정확 정부24 554000000158은 자연채 인증 생산자단체·개인의 자연채 포장재 구입비 50% 지원과 같은 상위조례를 명시한다. 현행 상위조례 1992815 제12~14조·18조는 상표사용권과 그 생산자 자금지원, 현행 규칙 2156975 제7조1항은 사용권자가 포장재 등에 자연채를 표시할 때 별지7 제출을 직접 의무화한다. 원본 전체311자는 승인번호·허가품목·포장재 규격과 수량·사용기한·대표 서명을 담으므로 그 포장재의 법정 사용절차에만 연결한다. 신청자 제작비 부담이라는 제7조2항을 50% 보조사업 부존재로 해석하지 않으며, 이 서식이 별도 보조금 사업신청을 겸한다는 주장도 하지 않는다. 2026-10-23 총괄이 고정 원본SHA·전체본문·실제한글출력을 확인하고 현행공식본문의 정확별표키/flSeq를 새로 대조했다. 표시한 용도·관할·신청주체·선택부분에 한정해 원본 다운로드를 제공한다. 다른 급여·다른 지역·단계까지 승인하지 않으며 원본 바이트는 변경하지 않는다."
         }
       ],
       "sourceEvidence": {
@@ -382,34 +385,80 @@
           "annexBinding": "bound"
         }
       },
-      "checkedAt": "2026-10-19",
+      "checkedAt": "2026-10-23",
       "additionalEvidence": {
         "externalCondition": "농업정책과의 해당 보조사업 공고·신청서에서 이 별지7 사용 여부 확인 필요. 검색으로 공식 첨부 확인하지 못했고 민간 재게시를 검증근거로 쓰지 않음."
       },
       "officialFollowup": {
-        "checkedAt": "2026-10-19",
-        "sourceResult": "logs/forms-completion/official-followup/team2/team2-results.json",
-        "sourceResultSHA256": "badd63d72d5f96dcc6815ad79e43ba695490e25777144516a69934cdab93a48a",
-        "proposedStatus": "confirmed_unresolved",
-        "officialEvidence": [
-          {
-            "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/554000000158",
-            "httpStatus": 200,
-            "savedEvidence": [
-              {
-                "path": "logs/forms-completion/official-followup/team2/case22-gov24.json",
-                "sha256": "0e0ddbc003aebedd6de9930959c862f0f0f45adbed86ca8b0d2114f69c2ac481",
-                "kind": "official_evidence_metadata"
-              }
-            ]
-          }
-        ],
-        "allFormsConnected": false
+        "checkedAt": "2026-10-23",
+        "sourceResult": "pipeline/forms/reviews/municipal-reviewed-round8210.json",
+        "sourceResultSHA256": "3b762e7bde5f9a7d180612030dd16ea0e51521e2ea86b4a422d0e202c18a9cdd",
+        "coordinatorPlanSHA256": "a3aa9cfb7bf546454d97628fb287ecdc4978c73c966b3f91d8222698c0cc7183",
+        "proposedStatus": "approved_exact_current_conditional_route",
+        "allOriginalsMatched": false
       },
       "relatedProgramIds": [
-        "g41610.gov24-554000000158",
-        "g41610.gov24-554000000159"
-      ]
+        "g41610.gov24-554000000158"
+      ],
+      "priorDispositions": [
+        {
+          "checkedAt": "2026-10-19",
+          "disposition": "requires_external_confirmation",
+          "reason": "현재 정부24 자연채 포장재 지원은 인증 생산자 등의 포장재 구입비50% 지원과 농업정책과 사업신청서 제출을 안내한다. 상표 표시·포장재 사용허가 원본이 그 보조금 수요·교부 신청을 겸한다는 광주시 공식 공고나 해당 첨부는 찾지 못했다. 상표 사용허가와 구입비 보조 신청을 분리하여 보류한다.",
+          "relatedProgramIds": [
+            "g41610.gov24-554000000158",
+            "g41610.gov24-554000000159"
+          ],
+          "reviewedProgramPairs": [
+            {
+              "programId": "g41610.gov24-554000000159",
+              "programName": "홈쇼핑 판로지원 사업",
+              "disposition": "not_applicable",
+              "reason": "원본 신청 주체·목적과 이 사업의 지원 범위를 대조했으며 이 연결은 승인하지 않음."
+            },
+            {
+              "programId": "g41610.gov24-554000000158",
+              "programName": "자연채 포장재 지원사업",
+              "disposition": "requires_external_confirmation",
+              "reason": "포장재 사용허가와50% 구입비 보조사업 신청의 동일서식 여부 미확인."
+            }
+          ],
+          "officialFollowup": {
+            "checkedAt": "2026-10-19",
+            "sourceResult": "logs/forms-completion/official-followup/team2/team2-results.json",
+            "sourceResultSHA256": "badd63d72d5f96dcc6815ad79e43ba695490e25777144516a69934cdab93a48a",
+            "proposedStatus": "confirmed_unresolved",
+            "officialEvidence": [
+              {
+                "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/554000000158",
+                "httpStatus": 200,
+                "savedEvidence": [
+                  {
+                    "path": "logs/forms-completion/official-followup/team2/case22-gov24.json",
+                    "sha256": "0e0ddbc003aebedd6de9930959c862f0f0f45adbed86ca8b0d2114f69c2ac481",
+                    "kind": "official_evidence_metadata"
+                  }
+                ]
+              }
+            ],
+            "allFormsConnected": false
+          }
+        }
+      ],
+      "reviewCheckedAt": "2026-10-23",
+      "reviewedBy": "codex-coordinator-with-independent-source-review",
+      "approvedAssociations": [
+        {
+          "programId": "g41610.gov24-554000000158",
+          "formId": "ordin-22282177",
+          "use": "conditional"
+        }
+      ],
+      "sourceLawCurrency": {
+        "checkedAt": "2026-10-23",
+        "currentLawId": "2156975",
+        "state": "source_current"
+      }
     },
     {
       "formId": "ordin-22321707",

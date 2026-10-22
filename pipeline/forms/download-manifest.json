@@ -22791,6 +22791,130 @@
    "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?flSeq=166471293",
    "downloadedAt": "2026-10-22T21:30:15.068693+00:00",
    "path": "originals/rule-3249999.hwpx"
+  },
+  "ordin-21934315": {
+   "format": "hwp",
+   "bytes": 50688,
+   "sha256": "cc4395b5fc3dbfb998035293ee8e776379b40461bb812bc3529916998142e86e",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=165903035&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C5%ED%98%B8+%EC%84%9C%EC%8B%9D%5D+%EC%9E%A5%EC%82%AC%EC%8B%9C%EC%84%A4+%EC%82%AC%EC%9A%A9%ED%97%88%EA%B0%80+%EB%B3%80%EA%B2%BD+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:04:33.305955+00:00",
+   "path": "originals/ordin-21934315.hwp"
+  },
+  "ordin-20589281": {
+   "format": "hwpx",
+   "bytes": 94840,
+   "sha256": "27a18064215adb1a12ca5239a277cb8cb1a2f76a3c7908dbf932cec7b8401990",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=154563043&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%B6%9C%EC%82%B0+%EC%84%9C%EB%B9%84%EC%8A%A4+%ED%86%B5%ED%95%A9%EC%B2%98%EB%A6%AC+%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:06:21.255636+00:00",
+   "path": "originals/ordin-20589281.hwpx"
+  },
+  "agency-44210-health-cts2393-initial-voucher": {
+   "format": "hwp",
+   "bytes": 108032,
+   "sha256": "369b21f72eae53a8d7bee4c7292e915d488cd76733e3fe9cc30778081cc21d39",
+   "sourceUrl": "https://www.seosan.go.kr/DATA/download/health/cts2393_file01.hwp",
+   "downloadedAt": "2026-10-22T22:46:10.714928+00:00",
+   "path": "originals/agency-44210-health-cts2393-initial-voucher.hwp",
+   "finalUrl": "https://www.seosan.go.kr/DATA/download/health/cts2393_file01.hwp"
+  },
+  "agency-44810-yesan-postpartum-36547": {
+   "format": "hwpx",
+   "bytes": 54521,
+   "sha256": "9ad606e8ce71741d2d094325c5b9acd164f2fc18808a4bacf65ca3556d0162c9",
+   "sourceUrl": "https://www.yesan.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000036547Um5&fileSn=0",
+   "downloadedAt": "2026-10-22T22:46:11.239703+00:00",
+   "path": "originals/agency-44810-yesan-postpartum-36547.hwpx",
+   "finalUrl": "https://www.yesan.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000036547Um5&fileSn=0"
+  },
+  "agency-43745-gazette825-independent-14": {
+   "format": "pdf",
+   "bytes": 415730,
+   "sha256": "ba6d5ce8245e005bac71e369a8933a5f7fe2243942f12283bcd141015a83a3ee",
+   "sourceUrl": "https://www.jp.go.kr/media/cmm/fms/FileDown.do?atchFileId=F00000055429yw4oU4bg&fileSn=1",
+   "downloadedAt": "2026-10-22T22:46:11.238871+00:00",
+   "path": "originals/agency-43745-gazette825-independent-14.pdf",
+   "finalUrl": "https://www.jp.go.kr/media/cmm/fms/FileDown.do?atchFileId=F00000055429yw4oU4bg&fileSn=1"
+  },
+  "agency-48310-geoje-payment-238390": {
+   "format": "hwp",
+   "bytes": 38400,
+   "sha256": "a2191e6b92053baeae8aa09c9ddbf1ec378992c8d49e3bb5be23eb6868ed0da4",
+   "sourceUrl": "https://www.geoje.go.kr/welfare/board/download.geoje?boardId=BBS_0000313&menuCd=DOM_000009607003000000&paging=ok&startPage=1&dataSid=306397542&command=update&fileSid=238390",
+   "downloadedAt": "2026-10-22T22:46:12.518841+00:00",
+   "path": "originals/agency-48310-geoje-payment-238390.hwp",
+   "finalUrl": "https://www.geoje.go.kr/welfare/board/download.geoje?boardId=BBS_0000313&menuCd=DOM_000009607003000000&paging=ok&startPage=1&dataSid=306397542&command=update&fileSid=238390"
+  },
+  "agency-48310-geoje-payment-238389": {
+   "format": "hwp",
+   "bytes": 38400,
+   "sha256": "b978745ab400d7aac11bf2f9bd4ce99355de607355357ef7fcf82af664631e3d",
+   "sourceUrl": "https://www.geoje.go.kr/welfare/board/download.geoje?boardId=BBS_0000313&menuCd=DOM_000009607003000000&paging=ok&startPage=1&dataSid=306397542&command=update&fileSid=238389",
+   "downloadedAt": "2026-10-22T22:46:13.099413+00:00",
+   "path": "originals/agency-48310-geoje-payment-238389.hwp",
+   "finalUrl": "https://www.geoje.go.kr/welfare/board/download.geoje?boardId=BBS_0000313&menuCd=DOM_000009607003000000&paging=ok&startPage=1&dataSid=306397542&command=update&fileSid=238389"
+  },
+  "agency-47000-bokjiro-wlf00003658-20260713-1": {
+   "format": "pdf",
+   "bytes": 364718,
+   "sha256": "0058363ddb46393e957f4a4ed1c4d807fee8baab40ac783ddfcaa89022a62026",
+   "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260713UUWBM1354590200902744&atcflSn=1&wlfareInfoId=WLF00003658",
+   "downloadedAt": "2026-10-22T22:46:14.505056+00:00",
+   "path": "originals/agency-47000-bokjiro-wlf00003658-20260713-1.pdf",
+   "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260713UUWBM1354590200902744&atcflSn=1&wlfareInfoId=WLF00003658"
+  },
+  "ordin-19859351": {
+   "format": "hwp",
+   "bytes": 48640,
+   "sha256": "edcd9c693939aa6a9ced5850205899ff83b14fd10cdfffa2265b9ec699537b74",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=151986301&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C11%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EB%8F%99%ED%95%B4%EC%82%AC%EB%9E%91%EC%83%81%ED%92%88%EA%B6%8C+%ED%99%98%EC%A0%84+%EC%B2%AD%EA%B5%AC%EC%84%9C%28%EC%A0%9C9%EC%A1%B0%EC%A0%9C1%ED%95%AD+%EA%B4%80%EB%A0%A8%29",
+   "downloadedAt": "2026-10-16T16:13:02.009998+00:00",
+   "path": "originals/ordin-19859351.hwp"
+  },
+  "ordin-19976627": {
+   "format": "hwp",
+   "bytes": 30720,
+   "sha256": "9b711e559913fd9d4b80143320c71681dfe82243c11d180120b67d7da2fa7795",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=152186553&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C2%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EC%9E%85%EC%86%8C%EC%8B%A0%EC%B2%AD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:13:22.635454+00:00",
+   "path": "originals/ordin-19976627.hwp"
+  },
+  "ordin-21184717": {
+   "format": "hwp",
+   "bytes": 49152,
+   "sha256": "256bbe9a374517c2a7379d20f652da70e22877888f263518f80918a1f0415b0f",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=159099703&flNm=%5B%EB%B3%84%EC%A7%80+%EC%A0%9C2%ED%98%B8%EC%84%9C%EC%8B%9D%5D+%EA%B2%B0%ED%98%BC%EC%9E%A5%EB%A0%A4%EA%B8%88+%EC%A7%80%EC%9B%90+%EC%9D%B4%ED%96%89%EC%84%9C%EC%95%BD%EC%84%9C",
+   "downloadedAt": "2026-10-16T16:17:35.349731+00:00",
+   "path": "originals/ordin-21184717.hwp"
+  },
+  "ordin-22282177": {
+   "format": "hwp",
+   "bytes": 12288,
+   "sha256": "2129a6988fb231bf180d5b4ad537edd2d82e91cf5900b360ef2029f7e4eef29b",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=167785055&flNm=%EB%B3%84%EC%A7%807",
+   "downloadedAt": "2026-10-16T16:21:11.165668+00:00",
+   "path": "originals/ordin-22282177.hwp"
+  },
+  "ordin-22425545": {
+   "format": "hwpx",
+   "bytes": 46484,
+   "sha256": "6c0773a9cdb1fa6e1d51a49bfede485dd863142c2b05fc3fb6092d62a615c7df",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?gubun=ELIS&flSeq=168362031&flNm=%5B%EB%B3%84%EC%A7%80%5D+%EC%A0%9C1%ED%98%B8%EC%84%9C%EC%8B%9D~%EC%A0%9C2%ED%98%B8%EC%84%9C%EC%8B%9D%3C%EA%B0%9C%EC%A0%95+2025.7.28.%3E",
+   "downloadedAt": "2026-10-16T16:23:43.905797+00:00",
+   "path": "originals/ordin-22425545.hwpx"
+  },
+  "rule-3249997": {
+   "format": "hwpx",
+   "bytes": 39280,
+   "sha256": "0a23cbf184e7bf01e088ede8eab4b8cb32948250cc9a322890460a80e5c753ba",
+   "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?flSeq=166471281",
+   "downloadedAt": "2026-10-22T22:46:20.190499+00:00",
+   "path": "originals/rule-3249997.hwpx",
+   "pdf": {
+    "path": "previews/rule-3249997.pdf",
+    "bytes": 102029,
+    "sha256": "6b51bd60eef21507ffa4103dbbfd3e12b645c9a11bfb8d7f85e8ce1ee929e723",
+    "sourceUrl": "https://www.law.go.kr/LSW/flDownload.do?flSeq=166471291"
+   }
   }
  }
 }

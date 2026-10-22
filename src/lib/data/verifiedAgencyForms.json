@@ -5406,6 +5406,427 @@
           "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/482000000133"
         }
       ]
+    },
+    "agency-48310-geoje-payment-238389": {
+      "sourceKind": "agency",
+      "role": "application",
+      "use": "conditional",
+      "condition": "2026년 거제시 고등학교 우수 장학생으로 이미 선발되어 개별 통보를 받은 사람의 지급신청 자료입니다. 공지 신청기간은 2026.4.6~4.10로 종료됐습니다. 현재 신규 선발이나 차기 모집, 대학교 성적우수·재능나눔 유형으로 사용하지 않습니다. 원문에는 해당 장학금 종류가 미리 선택되고 2026년이 인쇄되어 있으며, 이는 이용자가 새로 선택한 결과가 아닙니다. 통장사본 등 공지 증빙을 별도로 확인해야 합니다. 당시 회차자료로 원문을 그대로 제공하며 웹 자동작성은 제공하지 않습니다. 이 지급신청서는 별도의 재능나눔 완료확인서를 대체하지 않습니다.",
+      "regionCode": "48310",
+      "regionLabel": "경상남도 거제시",
+      "agencyName": "거제시 평생교육과",
+      "authorityKind": "government",
+      "authorityEvidenceKind": "government",
+      "authorityEvidenceUrl": "https://www.geoje.go.kr/welfare/board/view.geoje?boardId=BBS_0000313&dataSid=306397542&menuCd=DOM_000009607003000000&paging=ok&startPage=1",
+      "authorityEvidenceNote": "거제시 공식 복지포털 게시306397542(2026.4.6)가 이미 선정·개별통보된 고등학교 우수 장학생에게 첨부 fileSid238389를 지급신청서로 지정한다. 실제 HWP 38400바이트 SHAb978745ab400d7aac11bf2f9bd4ce99355de607355357ef7fcf82af664631e3d, 전체 BodyText/Section0 366자와 BinData0을 읽었다. 성명·주소·생년월일·계좌·신청인/보호자 서명은 비어 있고 해당 장학금 유형만 미리 선택되어 있다. 원문연도2026과 종료된4.6~4.10 접수기간을 유지한다. 현행2116943 제6조의 선발통지 후 지급신청 단계와 정확 g48310.gov24-537000000125의 해당 장학생 유형에 일치한다. 법정 지급신청12 일반원본은 이미 공개되어 있으며 이2026전용기관자료의 추가가 신규 혜택관계를 늘린다는 뜻은 아니다. 고정21680119의 오첨부12-1 문제는 해소하지 않는다.",
+      "sourcePageUrl": "https://www.geoje.go.kr/welfare/board/view.geoje?boardId=BBS_0000313&dataSid=306397542&menuCd=DOM_000009607003000000&paging=ok&startPage=1",
+      "sourceUrl": "https://www.geoje.go.kr/welfare/board/download.geoje?boardId=BBS_0000313&menuCd=DOM_000009607003000000&paging=ok&startPage=1&dataSid=306397542&command=update&fileSid=238389",
+      "finalUrl": "https://www.geoje.go.kr/welfare/board/download.geoje?boardId=BBS_0000313&menuCd=DOM_000009607003000000&paging=ok&startPage=1&dataSid=306397542&command=update&fileSid=238389",
+      "attachmentId": "238389",
+      "attachmentIdentifier": {
+        "queryParam": "fileSid",
+        "value": "238389"
+      },
+      "checkedAt": "2026-10-23",
+      "sha256": "b978745ab400d7aac11bf2f9bd4ce99355de607355357ef7fcf82af664631e3d",
+      "bytes": 38400,
+      "lawId": "",
+      "lawTitle": "",
+      "lawEvidenceUrl": "",
+      "lawEffectiveDate": "",
+      "lawCurrentCheckedAt": "",
+      "sectionsRead": [
+        "BodyText/Section0"
+      ],
+      "textScope": "all_body_sections_or_pages",
+      "selectedParts": [
+        {
+          "number": "별지 제12호",
+          "title": "거제시 장학금 지급 신청서",
+          "use": "conditional",
+          "author": "2026 거제시 고등학교 우수 장학생 선정자와 보호자",
+          "scope": "고등학교 우수 유형의 성명·계좌·서명과 원문전체; 다른유형 선택변경 불가"
+        }
+      ],
+      "applicant": "2026 거제시 고등학교 우수 장학생 선정자와 보호자",
+      "id": "agency-48310-geoje-payment-238389",
+      "title": "2026 회차자료 · 접수종료(4.6~4.10) — 고등학교 우수 장학금 지급 신청서",
+      "format": "hwp",
+      "publishedAt": "2026-04-06",
+      "authorityBasis": {
+        "kind": "official-program",
+        "title": "2026 회차자료 · 접수종료(4.6~4.10) — 고등학교 우수 장학금 지급 신청서",
+        "evidenceUrl": "https://www.geoje.go.kr/welfare/board/view.geoje?boardId=BBS_0000313&dataSid=306397542&menuCd=DOM_000009607003000000&paging=ok&startPage=1",
+        "checkedAt": "2026-10-23",
+        "evidenceNote": "거제시 공식 복지포털 게시306397542(2026.4.6)가 이미 선정·개별통보된 고등학교 우수 장학생에게 첨부 fileSid238389를 지급신청서로 지정한다. 실제 HWP 38400바이트 SHAb978745ab400d7aac11bf2f9bd4ce99355de607355357ef7fcf82af664631e3d, 전체 BodyText/Section0 366자와 BinData0을 읽었다. 성명·주소·생년월일·계좌·신청인/보호자 서명은 비어 있고 해당 장학금 유형만 미리 선택되어 있다. 원문연도2026과 종료된4.6~4.10 접수기간을 유지한다. 현행2116943 제6조의 선발통지 후 지급신청 단계와 정확 g48310.gov24-537000000125의 해당 장학생 유형에 일치한다. 법정 지급신청12 일반원본은 이미 공개되어 있으며 이2026전용기관자료의 추가가 신규 혜택관계를 늘린다는 뜻은 아니다. 고정21680119의 오첨부12-1 문제는 해소하지 않는다. 2026-10-23 총괄이 정확SHA·전체본문·모든문서쪽 및 현재공식안내의 직접첨부ID를 확인했다. 표시한 작성주체·단계·쪽·현재법정지원범위를 유지하여 원본다운로드만 승인하며, 옛별도원본의 자동covered나 전체묶음 자동작성으로 확대하지 않는다.",
+        "pageSHA256": "6332bfc1284bba7dddc217291b9b6710cfa5e709631c1050abe8178d33cbe7bd"
+      },
+      "programs": [
+        {
+          "id": "g48310.gov24-537000000125",
+          "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/537000000125"
+        }
+      ]
+    },
+    "agency-48310-geoje-payment-238390": {
+      "sourceKind": "agency",
+      "role": "application",
+      "use": "conditional",
+      "condition": "2026년 거제시 대학교 입학 우수 장학생으로 이미 선발되어 개별 통보를 받은 사람의 지급신청 자료입니다. 공지 신청기간은 2026.4.6~4.10로 종료됐습니다. 현재 신규 선발이나 차기 모집, 대학교 성적우수·재능나눔 유형으로 사용하지 않습니다. 원문에는 해당 장학금 종류가 미리 선택되고 2026년이 인쇄되어 있으며, 이는 이용자가 새로 선택한 결과가 아닙니다. 통장사본 및 등록금 납부 영수증 사본 등 공지 증빙을 별도로 확인해야 합니다. 당시 회차자료로 원문을 그대로 제공하며 웹 자동작성은 제공하지 않습니다. 이 지급신청서는 별도의 재능나눔 완료확인서를 대체하지 않습니다.",
+      "regionCode": "48310",
+      "regionLabel": "경상남도 거제시",
+      "agencyName": "거제시 평생교육과",
+      "authorityKind": "government",
+      "authorityEvidenceKind": "government",
+      "authorityEvidenceUrl": "https://www.geoje.go.kr/welfare/board/view.geoje?boardId=BBS_0000313&dataSid=306397542&menuCd=DOM_000009607003000000&paging=ok&startPage=1",
+      "authorityEvidenceNote": "거제시 공식 복지포털 게시306397542(2026.4.6)가 이미 선정·개별통보된 대학교 입학 우수 장학생에게 첨부 fileSid238390를 지급신청서로 지정한다. 실제 HWP 38400바이트 SHAa2191e6b92053baeae8aa09c9ddbf1ec378992c8d49e3bb5be23eb6868ed0da4, 전체 BodyText/Section0 366자와 BinData0을 읽었다. 성명·주소·생년월일·계좌·신청인/보호자 서명은 비어 있고 해당 장학금 유형만 미리 선택되어 있다. 원문연도2026과 종료된4.6~4.10 접수기간을 유지한다. 현행2116943 제6조의 선발통지 후 지급신청 단계와 정확 g48310.gov24-537000000125의 해당 장학생 유형에 일치한다. 법정 지급신청12 일반원본은 이미 공개되어 있으며 이2026전용기관자료의 추가가 신규 혜택관계를 늘린다는 뜻은 아니다. 고정21680119의 오첨부12-1 문제는 해소하지 않는다.",
+      "sourcePageUrl": "https://www.geoje.go.kr/welfare/board/view.geoje?boardId=BBS_0000313&dataSid=306397542&menuCd=DOM_000009607003000000&paging=ok&startPage=1",
+      "sourceUrl": "https://www.geoje.go.kr/welfare/board/download.geoje?boardId=BBS_0000313&menuCd=DOM_000009607003000000&paging=ok&startPage=1&dataSid=306397542&command=update&fileSid=238390",
+      "finalUrl": "https://www.geoje.go.kr/welfare/board/download.geoje?boardId=BBS_0000313&menuCd=DOM_000009607003000000&paging=ok&startPage=1&dataSid=306397542&command=update&fileSid=238390",
+      "attachmentId": "238390",
+      "attachmentIdentifier": {
+        "queryParam": "fileSid",
+        "value": "238390"
+      },
+      "checkedAt": "2026-10-23",
+      "sha256": "a2191e6b92053baeae8aa09c9ddbf1ec378992c8d49e3bb5be23eb6868ed0da4",
+      "bytes": 38400,
+      "lawId": "",
+      "lawTitle": "",
+      "lawEvidenceUrl": "",
+      "lawEffectiveDate": "",
+      "lawCurrentCheckedAt": "",
+      "sectionsRead": [
+        "BodyText/Section0"
+      ],
+      "textScope": "all_body_sections_or_pages",
+      "selectedParts": [
+        {
+          "number": "별지 제12호",
+          "title": "거제시 장학금 지급 신청서",
+          "use": "conditional",
+          "author": "2026 거제시 대학교 입학 우수 장학생 선정자와 보호자",
+          "scope": "대학교 입학 우수 유형의 성명·계좌·서명과 원문전체; 다른유형 선택변경 불가"
+        }
+      ],
+      "applicant": "2026 거제시 대학교 입학 우수 장학생 선정자와 보호자",
+      "id": "agency-48310-geoje-payment-238390",
+      "title": "2026 회차자료 · 접수종료(4.6~4.10) — 대학교 입학 우수 장학금 지급 신청서",
+      "format": "hwp",
+      "publishedAt": "2026-04-06",
+      "authorityBasis": {
+        "kind": "official-program",
+        "title": "2026 회차자료 · 접수종료(4.6~4.10) — 대학교 입학 우수 장학금 지급 신청서",
+        "evidenceUrl": "https://www.geoje.go.kr/welfare/board/view.geoje?boardId=BBS_0000313&dataSid=306397542&menuCd=DOM_000009607003000000&paging=ok&startPage=1",
+        "checkedAt": "2026-10-23",
+        "evidenceNote": "거제시 공식 복지포털 게시306397542(2026.4.6)가 이미 선정·개별통보된 대학교 입학 우수 장학생에게 첨부 fileSid238390를 지급신청서로 지정한다. 실제 HWP 38400바이트 SHAa2191e6b92053baeae8aa09c9ddbf1ec378992c8d49e3bb5be23eb6868ed0da4, 전체 BodyText/Section0 366자와 BinData0을 읽었다. 성명·주소·생년월일·계좌·신청인/보호자 서명은 비어 있고 해당 장학금 유형만 미리 선택되어 있다. 원문연도2026과 종료된4.6~4.10 접수기간을 유지한다. 현행2116943 제6조의 선발통지 후 지급신청 단계와 정확 g48310.gov24-537000000125의 해당 장학생 유형에 일치한다. 법정 지급신청12 일반원본은 이미 공개되어 있으며 이2026전용기관자료의 추가가 신규 혜택관계를 늘린다는 뜻은 아니다. 고정21680119의 오첨부12-1 문제는 해소하지 않는다. 2026-10-23 총괄이 정확SHA·전체본문·모든문서쪽 및 현재공식안내의 직접첨부ID를 확인했다. 표시한 작성주체·단계·쪽·현재법정지원범위를 유지하여 원본다운로드만 승인하며, 옛별도원본의 자동covered나 전체묶음 자동작성으로 확대하지 않는다.",
+        "pageSHA256": "6332bfc1284bba7dddc217291b9b6710cfa5e709631c1050abe8178d33cbe7bd"
+      },
+      "programs": [
+        {
+          "id": "g48310.gov24-537000000125",
+          "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/537000000125"
+        }
+      ]
+    },
+    "agency-43745-gazette825-independent-14": {
+      "sourceKind": "agency",
+      "role": "application",
+      "use": "conditional",
+      "condition": "증평군 독립유공자 및 등록 유족의 보훈명예수당 지급 신청 또는 지정계좌 변경 신고에 사용합니다. 다운로드 파일은 2024.12.20 발행된 35쪽 군보 원문 전체이며, 이 혜택의 신청서는 14쪽 별지 서식입니다. 11~13쪽은 해당 조례 본문이고 13쪽 부칙에 따라 2025.1.1부터 시행됩니다. 신청서 14쪽만 출력해 본인 정보·계좌·서명을 작성하고, 신규 신청은 국가유공자증·통장 사본, 계좌 변경은 통장 사본을 준비합니다. 다른 조례·소방시설 신청서·입법예고 의견서는 이 혜택의 신청서가 아닙니다. 일반 국가보훈대상자 보훈예우수당이나 참전유공자 수당에 사용하지 않습니다. 인쇄된 전자정부법 제38조 인용은 원문 그대로이며 현재 서명·증빙 절차는 접수 읍면의 안내를 따릅니다. 원본을 편집하거나 동의를 자동 생성하지 않으며 화면 작성은 제공하지 않습니다.",
+      "regionCode": "43745",
+      "regionLabel": "충청북도 증평군",
+      "agencyName": "증평군 문화관광과 군보 발행·복지지원과",
+      "authorityKind": "government",
+      "authorityEvidenceKind": "government",
+      "authorityEvidenceUrl": "https://www.jp.go.kr/media/prog/eBook/EB02/sub03_02/list.do?pageIndex=9",
+      "authorityEvidenceNote": "2026-10-23 증평군 공식 군보 목록에서 제825호 컨테이너와 직접첨부 atchFileId=F00000055429yw4oU4bg/fileSn=1을 결속하고 실제 GET200으로 PDF415730바이트를 확보했다. SHAba6d5ce8245e005bac71e369a8933a5f7fe2243942f12283bcd141015a83a3ee, 전체35쪽12446자 및 35쪽 렌더를 모두 읽었다. 11~13쪽은 2024.12.20 공포 조례1192호 독립유공자 조례 전부개정문이고 14쪽은 정확 독립유공자 보훈명예수당 지급 신청(변경신고)서다. 현행 법규1995491/stable2140274의 제3조 월20만원, 제4조 신청, 제8조 계좌변경 및 부칙2025.1.1 시행과 대조했다. API 기본정보 시행일2024.12.20과 부칙2025.1.1을 구분하여 법적 시행일은 실제 부칙을 따랐다. 14쪽은 처리20일·본인정보·계좌·서명·국가유공자증/통장증빙을 요구하며 실제신청인 개인정보와 서명은 비어 있다. 이 공식 공포원문은 법령포털19766693에 잘못 붙은 국가보훈대상자/다른조례 제5·9조 서식과 별개이고, 복지로의2017년 월10만원 조례PDF와도 별개다. 기존 불일치원본을 고치거나 같은SHA로 치환하지 않는다. 다른 조례·신청서·입법예고 부분은 이 사업의 작성범위에서 제외하며 14쪽 사용을 조건으로 명시한다.",
+      "sourcePageUrl": "https://www.jp.go.kr/media/prog/eBook/EB02/sub03_02/list.do?pageIndex=9",
+      "sourceUrl": "https://www.jp.go.kr/media/cmm/fms/FileDown.do?atchFileId=F00000055429yw4oU4bg&fileSn=1",
+      "finalUrl": "https://www.jp.go.kr/media/cmm/fms/FileDown.do?atchFileId=F00000055429yw4oU4bg&fileSn=1",
+      "attachmentId": "F00000055429yw4oU4bg",
+      "attachmentIdentifier": {
+        "queryParam": "atchFileId",
+        "value": "F00000055429yw4oU4bg"
+      },
+      "checkedAt": "2026-10-23",
+      "sha256": "ba6d5ce8245e005bac71e369a8933a5f7fe2243942f12283bcd141015a83a3ee",
+      "bytes": 415730,
+      "lawId": "1995491",
+      "lawTitle": "증평군 독립유공자 지원 조례",
+      "lawEvidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=1995491",
+      "lawEffectiveDate": "2025-01-01",
+      "lawCurrentCheckedAt": "2026-10-23",
+      "sectionsRead": [
+        "page-1",
+        "page-2",
+        "page-3",
+        "page-4",
+        "page-5",
+        "page-6",
+        "page-7",
+        "page-8",
+        "page-9",
+        "page-10",
+        "page-11",
+        "page-12",
+        "page-13",
+        "page-14",
+        "page-15",
+        "page-16",
+        "page-17",
+        "page-18",
+        "page-19",
+        "page-20",
+        "page-21",
+        "page-22",
+        "page-23",
+        "page-24",
+        "page-25",
+        "page-26",
+        "page-27",
+        "page-28",
+        "page-29",
+        "page-30",
+        "page-31",
+        "page-32",
+        "page-33",
+        "page-34",
+        "page-35"
+      ],
+      "textScope": "all_body_sections_or_pages",
+      "selectedParts": [
+        {
+          "number": "별지 서식(군보 14쪽; 번호 없음)",
+          "title": "독립유공자 보훈명예수당 지급 신청(변경신고)서",
+          "use": "conditional",
+          "author": "증평군 독립유공자 또는 국가보훈부 등록 수권 유족인 신청인",
+          "scope": "군보14쪽의 신규수당신청 또는 지정계좌변경 신고·증빙·서명; 다른 군보 서식 제외"
+        }
+      ],
+      "applicant": "증평군 독립유공자 또는 국가보훈부 등록 수권 유족인 신청인",
+      "id": "agency-43745-gazette825-independent-14",
+      "title": "독립유공자 보훈명예수당 지급 신청(변경신고)서 — 증평군보 제825호 14쪽",
+      "format": "pdf",
+      "publishedAt": "2024-12-20",
+      "programs": [
+        {
+          "id": "g43745.bokjiro-WLF00003002",
+          "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003002&wlfareInfoReldBztpCd=02"
+        }
+      ]
+    },
+    "agency-44810-yesan-postpartum-36547": {
+      "sourceKind": "agency",
+      "role": "application",
+      "use": "conditional",
+      "condition": "예산군 산후조리 비용 지원에서 산후조리원 이용비를 신청할 때 사용하는 보건소 배포 서식입니다. 현행 별표1은 일반 100만원, 「국민기초생활 보장법」에 따른 수급자·차상위계층 산모와 「한부모가족지원법」에 따른 한부모 산모는 200만원까지 지원하도록 정하며, 이 파일의 신청금액란은 빈칸으로 고정 비율·상한이 없습니다. 신생아를 예산군에 출생신고한 가구로서 부모의 6개월 거주 원칙, 미달기간 경과 후 지원 또는 별표2의 법정 예외에 해당하는 경우 실제 사실과 증빙에 따라 신청합니다. 거주기간 선택지는 사실에 해당하는 항목만 표시하고, 담당 공무원 확인·비고란은 기관 확인 영역입니다. 한부모·부모 사망/이혼·직장 인사이동·재혼·미숙아·다문화 등 별표2 적용은 해당 증빙으로 심사하며, 사실과 다른 부부거주 항목을 체크하거나 100만원 구간으로 축소하여 신청할 필요는 없습니다. 출산일로부터 6개월 이내 신청기한과 구비서류를 지킵니다. 산후조리원을 이용하지 않은 다른 지출 유형은 이 서식의 시설명·이용기간·영수증 항목과의 관계를 별도로 확인해야 합니다.",
+      "regionCode": "44810",
+      "regionLabel": "충청남도 예산군",
+      "agencyName": "예산군보건소 모자보건팀",
+      "authorityKind": "government",
+      "authorityEvidenceKind": "government",
+      "authorityEvidenceUrl": "https://www.yesan.go.kr/bbs/BBSMSTR_000000000099/list.do",
+      "authorityEvidenceNote": "예산군 공식 보건소 서식목록의 2026-01-10 산후조리 비용 지원 신청서 행에서 실제첨부 FILE_000000036547Um5/fileSn0 직접다운로드를 확인했다.",
+      "sourcePageUrl": "https://www.yesan.go.kr/bbs/BBSMSTR_000000000099/list.do",
+      "sourceUrl": "https://www.yesan.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000036547Um5&fileSn=0",
+      "finalUrl": "https://www.yesan.go.kr/cmm/fms/FileDown.do?atchFileId=FILE_000000036547Um5&fileSn=0",
+      "attachmentId": "FILE_000000036547Um5",
+      "attachmentIdentifier": {
+        "queryParam": "atchFileId",
+        "value": "FILE_000000036547Um5"
+      },
+      "checkedAt": "2026-10-23",
+      "sha256": "9ad606e8ce71741d2d094325c5b9acd164f2fc18808a4bacf65ca3556d0162c9",
+      "bytes": 54521,
+      "lawId": "2121601",
+      "lawTitle": "예산군 인구증가 시책추진 지원에 관한 조례",
+      "lawEvidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2121601",
+      "lawEffectiveDate": "2026-04-09",
+      "lawCurrentCheckedAt": "2026-10-23",
+      "sectionsRead": [
+        "Contents/section0.xml"
+      ],
+      "textScope": "all_body_sections_or_pages",
+      "selectedParts": [
+        {
+          "number": "무번호 신청서",
+          "title": "산후조리 비용 지원 신청서",
+          "use": "conditional",
+          "author": "산모(대리 신청 시 신청인과의 관계 기재)"
+        },
+        {
+          "number": "부속1",
+          "title": "개인정보 수집 및 이용 동의서",
+          "use": "conditional",
+          "author": "신청인 또는 적법한 대리인"
+        },
+        {
+          "number": "부속2",
+          "title": "행정정보 공동이용 사전동의서",
+          "use": "conditional",
+          "author": "정보주체 또는 적법한 대리인"
+        }
+      ],
+      "applicant": "산모 또는 적법한 대리 신청인",
+      "id": "agency-44810-yesan-postpartum-36547",
+      "title": "산후조리 비용 지원 신청서",
+      "format": "hwpx",
+      "publishedAt": "2026-01-10",
+      "programs": [
+        {
+          "id": "g44810.bokjiro-WLF00006603",
+          "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00006603&wlfareInfoReldBztpCd=02"
+        }
+      ]
+    },
+    "agency-47000-bokjiro-wlf00003658-20260713-1": {
+      "sourceKind": "agency",
+      "role": "application",
+      "use": "conditional",
+      "condition": "경상북도 산모·신생아 건강관리 본인부담금 지원 서비스를 계약한 이용자와 제공기관이 계약기간 중 서비스를 중도 해지하는 경우에만 사용합니다. 내려받는 원본은15쪽 안내 묶음이며 마지막15쪽의 【서식5】 서비스 해지 통보서를 작성합니다. 실제 이용기간·이용일수·잔여일수를 기재하고 이용자와 제공기관이 각각 서명한 뒤 각1통을 보관하고 관할 보건소에 각각 제출합니다. 최초 바우처/본인부담금 지원신청서나 환급청구서가 아닙니다. 10쪽 서식1에 인쇄된100만원/90만원 청구금액, 12~14쪽 기관 청구·명단·결정통지는 이번 제공 용도에 포함하지 않습니다. 지원액은 실제 서비스 이용일수와 해당 지원기준으로 산정되며, 해지 위약금은 지원하지 않는다는 지침을 확인하세요.",
+      "regionCode": "47000",
+      "regionLabel": "경상북도",
+      "agencyName": "경상북도 (복지로 공식 사업안내 배포)",
+      "authorityKind": "government",
+      "authorityEvidenceKind": "government",
+      "authorityEvidenceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003658&wlfareInfoReldBztpCd=02",
+      "authorityEvidenceNote": "경상북도 담당 정확복지로사업 WLF00003658 현재페이지와 첨부식별자20260713UUWBM1354590200902744가 직접 결속됨을 HTTP200 원문으로 확인.",
+      "sourcePageUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003658&wlfareInfoReldBztpCd=02",
+      "sourceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260713UUWBM1354590200902744&atcflSn=1&wlfareInfoId=WLF00003658",
+      "finalUrl": "https://www.bokjiro.go.kr/ssis-tbu/twata/CmmFileUtil/getDownload.do?atcflId=20260713UUWBM1354590200902744&atcflSn=1&wlfareInfoId=WLF00003658",
+      "attachmentId": "20260713UUWBM1354590200902744",
+      "attachmentIdentifier": {
+        "queryParam": "atcflId",
+        "value": "20260713UUWBM1354590200902744"
+      },
+      "checkedAt": "2026-10-23",
+      "sha256": "0058363ddb46393e957f4a4ed1c4d807fee8baab40ac783ddfcaa89022a62026",
+      "bytes": 364718,
+      "lawId": "",
+      "lawTitle": "",
+      "lawEvidenceUrl": "",
+      "lawEffectiveDate": "",
+      "lawCurrentCheckedAt": "",
+      "sectionsRead": [
+        "page-1",
+        "page-2",
+        "page-3",
+        "page-4",
+        "page-5",
+        "page-6",
+        "page-7",
+        "page-8",
+        "page-9",
+        "page-10",
+        "page-11",
+        "page-12",
+        "page-13",
+        "page-14",
+        "page-15"
+      ],
+      "textScope": "all_body_sections_or_pages",
+      "selectedParts": [
+        {
+          "number": "5",
+          "title": "산모·신생아 건강관리지원사업 서비스 해지 통보서",
+          "use": "conditional",
+          "author": "서비스 이용자와 계약한 서비스 제공기관 공동 작성"
+        }
+      ],
+      "applicant": "서비스 이용자와 계약한 서비스 제공기관 공동 작성",
+      "id": "agency-47000-bokjiro-wlf00003658-20260713-1",
+      "title": "2026년 산모신생아 본인부담금 지원 안내·서식 — 서비스 해지 통보서(15쪽)",
+      "format": "pdf",
+      "authorityBasis": {
+        "kind": "official-program",
+        "title": "2026년 산모신생아 본인부담금 지원 안내·서식 — 서비스 해지 통보서(15쪽)",
+        "evidenceUrl": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003658&wlfareInfoReldBztpCd=02",
+        "checkedAt": "2026-10-23",
+        "evidenceNote": "2026-10-23 정확 복지로 WLF00003658 페이지를 HTTP200으로 확인하고 현재 동일 atcflId에 결속된15쪽 공식PDF를 실제다운로드했다. 전체15쪽 텍스트와8개접촉시트를 모두 읽었으며7쪽·9쪽이 계약중도해지시 서식5 제출을 직접 지시하고15쪽의 이용자·제공기관·서비스기간·일수·잔여일수·양쪽서명 공란과 일치한다. 2025발급 일반산모 환급·2026발급 기관청구를 구분한 문서이므로 기관청구서를 산모 신청서로 안내하지 않는다. 원본17542133의 사후환급서식을 대체하거나 해결했다고 집계하지 않고 동일현재사업의 별도 해지절차 빈서식1건을 추가 제안한다. 2026-10-23 총괄이 정확SHA·전체본문·모든문서쪽 및 현재공식안내의 직접첨부ID를 확인했다. 표시한 작성주체·단계·쪽·현재법정지원범위를 유지하여 원본다운로드만 승인하며, 옛별도원본의 자동covered나 전체묶음 자동작성으로 확대하지 않는다.",
+        "pageSHA256": "d6384e474e3d5a53023fc19d03271c694f9a47b559eb42ef28df27a9b03e128a"
+      },
+      "programs": [
+        {
+          "id": "s47000.bokjiro-WLF00003658",
+          "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003658&wlfareInfoReldBztpCd=02"
+        }
+      ]
+    },
+    "agency-44210-health-cts2393-initial-voucher": {
+      "sourceKind": "agency",
+      "role": "application",
+      "use": "conditional",
+      "condition": "서산시에 주민등록을 둔 산모가 서산시보건소에 산모·신생아 건강관리 서비스 이용권을 처음 신청하는 지역 접수용입니다. 국가 기본지원(수급·차상위, 기준중위소득150%이하)과 서산 안내의 예외지원 신청에서 실제 해당하는 유형만 확인·선택합니다. 중위150%초과 첫째아는 출산예정일(출산일)3개월 전부터 서산 거주 등 서산의 추가요건을 확인해야 하며, 이 조건을 국가 기본대상 전체에 적용하지 않습니다. 부부 모두 외국인인 경우의 체류자격 등 현재 접수요건과 허용 대리신청·증빙을 확인합니다. 다른 지역의 공통 양식이나 모든 국가신청인에게 필수인 서류가 아닙니다. 같은 원문의 기저귀·조제분유 부분, 서비스 이용 후 본인부담금 환급, 임신축하금 신청에는 이번 연결을 사용하지 않습니다. 원문 개인정보 동의·유의사항과 담당공무원 안내확인란은 실제 안내를 받은 후 본인이 확인·서명해야 하며 자동으로 동의·서명을 생성하지 않습니다. 국가 정부24는 출산후30일, 서산 현 안내는60일을 기재하므로 적용되는 접수기한을 서산보건소에서 확인하세요. 서식을 내려받을 수 있다는 사실이 기한연장이나 수급승인을 보증하지 않습니다.",
+      "regionCode": "44210",
+      "regionLabel": "충청남도 서산시",
+      "agencyName": "서산시보건소",
+      "authorityKind": "government",
+      "authorityEvidenceKind": "government",
+      "authorityEvidenceUrl": "https://www.seosan.go.kr/health/contents.do?key=2393",
+      "authorityEvidenceNote": "서산시보건소 primary2393의 실제 GET200 HTML/SHAed39eba16ff6b9f76927650cd6b650d5d09c7d8c4d9ce927e038833a411f6a5d를 독립 판독했다. 신청대상은 서산시 주민등록 모든 산모이며 같은 안내의 가형(수급·차상위),통합형(중위150%이하),라형(초과)을 함께 제시하고 구비서류 사회보장급여 신청서가 정확 cts2393_file01.hwp를 직접 링크한다. 실제기관HWP108032바이트/SHA369b21f72eae53a8d7bee4c7292e915d488cd76733e3fe9cc30778081cc21d39의전체Section0 2685자와BinData0 및원본미리보기를읽었다. 기본지원 자격확인/소득기준이하와 예외지원대상(해당자만)이 병렬이고 국가·도지원을 받지못한다는 공통확약이나 서산3개월거주 일괄확약이 없다. 국가PTR000050390의수급·차상위/150%이하,시도·시군구예외,주소지보건소접수·초기가정방문서비스이용권과직접대응한다. 따라서국가기본대상접수에도이기관배포원본을쓴다는직접근거가있으며종전미확인은해소된다. 다만서산조례2161415의국가/도지원밖시추가지원별지22392705와같은원본으로치환하지않는다. 기관파일의기저귀·조제분유영역과사후본인부담금환급은이번연결밖이며,30일/60일공식안내차이는접수기한확인문제로별도보존한다.",
+      "sourcePageUrl": "https://www.seosan.go.kr/health/contents.do?key=2393",
+      "sourceUrl": "https://www.seosan.go.kr/DATA/download/health/cts2393_file01.hwp",
+      "finalUrl": "https://www.seosan.go.kr/DATA/download/health/cts2393_file01.hwp",
+      "attachmentId": "cts2393_file01.hwp",
+      "attachmentIdentifier": {
+        "path": "/DATA/download/health/cts2393_file01.hwp"
+      },
+      "checkedAt": "2026-10-23",
+      "sha256": "369b21f72eae53a8d7bee4c7292e915d488cd76733e3fe9cc30778081cc21d39",
+      "bytes": 108032,
+      "lawId": "",
+      "lawTitle": "",
+      "lawEvidenceUrl": "",
+      "lawEffectiveDate": "",
+      "lawCurrentCheckedAt": "",
+      "sectionsRead": [
+        "BodyText/Section0"
+      ],
+      "textScope": "all_body_sections_or_pages",
+      "selectedParts": [
+        {
+          "number": "별지 제1호의4서식 중 산모신생아 부분",
+          "title": "사회보장급여(사회서비스이용권) 신청(변경)서",
+          "use": "conditional",
+          "author": "서산시 주소지의 산모 본인 또는 국가안내·원문에서 허용하는 대리신청인",
+          "scope": "공통인적·가족사항,산모신생아건강관리지원 선택·기본/해당예외유형,관련개인정보동의·유의사항·증빙·서명. 기저귀·조제분유지원선택영역은제외."
+        }
+      ],
+      "applicant": "서산시 주소지의 산모 본인 또는 국가안내·원문에서 허용하는 대리신청인",
+      "id": "agency-44210-health-cts2393-initial-voucher",
+      "title": "서산시 보건소 접수용 산모·신생아 건강관리 이용권 신청서",
+      "format": "hwp",
+      "authorityBasis": {
+        "kind": "official-program",
+        "title": "서산시 보건소 접수용 산모·신생아 건강관리 이용권 신청서",
+        "evidenceUrl": "https://www.seosan.go.kr/health/contents.do?key=2393",
+        "checkedAt": "2026-10-23",
+        "evidenceNote": "서산시보건소 primary2393의 실제 GET200 HTML/SHAed39eba16ff6b9f76927650cd6b650d5d09c7d8c4d9ce927e038833a411f6a5d를 독립 판독했다. 신청대상은 서산시 주민등록 모든 산모이며 같은 안내의 가형(수급·차상위),통합형(중위150%이하),라형(초과)을 함께 제시하고 구비서류 사회보장급여 신청서가 정확 cts2393_file01.hwp를 직접 링크한다. 실제기관HWP108032바이트/SHA369b21f72eae53a8d7bee4c7292e915d488cd76733e3fe9cc30778081cc21d39의전체Section0 2685자와BinData0 및원본미리보기를읽었다. 기본지원 자격확인/소득기준이하와 예외지원대상(해당자만)이 병렬이고 국가·도지원을 받지못한다는 공통확약이나 서산3개월거주 일괄확약이 없다. 국가PTR000050390의수급·차상위/150%이하,시도·시군구예외,주소지보건소접수·초기가정방문서비스이용권과직접대응한다. 따라서국가기본대상접수에도이기관배포원본을쓴다는직접근거가있으며종전미확인은해소된다. 다만서산조례2161415의국가/도지원밖시추가지원별지22392705와같은원본으로치환하지않는다. 기관파일의기저귀·조제분유영역과사후본인부담금환급은이번연결밖이며,30일/60일공식안내차이는접수기한확인문제로별도보존한다. 총괄은 현재공식페이지의 전체대상·가/통합/라형 및 직접CTS첨부, 원본SHA·전체2685자·실제한글1쪽을 확인했다. 국가기본과지역예외의 초기이용권 접수라는 의미관계를 독립재검증하고 exact프로그램·서산지역·원본·안내페이지SHA에 결속된 별도선택경로만 승인한다. 기존지방조례22392705를 승인/covered하지 않는다.",
+        "pageSHA256": "ed39eba16ff6b9f76927650cd6b650d5d09c7d8c4d9ce927e038833a411f6a5d"
+      },
+      "nationalMunicipalIntakeReference": {
+        "kind": "municipal-intake",
+        "programmeId": "n.gov24-PTR000050390",
+        "sigungu": "44210",
+        "municipality": "서산시",
+        "municipalPageUrl": "https://www.seosan.go.kr/health/contents.do?key=2393",
+        "downloadUrl": "https://www.seosan.go.kr/DATA/download/health/cts2393_file01.hwp",
+        "sourceSHA256": "369b21f72eae53a8d7bee4c7292e915d488cd76733e3fe9cc30778081cc21d39",
+        "municipalPageSHA256": "ed39eba16ff6b9f76927650cd6b650d5d09c7d8c4d9ce927e038833a411f6a5d",
+        "httpStatus": 200,
+        "checkedAt": "2026-10-23",
+        "stage": "initial-application",
+        "sameServiceEvidence": "서산시보건소의 현재 산모·신생아 건강관리 안내는 산모 주소지 보건소의 서비스 이용권 최초 신청 구비서류로 이 정확 CTS 한글 파일을 직접 제공한다.",
+        "populationEvidence": "서산시 안내는 주민등록을 둔 모든 산모를 대상으로 가형 수급·차상위, 통합형 중위150%이하, 라형 초과 가정을 함께 안내하며 같은 신청서에서 기본·해당 예외 요건을 선택한다.",
+        "scopeRestriction": "서산시에 주민등록을 둔 산모가 서산시보건소의 초기 이용권 접수에 선택하여 쓰는 지역 기관 원본에 한정한다. 다른 지역 주민의 공통 서식으로 지정하지 않는다."
+      },
+      "programs": [
+        {
+          "id": "n.gov24-PTR000050390",
+          "url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/PTR000050390"
+        }
+      ]
     }
   }
 }
