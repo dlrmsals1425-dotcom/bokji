@@ -1,3 +1,4 @@
+import { openHomeSearch } from "./helpers/homeSearch";
 import { readFileSync } from "node:fs";
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
@@ -6,6 +7,7 @@ import { expect, test, type Page } from "@playwright/test";
 
 async function toResults(page: Page, sentence: string) {
   await page.goto("/");
+  await openHomeSearch(page);
   await page.locator("#home-q").fill(sentence);
   await page.locator("#home-q").press("Enter");
   await expect(page.getByTestId("prefill-banner")).toBeVisible({ timeout: 20_000 });
@@ -98,9 +100,15 @@ test.describe("방문처별 준비물 한 장", () => {
     await toResults(page, DAD);
     const cta = page.getByTestId("sheet-cta");
     await expect(cta).toContainText("담은 혜택 5개");
-    await page.getByTestId("pick").first().getByTestId("sheet-toggle").click();
+    const firstPick = page.getByTestId("pick").first();
+    await firstPick.getByTestId("benefit-more").locator(":scope > summary").click();
+    await firstPick.getByTestId("sheet-toggle").click();
     await expect(cta).toContainText("담은 혜택 4개");
-    await page.locator("#v2-fit [data-testid=v2-card]").filter({ has: page.getByRole("button", { name: /준비물 한 장에 담기$/ }) }).first().getByTestId("sheet-toggle").click();
+    const toAdd = page.locator("#v2-fit [data-testid=v2-card]").filter({
+      has: page.getByRole("button", { name: /준비물 한 장에 담기$/, includeHidden: true }),
+    }).first();
+    await toAdd.getByTestId("benefit-more").locator(":scope > summary").click();
+    await toAdd.getByTestId("sheet-toggle").click();
     await expect(cta).toContainText("담은 혜택 5개");
     const stored = await page.evaluate(() => sessionStorage.getItem("bn.sheet.v1"));
     expect(JSON.parse(stored!)).toEqual({ add: [expect.any(String)], remove: [expect.any(String)] });

@@ -1,3 +1,4 @@
+import { openHomeSearch } from "./helpers/homeSearch";
 import { expect, test, type Page } from "@playwright/test";
 
 /** 6차 프로덕션 검증 후속 (claude-code-fixes) V2 준비물 한 장 진입점 · V3 인쇄하면 실제 A4 1쪽 → (2026-10-16) 곳마다 A4 1쪽 */
@@ -9,6 +10,7 @@ async function open(page: Page, target: string) {
   if (PRESETS.includes(target)) await page.goto(`/results?example=${target}`);
   else {
     await page.goto("/");
+    await openHomeSearch(page);
     await page.locator("#home-q").fill(target);
     await page.locator("#home-q").press("Enter");
     await expect(page.getByTestId("prefill-banner")).toBeVisible({ timeout: 20_000 });
