@@ -16,6 +16,15 @@
       "evidenceNote": "원본 전체2쪽과 검증된 변환본을 대조했다. 열린73칸 중 건강음료 정보18칸, 다른서비스49칸, 공통첨부·신청인6칸이다. 승인한 건강음료 선택칸과 지원대상자 이름은 현재 열린칸에 없고, 다른서비스 선택·입력을 승인된 사업으로 오인할 수 있다. 다운로드와 화면입력 승인을 구분한다.",
       "independentReviewSHA256": "163c421de197b9ba15ed494617582b4bf397d2df685b29c4c579a4f0d52c1f1b",
       "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2092475"
+    },
+    "ordin-22371299": {
+      "sourceSHA256": "49b5991d6753869d07b09067f5108d9359e405aca330073bc42cc4f597157ee7",
+      "checkedAt": "2026-10-23",
+      "reason": "이 통합서식은 완도군 출산장려금 부분의 원본 연결을 확인했습니다. 현재 화면 입력에 접수기관·담당공무원 작성란과 다른 급여의 칸이 열려 있어 화면 작성을 보류합니다. 공식 원본은 그대로 받을 수 있습니다.",
+      "evidenceNote": "실제한글원본3쪽·검증된변환본과109개열린슬롯의좌표를대조했다. 실제Herdr Claude가변환HWPX의셀본문으로분류한기관작성22칸과다른급여13칸이함께열리며,핵심완도출산장려금선택5칸과공통신청정보는지원된다. 총괄은전체원본과앞면접수번호·접수일자를직접확인했고독립보고서의원본/변환/보류전manifest SHA일치를검증했다. 원본다운로드와검증된변환은유지하고이ID·SHA의화면작성만보류한다. 다른서식전체를함께수정·점검했다고주장하지않는다.",
+      "independentReviewSHA256": "3d87f400da38337a20dad45a991508991fcb8b261d3db04154e94f32e9b52059",
+      "evidenceUrl": "https://www.law.go.kr/ordinInfoP.do?ordinSeq=2160269",
+      "coordinatorCheckpointSHA256": "5dc4bcbb6b8f665eceb7d7dc6791cba0b9e6777453e734d0226cb435898e5d70"
     }
   }
 }

@@ -168,8 +168,8 @@ describe("세부 자료 전수", () => {
     expect(doc.sources.find((source) => source.id === "welfare100")?.documentDate?.min).toBe("2026-09-24");
     expect(doc.bundleGeneratedAt).toBe("2026-10-08T14:57:47.456Z");
     expect(doc.forms).toMatchObject({
-      downloadOriginals: 2805,
-      linkedPrograms: 2537,
+      downloadOriginals: 2816,
+      linkedPrograms: 2546,
       censusPrograms: 23578,
       lawReviewCheckedAt: "2026-10-22",
     });
@@ -186,8 +186,8 @@ describe("세부 자료 전수", () => {
     expect(text).toContain("10,218");
     expect(text).toContain("24,889");
     expect(text).toContain("1,263");
-    expect(text).toContain("2,805");
-    expect(text).toContain("2,537");
+    expect(text).toContain("2,816");
+    expect(text).toContain("2,546");
     expect(text).toContain("총 복지 수가 아닙니다");
     expect(text).toContain("개별 원문 주소가 비어");
     expect(text).toContain("23,528");

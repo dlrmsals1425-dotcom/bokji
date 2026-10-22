@@ -5201,6 +5201,83 @@
           "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00006649&wlfareInfoReldBztpCd=02"
         }
       ]
+    },
+    "agency-52180-jeongeup-249275": {
+      "sourceKind": "agency",
+      "role": "application",
+      "use": "conditional",
+      "condition": "2026년 별별꿈 재능바우처 지원사업의 모집 회차 자료입니다. 신청 접수는 2025.12.17~12.30에 종료됐으며 현재 신규 접수나 다음 회차 신청용을 뜻하지 않습니다. 해당 회차의 지원기간은 2026.2~12월입니다. 신청서(붙임1), 개인정보 동의서(붙임2), 이용안내(붙임3)를 원문 그대로 제공합니다. 월 학원비15만원 기준 시65%·협력학원25%·학생10% 조건이며, 지원대상과 구비서류는 해당 공고의 정확한 기준을 확인하세요. 화면작성 기능은 제공하지 않으며 내려받기는 접수 완료를 뜻하지 않습니다.",
+      "regionCode": "52180",
+      "regionLabel": "전북특별자치도 정읍시",
+      "agencyName": "정읍시 인재양성과·초산동",
+      "authorityKind": "government",
+      "authorityEvidenceKind": "government",
+      "authorityEvidenceUrl": "https://www.jeongeup.go.kr/board/view.jeongeup?boardId=BBS_0000012&dataSid=1395754",
+      "authorityEvidenceNote": "2026회차 정읍시 공식공고 제2025-2087호(2025-12-15 발행) 및 초산동 게시1395754(2025-12-22)가 직접 배포한 fileSid249275 HWPX를 재다운로드하지 않고 보관된 실제77176바이트를 재해시했다. SHA70f20a2cf41858b903ce218f2319ff895f8b0059d34d2b928108b25fd19256d9, Contents/section0~2 전본문3892자, BinData0개를 읽었다. 이번에는 같은공고의 공식PDF249273도 GET하여192425바이트/SHA를 확인하고7쪽 전부 렌더·시각대조했다. PDF4~7쪽의 신청서·동의서·안내와 HWPX의 선택부분이 일치하며 실제개인정보나 선체크된 동의가 없다. 정확사업g52180.bokjiro-WLF00001439의 학원비15만원·시97500원/학원37500원/학생15000원과 목적·관할·수신인·신청주체가 일치한다. 현행조례1938411 제3조는 시장의 기준일·세부선정을, 제4조는 예산범위 지원금액을, 제5조는 읍면동 신청을 정한다. 원법령첨부의60/30비율을 승인한 것이 아니며 이 별도기관배포본의2026회차 사용만 확인한다. 접수종료는 문서의 출처·해당회차 적합성을 없애지 않지만 현재접수 가능성을 뜻하지 않으므로 명확한 종료표시와 작성기차단을 적용하기 전에는 공개수입하지 않는다. D회차는 2026년2~12월 지원 중인 같은 사업에 대한 이미 종료된 모집 원본을 제공하는 목적이다. 새모집으로 표시하지 않도록 현재 카드가 버튼 전에 표시하는 제목과 조건을 구체화했다. 별도신규UI메타데이터를 필수로 요구하지 않으며 HWPX작성허용목록에 등록하지 않는다.",
+      "sourcePageUrl": "https://www.jeongeup.go.kr/board/view.jeongeup?boardId=BBS_0000012&dataSid=1395754",
+      "sourceUrl": "https://www.jeongeup.go.kr/board/download.jeongeup?boardId=BBS_0000012&paging=ok&startPage=1&dataSid=1395754&command=update&fileSid=249275",
+      "finalUrl": "https://www.jeongeup.go.kr/board/download.jeongeup?boardId=BBS_0000012&paging=ok&startPage=1&dataSid=1395754&command=update&fileSid=249275",
+      "attachmentId": "249275",
+      "attachmentIdentifier": {
+        "queryParam": "fileSid",
+        "value": "249275"
+      },
+      "checkedAt": "2026-10-23",
+      "sha256": "70f20a2cf41858b903ce218f2319ff895f8b0059d34d2b928108b25fd19256d9",
+      "bytes": 77176,
+      "lawId": "",
+      "lawTitle": "",
+      "lawEvidenceUrl": "",
+      "lawEffectiveDate": "",
+      "lawCurrentCheckedAt": "",
+      "sectionsRead": [
+        "Contents/section0.xml",
+        "Contents/section1.xml",
+        "Contents/section2.xml"
+      ],
+      "textScope": "all_body_sections_or_pages",
+      "selectedParts": [
+        {
+          "number": "붙임 1",
+          "title": "「별별꿈 재능바우처 지원 사업」신청서",
+          "use": "main",
+          "author": "해당2026회차 지원대상 아동·청소년의 신청인/보호자",
+          "scope": "앞면 신청인·세대주·지원대상자·자부담 선택·서명 및 뒷면 이용안내 전체"
+        },
+        {
+          "number": "붙임 2",
+          "title": "개인정보 수집 활용 및 제3자 제공 동의서",
+          "use": "additional",
+          "author": "지원대상자와 부·모 등 원문상 동의자",
+          "scope": "수집·이용 및 제3자 제공에 대한 비선택 상태의 동의/비동의란과 서명란 전체"
+        },
+        {
+          "number": "붙임 3",
+          "title": "사업 신청시 안내사항",
+          "use": "additional",
+          "author": "정읍시 안내; 신청인이 값을 작성하는 별도 신청서는 아님",
+          "scope": "2026회차 지원원칙·중복지원·카드 이용·중단 안내"
+        }
+      ],
+      "applicant": "해당2026회차 지원대상 아동·청소년의 신청인/보호자",
+      "id": "agency-52180-jeongeup-249275",
+      "title": "2026 회차자료 · 접수종료(2025.12.17~12.30) — 별별꿈 재능바우처 지원사업 신청서",
+      "format": "hwpx",
+      "publishedAt": "2025-12-22",
+      "authorityBasis": {
+        "kind": "official-program",
+        "title": "2026년 별별꿈 재능바우처 지원 사업 참여 대상자 모집 안내",
+        "evidenceUrl": "https://www.jeongeup.go.kr/board/view.jeongeup?boardId=BBS_0000012&dataSid=1395754",
+        "checkedAt": "2026-10-23",
+        "evidenceNote": "2026-10-23 총괄이 정읍시 공식2026모집 공고를 새로 조회하고 정확한 fileSid249275·접수기간2025-12-17~12-30·지원기간2026-02~12·학원비분담65/25/10을 직접 확인했다. 원본77176바이트/SHA와전체3섹션3892자, 실제한글출력4쪽을전부대조하여 신청·동의란이비어있음을확인했다. 현재진행중인2026지원사업의이미종료된모집회차원본을제공하며,제목과다운로드앞조건에접수종료및신규/다음회차용아님을명시한다. 화면작성허용목록에넣지않고원문다운로드만제공한다. 옛법령첨부19617443의60/30비율이나그바이트를승인·교체·covered처리하지않는다.",
+        "pageSHA256": "8cfec456018a2e560952ef5abbfac1f9c2f11bc28ed17fd96c53198a4f1d4488"
+      },
+      "programs": [
+        {
+          "id": "g52180.bokjiro-WLF00001439",
+          "url": "https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00001439&wlfareInfoReldBztpCd=02"
+        }
+      ]
     }
   }
 }

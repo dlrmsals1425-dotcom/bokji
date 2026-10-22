@@ -94,6 +94,16 @@ describe("paper-writing compiler — actual source semantics", () => {
       .toBe("c6713e5df348d8103c5b3a294fa8f61ae9ba0ee0cdecd1390379eb1987f6557c");
   });
 
+  it("완도 통합서식의 기관 확인란과 다른 급여 입력은 작성기로 제공하지 않는다", () => {
+    const id = "ordin-22371299";
+    const form = catalog[id], conversion = conversions[id];
+    const bytes = new Uint8Array(readFileSync(`public${conversion.asset.path}`));
+    expect(() => validateConversion(id, form, conversion, bytes)).not.toThrow();
+    expect(() => compileForm(id, form, conversion, bytes)).toThrow(/완도군 출산장려금 부분.*접수기관/);
+    expect(hash(readFileSync(`public${conversion.source.path}`)))
+      .toBe("49b5991d6753869d07b09067f5108d9359e405aca330073bc42cc4f597157ee7");
+  });
+
   it("원본에 ASCII 공백만 남은 실제 빈 셀도 런타임에서 같은 신원으로 읽는다", () => {
     const s = sample("ordin-20088657");
     const slot = Object.values(s.manifest.slots).find(item => item.kind === "text" && item.expect === "  " && !item.locked)!;
