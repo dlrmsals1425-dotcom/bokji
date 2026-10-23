@@ -1,9 +1,11 @@
+import { openHomeSearch } from "./helpers/homeSearch";
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
 /** 결정 1b: '장인어른 모시고 삽니다 부천' — 함께 사는 부모님 혜택을 같은 화면에서 */
 test("함께 사시는 분 나이대를 고르면 그분 기준 혜택이 나옴, 주소에 나이 없음 @mobile", async ({ page }) => {
   await page.goto("/");
+  await openHomeSearch(page);
   await page.locator("#home-q").fill("장인어른 모시고 삽니다 부천");
   await page.locator("#home-q").press("Enter");
   await expect(page.getByTestId("prefill-banner")).toBeVisible({ timeout: 20_000 });

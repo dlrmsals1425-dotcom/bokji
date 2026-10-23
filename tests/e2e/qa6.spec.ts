@@ -1,3 +1,4 @@
+import { openHomeSearch } from "./helpers/homeSearch";
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
 
@@ -5,6 +6,7 @@ import { expect, test, type Page } from "@playwright/test";
 
 async function toResults(page: Page, sentence: string) {
   await page.goto("/");
+  await openHomeSearch(page);
   await page.locator("#home-q").fill(sentence);
   await page.locator("#home-q").press("Enter");
   await expect(page.getByTestId("prefill-banner")).toBeVisible({ timeout: 20_000 });

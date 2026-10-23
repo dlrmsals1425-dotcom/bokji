@@ -1,9 +1,11 @@
+import { openHomeSearch } from "./helpers/homeSearch";
 import { expect, test, type Page, type Request } from "@playwright/test";
 
 /** QA 1차 수정 확인 (리뷰 보고서 항목 ID를 제목에 표기) */
 
 async function fromSentence(page: Page, sentence: string) {
   await page.goto("/");
+  await openHomeSearch(page);
   await page.locator("#home-q").fill(sentence);
   await page.locator("#home-q").press("Enter");
   await expect(page.getByTestId("prefill-banner")).toBeVisible({ timeout: 20_000 });

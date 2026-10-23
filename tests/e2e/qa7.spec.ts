@@ -1,9 +1,11 @@
+import { openHomeSearch } from "./helpers/homeSearch";
 import { expect, test, type Page } from "@playwright/test";
 
 /** 6차 프로덕션 검증 후속 (claude-code-fixes): 한눈에 보기 금액 M2·M3 */
 
 async function toResults(page: Page, sentence: string) {
   await page.goto("/");
+  await openHomeSearch(page);
   await page.locator("#home-q").fill(sentence);
   await page.locator("#home-q").press("Enter");
   await expect(page.getByTestId("prefill-banner")).toBeVisible({ timeout: 20_000 });

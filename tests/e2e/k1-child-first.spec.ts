@@ -1,8 +1,10 @@
+import { openHomeSearch } from "./helpers/homeSearch";
 import { expect, test } from "@playwright/test";
 
 /** 결정 2b: '아이 키우는 엄마 안산' — 자녀 나이부터 묻고, 답하면 먼저 확인할 것이 채워짐 */
 test("자녀 나이를 먼저 묻고, 답하면 먼저 확인할 5가지가 나옴 @mobile", async ({ page }) => {
   await page.goto("/");
+  await openHomeSearch(page);
   await page.locator("#home-q").fill("아이 키우는 엄마 안산");
   await page.locator("#home-q").press("Enter");
   await expect(page.getByTestId("prefill-banner")).toBeVisible({ timeout: 20_000 });

@@ -1,8 +1,10 @@
+import { openHomeSearch } from "./helpers/homeSearch";
 import { expect, test, type Page } from "@playwright/test";
 
 /** 6차 프로덕션 검증 후속 (claude-code-fixes) P3 신청 기한 줄 · T1 10대 본인 화면 */
 async function toResults(page: Page, sentence: string) {
   await page.goto("/");
+  await openHomeSearch(page);
   await page.locator("#home-q").fill(sentence);
   await page.locator("#home-q").press("Enter");
   await expect(page.getByTestId("prefill-banner")).toBeVisible({ timeout: 20_000 });

@@ -1,9 +1,11 @@
+import { openHomeSearch } from "./helpers/homeSearch";
 import { expect, test, type Page } from "@playwright/test";
 
 /** QA 5차 수정 확인 (리뷰 보고서 항목 ID를 제목에 표기, 재현 문장 그대로, 390×844는 @mobile) */
 
 async function fromHome(page: Page, sentence: string) {
   await page.goto("/");
+  await openHomeSearch(page);
   await page.locator("#home-q").fill(sentence);
   await page.locator("#home-q").press("Enter");
   await expect(page.getByTestId("prefill-banner")).toBeVisible({ timeout: 20_000 });
@@ -57,23 +59,38 @@ test.describe("QA 5차", () => {
     await expect(picks).not.toContainText("신청할 때 확인:");
   });
 
-  test("U2: 390px '글자 크게'에서 머리 안내 줄이 한 줄 @mobile", async ({ page }) => {
+  test("U2: 390px '글자 크게'에서 로고와 글자 크기 버튼이 한 줄에 겹치지 않음 @mobile", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
     await page.goto("/");
-    const util = page.locator(".util");
-    await expect(util).toContainText("로그인 없음");
-    const h0 = (await util.boundingBox())!.height;
-    await page.getByTestId("large-text").click();
-    await expect.poll(async () => (await util.boundingBox())!.height).toBeLessThan(h0 * 1.3);
-    const note = page.locator(".util-note");
-    const box = (await note.boundingBox())!;
-    expect(box.x + box.width).toBeLessThanOrEqual(390);
+    const header = page.locator("header.site-header");
+    const logo = header.getByRole("link", { name: "복지나침반 홈", exact: true });
+    const toggle = page.getByTestId("large-text");
+    await expect(logo).toBeVisible();
+    await expect(toggle).toBeVisible();
+    await page.evaluate(() => document.fonts.ready);
+    const h0 = (await header.boundingBox())!.height;
+    await toggle.click();
+    await expect(toggle).toHaveAttribute("aria-pressed", "true");
+    await expect(page.locator("html")).toHaveAttribute("data-large", "1");
+    await expect.poll(async () => (await header.boundingBox())!.height).toBeLessThan(h0 * 1.3);
+    const logoBox = (await logo.boundingBox())!, toggleBox = (await toggle.boundingBox())!;
+    expect(logoBox.x).toBeGreaterThanOrEqual(0);
+    expect(logoBox.x + logoBox.width).toBeLessThanOrEqual(toggleBox.x);
+    expect(toggleBox.x + toggleBox.width).toBeLessThanOrEqual(390);
+    expect(Math.abs(logoBox.y + logoBox.height / 2 - toggleBox.y - toggleBox.height / 2)).toBeLessThanOrEqual(1);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   });
 
-  test("H1: 홈 그림에 옛 둥근 나침반 대신 하트 나침반 상징", async ({ page }) => {
+  test("H1: 홈에 현재 나침반 지도·바늘과 브랜드 아이콘 표시", async ({ page }) => {
     await page.goto("/");
-    const art = page.locator("svg.hero-art");
+    const art = page.getByTestId("welfare-map");
     await expect(art).toBeVisible();
-    await expect(art.locator('image[href="/brand/logo-symbol.svg"]')).toHaveCount(1);
+    await expect(art).toHaveAttribute("aria-hidden", "true");
+    await expect(art.getByTestId("compass-needle")).toBeVisible();
+    const logo = page.locator("header.site-header a.logo img");
+    await expect(logo).toHaveCount(1);
+    await expect(logo).toHaveAttribute("src", "/brand/logo-symbol.svg?v=compass-1");
+    expect(await logo.evaluate((image: HTMLImageElement) => image.complete && image.naturalWidth > 0)).toBe(true);
     const ok = await page.evaluate(async () => (await fetch("/brand/logo-symbol.svg")).ok);
     expect(ok).toBe(true);
   });

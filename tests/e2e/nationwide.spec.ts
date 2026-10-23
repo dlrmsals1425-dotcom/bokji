@@ -1,9 +1,11 @@
+import { openHomeSearch } from "./helpers/homeSearch";
 import { expect, test } from "@playwright/test";
 
 /** 전국 확대 (2026-10-10): 경기도 밖 지역도 '받으실 수 있어요'까지 판정, 통합시 옛 지역, 인천 개편 문장 */
 
 async function fromSentence(page: import("@playwright/test").Page, text: string) {
   await page.goto("/");
+  await openHomeSearch(page);
   await page.locator("#home-q").fill(text);
   await page.locator("#home-q").press("Enter");
   await expect(page.getByTestId("prefill-banner")).toBeVisible({ timeout: 20_000 });

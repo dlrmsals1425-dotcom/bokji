@@ -1,9 +1,11 @@
+import { openHomeSearch } from "./helpers/homeSearch";
 import { expect, test, type Page } from "@playwright/test";
 
 /** QA 2차 수정 확인 (리뷰 보고서 항목 ID를 제목에 표기, 재현 문장 그대로) */
 
 async function fromHome(page: Page, sentence: string) {
   await page.goto("/");
+  await openHomeSearch(page);
   await page.locator("#home-q").fill(sentence);
   await page.locator("#home-q").press("Enter");
   await expect(page.getByTestId("prefill-banner")).toBeVisible({ timeout: 20_000 });
@@ -26,6 +28,7 @@ test.describe("QA 2차", () => {
     }
     // 서비스 이름은 그대로 검색, 정확히 맞는 이름이 1위
     await page.goto("/");
+    await openHomeSearch(page);
     await page.locator("#home-q").fill("기초연금");
     await page.locator("#home-q").press("Enter");
     await expect(page).toHaveURL(/\/search\?q=/);
